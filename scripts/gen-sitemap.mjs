@@ -6,6 +6,7 @@ const SITE = 'https://calcstack-eight.vercel.app'
 
 const calcSrc = readFileSync('src/data/calculators.ts', 'utf8')
 const varSrc = readFileSync('src/data/variants.ts', 'utf8')
+const statsSrc = readFileSync('src/data/stats.ts', 'utf8')
 
 // literal slugs:  slug: 'some-slug'
 const literalSlugs = [...(calcSrc + varSrc).matchAll(/slug: '([a-z0-9-]+)'/g)].map((m) => m[1])
@@ -16,11 +17,15 @@ const citySlugs = [...varSrc.matchAll(/slugCity: '([a-z0-9-]+)'/g)].map((m) => `
 
 const calcSlugs = [...new Set([...literalSlugs, ...stateSlugs, ...citySlugs])].sort()
 
+// per-state data pages from stats.ts (HOME_VALUES slugs)
+const stateDataSlugs = [...statsSrc.matchAll(/slug: '([a-z0-9-]+)'/g)].map((m) => m[1])
+
 const urls = [
   `  <url><loc>${SITE}/</loc><priority>1.0</priority></url>`,
   `  <url><loc>${SITE}/tools/bill-analyzer</loc><priority>0.9</priority></url>`,
   `  <url><loc>${SITE}/data/mortgage-payment-by-state</loc><priority>0.8</priority></url>`,
   `  <url><loc>${SITE}/data/average-salary-by-job</loc><priority>0.8</priority></url>`,
+  ...stateDataSlugs.map((s) => `  <url><loc>${SITE}/data/mortgage-payment-in/${s}</loc></url>`),
   ...calcSlugs.map((s) => `  <url><loc>${SITE}/calculators/${s}</loc></url>`),
 ]
 

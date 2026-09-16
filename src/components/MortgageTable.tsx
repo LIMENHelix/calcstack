@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { HOME_VALUES } from '@/data/stats'
 import { monthlyPayment, usd } from '@/lib/calc'
+
+const SITE = 'https://calcstack-eight.vercel.app'
 
 /** Interactive mortgage-by-state table — used on the data page AND the embed widget. */
 export function MortgageTable({ compact = false }: { compact?: boolean }) {
@@ -44,7 +47,17 @@ export function MortgageTable({ compact = false }: { compact?: boolean }) {
           <tbody>
             {rows.map((r) => (
               <tr key={r.slug} className="border-t hover:bg-muted/40">
-                <td className="p-2 font-medium">{r.state}</td>
+                <td className="p-2 font-medium">
+                  {compact ? (
+                    <a href={`${SITE}/data/mortgage-payment-in/${r.slug}`} target="_blank" rel="noopener" className="hover:text-primary hover:underline">
+                      {r.state}
+                    </a>
+                  ) : (
+                    <Link to={`/data/mortgage-payment-in/${r.slug}`} className="hover:text-primary hover:underline">
+                      {r.state}
+                    </Link>
+                  )}
+                </td>
                 <td className="p-2 text-right">{usd(r.value)}</td>
                 {!compact && <td className="p-2 text-right">{usd(r.principal)}</td>}
                 <td className="p-2 text-right font-semibold text-primary">{usd(r.pmt, 0)}</td>
