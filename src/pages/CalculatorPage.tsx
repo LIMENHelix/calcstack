@@ -4,6 +4,7 @@ import { CALC_COMPONENTS } from '@/calcs'
 import { MORE_CALC_COMPONENTS } from '@/calcs/more'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
+import { EmbedSnippet } from '@/components/EmbedSnippet'
 
 export default function CalculatorPage() {
   const { slug } = useParams()
@@ -88,6 +89,8 @@ export default function CalculatorPage() {
       </article>
 
       <AffiliateCard items={DEFAULT_AFFILIATES} />
+
+      <EmbedSnippet slug={meta.slug} title={meta.shortTitle} />
 
       {related.length > 0 && (
         <section className="mt-10">
