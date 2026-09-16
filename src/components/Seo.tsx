@@ -17,7 +17,7 @@ export function Seo({ title, description }: { title: string; description: string
       canonical.rel = 'canonical'
       document.head.appendChild(canonical)
     }
-    canonical.href = 'https://calcstack.example.com' + window.location.pathname
+    canonical.href = 'https://calcstack-eight.vercel.app' + window.location.pathname
   }, [title, description])
   return null
 }
