@@ -28,6 +28,22 @@ export default function Home() {
         </div>
       </section>
 
+      <Link to="/tools/bill-analyzer" className="mb-12 block">
+        <div className="rounded-xl border-2 border-primary/40 bg-gradient-to-r from-primary/10 to-transparent p-6 transition-all hover:-translate-y-0.5 hover:shadow-md sm:flex sm:items-center sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">Featured tool ✦ New</p>
+            <p className="mt-1 text-xl font-bold">Bill Analyzer</p>
+            <p className="mt-1 max-w-xl text-sm text-muted-foreground">
+              Paste your bills as plain text — get monthly and yearly totals, spending by category,
+              and flags on what you're overpaying. 100% private: parsed in your browser, never uploaded.
+            </p>
+          </div>
+          <span className="mt-4 inline-block shrink-0 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground sm:mt-0">
+            Analyze my bills →
+          </span>
+        </div>
+      </Link>
+
       {CATEGORIES.map((cat) => (
         <section key={cat} className="mb-10">
           <h2 className="mb-4 text-xl font-semibold">{cat}</h2>

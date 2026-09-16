@@ -9,8 +9,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Link to="/" className="text-lg font-bold tracking-tight">
             Calc<span className="text-primary">Stack</span>
           </Link>
-          <nav className="hidden gap-4 text-sm sm:flex">
-            {CALCULATORS.map((c) => (
+          <nav className="hidden items-center gap-4 text-sm sm:flex">
+            <NavLink
+              to="/tools/bill-analyzer"
+              className={({ isActive }) =>
+                `rounded-full border px-3 py-1 ${isActive ? 'border-primary font-medium text-primary' : 'border-primary/40 bg-primary/5 text-primary hover:bg-primary/10'}`
+              }
+            >
+              Bill Analyzer ✦
+            </NavLink>
+            {CALCULATORS.slice(0, 4).map((c) => (
               <NavLink
                 key={c.slug}
                 to={`/calculators/${c.slug}`}
