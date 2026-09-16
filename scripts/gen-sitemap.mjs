@@ -19,6 +19,8 @@ const calcSlugs = [...new Set([...literalSlugs, ...stateSlugs, ...citySlugs])].s
 const urls = [
   `  <url><loc>${SITE}/</loc><priority>1.0</priority></url>`,
   `  <url><loc>${SITE}/tools/bill-analyzer</loc><priority>0.9</priority></url>`,
+  `  <url><loc>${SITE}/data/mortgage-payment-by-state</loc><priority>0.8</priority></url>`,
+  `  <url><loc>${SITE}/data/average-salary-by-job</loc><priority>0.8</priority></url>`,
   ...calcSlugs.map((s) => `  <url><loc>${SITE}/calculators/${s}</loc></url>`),
 ]
 

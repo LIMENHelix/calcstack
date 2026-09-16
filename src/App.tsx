@@ -3,6 +3,8 @@ import { Layout } from './components/Layout'
 import Home from './pages/Home'
 import CalculatorPage from './pages/CalculatorPage'
 import BillAnalyzer from './pages/BillAnalyzer'
+import DataMortgage from './pages/DataMortgage'
+import DataSalaries from './pages/DataSalaries'
 import EmbedPage from './pages/EmbedPage'
 
 export default function App() {
@@ -18,6 +20,8 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/calculators/:slug" element={<CalculatorPage />} />
               <Route path="/tools/bill-analyzer" element={<BillAnalyzer />} />
+              <Route path="/data/mortgage-payment-by-state" element={<DataMortgage />} />
+              <Route path="/data/average-salary-by-job" element={<DataSalaries />} />
               <Route path="*" element={<CalculatorPage />} />
             </Routes>
           </Layout>

@@ -62,6 +62,28 @@ export default function Home() {
         </section>
       ))}
 
+      <section className="mb-10">
+        <h2 className="mb-4 text-xl font-semibold">Data &amp; Research</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Link to="/data/mortgage-payment-by-state">
+            <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
+              <CardContent className="p-5">
+                <p className="font-semibold">Average Mortgage Payment by State</p>
+                <p className="mt-1 text-sm text-muted-foreground">All 50 states + DC, computed live at your rate and term.</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/data/average-salary-by-job">
+            <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
+              <CardContent className="p-5">
+                <p className="font-semibold">Average Salary by Job</p>
+                <p className="mt-1 text-sm text-muted-foreground">40 occupations with honest hourly equivalents.</p>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+      </section>
+
       <section className="mt-14 max-w-3xl">
         <h2 className="mb-3 text-xl font-semibold">Why CalcStack?</h2>
         <div className="space-y-3 text-muted-foreground">
