@@ -1,8 +1,9 @@
 import { Link } from 'react-router'
-import { SALARIES, DATA_YEAR } from '@/data/stats'
-import { usd } from '@/lib/calc'
+import { DATA_YEAR } from '@/data/stats'
+import { SalaryTable } from '@/components/SalaryTable'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
+import { EmbedSnippet } from '@/components/EmbedSnippet'
 
 const FAQ = [
   {
@@ -24,7 +25,6 @@ const FAQ = [
 ]
 
 export default function SalaryByJob() {
-  const rows = [...SALARIES].sort((a, b) => b.pay - a.pay)
   return (
     <>
       <Seo
@@ -60,28 +60,7 @@ export default function SalaryByJob() {
         <Link to="/calculators/freelance-rate-calculator" className="text-primary underline-offset-4 hover:underline">freelance rate calculator</Link>.
       </p>
 
-      <div className="overflow-x-auto rounded-lg border">
-        <table className="w-full text-sm">
-          <thead className="bg-muted">
-            <tr>
-              <th className="p-2 text-left">Occupation</th>
-              <th className="p-2 text-right">Typical salary*</th>
-              <th className="p-2 text-right">≈ Hourly</th>
-              <th className="p-2 text-right">≈ Monthly</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.job} className="border-t hover:bg-muted/40">
-                <td className="p-2 font-medium">{r.job}</td>
-                <td className="p-2 text-right font-semibold text-primary">{usd(r.pay)}</td>
-                <td className="p-2 text-right">{usd(r.pay / 2080, 2)}</td>
-                <td className="p-2 text-right text-muted-foreground">{usd(r.pay / 12)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <SalaryTable />
       <p className="mt-2 text-xs text-muted-foreground">
         * Rounded median figures (~{DATA_YEAR}), gross pay before taxes. Hourly assumes 2,080
         hours/year. Verify with current wage data before negotiations.
@@ -100,6 +79,7 @@ export default function SalaryByJob() {
       </article>
 
       <AffiliateCard items={DEFAULT_AFFILIATES} />
+      <EmbedSnippet slug="table/salary-by-job" title="Average Salary by Job table" />
     </>
   )
 }

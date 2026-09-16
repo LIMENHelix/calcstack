@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import { Link } from 'react-router'
-import { HOME_VALUES, DATA_YEAR } from '@/data/stats'
-import { monthlyPayment, usd } from '@/lib/calc'
+import { DATA_YEAR } from '@/data/stats'
+import { MortgageTable } from '@/components/MortgageTable'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
+import { EmbedSnippet } from '@/components/EmbedSnippet'
 
 const FAQ = [
   {
@@ -24,23 +24,12 @@ const FAQ = [
   },
 ]
 
-export default function MortgageByState() {
-  const [rate, setRate] = useState(6.5)
-  const [years, setYears] = useState(30)
-
-  const rows = HOME_VALUES.map((s) => {
-    const principal = s.value * 0.8
-    const pmt = monthlyPayment(principal, rate, years)
-    return { ...s, principal, pmt, interest: pmt * years * 12 - principal }
-  }).sort((a, b) => b.pmt - a.pmt)
-
-  const median = rows[Math.floor(rows.length / 2)]
-
+export default function DataMortgage() {
   return (
     <>
       <Seo
         title="Average Mortgage Payment by State (All 50 States + DC)"
-        description="Typical monthly mortgage payment for every US state, computed from approximate typical home values. Compare states, then calculate your own payment."
+        description="Typical monthly mortgage payment for every US state, computed from approximate typical home values. Adjust the rate and term — the table recalculates live."
       />
       <script
         type="application/ld+json"
@@ -69,58 +58,11 @@ export default function MortgageByState() {
         your own numbers in the <Link to="/calculators/mortgage-payment-calculator" className="text-primary underline-offset-4 hover:underline">mortgage calculator</Link>.
       </p>
 
-      <div className="mb-6 flex flex-wrap items-center gap-6 rounded-lg border bg-card p-4">
-        <label className="flex items-center gap-2 text-sm">
-          Rate
-          <input type="number" step="0.1" value={rate} onChange={(e) => setRate(parseFloat(e.target.value) || 0)}
-            className="h-9 w-20 rounded-md border border-input bg-transparent px-2 text-sm" />
-          %
-        </label>
-        <label className="flex items-center gap-2 text-sm">
-          Term
-          <input type="number" value={years} onChange={(e) => setYears(parseFloat(e.target.value) || 30)}
-            className="h-9 w-20 rounded-md border border-input bg-transparent px-2 text-sm" />
-          yrs
-        </label>
-        <p className="text-sm text-muted-foreground">
-          Middle-of-the-pack state ({median.state}): <strong className="text-foreground">{usd(median.pmt, 0)}/mo</strong>
-        </p>
-      </div>
-
-      <div className="overflow-x-auto rounded-lg border">
-        <table className="w-full text-sm">
-          <thead className="bg-muted">
-            <tr>
-              <th className="p-2 text-left">State</th>
-              <th className="p-2 text-right">Typical home value*</th>
-              <th className="p-2 text-right">Loan (80%)</th>
-              <th className="p-2 text-right">Monthly P&I</th>
-              <th className="p-2 text-right">Total interest</th>
-              <th className="p-2 text-right"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r) => (
-              <tr key={r.slug} className="border-t hover:bg-muted/40">
-                <td className="p-2 font-medium">{r.state}</td>
-                <td className="p-2 text-right">{usd(r.value)}</td>
-                <td className="p-2 text-right">{usd(r.principal)}</td>
-                <td className="p-2 text-right font-semibold text-primary">{usd(r.pmt, 0)}</td>
-                <td className="p-2 text-right text-muted-foreground">{usd(r.interest)}</td>
-                <td className="p-2 text-right">
-                  <Link to={`/calculators/sales-tax-calculator-${r.slug}`} className="text-xs text-muted-foreground hover:text-primary">
-                    tax →
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <MortgageTable />
       <p className="mt-2 text-xs text-muted-foreground">
         * Approximate typical values ({DATA_YEAR}), rounded. Principal &amp; interest only — excludes
-        property tax, insurance, HOA, PMI. Sources of this type include public housing indices and
-        federal housing data; verify current numbers before making decisions.
+        property tax, insurance, HOA, PMI. Figures of this type derive from public housing indices
+        and federal housing data; verify current numbers before making decisions.
       </p>
 
       <AdSlot />
@@ -136,6 +78,7 @@ export default function MortgageByState() {
       </article>
 
       <AffiliateCard items={DEFAULT_AFFILIATES} />
+      <EmbedSnippet slug="table/mortgage-by-state" title="Average Mortgage Payment by State table" />
     </>
   )
 }

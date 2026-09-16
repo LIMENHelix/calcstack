@@ -6,12 +6,14 @@ import BillAnalyzer from './pages/BillAnalyzer'
 import DataMortgage from './pages/DataMortgage'
 import DataSalaries from './pages/DataSalaries'
 import EmbedPage from './pages/EmbedPage'
+import EmbedTablePage from './pages/EmbedTablePage'
 
 export default function App() {
   return (
     <Routes>
       {/* Bare widget route for iframes — no site chrome */}
       <Route path="/embed/:slug" element={<EmbedPage />} />
+      <Route path="/embed/table/:name" element={<EmbedTablePage />} />
       <Route
         path="*"
         element={
