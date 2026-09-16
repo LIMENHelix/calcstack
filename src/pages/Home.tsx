@@ -15,18 +15,26 @@ export default function Home() {
           Money questions, <span className="text-primary">answered in seconds.</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          Free calculators for freelancers, borrowers, and savers. Every result updates instantly,
-          every calculation runs in your browser — no accounts, no uploads, no ads in your face.
+          {CALCULATORS.length} free calculators for freelancers, borrowers, savers, and everyday
+          money. Results update as you type, and every calculation runs in your browser — no
+          accounts, no uploads, no email gates.
         </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-2 text-xs font-medium">
+          {['100% free', 'No signup', 'Private — runs locally', 'Instant results'].map((b) => (
+            <span key={b} className="rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-primary">
+              {b}
+            </span>
+          ))}
+        </div>
       </section>
 
       {CATEGORIES.map((cat) => (
         <section key={cat} className="mb-10">
           <h2 className="mb-4 text-xl font-semibold">{cat}</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CALCULATORS.filter((c) => c.category === cat).map((c) => (
               <Link key={c.slug} to={`/calculators/${c.slug}`}>
-                <Card className="h-full transition-colors hover:border-primary">
+                <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
                   <CardContent className="p-5">
                     <p className="font-semibold">{c.shortTitle}</p>
                     <p className="mt-1 text-sm text-muted-foreground">{c.tagline}</p>

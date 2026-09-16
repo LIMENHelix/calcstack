@@ -1,13 +1,14 @@
 import { useParams, Link } from 'react-router'
 import { CALCULATORS } from '@/data/calculators'
 import { CALC_COMPONENTS } from '@/calcs'
+import { MORE_CALC_COMPONENTS } from '@/calcs/more'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
 
 export default function CalculatorPage() {
   const { slug } = useParams()
   const meta = CALCULATORS.find((c) => c.slug === slug)
-  const Calc = slug ? CALC_COMPONENTS[slug] : undefined
+  const Calc = slug ? (CALC_COMPONENTS[slug] ?? MORE_CALC_COMPONENTS[slug]) : undefined
 
   if (!meta || !Calc) {
     return (

@@ -2,7 +2,7 @@ export interface CalculatorMeta {
   slug: string
   title: string
   shortTitle: string
-  category: 'Freelance & Career' | 'Loans & Debt' | 'Savings & Investing'
+  category: string
   description: string // meta description
   tagline: string
   intro: string
@@ -199,6 +199,415 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'tip-calculator',
+    title: 'Tip Calculator — Split the Bill & Tip Instantly',
+    shortTitle: 'Tip Calculator',
+    category: 'Everyday Money',
+    description:
+      'Free tip calculator with bill splitting. Enter the bill, pick a tip percentage, split between any number of people. Instant, no signup.',
+    tagline: 'End the awkward phone-passing at dinner.',
+    intro:
+      'Nobody wants to do percentage math over appetizers. This tip calculator gives you the tip amount, the total, and the per-person split the second you type. Quick buttons for the common 15/18/20/25% rates handle most situations; the custom field handles the rest — from coffee-shop rounding to large-group celebrations.',
+    howItWorks: [
+      'Enter the bill amount before tip.',
+      'Pick a tip percentage with the quick buttons or type a custom one.',
+      'Set how many people are splitting the bill (1 if it is just you).',
+      'Read the tip amount, total, and per-person cost instantly.',
+    ],
+    faq: [
+      {
+        q: 'Is 15% still a standard tip?',
+        a: 'In the US, 18–20% is now the common range for sit-down restaurants, with 15% seen as the minimum for acceptable service. For delivery, bartenders, and baristas, norms vary — $1–2 per drink or 10–15% is typical.',
+      },
+      {
+        q: 'Should I tip on the pre-tax or post-tax amount?',
+        a: 'Etiquette guides say pre-tax, and that is what this calculator uses by default. The difference on most bills is small enough that nobody will fault you either way.',
+      },
+      {
+        q: 'How do I split a bill fairly when people ordered differently?',
+        a: 'This calculator splits evenly. For uneven orders, each person can run their own subtotal plus shared items divided by the group, then add their proportional tip percentage.',
+      },
+    ],
+  },
+  {
+    slug: 'discount-calculator',
+    title: 'Discount Calculator — Final Price After Sale & Stacked Coupons',
+    shortTitle: 'Discount Calculator',
+    category: 'Everyday Money',
+    description:
+      'Free discount calculator. Compute the final price after one or two stacked percentage discounts, total savings, and your true effective discount rate.',
+    tagline: 'Know what "40% off + extra 20% off" really means.',
+    intro:
+      'Stores count on discount math being confusing — a "40% off plus an extra 20% off" sale is not 60% off, it is 52%. This calculator applies discounts the way registers do: sequentially, each one shrinking the already-reduced price. Enter the original price and up to two stacked discounts to see the true final price, your total savings, and the honest effective discount.',
+    howItWorks: [
+      'Enter the original (pre-discount) price.',
+      'Enter the first discount percentage.',
+      'Optionally add a second, stacked discount (coupon, loyalty code).',
+      'See the final price, total savings, and effective discount percentage.',
+    ],
+    faq: [
+      {
+        q: 'Why are stacked discounts smaller than they look?',
+        a: 'Because the second discount applies to the already-reduced price, not the original. 40% off $100 leaves $60; a further 20% off removes $12, not $20. Combined effect: 52% off.',
+      },
+      {
+        q: 'Does the order of discounts matter?',
+        a: 'No — multiplication is commutative. 40% then 20% gives the same final price as 20% then 40%.',
+      },
+      {
+        q: 'Is a "buy one get one 50% off" deal really 25% off?',
+        a: 'Only if you buy exactly two identical items and want both. You pay 1.5x for 2 items, which is 25% off the pair — but 0% off if you only needed one.',
+      },
+    ],
+  },
+  {
+    slug: 'sales-tax-calculator',
+    title: 'Sales Tax Calculator — Add or Remove Tax From a Price',
+    shortTitle: 'Sales Tax Calculator',
+    category: 'Everyday Money',
+    description:
+      'Free sales tax calculator. Add tax to a price or reverse it out of a total. Works with any state or local rate. Instant and no signup.',
+    tagline: 'Add tax, or reverse it out of a receipt total.',
+    intro:
+      'US price tags exclude tax, receipts include it, and invoices need it separated — this calculator handles both directions. Add a tax rate to a pre-tax price to see the checkout total, or reverse-tax a receipt to recover the pre-tax amount for expense reports and bookkeeping. Works with any combined state and local rate.',
+    howItWorks: [
+      'Choose "Add tax" (price → total) or "Remove tax" (total → price).',
+      'Enter the amount.',
+      'Enter your combined sales tax rate (state + county + city).',
+      'Get the pre-tax price, tax amount, and total instantly.',
+    ],
+    faq: [
+      {
+        q: 'How do I find my sales tax rate?',
+        a: 'Search "[your city] sales tax rate" — rates combine state, county, and city taxes and range from 0% (Oregon, Montana and others) to over 10% in parts of some states. Your receipt always shows the applied rate.',
+      },
+      {
+        q: 'How do I remove tax from a total?',
+        a: 'Divide by 1 plus the rate: $108.25 at 8.25% is $108.25 ÷ 1.0825 = $100. Multiplying the total by the rate instead is the common mistake — that overstates the tax.',
+      },
+      {
+        q: 'Is sales tax the same as VAT?',
+        a: 'Similar but not identical: US sales tax is added at checkout and shown separately, while VAT (Europe, UK, and elsewhere) is usually baked into displayed prices and collected at each production stage.',
+      },
+    ],
+  },
+  {
+    slug: 'percentage-calculator',
+    title: 'Percentage Calculator — Percent Of, Percent Change, What Percent',
+    shortTitle: 'Percentage Calculator',
+    category: 'Everyday Money',
+    description:
+      'Free 3-in-1 percentage calculator: what is X% of Y, percentage increase/decrease between two numbers, and X is what percent of Y. Instant answers.',
+    tagline: 'Every percent question, answered in one place.',
+    intro:
+      'Percent questions come in three flavors and everyone mixes them up: finding a percentage of a number, computing the percentage change between two numbers, and working out what percent one number is of another. This calculator has all three modes on one page with the formula visible in the labels — useful for homework, tips, price changes, and quick data checks.',
+    howItWorks: [
+      'Mode 1 — "What is X% of Y": enter the percent and the value.',
+      'Mode 2 — "Percentage change": enter the starting and ending numbers.',
+      'Mode 3 — "X is what percent of Y": enter the part and the whole.',
+      'Each mode computes live as you type.',
+    ],
+    faq: [
+      {
+        q: 'What is the formula for percentage change?',
+        a: '(New − Old) ÷ |Old| × 100. Going from 80 to 120 is (120−80)÷80×100 = +50%. The vertical bars matter: change from a negative base needs the absolute value to keep the sign sensible.',
+      },
+      {
+        q: 'If a price drops 20% then rises 20%, is it back where it started?',
+        a: 'No. $100 − 20% = $80; $80 + 20% = $96. Percentage changes apply to the current value, so symmetric moves do not cancel — you end up 4% down.',
+      },
+      {
+        q: 'What is the difference between percentage points and percent?',
+        a: 'An interest rate rising from 3% to 4% is up 1 percentage point but up 33.3% in relative terms. News headlines routinely confuse the two; this calculator computes the relative (percent) version.',
+      },
+    ],
+  },
+  {
+    slug: 'bmi-calculator',
+    title: 'BMI Calculator — Body Mass Index With Healthy Range',
+    shortTitle: 'BMI Calculator',
+    category: 'Health & Life',
+    description:
+      'Free BMI calculator. Enter height and weight for your body mass index, WHO category, and the healthy weight range for your height.',
+    tagline: 'Your BMI, plus the healthy range for your height.',
+    intro:
+      'Body Mass Index is a quick screening number: weight divided by height squared. It is crude — it cannot tell muscle from fat — but it is the standard first check used by doctors and insurers worldwide. This calculator shows your BMI, the WHO category it falls in, and the weight range that would land you in the "healthy" band for your height.',
+    howItWorks: [
+      'Enter your height in centimeters.',
+      'Enter your weight in kilograms.',
+      'The calculator computes BMI = kg ÷ m².',
+      'See your category and the healthy weight range for your height.',
+    ],
+    faq: [
+      {
+        q: 'What is a healthy BMI?',
+        a: 'The WHO bands are: under 18.5 underweight, 18.5–24.9 healthy, 25–29.9 overweight, 30 and above obese. These are population screening bands, not individual diagnoses.',
+      },
+      {
+        q: 'Why do athletes score "overweight" on BMI?',
+        a: 'BMI only sees mass and height, not composition. A muscular athlete can exceed 25 while having low body fat. Waist circumference or body-fat percentage are better individual measures.',
+      },
+      {
+        q: 'Is BMI different for children?',
+        a: 'Yes — children and teens use age- and sex-adjusted percentile charts, not the adult bands. This calculator uses the adult WHO scale.',
+      },
+    ],
+  },
+  {
+    slug: 'calorie-calculator',
+    title: 'Calorie Calculator — TDEE & Daily Calorie Needs (Mifflin-St Jeor)',
+    shortTitle: 'Calorie Calculator',
+    category: 'Health & Life',
+    description:
+      'Free calorie calculator using the Mifflin-St Jeor equation. Get your maintenance calories (TDEE), BMR, and targets for fat loss or muscle gain.',
+    tagline: 'Maintenance, cut, or bulk — get your daily number.',
+    intro:
+      'Every diet plan reduces to energy balance: eat at your maintenance level and weight stays flat, below it and you lose, above it and you gain. This calculator estimates your maintenance calories (TDEE) with the Mifflin-St Jeor equation — the formula the Academy of Nutrition and Dietetics rates most accurate for most adults — then gives practical targets for fat loss and muscle gain.',
+    howItWorks: [
+      'Enter weight, height, age, and sex.',
+      'Choose your activity multiplier: 1.2 for desk-bound days up to ~1.7 for heavy training.',
+      'The calculator computes your BMR, then multiplies by activity for TDEE.',
+      'Fat-loss (−500 kcal) and muscle-gain (+300 kcal) targets appear alongside.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is this calculator?',
+        a: 'Within roughly ±10% for most people — good enough to start. Track your weight for 2–3 weeks at the computed intake; if you are not trending as expected, adjust by 100–200 kcal.',
+      },
+      {
+        q: 'How fast should I lose weight?',
+        a: 'A 500 kcal daily deficit targets about 0.5 kg (1 lb) per week — fast enough to see progress, slow enough to preserve muscle and sanity. Larger deficits mostly trade muscle for speed.',
+      },
+      {
+        q: 'What activity multiplier should I pick?',
+        a: 'Most people overestimate. Desk job with 3 gym sessions a week is usually 1.4–1.5, not 1.7. When in doubt, pick the lower option and adjust from real results.',
+      },
+    ],
+  },
+  {
+    slug: 'age-calculator',
+    title: 'Age Calculator — Exact Age in Years, Months, Days',
+    shortTitle: 'Age Calculator',
+    category: 'Health & Life',
+    description:
+      'Free age calculator. Enter a birth date to get your exact age in years, months and days, total days alive, and the countdown to your next birthday.',
+    tagline: 'Exact age — down to the day — plus your birthday countdown.',
+    intro:
+      '"How old are you exactly?" turns out to be a fiddly calendar question — months have different lengths and leap years intrude. This calculator computes your precise age in years, months, and days as of today, plus fun totals: days and weeks alive, and the countdown to your next birthday.',
+    howItWorks: [
+      'Pick your date of birth in the date field.',
+      'The calculator compares it against today, borrowing days from the previous month when needed — the same method used for legal age calculations.',
+      'Read exact age, total days, total weeks, and days until your next birthday.',
+    ],
+    faq: [
+      {
+        q: 'How is exact age calculated?',
+        a: 'Subtract birth year from current year, then adjust: if your birthday has not happened yet this year, subtract one. Months and days borrow from the previous month when the current day-of-month is smaller than the birth day.',
+      },
+      {
+        q: 'How many days old am I?',
+        a: 'The calculator shows this directly — expect roughly 365.25 times your age in years, since leap days add about one extra day every four years.',
+      },
+      {
+        q: 'Can I calculate age at a past or future date?',
+        a: 'This tool computes age as of today. For the gap between any two arbitrary dates, use the date difference calculator — it handles any pair of dates.',
+      },
+    ],
+  },
+  {
+    slug: 'date-difference-calculator',
+    title: 'Date Difference Calculator — Days, Weeks & Months Between Dates',
+    shortTitle: 'Date Difference Calculator',
+    category: 'Health & Life',
+    description:
+      'Free date difference calculator. Days, weeks, months, and approximate workdays between any two dates — for deadlines, contracts, and countdowns.',
+    tagline: 'Days between any two dates — deadlines, contracts, countdowns.',
+    intro:
+      'Contract terms, project deadlines, visa windows, warranty periods — half of adult life is counting days between dates. This calculator gives you the exact day count between any two dates, plus week and average-month equivalents and an approximate workday count for planning.',
+    howItWorks: [
+      'Pick the start date and end date.',
+      'The calculator computes the exact calendar-day difference.',
+      'Weeks and months are shown as conversions (months use the 30.44-day average).',
+      'Approximate workdays assume a standard 5-day week (~5/7 of all days).',
+    ],
+    faq: [
+      {
+        q: 'Does the count include the end date?',
+        a: 'This calculator uses the standard convention: the difference between the two dates, so the start day is not counted but the end boundary is. For an inclusive count, add 1.',
+      },
+      {
+        q: 'How are months computed?',
+        a: 'As days divided by 30.44 — the average month length. Calendar months vary from 28 to 31 days, so for contract-grade "three calendar months" language, count month-by-month rather than by days.',
+      },
+      {
+        q: 'Can it count backward to a past date?',
+        a: 'Yes — if the end date is before the start date, the result is negative, telling you how many days ago that date was.',
+      },
+    ],
+  },
+  {
+    slug: 'gpa-calculator',
+    title: 'GPA Calculator — Weighted Grade Point Average by Credits',
+    shortTitle: 'GPA Calculator',
+    category: 'Health & Life',
+    description:
+      'Free GPA calculator. Add courses with letter-grade points and credit hours to get your weighted GPA on the standard 4.0 scale.',
+    tagline: 'Your semester GPA, weighted the way registrars do it.',
+    intro:
+      'A 4-credit chemistry class moves your GPA four times as much as a 1-credit elective, which is why simple grade averages are wrong. This calculator computes your weighted GPA the way registrars do: each course grade (on the 4.0 scale) multiplied by its credit hours, summed, and divided by total credits. Add as many courses as your semester holds.',
+    howItWorks: [
+      'Add a row per course.',
+      'Pick the grade points (A = 4.0, A− = 3.7, B+ = 3.3, and so on).',
+      'Enter the credit hours for each course.',
+      'Your weighted GPA updates live with every change.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between weighted and unweighted GPA?',
+        a: 'Unweighted GPA treats all grades equally; this calculator weights by credit hours (the college standard). Separately, some high schools also weight by course difficulty (AP = 5.0 scale) — that is a different system, defined by each school.',
+      },
+      {
+        q: 'What GPA do I need for grad school or scholarships?',
+        a: 'Common thresholds: 3.0 for most graduate programs, 3.5+ for competitive ones and many merit scholarships, 3.7+ for top-tier programs. Run your current courses here and test scenarios before the semester ends, not after.',
+      },
+      {
+        q: 'Can I use this to plan what grade I need in a final?',
+        a: 'Yes — enter your completed courses, then experiment with different grades for the outstanding course to see how each outcome moves your GPA.',
+      },
+    ],
+  },
+  {
+    slug: 'crypto-profit-calculator',
+    title: 'Crypto Profit Calculator — Gains, ROI & Fees',
+    shortTitle: 'Crypto Profit Calculator',
+    category: 'Investing & Crypto',
+    description:
+      'Free crypto profit calculator. Enter buy and sell prices, investment amount, and exchange fees to see profit, ROI, and coins held.',
+    tagline: 'Profit, ROI, and what the fees quietly took.',
+    intro:
+      'Crypto gains look bigger in your head than in your account — buy fees, sell fees, and spreads all shave the outcome. This calculator computes your true net profit: how many coins your investment bought, what they are worth at the exit price, what fees consumed, and your real return on investment. Use it before selling, or to plan entry and exit targets.',
+    howItWorks: [
+      'Enter how much you invested and your buy price per coin.',
+      'Enter your actual or target sell price.',
+      'Add the total exchange fee percentage (buy + sell combined).',
+      'See net profit, ROI, coins held, and exit value.',
+    ],
+    faq: [
+      {
+        q: 'Do I pay tax on crypto profits?',
+        a: 'In most jurisdictions, yes — selling, swapping, or spending crypto at a gain is typically a taxable event (capital gains in the US, UK, and many others). This calculator shows pre-tax profit; keep records of every trade.',
+      },
+      {
+        q: 'Why is my exchange showing a different profit?',
+        a: 'Exchanges usually display unrealized P&L at the current mid-price and may exclude withdrawal or network fees. Enter your actual filled buy price and a realistic sell price here for the number that matters.',
+      },
+      {
+        q: 'What ROI is realistic in crypto?',
+        a: 'Anyone quoting a fixed number is selling something. Historically crypto has produced both triple-digit years and 70%+ drawdowns. Plan exits with this calculator instead of hoping.',
+      },
+    ],
+  },
+  {
+    slug: 'roi-calculator',
+    title: 'ROI Calculator — Return on Investment & Annualized Returns',
+    shortTitle: 'ROI Calculator',
+    category: 'Investing & Crypto',
+    description:
+      'Free ROI calculator. Total return plus annualized ROI (CAGR) so you can compare investments over different time periods honestly.',
+    tagline: 'Total return is vanity; annualized return is sanity.',
+    intro:
+      '"I made 48%" means nothing until you know over how long. This calculator shows both numbers that matter: total ROI and annualized ROI (CAGR), which converts any multi-year gain into a per-year rate you can compare against index funds, savings accounts, or other deals. It works for stocks, property, a side business, or any investment with a buy-in and a payout.',
+    howItWorks: [
+      'Enter the amount you invested.',
+      'Enter what it returned (or is currently worth).',
+      'Enter how many years you held it.',
+      'Compare total ROI against the annualized figure.',
+    ],
+    faq: [
+      {
+        q: 'What is a good ROI?',
+        a: 'Context decides. Broad stock-market index funds have historically returned roughly 7–10% annualized over long periods, so anything consistently above that is strong; a savings account near inflation is treading water. Compare annualized numbers, never totals.',
+      },
+      {
+        q: 'Why is annualized ROI not just total ROI divided by years?',
+        a: 'Because of compounding. 48% over 2 years is 21.7% per year compounded, not 24%. Dividing by years (the "simple" method) overstates performance on multi-year holds.',
+      },
+      {
+        q: 'What does ROI not capture?',
+        a: 'Risk, taxes, and cash flow timing. Two investments with identical ROI can have wildly different risk. For multi-payment investments (rental property, businesses), an IRR calculation is more precise.',
+      },
+    ],
+  },
+  {
+    slug: 'inflation-calculator',
+    title: 'Inflation Calculator — Future Cost & Purchasing Power',
+    shortTitle: 'Inflation Calculator',
+    category: 'Investing & Crypto',
+    description:
+      'Free inflation calculator. See what today\'s money will be worth and what today\'s prices will cost after any inflation rate and number of years.',
+    tagline: 'See the silent tax on your cash, year by year.',
+    intro:
+      'Inflation compounds just like interest — against you. At 3% inflation, prices double roughly every 24 years and cash loses a quarter of its purchasing power per decade. This calculator shows both directions: what today\'s amount will cost in the future, and what today\'s cash will effectively be worth. Essential context for salary negotiations, retirement planning, and savings decisions.',
+    howItWorks: [
+      'Enter an amount in today\'s money.',
+      'Enter an assumed annual inflation rate (3% is a common long-run planning assumption).',
+      'Enter the number of years ahead.',
+      'See the future cost equivalent, the eroded value of today\'s cash, and total purchasing power lost.',
+    ],
+    faq: [
+      {
+        q: 'What inflation rate should I use?',
+        a: 'US inflation has averaged roughly 2–4% over recent decades, with occasional spikes well above. Use 3% for baseline planning, 4% for conservative planning, and check current CPI figures for short-term estimates.',
+      },
+      {
+        q: 'Does my salary keep up with inflation?',
+        a: 'Only if raises match or exceed it. A 2% raise in a 4% inflation year is a real-terms pay cut of about 2%. Run your salary through this calculator with and without the raise to see the truth.',
+      },
+      {
+        q: 'Is all inflation bad?',
+        a: 'Moderate inflation is normal in growing economies and eases debt burdens (fixed-rate mortgage payments shrink in real terms). It is cash and fixed incomes that suffer — which is why long-term savings belong in assets, not mattresses.',
+      },
+    ],
+  },
+  {
+    slug: 'break-even-calculator',
+    title: 'Break-Even Calculator — Units & Revenue to Cover Costs',
+    shortTitle: 'Break-Even Calculator',
+    category: 'Investing & Crypto',
+    description:
+      'Free break-even calculator for businesses. Enter fixed costs, price, and unit cost to find the exact units and revenue where you stop losing money.',
+    tagline: 'The exact sale count where you stop bleeding money.',
+    intro:
+      'Every product business lives or dies at one number: how many units you must sell before fixed costs are covered. This calculator computes that break-even point from three inputs — fixed costs, sale price, and variable cost per unit — and shows the contribution margin that determines it. Change any input to test pricing decisions before you commit to them.',
+    howItWorks: [
+      'Enter fixed costs: rent, salaries, software — costs that exist even at zero sales.',
+      'Enter your sale price per unit.',
+      'Enter variable cost per unit: materials, shipping, payment fees — costs that scale with each sale.',
+      'Break-even units = fixed costs ÷ (price − variable cost), shown with revenue and margin.',
+    ],
+    faq: [
+      {
+        q: 'What is contribution margin?',
+        a: 'Price minus variable cost per unit — the amount each sale contributes toward covering fixed costs. A $49 product costing $14 to fulfill contributes $35 per sale. Every pricing and cost decision flows through this number.',
+      },
+      {
+        q: 'What if my price barely exceeds my costs?',
+        a: 'Then break-even units explode toward infinity, which is the calculator telling you the business model needs a price rise or a cost cut, not more effort. Thin margins mean volume cannot save you.',
+      },
+      {
+        q: 'Should fixed costs be monthly or annual?',
+        a: 'Either works — just interpret the result in the same period. Monthly fixed costs give you break-even units per month, which is usually the most actionable frame.',
+      },
+    ],
+  },
 ]
 
-export const CATEGORIES = ['Freelance & Career', 'Loans & Debt', 'Savings & Investing'] as const
+export const CATEGORIES = [
+  'Freelance & Career',
+  'Everyday Money',
+  'Loans & Debt',
+  'Savings & Investing',
+  'Investing & Crypto',
+  'Health & Life',
+] as const

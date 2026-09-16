@@ -4,12 +4,12 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
 import { usd, num, monthlyPayment, monthsToPayoff } from '@/lib/calc'
 
-function useNumber(initial: number): [number, (v: string) => void] {
+export function useNumber(initial: number): [number, (v: string) => void] {
   const [v, setV] = useState(initial)
   return [v, (s: string) => setV(parseFloat(s) || 0)]
 }
 
-function Field({
+export function Field({
   label,
   value,
   onChange,
@@ -52,7 +52,7 @@ function Field({
   )
 }
 
-function Result({ label, value, big }: { label: string; value: string; big?: boolean }) {
+export function Result({ label, value, big }: { label: string; value: string; big?: boolean }) {
   return (
     <div className="rounded-lg border bg-card p-4">
       <p className="text-xs uppercase tracking-wide text-muted-foreground">{label}</p>
