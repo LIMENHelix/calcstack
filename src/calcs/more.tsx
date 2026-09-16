@@ -5,10 +5,10 @@ import { usd, num } from '@/lib/calc'
 
 /* ---------- Everyday Money ---------- */
 
-export function TipCalc() {
-  const [bill, setBill] = useNumber(86)
-  const [tipPct, setTipPct] = useNumber(18)
-  const [people, setPeople] = useNumber(2)
+export function TipCalc({ presets }: { presets?: Record<string, number> }) {
+  const [bill, setBill] = useNumber(presets?.bill ?? 86)
+  const [tipPct, setTipPct] = useNumber(presets?.tipPct ?? 18)
+  const [people, setPeople] = useNumber(presets?.people ?? 2)
   const r = useMemo(() => {
     const tip = bill * (tipPct / 100)
     const total = bill + tip
@@ -66,9 +66,9 @@ export function DiscountCalc() {
   )
 }
 
-export function SalesTaxCalc() {
-  const [price, setPrice] = useNumber(49.99)
-  const [rate, setRate] = useNumber(8.25)
+export function SalesTaxCalc({ presets }: { presets?: Record<string, number> }) {
+  const [price, setPrice] = useNumber(presets?.price ?? 49.99)
+  const [rate, setRate] = useNumber(presets?.rate ?? 8.25)
   const [mode, setMode] = useState<'add' | 'remove'>('add')
   const r = useMemo(() => {
     if (mode === 'add') {
@@ -446,7 +446,7 @@ export function BreakEvenCalc() {
   )
 }
 
-export const MORE_CALC_COMPONENTS: Record<string, () => React.ReactElement> = {
+export const MORE_CALC_COMPONENTS: Record<string, (props: { presets?: Record<string, number> }) => React.ReactElement> = {
   'tip-calculator': TipCalc,
   'discount-calculator': DiscountCalc,
   'sales-tax-calculator': SalesTaxCalc,

@@ -1,0 +1,299 @@
+import type { CalculatorMeta } from './calculators'
+
+export interface VariantMeta extends CalculatorMeta {
+  /** Slug of the base calculator component to render. */
+  baseSlug: string
+  /** Pre-filled input values for the base component. */
+  presets?: Record<string, number>
+  /** Slug of the core calculator this variant derives from (for related links). */
+  parentSlug: string
+}
+
+/* ---------- Sales tax by state ---------- */
+/* Average combined state + local rates (widely published estimates). Each page
+   tells the user their city rate may differ and shows how to find the exact one. */
+const STATE_TAX: { state: string; slugState: string; rate: number; stateOnly: number }[] = [
+  { state: 'California', slugState: 'california', rate: 8.85, stateOnly: 7.25 },
+  { state: 'Texas', slugState: 'texas', rate: 8.2, stateOnly: 6.25 },
+  { state: 'Florida', slugState: 'florida', rate: 7.0, stateOnly: 6.0 },
+  { state: 'New York', slugState: 'new-york', rate: 8.53, stateOnly: 4.0 },
+  { state: 'Washington', slugState: 'washington', rate: 9.38, stateOnly: 6.5 },
+  { state: 'Illinois', slugState: 'illinois', rate: 8.86, stateOnly: 6.25 },
+  { state: 'Colorado', slugState: 'colorado', rate: 7.81, stateOnly: 2.9 },
+  { state: 'Georgia', slugState: 'georgia', rate: 7.38, stateOnly: 4.0 },
+]
+
+const stateTaxVariants: VariantMeta[] = STATE_TAX.map(({ state, slugState, rate, stateOnly }) => ({
+  slug: `sales-tax-calculator-${slugState}`,
+  baseSlug: 'sales-tax-calculator',
+  parentSlug: 'sales-tax-calculator',
+  title: `${state} Sales Tax Calculator — ${stateOnly}% State Rate + Local Tax`,
+  shortTitle: `${state} Sales Tax Calculator`,
+  category: 'Everyday Money',
+  description: `Free ${state} sales tax calculator pre-set to the average combined rate (~${rate}%). Add tax to a price or reverse it out of a receipt. Adjust for your city.`,
+  tagline: `${state} rates pre-loaded — just enter the price.`,
+  presets: { rate },
+  intro: `${state} has a statewide sales tax of ${stateOnly}%, but what you actually pay at the register is higher: counties and cities stack their own rates on top, bringing the average combined rate in ${state} to roughly ${rate}%. This calculator comes pre-set to that average — adjust the rate field to your city's exact rate (shown on any receipt) for a precise answer. It works in both directions: add tax to a sticker price, or reverse tax out of a total.`,
+  howItWorks: [
+    `The rate field starts at ${rate}% — the average combined ${state} rate. Change it to your local rate for exact math.`,
+    'Enter the price before tax (or the receipt total in "Remove tax" mode).',
+    'Read the tax amount and total instantly.',
+    'For bookkeeping, use "Remove tax" to recover the pre-tax amount from a receipt.',
+  ],
+  faq: [
+    {
+      q: `What is the sales tax rate in ${state}?`,
+      a: `The statewide rate is ${stateOnly}%, but local additions bring the combined rate to roughly ${rate}% on average in ${state}. Exact rates vary by city and county — your receipt always shows the rate that was actually applied.`,
+    },
+    {
+      q: 'Why is my receipt rate different from the pre-set rate?',
+      a: `This calculator uses the ${state} average combined rate. City and district taxes vary — sometimes by over a percentage point within the same metro area. Type the rate printed on your receipt into the rate field for exact results.`,
+    },
+    {
+      q: 'Is anything exempt from sales tax?',
+      a: 'Most states exempt groceries, prescription drugs, or both, and many exempt clothing below a threshold. Exemption rules are state-specific — check your state revenue department\'s list for the categories you buy most.',
+    },
+  ],
+}))
+
+/* ---------- Tip calculator by profession ---------- */
+const TIP_PROFS: { slug: string; prof: string; pct: number; bill: number; note: string; etiquette: string }[] = [
+  {
+    slug: 'tip-calculator-hairdresser',
+    prof: 'Hairdresser',
+    pct: 20, bill: 75,
+    note: 'Pre-set to 20% — the common salon standard.',
+    etiquette: '18–20% is the common salon range for good work; 25%+ for a colorist who fixed a disaster. Tip on the full service price before any discounts, and tip assistants who shampooed separately ($5–10 is customary).',
+  },
+  {
+    slug: 'tip-calculator-tattoo-artist',
+    prof: 'Tattoo Artist',
+    pct: 20, bill: 300,
+    note: 'Pre-set to 20% on session price.',
+    etiquette: '15–25% of the session price is the studio norm, with 20% common for custom work. For multi-session pieces, tip per session. Cash is preferred at many shops.',
+  },
+  {
+    slug: 'tip-calculator-uber',
+    prof: 'Uber & Rideshare',
+    pct: 15, bill: 24,
+    note: 'Pre-set to 15% of the fare.',
+    etiquette: '10–20% of the fare is typical; $1–2 minimum on short rides. Drivers keep 100% of in-app tips. Airport runs, luggage help, and late-night pickups argue for the top of the range.',
+  },
+  {
+    slug: 'tip-calculator-delivery',
+    prof: 'Food Delivery',
+    pct: 18, bill: 32,
+    note: 'Pre-set to 18% of the order.',
+    etiquette: '15–20% of the order total, with a $3–5 floor so short trips are worth a driver\'s time. Bad weather, long distances, and apartment stairs all argue upward. Tip on the food total before app fees.',
+  },
+]
+
+const tipVariants: VariantMeta[] = TIP_PROFS.map(({ slug, prof, pct, bill, note, etiquette }) => ({
+  slug,
+  baseSlug: 'tip-calculator',
+  parentSlug: 'tip-calculator',
+  title: `${prof} Tip Calculator — How Much to Tip (${pct}% Preset)`,
+  shortTitle: `${prof} Tip Calculator`,
+  category: 'Everyday Money',
+  description: `Free ${prof.toLowerCase()} tip calculator pre-set to ${pct}%. Enter the amount, adjust the percentage, split between people. Instant and no signup.`,
+  tagline: note,
+  presets: { tipPct: pct, bill },
+  intro: `Tipping norms for ${prof.toLowerCase()}s are their own world — different from restaurants, different from each other. This calculator comes pre-set to ${pct}% so the default answer is already sensible; adjust to your situation and split between people if needed.`,
+  howItWorks: [
+    `The tip field starts at ${pct}% — the common rate for ${prof.toLowerCase()}s.`,
+    'Enter the amount on the bill, fare, or session price.',
+    'Adjust the percentage up or down for exceptional or poor service.',
+    'Split between people if you are sharing the cost.',
+  ],
+  faq: [
+    { q: `How much should I tip a ${prof.toLowerCase()}?`, a: etiquette },
+    {
+      q: 'Should I tip on the discounted price or full price?',
+      a: 'Full price before discounts or coupons. The service took the same effort regardless of your deal.',
+    },
+    {
+      q: 'What if service was genuinely bad?',
+      a: 'Dropping to 10% signals displeasure without stiffing someone who may depend on tips for base pay. If the problem was management (long waits, wrong orders), the worker usually was not the cause.',
+    },
+  ],
+}))
+
+/* ---------- Freelance rate by profession ---------- */
+const FREE_PROFS: { slug: string; prof: string; salary: number; billable: number; note: string }[] = [
+  { slug: 'freelance-rate-calculator-graphic-designer', prof: 'Graphic Designer', salary: 75000, billable: 55, note: 'Preset for a mid-career designer: $75K income goal, 55% billable.' },
+  { slug: 'freelance-rate-calculator-web-developer', prof: 'Web Developer', salary: 120000, billable: 60, note: 'Preset for a senior developer: $120K income goal, 60% billable.' },
+  { slug: 'freelance-rate-calculator-writer', prof: 'Freelance Writer', salary: 65000, billable: 65, note: 'Preset for a full-time writer: $65K income goal, 65% billable.' },
+  { slug: 'freelance-rate-calculator-photographer', prof: 'Photographer', salary: 80000, billable: 50, note: 'Preset for a photographer: $80K goal, 50% billable (editing eats hours).' },
+]
+
+const freelanceVariants: VariantMeta[] = FREE_PROFS.map(({ slug, prof, salary, billable, note }) => ({
+  slug,
+  baseSlug: 'freelance-rate-calculator',
+  parentSlug: 'freelance-rate-calculator',
+  title: `${prof} Rate Calculator — What to Charge Per Hour`,
+  shortTitle: `${prof} Rate Calculator`,
+  category: 'Freelance & Career',
+  description: `Free ${prof.toLowerCase()} hourly rate calculator. Pre-set for typical ${prof.toLowerCase()} income goals and billable hours — adjust to your situation for your minimum rate.`,
+  tagline: note,
+  presets: { salary, billablePct: billable },
+  intro: `A ${prof.toLowerCase()}'s rate has to cover more than the work clients see — admin, marketing, equipment, insurance, and the unpaid hours between gigs. This calculator starts from typical numbers for a working ${prof.toLowerCase()} (a $${(salary / 1000).toFixed(0)}K income goal and ${billable}% billable time) and produces your minimum hourly and day rate. Adjust every field to your real numbers; the defaults are a starting point, not a verdict.`,
+  howItWorks: [
+    `Income goal starts at $${salary.toLocaleString('en-US')} — set it to what a salaried role would pay you.`,
+    `Billable share starts at ${billable}% — typical for ${prof.toLowerCase()}s once admin and client-hunting are counted.`,
+    'Add your real annual business expenses (gear, software, insurance, studio).',
+    'Read your minimum hourly and day rates. Quote projects above this floor.',
+  ],
+  faq: [
+    {
+      q: `What do ${prof.toLowerCase()}s typically charge?`,
+      a: `Published surveys show enormous ranges because they mix beginners with specialists. What matters is your floor: with the defaults here, a ${prof.toLowerCase()} needs roughly $${Math.round((salary + 10000) / (48 * 40 * (billable / 100)))}/hour just to match the salaried equivalent — before any premium for experience or specialization.`,
+    },
+    {
+      q: 'Hourly, day rate, or per project?',
+      a: 'Use the hourly floor internally, quote fixed project prices to clients. Project pricing rewards efficiency; the floor keeps you from bidding below your own salary.',
+    },
+    {
+      q: 'When should I raise my rates?',
+      a: 'When more than about 80% of proposals get accepted without negotiation, you are underpriced. Raise 10–15% for new clients first; existing clients at renewal.',
+    },
+  ],
+}))
+
+/* ---------- Mortgage variants ---------- */
+const MORTGAGE_VARIANTS: VariantMeta[] = [
+  {
+    slug: '15-year-mortgage-calculator',
+    baseSlug: 'mortgage-payment-calculator',
+    parentSlug: 'mortgage-payment-calculator',
+    title: '15-Year Mortgage Calculator — Payment & Interest Comparison',
+    shortTitle: '15-Year Mortgage Calculator',
+    category: 'Loans & Debt',
+    description: 'Free 15-year mortgage calculator pre-set to a 15-year term. See the monthly payment, total interest, and how much you save versus 30 years.',
+    tagline: 'Higher payment, drastically lower total cost.',
+    presets: { years: 15, rate: 5.9 },
+    intro: 'A 15-year mortgage trades a higher monthly payment for a dramatically lower total cost — typically less than half the interest of a 30-year loan, and 15-year rates usually run 0.5–0.7 points lower to begin with. This calculator is pre-set to a 15-year term; run the same numbers at 30 years in the main calculator and compare the total interest lines side by side.',
+    howItWorks: [
+      'Term starts at 15 years, rate pre-set slightly lower than 30-year norms.',
+      'Enter the home price and down payment.',
+      'Compare the monthly payment against the total interest figure.',
+      'Then run the same loan at 30 years and compare — the interest gap is usually six figures.',
+    ],
+    faq: [
+      {
+        q: 'How much cheaper is a 15-year mortgage overall?',
+        a: 'On a $320,000 loan, switching from 30 years at 6.5% to 15 years at ~5.9% cuts total interest from about $408,000 to roughly $163,000 — a quarter-million-dollar difference for roughly $660 more per month.',
+      },
+      {
+        q: 'Who should choose a 15-year term?',
+        a: 'Buyers with stable income and room in the budget after retirement savings. The forced discipline builds equity fast, but the payment is mandatory — a 30-year loan with voluntary extra payments offers similar savings with an escape hatch.',
+      },
+      {
+        q: 'Can I pay a 30-year loan like a 15-year one?',
+        a: 'Yes — making the 15-year payment on a 30-year loan pays it off in roughly 16–17 years (slightly longer, since the rate is higher). Use the loan payoff calculator to model exactly.',
+      },
+    ],
+  },
+  {
+    slug: 'fha-loan-calculator',
+    baseSlug: 'mortgage-payment-calculator',
+    parentSlug: 'mortgage-payment-calculator',
+    title: 'FHA Loan Calculator — 3.5% Down Payment Mortgage',
+    shortTitle: 'FHA Loan Calculator',
+    category: 'Loans & Debt',
+    description: 'Free FHA loan calculator pre-set to the 3.5% minimum down payment. See monthly payments on an FHA mortgage and compare against conventional.',
+    tagline: 'Pre-set to the 3.5% FHA minimum down payment.',
+    presets: { downPct: 3.5 },
+    intro: 'FHA loans let buyers in with as little as 3.5% down and more flexible credit requirements than conventional loans — the trade-off is mandatory mortgage insurance (MIP) that adds to the monthly cost. This calculator is pre-set to the 3.5% minimum down payment so you can see the principal-and-interest side immediately; remember to budget MIP (typically ~0.55%/yr of the loan) on top.',
+    howItWorks: [
+      'Down payment starts at 3.5% — the FHA minimum for most credit scores.',
+      'Enter the home price and your quoted rate.',
+      'Read the monthly P&I payment and loan amount.',
+      'Add roughly 0.55% of the loan amount ÷ 12 per month for FHA mortgage insurance.',
+    ],
+    faq: [
+      {
+        q: 'What is the minimum down payment for an FHA loan?',
+        a: '3.5% with a credit score of 580 or above; 10% for scores between 500 and 579. Below 500, FHA is generally not available.',
+      },
+      {
+        q: 'What is FHA mortgage insurance and can I remove it?',
+        a: 'FHA charges an upfront premium (~1.75% of the loan, usually rolled in) plus annual MIP of roughly 0.55%. With under 10% down, MIP lasts the life of the loan — the common exit is refinancing into a conventional loan once you have 20% equity.',
+      },
+      {
+        q: 'FHA vs conventional — which is cheaper?',
+        a: 'With strong credit and 20% down, conventional usually wins (no lifetime insurance). With modest credit or small savings, FHA is often the only door in. Run both down payments in this calculator and compare the loan amounts and payments.',
+      },
+    ],
+  },
+  {
+    slug: 'va-loan-calculator',
+    baseSlug: 'mortgage-payment-calculator',
+    parentSlug: 'mortgage-payment-calculator',
+    title: 'VA Loan Calculator — Zero Down Payment Mortgage for Veterans',
+    shortTitle: 'VA Loan Calculator',
+    category: 'Loans & Debt',
+    description: 'Free VA loan calculator pre-set to 0% down. Estimate monthly payments on a VA mortgage — no down payment and no monthly mortgage insurance.',
+    tagline: 'Pre-set to $0 down — the VA loan superpower.',
+    presets: { downPct: 0 },
+    intro: 'VA loans are the strongest mortgage benefit in the US: no down payment, no monthly mortgage insurance, and rates that typically beat conventional. This calculator is pre-set to 0% down — enter the home price and a quoted VA rate to see the payment. Note the one cost unique to VA: a funding fee (2.15% for first use with 0% down) usually rolled into the loan amount.',
+    howItWorks: [
+      'Down payment starts at 0% — the standard VA structure.',
+      'Enter the home price and your quoted VA rate.',
+      'For accuracy, add the funding fee to the loan: increase the price input by ~2.15% for first-time use.',
+      'Read the monthly payment — no PMI/MIP line item needed.',
+    ],
+    faq: [
+      {
+        q: 'Do VA loans really require no down payment?',
+        a: 'Yes — 0% down with full entitlement, and no monthly mortgage insurance regardless of down payment size. That combination does not exist in conventional lending.',
+      },
+      {
+        q: 'What is the VA funding fee?',
+        a: 'A one-time fee replacing monthly insurance: 2.15% of the loan for first use with 0% down (less with 5%+ down; higher for subsequent use). Veterans with service-connected disability ratings are exempt. It is usually financed into the loan.',
+      },
+      {
+        q: 'Are VA rates lower than conventional?',
+        a: 'Typically yes, by roughly 0.25–0.5 points, because the VA guarantee removes default risk for lenders. Get quotes from at least three VA-approved lenders — spreads between them are wide.',
+      },
+    ],
+  },
+  {
+    slug: 'jumbo-loan-calculator',
+    baseSlug: 'mortgage-payment-calculator',
+    parentSlug: 'mortgage-payment-calculator',
+    title: 'Jumbo Loan Calculator — Mortgages Above Conforming Limits',
+    shortTitle: 'Jumbo Loan Calculator',
+    category: 'Loans & Debt',
+    description: 'Free jumbo loan calculator for mortgages above conforming limits. Pre-set to a $900K home with 20% down — estimate payments on large loans.',
+    tagline: 'For loans above the conforming limit.',
+    presets: { price: 900000, downPct: 20, rate: 6.9 },
+    intro: 'Jumbo loans finance amounts above the conforming loan limit (over $800K in most counties, higher in expensive metros). Lenders price them individually: expect stricter credit requirements, larger down payments (10–20%), and cash-reserve requirements of 6–12 months of payments. This calculator is pre-set to a representative jumbo scenario — $900K with 20% down.',
+    howItWorks: [
+      'Price starts at $900,000 with 20% down — adjust to your target property.',
+      'Enter your quoted jumbo rate (often close to or even below conforming rates for strong borrowers).',
+      'Read the monthly P&I payment and total interest.',
+      'Compare terms: on large balances, 0.25 points of rate is hundreds of dollars per month.',
+    ],
+    faq: [
+      {
+        q: 'What is the jumbo loan limit?',
+        a: 'It equals the conforming loan limit, which adjusts annually and is higher in designated high-cost counties. Check the current year\'s FHFA limit for your county — loans above it are jumbo by definition.',
+      },
+      {
+        q: 'Are jumbo rates higher?',
+        a: 'Historically yes, but in recent years strong borrowers sometimes get jumbo rates at or below conforming ones — banks compete for wealthy clients. Quote at least three lenders; the variance is large.',
+      },
+      {
+        q: 'How much do I need in reserves for a jumbo loan?',
+        a: 'Commonly 6–12 months of total housing payments in verifiable assets after closing. On a $720K loan that can mean $30–60K remaining in accounts — plan for it before making an offer.',
+      },
+    ],
+  },
+]
+
+export const VARIANTS: VariantMeta[] = [
+  ...stateTaxVariants,
+  ...tipVariants,
+  ...freelanceVariants,
+  ...MORTGAGE_VARIANTS,
+]

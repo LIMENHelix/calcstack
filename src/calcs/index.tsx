@@ -63,12 +63,12 @@ export function Result({ label, value, big }: { label: string; value: string; bi
 
 /* ---------------- Freelance Rate ---------------- */
 
-export function FreelanceRateCalc() {
-  const [salary, setSalary] = useNumber(100000)
-  const [expenses, setExpenses] = useNumber(10000)
-  const [hoursPerWeek, setHoursPerWeek] = useNumber(40)
-  const [billablePct, setBillablePct] = useNumber(60)
-  const [weeksOff, setWeeksOff] = useNumber(4)
+export function FreelanceRateCalc({ presets }: { presets?: Record<string, number> }) {
+  const [salary, setSalary] = useNumber(presets?.salary ?? 100000)
+  const [expenses, setExpenses] = useNumber(presets?.expenses ?? 10000)
+  const [hoursPerWeek, setHoursPerWeek] = useNumber(presets?.hoursPerWeek ?? 40)
+  const [billablePct, setBillablePct] = useNumber(presets?.billablePct ?? 60)
+  const [weeksOff, setWeeksOff] = useNumber(presets?.weeksOff ?? 4)
 
   const r = useMemo(() => {
     const weeks = Math.max(1, 52 - weeksOff)
@@ -165,11 +165,11 @@ export function SalaryHourlyCalc() {
 
 /* ---------------- Mortgage ---------------- */
 
-export function MortgageCalc() {
-  const [price, setPrice] = useNumber(400000)
-  const [downPct, setDownPct] = useNumber(20)
-  const [rate, setRate] = useNumber(6.5)
-  const [years, setYears] = useNumber(30)
+export function MortgageCalc({ presets }: { presets?: Record<string, number> }) {
+  const [price, setPrice] = useNumber(presets?.price ?? 400000)
+  const [downPct, setDownPct] = useNumber(presets?.downPct ?? 20)
+  const [rate, setRate] = useNumber(presets?.rate ?? 6.5)
+  const [years, setYears] = useNumber(presets?.years ?? 30)
 
   const r = useMemo(() => {
     const down = price * (downPct / 100)
@@ -360,7 +360,7 @@ export function LoanPayoffCalc() {
   )
 }
 
-export const CALC_COMPONENTS: Record<string, () => React.ReactElement> = {
+export const CALC_COMPONENTS: Record<string, (props: { presets?: Record<string, number> }) => React.ReactElement> = {
   'freelance-rate-calculator': FreelanceRateCalc,
   'salary-to-hourly-calculator': SalaryHourlyCalc,
   'mortgage-payment-calculator': MortgageCalc,

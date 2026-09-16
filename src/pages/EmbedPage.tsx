@@ -1,9 +1,11 @@
 import { useParams } from 'react-router'
 import { CALCULATORS } from '@/data/calculators'
+import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
 import { MORE_CALC_COMPONENTS } from '@/calcs/more'
 
 const SITE = 'https://calcstack-eight.vercel.app'
+const ALL_COMPONENTS = { ...CALC_COMPONENTS, ...MORE_CALC_COMPONENTS }
 
 /**
  * Standalone embeddable widget: renders just the calculator, framed for
@@ -11,8 +13,9 @@ const SITE = 'https://calcstack-eight.vercel.app'
  */
 export default function EmbedPage() {
   const { slug } = useParams()
-  const meta = CALCULATORS.find((c) => c.slug === slug)
-  const Calc = slug ? (CALC_COMPONENTS[slug] ?? MORE_CALC_COMPONENTS[slug]) : undefined
+  const variant = VARIANTS.find((v) => v.slug === slug)
+  const meta = CALCULATORS.find((c) => c.slug === slug) ?? variant
+  const Calc = (variant ? ALL_COMPONENTS[variant.baseSlug] : slug ? ALL_COMPONENTS[slug] : undefined)
 
   if (!meta || !Calc) {
     return <div className="p-6 text-sm">Unknown calculator.</div>
@@ -32,7 +35,7 @@ export default function EmbedPage() {
           </a>
         </div>
         <div className="p-2">
-          <Calc />
+          <Calc presets={variant?.presets} />
         </div>
         <div className="border-t border-slate-100 px-4 py-2 text-right">
           <a

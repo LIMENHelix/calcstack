@@ -1,15 +1,21 @@
 import { useParams, Link } from 'react-router'
 import { CALCULATORS } from '@/data/calculators'
+import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
 import { MORE_CALC_COMPONENTS } from '@/calcs/more'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
 import { EmbedSnippet } from '@/components/EmbedSnippet'
 
+const ALL_COMPONENTS = { ...CALC_COMPONENTS, ...MORE_CALC_COMPONENTS }
+
 export default function CalculatorPage() {
   const { slug } = useParams()
-  const meta = CALCULATORS.find((c) => c.slug === slug)
-  const Calc = slug ? (CALC_COMPONENTS[slug] ?? MORE_CALC_COMPONENTS[slug]) : undefined
+  const core = CALCULATORS.find((c) => c.slug === slug)
+  const variant = VARIANTS.find((v) => v.slug === slug)
+  const meta = core ?? variant
+  const baseSlug = variant ? variant.baseSlug : slug
+  const Calc = baseSlug ? ALL_COMPONENTS[baseSlug] : undefined
 
   if (!meta || !Calc) {
     return (
@@ -22,7 +28,17 @@ export default function CalculatorPage() {
     )
   }
 
-  const related = CALCULATORS.filter((c) => c.slug !== meta.slug && c.category === meta.category)
+  // Related: for variants, link the parent + sibling variants; for core pages,
+  // same-category calculators + this page's own variants.
+  const related = variant
+    ? [
+        ...CALCULATORS.filter((c) => c.slug === variant.parentSlug),
+        ...VARIANTS.filter((v) => v.slug !== variant.slug && v.parentSlug === variant.parentSlug),
+      ]
+    : [
+        ...CALCULATORS.filter((c) => c.slug !== meta.slug && c.category === meta.category),
+        ...VARIANTS.filter((v) => v.parentSlug === meta.slug),
+      ].slice(0, 6)
 
   return (
     <>
@@ -56,7 +72,7 @@ export default function CalculatorPage() {
       <p className="mb-6 text-lg text-muted-foreground">{meta.tagline}</p>
 
       {/* Tool first — the calculator is the hero of the page */}
-      <Calc />
+      <Calc presets={variant?.presets} />
 
       <AdSlot />
 
