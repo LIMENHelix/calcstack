@@ -34,7 +34,7 @@ export default function CalculatorPage() {
     ? [
         ...CALCULATORS.filter((c) => c.slug === variant.parentSlug),
         ...VARIANTS.filter((v) => v.slug !== variant.slug && v.parentSlug === variant.parentSlug),
-      ]
+      ].slice(0, 6)
     : [
         ...CALCULATORS.filter((c) => c.slug !== meta.slug && c.category === meta.category),
         ...VARIANTS.filter((v) => v.parentSlug === meta.slug),

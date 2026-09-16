@@ -13,37 +13,164 @@ export interface VariantMeta extends CalculatorMeta {
 /* Average combined state + local rates (widely published estimates). Each page
    tells the user their city rate may differ and shows how to find the exact one. */
 const STATE_TAX: { state: string; slugState: string; rate: number; stateOnly: number }[] = [
+  { state: 'Alabama', slugState: 'alabama', rate: 9.29, stateOnly: 4.0 },
+  { state: 'Alaska', slugState: 'alaska', rate: 1.82, stateOnly: 0 },
+  { state: 'Arizona', slugState: 'arizona', rate: 8.38, stateOnly: 5.6 },
+  { state: 'Arkansas', slugState: 'arkansas', rate: 9.45, stateOnly: 6.5 },
   { state: 'California', slugState: 'california', rate: 8.85, stateOnly: 7.25 },
-  { state: 'Texas', slugState: 'texas', rate: 8.2, stateOnly: 6.25 },
-  { state: 'Florida', slugState: 'florida', rate: 7.0, stateOnly: 6.0 },
-  { state: 'New York', slugState: 'new-york', rate: 8.53, stateOnly: 4.0 },
-  { state: 'Washington', slugState: 'washington', rate: 9.38, stateOnly: 6.5 },
-  { state: 'Illinois', slugState: 'illinois', rate: 8.86, stateOnly: 6.25 },
   { state: 'Colorado', slugState: 'colorado', rate: 7.81, stateOnly: 2.9 },
+  { state: 'Connecticut', slugState: 'connecticut', rate: 6.35, stateOnly: 6.35 },
+  { state: 'Delaware', slugState: 'delaware', rate: 0, stateOnly: 0 },
+  { state: 'Florida', slugState: 'florida', rate: 7.0, stateOnly: 6.0 },
   { state: 'Georgia', slugState: 'georgia', rate: 7.38, stateOnly: 4.0 },
+  { state: 'Hawaii', slugState: 'hawaii', rate: 4.5, stateOnly: 4.0 },
+  { state: 'Idaho', slugState: 'idaho', rate: 6.03, stateOnly: 6.0 },
+  { state: 'Illinois', slugState: 'illinois', rate: 8.86, stateOnly: 6.25 },
+  { state: 'Indiana', slugState: 'indiana', rate: 7.0, stateOnly: 7.0 },
+  { state: 'Iowa', slugState: 'iowa', rate: 6.94, stateOnly: 6.0 },
+  { state: 'Kansas', slugState: 'kansas', rate: 8.68, stateOnly: 6.5 },
+  { state: 'Kentucky', slugState: 'kentucky', rate: 6.0, stateOnly: 6.0 },
+  { state: 'Louisiana', slugState: 'louisiana', rate: 9.55, stateOnly: 4.45 },
+  { state: 'Maine', slugState: 'maine', rate: 5.5, stateOnly: 5.5 },
+  { state: 'Maryland', slugState: 'maryland', rate: 6.0, stateOnly: 6.0 },
+  { state: 'Massachusetts', slugState: 'massachusetts', rate: 6.25, stateOnly: 6.25 },
+  { state: 'Michigan', slugState: 'michigan', rate: 6.0, stateOnly: 6.0 },
+  { state: 'Minnesota', slugState: 'minnesota', rate: 7.88, stateOnly: 6.875 },
+  { state: 'Mississippi', slugState: 'mississippi', rate: 7.07, stateOnly: 7.0 },
+  { state: 'Missouri', slugState: 'missouri', rate: 8.39, stateOnly: 4.225 },
+  { state: 'Montana', slugState: 'montana', rate: 0, stateOnly: 0 },
+  { state: 'Nebraska', slugState: 'nebraska', rate: 6.97, stateOnly: 5.5 },
+  { state: 'Nevada', slugState: 'nevada', rate: 8.24, stateOnly: 6.85 },
+  { state: 'New Hampshire', slugState: 'new-hampshire', rate: 0, stateOnly: 0 },
+  { state: 'New Jersey', slugState: 'new-jersey', rate: 6.6, stateOnly: 6.625 },
+  { state: 'New Mexico', slugState: 'new-mexico', rate: 7.72, stateOnly: 4.875 },
+  { state: 'New York', slugState: 'new-york', rate: 8.53, stateOnly: 4.0 },
+  { state: 'North Carolina', slugState: 'north-carolina', rate: 7.0, stateOnly: 4.75 },
+  { state: 'North Dakota', slugState: 'north-dakota', rate: 7.04, stateOnly: 5.0 },
+  { state: 'Ohio', slugState: 'ohio', rate: 7.24, stateOnly: 5.75 },
+  { state: 'Oklahoma', slugState: 'oklahoma', rate: 8.98, stateOnly: 4.5 },
+  { state: 'Oregon', slugState: 'oregon', rate: 0, stateOnly: 0 },
+  { state: 'Pennsylvania', slugState: 'pennsylvania', rate: 6.34, stateOnly: 6.0 },
+  { state: 'Rhode Island', slugState: 'rhode-island', rate: 7.0, stateOnly: 7.0 },
+  { state: 'South Carolina', slugState: 'south-carolina', rate: 7.5, stateOnly: 6.0 },
+  { state: 'South Dakota', slugState: 'south-dakota', rate: 6.4, stateOnly: 4.2 },
+  { state: 'Tennessee', slugState: 'tennessee', rate: 9.55, stateOnly: 7.0 },
+  { state: 'Texas', slugState: 'texas', rate: 8.2, stateOnly: 6.25 },
+  { state: 'Utah', slugState: 'utah', rate: 7.25, stateOnly: 6.1 },
+  { state: 'Vermont', slugState: 'vermont', rate: 6.3, stateOnly: 6.0 },
+  { state: 'Virginia', slugState: 'virginia', rate: 5.75, stateOnly: 5.3 },
+  { state: 'Washington', slugState: 'washington', rate: 9.38, stateOnly: 6.5 },
+  { state: 'West Virginia', slugState: 'west-virginia', rate: 6.57, stateOnly: 6.0 },
+  { state: 'Wisconsin', slugState: 'wisconsin', rate: 5.43, stateOnly: 5.0 },
+  { state: 'Wyoming', slugState: 'wyoming', rate: 5.36, stateOnly: 4.0 },
+  { state: 'District of Columbia', slugState: 'washington-dc', rate: 6.0, stateOnly: 6.0 },
 ]
+
+/* ---------- Sales tax by city (top 20 metros by search volume) ---------- */
+/* Combined local rates as commonly published; pages tell users to check receipts. */
+const CITY_TAX: { city: string; slugCity: string; rate: number; stateName: string }[] = [
+  { city: 'New York City', slugCity: 'new-york-city', rate: 8.875, stateName: 'New York' },
+  { city: 'Los Angeles', slugCity: 'los-angeles', rate: 9.5, stateName: 'California' },
+  { city: 'Chicago', slugCity: 'chicago', rate: 10.25, stateName: 'Illinois' },
+  { city: 'Houston', slugCity: 'houston', rate: 8.25, stateName: 'Texas' },
+  { city: 'Phoenix', slugCity: 'phoenix', rate: 8.6, stateName: 'Arizona' },
+  { city: 'Philadelphia', slugCity: 'philadelphia', rate: 8.0, stateName: 'Pennsylvania' },
+  { city: 'San Antonio', slugCity: 'san-antonio', rate: 8.25, stateName: 'Texas' },
+  { city: 'San Diego', slugCity: 'san-diego', rate: 7.75, stateName: 'California' },
+  { city: 'Dallas', slugCity: 'dallas', rate: 8.25, stateName: 'Texas' },
+  { city: 'San Jose', slugCity: 'san-jose', rate: 9.375, stateName: 'California' },
+  { city: 'Austin', slugCity: 'austin', rate: 8.25, stateName: 'Texas' },
+  { city: 'Seattle', slugCity: 'seattle', rate: 10.35, stateName: 'Washington' },
+  { city: 'Denver', slugCity: 'denver', rate: 8.81, stateName: 'Colorado' },
+  { city: 'Boston', slugCity: 'boston', rate: 6.25, stateName: 'Massachusetts' },
+  { city: 'Las Vegas', slugCity: 'las-vegas', rate: 8.375, stateName: 'Nevada' },
+  { city: 'Portland', slugCity: 'portland', rate: 0, stateName: 'Oregon' },
+  { city: 'Nashville', slugCity: 'nashville', rate: 9.25, stateName: 'Tennessee' },
+  { city: 'Atlanta', slugCity: 'atlanta', rate: 8.9, stateName: 'Georgia' },
+  { city: 'Miami', slugCity: 'miami', rate: 7.0, stateName: 'Florida' },
+  { city: 'Minneapolis', slugCity: 'minneapolis', rate: 9.03, stateName: 'Minnesota' },
+]
+
+const cityTaxVariants: VariantMeta[] = CITY_TAX.map(({ city, slugCity, rate, stateName }) => ({
+  slug: `sales-tax-calculator-${slugCity}`,
+  baseSlug: 'sales-tax-calculator',
+  parentSlug: 'sales-tax-calculator',
+  title: `${city} Sales Tax Calculator — ${rate}% Combined Rate`,
+  shortTitle: `${city} Sales Tax Calculator`,
+  category: 'Everyday Money',
+  description: `Free ${city} sales tax calculator pre-set to the ${rate}% combined local rate. Add tax to a price or reverse it from a receipt total. Instant, no signup.`,
+  tagline: `Pre-set to ${city}'s ${rate}% combined rate.`,
+  presets: { rate },
+  intro: rate === 0
+    ? `${city}, ${stateName} has no sales tax — one of the few places in the US where the sticker price is the checkout price. This calculator is pre-set to 0%, which means totals equal the sticker price; it is still useful in "Remove tax" mode when comparing receipts from trips to taxed cities, or you can enter any rate to model what a purchase would cost elsewhere.`
+    : `The combined sales tax rate in ${city}, ${stateName} is ${rate}% — state, county, and city/district taxes stacked together. This calculator comes pre-set to that rate, so entering a sticker price gives you the real checkout total immediately. It also works in reverse: paste a receipt total in "Remove tax" mode to recover the pre-tax amount for expense reports.`,
+  howItWorks: rate === 0
+    ? [
+        `${city} has no sales tax — the rate field starts at 0%.`,
+        'Enter a price: total equals the sticker price.',
+        'To compare with a taxed city, enter that city\'s rate instead.',
+        'Use "Remove tax" mode on receipts from taxed locations elsewhere.',
+      ]
+    : [
+        `The rate field starts at ${rate}% — ${city}'s combined local rate.`,
+        'Enter the price before tax (or a receipt total in "Remove tax" mode).',
+        'Read the tax amount and total instantly.',
+        'Special taxing districts can add small surcharges — your receipt shows the exact applied rate.',
+      ],
+  faq: [
+    {
+      q: `What is the sales tax rate in ${city}?`,
+      a: rate === 0
+        ? `Zero. ${stateName} has no state or local sales tax in ${city} — the sticker price is the final price, which is why cross-border shopping is common.`
+        : `The combined rate in ${city} is ${rate}%, stacking ${stateName}'s state tax with county, city, and district taxes. Special districts inside the metro can differ slightly; your receipt shows the exact rate applied.`,
+    },
+    {
+      q: 'How do I remove tax from a receipt total?',
+      a: rate === 0
+        ? 'Nothing to remove in Portland — but for a receipt from a taxed city, switch to "Remove tax" mode, enter that city\'s rate and the total, and the pre-tax amount comes back.'
+        : `Switch to "Remove tax" mode and enter the total. The math divides by 1.${String(rate).replace('.', '').padEnd(3, '0').slice(0, 3)} — dividing the total by 1 + the rate — which correctly backs the tax out.`,
+    },
+    {
+      q: 'Do online purchases charge this rate?',
+      a: 'Generally yes — since the 2018 Wayfair decision, most online retailers collect sales tax based on your delivery address, so shipped-to-home orders typically carry your local combined rate.',
+    },
+  ],
+}))
 
 const stateTaxVariants: VariantMeta[] = STATE_TAX.map(({ state, slugState, rate, stateOnly }) => ({
   slug: `sales-tax-calculator-${slugState}`,
   baseSlug: 'sales-tax-calculator',
   parentSlug: 'sales-tax-calculator',
-  title: `${state} Sales Tax Calculator — ${stateOnly}% State Rate + Local Tax`,
+  title: stateOnly === 0 ? `${state} Sales Tax Calculator — No Sales Tax` : `${state} Sales Tax Calculator — ${stateOnly}% State Rate + Local Tax`,
   shortTitle: `${state} Sales Tax Calculator`,
   category: 'Everyday Money',
-  description: `Free ${state} sales tax calculator pre-set to the average combined rate (~${rate}%). Add tax to a price or reverse it out of a receipt. Adjust for your city.`,
-  tagline: `${state} rates pre-loaded — just enter the price.`,
+  description: stateOnly === 0
+    ? `${state} has no sales tax. Free calculator to confirm totals, compare against taxed states, or model what purchases would cost elsewhere.`
+    : `Free ${state} sales tax calculator pre-set to the average combined rate (~${rate}%). Add tax to a price or reverse it out of a receipt. Adjust for your city.`,
+  tagline: stateOnly === 0 ? `${state} has no sales tax — the sticker price is the price.` : `${state} rates pre-loaded — just enter the price.`,
   presets: { rate },
-  intro: `${state} has a statewide sales tax of ${stateOnly}%, but what you actually pay at the register is higher: counties and cities stack their own rates on top, bringing the average combined rate in ${state} to roughly ${rate}%. This calculator comes pre-set to that average — adjust the rate field to your city's exact rate (shown on any receipt) for a precise answer. It works in both directions: add tax to a sticker price, or reverse tax out of a total.`,
-  howItWorks: [
-    `The rate field starts at ${rate}% — the average combined ${state} rate. Change it to your local rate for exact math.`,
-    'Enter the price before tax (or the receipt total in "Remove tax" mode).',
-    'Read the tax amount and total instantly.',
-    'For bookkeeping, use "Remove tax" to recover the pre-tax amount from a receipt.',
-  ],
+  intro: stateOnly === 0
+    ? `${state} is one of the five states with no statewide sales tax — the sticker price is the checkout price. This calculator is pre-set to 0%, which makes it a comparison tool: enter another state's rate to see what the same purchase would cost there, or use "Remove tax" mode on receipts from trips to taxed states.`
+    : `${state} has a statewide sales tax of ${stateOnly}%, but what you actually pay at the register is higher: counties and cities stack their own rates on top, bringing the average combined rate in ${state} to roughly ${rate}%. This calculator comes pre-set to that average — adjust the rate field to your city's exact rate (shown on any receipt) for a precise answer. It works in both directions: add tax to a sticker price, or reverse tax out of a total.`,
+  howItWorks: stateOnly === 0
+    ? [
+        `${state} has no sales tax — the rate field starts at 0%.`,
+        'Enter a price: the total equals the sticker price.',
+        'To compare with a taxed state, enter its rate instead.',
+        'Use "Remove tax" mode on receipts from taxed states you visit.',
+      ]
+    : [
+        `The rate field starts at ${rate}% — the average combined ${state} rate. Change it to your local rate for exact math.`,
+        'Enter the price before tax (or the receipt total in "Remove tax" mode).',
+        'Read the tax amount and total instantly.',
+        'For bookkeeping, use "Remove tax" to recover the pre-tax amount from a receipt.',
+      ],
   faq: [
     {
       q: `What is the sales tax rate in ${state}?`,
-      a: `The statewide rate is ${stateOnly}%, but local additions bring the combined rate to roughly ${rate}% on average in ${state}. Exact rates vary by city and county — your receipt always shows the rate that was actually applied.`,
+      a: stateOnly === 0
+        ? `Zero — ${state} levies no statewide sales tax. (Alaska allows local-option taxes in some municipalities, averaging under 2% where they exist.) This is why residents of taxed neighbors cross the border for big purchases.`
+        : `The statewide rate is ${stateOnly}%, but local additions bring the combined rate to roughly ${rate}% on average in ${state}. Exact rates vary by city and county — your receipt always shows the rate that was actually applied.`,
     },
     {
       q: 'Why is my receipt rate different from the pre-set rate?',
@@ -293,6 +420,7 @@ const MORTGAGE_VARIANTS: VariantMeta[] = [
 
 export const VARIANTS: VariantMeta[] = [
   ...stateTaxVariants,
+  ...cityTaxVariants,
   ...tipVariants,
   ...freelanceVariants,
   ...MORTGAGE_VARIANTS,
