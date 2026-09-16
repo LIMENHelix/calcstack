@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://calcstack.example.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://calcstack.example.com/calculators/freelance-rate-calculator</loc></url>
+  <url><loc>https://calcstack.example.com/calculators/salary-to-hourly-calculator</loc></url>
+  <url><loc>https://calcstack.example.com/calculators/mortgage-payment-calculator</loc></url>
+  <url><loc>https://calcstack.example.com/calculators/compound-interest-calculator</loc></url>
+  <url><loc>https://calcstack.example.com/calculators/savings-goal-calculator</loc></url>
+  <url><loc>https://calcstack.example.com/calculators/loan-payoff-calculator</loc></url>
+</urlset>
