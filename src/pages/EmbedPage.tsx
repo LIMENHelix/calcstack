@@ -3,9 +3,23 @@ import { CALCULATORS } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
 import { MORE_CALC_COMPONENTS } from '@/calcs/more'
+import { NICHE_CALC_COMPONENTS } from '@/calcs/niche'
+import { SPORTS_CALC_COMPONENTS } from '@/calcs/sports'
+import { CONSTRUCTION_CALC_COMPONENTS } from '@/calcs/construction'
+import { TRADES_CALC_COMPONENTS } from '@/calcs/trades'
+import { PaycheckCalc } from '@/calcs/paycheck'
+import type { CalcProps } from '@/calcs'
 
 const SITE = 'https://calcstack-eight.vercel.app'
-const ALL_COMPONENTS = { ...CALC_COMPONENTS, ...MORE_CALC_COMPONENTS }
+const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  ...CALC_COMPONENTS,
+  ...MORE_CALC_COMPONENTS,
+  ...NICHE_CALC_COMPONENTS,
+  ...SPORTS_CALC_COMPONENTS,
+  ...CONSTRUCTION_CALC_COMPONENTS,
+  ...TRADES_CALC_COMPONENTS,
+  'paycheck-calculator': PaycheckCalc,
+}
 
 /**
  * Standalone embeddable widget: renders just the calculator, framed for
