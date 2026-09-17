@@ -17,7 +17,11 @@ const literalSlugs = [...(calcSrc + varSrc).matchAll(/slug: '([a-z0-9-]+)'/g)].m
 const stateSlugs = [...varSrc.matchAll(/slugState: '([a-z0-9-]+)'/g)].map((m) => `sales-tax-calculator-${m[1]}`)
 const citySlugs = [...varSrc.matchAll(/slugCity: '([a-z0-9-]+)'/g)].map((m) => `sales-tax-calculator-${m[1]}`)
 
-const calcSlugs = [...new Set([...literalSlugs, ...stateSlugs, ...citySlugs])].sort()
+// paycheck variants: generated from state rules in paycheck.ts
+const paySrc = readFileSync('src/data/paycheck.ts', 'utf8')
+const paycheckSlugs = [...paySrc.matchAll(/slug: '([a-z0-9-]+)'/g)].map((m) => `paycheck-calculator-${m[1]}`)
+
+const calcSlugs = [...new Set([...literalSlugs, ...stateSlugs, ...citySlugs, ...paycheckSlugs])].sort()
 
 // per-state data pages from stats.ts (HOME_VALUES slugs)
 const stateDataSlugs = [...statsSrc.matchAll(/slug: '([a-z0-9-]+)'/g)].map((m) => m[1])
