@@ -113,6 +113,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/gpa-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/gravel-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/heart-rate-zone-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/hvac-btu-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/inflation-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/jumbo-loan-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/loan-payoff-calculator</loc></url>
@@ -176,6 +177,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/paycheck-calculator-wyoming</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/percentage-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/periodization-planner</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/pipe-size-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/road-base-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/roi-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/roofing-calculator</loc></url>
@@ -263,4 +265,6 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/va-loan-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/velocity-based-training-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/vo2max-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/voltage-drop-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/wire-size-calculator</loc></url>
 </urlset>

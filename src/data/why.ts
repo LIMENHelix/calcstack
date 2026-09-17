@@ -85,4 +85,12 @@ export const WHY_USE: Record<string, string> = {
     'Rural homeowners and contractors pricing driveways use it because tonnage-with-compaction is where base orders go 25% short. The material toggle (crushed vs recycled vs asphalt) matters because densities — and prices — differ enough to change the order.',
   'driveway-cost-comparison':
     'Homeowners staring at three wildly different contractor bids use this to compare them on equal terms: the 20-year cost-per-square-foot column converts sales pitches into math. It is the five minutes that prevents a five-figure mistake.',
+  'voltage-drop-calculator':
+    'Electricians sizing runs to outbuildings, DIYers wiring a shed, and RV owners spec-ing a pedestal all hit the same wall: the wire is legal by ampacity but drops too many volts over distance. This catches that before the trench is backfilled.',
+  'wire-size-calculator':
+    'Anyone adding an EV charger, hot tub, or shop heater asks "what wire and what breaker?" — and the 125% continuous-load rule is exactly what casual answers miss. This applies the NEC table and the rule together, copper or aluminum.',
+  'hvac-btu-calculator':
+    'Homeowners use it before contractor season: knowing your tonnage converts "you need a 5-ton unit, trust me" into a conversation. It is also the reality check for window units and garage mini-splits — right-sizing beats oversizing every time.',
+  'pipe-size-calculator':
+    'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }

@@ -1287,6 +1287,114 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'voltage-drop-calculator',
+    title: 'Voltage Drop Calculator — NEC Wire Run Check',
+    shortTitle: 'Voltage Drop Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free voltage drop calculator using NEC Chapter 9 circular-mil math. Check any wire run against the 3% branch-circuit guideline and find the smallest gauge that passes.',
+    tagline: 'Will that 100-foot run actually deliver 120 volts?',
+    intro:
+      'Every long wire run loses voltage — to a shed, an RV pedestal, a well pump, a shop. Undersized wire means dim lights, hot conductors, and motors that die young. This calculator runs the standard NEC formula (Vd = 2 × K × L × I ÷ CM), checks the result against the 3% branch-circuit guideline, and tells you the smallest copper or aluminum gauge that passes.',
+    howItWorks: [
+      'Enter the load in amps and the one-way distance in feet.',
+      'Pick system voltage, wire gauge, and copper or aluminum.',
+      'Read the voltage drop in volts and percent, and the NEC 3% pass/fail.',
+      'Use the "smallest size that passes" output to spec the right wire before you trench.',
+    ],
+    faq: [
+      {
+        q: 'How much voltage drop is acceptable?',
+        a: 'The NEC recommends (as a performance guideline, not a mandate) no more than 3% on a branch circuit and 5% total for feeder plus branch. At 120 V, 3% is 3.6 volts. Sensitive electronics and motors care more than light bulbs.',
+      },
+      {
+        q: 'What size wire for 20 amps at 100 feet?',
+        a: '12 AWG copper carries 20 A legally, but at 100 feet it drops 7.9 V (6.6%) — over the guideline. Even 10 AWG fails at 5.0 V (4.1%). You need 8 AWG (3.1 V, 2.6%) to pass. Distance, not just amps, is what upsizes wire — run the numbers before you buy.',
+      },
+    ],
+  },
+  {
+    slug: 'wire-size-calculator',
+    title: 'Wire Size Calculator — Ampacity & Breaker Sizing (NEC)',
+    shortTitle: 'Wire Size Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free wire size calculator. NEC 75°C ampacity table plus the 125% continuous-load rule gives the minimum copper or aluminum gauge and breaker size for any load.',
+    tagline: 'Load amps in, wire gauge and breaker out.',
+    intro:
+      'Wire sizing has two rules that collide: the conductor must carry the load (ampacity), and continuous loads must be multiplied by 125% before sizing anything. This calculator applies both, using NEC Table 310.16 75°C ampacities for copper and aluminum, and outputs the minimum gauge and standard breaker size.',
+    howItWorks: [
+      'Enter the load in amps.',
+      'Say whether it runs 3+ hours at a stretch (EV chargers, heaters, lighting) — that triggers the 125% rule.',
+      'Pick copper or aluminum and the system voltage.',
+      'Read the minimum wire size, breaker, design amps, and load wattage.',
+    ],
+    faq: [
+      {
+        q: 'What size wire for a 50-amp circuit?',
+        a: 'Intermittent 50 A load: 8 AWG copper (50 A at 75°C). Continuous: 50 × 1.25 = 62.5 A design, so 6 AWG copper and a 70 A breaker. The continuous rule is why EV chargers upsize wire.',
+      },
+      {
+        q: 'Can I use aluminum instead of copper?',
+        a: 'Yes for feeders and large branch circuits — it is roughly two gauges larger and much cheaper per foot. Use AL-rated terminals, antioxidant compound, and proper torque; the 1970s fire problems were termination failures, not the metal.',
+      },
+    ],
+  },
+  {
+    slug: 'hvac-btu-calculator',
+    title: 'BTU Calculator — HVAC Sizing by Room or Home',
+    shortTitle: 'BTU Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free BTU calculator for HVAC sizing. Square footage, climate, insulation, ceiling height, sun, and occupants produce a BTU/hr estimate, cooling tons, and a typical unit size.',
+    tagline: 'How many BTUs does this space actually need?',
+    intro:
+      'Oversized air conditioners short-cycle and leave the air clammy; undersized ones run forever and never catch up. This calculator applies the standard sizing factors — climate baseline, insulation quality, ceiling volume, sun exposure, occupant heat — to produce a defensible BTU/hr estimate and tonnage before you talk to a contractor.',
+    howItWorks: [
+      'Enter the conditioned square footage.',
+      'Set climate (heating- vs cooling-dominant), insulation quality, and ceiling height.',
+      'Adjust for sun exposure and regular occupants (600 BTU/hr each beyond two).',
+      'Read BTU/hr, cooling tons (12,000 BTU = 1 ton), and the typical unit size to quote.',
+    ],
+    faq: [
+      {
+        q: 'How many BTUs per square foot do I need?',
+        a: 'The rule of thumb runs 20–35 BTU per sq ft depending on climate and insulation — a 1,500 sq ft average home in a mixed climate lands near 45,000 BTU/hr (about 3.5–4 tons). It is a screening number; a Manual J calculation is the real design.',
+      },
+      {
+        q: 'Is a bigger AC unit better?',
+        a: 'No — oversizing is the more expensive mistake. An oversized unit cools the air before it dehumidifies, then shuts off, leaving cool, sticky rooms and short equipment life. Right-sized equipment runs longer cycles and controls humidity.',
+      },
+    ],
+  },
+  {
+    slug: 'pipe-size-calculator',
+    title: 'Pipe Size Calculator — Fixture Units to Pipe Diameter',
+    shortTitle: 'Pipe Size Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free plumbing pipe size calculator. Count fixtures, get total fixture units and probable peak GPM, and size the supply line to keep velocity under 8 ft/s.',
+    tagline: 'Count the fixtures, size the line.',
+    intro:
+      'Plumbing lines are not sized for every tap running at once — they are sized for probable simultaneous demand, which is what fixture units encode. This calculator totals your fixture units, converts them to peak GPM, and picks the smallest supply line that keeps water velocity under the 8 ft/s noise-and-wear ceiling.',
+    howItWorks: [
+      'Count each fixture type the line serves — toilets, sinks, showers, appliances, hose bibs.',
+      'Read total fixture units and probable peak demand in GPM.',
+      'Get the recommended pipe diameter at ≤8 ft/s velocity.',
+      'Long runs, low street pressure, or flushometer fixtures need a licensed plumber\'s design — code governs.',
+    ],
+    faq: [
+      {
+        q: 'What size water line does a typical house need?',
+        a: 'A standard 2–2.5 bath home totals roughly 15–20 fixture units, demanding about 7–10 GPM at peak — a ¾-inch main handles it comfortably. One-inch service lines are common where street pressure is low or runs are long.',
+      },
+      {
+        q: 'Why not just run 1-inch pipe everywhere?',
+        a: 'Oversized supply lines waste money and, worse, let hot water sit and cool in the pipe — longer waits at the tap and more wasted water. Right-sizing balances pressure, cost, and hot-water delivery time.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
@@ -1298,5 +1406,6 @@ export const CATEGORIES = [
   'Health & Life',
   'Fitness & Sports',
   'Home & Yard',
+  'Trades & Engineering',
   'School & Science',
 ] as const
