@@ -80,28 +80,29 @@ export const CALCULATORS: CalculatorMeta[] = [
     shortTitle: 'Mortgage Payment Calculator',
     category: 'Loans & Debt',
     description:
-      'Free mortgage calculator. Compute your monthly principal & interest payment, total interest over the life of the loan, and see how rate and term change the cost.',
-    tagline: 'See what a house really costs, month by month and in total.',
+      'Free mortgage calculator with property tax, insurance, PMI, and HOA. Full monthly payment (PITI), amortization schedule, payoff date, and PMI drop-off month.',
+    tagline: 'The real monthly payment — tax, insurance, PMI, HOA included.',
     intro:
-      'The sticker price of a home is not what you pay — the interest is the silent second house. This calculator computes your monthly principal-and-interest payment using the standard amortization formula, then shows the total you will pay over the life of the loan and how much of it is interest. Change the rate or term and watch the totals move; small rate differences compound into tens of thousands of dollars.',
+      'The sticker price of a home is not what you pay — and principal & interest is not what you pay monthly. Property tax, homeowners insurance, PMI when you put less than 20% down, and HOA dues typically add 20–40% on top. This calculator computes the full monthly reality (PITI + PMI + HOA), tracks PMI until it drops off at 78% loan-to-value, and lays out the complete amortization schedule so you can see exactly when the balance tips from interest to principal.',
     howItWorks: [
-      'Enter the home price and your down payment (dollar amount or percentage).',
+      'Enter the home price and your down payment percentage.',
       'Enter the annual interest rate (APR) and the loan term in years.',
-      'The calculator applies the amortization formula M = P·r(1+r)ⁿ/((1+r)ⁿ−1).',
-      'Review the monthly payment, total paid, and total interest.',
+      'Add property tax (annual % of home value — 1.1% is the rough national average), homeowners insurance, PMI rate, and HOA dues.',
+      'The calculator applies the amortization formula M = P·r(1+r)ⁿ/((1+r)ⁿ−1) and adds every monthly cost.',
+      'Review the total monthly payment, the breakdown chart, and the full yearly amortization schedule.',
     ],
     faq: [
       {
         q: 'How much house can I afford?',
-        a: 'A common guideline is the 28/36 rule: housing costs under 28% of gross monthly income and total debt payments under 36%. Work backward from your income with this calculator to find a payment that fits.',
+        a: 'A common guideline is the 28/36 rule: total housing costs (the full PITI + HOA number this calculator shows, not just P&I) under 28% of gross monthly income and total debt payments under 36%. Work backward from your income to find a payment that fits.',
       },
       {
-        q: 'Does this include property tax and insurance?',
-        a: 'No. This calculator covers principal and interest (P&I) only. Property taxes, homeowners insurance, HOA dues, and PMI typically add 20–40% on top of the P&I payment, depending on location.',
+        q: 'When does PMI go away?',
+        a: 'By law (the Homeowners Protection Act), lenders must cancel PMI when your balance reaches 78% of the original home value, and you can request cancellation at 80%. This calculator tracks the balance monthly and shows the exact month PMI ends — plus what it costs you in total.',
       },
       {
         q: 'Is a 15-year or 30-year mortgage better?',
-        a: 'A 15-year term has a higher monthly payment but dramatically lower total interest — often less than half. A 30-year term offers flexibility and lower required payments. Run both in this calculator and compare the total interest lines.',
+        a: 'A 15-year term has a higher monthly payment but dramatically lower total interest — often less than half. A 30-year term offers flexibility. Run both here and compare the total interest lines and the amortization schedules; the crossover year where principal beats interest arrives much sooner on a 15-year.',
       },
     ],
   },

@@ -10,6 +10,7 @@ import type { CalcProps } from '@/calcs'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
 import { EmbedSnippet } from '@/components/EmbedSnippet'
+import { WHY_USE } from '@/data/why'
 
 const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   ...CALC_COMPONENTS,
@@ -91,6 +92,13 @@ export default function CalculatorPage() {
           <h2 className="mb-2 text-2xl font-bold">About this calculator</h2>
           <p className="text-muted-foreground">{meta.intro}</p>
         </section>
+
+        {(WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)) && (
+          <section>
+            <h2 className="mb-2 text-2xl font-bold">Why people use this calculator</h2>
+            <p className="text-muted-foreground">{WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)}</p>
+          </section>
+        )}
 
         <section>
           <h2 className="mb-2 text-2xl font-bold">How it works</h2>

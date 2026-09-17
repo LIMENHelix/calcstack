@@ -168,41 +168,170 @@ export function SalaryHourlyCalc() {
   )
 }
 
-/* ---------------- Mortgage ---------------- */
+/* ---------------- Mortgage (flagship: PITI + PMI + HOA + amortization) ---------------- */
+
+const DONUT_COLORS = ['#2563eb', '#93c5fd', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6']
 
 export function MortgageCalc({ presets }: { presets?: Record<string, number> }) {
   const [price, setPrice] = useNumber(presets?.price ?? 400000)
   const [downPct, setDownPct] = useNumber(presets?.downPct ?? 20)
   const [rate, setRate] = useNumber(presets?.rate ?? 6.5)
   const [years, setYears] = useNumber(presets?.years ?? 30)
+  const [taxRate, setTaxRate] = useNumber(presets?.taxRate ?? 1.1)
+  const [insurance, setInsurance] = useNumber(presets?.insurance ?? 1800)
+  const [pmiRate, setPmiRate] = useNumber(presets?.pmiRate ?? 0.5)
+  const [hoa, setHoa] = useNumber(presets?.hoa ?? 0)
+  const [showAll, setShowAll] = useState(false)
 
   const r = useMemo(() => {
     const down = price * (downPct / 100)
     const principal = Math.max(0, price - down)
     const pmt = monthlyPayment(principal, rate, years)
-    const n = years * 12
-    const total = pmt * n
-    return { down, principal, pmt, total, interest: total - principal }
-  }, [price, downPct, rate, years])
+    const n = Math.round(years * 12)
+    const mr = rate / 100 / 12
+    const taxMo = (price * (taxRate / 100)) / 12
+    const insMo = insurance / 12
+    const needsPmi = downPct < 20 && principal > 0
+    const pmiMo = needsPmi ? (principal * (pmiRate / 100)) / 12 : 0
+
+    // monthly amortization with PMI drop-off at 78% LTV (of original price)
+    let bal = principal
+    let totalInterest = 0
+    let totalPmi = 0
+    let pmiEndMonth: number | null = null
+    const yearly: { year: number; principal: number; interest: number; balance: number }[] = []
+    let yP = 0, yI = 0
+    for (let m = 1; m <= n && bal > 0.005; m++) {
+      const int = bal * mr
+      const pr = Math.min(pmt - int, bal)
+      bal -= pr
+      totalInterest += int
+      yP += pr
+      yI += int
+      if (needsPmi) {
+        if (bal > 0.78 * price) totalPmi += pmiMo
+        else if (pmiEndMonth === null) pmiEndMonth = m
+      }
+      if (m % 12 === 0 || bal <= 0.005 || m === n) {
+        yearly.push({ year: Math.ceil(m / 12), principal: yP, interest: yI, balance: Math.max(0, bal) })
+        yP = 0; yI = 0
+      }
+    }
+    const monthlyTotal = pmt + taxMo + insMo + pmiMo + hoa
+    const grand = totalInterest + totalPmi + taxMo * n + insMo * n + hoa * n + principal
+    const payoff = new Date()
+    payoff.setMonth(payoff.getMonth() + n)
+    return {
+      down, principal, pmt, taxMo, insMo, pmiMo, hoa, monthlyTotal,
+      totalInterest, totalPmi, grand, yearly, pmiEndMonth, needsPmi, payoff,
+    }
+  }, [price, downPct, rate, years, taxRate, insurance, pmiRate, hoa])
+
+  // monthly breakdown donut: principal+interest split of first payment, tax, ins, pmi, hoa
+  const firstInterest = r.principal * (rate / 100 / 12)
+  const firstPrincipal = Math.max(0, r.pmt - firstInterest)
+  const segs = [
+    { label: 'Principal', v: firstPrincipal },
+    { label: 'Interest', v: firstInterest },
+    { label: 'Property tax', v: r.taxMo },
+    { label: 'Insurance', v: r.insMo },
+    { label: 'PMI', v: r.pmiMo },
+    { label: 'HOA', v: r.hoa },
+  ].filter((s) => s.v > 0.005)
+  const segTotal = segs.reduce((a, s) => a + s.v, 0) || 1
+  let offset = 25
+
+  const shownYears = showAll ? r.yearly : r.yearly.slice(0, 10)
 
   return (
     <Card>
-      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
-        <div className="space-y-4">
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Field label="Home price" value={price} onChange={setPrice} prefix="$" />
           <Field label="Down payment" value={downPct} onChange={setDownPct} suffix="%" />
           <Field label="Interest rate (APR)" value={rate} onChange={setRate} suffix="%" />
           <Field label="Loan term" value={years} onChange={setYears} suffix="yrs" />
         </div>
-        <div className="space-y-3">
-          <Result big label="Monthly payment (P&I)" value={usd(r.pmt, 2)} />
-          <Result label="Loan amount" value={usd(r.principal)} />
-          <Result label="Down payment" value={usd(r.down)} />
-          <Result label="Total paid over life of loan" value={usd(r.total)} />
-          <Result label="Total interest" value={usd(r.interest)} />
-          <p className="text-sm text-muted-foreground">
-            Excludes property tax, insurance, HOA, and PMI — budget an additional 20–40%.
-          </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Field label="Property tax (annual)" value={taxRate} onChange={setTaxRate} suffix="%" />
+          <Field label="Home insurance (annual)" value={insurance} onChange={setInsurance} prefix="$" />
+          <Field label="PMI rate (if down < 20%)" value={pmiRate} onChange={setPmiRate} suffix="%" />
+          <Field label="HOA (monthly)" value={hoa} onChange={setHoa} prefix="$" />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-[1fr_auto]">
+          <div className="space-y-3">
+            <Result big label="Total monthly payment (PITI + PMI + HOA)" value={usd(r.monthlyTotal, 2)} />
+            <div className="grid gap-3 sm:grid-cols-3">
+              <Result label="Principal & interest" value={usd(r.pmt, 2)} />
+              <Result label="Tax + insurance / mo" value={usd(r.taxMo + r.insMo, 2)} />
+              <Result label={r.needsPmi ? 'PMI / mo (until 78% LTV)' : 'PMI / mo'} value={r.needsPmi ? usd(r.pmiMo, 2) : '$0 (20%+ down)'} />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <Result label="Total interest (life of loan)" value={usd(r.totalInterest)} />
+              <Result label="Total cost of home" value={usd(r.grand + r.down)} />
+              <Result label="Payoff date" value={r.payoff.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} />
+            </div>
+            {r.pmiEndMonth !== null && (
+              <p className="text-sm text-muted-foreground">
+                PMI ends in month {r.pmiEndMonth} when the balance drops below 78% of the home price —
+                saving {usd(r.pmiMo, 2)}/mo afterward. Total PMI paid: {usd(r.totalPmi)}.
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center gap-4">
+            <svg viewBox="0 0 42 42" className="h-36 w-36 shrink-0" role="img" aria-label="Monthly payment breakdown">
+              <circle cx="21" cy="21" r="15.9155" fill="none" stroke="hsl(var(--muted))" strokeWidth="7" />
+              {segs.map((s, i) => {
+                const pct = (s.v / segTotal) * 100
+                const el = (
+                  <circle key={s.label} cx="21" cy="21" r="15.9155" fill="none"
+                    stroke={DONUT_COLORS[i % DONUT_COLORS.length]} strokeWidth="7"
+                    strokeDasharray={`${pct} ${100 - pct}`} strokeDashoffset={offset} />
+                )
+                offset -= pct
+                return el
+              })}
+            </svg>
+            <ul className="space-y-1 text-xs">
+              {segs.map((s, i) => (
+                <li key={s.label} className="flex items-center gap-2">
+                  <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: DONUT_COLORS[i % DONUT_COLORS.length] }} />
+                  {s.label} <span className="text-muted-foreground">{usd(s.v, 0)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <p className="mb-2 text-sm font-medium">Amortization schedule (yearly)</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
+                  <th className="py-2 pr-3">Year</th><th className="py-2 pr-3">Principal paid</th>
+                  <th className="py-2 pr-3">Interest paid</th><th className="py-2">Remaining balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {shownYears.map((y) => (
+                  <tr key={y.year} className="border-b last:border-0">
+                    <td className="py-2 pr-3 font-medium">{y.year}</td>
+                    <td className="py-2 pr-3">{usd(y.principal)}</td>
+                    <td className="py-2 pr-3">{usd(y.interest)}</td>
+                    <td className="py-2">{usd(y.balance)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {r.yearly.length > 10 && (
+            <button onClick={() => setShowAll(!showAll)} className="mt-2 text-sm text-primary hover:underline">
+              {showAll ? 'Show less' : `Show all ${r.yearly.length} years`}
+            </button>
+          )}
         </div>
       </CardContent>
     </Card>
