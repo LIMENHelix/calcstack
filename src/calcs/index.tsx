@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
-import { usd, num, monthlyPayment, monthsToPayoff } from '@/lib/calc'
+import { usd, num, monthlyPayment } from '@/lib/calc'
 
 export interface CalcProps {
   presets?: Record<string, number>
@@ -413,7 +413,7 @@ export function SavingsGoalCalc() {
   const [rate, setRate] = useNumber(4.5)
 
   const r = useMemo(() => {
-    const m = rate / 100 / 12
+    const m = Math.pow(1 + rate / 100, 1 / 12) - 1 // true APY → monthly rate
     const n = Math.max(1, Math.round(months))
     // Future value of current savings; solve for deposit d: goal = saved*(1+m)^n + d*(((1+m)^n - 1)/m)
     const fvSaved = saved * Math.pow(1 + m, n)
@@ -459,9 +459,24 @@ export function LoanPayoffCalc() {
     const baseMonths = yearsLeft * 12
     const baseInterest = pmt * baseMonths - balance
     const newPmt = pmt + extra
-    const newMonthsRaw = monthsToPayoff(balance, rate, newPmt)
-    const newMonths = isFinite(newMonthsRaw) ? newMonthsRaw : baseMonths
-    const newInterest = newPmt * newMonths - balance
+    // Exact month-by-month simulation: the final month pays only the remaining
+    // balance plus that month's interest, so we don't overcharge a full payment.
+    const m = rate / 100 / 12
+    let bal = balance
+    let newInterest = 0
+    let newMonths = 0
+    if (newPmt <= balance * m) {
+      newMonths = baseMonths
+      newInterest = baseInterest
+    } else {
+      while (bal > 0.005 && newMonths < baseMonths + 1200) {
+        const interest = bal * m
+        newInterest += interest
+        const pay = Math.min(newPmt, bal + interest)
+        bal = bal + interest - pay
+        newMonths += 1
+      }
+    }
     return {
       pmt,
       baseMonths,

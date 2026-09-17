@@ -177,11 +177,13 @@ export function CkdCarbUpCalc(_props: CalcProps) {
     const [lo, hi] = duration === '24' ? [5, 6] : [12, 16]
     const carbsLo = lo * lbmKg
     const carbsHi = hi * lbmKg
-    // Glycogen + water: ~60% of carb-up carbs stored as glycogen; each g binds ~3 g water
+    // Glycogen + water: 60–80% of carb-up carbs stored as glycogen (supercompensation
+    // after a depleted keto week pushes storage up); each g binds ~3 g water. Add gut
+    // content and extra water (~1–2 lb) for the realistic morning-after reading.
     const glyLo = carbsLo * 0.6
-    const glyHi = carbsHi * 0.6
-    const scaleLo = (glyLo * 4) / 453.592 // lbs on the scale
-    const scaleHi = (glyHi * 4) / 453.592
+    const glyHi = carbsHi * 0.8
+    const scaleLo = (glyLo * 4) / 453.592 + 1 // lbs on the scale
+    const scaleHi = (glyHi * 4) / 453.592 + 2
     return { lbmLb, lbmKg, proteinLo, proteinHi, maintenance, fatG, carbsLo, carbsHi, scaleLo, scaleHi }
   }, [weight, bf, duration, activity])
 
@@ -210,8 +212,9 @@ export function CkdCarbUpCalc(_props: CalcProps) {
       </div>
       <p className="text-xs text-muted-foreground">
         Based on Lyle McDonald&apos;s published CKD / Ultimate Diet 2.0 guidelines: protein anchored to lean mass,
-        carb-up volume scaled to LBM, glycogen + ~3 g water per gram. The scale jump is glycogen and water, not fat —
-        it drains back out over the following keto week.
+        carb-up volume scaled to LBM. The scale jump is glycogen (60–80% storage), ~3 g of water per gram, plus gut
+        content — real-world reports run roughly 3–7 lb after a full carb-up. It is water and glycogen, not fat,
+        and drains back out over the following keto week.
       </p>
     </CardContent></Card>
   )
