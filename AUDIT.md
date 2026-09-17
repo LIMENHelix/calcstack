@@ -121,3 +121,40 @@ wage base $184,500 (verified against SSA announcement).
 *Audit performed 2026-09-17. Method: full line-by-line code read of `src/calcs/index.tsx`,
 `src/calcs/more.tsx`, `src/calcs/niche.tsx`, `src/calcs/sports.tsx`, `src/calcs/paycheck.tsx`,
 plus independent recomputation (`scripts/audit-reference.mjs`) of every default case.*
+
+---
+
+## Full-site sweep — 2026-09-17 (second pass)
+
+Triggered by the owner's real paystub reconciliation. Two-track audit: every calculator's math
+re-verified, plus a new **input-clarity audit** (does the input label answer the question the
+user is actually asking?).
+
+### Paystub reconciliation (owner's real 8/21/2026 stub)
+
+| Stub line | Stub value | Reproduced | Match |
+|---|---|---|---|
+| Social Security | $831.48 | ($13,550.77 − $139.77 §125) × 6.2% = $831.48 | exact |
+| Medicare | $194.46 | $13,411.00 × 1.45% = $194.46 | exact |
+| Federal W/H | $3,228.51 | aggregate method, 2026 brackets, $16,100 ded = $3,228.51 | exact |
+
+Root cause of the "federal tax is wrong" report: the owner entered a **$21k single check**
+into an **annual salary** input. Both numbers were correct; the page never stated which
+question it answered. Fix shipped: three explicit modes on all 51 paycheck pages —
+Annual salary / This single check / Variable income (YTD projection with W-4 adjustment).
+
+### Input-clarity fixes shipped in this sweep
+- Paycheck: annual input relabeled "full year — not one check"; two new modes added.
+- Mortgage: added lender-quote reconciliation note (escrow cushion, daily interest, closing costs).
+- Compound Interest: contribution labeled "deposited at each month end".
+- Freelance Rate: billable share labeled "(rest is admin, sales, email)".
+- Sales Tax: rate labeled "combined state + local — check a receipt".
+- Calorie/TDEE: added ±10% estimation-band framing with track-and-adjust guidance.
+- Verified already-correct design: Crypto (fees modeled both sides), Salary↔Hourly (bidirectional modes).
+
+### Math re-verified this sweep (independent recomputation, all match)
+1RM (Epley 215.8 / Brzycki 208.1 @ 185×5), Karvonen HR zones (Z2 138–151 @ age 30/RHR 60),
+Macro split (Mifflin + goal multipliers), Running pace + Riegel 1.06 predictions,
+Mulch/Gravel/Concrete yields (incl. 0.6 ft³ per 80 lb bag, 1.4 t/yd³ crushed stone),
+Navy body fat (17.7% @ defaults), Final grade (97.0% needed @ defaults), Ohm's law all six
+modes, VBT velocity tables, Periodization planner, VO₂max estimate.

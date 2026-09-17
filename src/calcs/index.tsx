@@ -89,7 +89,7 @@ export function FreelanceRateCalc({ presets }: { presets?: Record<string, number
           <Field label="Target annual take-home income" value={salary} onChange={setSalary} prefix="$" />
           <Field label="Annual business expenses" value={expenses} onChange={setExpenses} prefix="$" />
           <Field label="Hours worked per week" value={hoursPerWeek} onChange={setHoursPerWeek} suffix="hrs" />
-          <Field label="Billable share of hours" value={billablePct} onChange={setBillablePct} suffix="%" />
+          <Field label="Billable share of hours (rest is admin, sales, email)" value={billablePct} onChange={setBillablePct} suffix="%" />
           <Field label="Weeks off per year" value={weeksOff} onChange={setWeeksOff} suffix="wks" />
         </div>
         <div className="space-y-3">
@@ -278,6 +278,12 @@ export function MortgageCalc({ presets }: { presets?: Record<string, number> }) 
                 saving {usd(r.pmiMo, 2)}/mo afterward. Total PMI paid: {usd(r.totalPmi)}.
               </p>
             )}
+            <p className="text-xs text-muted-foreground">
+              Comparing against a lender quote? Quotes often differ because they include an escrow cushion,
+              daily interest to closing, or rolled-in closing costs — none of which are part of the loan
+              itself. Match our &quot;Principal &amp; interest&quot; line against theirs first; it&apos;s the
+              only apples-to-apples number.
+            </p>
           </div>
 
           <div className="flex items-center gap-4">
@@ -367,7 +373,7 @@ export function CompoundInterestCalc() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
             <Field label="Starting amount" value={initial} onChange={setInitial} prefix="$" />
-            <Field label="Monthly contribution" value={monthly} onChange={setMonthly} prefix="$" />
+            <Field label="Monthly contribution (deposited at each month end)" value={monthly} onChange={setMonthly} prefix="$" />
             <Field label="Annual return rate" value={rate} onChange={setRate} suffix="%" />
             <Field label="Years" value={years} onChange={setYears} suffix="yrs" />
           </div>

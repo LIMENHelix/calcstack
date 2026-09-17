@@ -90,7 +90,7 @@ export function SalesTaxCalc({ presets }: { presets?: Record<string, number> }) 
           ))}
         </div>
         <Field label={mode === 'add' ? 'Price before tax' : 'Price including tax'} value={price} onChange={setPrice} prefix="$" />
-        <Field label="Tax rate" value={rate} onChange={setRate} suffix="%" />
+        <Field label="Tax rate (combined state + local — check a receipt)" value={rate} onChange={setRate} suffix="%" />
       </div>
       <div className="space-y-3">
         <Result big label={mode === 'add' ? 'Total with tax' : 'Price before tax'} value={usd(mode === 'add' ? r.total : r.pre, 2)} />
@@ -198,7 +198,11 @@ export function CalorieCalc() {
         <Result label="Resting metabolism (BMR)" value={`${num(r.bmr, 0)} kcal/day`} />
         <Result label="Fat loss (−500)" value={`${num(r.cut, 0)} kcal/day`} />
         <Result label="Muscle gain (+300)" value={`${num(r.gain, 0)} kcal/day`} />
-        <p className="text-xs text-muted-foreground">Mifflin-St Jeor equation — the standard used by dietitians.</p>
+        <p className="text-xs text-muted-foreground">
+          Mifflin-St Jeor equation — the standard used by dietitians. Every TDEE formula is an estimate
+          (±10% between people is normal); treat this as a starting point, track for two weeks, and adjust
+          to what the scale actually does.
+        </p>
       </div>
     </CardContent></Card>
   )
