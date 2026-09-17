@@ -58,7 +58,7 @@ That was **correct math under 2025 rules** (2025 standard deduction $15,000 → 
 10% bracket → $600). The user supplied **2026** brackets, and the site now runs the full 2026
 engine. Under 2026 rules:
 
-**Kansas, $21,000, single (2026):**
+**Kansas, $21,000, single (2026) — corrected 2026-09-17 after owner challenge:**
 
 | Step | Value |
 |---|---|
@@ -68,16 +68,28 @@ engine. Under 2026 rules:
 | Federal tax (10% bracket: $0–$12,400) | **$490.00** |
 | Social Security (6.2%) | $1,302.00 |
 | Medicare (1.45%) | $304.50 |
-| KS taxable ($21,000 − $5,925 ded, SB 1 2024) | $15,075.00 |
-| Kansas tax (5.2% to $23,000) | **$783.90** |
-| Net take-home | **$18,119.60** |
-| Effective total rate | 13.7% |
+| KS standard deduction (SB 1 2024) | −$3,605.00 |
+| KS personal exemption (SB 1 2024, single) | −$9,160.00 |
+| KS taxable | $8,235.00 |
+| Kansas tax (5.2% to $23,000) | **$428.22** |
+| Net take-home | **$18,475.28** |
+| Effective total rate | 12.0% |
+
+**Correction log (2026-09-17):** the audit's first pass modeled Kansas with a combined
+deduction of $5,925 ($3,605 + the $2,320 *per-dependent* exemption), overstating Kansas tax
+($783.90 vs the correct $428.22). SB 1 (2024) actually raised the *personal* exemption to
+**$9,160 single / $18,320 MFJ**; the $2,320 figure applies only per dependent. The owner
+caught this by challenging the result ("federal should not be less than state") — the
+challenge was correct, and the fix was verified against Tax Foundation, EY, and TurboTax
+summaries of SB 1 before shipping. MFJ Kansas now uses the exact $26,560 MFJ deduction
+instead of the engine's default 2× approximation.
 
 **Texas, $75,000, single (2026):** taxable $58,900 → $1,240 (10% of $12,400) + $5,580 (12% of
 $46,500) = **$6,820 federal**; net **$62,442.50**.
 
 Sources: 2026 federal brackets and standard deductions as supplied by the project owner; Kansas
-SB 1 (2024) two-bracket structure with $5,925 single standard deduction; SSA 2026 Social Security
+SB 1 (2024) two-bracket structure with $3,605 standard deduction and $9,160/$18,320 personal
+exemption (Tax Foundation, EY Tax News 2024-1459, TurboTax state guide); SSA 2026 Social Security
 wage base $184,500 (verified against SSA announcement).
 
 ### Known simplifications (disclosed on every paycheck page)

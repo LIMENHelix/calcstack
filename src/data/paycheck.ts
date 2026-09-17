@@ -7,7 +7,8 @@ export interface StateRule {
   slug: string
   name: string
   kind: 'none' | 'flat' | 'brackets'
-  ded: number // approximate state standard deduction, single filer
+  ded: number // approximate state standard deduction + exemptions, single filer
+  dedMfj?: number // MFJ deduction when it differs from 2× single (e.g. Kansas)
   rate?: number // flat rate %
   brackets?: [number, number][] // [taxable income threshold, marginal rate %]
   note?: string
@@ -47,7 +48,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'illinois', name: 'Illinois', kind: 'flat', ded: 0, rate: 4.95 },
   { slug: 'indiana', name: 'Indiana', kind: 'flat', ded: 0, rate: 3.0, note: 'Excludes county income taxes (roughly 1–2% in most counties).' },
   { slug: 'iowa', name: 'Iowa', kind: 'flat', ded: 0, rate: 3.8 },
-  { slug: 'kansas', name: 'Kansas', kind: 'brackets', ded: 5925, brackets: [[0, 5.2], [23000, 5.58]], note: 'Kansas consolidated to two brackets (5.2%/5.58%) effective 2024 (SB 1); deduction shown combines the $3,605 standard deduction and ~$2,320 personal exemption.' },
+  { slug: 'kansas', name: 'Kansas', kind: 'brackets', ded: 12765, dedMfj: 26560, brackets: [[0, 5.2], [23000, 5.58]], note: 'Kansas consolidated to two brackets (5.2%/5.58%) effective 2024 (SB 1); deduction shown combines the $3,605 standard deduction and the $9,160 personal exemption ($8,240 + $18,320 married) with no dependents.' },
   { slug: 'kentucky', name: 'Kentucky', kind: 'flat', ded: 3160, rate: 4.0, note: 'Excludes local occupational taxes (about 1–2% in Louisville and Lexington).' },
   { slug: 'louisiana', name: 'Louisiana', kind: 'flat', ded: 12500, rate: 3.0 },
   { slug: 'maine', name: 'Maine', kind: 'brackets', ded: 15000, brackets: [[0, 5.8], [26050, 6.75], [61600, 7.15]] },
@@ -114,9 +115,11 @@ export function computePaycheck(gross: number, filing: 'single' | 'mfj', state: 
     gross * (MEDICARE_RATE / 100) +
     Math.max(0, gross - MEDICARE_SURTAX_THRESHOLD[filing]) * (MEDICARE_SURTAX / 100)
 
-  // State: MFJ approximated by doubling single brackets and deduction
+  // State: MFJ approximated by doubling single brackets and deduction,
+  // unless the state provides an exact MFJ deduction (dedMfj)
   const scale = filing === 'mfj' ? 2 : 1
-  const stateTaxable = Math.max(0, gross - state.ded * scale)
+  const stateDed = filing === 'mfj' && state.dedMfj ? state.dedMfj : state.ded * scale
+  const stateTaxable = Math.max(0, gross - stateDed)
   let stateTax = 0
   if (state.kind === 'flat') stateTax = stateTaxable * ((state.rate ?? 0) / 100)
   if (state.kind === 'brackets' && state.brackets) {

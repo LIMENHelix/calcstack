@@ -41,13 +41,13 @@ const fmt = (x) => Math.round(x * 100) / 100
 }
 
 // 5. Paycheck KS $21k single 2026: fed brackets 10% to 12400, 12% to 50400; std ded 16100
-//    KS: ded 5925 (SB1 2024), brackets 5.2% to 23000, 5.58% above
+//    KS (SB 1 2024): std ded 3605 + personal exemption 9160 = 12765; brackets 5.2% to 23000, 5.58% above
 {
   const gross = 21000, ded = 16100
   const taxable = Math.max(0, gross - ded) // 4900 → all in 10%
   const fed = taxable * 0.10
   const ss = gross * 0.062, mc = gross * 0.0145
-  const ksTaxable = Math.max(0, gross - 5925)
+  const ksTaxable = Math.max(0, gross - 12765)
   const ks = Math.min(ksTaxable, 23000) * 0.052 + Math.max(0, ksTaxable - 23000) * 0.0558
   console.log('PAYCHECK KS 21k: fed=%s ss=%s mc=%s state=%s net=%s effRate=%s%',
     fmt(fed), fmt(ss), fmt(mc), fmt(ks), fmt(gross - fed - ss - mc - ks),
