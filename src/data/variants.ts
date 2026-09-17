@@ -1,4 +1,5 @@
 import type { CalculatorMeta } from './calculators'
+import { PAYCHECK_STATES } from './paycheck'
 
 export interface VariantMeta extends CalculatorMeta {
   /** Slug of the base calculator component to render. */
@@ -7,6 +8,8 @@ export interface VariantMeta extends CalculatorMeta {
   presets?: Record<string, number>
   /** Slug of the core calculator this variant derives from (for related links). */
   parentSlug: string
+  /** Pre-selected state for state-aware components (e.g. paycheck). */
+  stateSlug?: string
 }
 
 /* ---------- Sales tax by state ---------- */
@@ -418,10 +421,62 @@ const MORTGAGE_VARIANTS: VariantMeta[] = [
   },
 ]
 
+const paycheckVariants: VariantMeta[] = PAYCHECK_STATES.map((st) => {
+  const noTax = st.kind === 'none'
+  const rateDesc = noTax
+    ? 'no state income tax'
+    : st.kind === 'flat'
+      ? `a flat ${st.rate}% state income tax`
+      : 'progressive state income tax brackets'
+  return {
+    slug: `paycheck-calculator-${st.slug}`,
+    baseSlug: 'paycheck-calculator',
+    parentSlug: 'paycheck-calculator',
+    stateSlug: st.slug,
+    title: noTax
+      ? `${st.name} Paycheck Calculator — 2025 Take-Home Pay (No State Income Tax)`
+      : `${st.name} Paycheck Calculator — 2025 Take-Home Pay After Taxes`,
+    shortTitle: `${st.name} Paycheck Calculator`,
+    category: 'Freelance & Career',
+    description: `Free ${st.name} paycheck calculator. Enter your salary to see 2025 take-home pay per year, month, and paycheck after federal, FICA, and ${st.name} state taxes.`,
+    tagline: noTax
+      ? `${st.name} takes no state income tax — see your real take-home.`
+      : `${st.name} has ${rateDesc} — see your real take-home.`,
+    intro: `Your offer letter says one number; your bank account says another. This calculator bridges the gap for ${st.name}: 2025 federal income tax brackets, Social Security and Medicare payroll taxes, and ${st.name}'s ${rateDesc}, all computed as you type. Results are estimates — they exclude pre-tax deductions like 401(k) contributions and health premiums, tax credits, and local taxes.${st.note ? ' ' + st.note : ''}`,
+    howItWorks: [
+      'Enter your annual gross salary and filing status.',
+      `${st.name} is pre-selected — switch states to compare a move or a remote-work offer.`,
+      'Federal tax uses the 2025 brackets after the standard deduction; FICA is 6.2% Social Security (up to the wage cap) plus 1.45% Medicare.',
+      `State tax uses ${st.name}'s ${rateDesc}.`,
+      'Read take-home pay per year, month, biweekly paycheck, and week, plus the full breakdown.',
+    ],
+    faq: [
+      noTax
+        ? {
+            q: `Does ${st.name} tax my paycheck?`,
+            a: `${st.note ?? st.name + ' has no state income tax.'} You still pay federal income tax and FICA payroll taxes, which this calculator shows separately.`,
+          }
+        : {
+            q: `What is the income tax rate in ${st.name}?`,
+            a: `${st.name} has ${rateDesc}.${st.note ? ' ' + st.note : ''} The calculator applies it to your salary automatically and shows the effective (real) percentage at the bottom.`,
+          },
+      {
+        q: 'Why is my actual paycheck different?',
+        a: 'Real paychecks include pre-tax deductions (401(k), health insurance, HSA) that lower taxable income, plus benefits and credits this estimate excludes. Local income taxes, where they exist, are also excluded. Compare the breakdown against your paystub to calibrate.',
+      },
+      {
+        q: `Is ${st.name} a high-tax state for workers?`,
+        a: `Use the state dropdown to compare: enter the same salary and switch between ${st.name} and another state. The take-home difference on an $75,000 salary between the highest- and lowest-tax states runs several thousand dollars per year — real money when evaluating a move.`,
+      },
+    ],
+  }
+})
+
 export const VARIANTS: VariantMeta[] = [
   ...stateTaxVariants,
   ...cityTaxVariants,
   ...tipVariants,
   ...freelanceVariants,
   ...MORTGAGE_VARIANTS,
+  ...paycheckVariants,
 ]

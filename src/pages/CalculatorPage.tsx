@@ -4,11 +4,18 @@ import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
 import { MORE_CALC_COMPONENTS } from '@/calcs/more'
 import { NICHE_CALC_COMPONENTS } from '@/calcs/niche'
+import { PaycheckCalc } from '@/calcs/paycheck'
+import type { CalcProps } from '@/calcs'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
 import { EmbedSnippet } from '@/components/EmbedSnippet'
 
-const ALL_COMPONENTS = { ...CALC_COMPONENTS, ...MORE_CALC_COMPONENTS, ...NICHE_CALC_COMPONENTS }
+const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  ...CALC_COMPONENTS,
+  ...MORE_CALC_COMPONENTS,
+  ...NICHE_CALC_COMPONENTS,
+  'paycheck-calculator': PaycheckCalc,
+}
 
 export default function CalculatorPage() {
   const { slug } = useParams()
@@ -73,7 +80,7 @@ export default function CalculatorPage() {
       <p className="mb-6 text-lg text-muted-foreground">{meta.tagline}</p>
 
       {/* Tool first — the calculator is the hero of the page */}
-      <Calc presets={variant?.presets} />
+      <Calc presets={variant?.presets} stateSlug={variant?.stateSlug} />
 
       <AdSlot />
 

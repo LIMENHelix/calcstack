@@ -446,7 +446,7 @@ export function BreakEvenCalc() {
   )
 }
 
-export const MORE_CALC_COMPONENTS: Record<string, (props: { presets?: Record<string, number> }) => React.ReactElement> = {
+export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'tip-calculator': TipCalc,
   'discount-calculator': DiscountCalc,
   'sales-tax-calculator': SalesTaxCalc,

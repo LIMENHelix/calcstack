@@ -425,7 +425,7 @@ export function OhmsLawCalc() {
   )
 }
 
-export const NICHE_CALC_COMPONENTS: Record<string, () => React.ReactElement> = {
+export const NICHE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'one-rep-max-calculator': OneRepMaxCalc,
   'heart-rate-zone-calculator': HeartRateZoneCalc,
   'macro-calculator': MacroCalc,

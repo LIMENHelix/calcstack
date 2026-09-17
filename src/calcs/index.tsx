@@ -4,6 +4,11 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
 import { usd, num, monthlyPayment, monthsToPayoff } from '@/lib/calc'
 
+export interface CalcProps {
+  presets?: Record<string, number>
+  stateSlug?: string
+}
+
 export function useNumber(initial: number): [number, (v: string) => void] {
   const [v, setV] = useState(initial)
   return [v, (s: string) => setV(parseFloat(s) || 0)]
@@ -360,7 +365,7 @@ export function LoanPayoffCalc() {
   )
 }
 
-export const CALC_COMPONENTS: Record<string, (props: { presets?: Record<string, number> }) => React.ReactElement> = {
+export const CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   'freelance-rate-calculator': FreelanceRateCalc,
   'salary-to-hourly-calculator': SalaryHourlyCalc,
   'mortgage-payment-calculator': MortgageCalc,

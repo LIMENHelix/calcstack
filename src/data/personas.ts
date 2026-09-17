@@ -96,6 +96,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'salary-to-hourly-calculator',
+      'paycheck-calculator',
       'compound-interest-calculator',
       'loan-payoff-calculator',
       'roi-calculator',
@@ -167,6 +168,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'salary-to-hourly-calculator',
+      'paycheck-calculator',
       'loan-payoff-calculator',
       'percentage-calculator',
       'savings-goal-calculator',
@@ -764,6 +766,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'salary-to-hourly-calculator',
+      'paycheck-calculator',
       'loan-payoff-calculator',
       'compound-interest-calculator',
       'savings-goal-calculator',
