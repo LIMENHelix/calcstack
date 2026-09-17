@@ -476,111 +476,6 @@ export const PERSONAS: Persona[] = [
     ],
   },
   {
-    slug: 'electricians',
-    job: 'Electricians',
-    title: 'Calculators for Electricians — Wage Math, Side Jobs & Going Independent',
-    description: 'Free tools for electricians: wage and overtime conversions, pricing side jobs, break-even for starting your own shop, and truck/tool loan math.',
-    hero: 'Journeyman wages are solid; the real money question is when to go independent. These tools price your side jobs, compare the apprentice-to-master jump, and show what a one-van operation needs to clear.',
-    questions: [
-      'What should I charge for side jobs on weekends?',
-      'Is the master\'s license jump worth it in dollars?',
-      'What does my own shop need to bill monthly to beat my wages?',
-    ],
-    calcSlugs: [
-      'salary-to-hourly-calculator',
-      'freelance-rate-calculator',
-      'break-even-calculator',
-      'loan-payoff-calculator',
-      'savings-goal-calculator',
-      'percentage-calculator',
-      'compound-interest-calculator',
-    ],
-    faq: [
-      {
-        q: 'What should I charge for weekend side jobs?',
-        a: 'Your wage ÷ 2,080 is the floor of the floor — side work carries no benefits, uses your tools, and risks your license. A common rule is 1.5–2× your straight-time wage. The freelance rate calculator builds the honest number from your income goal and costs.',
-      },
-      {
-        q: 'Is going independent worth it financially?',
-        a: 'Run the break-even calculator with your real fixed costs: van payment, insurance, licensing, advertising. Divide by your realistic hourly billing rate to see billable hours needed per month. If that number exceeds hours you can actually sell, the math says wait.',
-      },
-      {
-        q: 'How much does a truck and tool loan really cost?',
-        a: 'A $45K work vehicle at 8% for 6 years costs about $11.8K in interest — real money against a new shop\'s margins. The loan payoff calculator shows the total and what paying it early saves.',
-      },
-    ],
-  },
-  {
-    slug: 'plumbers',
-    job: 'Plumbers',
-    title: 'Calculators for Plumbers — Job Pricing, Wages & Going Independent',
-    description: 'Free tools for plumbers: wage conversions, flat-rate job pricing math, break-even for your own business, and vehicle loan payoff.',
-    hero: 'Plumbing is one of the few trades where going independent can double income — if the pricing math is right. These tools handle flat-rate pricing, the wage-versus-owner comparison, and the van payment in between.',
-    questions: [
-      'What flat rate covers my costs and a real margin?',
-      'Employee wages or my own license — where is the crossover?',
-      'How much van can the business actually afford?',
-    ],
-    calcSlugs: [
-      'freelance-rate-calculator',
-      'salary-to-hourly-calculator',
-      'break-even-calculator',
-      'loan-payoff-calculator',
-      'percentage-calculator',
-      'savings-goal-calculator',
-      'compound-interest-calculator',
-    ],
-    faq: [
-      {
-        q: 'How do I set flat rates for common jobs?',
-        a: 'Cost of parts + (your honest hourly floor × realistic hours including drive time) + margin for callbacks and warranty risk. The freelance rate calculator builds the hourly floor; most independents land at $95–150/hour equivalent.',
-      },
-      {
-        q: 'When does going independent beat journeyman wages?',
-        a: 'When your break-even billable hours (fixed costs ÷ rate) fit inside hours you can actually sell. Run it in the break-even calculator with van, insurance, and licensing as fixed costs — the answer is usually 15–25 billable hours weekly.',
-      },
-      {
-        q: 'Should I finance or pay cash for the work van?',
-        a: 'Compare the loan\'s total interest (loan payoff calculator) against what that cash earns invested (compound interest calculator). With equipment loans near 8% and savings near 4%, financing rarely wins on math alone — but cash reserves matter more than optimization in year one.',
-      },
-    ],
-  },
-  {
-    slug: 'hvac-technicians',
-    job: 'HVAC Technicians',
-    title: 'Calculators for HVAC Techs — Seasonal Income, Overtime & Business Math',
-    description: 'Free tools for HVAC technicians: overtime and seasonal income math, wage conversions, break-even for going independent, and savings goals.',
-    hero: 'HVAC income is seasonal by design — summer and winter peaks, shoulder-season valleys. These tools smooth the peaks into a yearly plan and price the jump from technician to contractor.',
-    questions: [
-      'How do I budget when summer pays triple what spring does?',
-      'What is all this overtime actually worth per year?',
-      'What does a one-truck HVAC business need to clear monthly?',
-    ],
-    calcSlugs: [
-      'salary-to-hourly-calculator',
-      'savings-goal-calculator',
-      'break-even-calculator',
-      'freelance-rate-calculator',
-      'loan-payoff-calculator',
-      'percentage-calculator',
-      'compound-interest-calculator',
-    ],
-    faq: [
-      {
-        q: 'How do I handle seasonal income swings?',
-        a: 'Annualize: total last year\'s income, divide by 12, live on that. Peak-season surplus goes to the cushion, not lifestyle. The savings goal calculator turns "cover two slow months" into an automatic per-paycheck deposit.',
-      },
-      {
-        q: 'What is heavy overtime actually worth?',
-        a: 'Less per hour than it feels: 60-hour weeks at $28 base blend to about $33/hour, and the extra hours are taxed at your top rate. The salary-to-hourly calculator shows the blended number so you can price the burnout honestly.',
-      },
-      {
-        q: 'What does an independent HVAC shop need to bill?',
-        a: 'Fixed costs (truck, insurance, license, advertising — often $3–5K/month) divided by your billing rate, plus parts margin. The break-even calculator gives the monthly service-call count required; compare it against your current call volume before leaping.',
-      },
-    ],
-  },
-  {
     slug: 'construction-contractors',
     job: 'Construction Contractors',
     title: 'Calculators for Contractors — Bid Math, Break-Even & Equipment Loans',
@@ -1075,6 +970,112 @@ export const PERSONAS: Persona[] = [
       {
         q: 'What GPA do engineering employers and grad schools want?',
         a: 'Common lines: 3.0 for most internships and large employers, 3.5+ for competitive grad programs and fellowships. The GPA calculator\'s what-if mode shows exactly how this semester moves your cumulative number.',
+      },
+    ],
+  },
+  {
+    slug: 'electricians',
+    job: 'Electricians & Electrical Contractors',
+    title: 'Calculators for Electricians — Voltage Drop, Wire Sizing & Bid Math',
+    description: 'Free tools for electricians: NEC voltage drop and wire ampacity calculators, Ohm\'s law, hourly rate math for self-employed sparkies, and paycheck breakdowns. No signup.',
+    hero: 'Ampacity keeps it legal, voltage drop keeps it working — the difference shows up 100 feet from the panel. These are the NEC table calculations you already know, running at truck speed, plus the business math for when the job is yours.',
+    questions: [
+      'What wire size actually passes at this distance, not just by ampacity?',
+      'Is this load continuous — and did I apply the 125% rule?',
+      'What should I charge per hour running my own truck?',
+    ],
+    calcSlugs: [
+      'voltage-drop-calculator',
+      'wire-size-calculator',
+      'ohms-law-calculator',
+      'freelance-rate-calculator',
+      'break-even-calculator',
+      'loan-payoff-calculator',
+      'salary-to-hourly-calculator',
+      'paycheck-calculator',
+    ],
+    faq: [
+      {
+        q: 'Why does the voltage drop calculator matter if my wire meets ampacity?',
+        a: 'Ampacity is about heat; voltage drop is about performance. A 12 AWG copper run is legal at 20 A but drops 7.9 volts over 100 feet — motors run hot, LEDs flicker, EV chargers fault out. NEC\'s 3% guideline upsizes wire on distance long before ampacity does.',
+      },
+      {
+        q: 'What is the 125% continuous load rule?',
+        a: 'NEC 210.19/215.2: loads running 3+ hours (EV chargers, heaters, lighting) must be multiplied by 1.25 before sizing wire and breaker. A 40 A EVSE needs wire and a breaker sized for 50 A — that is the rule everyone\'s cousin skips.',
+      },
+      {
+        q: 'Can I trust these numbers for permitted work?',
+        a: 'Use them for estimates, bids, and sanity checks — the tables are NEC Chapter 9 and 310.16 at 75°C. Final design belongs to the licensed electrician of record and the AHJ; terminals, bundling, and ambient temperature can all change legal ampacity.',
+      },
+    ],
+  },
+  {
+    slug: 'hvac-technicians',
+    job: 'HVAC Technicians & Installers',
+    title: 'Calculators for HVAC Techs — BTU Loads, Tonnage & Wire Sizing',
+    description: 'Free tools for HVAC technicians: BTU load estimates by climate and insulation, cooling tonnage, unit sizing, and electrical sizing for condensers and air handlers.',
+    hero: 'The fastest way to lose a customer is an oversized unit that short-cycles their house into a clammy cave. Run the load math first, walk in with a defensible tonnage, and let the competitor\'s "bigger is better" pitch die on its own.',
+    questions: [
+      'What tonnage does this home actually need?',
+      'How do insulation, ceilings, and sun exposure move the load?',
+      'What wire and breaker does that condenser need?',
+    ],
+    calcSlugs: [
+      'hvac-btu-calculator',
+      'wire-size-calculator',
+      'voltage-drop-calculator',
+      'break-even-calculator',
+      'loan-payoff-calculator',
+      'salary-to-hourly-calculator',
+      'paycheck-calculator',
+    ],
+    faq: [
+      {
+        q: 'How accurate is a rule-of-thumb BTU estimate?',
+        a: 'Good enough to quote confidently and catch a bad bid: climate, insulation, ceiling height, sun, and occupants move the number 20–35 BTU per square foot. For the design itself, Manual J is the standard — this gets you into the right half-ton before you run it.',
+      },
+      {
+        q: 'Why is oversizing an AC worse than undersizing?',
+        a: 'An oversized unit cools the air before it dehumidifies, then short-cycles: cold, sticky rooms, higher bills, shorter compressor life. Right-sized equipment runs longer cycles, wrings out humidity, and lasts. Bigger is not better; matched is better.',
+      },
+      {
+        q: 'What electrical does a typical condenser need?',
+        a: 'Check the nameplate MCA and MOCP — then verify the run with the wire size calculator (MCA already includes the 125% rule) and the voltage drop calculator if the disconnect sits far from the panel.',
+      },
+    ],
+  },
+  {
+    slug: 'plumbers',
+    job: 'Plumbers & Plumbing Contractors',
+    title: 'Calculators for Plumbers — Fixture Units, Pipe Sizing & Rate Math',
+    description: 'Free tools for plumbers: fixture-unit pipe sizing, probable peak GPM, and the business math — hourly rate floors and paycheck breakdowns for shop owners and journeymen.',
+    hero: 'Every repipe bid starts with the same question: what does this house actually demand at peak? Fixture units answer it with math instead of habit — and the rate calculators handle the other half of the business, what to charge.',
+    questions: [
+      'Can this bathroom addition tee off the existing line?',
+      'What is the probable peak GPM for this fixture count?',
+      'What hourly rate keeps my shop profitable after the van, insurance, and slow weeks?',
+    ],
+    calcSlugs: [
+      'pipe-size-calculator',
+      'freelance-rate-calculator',
+      'break-even-calculator',
+      'loan-payoff-calculator',
+      'salary-to-hourly-calculator',
+      'paycheck-calculator',
+      'concrete-mix-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do fixture units translate to pipe size?',
+        a: 'Fixture units encode how likely fixtures run simultaneously — a toilet is 3 FU, a sink 1. Total the FU, convert to probable peak GPM (a 2.5-bath home lands near 8–10 GPM), and size the line to keep velocity under 8 ft/s. A typical house needs a ¾-inch main.',
+      },
+      {
+        q: 'When do I need a real engineered design?',
+        a: 'Flushometer fixtures, low street pressure, long runs, multi-story buildings, and anything permitted for public or commercial use. Fixture-unit charts are the residential first pass; the local code and inspector have final say.',
+      },
+      {
+        q: 'What should a self-employed plumber charge per hour?',
+        a: 'Start from the freelance rate floor: target income plus the van, insurance, tools, and licensing, divided by realistic billable hours (usually 50–65% of the week — the rest is estimates, driving, and callbacks). Most shops underprice the non-billable half of the week.',
       },
     ],
   },
