@@ -883,25 +883,25 @@ export const CALCULATORS: CalculatorMeta[] = [
   },
   {
     slug: 'paycheck-calculator',
-    title: 'Paycheck Calculator — 2025 Take-Home Pay After Taxes (All States)',
+    title: 'Paycheck Calculator — 2026 Take-Home Pay After Taxes (All States)',
     shortTitle: 'Paycheck Calculator',
     category: 'Freelance & Career',
     description:
-      'Free paycheck calculator with 2025 federal brackets, FICA, and all 50 state tax rules built in. See take-home pay per year, month, and paycheck. No signup.',
+      'Free paycheck calculator with 2026 federal brackets, FICA, and all 50 state tax rules built in. See take-home pay per year, month, and paycheck. No signup.',
     tagline: 'The number on the offer letter, translated to the number in your account.',
     intro:
-      'A $75,000 salary is not $75,000 — federal tax, Social Security, Medicare, and your state all take a cut before the money lands. This calculator applies the 2025 federal brackets and FICA rules plus the income tax rules of any US state, so you can see your real take-home per year, month, biweekly paycheck, and week. Switching states shows you exactly what a move is worth. Results are estimates: pre-tax deductions (401(k), health premiums), credits, and local taxes are not included.',
+      'A $75,000 salary is not $75,000 — federal tax, Social Security, Medicare, and your state all take a cut before the money lands. This calculator applies the 2026 federal brackets and FICA rules plus the income tax rules of any US state, so you can see your real take-home per year, month, biweekly paycheck, and week. Switching states shows you exactly what a move is worth. Results are estimates: pre-tax deductions (401(k), health premiums), credits, and local taxes are not included.',
     howItWorks: [
       'Enter your annual gross salary and filing status.',
       'Pick your state — every state plus DC has its own rules pre-loaded.',
-      'Federal tax uses the 2025 brackets after the standard deduction ($15,000 single / $30,000 married).',
-      'FICA is 6.2% Social Security (capped at $176,100 of wages) plus 1.45% Medicare, with the 0.9% surtax above $200,000.',
+      'Federal tax uses the 2026 brackets after the standard deduction ($16,100 single / $32,200 married).',
+      'FICA is 6.2% Social Security (capped at $184,500 of wages in 2026) plus 1.45% Medicare, with the 0.9% surtax above $200,000.',
       'Read take-home pay four ways plus a visual breakdown of where every dollar goes.',
     ],
     faq: [
       {
         q: 'How accurate is this paycheck calculator?',
-        a: 'The federal and FICA math is exact for a W-2 employee taking the standard deduction with no pre-tax benefits. State taxes use simplified 2025 rules — close for most filers, but local taxes, credits, and pre-tax deductions can shift the real number a few percent. Compare against your paystub to calibrate.',
+        a: 'The federal and FICA math is exact for a W-2 employee taking the standard deduction with no pre-tax benefits. State taxes use simplified 2025–2026 rules — close for most filers, but local taxes, credits, and pre-tax deductions can shift the real number a few percent. Compare against your paystub to calibrate.',
       },
       {
         q: 'Which states have no income tax?',

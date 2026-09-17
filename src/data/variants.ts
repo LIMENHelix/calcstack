@@ -434,19 +434,19 @@ const paycheckVariants: VariantMeta[] = PAYCHECK_STATES.map((st) => {
     parentSlug: 'paycheck-calculator',
     stateSlug: st.slug,
     title: noTax
-      ? `${st.name} Paycheck Calculator — 2025 Take-Home Pay (No State Income Tax)`
-      : `${st.name} Paycheck Calculator — 2025 Take-Home Pay After Taxes`,
+      ? `${st.name} Paycheck Calculator — 2026 Take-Home Pay (No State Income Tax)`
+      : `${st.name} Paycheck Calculator — 2026 Take-Home Pay After Taxes`,
     shortTitle: `${st.name} Paycheck Calculator`,
     category: 'Freelance & Career',
-    description: `Free ${st.name} paycheck calculator. Enter your salary to see 2025 take-home pay per year, month, and paycheck after federal, FICA, and ${st.name} state taxes.`,
+    description: `Free ${st.name} paycheck calculator. Enter your salary to see 2026 take-home pay per year, month, and paycheck after federal, FICA, and ${st.name} state taxes.`,
     tagline: noTax
       ? `${st.name} takes no state income tax — see your real take-home.`
       : `${st.name} has ${rateDesc} — see your real take-home.`,
-    intro: `Your offer letter says one number; your bank account says another. This calculator bridges the gap for ${st.name}: 2025 federal income tax brackets, Social Security and Medicare payroll taxes, and ${st.name}'s ${rateDesc}, all computed as you type. Results are estimates — they exclude pre-tax deductions like 401(k) contributions and health premiums, tax credits, and local taxes.${st.note ? ' ' + st.note : ''}`,
+    intro: `Your offer letter says one number; your bank account says another. This calculator bridges the gap for ${st.name}: 2026 federal income tax brackets, Social Security and Medicare payroll taxes, and ${st.name}'s ${rateDesc}, all computed as you type. Results are estimates — they exclude pre-tax deductions like 401(k) contributions and health premiums, tax credits, and local taxes.${st.note ? ' ' + st.note : ''}`,
     howItWorks: [
       'Enter your annual gross salary and filing status.',
       `${st.name} is pre-selected — switch states to compare a move or a remote-work offer.`,
-      'Federal tax uses the 2025 brackets after the standard deduction; FICA is 6.2% Social Security (up to the wage cap) plus 1.45% Medicare.',
+      'Federal tax uses the 2026 brackets after the standard deduction; FICA is 6.2% Social Security (up to the wage cap) plus 1.45% Medicare.',
       `State tax uses ${st.name}'s ${rateDesc}.`,
       'Read take-home pay per year, month, biweekly paycheck, and week, plus the full breakdown.',
     ],

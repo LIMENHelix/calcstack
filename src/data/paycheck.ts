@@ -1,5 +1,5 @@
-/* Paycheck engine: 2025 federal brackets (IRS Rev. Proc. 2024-40) + per-state
-   income tax rules. State data is a simplified single-filer model — brackets and
+/* Paycheck engine: 2026 federal brackets + per-state income tax rules.
+   State data is a simplified single-filer model — brackets and
    deductions are approximate, local taxes/credits/pre-tax deductions excluded.
    Every page using this data says so and points users to their state revenue dept. */
 
@@ -15,17 +15,17 @@ export interface StateRule {
 
 export const FEDERAL = {
   single: {
-    ded: 15000,
-    brackets: [[0, 10], [11925, 12], [48475, 22], [103350, 24], [197300, 32], [250525, 35], [626350, 37]] as [number, number][],
+    ded: 16100,
+    brackets: [[0, 10], [12400, 12], [50400, 22], [105700, 24], [201775, 32], [256225, 35], [640600, 37]] as [number, number][],
   },
   mfj: {
-    ded: 30000,
-    brackets: [[0, 10], [23850, 12], [96950, 22], [206700, 24], [394600, 32], [501050, 35], [751600, 37]] as [number, number][],
+    ded: 32200,
+    brackets: [[0, 10], [24800, 12], [100800, 22], [211400, 24], [403550, 32], [512450, 35], [768700, 37]] as [number, number][],
   },
 }
 
 export const SS_RATE = 6.2
-export const SS_WAGE_CAP = 176100 // 2025 Social Security wage base
+export const SS_WAGE_CAP = 184500 // 2026 Social Security wage base (SSA)
 export const MEDICARE_RATE = 1.45
 export const MEDICARE_SURTAX = 0.9
 export const MEDICARE_SURTAX_THRESHOLD = { single: 200000, mfj: 250000 }
@@ -39,7 +39,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'colorado', name: 'Colorado', kind: 'flat', ded: 15000, rate: 4.4 },
   { slug: 'connecticut', name: 'Connecticut', kind: 'brackets', ded: 0, brackets: [[0, 2], [10000, 4.5], [50000, 6], [100000, 6.5], [200000, 6.9], [250000, 6.99]], note: 'Personal exemptions and credits phase out with income and are not modeled.' },
   { slug: 'delaware', name: 'Delaware', kind: 'brackets', ded: 3250, brackets: [[0, 0], [2000, 2.2], [5000, 3.9], [10000, 4.8], [20000, 5.2], [25000, 5.55], [60000, 6.6]] },
-  { slug: 'washington-dc', name: 'District of Columbia', kind: 'brackets', ded: 14600, brackets: [[0, 4], [10000, 6], [40000, 6.5], [60000, 8.5], [250000, 8.75], [1000000, 8.95]] },
+  { slug: 'washington-dc', name: 'District of Columbia', kind: 'brackets', ded: 14600, brackets: [[0, 4], [10000, 6], [40000, 6.5], [60000, 8.5], [250000, 8.75], [1000000, 10.75]] },
   { slug: 'florida', name: 'Florida', kind: 'none', ded: 0, note: 'Florida has no state income tax.' },
   { slug: 'georgia', name: 'Georgia', kind: 'flat', ded: 12000, rate: 5.19 },
   { slug: 'hawaii', name: 'Hawaii', kind: 'brackets', ded: 4400, brackets: [[0, 1.4], [2400, 3.2], [4800, 5.5], [9600, 6.4], [14400, 6.8], [19200, 7.2], [24000, 7.6], [36000, 8.25], [48000, 9], [150000, 10], [175000, 11]] },
@@ -47,7 +47,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'illinois', name: 'Illinois', kind: 'flat', ded: 0, rate: 4.95 },
   { slug: 'indiana', name: 'Indiana', kind: 'flat', ded: 0, rate: 3.0, note: 'Excludes county income taxes (roughly 1–2% in most counties).' },
   { slug: 'iowa', name: 'Iowa', kind: 'flat', ded: 0, rate: 3.8 },
-  { slug: 'kansas', name: 'Kansas', kind: 'brackets', ded: 3605, brackets: [[0, 3.1], [15000, 5.25], [30000, 5.7]] },
+  { slug: 'kansas', name: 'Kansas', kind: 'brackets', ded: 5925, brackets: [[0, 5.2], [23000, 5.58]], note: 'Kansas consolidated to two brackets (5.2%/5.58%) effective 2024 (SB 1); deduction shown combines the $3,605 standard deduction and ~$2,320 personal exemption.' },
   { slug: 'kentucky', name: 'Kentucky', kind: 'flat', ded: 3160, rate: 4.0, note: 'Excludes local occupational taxes (about 1–2% in Louisville and Lexington).' },
   { slug: 'louisiana', name: 'Louisiana', kind: 'flat', ded: 12500, rate: 3.0 },
   { slug: 'maine', name: 'Maine', kind: 'brackets', ded: 15000, brackets: [[0, 5.8], [26050, 6.75], [61600, 7.15]] },

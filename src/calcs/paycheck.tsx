@@ -76,7 +76,7 @@ export function PaycheckCalc({ stateSlug }: CalcProps) {
       </div>
 
       <p className="text-xs text-muted-foreground">
-        Estimate using 2025 federal brackets and {rule.name} state rules, {filing === 'single' ? 'single filer' : 'married filing jointly'}.
+        Estimate using 2026 federal brackets and {rule.name} state rules, {filing === 'single' ? 'single filer' : 'married filing jointly'}.
         Excludes pre-tax deductions (401(k), health premiums), tax credits, and local taxes.{' '}
         {rule.note ?? ''} Verify against your paystub or state revenue department.
       </p>
