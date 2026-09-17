@@ -138,3 +138,123 @@ export function computePaycheck(gross: number, filing: 'single' | 'mfj', state: 
     effectiveRate: gross > 0 ? ((gross - net) / gross) * 100 : 0,
   }
 }
+
+/* ---------- Single-check withholding (employer payroll method) ---------- */
+
+export const SUPPLEMENTAL_RATE = 22 // flat federal rate on supplemental wages under $1M (IRS Pub 15)
+
+export interface CheckInput {
+  checkGross: number
+  periodsPerYear: number // 52 weekly, 26 biweekly, 24 semimonthly, 12 monthly
+  bonusInCheck: number // portion paid as supplemental wages, withheld at flat 22%
+  pretax125: number // per-check Section 125 (health/dental/vision premiums, FSA/HSA via cafeteria plan)
+  pretax401k: number // per-check pre-tax 401(k) — Roth 401(k) is post-tax, do not include
+}
+
+export interface CheckResult {
+  ficaWages: number
+  fedWages: number
+  federalRegular: number
+  federalSupplemental: number
+  federal: number
+  ss: number
+  medicare: number
+  state: number
+  net: number
+  annualizedPace: number
+}
+
+export function computeCheck(input: CheckInput, filing: 'single' | 'mfj', state: StateRule): CheckResult {
+  const periods = Math.max(1, Math.round(input.periodsPerYear))
+  const ficaWages = Math.max(0, input.checkGross - input.pretax125)
+  const fedWages = Math.max(0, ficaWages - input.pretax401k)
+  const bonus = Math.min(Math.max(0, input.bonusInCheck), fedWages)
+  const regular = fedWages - bonus
+  const fed = FEDERAL[filing]
+  // IRS percentage/aggregate method: annualize the regular portion, bracket-tax it, divide back
+  const federalRegular = bracketTax(fed.brackets, Math.max(0, regular * periods - fed.ded)) / periods
+  const federalSupplemental = bonus * (SUPPLEMENTAL_RATE / 100)
+  const ss = ficaWages * (SS_RATE / 100) // per-check; ignores YTD wage-cap crossing (disclosed)
+  const medicare = ficaWages * (MEDICARE_RATE / 100) // 0.9% surtax is reconciled at filing (disclosed)
+  const scale = filing === 'mfj' ? 2 : 1
+  const stateDed = filing === 'mfj' && state.dedMfj ? state.dedMfj : state.ded * scale
+  const stateTaxableAnnual = Math.max(0, fedWages * periods - stateDed)
+  let stateTax = 0
+  if (state.kind === 'flat') stateTax = (stateTaxableAnnual * ((state.rate ?? 0) / 100)) / periods
+  if (state.kind === 'brackets' && state.brackets) {
+    const scaled = state.brackets.map(([t, r]) => [t * scale, r] as [number, number])
+    stateTax = bracketTax(scaled, stateTaxableAnnual) / periods
+  }
+  const federal = federalRegular + federalSupplemental
+  const net = input.checkGross - input.pretax125 - input.pretax401k - federal - ss - medicare - stateTax
+  return { ficaWages, fedWages, federalRegular, federalSupplemental, federal, ss, medicare, state: stateTax, net, annualizedPace: fedWages * periods }
+}
+
+/* ---------- Variable-income YTD projection ---------- */
+
+export interface YtdInput {
+  ytdGross: number // from your latest paystub
+  ytdFederal: number // YTD federal income tax withheld (not FICA)
+  ytdState: number // YTD state income tax withheld
+  checksRemaining: number
+  avgCheckGross: number // expected regular gross per remaining check
+  bonusRemaining: number // total commission/bonus still expected this year
+  pretaxPerCheck: number // combined Section 125 + pre-tax 401(k) per remaining check
+  periodsPerYear: number
+}
+
+export interface YtdResult {
+  projectedGross: number
+  projectedFedLiability: number
+  projectedFedWithheld: number
+  fedBalance: number // positive = you owe, negative = refund
+  projectedStateLiability: number
+  projectedStateWithheld: number
+  stateBalance: number
+  perCheckAdjustment: number // extra to withhold per remaining check (negative = reduce)
+}
+
+export function computeYtd(input: YtdInput, filing: 'single' | 'mfj', state: StateRule): YtdResult {
+  const rem = Math.max(0, Math.round(input.checksRemaining))
+  const periods = Math.max(1, Math.round(input.periodsPerYear))
+  const bonusRem = Math.max(0, input.bonusRemaining)
+  const pretax = Math.max(0, input.pretaxPerCheck)
+  const projectedGross = input.ytdGross + rem * input.avgCheckGross + bonusRem
+  const fed = FEDERAL[filing]
+  // YTD pretax already embedded in ytdGross figures the user copies from the stub;
+  // we only model remaining-check pretax explicitly.
+  const fedTaxable = Math.max(0, projectedGross - rem * pretax - fed.ded)
+  const projectedFedLiability = bracketTax(fed.brackets, fedTaxable)
+  const regularFedWages = Math.max(0, input.avgCheckGross - pretax)
+  const perCheckWH = bracketTax(fed.brackets, Math.max(0, regularFedWages * periods - fed.ded)) / periods
+  const projectedFedWithheld = input.ytdFederal + rem * perCheckWH + bonusRem * (SUPPLEMENTAL_RATE / 100)
+  const scale = filing === 'mfj' ? 2 : 1
+  const stateDed = filing === 'mfj' && state.dedMfj ? state.dedMfj : state.ded * scale
+  const stateTaxable = Math.max(0, projectedGross - rem * pretax - stateDed)
+  let projectedStateLiability = 0
+  if (state.kind === 'flat') projectedStateLiability = stateTaxable * ((state.rate ?? 0) / 100)
+  if (state.kind === 'brackets' && state.brackets) {
+    const scaled = state.brackets.map(([t, r]) => [t * scale, r] as [number, number])
+    projectedStateLiability = bracketTax(scaled, stateTaxable)
+  }
+  let perCheckStateWH = 0
+  const stateRegularAnnual = Math.max(0, regularFedWages * periods - stateDed)
+  if (state.kind === 'flat') perCheckStateWH = (stateRegularAnnual * ((state.rate ?? 0) / 100)) / periods
+  if (state.kind === 'brackets' && state.brackets) {
+    const scaled = state.brackets.map(([t, r]) => [t * scale, r] as [number, number])
+    perCheckStateWH = bracketTax(scaled, stateRegularAnnual) / periods
+  }
+  const projectedStateWithheld = input.ytdState + rem * perCheckStateWH + bonusRem * ((state.rate ?? (state.brackets?.[0]?.[1] ?? 0)) / 100)
+  const fedBalance = projectedFedLiability - projectedFedWithheld
+  const stateBalance = projectedStateLiability - projectedStateWithheld
+  return {
+    projectedGross,
+    projectedFedLiability,
+    projectedFedWithheld,
+    fedBalance,
+    projectedStateLiability,
+    projectedStateWithheld,
+    stateBalance,
+    perCheckAdjustment: rem > 0 ? fedBalance / rem : 0,
+  }
+}
