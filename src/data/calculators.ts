@@ -1071,6 +1071,141 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'framing-calculator',
+    title: 'Framing Calculator — Studs, Plates & Wall Lumber Count',
+    shortTitle: 'Framing Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free wall framing calculator. Get exact stud counts, plate boards, and openings math for 16" or 24" on-center walls — plus an editable materials and labor cost estimate.',
+    tagline: 'How many studs is that wall, really?',
+    intro:
+      'Framing lumber counts follow simple rules, but getting them wrong means a mid-job lumber run or a pile of wasted studs. This calculator applies the standard carpentry count — one stud per spacing interval plus a starter, king/jack/cripple studs around every opening, extras at corners, and single-bottom-plus-double-top plates — so your order matches the plan.',
+    howItWorks: [
+      'Enter the wall length, height, and stud spacing (16" on center is standard for load-bearing walls).',
+      'Count door and window openings and corners/intersections.',
+      'Read the stud count, plate boards (8-ft), and total plate linear feet.',
+      'Open the cost section to add editable unit costs and a labor rate for a project total.',
+    ],
+    faq: [
+      {
+        q: 'How many studs do I need for a 20-foot wall?',
+        a: 'At 16" on center: ⌈20 × 12 ÷ 16⌉ + 1 = 16 studs before openings and corners. Each door or window opening adds about 4 studs (king, jack, and cripples), and each corner adds 1.',
+      },
+      {
+        q: 'Should I frame at 16 or 24 inches on center?',
+        a: '16" on center is the default for load-bearing walls and anywhere you will hang heavy cabinets or tile. 24" on center (advanced framing) saves roughly 30% on studs and improves insulation, but check your local code — some jurisdictions and wind/seismic zones require 16".',
+      },
+    ],
+  },
+  {
+    slug: 'drywall-calculator',
+    title: 'Drywall Calculator — Sheets, Mud, Tape & Screws',
+    shortTitle: 'Drywall Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free drywall calculator. Compute sheets of drywall (4×8 or 4×12), joint tape, compound gallons, and screws for any room — with an editable cost and labor estimate.',
+    tagline: 'Sheets, mud, tape, screws — the whole order in one pass.',
+    intro:
+      'Drywall estimates fail in two places: forgetting the ceiling and under-buying mud. This calculator nets out doors and windows, adds the ceiling if you want it, applies 10% cutting waste, then converts the area into sheets, 500-ft tape rolls, gallons of ready-mix, and pounds of screws — a complete shopping list, not just a sheet count.',
+    howItWorks: [
+      'Enter room length, width, and wall height, plus door and window counts (21 and 15 sq ft deducted each).',
+      'Choose whether to include the ceiling and pick 4×8 or 4×12 sheets (12-footers mean fewer butt seams).',
+      'Read sheets (with 10% waste), tape rolls, compound gallons, and screw weight.',
+      'Open the cost section for a materials-plus-labor estimate with editable unit prices.',
+    ],
+    faq: [
+      {
+        q: 'How much drywall mud do I need per sheet?',
+        a: 'A reliable rule is about 1 gallon of ready-mix joint compound per 100 square feet of wall for tape plus two finish coats — roughly 1.5 gallons per 4×8 sheet. Buy one extra gallon; running out mid-coat is worse than returning an unopened one.',
+      },
+      {
+        q: 'Is 4×12 drywall worth it?',
+        a: 'On walls longer than 8 feet, yes: 4×12 sheets eliminate butt joints, which are the hardest seams to hide. They are heavier and harder to maneuver in tight stairs and hallways — for small rooms, 4×8 sheets are easier to handle.',
+      },
+    ],
+  },
+  {
+    slug: 'roofing-calculator',
+    title: 'Roofing Calculator — Squares, Bundles & Shingle Estimate',
+    shortTitle: 'Roofing Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free roofing calculator. Convert footprint and pitch into roofing squares, shingle bundles, underlayment rolls, and nails — plus an editable materials and labor estimate.',
+    tagline: 'From footprint and pitch to squares and bundles.',
+    intro:
+      'Roofing is sold in squares (100 sq ft), but your house is measured in footprint and pitch. This calculator applies the correct slope multiplier for your roof pitch, adds the right waste factor for gable versus hip roofs, and converts the result into bundles, felt rolls, and nails — the numbers a supplier actually quotes in.',
+    howItWorks: [
+      'Enter the roof footprint length and width (the building outline, not the slope surface).',
+      'Pick the pitch — rise per 12 inches of run. A 6/12 roof multiplies area by 1.118.',
+      'Choose gable (10% waste) or hip/complex (15% waste).',
+      'Read squares, bundles (3 per square), underlayment rolls, and nails; open the cost section for a project estimate.',
+    ],
+    faq: [
+      {
+        q: 'How many bundles of shingles are in a square?',
+        a: 'Three bundles cover one square (100 sq ft) for standard architectural shingles. Some heavyweight designer shingles run 4 bundles per square — check the wrapper before ordering.',
+      },
+      {
+        q: 'Why is my roofer\'s square count higher than this estimate?',
+        a: 'This calculator covers field shingles, underlayment, and nails. Roofers also charge for tear-off and disposal, ridge cap, drip edge, flashing, pipe boots, and steep-slope or story surcharges. Use this number to sanity-check the materials line of their quote, not the total.',
+      },
+    ],
+  },
+  {
+    slug: 'paint-calculator',
+    title: 'Paint Calculator — Gallons Needed for Any Room',
+    shortTitle: 'Paint Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free paint calculator. Get exact gallons from room dimensions, doors, windows, coats, and real coverage per can — plus primer, and an editable paint-and-labor cost estimate.',
+    tagline: 'Buy the right number of gallons the first time.',
+    intro:
+      'The difference between one gallon and three is whether you subtracted the windows and used the coverage printed on your can instead of a guess. This calculator nets out doors and windows, multiplies by your coat count, divides by real coverage — and separates primer, because new drywall drinks a different product than finish paint.',
+    howItWorks: [
+      'Enter room length, width, and height, plus door and window counts.',
+      'Choose coats: 1 for a same-color refresh, 2 standard, 3 for dark-over-light.',
+      'Set coverage from your paint can (350–400 sq ft/gal is typical; textured walls cut it by a third).',
+      'Read gallons and primer; open the cost section for a materials-plus-labor total.',
+    ],
+    faq: [
+      {
+        q: 'How many gallons paint a 12×14 room?',
+        a: 'With 8-ft ceilings, 1 door, and 2 windows: about 340 sq ft of wall, so 2 coats at 350 sq ft/gal needs 2 gallons. Add the ceiling (168 sq ft) and you are at 3 gallons. Always round up — matching a touch-up batch later is nearly impossible.',
+      },
+      {
+        q: 'Do I really need primer?',
+        a: 'On new drywall, yes — bare joint compound and paper face absorb paint unevenly and flash through the finish. Over a sound, similar-color existing paint, a quality paint-and-primer-in-one with two coats usually skips the separate primer step.',
+      },
+    ],
+  },
+  {
+    slug: 'tile-calculator',
+    title: 'Tile Calculator — Tile Count, Thinset & Grout',
+    shortTitle: 'Tile Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free tile calculator. Convert floor dimensions and tile size into exact tile counts with cutting waste, plus thinset bags and grout pounds — with an editable cost and labor estimate.',
+    tagline: 'Tiles, thinset, grout — order once, order right.',
+    intro:
+      'Tile orders fail on waste: a straight grid loses about 10% to cuts, a diagonal or herringbone layout 15%. This calculator applies the right waste factor to your floor area and tile size, then adds the materials everyone forgets — 50-lb thinset bags and grout pounds — so one trip covers the whole job.',
+    howItWorks: [
+      'Enter floor length and width.',
+      'Pick the tile size and layout — diagonal and herringbone add 15% waste instead of 10%.',
+      'Read the tile count (rounded up), thinset bags at ~95 sq ft per 50-lb bag, and grout at ~¼ lb per sq ft.',
+      'Open the cost section for a materials-plus-labor estimate; keep 2–3 spare tiles for future repairs.',
+    ],
+    faq: [
+      {
+        q: 'How many 12×12 tiles do I need for 100 square feet?',
+        a: 'Each 12×12 tile covers exactly 1 sq ft. With 10% cutting waste: 110 tiles for a straight layout, 115 for diagonal. Buy the full box overage — dye lots vary between batches.',
+      },
+      {
+        q: 'How much thinset do I need per 100 square feet?',
+        a: 'Roughly one 50-lb bag per 95 sq ft with a ¼-inch square-notch trowel — so 2 bags for 100 sq ft. Large-format tile (24×24) needs a ½-inch trowel and uses about twice as much.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

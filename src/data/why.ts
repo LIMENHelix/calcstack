@@ -69,4 +69,14 @@ export const WHY_USE: Record<string, string> = {
     'Lifters with a VBT device (or a phone app) use this to autoregulate: bar speed reveals today\'s strength before you waste a warm-up guessing. Coaches use it to set velocity targets instead of fixed percentages — the difference between training an athlete and training a spreadsheet.',
   'vo2max-calculator':
     'Runners use this to track the engine; beginners use the walk test as a safe entry point; coaches use it to group athletes. It is the number smartwatches estimate opaquely — this shows the actual field-test math, free, with nothing on your wrist.',
+  'framing-calculator':
+    'DIYers standing in the lumber aisle and estimators pricing a basement finish both use this: the stud-count rules are simple but the openings-and-corners arithmetic is where orders go wrong. Contractors use the cost layer as a first-pass bid check before quoting.',
+  'drywall-calculator':
+    'Remodelers use it the night before the supplier run: sheets are only half the order — mud, tape, and screws are what get forgotten. The editable cost section doubles as a homeowner\'s sanity check against a drywall sub\'s quote.',
+  'roofing-calculator':
+    'Homeowners use this before calling roofers: knowing your square count and bundle math converts a black-box quote into a conversation. Handy homeowners pricing a shed or garage roof get the full materials list without climbing a ladder twice.',
+  'paint-calculator':
+    'Weekend painters use it to buy once — the can coverage, coat count, and openings math decide whether it is a 2-gallon or 3-gallon job. Landlords refreshing units between tenants use the cost layer to compare DIY against a painter\'s day rate.',
+  'tile-calculator':
+    'DIY tilers use it because the three purchases (tile, thinset, grout) live in different aisles with different coverage math. The diagonal-layout waste toggle exists because that is the exact mistake that strands a Saturday project half-tiled.',
 }
