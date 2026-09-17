@@ -57,7 +57,7 @@ export default function Home() {
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {CALCULATORS.filter((c) =>
-            ['one-rep-max-calculator', 'running-pace-calculator', 'mulch-calculator', 'final-grade-calculator', 'ohms-law-calculator', 'macro-calculator', 'heart-rate-zone-calculator', 'concrete-calculator', 'body-fat-calculator', 'gravel-calculator'].includes(c.slug),
+            ['one-rep-max-calculator', 'running-pace-calculator', 'mulch-calculator', 'final-grade-calculator', 'ohms-law-calculator', 'macro-calculator', 'heart-rate-zone-calculator', 'concrete-calculator', 'body-fat-calculator', 'gravel-calculator', 'periodization-planner', 'velocity-based-training-calculator', 'ckd-carb-up-calculator', 'vo2max-calculator', 'paycheck-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

@@ -4,6 +4,7 @@ import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
 import { MORE_CALC_COMPONENTS } from '@/calcs/more'
 import { NICHE_CALC_COMPONENTS } from '@/calcs/niche'
+import { SPORTS_CALC_COMPONENTS } from '@/calcs/sports'
 import { PaycheckCalc } from '@/calcs/paycheck'
 import type { CalcProps } from '@/calcs'
 import { Seo } from '@/components/Seo'
@@ -14,6 +15,7 @@ const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> =
   ...CALC_COMPONENTS,
   ...MORE_CALC_COMPONENTS,
   ...NICHE_CALC_COMPONENTS,
+  ...SPORTS_CALC_COMPONENTS,
   'paycheck-calculator': PaycheckCalc,
 }
 

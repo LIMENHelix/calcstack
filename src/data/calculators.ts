@@ -943,6 +943,133 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'periodization-planner',
+    title: 'Periodization Planner — Bompa Macrocycle Generator With Dates',
+    shortTitle: 'Periodization Planner',
+    category: 'Fitness & Sports',
+    description:
+      'Free periodization planner based on Tudor Bompa\'s model. Enter your competition date and goal to generate a full macrocycle: phases, dates, loads, and rep ranges.',
+    tagline: 'Your whole season, planned backward from game day.',
+    intro:
+      'Tudor Bompa\'s linear periodization — the model behind modern strength coaching — sequences training into phases: anatomical adaptation, maximum strength, conversion to power or sport-specific work, then a taper that lands you at peak on competition day. Most athletes improvise this in a spreadsheet. This planner builds the entire macrocycle from two dates and a goal: phase boundaries, week counts, intensity zones, and rep ranges, all dated.',
+    howItWorks: [
+      'Enter your training start date and the date you need to peak (meet, game, race, photoshoot).',
+      'Pick the goal: maximum strength to power, hypertrophy to strength, or strength endurance.',
+      'Beginners get a longer anatomical adaptation block, per Bompa\'s guidelines.',
+      'The planner allocates weeks proportionally across phases and reserves a 1–2 week taper.',
+      'Each phase shows dates, %1RM loads, rep ranges, and training focus.',
+    ],
+    faq: [
+      {
+        q: 'What is periodization?',
+        a: 'Planned variation of training volume and intensity over time, so adaptation accumulates without burnout and performance peaks on a chosen date. Tudor Bompa formalized the model — phases (macrocycles) built from weekly blocks (microcycles) — now standard in strength and conditioning.',
+      },
+      {
+        q: 'Why can\'t I just train hard all year?',
+        a: 'Because adaptation plateaus and fatigue accumulates: the same stimulus stops working within weeks, and maximal-intensity training can only be sustained briefly before performance regresses. Phases solve both — each block creates the adaptation the next one converts.',
+      },
+      {
+        q: 'How many times per year should I peak?',
+        a: 'Bompa\'s answer: 2–3 macrocycles per year for most sports. Each macrocycle ends in a peak followed by a short transition (active rest) phase before the next anatomical adaptation block begins.',
+      },
+    ],
+  },
+  {
+    slug: 'ckd-carb-up-calculator',
+    title: 'CKD Carb-Up Calculator — Glycogen, Protein & Refeed Math (McDonald)',
+    shortTitle: 'CKD Carb-Up Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free CKD carb-up calculator based on Lyle McDonald\'s guidelines. Lean-mass protein targets, carb-up amounts for 24–48h refeeds, and the glycogen + water scale jump explained.',
+    tagline: 'The carb-up is a tool. This is its instruction manual.',
+    intro:
+      'The cyclical ketogenic diet — five to six days keto, one to two days of structured carbs — lives or dies on the carb-up math, and Lyle McDonald wrote the book on it (The Ketogenic Diet, Ultimate Diet 2.0). This calculator does his arithmetic: protein anchored to lean body mass, carb-up volume scaled to lean mass for 24-hour and 48-hour refeeds, and the number that stops the Monday-morning panic — how much of the scale jump is glycogen and water, not fat.',
+    howItWorks: [
+      'Enter body weight and body fat percentage (estimate it with our Navy-method calculator).',
+      'Choose the carb-up length: classic 24-hour CKD or a 36–48 hour UD2-style refeed.',
+      'Keto-day targets: protein at 0.7–0.9 g per pound of lean mass, fat filling the rest of maintenance.',
+      'Carb-up targets: roughly 5–6 g/kg lean mass over 24 hours, 12–16 g/kg over a full refeed.',
+      'The scale-jump estimate shows glycogen storage plus the ~3 g of water each gram binds.',
+    ],
+    faq: [
+      {
+        q: 'Why did I gain 4 pounds after my carb-up?',
+        a: 'Glycogen and water, almost entirely. Stored glycogen binds roughly 3 g of water per gram, so a 400 g carb-up that stores ~240 g of glycogen puts about 2 lb of glycogen-plus-water on the scale. It is fuel in the tank, not fat — it drains back out over the keto week.',
+      },
+      {
+        q: 'Who is CKD actually for?',
+        a: 'Trainees doing intense glycolytic work (lifting, sprinting) several times a week, who need glycogen for performance but want keto\'s appetite control the rest of the week. Sedentary keto dieters do not need carb-ups; endurance athletes need different fueling entirely.',
+      },
+      {
+        q: 'Can I gain fat during a carb-up?',
+        a: 'Yes — but only from calories above maintenance, same as always. The carb-up targets here are sized to refill glycogen, not to be a cheat day. Stay near maintenance calories and the refeed overwhelmingly becomes glycogen and water.',
+      },
+    ],
+  },
+  {
+    slug: 'velocity-based-training-calculator',
+    title: 'Velocity Based Training Calculator — Bar Speed to %1RM & Daily Max',
+    shortTitle: 'Velocity Training (VBT) Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free velocity based training (VBT) calculator. Enter load and mean bar velocity to estimate %1RM and daily max for bench, squat, and deadlift using published load-velocity profiles.',
+    tagline: 'The bar speed never lies about how strong you are today.',
+    intro:
+      'Velocity-based training replaces guessing with a speedometer: every lift has a load-velocity relationship, so bar speed reveals what percentage of your max is on the bar — and therefore today\'s true max, which fluctuates with fatigue. This calculator applies the average load-velocity profiles from published research (González-Badillo and colleagues) to bench press, back squat, and deadlift: enter load and mean concentric velocity, get estimated %1RM and daily 1RM.',
+    howItWorks: [
+      'Pick the lift — each has its own profile (squats move faster at a given %1RM than bench).',
+      'Enter the load and mean concentric velocity from your VBT device or phone app.',
+      'The calculator interpolates the load-velocity profile to estimate %1RM.',
+      'Estimated daily 1RM = load ÷ %1RM — use it to autoregulate the day\'s working weights.',
+      'Reference table below shows the full profile, including the minimum velocity threshold.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is velocity-based training?',
+        a: 'The load-velocity relationship is remarkably stable within an individual (r > 0.95 in studies), but average profiles vary between lifters by several percent. Best practice: calibrate your own profile over 2–3 sessions, then re-check monthly as you get stronger.',
+      },
+      {
+        q: 'How do coaches use velocity stops?',
+        a: 'Stop a set when velocity drops a set percentage from the first rep: ~10–15% drop for speed-strength, ~20% for maximum strength, ~30–40% for hypertrophy. It ends sets at the right fatigue dose instead of an arbitrary rep count.',
+      },
+      {
+        q: 'What is the minimum velocity threshold?',
+        a: 'The slowest velocity at which a lifter can complete a rep — roughly their true 1RM speed. Around 0.15–0.2 m/s for bench and deadlift, ~0.3 m/s for squat in research averages. A rep slower than your threshold fails.',
+      },
+    ],
+  },
+  {
+    slug: 'vo2max-calculator',
+    title: 'VO2max Calculator — Cooper 1.5-Mile Run & Rockport Walk Test',
+    shortTitle: 'VO₂max Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free VO2max calculator using the Cooper 1.5-mile run and Rockport 1-mile walk test. Field-test cardio fitness estimates from ACSM guidelines. No lab needed.',
+    tagline: 'Lab-grade cardio fitness from a stopwatch.',
+    intro:
+      'VO₂max — the maximum oxygen your body can use per minute — is the single best number for cardiovascular fitness, and the one wearable brands charge you to estimate. The Cooper 1.5-mile run and Rockport 1-mile walk tests, standard in ACSM guidelines and exercise physiology texts like Fahey\'s Fit & Well, estimate it accurately from a stopwatch. Run (or walk) the distance, enter your time, get your number and fitness band.',
+    howItWorks: [
+      'Cooper test: run 1.5 miles as fast as sustainably possible; enter the time.',
+      'Rockport test: walk 1 mile briskly, record time and heart rate at the finish; enter age, weight, and sex.',
+      'The calculator applies the published regression equations for each test.',
+      'Read your VO₂max in ml/kg/min, the MET equivalent, and a general fitness band.',
+    ],
+    faq: [
+      {
+        q: 'What is a good VO₂max?',
+        a: 'General adult bands: below 28 poor, 28–34 below average, 34–40 fair to good, 40–46 good to excellent, above 46 excellent — with age and sex shifting the bands. Elite endurance athletes run 60–85. Any trend upward is the metric that matters.',
+      },
+      {
+        q: 'Which test should I pick?',
+        a: 'The Cooper run suits people already training — it is maximal effort. The Rockport walk is designed for beginners and older adults: submaximal, safer, and nearly as accurate when the heart rate is measured properly at the finish.',
+      },
+      {
+        q: 'How fast does VO₂max improve?',
+        a: 'Beginners commonly gain 10–20% in the first 3–6 months of consistent Zone 2 training. After that, gains slow to single digits per year — which is why tracking it annually, not weekly, keeps expectations honest.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

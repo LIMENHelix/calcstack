@@ -34,6 +34,7 @@
   <url><loc>https://calcstack-eight.vercel.app/for/personal-trainers</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/athletes</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/landscapers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/strength-and-conditioning-coaches</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/science-and-engineering-students</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/alabama</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/alaska</loc></url>
@@ -92,6 +93,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/body-fat-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/break-even-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/calorie-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/ckd-carb-up-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/compound-interest-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/concrete-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/crypto-profit-calculator</loc></url>
@@ -168,6 +170,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/paycheck-calculator-wisconsin</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/paycheck-calculator-wyoming</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/percentage-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/periodization-planner</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/roi-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/running-pace-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/salary-to-hourly-calculator</loc></url>
@@ -250,4 +253,6 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/tip-calculator-tattoo-artist</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/tip-calculator-uber</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/va-loan-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/velocity-based-training-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/vo2max-calculator</loc></url>
 </urlset>

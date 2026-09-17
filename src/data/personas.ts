@@ -908,12 +908,14 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'one-rep-max-calculator',
+      'periodization-planner',
+      'velocity-based-training-calculator',
       'heart-rate-zone-calculator',
       'macro-calculator',
+      'ckd-carb-up-calculator',
       'body-fat-calculator',
+      'vo2max-calculator',
       'calorie-calculator',
-      'bmi-calculator',
-      'running-pace-calculator',
       'freelance-rate-calculator',
     ],
     faq: [
@@ -944,12 +946,15 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'running-pace-calculator',
+      'vo2max-calculator',
+      'periodization-planner',
       'heart-rate-zone-calculator',
       'one-rep-max-calculator',
+      'velocity-based-training-calculator',
       'macro-calculator',
-      'calorie-calculator',
+      'ckd-carb-up-calculator',
       'body-fat-calculator',
-      'bmi-calculator',
+      'calorie-calculator',
     ],
     faq: [
       {
@@ -999,6 +1004,42 @@ export const PERSONAS: Persona[] = [
       {
         q: 'How do I know if a new mower or skid steer pays for itself?',
         a: 'Loan payoff calculator for the true total cost, then break-even: monthly payment ÷ your margin per job = jobs per month the machine must generate. If that number exceeds the work it realistically brings, the math says wait.',
+      },
+    ],
+  },
+  {
+    slug: 'strength-and-conditioning-coaches',
+    job: 'Strength & Conditioning Coaches',
+    title: 'Calculators for S&C Coaches — Periodization, VBT & Athlete Monitoring Math',
+    description: 'Free tools for strength and conditioning coaches: Bompa periodization planner, velocity-based training estimator, 1RM percentages, VO2max tests, and athlete nutrition math.',
+    hero: 'Your job is turning physiology into spreadsheets: periodized plans, velocity targets, fueling numbers. These tools are the spreadsheet-free version — Bompa macrocycles generated from a competition date, bar speed converted to daily max, VO2max from a stopwatch.',
+    questions: [
+      'What should the loading look like 6 weeks out from the championship?',
+      'Is today a 85% day or a 75% day for this athlete?',
+      'What does the carb-up look like for my keto fighter before weigh-ins?',
+    ],
+    calcSlugs: [
+      'periodization-planner',
+      'velocity-based-training-calculator',
+      'one-rep-max-calculator',
+      'vo2max-calculator',
+      'ckd-carb-up-calculator',
+      'heart-rate-zone-calculator',
+      'macro-calculator',
+      'body-fat-calculator',
+    ],
+    faq: [
+      {
+        q: 'Is the periodization planner really Bompa\'s model?',
+        a: 'Yes — the linear macrocycle structure from Periodization: Theory and Methodology: anatomical adaptation, maximum strength, conversion to power or sport-specific strength, taper. Loads and rep ranges follow his published tables; the planner scales phases to your calendar and lengthens adaptation for novice athletes.',
+      },
+      {
+        q: 'How do I start using velocity with a team?',
+        a: 'Pick one main lift per session, record mean velocity on working sets for two weeks to build each athlete\'s profile, then use the VBT calculator\'s reference table as the shared language: "today we work at 0.55–0.65 m/s" lands better than "85%" on a fatigued Tuesday.',
+      },
+      {
+        q: 'Can athletes use these tools directly?',
+        a: 'That is the design — no logins, works on the weight-room tablet or a phone. Many S&C staffs embed calculators on their team portal using the free embed snippet at the bottom of each tool page.',
       },
     ],
   },
