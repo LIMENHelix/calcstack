@@ -495,6 +495,7 @@ export const PERSONAS: Persona[] = [
       'concrete-mix-calculator',
       'road-base-calculator',
       'driveway-cost-comparison',
+      'bid-sheet-calculator',
       'break-even-calculator',
       'percentage-calculator',
       'loan-payoff-calculator',

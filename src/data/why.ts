@@ -91,6 +91,8 @@ export const WHY_USE: Record<string, string> = {
     'Anyone adding an EV charger, hot tub, or shop heater asks "what wire and what breaker?" — and the 125% continuous-load rule is exactly what casual answers miss. This applies the NEC table and the rule together, copper or aluminum.',
   'hvac-btu-calculator':
     'Homeowners use it before contractor season: knowing your tonnage converts "you need a 5-ton unit, trust me" into a conversation. It is also the reality check for window units and garage mini-splits — right-sizing beats oversizing every time.',
+  'bid-sheet-calculator':
+    'Contractors use it the night before the walkthrough: dump the takeoff counts from the framing, drywall, and paint calculators in as line items, apply markup, and print a bid. Homeowners run it in reverse — paste a contractor\'s quote in line by line and see the margin hiding inside it.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }

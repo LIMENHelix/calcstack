@@ -1395,6 +1395,37 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'bid-sheet-calculator',
+    title: 'Pro Bid Sheet — Contractor Estimate Builder with Markup & Margin',
+    shortTitle: 'Pro Bid Sheet',
+    category: 'Trades & Engineering',
+    description:
+      'Free contractor bid sheet. Turn takeoff quantities into a priced, line-item estimate with markup vs margin math and a $/sq ft check — saved in your browser, prints clean for the client.',
+    tagline: 'Takeoff numbers in, client-ready bid out.',
+    intro:
+      'Every bid starts as a pile of takeoff quantities — studs, sheets, gallons, hours. This bid sheet turns that pile into a priced estimate: editable line items split into materials and labor, your overhead-and-profit markup applied on top, the true margin shown next to it, and a price-per-square-foot reality check against your market. It auto-saves in your browser, so the bid is still there when the client calls back, and it prints clean for the kitchen-table meeting.',
+    howItWorks: [
+      'Name the job and, optionally, the client.',
+      'Edit the sample line items or add your own — description, quantity, unit, and unit cost for each; tag each line as material or labor.',
+      'Set your markup percentage on cost and the job size in square feet.',
+      'Read the materials and labor subtotals, markup amount, bid total, true margin, and $/sq ft — then print or save as PDF.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between markup and margin?',
+        a: 'Markup is a percentage added to your cost; margin is the profit share of the final price. A 15% markup on a $2,428 cost adds $364.20 for a $2,792.20 bid — but $364.20 ÷ $2,792.20 is only a 13.0% margin. Overhead targets are expressed in margin, so quoting in markup without converting is how contractors undercharge.',
+      },
+      {
+        q: 'What markup should a contractor charge?',
+        a: 'It depends on overhead. Many residential remodelers and GCs target roughly 15–25% markup on small jobs, and specialty subs vary widely by trade and region. Work backwards from your real numbers: if running the business costs 15% of revenue and you want 10% profit, you need a 25% margin — which is a 33% markup on cost.',
+      },
+      {
+        q: 'Where is my bid data stored?',
+        a: "Only in your browser's local storage on this device — nothing is uploaded or shared. Clearing browser data resets the sheet, so use Print / save as PDF to keep a permanent copy of any real bid.",
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
