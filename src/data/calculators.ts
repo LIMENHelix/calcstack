@@ -1461,6 +1461,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'real-estate-commission-calculator',
+    title: 'Real Estate Commission Calculator — Splits, Fees & Agent Net Pay',
+    shortTitle: 'Commission Split Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free real estate commission calculator. Run the full waterfall — gross commission, your side, franchise fee, broker split, transaction fees — and see your true net per deal.',
+    tagline: 'What does the agent actually keep?',
+    intro:
+      'The headline commission percentage is never what lands in your account. This calculator runs the real waterfall: gross commission, your side of it, the franchise fee off the top, your split with the broker, and flat transaction fees — ending at your true net per deal and the effective percentage of the sale price you actually keep.',
+    howItWorks: [
+      'Enter the sale price, total commission %, and your side of the deal (50% if you have one side of a typical split).',
+      'Add your franchise fee %, your broker split (% to you), and any flat transaction/admin fee.',
+      'Read each stage of the waterfall plus your net and effective rate on the sale price.',
+    ],
+    faq: [
+      {
+        q: 'Why is my net so much lower than the commission percentage?',
+        a: 'Because several layers come out first. On a $400,000 sale at 5.5% total, your half is $11,000 — then a 6% franchise fee ($660), then a 70/30 broker split leaves $7,238, and a $395 transaction fee leaves $6,843. That is 1.71% of the sale price, not 5.5%.',
+      },
+      {
+        q: 'What are typical broker splits?',
+        a: 'New agents often start at 50/50 to 70/30; experienced agents negotiate 80/20 or 90/10, sometimes with a yearly cap after which they keep 100%. Flat-fee and 100%-commission brokerages trade the split for monthly desk fees instead — run both structures through this calculator to compare.',
+      },
+      {
+        q: 'What is a franchise fee?',
+        a: 'Agents at franchise brokerages (the big national brands) typically pay 5–8% of gross commission off the top, before the broker split is applied. It funds the national brand and marketing. Independent brokerages usually do not charge one.',
+      },
+    ],
+  },
+  {
+    slug: 'cap-rate-calculator',
+    title: 'Cap Rate Calculator — NOI, Gross Rent Multiplier & Cash-on-Cash Return',
+    shortTitle: 'Cap Rate Calculator',
+    category: 'Savings & Investing',
+    description:
+      'Free cap rate calculator for rental property. Compute NOI, cap rate, gross rent multiplier, mortgage payment, annual cash flow, and cash-on-cash return in one pass.',
+    tagline: 'Is this rental actually a good deal?',
+    intro:
+      'Cap rate is the fastest honest filter in rental investing — but only if the NOI is honest. This calculator builds NOI properly (rent minus vacancy minus real operating expenses, never the mortgage), then layers financing on top so you see both the property\'s unlevered yield (cap rate, GRM) and your actual leveraged result (cash flow and cash-on-cash return).',
+    howItWorks: [
+      'Enter the purchase price, monthly rent, a vacancy allowance, and operating expenses as % of income (35–50% is typical for single-family).',
+      'Add your financing: down payment %, loan rate, and term.',
+      'Read NOI, cap rate, and GRM for the property itself — then the mortgage payment, annual cash flow, and cash-on-cash return for your deal.',
+    ],
+    faq: [
+      {
+        q: 'Does cap rate include the mortgage?',
+        a: 'No. Cap rate = NOI ÷ price, and NOI excludes debt service by definition — it measures the property\'s yield independent of how you finance it. Your return with financing is cash-on-cash: (NOI − annual debt service) ÷ cash invested. A property can have a healthy 6% cap rate and still produce near-zero cash flow at high interest rates.',
+      },
+      {
+        q: 'What is a good cap rate?',
+        a: 'It depends on market and risk. Roughly: prime big-city multifamily often trades at 4–5%, suburban single-family rentals at 5–7%, and higher-risk or smaller-market properties at 8–10%+. Compare a deal to similar sales in the same market — the absolute number means little alone.',
+      },
+      {
+        q: 'What should I include in operating expenses?',
+        a: 'Property taxes, insurance, maintenance and repairs, capital expenditure reserves, management (even if self-managed — your time has a cost), utilities you pay, and HOA dues. Not the mortgage. Sellers\' pro formas famously understate expenses; 35–50% of gross income is the common reality check for single-family rentals.',
+      },
+    ],
+  },
+  {
+    slug: 'gci-goal-calculator',
+    title: 'GCI Goal Calculator — How Many Deals to Hit Your Income Goal',
+    shortTitle: 'GCI Goal Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free GCI goal calculator for real estate agents. Convert your annual income goal into the number of closings you need, with franchise fees and broker splits baked in.',
+    tagline: 'Turn the income goal into a deal count.',
+    intro:
+      'Business plans fail when the income goal never gets converted into a deal count. This planner works backwards from what you want to net: your average sale price, commission per side, franchise fee, and broker split produce a true net-per-deal figure, and your goal divided by that number is the closings you need — per year and per month.',
+    howItWorks: [
+      'Enter your annual net income goal and your market\'s average sale price.',
+      'Add your commission per side %, franchise fee %, and broker split.',
+      'Read your net per deal, the deals needed this year, and the pace per month your prospecting has to support.',
+    ],
+    faq: [
+      {
+        q: 'What is GCI?',
+        a: 'Gross Commission Income — the total commission your sides of transactions generate before splits, fees, and expenses. It is the headline number brokerages recruit with, but your actual income is GCI minus franchise fees, broker splits, transaction fees, and your marketing costs. Plan on net, not GCI.',
+      },
+      {
+        q: 'Why does net per deal matter more than GCI?',
+        a: 'Because two agents with identical GCI can take home wildly different incomes. A $150,000 goal at $7,238 net per deal needs 21 closings; the same goal at a 50/50 split with a franchise fee can need 30+. Know your number before you commit to a pipeline.',
+      },
+      {
+        q: 'How many deals does a typical agent close?',
+        a: 'It varies enormously by market and experience — many part-time agents close a handful of deals a year while full-time agents in active markets may close 15–30. Use this planner in reverse: enter your actual last-year closings to see the income your current structure produces, then test what a better split would change.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

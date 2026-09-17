@@ -95,6 +95,12 @@ export const WHY_USE: Record<string, string> = {
     'Contractors use it the night before the walkthrough: dump the takeoff counts from the framing, drywall, and paint calculators in as line items, apply markup, and print a bid. Homeowners run it in reverse — paste a contractor\'s quote in line by line and see the margin hiding inside it.',
   'markup-margin-calculator':
     'Anyone who quotes prices uses this: supplier talks and accounting run on margin, price sheets run on markup, and mixing the two up is how a "profitable" job loses money. The overhead solver is the part people bookmark — it converts what the business costs to run into the markup every quote must carry.',
+  'real-estate-commission-calculator':
+    'Agents use it before listing appointments and when comparing brokerages: the headline split means nothing until the franchise fee and transaction costs come out. New agents use it to find out why the 5.5% they quoted is really 1.7% to them.',
+  'cap-rate-calculator':
+    'Investors use it in the first five minutes of screening a listing — honest NOI, cap rate, and GRM kill bad deals fast, and the financing layer shows whether the deal still cash-flows at today\'s rates. Agents use it to speak investor language with clients.',
+  'gci-goal-calculator':
+    'Agents building a business plan use it to convert "I want to make $150k" into "I need 21 closings, which is 1.8 a month" — the number that actually drives prospecting. Brokers use it in recruiting conversations to show agents what their split really produces.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }

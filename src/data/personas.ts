@@ -64,6 +64,9 @@ export const PERSONAS: Persona[] = [
       'fha-loan-calculator',
       'va-loan-calculator',
       'jumbo-loan-calculator',
+      'real-estate-commission-calculator',
+      'gci-goal-calculator',
+      'cap-rate-calculator',
       'loan-payoff-calculator',
       'sales-tax-calculator',
       'percentage-calculator',
@@ -240,6 +243,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'mortgage-payment-calculator',
+      'cap-rate-calculator',
       'loan-payoff-calculator',
       'roi-calculator',
       'break-even-calculator',
