@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { CALCULATORS, CATEGORIES } from '@/data/calculators'
+import { PERSONAS } from '@/data/personas'
 import { Seo } from '@/components/Seo'
 import { SearchBar } from '@/components/SearchBar'
 import { Card, CardContent } from '@/components/ui/card'
@@ -66,6 +67,24 @@ export default function Home() {
           </div>
         </section>
       ))}
+
+      <section className="mb-10">
+        <h2 className="mb-4 text-xl font-semibold">Toolkits by profession</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {PERSONAS.map((p) => (
+            <Link key={p.slug} to={`/for/${p.slug}`}>
+              <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
+                <CardContent className="p-5">
+                  <p className="font-semibold">{p.job}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {p.calcSlugs.length} tools curated for how {p.job.split(' ')[0].toLowerCase()} actually work
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <section className="mb-10">
         <h2 className="mb-4 text-xl font-semibold">Data &amp; Research</h2>

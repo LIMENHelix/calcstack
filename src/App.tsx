@@ -7,6 +7,7 @@ import DataMortgage from './pages/DataMortgage'
 import DataSalaries from './pages/DataSalaries'
 import StateMortgage from './pages/StateMortgage'
 import Directory from './pages/Directory'
+import PersonaPage from './pages/PersonaPage'
 import EmbedPage from './pages/EmbedPage'
 import EmbedTablePage from './pages/EmbedTablePage'
 
@@ -28,6 +29,7 @@ export default function App() {
               <Route path="/data/mortgage-payment-in/:slug" element={<StateMortgage />} />
               <Route path="/data/average-salary-by-job" element={<DataSalaries />} />
               <Route path="/directory" element={<Directory />} />
+              <Route path="/for/:slug" element={<PersonaPage />} />
               <Route path="*" element={<CalculatorPage />} />
             </Routes>
           </Layout>

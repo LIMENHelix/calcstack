@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { CALCULATORS, CATEGORIES } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
 import { HOME_VALUES } from '@/data/stats'
+import { PERSONAS } from '@/data/personas'
 import { Seo } from '@/components/Seo'
 import { SearchBar } from '@/components/SearchBar'
 
@@ -70,6 +71,19 @@ export default function Directory() {
           </section>
         )
       })}
+
+      <section className="mt-10">
+        <h2 className="mb-3 text-xl font-semibold">Toolkits by profession</h2>
+        <ul className="grid gap-1 text-sm sm:grid-cols-2 lg:grid-cols-3">
+          {PERSONAS.map((p) => (
+            <li key={p.slug}>
+              <Link to={`/for/${p.slug}`} className="text-primary underline-offset-4 hover:underline">
+                {p.job} →
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section className="mt-10">
         <h2 className="mb-3 text-xl font-semibold">Mortgage Payment by State</h2>
