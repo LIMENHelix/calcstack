@@ -892,4 +892,146 @@ export const PERSONAS: Persona[] = [
       },
     ],
   },
+  {
+    slug: 'personal-trainers',
+    job: 'Personal Trainers & Coaches',
+    title: 'Calculators for Personal Trainers — 1RM, Zones, Macros & Client Programming Math',
+    description: 'Free tools for personal trainers: one-rep max with percentage charts, Karvonen heart rate zones, macro splits, and body fat estimates for client programming.',
+    hero: 'Programming is applied math: percentages of a max, zones from a resting heart rate, macros from a goal. These are the exact formulas your certification taught — Epley, Karvonen, Mifflin-St Jeor — running at client-session speed.',
+    questions: [
+      'What are this client\'s working weights at 75% and 85%?',
+      'Where should their heart rate sit for Zone 2 conditioning?',
+      'What macros do I hand a fat-loss client on day one?',
+    ],
+    calcSlugs: [
+      'one-rep-max-calculator',
+      'heart-rate-zone-calculator',
+      'macro-calculator',
+      'body-fat-calculator',
+      'calorie-calculator',
+      'bmi-calculator',
+      'running-pace-calculator',
+      'freelance-rate-calculator',
+    ],
+    faq: [
+      {
+        q: 'Are these the formulas certifications actually teach?',
+        a: 'Yes: the NSCA teaches Epley for 1RM estimation, NASM materials reference Brzycki, ACSM teaches the Karvonen heart-rate-reserve method, and Mifflin-St Jeor is the equation the Academy of Nutrition and Dietetics rates most accurate. Each tool page documents its formula.',
+      },
+      {
+        q: 'How do I use the 1RM chart with a new client?',
+        a: 'Have them complete a crisp set of 5 at a challenging weight — never grind a true max with a new client. Enter weight and reps, then program straight off the percentage table: 5×5 work typically sits at 80–85% of the estimate.',
+      },
+      {
+        q: 'Can I send clients here directly?',
+        a: 'That is the idea — no accounts, no app installs, works on any phone between sets. Many trainers put the macro and zone calculators in their onboarding packet; every tool also has a free embed snippet for your training site.',
+      },
+    ],
+  },
+  {
+    slug: 'athletes',
+    job: 'Runners & Athletes',
+    title: 'Calculators for Runners & Athletes — Pace, Zones, 1RM & Race Predictions',
+    description: 'Free tools for runners and athletes: running pace with race time predictions, heart rate zones, one-rep max, macros, and body fat. No signup.',
+    hero: 'Training is three dials: how fast, how heavy, how much fuel. These tools set all three — pace and race predictions for the run, percentages for the weight room, macros and zones for everything in between.',
+    questions: [
+      'What does my 10K time predict for a marathon?',
+      'What pace is my Zone 2, honestly?',
+      'How much protein does this training block actually need?',
+    ],
+    calcSlugs: [
+      'running-pace-calculator',
+      'heart-rate-zone-calculator',
+      'one-rep-max-calculator',
+      'macro-calculator',
+      'calorie-calculator',
+      'body-fat-calculator',
+      'bmi-calculator',
+    ],
+    faq: [
+      {
+        q: 'Can my 5K time really predict my marathon?',
+        a: 'Within a few percent — if you train for the marathon. The Riegel formula assumes equivalent preparation; it cannot give you endurance you never built. Use it as a target, then respect the mileage.',
+      },
+      {
+        q: 'Why does everyone say slow down on easy days?',
+        a: 'Because Zone 2 builds the aerobic engine that everything else runs on, and most athletes train it too fast to get the adaptation. The heart rate zone calculator shows your honest Zone 2 ceiling — staying under it feels embarrassingly easy at first.',
+      },
+      {
+        q: 'Do strength percentages matter for runners?',
+        a: 'Yes — heavy low-rep work (85%+ of 1RM) improves running economy and injury resistance without adding bulk. The one-rep max calculator gives you the loads without ever testing a true max.',
+      },
+    ],
+  },
+  {
+    slug: 'landscapers',
+    job: 'Landscapers & Lawn Care Pros',
+    title: 'Calculators for Landscapers — Mulch, Gravel, Concrete & Job Pricing Math',
+    description: 'Free tools for landscapers: mulch calculator, gravel and concrete estimates, break-even analysis, and pricing math for quotes. No signup, works on-site.',
+    hero: 'Landscaping profit is made in the estimate: order a yard short and the job stalls, quote a dollar light and the margin is gone. These tools do materials math on-site from your phone and keep every quote honest.',
+    questions: [
+      'How many yards of mulch does this bed actually need?',
+      'What tonnage of gravel for this driveway?',
+      'Is this job priced above my real break-even?',
+    ],
+    calcSlugs: [
+      'mulch-calculator',
+      'gravel-calculator',
+      'concrete-calculator',
+      'break-even-calculator',
+      'percentage-calculator',
+      'sales-tax-calculator',
+      'loan-payoff-calculator',
+      'freelance-rate-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I quote mulch jobs without guessing?',
+        a: 'Measure the beds, run the mulch calculator at the client\'s requested depth, then quote material cost + delivery + your installed rate per yard (commonly 2–3× material cost). The cubic-yard-to-bag conversion ends the "how many bags" debate on the spot.',
+      },
+      {
+        q: 'Bulk or bagged materials for my crew?',
+        a: 'Above ~2 cubic yards, bulk wins on price almost everywhere — typically $30–50/yard bulk versus the $40–67/yard equivalent in bags. The gravel and mulch calculators show both so you can compare against your supplier\'s quote in the truck.',
+      },
+      {
+        q: 'How do I know if a new mower or skid steer pays for itself?',
+        a: 'Loan payoff calculator for the true total cost, then break-even: monthly payment ÷ your margin per job = jobs per month the machine must generate. If that number exceeds the work it realistically brings, the math says wait.',
+      },
+    ],
+  },
+  {
+    slug: 'science-and-engineering-students',
+    job: 'Science & Engineering Students',
+    title: 'Calculators for Science & Engineering Students — Ohm\'s Law, GPA & Exam Math',
+    description: 'Free tools for STEM students: Ohm\'s law solver, final grade calculator, weighted GPA, percentage math, and date countdowns for deadlines.',
+    hero: 'STEM coursework is math about math. These tools handle the meta-layer: solve circuit problems without rearranging formulas, know exactly what you need on the final, and keep the GPA that keeps the scholarship.',
+    questions: [
+      'What do I need on the final to keep my A?',
+      'How do I solve for resistance without algebra gymnastics?',
+      'What does this semester do to my cumulative GPA?',
+    ],
+    calcSlugs: [
+      'ohms-law-calculator',
+      'final-grade-calculator',
+      'gpa-calculator',
+      'percentage-calculator',
+      'date-difference-calculator',
+      'salary-to-hourly-calculator',
+      'compound-interest-calculator',
+    ],
+    faq: [
+      {
+        q: 'Can I use the Ohm\'s law calculator in lab reports?',
+        a: 'Use it to check your work — show the rearrangement by hand, verify with the calculator. It solves all twelve permutations of V=IR and P=VI, so it catches algebra slips before your TA does.',
+      },
+      {
+        q: 'How do I triage finals week?',
+        a: 'Run every course through the final grade calculator first. Courses where you need 95%+ get priority study time; courses where you have already locked the grade get a review skim. Strategy beats panic.',
+      },
+      {
+        q: 'What GPA do engineering employers and grad schools want?',
+        a: 'Common lines: 3.0 for most internships and large employers, 3.5+ for competitive grad programs and fellowships. The GPA calculator\'s what-if mode shows exactly how this semester moves your cumulative number.',
+      },
+    ],
+  },
 ]

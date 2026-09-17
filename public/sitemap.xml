@@ -31,6 +31,10 @@
   <url><loc>https://calcstack-eight.vercel.app/for/retirees</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/military-veterans</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/first-time-homebuyers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/personal-trainers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/athletes</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/landscapers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/science-and-engineering-students</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/alabama</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/alaska</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/arizona</loc></url>
@@ -85,25 +89,35 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/15-year-mortgage-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/age-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/bmi-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/body-fat-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/break-even-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/calorie-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/compound-interest-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/concrete-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/crypto-profit-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/date-difference-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/discount-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/fha-loan-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/final-grade-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/freelance-rate-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/freelance-rate-calculator-graphic-designer</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/freelance-rate-calculator-photographer</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/freelance-rate-calculator-web-developer</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/freelance-rate-calculator-writer</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/gpa-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/gravel-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/heart-rate-zone-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/inflation-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/jumbo-loan-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/loan-payoff-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/macro-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/mortgage-payment-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/mulch-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/ohms-law-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/one-rep-max-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/percentage-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/roi-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/running-pace-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/salary-to-hourly-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/sales-tax-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/sales-tax-calculator-alabama</loc></url>

@@ -601,6 +601,316 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'one-rep-max-calculator',
+    title: 'One Rep Max Calculator — Epley & Brzycki Formulas With Training Percentages',
+    shortTitle: 'One Rep Max Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free one rep max (1RM) calculator using the Epley and Brzycki formulas. Enter weight and reps to get your estimated max plus a full training percentage chart.',
+    tagline: 'Know your max without testing your max.',
+    intro:
+      'Testing a true one-rep max is fatiguing, risky, and unnecessary for programming. This calculator estimates your 1RM from any submaximal set using the two most validated formulas — Epley (the NSCA standard) and Brzycki — averages them for a robust estimate, and generates the full percentage chart that percentage-based programs (5/3/1, Texas Method, most powerlifting peaking plans) are built on.',
+    howItWorks: [
+      'Enter the weight you lifted and the reps you completed with good form.',
+      'Sets of 1–12 reps give the most accurate estimates; accuracy drops beyond that.',
+      'The calculator applies Epley (weight × (1 + reps/30)) and Brzycki (weight × 36/(37−reps)) and averages them.',
+      'Read your estimated 1RM and the 50–95% training loads below it.',
+    ],
+    faq: [
+      {
+        q: 'How accurate are 1RM formulas?',
+        a: 'Within roughly ±5% for sets of 5 reps or fewer on big barbell lifts, and ±10% for sets up to 12. Accuracy degrades on high-rep sets and isolation movements. Treat the number as a programming guide, not a guarantee.',
+      },
+      {
+        q: 'Which formula do certifications like NASM and NSCA use?',
+        a: 'The NSCA teaches the Epley formula; NASM materials commonly reference Brzycki. Both appear in this calculator — the averaged estimate is usually closest to a tested max.',
+      },
+      {
+        q: 'How do I use the percentage chart?',
+        a: 'Match the program to the row: strength work lives at 85–95% (1–5 reps), hypertrophy at 65–85% (6–12 reps), and muscular endurance below 65%. Recalculate every 4–8 weeks as your estimated max climbs.',
+      },
+    ],
+  },
+  {
+    slug: 'heart-rate-zone-calculator',
+    title: 'Heart Rate Zone Calculator — Karvonen Formula Training Zones',
+    shortTitle: 'Heart Rate Zone Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free heart rate zone calculator using the Karvonen formula. Enter age and resting heart rate for personalized zones 1–5, from recovery to max effort.',
+    tagline: 'Train the right system, not just the right amount.',
+    intro:
+      '"220 minus age" zones ignore the biggest variable in cardiac fitness: your resting heart rate. This calculator uses the Karvonen (heart rate reserve) method — the approach taught in ACSM and NASM certifications — which scales every zone to your actual fitness level. Five zones, from active recovery to redline, personalized in two inputs.',
+    howItWorks: [
+      'Enter your age and resting heart rate (measure it lying down, right after waking).',
+      'The calculator estimates max HR (220 − age), then your heart rate reserve (max − resting).',
+      'Each zone is a percentage band of that reserve added back to your resting rate.',
+      'Zone 2 (60–70%) is the endurance base zone where most training time should live.',
+    ],
+    faq: [
+      {
+        q: 'Why is Karvonen better than simple percentage-of-max zones?',
+        a: 'Two 40-year-olds can have resting heart rates of 50 and 80 — a simple percentage gives them identical zones, which is wrong. Karvonen anchors to heart rate reserve, so a fitter heart earns lower, more accurate zone boundaries.',
+      },
+      {
+        q: 'How much of my training should be Zone 2?',
+        a: 'The 80/20 rule used by most endurance coaches: roughly 80% of weekly training time in Zones 1–2 (conversational pace) and 20% in Zones 3–5. Zone 2 feels almost too easy — that is the point.',
+      },
+      {
+        q: 'What if I know my actual max heart rate?',
+        a: 'Use it: replace (220 − age) with your tested max from a hard hill-repeat or race effort. The reserve method stays the same; the tested max just removes the estimation error.',
+      },
+    ],
+  },
+  {
+    slug: 'macro-calculator',
+    title: 'Macro Calculator — Protein, Carbs & Fat for Your Goal',
+    shortTitle: 'Macro Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free macro calculator. Get daily protein, carb, and fat targets based on your body, activity, and goal — fat loss, maintenance, or muscle gain.',
+    tagline: 'Calories decide weight; macros decide composition.',
+    intro:
+      'Two diets with identical calories can produce completely different physiques — the difference is macronutrient split. This calculator estimates your maintenance calories with the Mifflin-St Jeor equation, adjusts for your goal (cut, maintain, or bulk), then splits the total into evidence-based targets: protein anchored to body weight, fat set to support hormones, and carbs filling the rest.',
+    howItWorks: [
+      'Enter weight, height, age, and sex for the Mifflin-St Jeor BMR estimate.',
+      'Pick your honest activity level — most people overestimate by one tier.',
+      'Choose a goal: fat loss (−20% calories), maintenance, or muscle gain (+10%).',
+      'Protein is set at 1.6–2.0 g/kg (higher when cutting), fat at 25% of calories, carbs take the remainder.',
+    ],
+    faq: [
+      {
+        q: 'Why does protein go up when cutting?',
+        a: 'In a deficit, higher protein (around 2 g/kg) protects muscle mass — research consistently shows high-protein cuts preserve more lean tissue than low-protein ones at the same calories. Muscle is what keeps the weight off afterward.',
+      },
+      {
+        q: 'How closely do I need to hit these numbers?',
+        a: 'Calories and protein within ±10% covers ~90% of results. Carb and fat split can flex day to day — total weekly intake matters more than any single day\'s precision.',
+      },
+      {
+        q: 'Should I eat back exercise calories?',
+        a: 'No — the activity multiplier already includes them. Fitness trackers overestimate burn by 20–50%, so "eating back" their numbers is the most common reason diets stall.',
+      },
+    ],
+  },
+  {
+    slug: 'running-pace-calculator',
+    title: 'Running Pace Calculator — Pace, Speed & Race Time Predictor',
+    shortTitle: 'Running Pace Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free running pace calculator. Enter any distance and time for pace per km and mile, speed, and equivalent 5K, 10K, half marathon, and marathon predictions.',
+    tagline: 'One run in, every race prediction out.',
+    intro:
+      'Pace math trips everyone up mid-run: what is 4:55 per km in miles, and what does today\'s 10K say about your marathon? This calculator converts any distance and time into pace per kilometer and per mile, overall speed, and equivalent race times at the four classic distances using the Riegel formula — the standard race-equivalency model used by coaches.',
+    howItWorks: [
+      'Enter the distance you ran (km or miles) and your time in hours, minutes, seconds.',
+      'Read your pace per km, pace per mile, and speed instantly.',
+      'The Riegel formula (T₂ = T₁ × (D₂/D₁)^1.06) predicts equivalent times for 5K through marathon.',
+      'Predictions assume equivalent training for the distance — a 5K time does not guarantee a marathon without the mileage.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is the Riegel prediction?',
+        a: 'Within a few percent for runners trained for both distances. It overestimates marathon performance for runners whose training is short and fast — endurance is a separate adaptation from speed.',
+      },
+      {
+        q: 'What is a good running pace?',
+        a: 'Context is everything: average 5K finish times cluster around 6:30–7:30 per km for recreational runners, sub-4:00 per km is competitive amateur, and elites run under 3:00. Compare against your own history first.',
+      },
+      {
+        q: 'How do I convert treadmill speed to pace?',
+        a: 'Treadmills display speed (km/h or mph): pace is 60 ÷ speed. 12 km/h is exactly 5:00 per km. The calculator converts automatically — enter a 1 km run at the time it takes at that speed.',
+      },
+    ],
+  },
+  {
+    slug: 'mulch-calculator',
+    title: 'Mulch Calculator — Cubic Yards & Bags From Area and Depth',
+    shortTitle: 'Mulch Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free mulch calculator. Enter square footage and depth to get cubic feet, cubic yards for bulk delivery, and exact bag counts for 2 and 3 cu ft bags.',
+    tagline: 'Never make a second trip to the garden center.',
+    intro:
+      'Mulch is sold two ways — by the cubic yard in bulk or by the bag — and beds are measured in square feet and inches. That unit mismatch is why everyone either runs out mid-job or pays for a pallet they never open. This calculator does the conversion both ways: bulk yards for delivery and exact bag counts for the DIY route.',
+    howItWorks: [
+      'Measure the bed\'s area in square feet (length × width for rectangles; pace off odd shapes in sections).',
+      'Choose depth: 2–3 inches for annual refresh, 3–4 inches for new beds or weed suppression.',
+      'The calculator converts area × depth to cubic feet, then to cubic yards (÷27).',
+      'Bag counts use the standard 2 and 3 cubic foot sizes.',
+    ],
+    faq: [
+      {
+        q: 'How deep should mulch be?',
+        a: '2–3 inches is the standard for established beds; 3–4 inches for new installations. More than 4 inches suffocates roots and invites rot — deeper is not better.',
+      },
+      {
+        q: 'Bulk or bags — which is cheaper?',
+        a: 'Bulk almost always wins above ~2 cubic yards: bulk mulch typically runs $30–50 per yard versus $3–5 per 2 cu ft bag (which works out to $40–67 per yard equivalent). Below a yard, bags avoid delivery fees.',
+      },
+      {
+        q: 'How many bags are in a yard of mulch?',
+        a: 'A cubic yard is 27 cubic feet — so 13.5 of the 2 cu ft bags or 9 of the 3 cu ft bags per yard. The calculator shows both counts directly.',
+      },
+    ],
+  },
+  {
+    slug: 'gravel-calculator',
+    title: 'Gravel Calculator — Tons, Yards & Bags for Driveways and Paths',
+    shortTitle: 'Gravel Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free gravel calculator. Enter length, width, and depth to get cubic yards and approximate tons of crushed stone or gravel for any project.',
+    tagline: 'The driveway math quarries assume you can\'t do.',
+    intro:
+      'Gravel is ordered by the ton but planned by the yard, and the conversion depends on the material. This calculator handles the full chain: dimensions to cubic feet to cubic yards to approximate tons using the standard crushed-stone density — so you can order once, order right, and spot a bad quote instantly.',
+    howItWorks: [
+      'Enter the project length and width in feet.',
+      'Enter depth in inches: 2–3 for paths, 4 for driveways over a compacted base, 6+ for heavy vehicles.',
+      'The calculator computes cubic yards and converts to tons at ~1.4 tons per yard (typical crushed stone).',
+      'Add 5–10% for compaction and waste before ordering.',
+    ],
+    faq: [
+      {
+        q: 'How much does a ton of gravel cover?',
+        a: 'Roughly 100 square feet at 2 inches deep, or 80 square feet at 3 inches, for standard crushed stone. Pea gravel and lava rock differ — ask the supplier for their density if ordering specialty stone.',
+      },
+      {
+        q: 'How deep should a gravel driveway be?',
+        a: 'Three layers is the professional standard: 4 inches of large base stone, 4 inches of mid-size, and 2–3 inches of surface gravel. For a single-layer refresh, 2–3 inches over existing compacted gravel is typical.',
+      },
+      {
+        q: 'How many cubic yards fit in a dump truck?',
+        a: 'A standard tandem dump truck carries 10–14 cubic yards; a single-axle around 5–6. Weight is often the real limit — a full load of gravel can exceed 10 tons.',
+      },
+    ],
+  },
+  {
+    slug: 'concrete-calculator',
+    title: 'Concrete Calculator — Cubic Yards & Bag Count for Slabs',
+    shortTitle: 'Concrete Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free concrete calculator. Enter slab length, width, and thickness to get cubic yards for ready-mix and exact 60/80 lb bag counts.',
+    tagline: 'Slabs, footings, posts — ordered right the first time.',
+    intro:
+      'Concrete has a brutal property: you cannot pause mid-pour to buy more. Ordering short means a cold joint and a weakened slab; ordering long is money hardening in the truck. This calculator converts your dimensions to cubic yards for ready-mix orders and to exact bag counts for the mixer-in-a-wheelbarrow approach, so the pour finishes in one go.',
+    howItWorks: [
+      'Enter the slab length and width in feet.',
+      'Enter thickness: 4 inches is standard for patios and walkways, 5–6 for driveways, 6+ for heavy loads.',
+      'The calculator computes cubic yards (the ready-mix unit) and cubic feet.',
+      'Bag counts use standard yields: 80 lb ≈ 0.6 cu ft, 60 lb ≈ 0.45 cu ft.',
+    ],
+    faq: [
+      {
+        q: 'When is ready-mix worth it over bags?',
+        a: 'The crossover is around 1 cubic yard: that is 45 bags of 80 lb mix — hours of brutal mixing — versus a single truck delivery. Most pros say bags under a yard, truck over it, and always order 5–10% extra.',
+      },
+      {
+        q: 'How thick should a concrete driveway be?',
+        a: '4 inches handles passenger cars on good soil; 5–6 inches is the common standard for durability, and 6+ with reinforcement for trucks or poor subgrade. Thickness is cheaper than replacement.',
+      },
+      {
+        q: 'How many 80 lb bags make a yard of concrete?',
+        a: 'About 45 bags per cubic yard (27 cu ft ÷ 0.6 cu ft per bag). The 60 lb size takes about 60 bags. The calculator shows both counts for your exact slab.',
+      },
+    ],
+  },
+  {
+    slug: 'body-fat-calculator',
+    title: 'Body Fat Calculator — US Navy Method (Tape Measure Only)',
+    shortTitle: 'Body Fat Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free body fat percentage calculator using the US Navy circumference method. Just a tape measure: waist, neck, height (plus hip for women).',
+    tagline: 'A tape measure beats a $50 smart scale.',
+    intro:
+      'The US Navy body fat formula estimates body composition from circumference measurements — no calipers, no scanners, no bioimpedance scale guessing at your hydration. Developed for military fitness assessments, it is the most validated no-equipment method available and typically lands within 3–4% of a DEXA scan. This calculator also maps your result to the American Council on Exercise categories.',
+    howItWorks: [
+      'Measure height, waist at the navel (relaxed, not sucked in), and neck below the Adam\'s apple.',
+      'Women also measure hips at the widest point.',
+      'The Navy formula combines the circumferences logarithmically — men and women use different equations.',
+      'Read your estimated body fat percentage and ACE category.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is the Navy method?',
+        a: 'Studies put it within roughly ±3–4% of DEXA for most people — better than consumer smart scales, which swing wildly with hydration. Consistency matters more than absolute precision: measure the same way, same time, weekly.',
+      },
+      {
+        q: 'What is a healthy body fat percentage?',
+        a: 'ACE guidelines: men 14–24% is the fitness-to-average range, women 21–31%. Essential fat (the floor for health) is roughly 2–5% for men and 10–13% for women. Athletes sit between the two.',
+      },
+      {
+        q: 'Why does the Navy method use the neck?',
+        a: 'Neck circumference corrects for frame size: a thick-necked 38-inch waist carries very different fat than a slim-necked one. The waist-to-neck difference is the core of the male formula.',
+      },
+    ],
+  },
+  {
+    slug: 'final-grade-calculator',
+    title: 'Final Grade Calculator — What Do I Need on the Final Exam?',
+    shortTitle: 'Final Grade Calculator',
+    category: 'School & Science',
+    description:
+      'Free final grade calculator. Enter your current grade, the final exam weight, and your target grade to see exactly what score you need.',
+    tagline: 'The most-Googled question of every December and May.',
+    intro:
+      'Every semester ends with the same arithmetic panic: what do I need on the final? This calculator answers it exactly — current grade, the final\'s weight in the syllabus, and your target produce the required score. It also tells you the two honest edge cases: when the grade you want is mathematically impossible, and when you have already locked it in.',
+    howItWorks: [
+      'Enter your current grade in the course (before the final).',
+      'Enter the final exam\'s weight from the syllabus (commonly 20–40%).',
+      'Enter the overall grade you want in the course.',
+      'The calculator solves: needed = (target − current × (1 − weight)) ÷ weight.',
+    ],
+    faq: [
+      {
+        q: 'What if my needed score is over 100%?',
+        a: 'Then the target is mathematically out of reach on the final alone — the honest answer this calculator gives you. Options: extra credit, a lower target (run it again), or talking to the professor now rather than after the exam.',
+      },
+      {
+        q: 'What if it says I need a negative score?',
+        a: 'Congratulations — your target is locked in even if you score zero. That information is valuable too: it tells you which of your finals deserves your study time and which is already safe.',
+      },
+      {
+        q: 'Does this work for weighted categories?',
+        a: 'It works when your current grade is already computed as a single number. If your course uses weighted categories (homework 20%, tests 40%…), compute the current standing first — your LMS usually shows it — then use this for the final.',
+      },
+    ],
+  },
+  {
+    slug: 'ohms-law-calculator',
+    title: 'Ohm\'s Law Calculator — Voltage, Current, Resistance & Power',
+    shortTitle: 'Ohm\'s Law Calculator',
+    category: 'School & Science',
+    description:
+      'Free Ohm\'s law calculator. Enter any two of voltage, current, resistance, or power to solve the other two instantly. V=IR, P=VI.',
+    tagline: 'Any two in, the other two out.',
+    intro:
+      'Ohm\'s law and the power law form the four equations behind every circuit: V = IR and P = VI. Knowing any two of voltage, current, resistance, and power determines the other two — but the rearrangements are where homework and field work slow down. This calculator does all twelve permutations: pick your two knowns, read everything else.',
+    howItWorks: [
+      'Select which two quantities you know (six possible pairs).',
+      'Enter their values.',
+      'The calculator solves the remaining two using V = IR and P = VI.',
+      'Results update live as you type.',
+    ],
+    faq: [
+      {
+        q: 'What is Ohm\'s law?',
+        a: 'V = IR: voltage equals current times resistance. It says pushing more current through a resistance requires proportionally more voltage — the foundational relationship of all circuit analysis.',
+      },
+      {
+        q: 'How do I find power from voltage and resistance?',
+        a: 'P = V²/R. A 12 V supply across 6 Ω dissipates 24 W. The calculator handles this and all other rearrangements automatically — pick the "Voltage & Resistance" mode.',
+      },
+      {
+        q: 'Does Ohm\'s law work for AC circuits?',
+        a: 'For purely resistive AC loads using RMS values, yes. With capacitors or inductors, impedance replaces resistance and phase enters the math — this calculator covers the DC and resistive-AC cases, which includes most household and automotive work.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
@@ -610,4 +920,7 @@ export const CATEGORIES = [
   'Savings & Investing',
   'Investing & Crypto',
   'Health & Life',
+  'Fitness & Sports',
+  'Home & Yard',
+  'School & Science',
 ] as const

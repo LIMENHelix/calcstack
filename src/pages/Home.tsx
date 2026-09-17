@@ -17,7 +17,7 @@ export default function Home() {
           Money questions, <span className="text-primary">answered in seconds.</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          {CALCULATORS.length} free calculators for freelancers, borrowers, savers, and everyday
+          {CALCULATORS.length} free calculators for freelancers, lifters, landscapers, borrowers, students, and everyday
           money. Results update as you type, and every calculation runs in your browser — no
           accounts, no uploads, no email gates.
         </p>
@@ -49,6 +49,27 @@ export default function Home() {
           </span>
         </div>
       </Link>
+
+      <section className="mb-12">
+        <h2 className="mb-1 text-xl font-semibold">Bet you didn&apos;t expect these 🤯</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          The tools people use every week but never think to search for — from the weight room to the mulch bed.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {CALCULATORS.filter((c) =>
+            ['one-rep-max-calculator', 'running-pace-calculator', 'mulch-calculator', 'final-grade-calculator', 'ohms-law-calculator', 'macro-calculator', 'heart-rate-zone-calculator', 'concrete-calculator', 'body-fat-calculator', 'gravel-calculator'].includes(c.slug),
+          ).map((c) => (
+            <Link key={c.slug} to={`/calculators/${c.slug}`}>
+              <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
+                <CardContent className="p-4">
+                  <p className="text-sm font-semibold">{c.shortTitle}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{c.tagline}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       {CATEGORIES.map((cat) => (
         <section key={cat} className="mb-10">

@@ -3,11 +3,12 @@ import { CALCULATORS } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
 import { MORE_CALC_COMPONENTS } from '@/calcs/more'
+import { NICHE_CALC_COMPONENTS } from '@/calcs/niche'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
 import { EmbedSnippet } from '@/components/EmbedSnippet'
 
-const ALL_COMPONENTS = { ...CALC_COMPONENTS, ...MORE_CALC_COMPONENTS }
+const ALL_COMPONENTS = { ...CALC_COMPONENTS, ...MORE_CALC_COMPONENTS, ...NICHE_CALC_COMPONENTS }
 
 export default function CalculatorPage() {
   const { slug } = useParams()
