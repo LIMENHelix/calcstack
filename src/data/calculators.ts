@@ -1426,6 +1426,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'markup-margin-calculator',
+    title: 'Markup vs Margin Calculator — Convert, Price Jobs & Hit Profit Targets',
+    shortTitle: 'Markup vs Margin',
+    category: 'Trades & Engineering',
+    description:
+      'Free markup vs margin calculator. Convert markup to margin and back, price a job from cost, or find the markup you need to cover overhead and hit a profit target.',
+    tagline: 'Quote in markup. Run the business on margin.',
+    intro:
+      'Markup and margin measure the same profit from different bases — markup from cost, margin from price — and confusing them is one of the most common ways contractors and freelancers undercharge. This calculator works in all three directions: price a job from cost and markup, back into a price from a target margin, or dissect an existing quote into profit, markup, and margin. The overhead solver answers the harder question: given what it costs to run the business, what markup do you actually need?',
+    howItWorks: [
+      'Choose what you know: cost + markup %, cost + target margin %, or cost + sell price.',
+      'Enter your job cost (materials + labor) and the percentage or price.',
+      'Read the sell price, profit, markup, and margin — all four, always.',
+      'Open the overhead solver to convert your business overhead and profit target into the required markup, or check the conversion table.',
+    ],
+    faq: [
+      {
+        q: 'What markup gives me a 20% margin?',
+        a: '25%. Price = cost ÷ (1 − 0.20) = 1.25 × cost. The general conversion is markup = margin ÷ (1 − margin), so a 20% margin needs 0.20 ÷ 0.80 = 25% markup.',
+      },
+      {
+        q: 'Is a 100% markup the same as a 50% margin?',
+        a: 'Yes. Double your cost ($1,000 → $2,000) and the $1,000 profit is half of the selling price — a 50% margin. Doubling the price never means 100% margin; 100% margin would require a cost of zero.',
+      },
+      {
+        q: 'Why does margin matter more than markup for my business?',
+        a: 'Because your overhead — truck, insurance, office, taxes — eats a share of revenue (the selling price), not a share of cost. If overhead is 15% of revenue and you want 10% net profit, you need a 25% margin on every job, which means quoting a 33.3% markup on cost. Quote 25% markup instead and you get a 20% margin — 5 points short.',
+      },
+      {
+        q: 'What is a good margin for a contractor?',
+        a: 'It varies by trade and region, but many residential contractors find they need gross margins in the 25–35% range to cover overhead and leave real net profit, which translates to markups of roughly 33–54% on cost. Use the overhead solver with your own numbers — averages are a starting point, not a budget.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

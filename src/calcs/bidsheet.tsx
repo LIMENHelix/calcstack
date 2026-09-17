@@ -198,6 +198,115 @@ export function BidSheetCalc() {
   )
 }
 
+/* ---------------- Markup vs Margin ---------------- */
+
+import { Field, useNumber } from './index'
+
+const MARKUP_ROWS = [10, 15, 20, 25, 33.3, 50, 75, 100]
+const MARGIN_ROWS = [10, 15, 20, 25, 30, 40, 50]
+
+export function MarkupMarginCalc() {
+  const [mode, setMode] = useState('markup')
+  const [cost, setCost] = useNumber(2428)
+  const [markup, setMarkup] = useNumber(15)
+  const [margin, setMargin] = useNumber(20)
+  const [price, setPrice] = useNumber(2792.2)
+  const [overhead, setOverhead] = useNumber(15)
+  const [profitTarget, setProfitTarget] = useNumber(10)
+
+  const r = useMemo(() => {
+    let p = 0
+    if (mode === 'markup') p = cost * (1 + markup / 100)
+    else if (mode === 'margin') p = margin < 100 ? cost / (1 - margin / 100) : 0
+    else p = price
+    const profit = p - cost
+    const mk = cost > 0 ? (profit / cost) * 100 : 0
+    const mg = p > 0 ? (profit / p) * 100 : 0
+    const reqMargin = overhead + profitTarget
+    const reqMarkup = reqMargin < 100 ? (reqMargin / (100 - reqMargin)) * 100 : 0
+    const reqPrice = reqMargin < 100 ? cost / (1 - reqMargin / 100) : 0
+    return { p, profit, mk, mg, reqMargin, reqMarkup, reqPrice }
+  }, [mode, cost, markup, margin, price, overhead, profitTarget])
+
+  return (
+    <Card><CardContent className="space-y-5 p-5">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <p className="text-sm font-medium">I know my…</p>
+          <select className={inputCls} value={mode} onChange={(e) => setMode(e.target.value)}>
+            <option value="markup">Cost + markup %</option>
+            <option value="margin">Cost + target margin %</option>
+            <option value="price">Cost + sell price</option>
+          </select>
+        </div>
+        <Field label="Job cost (materials + labor)" value={cost} onChange={setCost} prefix="$" />
+        {mode === 'markup' && <Field label="Markup on cost" value={markup} onChange={setMarkup} suffix="%" />}
+        {mode === 'margin' && <Field label="Target margin on price" value={margin} onChange={setMargin} suffix="%" />}
+        {mode === 'price' && <Field label="Sell price" value={price} onChange={setPrice} prefix="$" />}
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Sell price" value={usd(r.p, 2)} />
+        <Result label="Profit" value={usd(r.profit, 2)} />
+        <Result label="Markup" value={`${num(r.mk, 1)}%`} />
+        <Result label="Margin" value={`${num(r.mg, 1)}%`} />
+      </div>
+
+      <p className="text-sm text-muted-foreground">
+        Formulas: price = cost × (1 + markup) = cost ÷ (1 − margin). Convert with margin = markup ÷ (1 + markup)
+        and markup = margin ÷ (1 − margin). A 50% markup is only a 33.3% margin — the two diverge fast as numbers grow.
+      </p>
+
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">What markup do I actually need? (overhead solver)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <Field label="Overhead as % of revenue" value={overhead} onChange={setOverhead} suffix="%" />
+          <Field label="Net profit target" value={profitTarget} onChange={setProfitTarget} suffix="%" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Result label="Required margin" value={`${num(r.reqMargin, 1)}%`} />
+          <Result big label="Required markup" value={`${num(r.reqMarkup, 1)}%`} />
+          <Result label="Price on your cost above" value={usd(r.reqPrice, 2)} />
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Overhead and profit are both shares of the <em>selling price</em>, so required margin = overhead % + profit %.
+          Convert to markup before applying it to cost: markup = margin ÷ (1 − margin).
+          15% overhead + 10% profit = 25% margin = 33.3% markup.
+        </p>
+      </details>
+
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Conversion table</summary>
+        <div className="mt-4 grid gap-6 sm:grid-cols-2">
+          <table className="w-full text-sm">
+            <thead><tr className="text-left text-muted-foreground"><th className="pb-2">Markup</th><th className="pb-2">= Margin</th></tr></thead>
+            <tbody>
+              {MARKUP_ROWS.map((m) => (
+                <tr key={m} className="border-t">
+                  <td className="py-1.5">{num(m, 1)}%</td>
+                  <td className="py-1.5">{num((m / (100 + m)) * 100, 1)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <table className="w-full text-sm">
+            <thead><tr className="text-left text-muted-foreground"><th className="pb-2">Margin</th><th className="pb-2">= Markup</th></tr></thead>
+            <tbody>
+              {MARGIN_ROWS.map((g) => (
+                <tr key={g} className="border-t">
+                  <td className="py-1.5">{num(g, 1)}%</td>
+                  <td className="py-1.5">{num((g / (100 - g)) * 100, 1)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </CardContent></Card>
+  )
+}
+
 export const BID_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'bid-sheet-calculator': BidSheetCalc,
+  'markup-margin-calculator': MarkupMarginCalc,
 }

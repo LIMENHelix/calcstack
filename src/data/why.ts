@@ -93,6 +93,8 @@ export const WHY_USE: Record<string, string> = {
     'Homeowners use it before contractor season: knowing your tonnage converts "you need a 5-ton unit, trust me" into a conversation. It is also the reality check for window units and garage mini-splits — right-sizing beats oversizing every time.',
   'bid-sheet-calculator':
     'Contractors use it the night before the walkthrough: dump the takeoff counts from the framing, drywall, and paint calculators in as line items, apply markup, and print a bid. Homeowners run it in reverse — paste a contractor\'s quote in line by line and see the margin hiding inside it.',
+  'markup-margin-calculator':
+    'Anyone who quotes prices uses this: supplier talks and accounting run on margin, price sheets run on markup, and mixing the two up is how a "profitable" job loses money. The overhead solver is the part people bookmark — it converts what the business costs to run into the markup every quote must carry.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }
