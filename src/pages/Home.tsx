@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { CALCULATORS, CATEGORIES } from '@/data/calculators'
 import { Seo } from '@/components/Seo'
+import { SearchBar } from '@/components/SearchBar'
 import { Card, CardContent } from '@/components/ui/card'
 
 export default function Home() {
@@ -18,6 +19,10 @@ export default function Home() {
           {CALCULATORS.length} free calculators for freelancers, borrowers, savers, and everyday
           money. Results update as you type, and every calculation runs in your browser — no
           accounts, no uploads, no email gates.
+        </p>
+        <SearchBar />
+        <p className="mt-3 text-sm text-muted-foreground">
+          or <Link to="/directory" className="text-primary underline-offset-4 hover:underline">browse the full directory of every page</Link>
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2 text-xs font-medium">
           {['100% free', 'No signup', 'Private — runs locally', 'Instant results'].map((b) => (

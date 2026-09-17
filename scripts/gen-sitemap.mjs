@@ -25,6 +25,7 @@ const urls = [
   `  <url><loc>${SITE}/tools/bill-analyzer</loc><priority>0.9</priority></url>`,
   `  <url><loc>${SITE}/data/mortgage-payment-by-state</loc><priority>0.8</priority></url>`,
   `  <url><loc>${SITE}/data/average-salary-by-job</loc><priority>0.8</priority></url>`,
+  `  <url><loc>${SITE}/directory</loc><priority>0.7</priority></url>`,
   ...stateDataSlugs.map((s) => `  <url><loc>${SITE}/data/mortgage-payment-in/${s}</loc></url>`),
   ...calcSlugs.map((s) => `  <url><loc>${SITE}/calculators/${s}</loc></url>`),
 ]

@@ -18,7 +18,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
             >
               Bill Analyzer ✦
             </NavLink>
-            {CALCULATORS.slice(0, 4).map((c) => (
+            <NavLink
+              to="/directory"
+              className={({ isActive }) =>
+                isActive ? 'font-medium text-primary' : 'text-muted-foreground hover:text-foreground'
+              }
+            >
+              All tools
+            </NavLink>
+            {CALCULATORS.slice(0, 3).map((c) => (
               <NavLink
                 key={c.slug}
                 to={`/calculators/${c.slug}`}
