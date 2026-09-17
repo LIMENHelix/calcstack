@@ -45,7 +45,7 @@ export default function PersonaPage() {
 
       <nav className="mb-4 text-sm text-muted-foreground">
         <Link to="/" className="hover:text-foreground">CalcStack</Link>
-        <span className="mx-2">/</span><span>Toolkits</span>
+        <span className="mx-2">/</span><Link to="/for" className="hover:text-foreground">Toolkits</Link>
         <span className="mx-2">/</span><span className="text-foreground">{p.job}</span>
       </nav>
 

@@ -261,4 +261,635 @@ export const PERSONAS: Persona[] = [
       },
     ],
   },
+  {
+    slug: 'software-developers',
+    job: 'Software Developers',
+    title: 'Calculators for Software Developers — Salary, Offers & Wealth Math',
+    description: 'Free tools for software developers: salary-to-hourly conversions, offer comparisons, compound interest projections, and freelance rate math. No signup.',
+    hero: 'Tech compensation is a puzzle of base, bonus, equity, and golden handcuffs. These tools convert every offer into comparable units and show what your savings rate becomes over a 20-year career.',
+    questions: [
+      'Is this startup offer actually competitive once equity is discounted?',
+      'What does maxing my savings rate become at 7% over 15 years?',
+      'What would I need to charge per hour to go independent?',
+    ],
+    calcSlugs: [
+      'salary-to-hourly-calculator',
+      'freelance-rate-calculator-web-developer',
+      'compound-interest-calculator',
+      'roi-calculator',
+      'loan-payoff-calculator',
+      'inflation-calculator',
+      'crypto-profit-calculator',
+      'savings-goal-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I compare offers with different equity structures?',
+        a: 'Discount paper equity aggressively: a common approach values private-company options at 25–50% of their spreadsheet value, public RSUs at face. Convert total comp to honest hourly (total ÷ real hours, including on-call) with the salary-to-hourly calculator and compare that number.',
+      },
+      {
+        q: 'How much does a high savings rate early in a tech career matter?',
+        a: 'It is the whole game. A developer saving $3,000/month from 25 to 35 at 7% often ends up with more at 60 than one saving $6,000/month from 40 to 60. Run both in the compound interest calculator — the gap is the argument for front-loading.',
+      },
+      {
+        q: 'Should I pay off student loans or invest?',
+        a: 'Compare guaranteed vs expected return: payoff earns the loan APR risk-free. Above ~7% APR, payoff usually wins; below ~4%, investing usually does. The loan payoff and compound interest calculators quantify both sides with your actual numbers.',
+      },
+    ],
+  },
+  {
+    slug: 'accountants',
+    job: 'Accountants & CPAs',
+    title: 'Calculators for Accountants — Client Math, Loans & Break-Even',
+    description: 'Free tools for accountants and CPAs: loan amortization, break-even analysis, sales tax by state, ROI, and inflation math for client conversations.',
+    hero: 'You already know the formulas — what you need is speed in front of a client and clean numbers to screenshot into a memo. Every tool here runs instantly, shows its working, and needs no login.',
+    questions: [
+      'What does this equipment loan cost the client in total interest?',
+      'Where is the break-even point on the client\'s new product line?',
+      'How does this state\'s sales tax change the client\'s pricing?',
+    ],
+    calcSlugs: [
+      'loan-payoff-calculator',
+      'break-even-calculator',
+      'sales-tax-calculator',
+      'roi-calculator',
+      'inflation-calculator',
+      'percentage-calculator',
+      'compound-interest-calculator',
+      'mortgage-payment-calculator',
+    ],
+    faq: [
+      {
+        q: 'Can I use these tools in client deliverables?',
+        a: 'Yes — the outputs are plain numbers you can copy anywhere. For client-facing sites, every calculator also has a free embed snippet, useful for firm resource pages.',
+      },
+      {
+        q: 'How do I sanity-check a client\'s pricing quickly?',
+        a: 'Run their fixed costs, price, and unit cost through the break-even calculator. If break-even units exceed plausible market volume, the pricing conversation happens now instead of after the quarter closes.',
+      },
+      {
+        q: 'What is the fastest way to show a client the cost of waiting to invest?',
+        a: 'Two runs of the compound interest calculator: start now vs start in five years, same monthly amount. The five-year delay typically costs six figures at retirement on modest contributions — that screenshot ends the debate.',
+      },
+    ],
+  },
+  {
+    slug: 'doctors',
+    job: 'Doctors & Physicians',
+    title: 'Calculators for Doctors — Loan Payoff, Contract Math & Wealth Building',
+    description: 'Free tools for physicians: student loan payoff strategies, salary conversions for contract comparisons, and long-term investing math. No signup.',
+    hero: 'Physician finances are extreme in both directions: the largest student loans in any profession, then a top-decile income that arrives a decade late. These tools handle the payoff-versus-invest decision and the catch-up math in between.',
+    questions: [
+      'How fast can I realistically kill $300K of med school debt?',
+      'Is this private practice offer actually better than the hospital contract?',
+      'How much do the lost compounding years of residency cost me?',
+    ],
+    calcSlugs: [
+      'loan-payoff-calculator',
+      'salary-to-hourly-calculator',
+      'compound-interest-calculator',
+      'mortgage-payment-calculator',
+      'inflation-calculator',
+      'savings-goal-calculator',
+      'roi-calculator',
+    ],
+    faq: [
+      {
+        q: 'Aggressive payoff or PSLF for physician loans?',
+        a: 'If you work at a qualifying nonprofit hospital, PSLF after 120 payments often beats payoff by six figures — check eligibility first. In private practice, the loan payoff calculator shows what attending-level extra payments do: on typical balances, $5K extra monthly often clears the debt in under 5 years.',
+      },
+      {
+        q: 'How do I compare physician contracts?',
+        a: 'Convert to honest hourly: total comp ÷ real hours including call, charting, and admin. A $350K job at 60 real hours weekly pays less per hour than a $300K job at 45. The salary-to-hourly calculator makes the comparison in seconds.',
+      },
+      {
+        q: 'Can a late-starting doctor still build real wealth?',
+        a: 'Yes — the income is the catch-up engine. A physician saving $8,000/month from age 35 at 7% reaches roughly $9.8M by 65. The compound interest calculator shows your specific timeline; the key variable is savings rate, not market timing.',
+      },
+    ],
+  },
+  {
+    slug: 'lawyers',
+    job: 'Lawyers & Attorneys',
+    title: 'Calculators for Lawyers — Loan Payoff, Billable-Hour & Settlement Math',
+    description: 'Free tools for attorneys: law school loan payoff, salary-to-hourly conversions with real billable hours, compound interest, and ROI analysis.',
+    hero: 'Big Law hours and six-figure law school debt make attorney math unique: your headline salary lies about your hourly wage, and your loans demand a strategy. These tools give you both truths.',
+    questions: [
+      'What is my Big Law salary actually worth per real hour worked?',
+      'Refinance-and-attack the loans, or ride IBR to forgiveness?',
+      'What does going solo require to match my current income?',
+    ],
+    calcSlugs: [
+      'salary-to-hourly-calculator',
+      'loan-payoff-calculator',
+      'freelance-rate-calculator',
+      'compound-interest-calculator',
+      'savings-goal-calculator',
+      'inflation-calculator',
+      'roi-calculator',
+    ],
+    faq: [
+      {
+        q: 'What is a $210K Big Law salary really worth per hour?',
+        a: 'At 2,200 billed hours plus realistic non-billable time — say 2,800 real hours — roughly $75/hour. Good, but a fraction of the billing rate clients pay. Run your own hours in the salary-to-hourly calculator before lateral moves.',
+      },
+      {
+        q: 'How fast can an associate pay off law school debt?',
+        a: 'On a typical $160K balance at 7%, minimum payments take ~10 years and cost ~$63K in interest. $3,000/month extra cuts it to roughly 3.5 years and saves most of the interest. The loan payoff calculator shows your exact curve.',
+      },
+      {
+        q: 'What rate do I need as a solo to match a firm salary?',
+        a: 'The freelance rate calculator builds it: target income, plus malpractice, office, and software costs, divided by realistic billable hours (solo attorneys typically bill 50–60% of working time). Most are surprised the answer is near their effective firm rate.',
+      },
+    ],
+  },
+  {
+    slug: 'sales-professionals',
+    job: 'Sales Professionals',
+    title: 'Calculators for Salespeople — Commission, Quota & Income Math',
+    description: 'Free tools for sales professionals: commission and percentage math, salary-to-hourly for OTE comparisons, savings goals for lumpy income, and ROI.',
+    hero: 'OTE is a promise; commission is reality. These tools help you compare offers honestly, smooth lumpy income into a budget, and make the fat years fund the lean ones.',
+    questions: [
+      'Is this higher-OTE offer actually better given the quota?',
+      'How do I budget when income swings 40% month to month?',
+      'What discount can I offer without destroying the deal\'s margin?',
+    ],
+    calcSlugs: [
+      'percentage-calculator',
+      'salary-to-hourly-calculator',
+      'discount-calculator',
+      'savings-goal-calculator',
+      'compound-interest-calculator',
+      'roi-calculator',
+      'break-even-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I compare two sales offers with different OTE structures?',
+        a: 'Ask what percentage of reps hit quota last year, then discount OTE by that attainment rate. A $150K OTE at 60% attainment is really ~$120K expected. Convert both to honest hourly with the salary-to-hourly calculator for the real comparison.',
+      },
+      {
+        q: 'How do top earners handle commission swings?',
+        a: 'They budget on their base (or worst-quarter income) and sweep commission checks into savings the day they land. The savings goal calculator turns "build a 6-month cushion" into a per-check deposit number.',
+      },
+      {
+        q: 'What does a discount really cost a deal?',
+        a: 'More than the percentage suggests: a 15% discount on a 40% margin deal cuts profit by 37.5%, not 15%. The discount calculator shows the price math; run your margin through it before offering the discount, not after.',
+      },
+    ],
+  },
+  {
+    slug: 'truck-drivers',
+    job: 'Truck Drivers & Owner-Operators',
+    title: 'Calculators for Truck Drivers — Per-Mile Pay, Truck Loans & Fuel Math',
+    description: 'Free tools for truck drivers and owner-operators: per-mile to salary conversions, truck loan payoff, break-even for owner-op decisions, and savings goals.',
+    hero: 'Cents-per-mile is not a salary until you do the math: unpaid miles, home time, and for owner-operators, the truck payment that never sleeps. These tools convert the trucking numbers into honest dollars.',
+    questions: [
+      'What does 55 cents a mile actually pay per year?',
+      'Can I afford the truck payment if freight slows down?',
+      'Company driver or owner-operator — which actually nets more?',
+    ],
+    calcSlugs: [
+      'salary-to-hourly-calculator',
+      'loan-payoff-calculator',
+      'break-even-calculator',
+      'savings-goal-calculator',
+      'percentage-calculator',
+      'compound-interest-calculator',
+      'inflation-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I convert per-mile pay to a yearly salary?',
+        a: 'Miles × rate, then subtract nothing — that part is simple. The honest part is hours: 2,500 miles a week at $0.55 is ~$71K a year, but at 70-hour weeks it is under $20/hour. The salary-to-hourly calculator shows the real rate.',
+      },
+      {
+        q: 'What truck payment can I afford as a new owner-operator?',
+        a: 'Work backward: realistic monthly revenue minus fuel, insurance, maintenance, and a breakdown reserve — what remains is your maximum payment. The break-even calculator shows the minimum monthly miles needed to cover it all.',
+      },
+      {
+        q: 'How much should I keep for breakdowns?',
+        a: 'A common rule is $10,000–15,000 liquid before going independent — one turbo or transmission can end a new operation. The savings goal calculator converts that target into a weekly set-aside.',
+      },
+    ],
+  },
+  {
+    slug: 'electricians',
+    job: 'Electricians',
+    title: 'Calculators for Electricians — Wage Math, Side Jobs & Going Independent',
+    description: 'Free tools for electricians: wage and overtime conversions, pricing side jobs, break-even for starting your own shop, and truck/tool loan math.',
+    hero: 'Journeyman wages are solid; the real money question is when to go independent. These tools price your side jobs, compare the apprentice-to-master jump, and show what a one-van operation needs to clear.',
+    questions: [
+      'What should I charge for side jobs on weekends?',
+      'Is the master\'s license jump worth it in dollars?',
+      'What does my own shop need to bill monthly to beat my wages?',
+    ],
+    calcSlugs: [
+      'salary-to-hourly-calculator',
+      'freelance-rate-calculator',
+      'break-even-calculator',
+      'loan-payoff-calculator',
+      'savings-goal-calculator',
+      'percentage-calculator',
+      'compound-interest-calculator',
+    ],
+    faq: [
+      {
+        q: 'What should I charge for weekend side jobs?',
+        a: 'Your wage ÷ 2,080 is the floor of the floor — side work carries no benefits, uses your tools, and risks your license. A common rule is 1.5–2× your straight-time wage. The freelance rate calculator builds the honest number from your income goal and costs.',
+      },
+      {
+        q: 'Is going independent worth it financially?',
+        a: 'Run the break-even calculator with your real fixed costs: van payment, insurance, licensing, advertising. Divide by your realistic hourly billing rate to see billable hours needed per month. If that number exceeds hours you can actually sell, the math says wait.',
+      },
+      {
+        q: 'How much does a truck and tool loan really cost?',
+        a: 'A $45K work vehicle at 8% for 6 years costs about $11.8K in interest — real money against a new shop\'s margins. The loan payoff calculator shows the total and what paying it early saves.',
+      },
+    ],
+  },
+  {
+    slug: 'plumbers',
+    job: 'Plumbers',
+    title: 'Calculators for Plumbers — Job Pricing, Wages & Going Independent',
+    description: 'Free tools for plumbers: wage conversions, flat-rate job pricing math, break-even for your own business, and vehicle loan payoff.',
+    hero: 'Plumbing is one of the few trades where going independent can double income — if the pricing math is right. These tools handle flat-rate pricing, the wage-versus-owner comparison, and the van payment in between.',
+    questions: [
+      'What flat rate covers my costs and a real margin?',
+      'Employee wages or my own license — where is the crossover?',
+      'How much van can the business actually afford?',
+    ],
+    calcSlugs: [
+      'freelance-rate-calculator',
+      'salary-to-hourly-calculator',
+      'break-even-calculator',
+      'loan-payoff-calculator',
+      'percentage-calculator',
+      'savings-goal-calculator',
+      'compound-interest-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I set flat rates for common jobs?',
+        a: 'Cost of parts + (your honest hourly floor × realistic hours including drive time) + margin for callbacks and warranty risk. The freelance rate calculator builds the hourly floor; most independents land at $95–150/hour equivalent.',
+      },
+      {
+        q: 'When does going independent beat journeyman wages?',
+        a: 'When your break-even billable hours (fixed costs ÷ rate) fit inside hours you can actually sell. Run it in the break-even calculator with van, insurance, and licensing as fixed costs — the answer is usually 15–25 billable hours weekly.',
+      },
+      {
+        q: 'Should I finance or pay cash for the work van?',
+        a: 'Compare the loan\'s total interest (loan payoff calculator) against what that cash earns invested (compound interest calculator). With equipment loans near 8% and savings near 4%, financing rarely wins on math alone — but cash reserves matter more than optimization in year one.',
+      },
+    ],
+  },
+  {
+    slug: 'hvac-technicians',
+    job: 'HVAC Technicians',
+    title: 'Calculators for HVAC Techs — Seasonal Income, Overtime & Business Math',
+    description: 'Free tools for HVAC technicians: overtime and seasonal income math, wage conversions, break-even for going independent, and savings goals.',
+    hero: 'HVAC income is seasonal by design — summer and winter peaks, shoulder-season valleys. These tools smooth the peaks into a yearly plan and price the jump from technician to contractor.',
+    questions: [
+      'How do I budget when summer pays triple what spring does?',
+      'What is all this overtime actually worth per year?',
+      'What does a one-truck HVAC business need to clear monthly?',
+    ],
+    calcSlugs: [
+      'salary-to-hourly-calculator',
+      'savings-goal-calculator',
+      'break-even-calculator',
+      'freelance-rate-calculator',
+      'loan-payoff-calculator',
+      'percentage-calculator',
+      'compound-interest-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I handle seasonal income swings?',
+        a: 'Annualize: total last year\'s income, divide by 12, live on that. Peak-season surplus goes to the cushion, not lifestyle. The savings goal calculator turns "cover two slow months" into an automatic per-paycheck deposit.',
+      },
+      {
+        q: 'What is heavy overtime actually worth?',
+        a: 'Less per hour than it feels: 60-hour weeks at $28 base blend to about $33/hour, and the extra hours are taxed at your top rate. The salary-to-hourly calculator shows the blended number so you can price the burnout honestly.',
+      },
+      {
+        q: 'What does an independent HVAC shop need to bill?',
+        a: 'Fixed costs (truck, insurance, license, advertising — often $3–5K/month) divided by your billing rate, plus parts margin. The break-even calculator gives the monthly service-call count required; compare it against your current call volume before leaping.',
+      },
+    ],
+  },
+  {
+    slug: 'construction-contractors',
+    job: 'Construction Contractors',
+    title: 'Calculators for Contractors — Bid Math, Break-Even & Equipment Loans',
+    description: 'Free tools for general contractors: bid and margin math, break-even analysis, equipment loan payoff, and percentage calculations for estimates.',
+    hero: 'Contracting is won or lost in the estimate: miss the margin by 5% and a busy year still loses money. These tools keep bids honest, equipment loans visible, and the break-even point in front of you before you sign.',
+    questions: [
+      'Is my markup actually covering overhead, or just materials?',
+      'Finance the skid steer or pay cash?',
+      'How many jobs a month does this operation need to survive?',
+    ],
+    calcSlugs: [
+      'break-even-calculator',
+      'percentage-calculator',
+      'loan-payoff-calculator',
+      'roi-calculator',
+      'sales-tax-calculator',
+      'compound-interest-calculator',
+      'savings-goal-calculator',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between markup and margin?',
+        a: 'The most expensive confusion in contracting: 20% markup on $100K of costs is $120K, which is only 16.7% margin. If your overhead runs 15%, that bid clears 1.7 points of profit. The percentage calculator keeps the two straight mid-estimate.',
+      },
+      {
+        q: 'How do I know if I can afford new equipment?',
+        a: 'Compare the loan payment against the billable revenue the equipment generates, minus its operating cost. The break-even calculator shows how many billable days per month the machine needs just to cover its own payment.',
+      },
+      {
+        q: 'How much working capital should a GC hold?',
+        a: 'A common floor is one to two months of total overhead plus the largest single project\'s cost float — clients pay late, suppliers do not wait. The savings goal calculator converts that number into a per-job set-aside percentage.',
+      },
+    ],
+  },
+  {
+    slug: 'restaurant-owners',
+    job: 'Restaurant Owners',
+    title: 'Calculators for Restaurant Owners — Food Cost, Break-Even & Pricing',
+    description: 'Free tools for restaurant owners: break-even analysis, menu pricing and discount math, sales tax handling, and loan payoff for equipment.',
+    hero: 'Restaurants die of arithmetic, not cooking: 5% margins, rising food costs, and a break-even point that moves every time beef does. These tools keep the three numbers that matter — break-even, food cost, and discount impact — in front of you.',
+    questions: [
+      'How many covers a night do we need to break even?',
+      'What does this food cost increase do to my margins?',
+      'Are those promo discounts quietly losing us money?',
+    ],
+    calcSlugs: [
+      'break-even-calculator',
+      'percentage-calculator',
+      'discount-calculator',
+      'sales-tax-calculator',
+      'loan-payoff-calculator',
+      'roi-calculator',
+      'savings-goal-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I compute my restaurant\'s break-even point?',
+        a: 'Monthly fixed costs (rent, salaries, utilities, loan payments) ÷ average contribution per cover (average ticket − food and variable cost per ticket). The break-even calculator does it in seconds — run it monthly, because it moves.',
+      },
+      {
+        q: 'What should menu prices be relative to food cost?',
+        a: 'The classic target is food cost at 28–35% of menu price, meaning roughly a 3× markup on ingredients. Run your top sellers through the percentage calculator: if any signature dish sits above 40% food cost, reprice it or re-engineer the plate.',
+      },
+      {
+        q: 'Do "20% off" promotions make money for restaurants?',
+        a: 'Rarely on existing demand — a 20% discount on a 65% margin item cuts profit per plate by ~31%. Promos only work if they bring genuinely new covers. The discount calculator shows the honest per-plate math before you print the coupon.',
+      },
+    ],
+  },
+  {
+    slug: 'tipped-workers',
+    job: 'Servers, Bartenders & Tipped Workers',
+    title: 'Calculators for Tipped Workers — Real Hourly Wage, Tips & Budgeting',
+    description: 'Free tools for servers and bartenders: true hourly wage with tips, tip-out math, budgeting on variable income, and savings goals.',
+    hero: 'Your paystub says $2.83 an hour and your apron says $200 a night — neither is your real wage. These tools compute your true hourly rate, smooth the good nights and dead Tuesdays into a budget, and turn "save more" into a number.',
+    questions: [
+      'What do I actually make per hour all-in?',
+      'How do I budget when Saturday pays 5× Tuesday?',
+      'How much should I set aside for taxes on tips?',
+    ],
+    calcSlugs: [
+      'salary-to-hourly-calculator',
+      'tip-calculator',
+      'savings-goal-calculator',
+      'percentage-calculator',
+      'compound-interest-calculator',
+      'discount-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I figure out my real hourly wage?',
+        a: 'Track tips for two full weeks (all shifts, not just good ones), add base pay, divide by hours worked. Most servers land at $18–35/hour depending on venue — but the spread between shifts is huge, which is why the weekly average matters more than any single night.',
+      },
+      {
+        q: 'How much should I set aside for taxes?',
+        a: 'If your employer only withholds on the tiny base wage, you likely owe more in April. A common practice is 15–20% of cash tips into a separate account weekly. The savings goal calculator can target your estimated tax bill as the goal.',
+      },
+      {
+        q: 'How do I build savings on unpredictable income?',
+        a: 'Flip the order: decide a fixed amount to move every shift — even $20 — before spending anything. The compound interest calculator shows why: $20 per shift, 4 shifts a week at 4% in a high-yield account, is roughly $4,300 a year from money you never missed.',
+      },
+    ],
+  },
+  {
+    slug: 'rideshare-delivery-drivers',
+    job: 'Rideshare & Delivery Drivers',
+    title: 'Calculators for Rideshare & Delivery Drivers — True Per-Hour & Per-Mile Pay',
+    description: 'Free tools for Uber, Lyft, and delivery drivers: true hourly earnings after gas and miles, vehicle cost math, and savings goals for taxes and repairs.',
+    hero: 'The app shows what you earned; it never shows what it cost. Gas, depreciation, and unpaid miles between rides decide whether gig driving pays $25 an hour or $9. These tools compute the honest number.',
+    questions: [
+      'What do I really make per hour after gas and wear?',
+      'Is this surge actually worth driving toward?',
+      'How much should I set aside for taxes and car repairs?',
+    ],
+    calcSlugs: [
+      'salary-to-hourly-calculator',
+      'tip-calculator-uber',
+      'tip-calculator-delivery',
+      'percentage-calculator',
+      'savings-goal-calculator',
+      'loan-payoff-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I calculate my true hourly earnings?',
+        a: '(Earnings − gas − per-mile vehicle cost) ÷ total hours including waiting and driving to pickups. Use a per-mile cost of $0.30–0.45 depending on your car. Drivers who skip this step routinely overestimate their wage by 30–40%.',
+      },
+      {
+        q: 'Should I drive toward surge zones?',
+        a: 'Only if the surge premium exceeds the deadhead cost: miles to the zone × your per-mile cost + time value. A $6 surge 15 minutes away is often break-even at best. The percentage calculator helps compare per-hour rates across zones quickly.',
+      },
+      {
+        q: 'How much should gig drivers save for taxes?',
+        a: 'You are a 1099 contractor — no withholding. A common rule is 20–25% of net earnings set aside per payout, plus quarterly estimated payments. The savings goal calculator converts your estimated annual tax bill into a per-week deposit.',
+      },
+    ],
+  },
+  {
+    slug: 'students',
+    job: 'College Students',
+    title: 'Calculators for Students — GPA, Loans, Budgeting & First-Job Math',
+    description: 'Free tools for college students: GPA calculator, student loan payoff projections, part-time wage math, and budgeting calculators. No signup.',
+    hero: 'College is four years of math nobody teaches: what your GPA actually is, what your loans will actually cost, and whether that part-time job covers the gap. These are the tools for all of it.',
+    questions: [
+      'What grade do I need on the final to keep my GPA?',
+      'What will my loan payment actually be after graduation?',
+      'Is this part-time job worth the hours against studying?',
+    ],
+    calcSlugs: [
+      'gpa-calculator',
+      'loan-payoff-calculator',
+      'salary-to-hourly-calculator',
+      'percentage-calculator',
+      'savings-goal-calculator',
+      'discount-calculator',
+      'date-difference-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I figure out what I need on the final exam?',
+        a: 'Enter your completed courses in the GPA calculator, then add the current course and experiment with different grades. The credit weighting does the honest math — a 4-credit class moves your GPA four times as much as a 1-credit one.',
+      },
+      {
+        q: 'What will my student loan payment be?',
+        a: 'Standard federal repayment is 10 years: on a $30K balance at 6%, about $333/month. The loan payoff calculator shows that plus what an extra $50/month starting immediately after graduation saves — usually thousands.',
+      },
+      {
+        q: 'Is a part-time job worth it during the semester?',
+        a: 'Run the honest hourly (salary-to-hourly calculator), then weigh it against the GPA cost of lost study hours. The breakpoint many advisors suggest: under 15 hours a week usually costs nothing academically; over 20 often does.',
+      },
+    ],
+  },
+  {
+    slug: 'recent-graduates',
+    job: 'Recent Graduates',
+    title: 'Calculators for Recent Graduates — First Salary, Loans & Adult Money Math',
+    description: 'Free tools for new grads: salary-to-hourly conversions, student loan payoff strategies, first-apartment budgeting, and early investing math.',
+    hero: 'The first real paycheck comes with the first real decisions: attack the loans or start investing, how much apartment you can actually afford, and why starting at 23 beats starting at 30 by more than you think.',
+    questions: [
+      'How much rent can I actually afford on my starting salary?',
+      'Pay extra on loans or start a Roth IRA?',
+      'What does saving $200/month at 23 become by 60?',
+    ],
+    calcSlugs: [
+      'salary-to-hourly-calculator',
+      'loan-payoff-calculator',
+      'compound-interest-calculator',
+      'savings-goal-calculator',
+      'inflation-calculator',
+      'percentage-calculator',
+      'break-even-calculator',
+    ],
+    faq: [
+      {
+        q: 'How much rent can I afford on my first salary?',
+        a: 'The common guideline is 30% of gross income, but 25% buys breathing room. On $55K that is $1,145–1,375/month. Convert to hourly with the salary-to-hourly calculator to feel it differently: at $26/hour, that apartment costs ~53 hours of your month.',
+      },
+      {
+        q: 'Student loans or investing first?',
+        a: 'Grab any employer 401(k) match first — it is an instant 100% return. After that, compare your loan APR against ~7% expected market returns: above 7% APR pay the loans, below 4% invest, between them split the difference. Both calculators on this page quantify your exact case.',
+      },
+      {
+        q: 'Does saving small amounts in my 20s really matter?',
+        a: 'It is the highest-leverage money of your life. $200/month from 23 to 33 at 7%, then never adding another dollar, grows to roughly $380K by 60. Starting the same habit at 33 ends near $190K. The compound interest calculator shows the decade you cannot buy back.',
+      },
+    ],
+  },
+  {
+    slug: 'retirees',
+    job: 'Retirees & Near-Retirees',
+    title: 'Calculators for Retirees — Savings Longevity, Inflation & Fixed-Income Math',
+    description: 'Free tools for retirees: how long savings last, inflation\'s effect on fixed income, mortgage payoff decisions, and age/date calculations.',
+    hero: 'Retirement flips the math: instead of growing the pile, you are defending it — against inflation, against bad timing, against outliving it. These tools model the defense honestly.',
+    questions: [
+      'How long will my savings last at this withdrawal rate?',
+      'What does 3% inflation do to my fixed income over 20 years?',
+      'Should I pay off the mortgage with a lump sum?',
+    ],
+    calcSlugs: [
+      'compound-interest-calculator',
+      'inflation-calculator',
+      'loan-payoff-calculator',
+      'savings-goal-calculator',
+      'mortgage-payment-calculator',
+      'age-calculator',
+      'percentage-calculator',
+    ],
+    faq: [
+      {
+        q: 'How long will my retirement savings last?',
+        a: 'The classic 4% rule suggests savings last ~30 years if you withdraw 4% of the starting balance annually, adjusted for inflation. Model your own numbers with the compound interest calculator: enter your balance, a negative-equivalent scenario via the inflation tool, and your real return (market return minus inflation).',
+      },
+      {
+        q: 'What does inflation do to a fixed pension?',
+        a: 'Quietly halves it: at 3% inflation, a $3,000/month pension buys what $1,660 buys today after 20 years. The inflation calculator shows the erosion curve — it is why even "safe" fixed income needs a growth component.',
+      },
+      {
+        q: 'Pay off the mortgage before retiring?',
+        a: 'Compare guaranteed vs expected return: paying it off earns your mortgage rate risk-free. If your rate is 6%+ and your portfolio is conservative, payoff often wins. The loan payoff calculator shows the interest saved; the peace of mind is free.',
+      },
+    ],
+  },
+  {
+    slug: 'military-veterans',
+    job: 'Military Members & Veterans',
+    title: 'Calculators for Military & Veterans — VA Loans, BAH Math & Transition Planning',
+    description: 'Free tools for service members and veterans: VA loan calculator, BAH and pay conversions, transition salary comparisons, and deployment savings math.',
+    hero: 'Military pay is a system — base, BAH, BAS, allowances civilians never see — and the transition out is a pay-structure shock. These tools translate between the two worlds and make the most of the benefits you earned.',
+    questions: [
+      'How much house does my VA loan benefit actually buy?',
+      'What civilian salary matches my total military compensation?',
+      'What can a deployment savings sprint become?',
+    ],
+    calcSlugs: [
+      'va-loan-calculator',
+      'salary-to-hourly-calculator',
+      'mortgage-payment-calculator',
+      'savings-goal-calculator',
+      'compound-interest-calculator',
+      'loan-payoff-calculator',
+      'percentage-calculator',
+    ],
+    faq: [
+      {
+        q: 'What makes VA loans different from conventional mortgages?',
+        a: 'No down payment requirement and no PMI — on a $350K home that saves roughly $70K upfront plus $150–250/month versus conventional with 5% down. The VA loan calculator is preset with typical VA terms; run it against a conventional scenario to see the lifetime difference.',
+      },
+      {
+        q: 'How do I compare military pay to a civilian offer?',
+        a: 'Total your real compensation: base + BAH + BAS + the tax advantage (allowances are untaxed — worth roughly 15–25% more than equivalent salary) + healthcare value. Then convert both to honest hourly. Most E-6s and O-3s need $75–95K civilian to break even, depending on location.',
+      },
+      {
+        q: 'What can deployment savings become?',
+        a: 'A deployed service member banking $1,500/month for 9 months builds $13.5K — invested at 7% and left alone, that single deployment becomes roughly $108K by retirement age. The compound interest calculator shows your specific timeline.',
+      },
+    ],
+  },
+  {
+    slug: 'first-time-homebuyers',
+    job: 'First-Time Home Buyers',
+    title: 'Calculators for First-Time Home Buyers — Payments, FHA & Down Payment Math',
+    description: 'Free tools for first-time buyers: mortgage payment calculator, FHA loan math, 15 vs 30 year comparison, and down payment savings plans.',
+    hero: 'Buying your first home is the biggest math problem of your life so far — and the industry profits when you skip it. These tools show the real monthly payment, the real total cost, and exactly how to save the down payment.',
+    questions: [
+      'What is the real monthly payment on a house in my price range?',
+      'FHA with 3.5% down or wait and save 20%?',
+      'How long will it take to save the down payment?',
+    ],
+    calcSlugs: [
+      'mortgage-payment-calculator',
+      'fha-loan-calculator',
+      '15-year-mortgage-calculator',
+      'savings-goal-calculator',
+      'sales-tax-calculator',
+      'percentage-calculator',
+      'compound-interest-calculator',
+      'loan-payoff-calculator',
+    ],
+    faq: [
+      {
+        q: 'How much house can I actually afford?',
+        a: 'Lenders approve up to ~43% debt-to-income, but comfortable is closer to 28% of gross monthly income on housing. On a $75K salary that is about $1,750/month — and remember P&I is only part of it: taxes, insurance, and maintenance typically add 20–40% on top.',
+      },
+      {
+        q: 'FHA now or save 20% down first?',
+        a: 'Run both: FHA gets you in at 3.5% down but adds mortgage insurance for the loan\'s life in most cases — often $200+/month. Saving 20% avoids it but delays you years while prices move. The FHA and standard mortgage calculators show the monthly difference; the savings goal calculator shows the timeline difference.',
+      },
+      {
+        q: 'Is a 15-year mortgage worth the higher payment?',
+        a: 'On a $300K loan at 6.5%, the 30-year costs ~$382K in interest; the 15-year roughly $171K — a $211K difference for a payment about $650/month higher. If the higher payment fits under the 28% rule comfortably, the 15-year is the best forced savings plan in America.',
+      },
+    ],
+  },
 ]

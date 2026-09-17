@@ -5,6 +5,7 @@
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-by-state</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/data/average-salary-by-job</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/directory</loc><priority>0.7</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/freelancers</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/real-estate-agents</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/engineers</loc><priority>0.8</priority></url>
@@ -12,6 +13,24 @@
   <url><loc>https://calcstack-eight.vercel.app/for/nurses</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/small-business-owners</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/landlords</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/software-developers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/accountants</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/doctors</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/lawyers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/sales-professionals</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/truck-drivers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/electricians</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/plumbers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/hvac-technicians</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/construction-contractors</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/restaurant-owners</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/tipped-workers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/rideshare-delivery-drivers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/students</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/recent-graduates</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/retirees</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/military-veterans</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/first-time-homebuyers</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/alabama</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/alaska</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/arizona</loc></url>

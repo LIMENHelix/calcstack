@@ -69,9 +69,14 @@ export default function Home() {
       ))}
 
       <section className="mb-10">
-        <h2 className="mb-4 text-xl font-semibold">Toolkits by profession</h2>
+        <div className="mb-4 flex items-baseline justify-between">
+          <h2 className="text-xl font-semibold">Toolkits by profession</h2>
+          <Link to="/for" className="text-sm text-primary hover:underline">
+            All {PERSONAS.length} toolkits →
+          </Link>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {PERSONAS.map((p) => (
+          {PERSONAS.slice(0, 9).map((p) => (
             <Link key={p.slug} to={`/for/${p.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
                 <CardContent className="p-5">
