@@ -79,4 +79,10 @@ export const WHY_USE: Record<string, string> = {
     'Weekend painters use it to buy once — the can coverage, coat count, and openings math decide whether it is a 2-gallon or 3-gallon job. Landlords refreshing units between tenants use the cost layer to compare DIY against a painter\'s day rate.',
   'tile-calculator':
     'DIY tilers use it because the three purchases (tile, thinset, grout) live in different aisles with different coverage math. The diagonal-layout waste toggle exists because that is the exact mistake that strands a Saturday project half-tiled.',
+  'concrete-mix-calculator':
+    'Anyone calling a ready-mix plant for the first time uses this: the plant asks "how many yards and what mix?" and this answers both. It is also the settle-the-argument tool for whether a job is a bagged-mix Saturday or a truck delivery.',
+  'road-base-calculator':
+    'Rural homeowners and contractors pricing driveways use it because tonnage-with-compaction is where base orders go 25% short. The material toggle (crushed vs recycled vs asphalt) matters because densities — and prices — differ enough to change the order.',
+  'driveway-cost-comparison':
+    'Homeowners staring at three wildly different contractor bids use this to compare them on equal terms: the 20-year cost-per-square-foot column converts sales pitches into math. It is the five minutes that prevents a five-figure mistake.',
 }

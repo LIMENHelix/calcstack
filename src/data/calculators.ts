@@ -1206,6 +1206,87 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'concrete-mix-calculator',
+    title: 'Concrete Mix Calculator — Right PSI, Yards & Bags for Your Job',
+    shortTitle: 'Concrete Mix Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free concrete mix calculator. Pick the job (footing, slab, driveway, patio), get the recommended PSI mix and air entrainment, and convert square feet to cubic yards or 80-lb bags.',
+    tagline: 'The right mix for the job, and exactly how much of it.',
+    intro:
+      'Ordering concrete has two failure modes: the wrong amount (a short pour is a cold joint and a weak slab) and the wrong mix (a non-air-entrained driveway in Kansas scales apart in three winters). This calculator converts your dimensions to yards and bags with the 10% over-order rule, then specs the mix strength and air entrainment the application actually needs.',
+    howItWorks: [
+      'Pick the job: footing, interior slab, driveway, patio, or specialty.',
+      'Enter length, width, and thickness — the calculator converts square feet to cubic yards (1 yd³ = 81 sq ft at 4 inches).',
+      'Read the recommended PSI, whether you need air entrainment, and the order quantity with 10% extra.',
+      'Compare ready-mix versus 80-lb bags with editable local prices.',
+    ],
+    faq: [
+      {
+        q: 'How many square feet does a yard of concrete cover?',
+        a: 'One cubic yard covers 81 sq ft at 4 inches thick, 108 sq ft at 3 inches, or 54 sq ft at 6 inches. A 24×12 driveway at 4 inches is 288 sq ft, which needs 3.56 yards — order 4.',
+      },
+      {
+        q: 'What PSI concrete do I need for a driveway?',
+        a: '3,500–4,000 psi with 5–7% air entrainment in any climate that freezes. Interior slabs can run 3,000–3,500 psi without air. The mix design matters as much as thickness for how long the slab lasts.',
+      },
+    ],
+  },
+  {
+    slug: 'road-base-calculator',
+    title: 'Road Base Calculator — Aggregate Tonnage with Compaction',
+    shortTitle: 'Road Base Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free road base calculator. Convert driveway dimensions and compacted depth into tons of crushed stone, recycled base, or asphalt — with the 25% loose-to-compacted factor built in.',
+    tagline: 'Tonnage that accounts for compaction — the part everyone forgets.',
+    intro:
+      'The classic road base mistake: you calculate compacted volume, order that many tons of loose aggregate, and come up 25% short after the plate compactor does its job. This calculator builds the compaction factor in, converts to tons using the right density for crushed stone, recycled base, or hot-mix asphalt, and adds delivery if you need it.',
+    howItWorks: [
+      'Enter the area length, width, and the compacted depth you want (4–6 in for cars, 8–12 in for trucks/RVs).',
+      'Pick the material — densities differ: crushed stone ~1.4 t/yd³, recycled base ~1.35, asphalt ~2.0.',
+      'Read the order tonnage (compaction-adjusted) and compacted yards.',
+      'Open the cost section for materials-plus-delivery with editable per-ton pricing.',
+    ],
+    faq: [
+      {
+        q: 'How much road base do I need for a 50×12 driveway?',
+        a: 'At 6 inches compacted: 50 × 12 × 0.5 ft = 300 cu ft = 11.1 compacted yards ≈ 15.5 tons of crushed stone, or about 19.5 tons ordered loose after the 25% compaction factor.',
+      },
+      {
+        q: 'Is recycled asphalt millings a good base?',
+        a: 'Yes for driveways and rural lanes — millings re-bind under compaction and summer heat, resist dust, and usually cost less per ton than virgin crushed stone. They are not DOT-approved for public roads and can track indoors in hot weather.',
+      },
+    ],
+  },
+  {
+    slug: 'driveway-cost-comparison',
+    title: 'Driveway Cost Comparison — Gravel vs Asphalt vs Concrete',
+    shortTitle: 'Driveway Cost Comparison',
+    category: 'Home & Yard',
+    description:
+      'Free driveway cost comparison calculator. Compare gravel, asphalt, and concrete on install cost, 20-year maintenance, cost per square foot per year, and lifespan — with editable local rates.',
+    tagline: 'First cost is not the cost. Run the 20-year math.',
+    intro:
+      'Gravel is cheapest to install and most expensive to own per year — unless you never maintain anything, in which case asphalt is. This calculator puts all three surfaces on one honest table: installed cost, 20-year maintenance schedule, total cost per square foot per year, and realistic lifespan. Adjust the installed rates to your local quotes and the ranking updates itself.',
+    howItWorks: [
+      'Enter your driveway length and width.',
+      'Read the comparison table: install cost, 20-year maintenance, total, and cost per sq ft per year.',
+      'Open the cost section and replace the defaults with real quotes from local contractors.',
+      'Factor your climate: freeze-thaw punishes concrete without air entrainment; extreme heat softens asphalt; slopes shed gravel.',
+    ],
+    faq: [
+      {
+        q: 'Is asphalt or concrete cheaper for a driveway?',
+        a: 'Asphalt is cheaper to install (typically $3–7/sq ft vs $6–12 for concrete) but needs sealcoating every 3–5 years and resurfacing around year 15–20. Over 20 years the totals are often close; over 30–40 years, concrete usually wins if it was installed correctly for the climate.',
+      },
+      {
+        q: 'How long does a gravel driveway last?',
+        a: 'Indefinitely, with upkeep — plan on regrading and a fresh top layer every couple of years. It is the best answer for long rural driveways where paving costs are prohibitive and the worst answer for steep slopes or heavy snow-plow use.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

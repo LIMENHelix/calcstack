@@ -375,4 +375,213 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'roofing-calculator': RoofingCalc,
   'paint-calculator': PaintCalc,
   'tile-calculator': TileCalc,
+  'concrete-mix-calculator': ConcreteMixCalc,
+  'road-base-calculator': RoadBaseCalc,
+  'driveway-cost-comparison': DrivewayCompareCalc,
+}
+
+/* ---------------- Concrete Mix Selector ---------------- */
+
+const MIX_TABLE: Record<string, { psi: string; use: string; air: string; note: string }> = {
+  footing: { psi: '2,500–3,000 psi', use: 'Footings & foundation walls', air: 'Not required (below grade)', note: 'Standard residential footing mix. Keep the slump at 4–5 inches for easy placement into forms.' },
+  slab: { psi: '3,000–3,500 psi', use: 'Interior slabs & garage floors', air: 'Optional', note: 'Interior slabs skip air entrainment — it makes power-troweling harder and can blister the finish.' },
+  driveway: { psi: '3,500–4,000 psi', use: 'Driveways & exterior flatwork', air: 'Yes — 5–7% in freeze-thaw climates', note: 'Exterior concrete in cold climates must be air-entrained or it will scale within a few winters.' },
+  patio: { psi: '3,500 psi', use: 'Patios, sidewalks & pool decks', air: 'Yes — 5–7% if exposed to freezing', note: 'Same spec as driveways. For stamped finishes, tell the plant — stampable mixes tweak the sand content.' },
+  countertop: { psi: '5,000+ psi (or GFRC)', use: 'Counters, sinks & furniture', air: 'No', note: 'High-early or GFRC mixes with fibers and admixtures — this is a specialty bagged product, not ready-mix.' },
+}
+
+export function ConcreteMixCalc() {
+  const [job, setJob] = useState('driveway')
+  const [length, setLength] = useNumber(24)
+  const [width, setWidth] = useNumber(12)
+  const [depth, setDepth] = useNumber(4)
+  const [yardCost, setYardCost] = useNumber(165)
+  const [bagCost, setBagCost] = useNumber(6.5)
+
+  const r = useMemo(() => {
+    const area = length * width
+    const cuyd = (area * depth) / 12 / 27
+    const orderYd = cuyd * 1.1 // 10% over-order rule
+    const bags80 = Math.ceil((cuyd * 27) / 0.6)
+    const readyMix = cuyd >= 1
+    const mix = MIX_TABLE[job]
+    const costReady = orderYd * yardCost
+    const costBagged = bags80 * bagCost
+    return { area, cuyd, orderYd, bags80, readyMix, mix, costReady, costBagged, coversAt4: cuyd * 81 }
+  }, [job, length, width, depth, yardCost, bagCost])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <Select label="What are you pouring?" value={job} onChange={setJob} options={[
+        ['footing', 'Footings / foundation'], ['slab', 'Interior or garage slab'],
+        ['driveway', 'Driveway'], ['patio', 'Patio / sidewalk'], ['countertop', 'Countertop / specialty'],
+      ]} />
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Width" value={width} onChange={setWidth} suffix="ft" />
+        <Field label="Thickness" value={depth} onChange={setDepth} suffix="in" />
+      </div>
+      <div className="rounded-lg border border-primary/40 bg-primary/5 p-4">
+        <p className="text-sm font-semibold">Recommended mix: {r.mix.psi}</p>
+        <p className="text-sm text-muted-foreground">{r.mix.use} · Air entrainment: {r.mix.air}</p>
+        <p className="mt-1 text-sm text-muted-foreground">{r.mix.note}</p>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Concrete needed" value={`${num(r.cuyd, 2)} yd³`} />
+        <Result label="Order (with 10% extra)" value={`${num(r.orderYd, 2)} yd³`} />
+        <Result label="Equals in 80-lb bags" value={String(r.bags80)} />
+        <Result label="Area covered" value={`${num(r.area, 0)} sq ft`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Conversion anchor: <strong>1 cubic yard covers 81 sq ft at 4 inches thick</strong> (54 sq ft at 6 in,
+        108 sq ft at 3 in). {r.readyMix
+          ? 'At ≥1 yard, ready-mix delivery usually beats bagged on both cost and your back.'
+          : 'Under a yard, bags are practical; at 1 yard and up, call a ready-mix plant.'}
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Cost estimate (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <Field label="Ready-mix per yard" value={yardCost} onChange={setYardCost} prefix="$" />
+          <Field label="80-lb bag price" value={bagCost} onChange={setBagCost} prefix="$" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <Result label={`Ready-mix (${num(r.orderYd, 1)} yd³ ordered)`} value={usd(r.costReady, 2)} />
+          <Result label={`Bagged (${r.bags80} bags)`} value={usd(r.costBagged, 2)} />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Road Base / Aggregate ---------------- */
+
+export function RoadBaseCalc() {
+  const [length, setLength] = useNumber(50)
+  const [width, setWidth] = useNumber(12)
+  const [depth, setDepth] = useNumber(6)
+  const [material, setMaterial] = useState('crushed')
+  const [tonCost, setTonCost] = useNumber(28)
+  const [delivered, setDelivered] = useState('yes')
+
+  const r = useMemo(() => {
+    const density = material === 'asphalt' ? 2.0 : material === 'recycled' ? 1.35 : 1.4 // compacted tons per yd³
+    const compactedYd = (length * width * depth) / 12 / 27
+    const orderTons = compactedYd * density * (material === 'asphalt' ? 1 : 1.25) // aggregates: +25% loose-to-compacted
+    const materials = orderTons * tonCost
+    const delivery = delivered === 'yes' ? 150 : 0
+    return { compactedYd, orderTons, materials, delivery, total: materials + delivery, area: length * width, density }
+  }, [length, width, depth, material, tonCost, delivered])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Width" value={width} onChange={setWidth} suffix="ft" />
+        <Field label="Compacted depth" value={depth} onChange={setDepth} suffix="in" />
+        <Select label="Material" value={material} onChange={setMaterial} options={[
+          ['crushed', 'Crushed stone / road base (¾" minus)'], ['recycled', 'Recycled concrete / asphalt millings'],
+          ['asphalt', 'Hot-mix asphalt'],
+        ]} />
+        <Select label="Delivery needed?" value={delivered} onChange={setDelivered} options={[['yes', 'Yes — add delivery'], ['no', 'No — I have a truck/trailer']]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Order quantity" value={`${num(r.orderTons, 1)} tons`} />
+        <Result label="Compacted volume" value={`${num(r.compactedYd, 2)} yd³`} />
+        <Result label="Coverage" value={`${num(r.area, 0)} sq ft`} />
+        <Result label="Density used" value={`${r.density} t/yd³`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Aggregates compact ~25% from loose to rolled — the tonnage shown already includes that compaction
+        factor (asphalt is ordered by compacted ton and doesn&apos;t need it). A passenger-car driveway base
+        is typically 4–6 in compacted; RV/truck traffic wants 8–12 in. Compact in 3-inch lifts, not all at once.
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Cost estimate (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <Field label="Material per ton" value={tonCost} onChange={setTonCost} prefix="$" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Result label="Materials" value={usd(r.materials, 2)} />
+          <Result label="Delivery (flat)" value={usd(r.delivery, 2)} />
+          <Result big label="Project total" value={usd(r.total, 2)} />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Driveway: Gravel vs Asphalt vs Concrete ---------------- */
+
+export function DrivewayCompareCalc() {
+  const [length, setLength] = useNumber(50)
+  const [width, setWidth] = useNumber(12)
+  const [gravelSqft, setGravelSqft] = useNumber(1.5)
+  const [asphaltSqft, setAsphaltSqft] = useNumber(5)
+  const [concreteSqft, setConcreteSqft] = useNumber(9)
+
+  const r = useMemo(() => {
+    const area = length * width
+    // 20-year total cost per option: install + maintenance
+    const gravelInstall = area * gravelSqft
+    const gravelMaint = area * 0.25 * (20 / 2) // regrade/replenish ~every 2 yrs
+    const asphaltInstall = area * asphaltSqft
+    const asphaltMaint = area * 0.5 * 4 // sealcoat ~every 5 yrs, 4 times in 20
+    const concreteInstall = area * concreteSqft
+    const concreteMaint = area * 0.15 * 2 // joint sealing / cleaning, twice in 20 yrs
+    const rows = [
+      { name: 'Gravel (6" crushed base)', install: gravelInstall, maint: gravelMaint, life: 'Indefinite with upkeep' },
+      { name: 'Asphalt (3" hot-mix over base)', install: asphaltInstall, maint: asphaltMaint, life: '~15–20 yrs (resurface)' },
+      { name: 'Concrete (4" 4000 psi)', install: concreteInstall, maint: concreteMaint, life: '30–40 yrs' },
+    ]
+    return { area, rows }
+  }, [length, width, gravelSqft, asphaltSqft, concreteSqft])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Driveway length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Driveway width" value={width} onChange={setWidth} suffix="ft" />
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
+              <th className="py-2 pr-3">Surface</th><th className="py-2 pr-3">Install cost</th>
+              <th className="py-2 pr-3">20-yr maintenance</th><th className="py-2 pr-3">20-yr total</th>
+              <th className="py-2 pr-3">Cost / sq ft / yr</th><th className="py-2">Lifespan</th>
+            </tr>
+          </thead>
+          <tbody>
+            {r.rows.map((row) => (
+              <tr key={row.name} className="border-b last:border-0">
+                <td className="py-2 pr-3 font-medium">{row.name}</td>
+                <td className="py-2 pr-3">{usd(row.install)}</td>
+                <td className="py-2 pr-3">{usd(row.maint)}</td>
+                <td className="py-2 pr-3 font-semibold">{usd(row.install + row.maint)}</td>
+                <td className="py-2 pr-3">{usd((row.install + row.maint) / r.area / 20, 2)}</td>
+                <td className="py-2 text-muted-foreground">{row.life}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Gravel wins on first cost and stays cheapest if you keep up with regrading; asphalt splits the
+        difference but needs sealcoating on schedule or the math collapses; concrete costs the most up front
+        and typically pulls ahead only on a 30–40-year horizon. Climate matters: asphalt softens in extreme
+        heat, concrete scales in freeze-thaw without air entrainment, gravel migrates on slopes.
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Adjust installed costs (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <Field label="Gravel installed $/sq ft" value={gravelSqft} onChange={setGravelSqft} prefix="$" />
+          <Field label="Asphalt installed $/sq ft" value={asphaltSqft} onChange={setAsphaltSqft} prefix="$" />
+          <Field label="Concrete installed $/sq ft" value={concreteSqft} onChange={setConcreteSqft} prefix="$" />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
 }
