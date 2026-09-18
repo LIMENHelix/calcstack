@@ -4624,6 +4624,37 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'room-airflow-calculator',
+    title: 'Room Airflow Calculator — CFM per Room from BTU Loads',
+    shortTitle: 'Room Airflow Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free room CFM calculator. Enter each room\'s cooling load in BTU/h — get target airflow per room, total CFM, and CFM per ton using the sensible-heat formula CFM = BTU ÷ 1.08ΔT.',
+    tagline: 'Every room gets its share — on paper, then in the ducts.',
+    intro:
+      'A system that moves the right TOTAL air can still leave rooms roasting if the split is wrong. This calculator converts each room\'s cooling load into its target CFM using the sensible-heat equation, totals the system airflow, and checks the result against the 400 CFM-per-ton convention — the number you balance dampers to and the input the duct size calculator needs for every run-out.',
+    howItWorks: [
+      'Enter each room\'s name and cooling load in BTU/h (from a Manual J or the BTU load calculator).',
+      'Set the sensible heat ratio — 0.75 typical, higher in dry climates, lower in humid ones — and the supply-to-room temperature difference (~20°F for cooling).',
+      'Read target CFM and share per room, plus total system airflow and CFM per ton.',
+      'Feed each room\'s CFM into the duct size calculator to size its run-out.',
+    ],
+    faq: [
+      {
+        q: 'Why does only part of the BTU load count for airflow?',
+        a: 'Air carries sensible heat — the temperature part. The rest of the load is latent (moisture), which the coil removes without changing air temperature. The sensible heat ratio splits them: at 0.75 SHR, three-quarters of the BTU load needs air moved; that is why 2.5 tons at 0.75 SHR wants about 1,040 CFM, matching the 400-per-ton rule.',
+      },
+      {
+        q: 'What ΔT should I use?',
+        a: 'For cooling, supply air typically leaves the coil at 50–55°F against a 75°F room — a 20–25°F difference, and 20°F is the standard design value. For heating, furnaces supply at 120–140°F against a 70°F room (ΔT 50–70); heat pumps run cooler, 85–95°F supply (ΔT 15–25), which is why they move more air.',
+      },
+      {
+        q: 'A room is always too hot — is it the airflow?',
+        a: 'Most of the time, yes. Compare its target CFM above against what the register actually delivers (a cheap anemometer or a balance hood tells you). If the duct is undersized for its CFM share, no thermostat setting fixes it — the room airflow and duct size calculators together find the bottleneck.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

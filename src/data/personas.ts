@@ -1161,6 +1161,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'hvac-btu-calculator',
+      'room-airflow-calculator',
       'duct-size-calculator',
       'wire-size-calculator',
       'voltage-drop-calculator',

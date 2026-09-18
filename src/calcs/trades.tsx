@@ -699,6 +699,109 @@ export function DuctSizeCalc() {
   )
 }
 
+/* ---------------- Room Airflow (sensible heat: CFM = BTU / 1.08ΔT) ---------------- */
+
+interface Room { name: string; btu: number }
+
+export function RoomAirflowCalc() {
+  const [shr, setShr] = useNumber(0.75)
+  const [deltaT, setDeltaT] = useNumber(20)
+  const [rooms, setRooms] = useState<Room[]>([
+    { name: 'Living room', btu: 9000 }, { name: 'Kitchen', btu: 6000 },
+    { name: 'Primary bedroom', btu: 6000 }, { name: 'Bedroom 2', btu: 4500 }, { name: 'Bedroom 3', btu: 4500 },
+  ])
+
+  const r = useMemo(() => {
+    const active = rooms.filter((rm) => rm.btu > 0)
+    const totalBtu = active.reduce((a, rm) => a + rm.btu, 0)
+    const rows = active.map((rm) => {
+      const sensible = rm.btu * shr
+      const cfm = sensible / (1.08 * deltaT)
+      return { ...rm, sensible, cfm, share: totalBtu > 0 ? rm.btu / totalBtu : 0 }
+    })
+    const totalCfm = rows.reduce((a, rm) => a + rm.cfm, 0)
+    const tons = totalBtu / 12000
+    const cfmPerTon = tons > 0 ? totalCfm / tons : 0
+    return { rows, totalBtu, totalCfm, tons, cfmPerTon }
+  }, [rooms, shr, deltaT])
+
+  function setRoom(i: number, patch: Partial<Room>) {
+    setRooms((prev) => prev.map((rm, j) => (j === i ? { ...rm, ...patch } : rm)))
+  }
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Sensible heat ratio (SHR)" value={shr} onChange={setShr} step="0.05" />
+        <Field label="Supply-to-room ΔT" value={deltaT} onChange={setDeltaT} suffix="°F" />
+        <div className="flex items-end">
+          <button
+            type="button"
+            onClick={() => setRooms((p) => [...p, { name: `Room ${p.length + 1}`, btu: 0 }])}
+            className="h-9 rounded-md border px-3 text-sm hover:bg-accent"
+          >+ Add room</button>
+        </div>
+      </div>
+      <div className="space-y-2">
+        {rooms.map((rm, i) => (
+          <div key={i} className="grid grid-cols-[1fr_120px_110px_90px_32px] items-end gap-2">
+            <div className="space-y-1.5">
+              {i === 0 && <p className="text-sm font-medium">Room</p>}
+              <input
+                value={rm.name}
+                onChange={(e) => setRoom(i, { name: e.target.value })}
+                className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              />
+            </div>
+            <div className="space-y-1.5">
+              {i === 0 && <p className="text-sm font-medium">Load (BTU/h)</p>}
+              <input
+                type="number"
+                value={rm.btu || ''}
+                onChange={(e) => setRoom(i, { btu: parseFloat(e.target.value) || 0 })}
+                className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              />
+            </div>
+            <div className="space-y-1.5">
+              {i === 0 && <p className="text-sm font-medium">Target CFM</p>}
+              <p className="flex h-9 items-center rounded-md bg-muted px-3 text-sm font-semibold">
+                {rm.btu > 0 ? num(rm.btu * shr / (1.08 * deltaT), 0) : '—'}
+              </p>
+            </div>
+            <div className="space-y-1.5">
+              {i === 0 && <p className="text-sm font-medium">Share</p>}
+              <p className="flex h-9 items-center rounded-md bg-muted px-3 text-sm">
+                {r.rows.find((x) => x.name === rm.name && x.btu === rm.btu) ? num((rm.btu / (r.totalBtu || 1)) * 100, 1) + '%' : '—'}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setRooms((p) => p.filter((_, j) => j !== i))}
+              className="flex h-9 items-center justify-center rounded-md border text-sm text-muted-foreground hover:bg-accent"
+              aria-label="Remove room"
+            >×</button>
+          </div>
+        ))}
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Total airflow" value={`${num(r.totalCfm, 0)} CFM`} />
+        <Result label="Total load" value={`${num(r.totalBtu, 0)} BTU/h (${num(r.tons, 2)} tons)`} />
+        <Result label="CFM per ton" value={`${num(r.cfmPerTon, 0)}`} />
+        <Result label="Sensible capacity moved" value={`${num(r.totalCfm * 1.08 * deltaT, 0)} BTU/h`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Sensible-heat math: CFM = sensible BTU/h ÷ (1.08 × ΔT), where 1.08 is the heat carried by
+        standard air (0.075 lb/ft³ × 60 min × 0.24 BTU/lb·°F) and ΔT is supply-to-room difference
+        — about 20°F for cooling with ~55°F supply air. Only the SENSIBLE part of the load moves
+        air: at a typical 0.75 SHR, a 30,000 BTU/h (2.5-ton) total load is 22,500 sensible and
+        wants ~1,040 CFM — right at the 400 CFM/ton convention. Set SHR higher (0.80–0.90) in dry
+        climates, lower (0.65–0.70) in humid ones. Then size each run-out with the duct size
+        calculator so every room actually gets its target.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
 
 // NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
@@ -823,4 +926,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'motor-circuit-calculator': MotorCircuitCalc,
   'service-load-calculator': ServiceLoadCalc,
   'duct-size-calculator': DuctSizeCalc,
+  'room-airflow-calculator': RoomAirflowCalc,
 }
