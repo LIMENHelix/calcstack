@@ -54,12 +54,12 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — what a car really costs per mile, the 20/4/10 car budget,
-          and the lease-vs-buy answer with real math.
+          The newest tools on the site — your net worth against the Fed data, what a raise keeps
+          after taxes, and salary equivalence between any two states.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['car-true-cost-calculator', 'car-affordability-calculator', 'lease-vs-buy-calculator', 'rent-vs-buy-calculator', 'rmd-calculator', 'va-funding-fee-calculator'].includes(c.slug),
+            ['net-worth-calculator', 'cost-of-living-comparison-calculator', 'raise-worth-calculator', 'car-true-cost-calculator', 'car-affordability-calculator', 'lease-vs-buy-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

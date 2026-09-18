@@ -734,6 +734,9 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'salary-to-hourly-calculator',
       'paycheck-calculator',
+      'raise-worth-calculator',
+      'cost-of-living-comparison-calculator',
+      'net-worth-calculator',
       'loan-payoff-calculator',
       'first-apartment-budget-calculator',
       'salary-offer-comparison-calculator',
@@ -746,6 +749,10 @@ export const PERSONAS: Persona[] = [
       'break-even-calculator',
     ],
     faq: [
+      {
+        q: 'How do I compare job offers in different cities?',
+        a: 'Never compare nominal salaries. Convert both to purchasing power with the cost of living comparison calculator (official BEA price parities), then run the after-tax value with the raise worth calculator if one offer is a raise over your current pay. A $70K offer in Kansas can out-buy an $88K offer in California.',
+      },
       {
         q: 'How much rent can I afford on my first salary?',
         a: 'The common guideline is 30% of gross income, but 25% buys breathing room. On $55K that is $1,145–1,375/month. Convert to hourly with the salary-to-hourly calculator to feel it differently: at $26/hour, that apartment costs ~53 hours of your month.',
@@ -851,6 +858,7 @@ export const PERSONAS: Persona[] = [
       'dti-calculator',
       'mortgage-payment-calculator',
       'rent-vs-buy-calculator',
+      'net-worth-calculator',
       'closing-cost-calculator',
       'fha-loan-calculator',
       '15-year-mortgage-calculator',
