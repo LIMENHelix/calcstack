@@ -89,6 +89,7 @@
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/wyoming</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/15-year-mortgage-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/age-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/beam-load-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/bid-sheet-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/billable-hours-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/bmi-calculator</loc></url>
@@ -125,12 +126,14 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/gpa-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/gravel-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/heart-rate-zone-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/horsepower-torque-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/hvac-btu-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/inflation-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/invoice-late-fee-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/jumbo-loan-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/lawn-care-pricing-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/lawn-revenue-planner</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/load-combination-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/loan-payoff-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/macro-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/markup-margin-calculator</loc></url>
@@ -202,6 +205,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/prime-cost-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/quarterly-estimated-tax-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/quota-attainment-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/rc-circuit-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/real-estate-commission-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/realization-rate-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/road-base-calculator</loc></url>

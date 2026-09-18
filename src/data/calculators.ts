@@ -2526,6 +2526,126 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'beam-load-calculator',
+    title: 'Beam Load Calculator — Moment, Shear, Stress & Deflection',
+    shortTitle: 'Beam Load',
+    category: 'Trades & Engineering',
+    description:
+      'Free beam load calculator. Max moment, shear, bending stress, and deflection for simply supported and cantilever beams with point or uniform loads.',
+    tagline: 'PL/4 and wL²/8 — the two formulas that built the world.',
+    intro:
+      'First-pass beam sizing is four classic elastic cases: simply supported or cantilever, point load or uniform. This calculator computes max shear, max bending moment, bending stress from your section modulus, and deflection from E and I — with the deflection ratio checked against common L/240 and L/360 serviceability limits.',
+    howItWorks: [
+      'Choose the beam configuration (supports and load type).',
+      'Enter the load, span, material E, and section properties I and S.',
+      'Read max moment, shear, bending stress, deflection, and the L/x serviceability ratio.',
+    ],
+    faq: [
+      {
+        q: 'What is the max moment formula for a beam?',
+        a: 'Simply supported with a center point load: M = PL/4. Simply supported with a uniform load: M = wL²/8. Cantilever with end load: M = PL. Cantilever uniform: M = wL²/2. Moment is in lb·ft when P is pounds, w is lb/ft, and L is feet — convert to lb·in before dividing by section modulus for stress.',
+      },
+      {
+        q: 'How much deflection is acceptable?',
+        a: 'Common serviceability limits: L/360 for floor beams supporting plaster or brittle finishes, L/240 for roofs, L/180 as an absolute floor. A 10 ft beam at L/360 deflects at most 0.33 inches. Deflection, not strength, governs most floor designs — stiffness (E×I) is usually the binding constraint.',
+      },
+      {
+        q: 'Can I use this to design a real structure?',
+        a: 'No — use it for feasibility checks, education, and sanity-checking software output. Real design applies code load combinations with safety factors (see the load combination calculator), lateral bracing checks, connection design, and a licensed engineer\'s stamp. These are elastic formulas for prismatic beams; they do not cover lateral-torsional buckling or shear failure.',
+      },
+    ],
+  },
+  {
+    slug: 'load-combination-calculator',
+    title: 'Load Combination Calculator — ASCE 7 LRFD Combinations',
+    shortTitle: 'Load Combinations',
+    category: 'Trades & Engineering',
+    description:
+      'Free load combination calculator. Compute ASCE 7 LRFD strength combinations from dead, live, snow, and wind loads and find the governing case.',
+    tagline: 'You never design for D + L. You design for 1.2D + 1.6L.',
+    intro:
+      'Structural codes do not let you add loads and call it a day: each load type gets a factor reflecting its uncertainty, and the designer checks every combination to find which governs. This calculator runs the common ASCE 7 LRFD combinations on your dead, live, snow, and wind loads and flags the governing case — including the easily-forgotten 0.9D + 1.0W uplift check.',
+    howItWorks: [
+      'Enter dead, live, snow, and wind loads in consistent units (psf, plf, or kips).',
+      'Read each factored combination.',
+      'The governing (highest) combination is what members are sized for.',
+    ],
+    faq: [
+      {
+        q: 'Why are load factors different for each load type?',
+        a: 'Uncertainty. Dead loads are knowable to within a few percent, so the factor is 1.2. Live loads vary wildly, so 1.6. The factors come from reliability analysis calibrated to a target probability of failure — they are statistics wearing a hard hat, not arbitrary padding.',
+      },
+      {
+        q: 'Why is 0.9D in the uplift combination?',
+        a: 'When wind lifts the roof, dead load is the only thing holding it down — and assuming you have MORE dead load than reality is unconservative. So the code reduces the resisting dead load to 0.9D while applying full wind. Underestimating your anchor is how roofs leave buildings.',
+      },
+      {
+        q: 'LRFD vs ASD?',
+        a: 'LRFD (strength design) factors loads up and compares against reduced member strength; ASD keeps loads unfactored and divides capacity by a safety factor. Both are legal under ASCE 7; steel and concrete codes each have both paths. Do not mix factors from one with capacities from the other.',
+      },
+    ],
+  },
+  {
+    slug: 'horsepower-torque-calculator',
+    title: 'Horsepower Torque Calculator — HP = T × RPM ÷ 5252',
+    shortTitle: 'HP ↔ Torque',
+    category: 'Trades & Engineering',
+    description:
+      'Free horsepower torque calculator. Convert between horsepower and torque at any RPM, with kW and newton-meter equivalents. Exact 5252 formula.',
+    tagline: 'Torque does the work; horsepower tells you how fast.',
+    intro:
+      'Horsepower and torque are the same measurement at different speeds, welded together by one constant: HP = T × RPM ÷ 5,252. This calculator solves either direction and converts to kilowatts and newton-meters — for sizing motors, reading dyno sheets, or winning arguments about diesels.',
+    howItWorks: [
+      'Choose whether to solve for horsepower or torque.',
+      'Enter the known value and the RPM.',
+      'Read the result with kW and N·m equivalents.',
+    ],
+    faq: [
+      {
+        q: 'Why is the constant 5252?',
+        a: 'One horsepower is defined as 33,000 ft·lb per minute. A pound-foot of torque acting through one revolution does 2π ft·lb of work, so HP = T × 2π × RPM ÷ 33,000 = T × RPM ÷ 5,252 (rounded). Every torque and horsepower curve on every dyno chart crosses at exactly 5,252 RPM — it is arithmetic, not coincidence.',
+      },
+      {
+        q: 'Does gearing change horsepower?',
+        a: 'No — gearing trades RPM for torque at roughly constant power (minus friction losses, typically 2–15%). A 3:1 reduction triples output torque at one-third the speed. This is why electric motors with flat torque curves need fewer gears than engines with peaky ones.',
+      },
+      {
+        q: 'How do I size a motor from a load?',
+        a: 'Start from the load torque at the required speed, compute HP here, then apply a service factor (1.15–1.25 typical) for starts, ambient temperature, and duty cycle. Size to the worst operating point, not the nameplate average — and check starting torque separately; it is often 2–3× running torque.',
+      },
+    ],
+  },
+  {
+    slug: 'rc-circuit-calculator',
+    title: 'RC Circuit Calculator — Time Constant & Filter Cutoff Frequency',
+    shortTitle: 'RC Circuit',
+    category: 'Trades & Engineering',
+    description:
+      'Free RC circuit calculator. Compute the RC time constant, −3 dB filter cutoff frequency, and capacitor charge times from resistance and capacitance.',
+    tagline: 'τ = RC: the smallest useful equation in electronics.',
+    intro:
+      'One resistor and one capacitor set a time scale: τ = RC. That single number defines how fast a capacitor charges (63.2% in one τ), where a filter starts cutting (f = 1/2πRC), and how long a switch bounce lasts. This calculator converts your R and C into the time constant, cutoff frequency, and charge-time benchmarks.',
+    howItWorks: [
+      'Enter resistance in ohms and capacitance in microfarads.',
+      'Read the time constant τ and the −3 dB cutoff frequency.',
+      'Charge benchmarks: 63.2% in 1τ, 99% in ~4.6τ.',
+    ],
+    faq: [
+      {
+        q: 'What does the cutoff frequency mean?',
+        a: 'At f = 1/(2πRC), a low-pass RC filter passes half power (−3 dB) — the signal drops to 70.7% amplitude. Above cutoff the signal rolls off at 20 dB per decade; below it, the signal passes nearly untouched. Put the cutoff at least a decade away from frequencies you must preserve or reject for clean behavior.',
+      },
+      {
+        q: 'How long until a capacitor is "fully" charged?',
+        a: 'Never completely — it is asymptotic. 1τ gets 63.2%, 3τ gets 95%, 4.6τ gets 99%, 5τ gets 99.3%. Digital designs usually wait 5τ before assuming a settled voltage; analog designs check the ripple spec against the actual exponential.',
+      },
+      {
+        q: 'Where does RC math show up in real designs?',
+        a: 'Switch debouncing (τ of a few ms kills bounce), power supply smoothing, 555 timer periods, audio crossovers, ADC input settling, and reset circuits. It is also the reason long wires and high impedance don\'t mix: stray capacitance forms an accidental RC filter with your source resistance.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

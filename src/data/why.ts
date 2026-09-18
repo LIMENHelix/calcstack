@@ -167,4 +167,12 @@ export const WHY_USE: Record<string, string> = {
     'Runners and field-sport athletes use it once per season per climate: weigh before and after, get your personal L/hr, and hydration stops being guesswork. It also answers the "why do I cramp and you don\'t" question between training partners.',
   'dots-score-calculator':
     'Powerlifters use it to compare against lifters in other weight classes and to pick the right weight class before a meet. Coaches track athlete progress with it when body weight is moving — the total can stall while the score quietly climbs.',
+  'beam-load-calculator':
+    'Engineering students use it to check homework before submitting; practicing engineers use it to sanity-check software output — if SAP2000 and PL/4 disagree, the model is wrong. DIYers use it before trusting a shelf span or a garage hoist point.',
+  'load-combination-calculator':
+    'Structural engineers use it as the first step of every member design — which combination governs sets everything downstream. Students use it to stop mixing LRFD factors with ASD capacities, the classic exam and rookie error.',
+  'horsepower-torque-calculator':
+    'Mechanical engineers and mechanics use it both directions: motor sizing from load torque, and decoding dyno sheets where peak torque and peak power happen at different RPM. Also settles bar arguments about why diesels tow.',
+  'rc-circuit-calculator':
+    'Electronics hobbyists use it for debounce and filter design; EE students live in it during circuits courses. The 1τ/63.2% benchmark is the fastest way to read a scope trace without a cursor.',
 }

@@ -103,6 +103,12 @@ export const PERSONAS: Persona[] = [
       'Should I pay extra on the loans or invest the difference?',
     ],
     calcSlugs: [
+      'beam-load-calculator',
+      'load-combination-calculator',
+      'horsepower-torque-calculator',
+      'rc-circuit-calculator',
+      'ohms-law-calculator',
+      'voltage-drop-calculator',
       'salary-to-hourly-calculator',
       'paycheck-calculator',
       'compound-interest-calculator',
@@ -1009,6 +1015,9 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'ohms-law-calculator',
+      'rc-circuit-calculator',
+      'beam-load-calculator',
+      'load-combination-calculator',
       'final-grade-calculator',
       'gpa-calculator',
       'percentage-calculator',
