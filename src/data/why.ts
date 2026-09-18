@@ -211,4 +211,10 @@ export const WHY_USE: Record<string, string> = {
     'Landlords use it at tax time to see the deduction that shelters their cash flow — and before selling, to price the recapture bill nobody warned them about. CPAs use it to show clients why "the rental loses money on paper" is a feature.',
   'prorated-rent-calculator':
     'Tenants use it to check a mid-month move-in quote before paying; landlords use it to charge the lease-specified method and end the argument with arithmetic. It settles the February discrepancy that calculators using 30-day months get wrong.',
+  'employee-true-cost-calculator':
+    'Owners use it before posting the job: pricing a role off the wage instead of the loaded cost is how small businesses quietly go underwater. It converts "can we afford help?" into a per-hour number you can build into quotes.',
+  'cash-runway-calculator':
+    'Founders and small business owners run it monthly — it is the survival countdown. The zero-growth case is the floor investors and lenders ask for, and having both numbers in seconds beats a spreadsheet nobody updates.',
+  'commercial-lease-calculator':
+    'Tenants use it before signing to convert the quoted base rate into the real all-in commitment, and to see what escalations do to a 5-year term. Brokers respect tenants who show up knowing the NNN actuals.',
 }

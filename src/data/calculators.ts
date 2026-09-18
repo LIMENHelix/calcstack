@@ -3186,6 +3186,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'employee-true-cost-calculator',
+    title: 'Employee True Cost Calculator — What a Hire Really Costs',
+    shortTitle: 'Employee True Cost',
+    category: 'Freelance & Career',
+    description:
+      'Free employee cost calculator. Adds employer FICA, unemployment taxes, workers\' comp, health insurance, and 401(k) match to any salary for the true cost per hour and year.',
+    tagline: 'A $50,000 salary is a $62,000 decision.',
+    intro:
+      'Salary is the sticker price, not the cost. Employers pay their own side of FICA, federal and state unemployment tax, workers\' comp, and whatever benefits they offer — typically 1.2× to 1.4× the salary. This calculator builds the real number so hiring, pricing, and "can I afford help" decisions use true costs.',
+    howItWorks: [
+      'Enter the gross salary.',
+      'Add what you pay for health insurance, your state unemployment rate, workers\' comp rate, and any 401(k) match.',
+      'Read the true annual cost, the multiplier, and the honest cost per hour.',
+    ],
+    faq: [
+      {
+        q: 'What percentage should I budget on top of salary?',
+        a: 'The classic range is 1.25×–1.4× for benefits-plus-taxes. Taxes alone (employer FICA, FUTA, SUTA, workers\' comp) usually run 10–13%; health insurance adds $6,000–$15,000; a 3% retirement match adds 3%. Labor-intensive businesses price jobs off the loaded hourly cost, never the wage.',
+      },
+      {
+        q: 'What is the employer share of payroll tax?',
+        a: '7.65% of wages: 6.2% Social Security up to the $184,500 wage base (2026) plus 1.45% Medicare with no cap. Add FUTA at 0.6% on the first $7,000 and state unemployment at your assigned rate — new employers typically start around 2.7% on a state-specific wage base.',
+      },
+      {
+        q: 'Is it cheaper to use a 1099 contractor?',
+        a: 'On paper, yes — no employer taxes or benefits. But only if the working relationship is genuinely independent: the IRS reclassifies mislabeled employees and bills the employer for back taxes. Compare rates honestly with the 1099 vs W-2 calculator.',
+      },
+    ],
+  },
+  {
+    slug: 'cash-runway-calculator',
+    title: 'Cash Runway Calculator — Months Until the Money Runs Out',
+    shortTitle: 'Cash Runway',
+    category: 'Freelance & Career',
+    description:
+      'Free cash runway calculator. Simulates month-by-month burn with revenue growth to show exactly when cash hits zero — and when the business turns profitable.',
+    tagline: 'Every business is a countdown clock. Know your number.',
+    intro:
+      'Runway is the only startup metric that is literally survival: months until cash hits zero. This calculator simulates it honestly — expenses against revenue that compounds at your growth rate — and shows both the optimistic case and the zero-growth case investors will ask for.',
+    howItWorks: [
+      'Enter cash on hand, monthly expenses, and current monthly revenue.',
+      'Enter a realistic monthly revenue growth rate.',
+      'Read the runway — then run it again at 0% growth for the conservative floor.',
+    ],
+    faq: [
+      {
+        q: 'How much runway should a small business keep?',
+        a: 'Three to six months of expenses is the standard buffer for established businesses; pre-profit startups raising money want 12–18 months so a fundraise never happens from desperation. If runway is shrinking, the only three fixes are more revenue, less burn, or more capital — the math shows which lever matters most.',
+      },
+      {
+        q: 'What is the difference between burn rate and runway?',
+        a: 'Burn rate is the monthly net cash loss (expenses − revenue); runway is cash ÷ burn. Both lie if revenue is growing fast — compounding shortens burn over time, which is why this calculator simulates month by month instead of dividing once.',
+      },
+      {
+        q: 'My runway is under 3 months. What now?',
+        a: 'Cut burn before chasing revenue — cost cuts take effect this month, revenue takes effect next quarter. Founders also systematically overestimate growth; plan to the 0% case and treat any growth as margin of safety.',
+      },
+    ],
+  },
+  {
+    slug: 'commercial-lease-calculator',
+    title: 'Commercial Lease Calculator — True All-In Cost with NNN & Escalations',
+    shortTitle: 'Commercial Lease',
+    category: 'Freelance & Career',
+    description:
+      'Free commercial lease calculator. Combines base rent and NNN charges into the true per-sq-ft rate, then projects total lease cost over the term with annual escalations.',
+    tagline: 'The $22/sq ft space costs $30/sq ft. Here is the math.',
+    intro:
+      'Commercial leases quote a base rate and bill the rest separately: taxes, insurance, and common-area maintenance (NNN), plus annual escalations that compound over the term. This calculator assembles the real all-in rate and the total 5-year commitment — the number to compare across spaces.',
+    howItWorks: [
+      'Enter the space size and the quoted base rent per square foot.',
+      'Enter the NNN charges (ask the broker for the current actuals, not the estimate).',
+      'Enter the annual escalation and term to see the total commitment and average monthly cost.',
+    ],
+    faq: [
+      {
+        q: 'What does NNN mean in a lease?',
+        a: 'Triple net: the tenant pays property taxes, building insurance, and common-area maintenance on top of base rent — typically $6–$12/sq ft on top of the quoted rate. A gross lease bundles everything. Never compare a gross quote to a NNN quote without converting both to all-in rates.',
+      },
+      {
+        q: 'How much do escalations really cost?',
+        a: 'A 3% annual escalation on a 5-year lease adds about 6.2% to the total versus flat rent — on the default example here, $13,911 over the term. Escalations are negotiable at signing and nearly never negotiable after; caps and flat renewal options are worth real money.',
+      },
+      {
+        q: 'What should I negotiate besides rate?',
+        a: 'In order of dollar impact: tenant-improvement allowance (free build-out money), free rent months (1 month per year of term is common), the NNN reconciliation audit right, and assignment/sublet rights (your exit if the business moves or dies). Rate is the fourth thing, not the first.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
