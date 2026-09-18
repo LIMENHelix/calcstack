@@ -653,6 +653,9 @@ export const PERSONAS: Persona[] = [
       'gig-driver-hourly-calculator',
       'mileage-deduction-calculator',
       'mileage-vs-actual-expense-calculator',
+      'car-true-cost-calculator',
+      'car-affordability-calculator',
+      'lease-vs-buy-calculator',
       'quarterly-estimated-tax-calculator',
       'delivery-offer-calculator',
       'salary-to-hourly-calculator',
@@ -674,6 +677,10 @@ export const PERSONAS: Persona[] = [
       {
         q: 'How much should gig drivers save for taxes?',
         a: 'You are a 1099 contractor — no withholding. A common rule is 20–25% of net earnings set aside per payout, plus quarterly estimated payments. The savings goal calculator converts your estimated annual tax bill into a per-week deposit.',
+      },
+      {
+        q: 'When does gig driving wear out my car — and what replaces it?',
+        a: 'Run the car true cost calculator: at 30,000+ miles a year, depreciation and maintenance often exceed $0.80/mile — the IRS rate exists for a reason. When repairs outpace a payment, the car affordability calculator sets a budget from your actual net gig income, and lease-vs-buy tells you whether a high-mileage driver should ever lease (usually no — mileage penalties punish gig work).',
       },
     ],
   },
