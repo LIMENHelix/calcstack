@@ -3036,6 +3036,66 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'mileage-vs-actual-expense-calculator',
+    title: 'Standard Mileage vs Actual Expenses Calculator — Which Deduction Wins?',
+    shortTitle: 'Mileage vs Actual',
+    category: 'Freelance & Career',
+    description:
+      'Free mileage vs actual expense calculator. Compares the IRS standard mileage rate against the actual-expense method using your real costs, miles, and business-use percentage.',
+    tagline: 'The IRS gives you two ways. Only one is bigger.',
+    intro:
+      'Every business mile can be deducted two ways — the flat IRS rate or your share of what the car actually cost — and the gap is routinely thousands of dollars. This calculator runs both with your real numbers and shows the winner, plus the lock-in rule that decides which cars get to choose.',
+    howItWorks: [
+      'Enter business miles and total miles (sets your business-use percentage).',
+      'Enter your real annual car costs: gas, insurance, repairs, depreciation or lease.',
+      'Compare both deductions — and check the lock-in rule before switching methods.',
+    ],
+    faq: [
+      {
+        q: 'What is the mileage rate for 2026?',
+        a: 'The IRS set a split year for 2026: 72.5¢/mile January through June and 76¢/mile July through December, a mid-year adjustment driven by fuel costs. A blended ~74¢ works for planning; for filing, track miles by half-year and apply each rate separately.',
+      },
+      {
+        q: 'What is the lock-in rule?',
+        a: 'To preserve the right to switch methods, you must use standard mileage in the FIRST year the car is placed in business service. Choose actual expenses first and that car is locked into actual (with MACRS depreciation) for life. Leased cars that start on standard mileage must keep it for the entire lease.',
+      },
+      {
+        q: 'Which method usually wins for gig drivers?',
+        a: 'Standard mileage, usually — a high-mpg car doing 20,000+ business miles often deducts 74¢/mi while actually costing 30–45¢/mi. Actual wins for expensive vehicles with low business mileage or big repair years. Either way you need a mileage log: apps, or a notebook with date, miles, and purpose.',
+      },
+    ],
+  },
+  {
+    slug: '1099-vs-w2-calculator',
+    title: '1099 vs W-2 Calculator — Contract Rate to Salary Equivalent',
+    shortTitle: '1099 vs W-2',
+    category: 'Freelance & Career',
+    description:
+      'Free 1099 vs W-2 calculator. Converts a contract hourly rate into its true W-2 salary equivalent after self-employment tax, health insurance, and unpaid time off.',
+    tagline: '$60/hr contract is not $60/hr. Here is what it actually is.',
+    intro:
+      'Contract rates are inflated by everything an employer normally absorbs: half your FICA, your health insurance, and every vacation day. This calculator strips those out of any 1099 rate and shows the W-2 salary it truly equals — so a job offer and a contract offer become comparable numbers.',
+    howItWorks: [
+      'Enter the contract rate and realistic billable hours per year.',
+      'Enter what health insurance would cost you on the open market.',
+      'Enter unpaid weeks (vacation, sick days, gaps between contracts) and read the W-2 equivalent.',
+    ],
+    faq: [
+      {
+        q: 'What multiplier should a 1099 rate have over W-2?',
+        a: 'The classic rule is 1.25×–1.4× the W-2 wage for the same work. This calculator shows your personal number: extra FICA is about 7.1% of gross, individual health insurance runs $5,000–$8,000/yr, and three unpaid weeks off costs about 5.8% of gross. Below 1.2× you are almost certainly underpaid as a contractor.',
+      },
+      {
+        q: 'Does anything favor the 1099 side?',
+        a: 'Yes, and it can be big: the QBI deduction shelters up to 20% of qualified business income from income tax, business expenses come off the top (home office, equipment, mileage), and a Solo 401(k) allows much larger retirement contributions than most employer plans. Run the quarterly tax calculator for the SE-tax side of the picture.',
+      },
+      {
+        q: 'Can my employer just call me 1099 to save money?',
+        a: 'Not legally. If they control your hours, tools, and how the work is done, the IRS considers you an employee regardless of the label — misclassification is their liability, not yours. The IRS SS-8 form exists precisely for workers who suspect this.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

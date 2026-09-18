@@ -642,6 +642,8 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'gig-driver-hourly-calculator',
       'mileage-deduction-calculator',
+      'mileage-vs-actual-expense-calculator',
+      'quarterly-estimated-tax-calculator',
       'delivery-offer-calculator',
       'salary-to-hourly-calculator',
       'tip-calculator-uber',

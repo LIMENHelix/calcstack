@@ -201,4 +201,8 @@ export const WHY_USE: Record<string, string> = {
     'Borrowers with extra monthly cash use it to settle the pay-down-or-invest debate with fair same-outlay math instead of vibes. It makes the guaranteed-versus-expected tradeoff visible, which is the part most advice glosses over.',
   'moving-cost-calculator':
     'People relocating for a job use it right after the offer lands to price the sweat-versus-money decision before booking anything. Pair it with the salary offer comparison and the whole "should I take the job in Denver" question becomes arithmetic.',
+  'mileage-vs-actual-expense-calculator':
+    'Rideshare drivers use it at tax time to confirm the standard rate really is the bigger deduction — and new gig drivers use it in year one because the lock-in rule makes that first-year choice permanent. It turns a shrug into a four-figure difference.',
+  '1099-vs-w2-calculator':
+    'Anyone weighing a contract offer against a salary offer uses it to make the numbers comparable — recruiters quote 1099 rates knowing they look bigger. It prices the invisible costs (FICA, insurance, unpaid weeks) that decide whether the contract is actually a raise.',
 }

@@ -148,8 +148,116 @@ export function DeliveryOfferCalc() {
   )
 }
 
+/* ---------------- Standard mileage vs actual expenses ---------------- */
+
+export function MileageVsActualCalc() {
+  const [bizMiles, setBizMiles] = useNumber(15000)
+  const [totalMiles, setTotalMiles] = useNumber(20000)
+  const [gasCost, setGasCost] = useNumber(2400)
+  const [insurance, setInsurance] = useNumber(1800)
+  const [repairs, setRepairs] = useNumber(800)
+  const [depreciation, setDepreciation] = useNumber(4000)
+  const [rate, setRate] = useNumber(0.74)
+
+  const r = useMemo(() => {
+    const bizPct = totalMiles > 0 ? Math.min(1, bizMiles / totalMiles) : 0
+    const actualTotal = gasCost + insurance + repairs + depreciation
+    const actualDeduction = actualTotal * bizPct
+    const standardDeduction = bizMiles * rate
+    const diff = standardDeduction - actualDeduction
+    const winner = Math.abs(diff) < 1 ? 0 : diff > 0 ? 1 : 2
+    const perMile = bizMiles > 0 ? actualDeduction / bizMiles : 0
+    return { bizPct, actualTotal, actualDeduction, standardDeduction, diff, winner, perMile }
+  }, [bizMiles, totalMiles, gasCost, insurance, repairs, depreciation, rate])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Business miles this year" value={bizMiles} onChange={setBizMiles} suffix="mi" />
+          <Field label="Total miles (business + personal)" value={totalMiles} onChange={setTotalMiles} suffix="mi" />
+          <Field label="Gas for the year" value={gasCost} onChange={setGasCost} prefix="$" />
+          <Field label="Insurance for the year" value={insurance} onChange={setInsurance} prefix="$" />
+          <Field label="Repairs & maintenance" value={repairs} onChange={setRepairs} prefix="$" />
+          <Field label="Depreciation or lease payments" value={depreciation} onChange={setDepreciation} prefix="$" />
+          <Field label="Standard mileage rate" value={rate} onChange={setRate} prefix="$" suffix="/mi" />
+          <p className="text-xs text-muted-foreground">
+            2026 IRS rate: 72.5¢/mi January–June, 76¢/mi July–December (mid-year adjustment —
+            use ~74¢ blended, or run each half separately). Actual method deducts the
+            business-use percentage of real costs. Lock-in rule: to switch methods later you
+            must use standard mileage in the FIRST year the car is used for business; choosing
+            actual first locks you into actual for that car.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result
+            big
+            label="Bigger deduction"
+            value={r.winner === 0 ? 'Dead even' : r.winner === 1 ? 'Standard mileage' : 'Actual expenses'}
+          />
+          <Result label="Standard mileage deduction" value={usd(r.standardDeduction)} />
+          <Result label={`Actual deduction (${num(r.bizPct * 100, 0)}% business use)`} value={usd(r.actualDeduction)} />
+          <Result label="Difference per year" value={usd(Math.abs(r.diff))} />
+          <Result label="Your actual cost per business mile" value={`$${num(r.perMile, 2)}`} />
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+/* ---------------- 1099 contract rate vs W-2 salary equivalent ---------------- */
+
+export function ContractVsW2Calc() {
+  const [rate1099, setRate1099] = useNumber(50)
+  const [hours, setHours] = useNumber(2000)
+  const [healthCost, setHealthCost] = useNumber(6000)
+  const [unpaidWeeks, setUnpaidWeeks] = useNumber(3)
+
+  const r = useMemo(() => {
+    const gross = rate1099 * hours
+    // Employer-side FICA the contractor now pays themselves: 7.65% on 92.35% of net
+    const extraFica = gross * 0.9235 * 0.0765
+    // Unpaid time off: weeks of no pay out of a 52-week year
+    const unpaidCost = gross * (unpaidWeeks / 52)
+    const equivalent = gross - extraFica - healthCost - unpaidCost
+    const ruleRate = gross > 0 ? gross / Math.max(1, equivalent) : 0
+    const w2Rate = hours > 0 ? equivalent / hours : 0
+    return { gross, extraFica, unpaidCost, equivalent, ruleRate, w2Rate }
+  }, [rate1099, hours, healthCost, unpaidWeeks])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="1099 contract rate" value={rate1099} onChange={setRate1099} prefix="$" suffix="/hr" />
+          <Field label="Billable hours per year" value={hours} onChange={setHours} suffix="hrs" />
+          <Field label="Health insurance you'd buy yourself" value={healthCost} onChange={setHealthCost} prefix="$/yr" />
+          <Field label="Unpaid weeks off per year (vacation, sick, gaps)" value={unpaidWeeks} onChange={setUnpaidWeeks} suffix="wks" />
+          <p className="text-xs text-muted-foreground">
+            A 1099 rate looks bigger because you're paying what an employer normally covers:
+            the 7.65% employer share of FICA (on 92.35% of net), your own health insurance,
+            and nobody pays you for time off. This ignores income-tax differences (the QBI
+            deduction can favor 1099) and 401(k) match — run the quarterly tax calculator for
+            the full self-employment picture.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label="W-2 salary equivalent" value={usd(r.equivalent)} />
+          <Result label="1099 gross" value={usd(r.gross)} />
+          <Result label="Extra FICA you pay (employer side)" value={usd(r.extraFica)} />
+          <Result label="Cost of unpaid time off" value={usd(r.unpaidCost)} />
+          <Result label="As an hourly W-2 wage" value={`${usd(r.w2Rate, 2)}/hr`} />
+          <Result label="Rule-of-thumb multiplier you charged" value={`${num(r.ruleRate, 2)}×`} />
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const GIG_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'gig-driver-hourly-calculator': GigHourlyCalc,
   'mileage-deduction-calculator': MileageDeductionCalc,
   'delivery-offer-calculator': DeliveryOfferCalc,
+  'mileage-vs-actual-expense-calculator': MileageVsActualCalc,
+  '1099-vs-w2-calculator': ContractVsW2Calc,
 }
