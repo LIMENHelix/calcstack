@@ -3795,6 +3795,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'roth-vs-traditional-calculator',
+    title: 'Roth vs Traditional Calculator — Which Account Wins After Tax?',
+    shortTitle: 'Roth vs Traditional',
+    category: 'Savings & Investing',
+    description:
+      'Free Roth vs Traditional 401(k)/IRA calculator. Compare after-tax retirement dollars both ways from your tax rate today vs your expected rate in retirement — with the equal-rate identity shown honestly.',
+    tagline: 'Same dollars, two tax schedules, one winner.',
+    intro:
+      'The Roth-or-Traditional question reduces to one comparison: your marginal tax rate today versus your rate in retirement. Contribute pre-tax and every dollar is taxed at withdrawal; contribute Roth and the tax is paid now at today\'s rate. This calculator runs both sides on equal out-of-pocket dollars and shows the after-tax retirement value each way — including the honest case where the rates are equal and the two are mathematically identical.',
+    howItWorks: [
+      'Enter your annual contribution, growth years, and expected return.',
+      'Enter your marginal tax rate today and your expected rate in retirement.',
+      'The Traditional side invests the full contribution and pays tax at withdrawal; the Roth side invests what remains after today\'s tax and grows tax-free.',
+      'Read the after-tax value each way, the winning side, and by how much.',
+    ],
+    faq: [
+      {
+        q: 'Is Roth or Traditional better?',
+        a: 'Whichever tax rate is lower decides. $6,000 a year for 30 years at 7%: at a 22% rate both today and in retirement, both sides end at exactly $35,625 after tax — identical. If your retirement rate is 32%, Roth wins by $4,567; if it drops to 12%, Traditional wins by $4,567. Higher rate later → Roth; lower rate later → Traditional.',
+      },
+      {
+        q: 'What if I have no idea what my retirement tax rate will be?',
+        a: 'Hedge by splitting contributions — most savers end up with some of both anyway because employer matches are always pre-tax. Rules of thumb: early-career low brackets favor Roth; peak-earning years favor Traditional; and Roth has structural bonuses (no RMDs, income-tax-free to heirs) that break close ties.',
+      },
+      {
+        q: 'Do Roth accounts have required minimum distributions?',
+        a: 'Roth IRAs have none during the owner\'s lifetime, and since 2024 Roth 401(k)s are RMD-free too. Traditional accounts force taxable RMDs starting at age 73 whether you need the money or not — a real argument for holding at least some Roth in case tax rates rise.',
+      },
+    ],
+  },
+  {
     slug: 'social-security-breakeven-calculator',
     title: 'Social Security Breakeven Calculator — Claim at 62, 67, or 70?',
     shortTitle: 'SS Breakeven Age',

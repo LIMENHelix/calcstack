@@ -310,8 +310,65 @@ export function K401Calc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Roth vs Traditional ---------------- */
+
+export function RothVsTraditionalCalc(_props: CalcProps) {
+  const [contrib, setContrib] = useNumber(6000)
+  const [years, setYears] = useNumber(30)
+  const [ret, setRet] = useNumber(7)
+  const [rateNow, setRateNow] = useNumber(22)
+  const [rateRet, setRateRet] = useNumber(18)
+
+  const r = useMemo(() => {
+    const growth = Math.pow(1 + ret / 100, years)
+    const fv = contrib * growth
+    const trad = fv * (1 - rateRet / 100)
+    const roth = contrib * (1 - rateNow / 100) * growth
+    const diff = roth - trad
+    const taxNow = contrib * (rateNow / 100)
+    const taxLater = fv * (rateRet / 100)
+    return { fv, trad, roth, diff, taxNow, taxLater }
+  }, [contrib, years, ret, rateNow, rateRet])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Annual contribution (either type)" value={contrib} onChange={setContrib} prefix="$" />
+          <Field label="Years to grow" value={years} onChange={setYears} step="1" />
+          <Field label="Annual return" value={ret} onChange={setRet} suffix="%" step="0.5" />
+          <Field label="Marginal tax rate today" value={rateNow} onChange={setRateNow} suffix="%" step="1" />
+          <Field label="Expected tax rate in retirement" value={rateRet} onChange={setRateRet} suffix="%" step="1" />
+          <p className="text-xs text-muted-foreground">
+            Comparing equal out-of-pocket dollars: the Roth side invests what remains after
+            today's tax; the Traditional side invests the full amount and pays tax at withdrawal.
+            Employer matches are always pre-tax, so most people end up with some of both regardless.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label={r.diff >= 0 ? 'Roth wins by' : 'Traditional wins by'} value={usd(Math.abs(r.diff), 0)} />
+          <Result label="Traditional: after-tax at withdrawal" value={usd(r.trad, 0)} />
+          <Result label="Roth: after-tax (grows tax-free)" value={usd(r.roth, 0)} />
+          <Result label="Pre-tax balance at retirement" value={usd(r.fv, 0)} />
+          <Result label="Tax paid today (Roth)" value={usd(r.taxNow, 0)} />
+          <Result label="Tax paid at withdrawal (Traditional)" value={usd(r.taxLater, 0)} />
+          <p className="text-sm text-muted-foreground">
+            {r.diff > 0.005
+              ? `Your retirement rate (${num(rateRet, 0)}%) is above today's (${num(rateNow, 0)}%) — paying tax now at the lower rate wins. Roth also skips RMDs and passes to heirs income-tax-free.`
+              : r.diff < -0.005
+                ? `Today's rate (${num(rateNow, 0)}%) is above your expected retirement rate (${num(rateRet, 0)}%) — deferring tax to the lower bracket wins. This is the classic high-earner case.`
+                : `Equal rates in and out make the two mathematically identical — ${usd(r.trad, 0)} either way. The tie-breakers then decide: RMDs, heirs, and rate uncertainty.`}{' '}
+            If the rates are close, hedge: split contributions. Nobody knows 2046 tax law.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const RETIRE_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   '401k-contribution-calculator': K401Calc,
+  'roth-vs-traditional-calculator': RothVsTraditionalCalc,
   'rmd-calculator': RmdCalc,
   'social-security-breakeven-calculator': SsBreakevenCalc,
   'safe-withdrawal-calculator': SafeWithdrawalCalc,
