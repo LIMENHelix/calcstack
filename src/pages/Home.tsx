@@ -54,13 +54,13 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — the workplace-money cluster: federal and California
-          overtime done right, PTO accrual with caps and year-end projections, plus the
-          complete insurance chain (DIME life needs, term vs whole life, disability gap).
+          The newest tools on the site — the retirement cluster: 401(k) contributions with
+          official 2026 IRS limits, Roth vs Traditional decided by one tax-rate comparison,
+          plus the workplace-money pair (California-correct overtime, PTO accrual with caps).
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['pto-accrual-calculator', 'overtime-calculator', 'life-insurance-calculator', 'term-vs-whole-life-calculator', 'disability-insurance-calculator', 'sump-pump-calculator'].includes(c.slug),
+            ['401k-contribution-calculator', 'roth-vs-traditional-calculator', 'pto-accrual-calculator', 'overtime-calculator', 'life-insurance-calculator', 'term-vs-whole-life-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
