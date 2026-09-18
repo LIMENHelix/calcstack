@@ -551,6 +551,84 @@ export function MotorCircuitCalc() {
   )
 }
 
+/* ---------------- Residential Service Load (NEC 220, standard method) ---------------- */
+
+export function ServiceLoadCalc() {
+  const [sqft, setSqft] = useNumber(2000)
+  const [saCircuits, setSaCircuits] = useNumber(2)
+  const [laundry, setLaundry] = useState('yes')
+  const [rangeKw, setRangeKw] = useNumber(12)
+  const [dryerKw, setDryerKw] = useNumber(5)
+  const [waterHeater, setWaterHeater] = useNumber(4500)
+  const [dishwasher, setDishwasher] = useNumber(1200)
+  const [disposal, setDisposal] = useNumber(500)
+  const [otherFixed, setOtherFixed] = useNumber(0)
+  const [acVa, setAcVa] = useNumber(5000)
+  const [heatVa, setHeatVa] = useNumber(0)
+
+  const r = useMemo(() => {
+    // General lighting + small appliance + laundry (220.12 / 220.52)
+    const glTotal = sqft * 3 + saCircuits * 1500 + (laundry === 'yes' ? 1500 : 0)
+    // Table 220.42 dwelling demand: first 3000 @100%, to 120k @35%, remainder @25%
+    const glDemand = Math.min(glTotal, 3000) + Math.max(0, Math.min(glTotal - 3000, 117000)) * 0.35 + Math.max(0, glTotal - 120000) * 0.25
+    // Range (Table 220.55): 8 kW for ≤12 kW; +5% per kW over 12
+    const rangeDemand = rangeKw <= 0 ? 0 : rangeKw <= 12 ? 8000 : 8000 * (1 + 0.05 * (rangeKw - 12))
+    // Dryer (220.54): nameplate or 5000 VA, whichever larger
+    const dryerDemand = dryerKw <= 0 ? 0 : Math.max(dryerKw * 1000, 5000)
+    // Fixed appliances (220.53): 4+ → 75% demand
+    const fixed = [waterHeater, dishwasher, disposal, otherFixed].filter((v) => v > 0)
+    const fixedSum = fixed.reduce((a, b) => a + b, 0)
+    const fixedDemand = fixed.length >= 4 ? fixedSum * 0.75 : fixedSum
+    // HVAC (220.60): non-coincident — larger of heating or cooling
+    const hvac = Math.max(acVa, heatVa)
+    const total = glDemand + rangeDemand + dryerDemand + fixedDemand + hvac
+    const amps = total / 240
+    const SERVICE_SIZES = [100, 125, 150, 175, 200, 225, 300, 400]
+    const service = SERVICE_SIZES.find((s) => s >= amps) ?? null
+    return { glTotal, glDemand, rangeDemand, dryerDemand, fixedDemand, fixedCount: fixed.length, hvac, total, amps, service }
+  }, [sqft, saCircuits, laundry, rangeKw, dryerKw, waterHeater, dishwasher, disposal, otherFixed, acVa, heatVa])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Conditioned floor area" value={sqft} onChange={setSqft} suffix="sq ft" />
+        <Field label="Small-appliance circuits (min 2)" value={saCircuits} onChange={setSaCircuits} step="1" />
+        <Select label="Laundry circuit?" value={laundry} onChange={setLaundry} options={[['yes', 'Yes'], ['no', 'No']]} />
+        <Field label="Electric range (0 = none)" value={rangeKw} onChange={setRangeKw} suffix="kW" />
+        <Field label="Electric dryer (0 = none)" value={dryerKw} onChange={setDryerKw} suffix="kW" />
+        <Field label="Water heater" value={waterHeater} onChange={setWaterHeater} suffix="VA" />
+        <Field label="Dishwasher" value={dishwasher} onChange={setDishwasher} suffix="VA" />
+        <Field label="Disposal" value={disposal} onChange={setDisposal} suffix="VA" />
+        <Field label="Other fixed appliances" value={otherFixed} onChange={setOtherFixed} suffix="VA" />
+        <Field label="Air conditioning" value={acVa} onChange={setAcVa} suffix="VA" />
+        <Field label="Electric heat" value={heatVa} onChange={setHeatVa} suffix="VA" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Calculated demand" value={`${num(r.total, 0)} VA`} />
+        <Result label="Service current" value={`${num(r.amps, 1)} A`} />
+        <Result label="Minimum service" value={r.service ? `${r.service} A` : '>400 A'} />
+        <Result label="Lighting after 220.42 demand" value={`${num(r.glDemand, 0)} of ${num(r.glTotal, 0)} VA`} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Range demand (220.55)" value={`${num(r.rangeDemand, 0)} VA`} />
+        <Result label="Dryer demand (220.54)" value={`${num(r.dryerDemand, 0)} VA`} />
+        <Result label={`Fixed appliances (${r.fixedCount}×, 220.53)`} value={`${num(r.fixedDemand, 0)} VA`} />
+        <Result label="HVAC — larger only (220.60)" value={`${num(r.hvac, 0)} VA`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Standard method, NEC Article 220 Part III: lighting at 3 VA/sq ft plus 1500 VA per
+        small-appliance and laundry circuit, demand-factored per Table 220.42 (first 3000 VA at
+        100%, remainder at 35%). One range ≤12 kW counts as 8 kW (Table 220.55); a dryer counts at
+        nameplate or 5000 VA, whichever is larger (220.54); four or more fixed appliances drop to
+        75% (220.53); and heating/cooling never coincide, so only the larger counts (220.60).
+        EV chargers add at 100% as continuous loads (Article 625) — add one to &quot;other fixed
+        appliances.&quot; Gas appliances contribute only their blowers and controls. The optional
+        method (220.82) often lands one service size smaller; the AHJ has the final word.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
 
 // NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
@@ -673,4 +751,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'conduit-fill-calculator': ConduitFillCalc,
   'ampacity-derating-calculator': AmpacityDerateCalc,
   'motor-circuit-calculator': MotorCircuitCalc,
+  'service-load-calculator': ServiceLoadCalc,
 }

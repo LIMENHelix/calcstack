@@ -4554,6 +4554,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'service-load-calculator',
+    title: 'Residential Service Load Calculator — NEC 220 Standard Method',
+    shortTitle: 'Service Load Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free NEC 220 residential load calculator. Compute demand VA with lighting, range, dryer, and HVAC demand factors, then get service amps and minimum panel size — 100A vs 150A vs 200A.',
+    tagline: 'The math that decides 100A or 200A.',
+    intro:
+      'Every panel upgrade, service change, and new build starts with the same question: how big a service does this house actually need? This calculator runs the NEC Article 220 standard method line by line — lighting at 3 VA per square foot, demand factors from Table 220.42, the 8 kW range allowance, dryer minimums, fixed-appliance diversity, and the non-coincident heating/cooling rule — ending at total demand VA, service amps, and the minimum standard service size.',
+    howItWorks: [
+      'Enter floor area, small-appliance circuits, and laundry — lighting demand applies Table 220.42 automatically.',
+      'Add range and dryer ratings (0 for gas/none) — code demand factors are built in.',
+      'List fixed appliances; four or more trigger the 75% diversity factor (220.53).',
+      'Enter AC and electric heat separately — only the larger counts (220.60). Read total VA, amps, and minimum service size.',
+    ],
+    faq: [
+      {
+        q: 'Why is my calculated load so much higher than my actual electric bill?',
+        a: 'The calculation assumes worst case with code-mandated diversity, not your actual usage. It exists to guarantee the service can carry the peak the code imagines — burners, dryer, AC, and water heater with realistic overlap. Demand factors like 35% on lighting and 8 kW on a 12 kW range are the code\'s model of how homes really behave.',
+      },
+      {
+        q: 'How do gas appliances affect the calculation?',
+        a: 'Barely. A gas furnace contributes only its blower motor (often 400–800 VA), a gas water heater contributes nothing, and a gas range only its controls. Homes with gas heat, hot water, and cooking routinely calculate under 100A; all-electric homes are the ones pushing 150–200A.',
+      },
+      {
+        q: 'Does an EV charger force a 200A service?',
+        a: 'Often it is the deciding load. A 48A Level 2 charger adds 11,520 VA at 100% as a continuous load — on a house calculating at 90A, that single addition pushes the service past 125A toward 150 or 200A. Add the charger\'s VA to "other fixed appliances" above to see it.',
+      },
+      {
+        q: 'What about the optional method?',
+        a: 'NEC 220.82 offers an alternative for dwellings (100% of the first 10 kVA, 40% of the rest) that frequently lands one service size smaller. The standard method above is always accepted; many electricians run both and submit the smaller. The local authority having jurisdiction makes the final call.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
