@@ -11,6 +11,7 @@ export interface StateRule {
   dedMfj?: number // MFJ deduction when it differs from 2× single (e.g. Kansas)
   rate?: number // flat rate %
   brackets?: [number, number][] // [taxable income threshold, marginal rate %]
+  bracketsMfj?: [number, number][] // exact MFJ thresholds when not exactly 2× single (e.g. New York)
   note?: string
 }
 
@@ -36,7 +37,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'alaska', name: 'Alaska', kind: 'none', ded: 0, note: 'Alaska has no state income tax.' },
   { slug: 'arizona', name: 'Arizona', kind: 'flat', ded: 14600, rate: 2.5 },
   { slug: 'arkansas', name: 'Arkansas', kind: 'brackets', ded: 2340, brackets: [[0, 0], [5500, 2], [10900, 3], [15600, 3.4], [25700, 3.9]] },
-  { slug: 'california', name: 'California', kind: 'brackets', ded: 5363, brackets: [[0, 1], [10412, 2], [24684, 4], [38959, 6], [54081, 8], [68274, 9.3], [349137, 10.3]], note: 'Excludes the 1.1% SDI payroll tax (uncapped since 2024) and the 1% mental-health surtax over $1M.' },
+  { slug: 'california', name: 'California', kind: 'brackets', ded: 5706, dedMfj: 11412, brackets: [[0, 1], [11079, 2], [26264, 4], [41452, 6], [57542, 8], [72724, 9.3], [371479, 10.3], [445771, 11.3], [742953, 12.3]], note: '2025 FTB Schedule X brackets (latest published; 2026 thresholds arrive fall 2026). Excludes the 1.3% SDI payroll tax (uncapped) and the 1% Behavioral Health Services surtax over $1M (top effective rate 13.3%).' },
   { slug: 'colorado', name: 'Colorado', kind: 'flat', ded: 15000, rate: 4.4 },
   { slug: 'connecticut', name: 'Connecticut', kind: 'brackets', ded: 0, brackets: [[0, 2], [10000, 4.5], [50000, 6], [100000, 6.5], [200000, 6.9], [250000, 6.99]], note: 'Personal exemptions and credits phase out with income and are not modeled.' },
   { slug: 'delaware', name: 'Delaware', kind: 'brackets', ded: 3250, brackets: [[0, 0], [2000, 2.2], [5000, 3.9], [10000, 4.8], [20000, 5.2], [25000, 5.55], [60000, 6.6]] },
@@ -64,7 +65,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'new-hampshire', name: 'New Hampshire', kind: 'none', ded: 0, note: 'New Hampshire taxes only interest and dividends — wages are untaxed.' },
   { slug: 'new-jersey', name: 'New Jersey', kind: 'brackets', ded: 0, brackets: [[0, 1.4], [20000, 1.75], [35000, 3.5], [40000, 5.525], [75000, 6.37], [500000, 8.97], [1000000, 10.75]] },
   { slug: 'new-mexico', name: 'New Mexico', kind: 'brackets', ded: 15000, brackets: [[0, 1.7], [5500, 3.2], [11000, 4.7], [16000, 4.9], [210000, 5.9]] },
-  { slug: 'new-york', name: 'New York', kind: 'brackets', ded: 8000, brackets: [[0, 4], [8500, 4.5], [11700, 5.25], [13900, 5.9], [80650, 6.25], [215400, 6.85], [1077550, 9.65], [5000000, 10.3], [25000000, 10.9]], note: 'Excludes NYC and Yonkers income taxes (NYC adds roughly 3–3.9%).' },
+  { slug: 'new-york', name: 'New York', kind: 'brackets', ded: 8000, dedMfj: 16050, brackets: [[0, 4], [8500, 4.5], [11700, 5.25], [13900, 5.5], [80650, 6], [215400, 6.85], [1077550, 9.65], [5000000, 10.3], [25000000, 10.9]], bracketsMfj: [[0, 4], [17150, 4.5], [23600, 5.25], [27900, 5.5], [161550, 6], [323200, 6.85], [2155350, 9.65], [5000000, 10.3], [25000000, 10.9]], note: 'NY DTF 2025 rate schedule. MFJ uses exact DTF joint thresholds (not doubled singles). Excludes NYC and Yonkers income taxes (NYC adds roughly 3–3.9%).' },
   { slug: 'north-carolina', name: 'North Carolina', kind: 'flat', ded: 12750, rate: 4.25 },
   { slug: 'north-dakota', name: 'North Dakota', kind: 'brackets', ded: 15000, brackets: [[0, 0], [44725, 1.95], [225975, 2.5]] },
   { slug: 'ohio', name: 'Ohio', kind: 'brackets', ded: 0, brackets: [[0, 0], [26050, 2.75], [100000, 3.5]], note: 'Excludes municipal income taxes (often 1–3% in Ohio cities).' },
@@ -123,7 +124,9 @@ export function computePaycheck(gross: number, filing: 'single' | 'mfj', state: 
   let stateTax = 0
   if (state.kind === 'flat') stateTax = stateTaxable * ((state.rate ?? 0) / 100)
   if (state.kind === 'brackets' && state.brackets) {
-    const scaled = state.brackets.map(([t, r]) => [t * scale, r] as [number, number])
+    const scaled = filing === 'mfj' && state.bracketsMfj
+      ? state.bracketsMfj
+      : state.brackets.map(([t, r]) => [t * scale, r] as [number, number])
     stateTax = bracketTax(scaled, stateTaxable)
   }
 
@@ -182,7 +185,9 @@ export function computeCheck(input: CheckInput, filing: 'single' | 'mfj', state:
   let stateTax = 0
   if (state.kind === 'flat') stateTax = (stateTaxableAnnual * ((state.rate ?? 0) / 100)) / periods
   if (state.kind === 'brackets' && state.brackets) {
-    const scaled = state.brackets.map(([t, r]) => [t * scale, r] as [number, number])
+    const scaled = filing === 'mfj' && state.bracketsMfj
+      ? state.bracketsMfj
+      : state.brackets.map(([t, r]) => [t * scale, r] as [number, number])
     stateTax = bracketTax(scaled, stateTaxableAnnual) / periods
   }
   const federal = federalRegular + federalSupplemental
