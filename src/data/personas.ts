@@ -559,6 +559,7 @@ export const PERSONAS: Persona[] = [
       'plate-cost-calculator',
       'prime-cost-calculator',
       'pour-cost-calculator',
+      'tip-pool-calculator',
       'break-even-calculator',
       'percentage-calculator',
       'discount-calculator',
@@ -594,6 +595,9 @@ export const PERSONAS: Persona[] = [
       'How much should I set aside for taxes on tips?',
     ],
     calcSlugs: [
+      'tip-income-calculator',
+      'tip-credit-calculator',
+      'tip-pool-calculator',
       'salary-to-hourly-calculator',
       'tip-calculator',
       'savings-goal-calculator',

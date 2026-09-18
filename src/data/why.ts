@@ -153,4 +153,10 @@ export const WHY_USE: Record<string, string> = {
     'Firm partners use it at year-end to find which leak is costing them — write-downs, unbilled time, or collections. Solo attorneys and consultants run it quarterly; a 5-point realization gain is pure found revenue with zero new clients.',
   'consultant-day-rate-calculator':
     'People quitting salaried jobs to consult use it the week before they give notice: income goal plus overhead divided by realistic billable days. It replaces the classic mistake of dividing old salary by 2,080 and wondering why year one went broke.',
+  'tip-pool-calculator':
+    'Shift leads use it at close-out to split the pool where everyone can watch the math. Servers and bussers use it to verify their cut — hours times points is only fair if everyone can see the arithmetic.',
+  'tip-credit-calculator':
+    'Tipped workers use it after a slow week: if cash wage plus tips misses the minimum, the employer owes the difference — this computes the exact top-up. Workers moving states use it to learn whether they just landed in a no-tip-credit state with full minimum wage plus tips.',
+  'tip-income-calculator':
+    'Servers and bartenders use it to answer "can I afford this apartment?" honestly — fixed bills go against the guaranteed base-pay floor, tips go to savings and debt. It is the antidote to budgeting on your best Friday.',
 }

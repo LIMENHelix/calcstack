@@ -2316,6 +2316,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'tip-pool-calculator',
+    title: 'Tip Pool Calculator — Split Shared Tips by Hours & Points',
+    shortTitle: 'Tip Pool Splitter',
+    category: 'Freelance & Career',
+    description:
+      'Free tip pool calculator. Split pooled tips fairly across servers, bartenders, bussers, and hosts using hours worked and points-weighted shares.',
+    tagline: 'The shift ends; the argument about the pool begins.',
+    intro:
+      'Points-based pools split tips by responsibility, not just presence: a server at 1.0 points working 8 hours earns twice the share of a busser at 0.5 points working the same shift. This calculator does the weighted-hours math for the whole house and shows each person\'s cut — so the split is arithmetic, not negotiation.',
+    howItWorks: [
+      'Enter the total tips in the pool.',
+      'Enter each person\'s hours worked and points weight (1.0 for servers/bartenders, 0.5 for bussers, 0.25 for hosts — or your house system).',
+      'Read the value per point-hour and each person\'s share.',
+    ],
+    faq: [
+      {
+        q: 'How do tip pools usually work?',
+        a: 'Two common systems: hours-proportional (everyone shares by hours worked) and points-weighted (roles get multipliers — servers 1.0, bussers 0.5, hosts 0.25 — then shares follow hours × points). Points systems are the norm in full-service restaurants because they reflect who carries the guest experience. This calculator does points-weighted math, which degenerates to hours-proportional if everyone gets 1.0.',
+      },
+      {
+        q: 'Who can legally be in a tip pool?',
+        a: 'Under the FLSA, if the employer pays the full minimum wage (no tip credit), the pool can include back-of-house staff like cooks and dishwashers. If the employer takes a tip credit, the pool is limited to employees who customarily receive tips — managers and supervisors are always excluded. State laws can be stricter.',
+      },
+      {
+        q: 'What keeps a pool from causing fights?',
+        a: 'Written weights agreed before the shift, math visible to everyone in the pool, and a payout the same night. Most pool disputes are not about greed — they are about a split nobody could verify. Run the numbers where everyone can see them.',
+      },
+    ],
+  },
+  {
+    slug: 'tip-credit-calculator',
+    title: 'Tip Credit Calculator — Minimum Wage Top-Up Checker for Tipped Workers',
+    shortTitle: 'Tip Credit Checker',
+    category: 'Everyday Money',
+    description:
+      'Free tip credit calculator. Check whether your cash wage plus tips meets minimum wage, and compute the hourly and weekly top-up your employer owes if it doesn\'t.',
+    tagline: 'The $2.13 wage has a catch — and it is in your favor.',
+    intro:
+      'When an employer pays a tipped cash wage below minimum wage, the law requires tips to close the gap — and if they don\'t, the employer must pay the difference every single pay period. This calculator checks your cash wage plus tips against the minimum and computes exactly what you\'re owed if you fall short.',
+    howItWorks: [
+      'Enter your state minimum wage and the cash wage on your paystub.',
+      'Enter your average tips per hour and tipped hours per week.',
+      'Read your effective hourly wage — or the top-up owed if cash wage plus tips falls short.',
+    ],
+    faq: [
+      {
+        q: 'What is the federal tipped minimum wage?',
+        a: '$2.13/hour cash wage against the $7.25 federal minimum — a maximum tip credit of $5.12. If tips don\'t bring you to $7.25 in any workweek, the employer must pay the difference. Many states set higher floors, and California, Oregon, Washington, Nevada, Montana, Alaska, and Minnesota prohibit tip credits entirely — servers there get full state minimum wage plus tips.',
+      },
+      {
+        q: 'Can my employer average good and bad weeks?',
+        a: 'No. The top-up obligation is computed per workweek. A $300 Friday cannot legally cover a $20 Tuesday across the week boundary, and within the week the test is total cash wage plus tips divided by hours. Slow weeks trigger the top-up regardless of what you made last week.',
+      },
+      {
+        q: 'What counts as tips for the credit?',
+        a: 'Only tips you actually receive and keep after any lawful pool. Mandatory service charges auto-added to large parties are not tips under federal law unless the employer passes them to you — check whether your house treats them as commission or distributes them.',
+      },
+    ],
+  },
+  {
+    slug: 'tip-income-calculator',
+    title: 'Tip Income Calculator — Budget on Base Pay, Bank the Tips',
+    shortTitle: 'Tip Income Budget',
+    category: 'Everyday Money',
+    description:
+      'Free tip income calculator. See what share of your income is tips, your real annual total, and the guaranteed base-pay floor to build a budget on.',
+    tagline: 'Tips are weather. Base pay is climate.',
+    intro:
+      'When 50–70% of your income arrives in tips, budgeting on last Friday\'s take is how rent gets missed in February. This calculator splits your income into the guaranteed base and the variable tip share — so you can build fixed bills on the floor and aim the upside at savings and debt.',
+    howItWorks: [
+      'Enter your base hourly wage and hours per week.',
+      'Enter your average weekly tips (use an 8–12 week average, or your slow-season average to be safe).',
+      'Read your total weekly income, tip share, annual estimate, and the guaranteed floor for budgeting.',
+    ],
+    faq: [
+      {
+        q: 'How much of a server\'s income is usually tips?',
+        a: 'For full-service restaurant servers, typically 60–85%. Bartenders in busy venues can top 90%. That variability is exactly why lenders and landlords discount tip income — and why your own budget should too.',
+      },
+      {
+        q: 'Do I pay taxes on tips?',
+        a: 'Yes — tips are taxable income. Employers withhold on reported tips, and under the 2025 tax law, qualifying tips up to $25,000 are deductible from federal income tax through 2028 (phasing out at higher incomes) — but Social Security and Medicare tax still applies. Report them all; the deduction happens on your return, not by under-reporting.',
+      },
+      {
+        q: 'How do I budget when income swings week to week?',
+        a: 'Two-account method: all income lands in one account, and you pay yourself a fixed weekly "salary" into a spending account sized to your floor. Fat weeks build the buffer in the first account; lean weeks draw it down. After 3–6 months you have a self-insuring income smoother.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
