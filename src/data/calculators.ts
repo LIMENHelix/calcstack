@@ -3502,6 +3502,40 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'refinance-break-even-calculator',
+    title: 'Refinance Break-Even Calculator — Months to Recoup & True Savings',
+    shortTitle: 'Refinance Break-Even',
+    category: 'Loans & Debt',
+    description:
+      'Free refinance calculator. Break-even months, honest horizon math (payments plus remaining debt), and the reset-the-clock warning when a lower payment hides higher total interest.',
+    tagline: 'A lower payment is not the same as saving money. Here is the difference.',
+    intro:
+      'Refinance pitches lead with the monthly payment drop because it always looks good — even when the new loan costs more in total. This calculator gives you the break-even month, then the rigorous version: everything you pay plus everything you still owe at the month you plan to leave, on both paths. And it warns you when resetting to a new 30-year clock quietly raises your lifetime interest.',
+    howItWorks: [
+      'Enter your current balance, rate, and remaining term from your latest statement.',
+      'Enter the quoted new rate, new term, and the closing costs from the Loan Estimate.',
+      'Set how long you plan to stay — the horizon comparison, not the monthly drop, is the real answer.',
+    ],
+    faq: [
+      {
+        q: 'How do I calculate refinance break-even?',
+        a: 'Closing costs ÷ monthly payment savings. $4,500 in costs with a $336 monthly saving breaks even in about 13 months — leave before that and the refi cost you money, stay past it and you are ahead. But break-even alone misses the clock reset: a new 30-year term on a loan with 27 years left adds three years of payments.',
+      },
+      {
+        q: 'Is a lower monthly payment always worth it?',
+        a: 'No — the payment can drop while total interest rises, whenever the new term is longer than your remaining one. On a $320,000 balance, dropping from 7.5% to 6.25% with a fresh 30-year clock saves $336 a month but can still add interest versus finishing the current loan. The horizon table above compares outlay plus remaining debt so the trade is visible.',
+      },
+      {
+        q: 'What closing costs should I expect on a refinance?',
+        a: 'Typically 2–3% of the loan: origination, appraisal, title, and recording fees. Use line J of the Loan Estimate — and be skeptical of "no-closing-cost" refis, which either raise the rate (lender credit) or roll costs into the balance. Both are fine choices; neither is free.',
+      },
+      {
+        q: 'Does the old rule about waiting for a 1% rate drop hold?',
+        a: 'It is a decent first filter, nothing more. On large balances a 0.5% drop can pay back in a year; on a small balance with five years left, even 2% may never recoup the closing costs. Balance, spread, term reset, and years-stayed decide it — which is why they are the inputs here.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

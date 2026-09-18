@@ -18,6 +18,11 @@ const SECTIONS: { title: string; blurb: string; slugs: readonly string[] }[] = [
     blurb: 'The last surprise costs of a first place, priced in advance.',
     slugs: ['moving-cost-calculator', 'first-apartment-budget-calculator'],
   },
+  {
+    title: 'Already own? Rate-check your mortgage',
+    blurb: 'Refinance pitches lead with the payment drop. Check the break-even month first.',
+    slugs: ['refinance-break-even-calculator', 'loan-payoff-calculator'],
+  },
 ]
 
 const REASONS: Record<string, string> = {
@@ -31,6 +36,8 @@ const REASONS: Record<string, string> = {
   'va-funding-fee-calculator': '2026 VA funding fee rates, exemption check, and what financing the fee adds to the loan.',
   'moving-cost-calculator': 'DIY truck vs full-service movers, priced by distance and home size.',
   'first-apartment-budget-calculator': 'Rent you can actually afford with deposits, utilities, and the move-in stack.',
+  'refinance-break-even-calculator': 'Closing costs ÷ monthly savings, then the honest horizon total that exposes a reset clock.',
+  'loan-payoff-calculator': 'What extra payments do to the end date — the cheapest rate cut is often the one you make yourself.',
 }
 
 export default function HomeBuying() {

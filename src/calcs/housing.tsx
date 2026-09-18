@@ -604,6 +604,106 @@ export function VaLoanCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Refinance Break-Even ---------------- */
+
+export function RefinanceCalc(_props: CalcProps) {
+  const [balance, setBalance] = useNumber(320000)
+  const [curRate, setCurRate] = useNumber(7.5)
+  const [remYears, setRemYears] = useNumber(27)
+  const [newRate, setNewRate] = useNumber(6.25)
+  const [newYears, setNewYears] = useNumber(30)
+  const [closing, setClosing] = useNumber(4500)
+  const [stayYears, setStayYears] = useNumber(7)
+
+  const r = useMemo(() => {
+    const pmt = (l: number, ratePct: number, n: number) => {
+      const mr = ratePct / 100 / 12
+      return mr > 0 ? (l * mr) / (1 - Math.pow(1 + mr, -n)) : l / n
+    }
+    const balAt = (l: number, ratePct: number, n: number, m: number) => {
+      const mr = ratePct / 100 / 12
+      if (mr === 0) return Math.max(0, l - (l / n) * m)
+      const p = pmt(l, ratePct, n)
+      return Math.max(0, l * Math.pow(1 + mr, m) - p * ((Math.pow(1 + mr, m) - 1) / mr))
+    }
+    const nc = Math.round(remYears * 12)
+    const nn = Math.round(newYears * 12)
+    const pCur = pmt(balance, curRate, nc)
+    const pNew = pmt(balance, newRate, nn)
+    const moSave = pCur - pNew
+    const breakeven = moSave > 0 ? closing / moSave : null
+    // Total interest to finish each path (new path includes closing costs)
+    const intCur = pCur * nc - balance
+    const intNew = pNew * nn - balance + closing
+    // Honest horizon comparison: outlay + remaining debt at month H, both paths
+    const H = Math.round(stayYears * 12)
+    const costCur = pCur * Math.min(H, nc) + balAt(balance, curRate, nc, Math.min(H, nc))
+    const costNew = pNew * Math.min(H, nn) + closing + balAt(balance, newRate, nn, Math.min(H, nn))
+    const horizonSave = costCur - costNew
+    const clockReset = moSave > 0 && intNew > intCur
+    return { pCur, pNew, moSave, breakeven, intCur, intNew, costCur, costNew, horizonSave, clockReset }
+  }, [balance, curRate, remYears, newRate, newYears, closing, stayYears])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Field label="Current balance" value={balance} onChange={setBalance} prefix="$" />
+          <Field label="Current rate" value={curRate} onChange={setCurRate} suffix="%" />
+          <Field label="Remaining term" value={remYears} onChange={setRemYears} suffix="yrs" />
+          <Field label="New rate" value={newRate} onChange={setNewRate} suffix="%" />
+          <Field label="New term" value={newYears} onChange={setNewYears} suffix="yrs" />
+          <Field label="Closing costs (new loan)" value={closing} onChange={setClosing} prefix="$" />
+          <Field label="Years you plan to stay" value={stayYears} onChange={setStayYears} suffix="yrs" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result
+            big
+            label="Break-even point"
+            value={r.breakeven !== null ? `${num(r.breakeven, 0)} months` : 'Never (payment rises)'}
+          />
+          <Result label="Current P&I" value={usd(r.pCur, 2)} />
+          <Result label="New P&I" value={usd(r.pNew, 2)} />
+          <Result label="Monthly savings" value={usd(r.moSave, 2)} />
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border">
+          <table className="w-full text-sm">
+            <thead className="bg-muted">
+              <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <th className="p-2">The honest totals</th>
+                <th className="p-2 text-right">Keep current loan</th>
+                <th className="p-2 text-right">Refinance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t"><td className="p-2">Interest to finish the loan{newYears * 12 > Math.round(remYears * 12) ? ' (new loan resets the clock)' : ''}</td><td className="p-2 text-right">{usd(r.intCur)}</td><td className="p-2 text-right">{usd(r.intNew)} (incl. closing)</td></tr>
+              <tr className="border-t font-medium"><td className="p-2">Total cost over your {stayYears}-year stay (payments + remaining debt; refi adds closing)</td><td className="p-2 text-right">{usd(r.costCur)}</td><td className="p-2 text-right">{usd(r.costNew)}</td></tr>
+              <tr className="border-t font-medium"><td className="p-2">You save by refinancing</td><td className="p-2 text-right" colSpan={2}>{usd(r.horizonSave)} over {stayYears} years</td></tr>
+            </tbody>
+          </table>
+        </div>
+        {r.clockReset && (
+          <p className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">
+            Careful: the monthly payment drops, but total interest is HIGHER because the new
+            {` ${newYears}`}-year clock is longer than your remaining {num(remYears, 0)} years.
+            Refinancing still wins if you invest the monthly savings — but the payment drop alone
+            is not profit.
+          </p>
+        )}
+        <p className="text-xs text-muted-foreground">
+          Break-even is closing costs ÷ monthly savings — before that month you are underwater on
+          the refi, after it you are ahead. The horizon row is the rigorous version: it compares
+          everything you pay plus what you still owe at the month you sell or move, so a lower
+          payment into a longer loan cannot hide behind the monthly number. Taxes and insurance
+          don't change with a refinance, so they are excluded from both sides.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const HOUSING_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   'rent-vs-buy-calculator': RentVsBuyCalc,
   'closing-cost-calculator': ClosingCostCalc,
@@ -611,4 +711,5 @@ export const HOUSING_CALC_COMPONENTS: Record<string, (props: CalcProps) => React
   'fha-loan-calculator': FHALoanCalc,
   '15-year-mortgage-calculator': FifteenVsThirtyCalc,
   'va-loan-calculator': VaLoanCalc,
+  'refinance-break-even-calculator': RefinanceCalc,
 }
