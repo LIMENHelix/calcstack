@@ -54,13 +54,13 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — the exterior carpentry and earthwork stack is complete:
-          roof pitch, excavation haul math (FM 5-434), retaining walls, deck footings (IRC
-          R507.3.1), ADA ramps, and ladder sizing.
+          The newest tools on the site — the water-management chain is complete end to end:
+          sump pump sizing, dry wells, French drains, roof pitch, excavation haul math (FM
+          5-434), and retaining walls.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['roof-pitch-calculator', 'excavation-calculator', 'retaining-wall-calculator', 'deck-footing-calculator', 'ramp-slope-calculator', 'ladder-angle-calculator'].includes(c.slug),
+            ['sump-pump-calculator', 'dry-well-calculator', 'french-drain-calculator', 'roof-pitch-calculator', 'excavation-calculator', 'retaining-wall-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
