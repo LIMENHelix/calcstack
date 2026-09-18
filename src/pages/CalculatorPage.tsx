@@ -11,6 +11,7 @@ import { BID_CALC_COMPONENTS } from '@/calcs/bidsheet'
 import { RE_CALC_COMPONENTS } from '@/calcs/realestate'
 import { SALES_CALC_COMPONENTS } from '@/calcs/sales'
 import { RESTAURANT_CALC_COMPONENTS } from '@/calcs/restaurant'
+import { TRAINER_CALC_COMPONENTS } from '@/calcs/trainer'
 import { PaycheckCalc } from '@/calcs/paycheck'
 import type { CalcProps } from '@/calcs'
 import { Seo } from '@/components/Seo'
@@ -29,6 +30,7 @@ const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> =
   ...RE_CALC_COMPONENTS,
   ...SALES_CALC_COMPONENTS,
   ...RESTAURANT_CALC_COMPONENTS,
+  ...TRAINER_CALC_COMPONENTS,
   'paycheck-calculator': PaycheckCalc,
 }
 

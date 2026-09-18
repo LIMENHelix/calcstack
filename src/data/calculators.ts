@@ -1765,6 +1765,97 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'trainer-rate-calculator',
+    title: 'Personal Trainer Rate Calculator — What to Charge Per Session',
+    shortTitle: 'Trainer Rate Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free personal trainer rate calculator. Work backwards from your income goal, business costs, and real session capacity to the rate you must charge per session.',
+    tagline: 'The rate is the business plan.',
+    intro:
+      'Most trainers pick a rate by looking at the trainer down the street. This calculator builds it from your own numbers: take-home goal plus business costs, divided by the sessions you can actually deliver in a year (not 52 fantasy weeks — real ones, with vacations and January cancellations). The answer is the minimum rate that makes the business work.',
+    howItWorks: [
+      'Enter your annual take-home income goal and your annual business costs (gym rent split, insurance, software, equipment).',
+      'Enter sessions per week and honest working weeks per year — 44 to 48 for most trainers.',
+      'Read the required rate per session and the monthly revenue target behind it.',
+    ],
+    faq: [
+      {
+        q: 'What do personal trainers charge per session?',
+        a: 'Rates vary widely by market — roughly $40–$75 in smaller markets, $75–$150+ in major metros, and more for specialists. But the right question is what YOU must charge: an $80k goal with $12k of costs over 1,150 sessions a year requires $80 per session, full stop.',
+      },
+      {
+        q: 'Why use 46 working weeks instead of 52?',
+        a: 'Because you will not bill 52 weeks. Vacation, holidays, sick days, client travel, and the attendance dip after New Year\'s motivation fades all cut capacity. Planning on 46 weeks is still optimistic for many trainers — 44 is safer for a first plan.',
+      },
+      {
+        q: 'What if the required rate is above my market?',
+        a: 'Three levers: more sessions per week (limited by your energy), semi-private training (2–4 clients split the slot — the classic move), or online/hybrid clients who add revenue without adding gym hours. Lowering the income goal is the fourth lever, but know you are pulling it.',
+      },
+    ],
+  },
+  {
+    slug: 'session-package-calculator',
+    title: 'Session Package Calculator — Bundle Pricing for Trainers',
+    shortTitle: 'Session Package Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free session package calculator for personal trainers. Price multi-session bundles with a discount, see the effective per-session rate, what the client saves, and monthly revenue per client.',
+    tagline: 'Cash up front, commitment built in.',
+    intro:
+      'Packages are how trainers stabilize lumpy income: the client prepays ten sessions, you get cash flow and a booked calendar, and the discount buys commitment that drop-in pricing never earns. This calculator prices the bundle, shows the effective per-session rate you are really earning, and converts one package client into monthly revenue.',
+    howItWorks: [
+      'Enter your single-session rate.',
+      'Set the package size (10 sessions is the industry standard) and the discount.',
+      'Read the package price, effective rate per session, and what the client saves.',
+      'Use the monthly revenue figure to see what each package client is worth at two sessions a week.',
+    ],
+    faq: [
+      {
+        q: 'How much should I discount a session package?',
+        a: 'Five to fifteen percent is the common band. A 10-pack at 10% off an $80 rate prices at $720 — you trade $80 of rate for $720 of prepaid commitment. Deeper than 15% and you are discounting for clients who would have paid full price.',
+      },
+      {
+        q: 'Should packages expire?',
+        a: 'Yes — a 3–6 month expiry protects you from selling sessions at today\'s rate that get redeemed years later at tomorrow\'s prices, and it creates urgency that keeps clients training. Check your state\'s gift-card and prepaid-service laws; some regulate expiry on prepaid services.',
+      },
+      {
+        q: 'Packages or monthly memberships?',
+        a: 'Packages suit clients with irregular schedules; memberships (e.g., 8 sessions/month, use them or lose them) suit consistent clients and give you the most predictable revenue. Many trainers offer both and let the client self-select — run both through this calculator to see the effective rates you are really offering.',
+      },
+    ],
+  },
+  {
+    slug: 'client-capacity-calculator',
+    title: 'Client Capacity Calculator — How Many Clients Can a Trainer Carry?',
+    shortTitle: 'Client Capacity Calculator',
+    category: 'Fitness & Sports',
+    description:
+      'Free client capacity calculator for personal trainers. Convert working hours, session length, and utilization into max clients, weekly sessions, and annual revenue at capacity.',
+    tagline: 'Your schedule has a ceiling — find it.',
+    intro:
+      'A trainer\'s income is capped by arithmetic: working minutes divided by session-plus-buffer gives the slots; honest utilization gives the sessions; sessions per client per week gives the client count. This calculator runs that chain and prices the result, so you know exactly when it is time to raise rates, go semi-private, or add online clients.',
+    howItWorks: [
+      'Enter working hours per week, session length, and the buffer between sessions.',
+      'Set a realistic utilization (75% is honest — no-shows and admin eat slots) and sessions per client per week.',
+      'Read your session slots, bookable sessions, client ceiling, and weekly/annual revenue at capacity.',
+    ],
+    faq: [
+      {
+        q: 'How many clients can a full-time personal trainer handle?',
+        a: 'Typically 15–30 active clients. Forty working hours with 75-minute slots is 32 slots; at a realistic 75% utilization that is 24 sessions a week — 12 clients at twice a week, or 24 at once a week. Anyone claiming 50 weekly one-on-one clients is either running 30-minute sessions or counting ghosts.',
+      },
+      {
+        q: 'What is a realistic utilization rate?',
+        a: 'Seventy to eighty percent for an established trainer. New trainers run far lower; waitlisted trainers can approach 90% in peak hours. Prime-time slots (6–9am, 5–8pm) fill first — mid-day utilization is where capacity dies.',
+      },
+      {
+        q: 'How do I grow past the capacity ceiling?',
+        a: 'Raise rates (demand exceeds supply — that is what a waitlist means), switch some slots to semi-private (2–4 clients each paying 60–70% of solo rate multiplies slot revenue), or add online programming clients who consume no gym slots. All three beat adding hours.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

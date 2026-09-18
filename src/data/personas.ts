@@ -821,6 +821,9 @@ export const PERSONAS: Persona[] = [
       'What macros do I hand a fat-loss client on day one?',
     ],
     calcSlugs: [
+      'trainer-rate-calculator',
+      'session-package-calculator',
+      'client-capacity-calculator',
       'one-rep-max-calculator',
       'periodization-planner',
       'velocity-based-training-calculator',

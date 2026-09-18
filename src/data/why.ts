@@ -115,6 +115,12 @@ export const WHY_USE: Record<string, string> = {
     'Operators use it as the monthly health check — COGS plus labor against the 60–65% benchmark tells you whether the problem is the kitchen, the schedule, or neither. Lenders and franchise reviewers ask for prime cost before almost anything else.',
   'pour-cost-calculator':
     'Bar managers use it when pricing the drink menu and when bartender variance shows up in inventory: pours per bottle, cost per pour, and profit per bottle turn a liquor invoice into a pricing decision. New bar owners use it to discover why the bar subsidizes the kitchen.',
+  'trainer-rate-calculator':
+    'Trainers going independent use it before quitting the gym job: income goal plus costs over real session capacity gives the rate floor, and it is almost always higher than expected. Gym managers use it to show trainers why the 50/50 split is not the villain.',
+  'session-package-calculator':
+    'Trainers use it to price 10-packs without gut-feel discounts — the effective per-session rate shows exactly what the discount costs, and the monthly figure shows what each package client is worth. Studio owners use it to standardize pricing across a team.',
+  'client-capacity-calculator':
+    'Trainers use it to find their income ceiling before they hit it: slots, honest utilization, and sessions-per-client produce the max client count and the annual revenue at capacity. It answers "when do I raise rates" with a number instead of a feeling.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }
