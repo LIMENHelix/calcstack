@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Field, Result, useNumber, type CalcProps } from './index'
 import { Card, CardContent } from '@/components/ui/card'
 import { usd, num, monthlyPayment } from '@/lib/calc'
+import { vaFeeRate } from './milstu'
 
 /* ---------------- Rent vs Buy Breakeven ---------------- */
 
@@ -474,10 +475,140 @@ export function FifteenVsThirtyCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- VA Loan (funding fee financed, no PMI) ---------------- */
+
+export function VaLoanCalc(_props: CalcProps) {
+  const [price, setPrice] = useNumber(400000)
+  const [downPct, setDownPct] = useNumber(0)
+  const [firstUse, setFirstUse] = useState(true)
+  const [exempt, setExempt] = useState(false)
+  const [rate, setRate] = useNumber(6.25)
+  const [term, setTerm] = useNumber(30)
+  const [taxRate, setTaxRate] = useNumber(1.1)
+  const [insurance, setInsurance] = useNumber(1800)
+
+  const r = useMemo(() => {
+    const n = Math.round(term * 12)
+    const pmtFor = (l: number) => {
+      const mr = rate / 100 / 12
+      return mr > 0 ? (l * mr) / (1 - Math.pow(1 + mr, -n)) : l / n
+    }
+    const taxMo = (price * (taxRate / 100)) / 12
+    const insMo = insurance / 12
+
+    // VA: funding fee financed, no monthly mortgage insurance ever
+    const vaDown = price * (downPct / 100)
+    const vaBase = Math.max(0, price - vaDown)
+    const vaFeeRateUsed = exempt ? 0 : vaFeeRate(downPct, firstUse)
+    const vaFee = vaBase * vaFeeRateUsed
+    const vaLoan = vaBase + vaFee
+    const vaPmt = pmtFor(vaLoan)
+    const vaTotal = vaPmt + taxMo + insMo
+
+    // FHA comparison: 3.5% down, 1.75% UFMIP financed, 0.55% MIP for life (LTV > 95%)
+    const fhaDown = price * 0.035
+    const fhaBase = price - fhaDown
+    const fhaLoan = fhaBase * 1.0175
+    const fhaPmt = pmtFor(fhaLoan)
+    const fhaMip = (fhaLoan * 0.0055) / 12
+    const fhaTotal = fhaPmt + fhaMip + taxMo + insMo
+
+    // Conventional comparison: 5% down, PMI 0.5%/yr of loan
+    const convDown = price * 0.05
+    const convLoan = price - convDown
+    const convPmt = pmtFor(convLoan)
+    const convPmi = (convLoan * 0.005) / 12
+    const convTotal = convPmt + convPmi + taxMo + insMo
+
+    return { vaDown, vaBase, vaFeeRateUsed, vaFee, vaLoan, vaPmt, vaTotal, fhaDown, fhaPmt, fhaMip, fhaTotal, convDown, convPmt, convPmi, convTotal, taxMo, insMo }
+  }, [price, downPct, firstUse, exempt, rate, term, taxRate, insurance])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="Home price" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Down payment" value={downPct} onChange={setDownPct} suffix="%" />
+          <Field label="Interest rate" value={rate} onChange={setRate} suffix="%" />
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Term</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+            >
+              <option value={30}>30 years</option>
+              <option value={15}>15 years</option>
+            </select>
+          </div>
+          <Field label="Property tax" value={taxRate} onChange={setTaxRate} suffix="%/yr" />
+          <Field label="Home insurance" value={insurance} onChange={setInsurance} prefix="$" suffix="/yr" />
+        </div>
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setFirstUse(true)}
+              className={`rounded-md border px-3 py-1.5 text-sm ${firstUse ? 'border-primary bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+            >
+              First VA loan
+            </button>
+            <button
+              onClick={() => setFirstUse(false)}
+              className={`rounded-md border px-3 py-1.5 text-sm ${!firstUse ? 'border-primary bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+            >
+              Subsequent use
+            </button>
+          </div>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={exempt} onChange={(e) => setExempt(e.target.checked)} />
+            Funding-fee exempt (service-connected disability, DIC, active-duty Purple Heart)
+          </label>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label="VA total monthly (PITI)" value={usd(r.vaTotal, 2)} />
+          <Result label="P&I (fee financed)" value={usd(r.vaPmt, 2)} />
+          <Result label="Funding fee" value={exempt ? '$0 (exempt)' : usd(r.vaFee)} />
+          <Result label="Cash due at close (down only)" value={usd(r.vaDown)} />
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border">
+          <table className="w-full text-sm">
+            <thead className="bg-muted">
+              <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <th className="p-2">Same house, three loan types</th>
+                <th className="p-2 text-right">VA ({num(downPct, 1)}% down)</th>
+                <th className="p-2 text-right">FHA (3.5% down)</th>
+                <th className="p-2 text-right">Conventional (5% down)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t"><td className="p-2">P&I</td><td className="p-2 text-right">{usd(r.vaPmt, 2)}</td><td className="p-2 text-right">{usd(r.fhaPmt, 2)}</td><td className="p-2 text-right">{usd(r.convPmt, 2)}</td></tr>
+              <tr className="border-t"><td className="p-2">Mortgage insurance</td><td className="p-2 text-right">$0 — never</td><td className="p-2 text-right">{usd(r.fhaMip, 2)} MIP (life of loan)</td><td className="p-2 text-right">{usd(r.convPmi, 2)} PMI (to 78% LTV)</td></tr>
+              <tr className="border-t"><td className="p-2">Taxes & insurance</td><td className="p-2 text-right">{usd(r.taxMo + r.insMo, 2)}</td><td className="p-2 text-right">{usd(r.taxMo + r.insMo, 2)}</td><td className="p-2 text-right">{usd(r.taxMo + r.insMo, 2)}</td></tr>
+              <tr className="border-t font-medium"><td className="p-2">Total monthly</td><td className="p-2 text-right">{usd(r.vaTotal, 2)}</td><td className="p-2 text-right">{usd(r.fhaTotal, 2)}</td><td className="p-2 text-right">{usd(r.convTotal, 2)}</td></tr>
+              <tr className="border-t"><td className="p-2">Cash to bring (down payment)</td><td className="p-2 text-right">{usd(r.vaDown)}</td><td className="p-2 text-right">{usd(r.fhaDown)}</td><td className="p-2 text-right">{usd(r.convDown)}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Funding fee per the VA schedule effective April 7, 2023 (current for 2026): first use
+          2.15% under 5% down, 1.5% at 5–9.99%, 1.25% at 10%+; subsequent use 3.3% under 5% down.
+          Exempt borrowers pay $0. FHA comparison uses ML 2023-05 MIP at 0.55% for life; conventional
+          PMI at a 0.5% planning rate. Closing costs (2–5%) are additional for all three — run the
+          Closing Costs calculator next. VA loans have no monthly mortgage insurance at any down
+          payment, and no loan limit with full entitlement.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const HOUSING_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   'rent-vs-buy-calculator': RentVsBuyCalc,
   'closing-cost-calculator': ClosingCostCalc,
   'home-affordability-calculator': HomeAffordabilityCalc,
   'fha-loan-calculator': FHALoanCalc,
   '15-year-mortgage-calculator': FifteenVsThirtyCalc,
+  'va-loan-calculator': VaLoanCalc,
 }

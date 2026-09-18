@@ -292,38 +292,6 @@ const freelanceVariants: VariantMeta[] = FREE_PROFS.map(({ slug, prof, salary, b
 /* ---------- Mortgage variants ---------- */
 const MORTGAGE_VARIANTS: VariantMeta[] = [
   {
-    slug: 'va-loan-calculator',
-    baseSlug: 'mortgage-payment-calculator',
-    parentSlug: 'mortgage-payment-calculator',
-    title: 'VA Loan Calculator — Zero Down Payment Mortgage for Veterans',
-    shortTitle: 'VA Loan Calculator',
-    category: 'Loans & Debt',
-    description: 'Free VA loan calculator pre-set to 0% down. Estimate monthly payments on a VA mortgage — no down payment and no monthly mortgage insurance.',
-    tagline: 'Pre-set to $0 down — the VA loan superpower.',
-    presets: { downPct: 0 },
-    intro: 'VA loans are the strongest mortgage benefit in the US: no down payment, no monthly mortgage insurance, and rates that typically beat conventional. This calculator is pre-set to 0% down — enter the home price and a quoted VA rate to see the payment. Note the one cost unique to VA: a funding fee (2.15% for first use with 0% down) usually rolled into the loan amount.',
-    howItWorks: [
-      'Down payment starts at 0% — the standard VA structure.',
-      'Enter the home price and your quoted VA rate.',
-      'For accuracy, add the funding fee to the loan: increase the price input by ~2.15% for first-time use.',
-      'Read the monthly payment — no PMI/MIP line item needed.',
-    ],
-    faq: [
-      {
-        q: 'Do VA loans really require no down payment?',
-        a: 'Yes — 0% down with full entitlement, and no monthly mortgage insurance regardless of down payment size. That combination does not exist in conventional lending.',
-      },
-      {
-        q: 'What is the VA funding fee?',
-        a: 'A one-time fee replacing monthly insurance: 2.15% of the loan for first use with 0% down (less with 5%+ down; higher for subsequent use). Veterans with service-connected disability ratings are exempt. It is usually financed into the loan.',
-      },
-      {
-        q: 'Are VA rates lower than conventional?',
-        a: 'Typically yes, by roughly 0.25–0.5 points, because the VA guarantee removes default risk for lenders. Get quotes from at least three VA-approved lenders — spreads between them are wide.',
-      },
-    ],
-  },
-  {
     slug: 'jumbo-loan-calculator',
     baseSlug: 'mortgage-payment-calculator',
     parentSlug: 'mortgage-payment-calculator',

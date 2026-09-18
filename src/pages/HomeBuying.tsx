@@ -6,7 +6,7 @@ const SECTIONS: { title: string; blurb: string; slugs: readonly string[] }[] = [
   {
     title: 'Can you afford it — decide before you tour',
     blurb: 'The payment is only part of the cost. Run the numbers before the open house.',
-    slugs: ['home-affordability-calculator', 'mortgage-payment-calculator', 'fha-loan-calculator', '15-year-mortgage-calculator', 'rent-vs-buy-calculator'],
+    slugs: ['home-affordability-calculator', 'mortgage-payment-calculator', 'fha-loan-calculator', 'va-loan-calculator', '15-year-mortgage-calculator', 'rent-vs-buy-calculator'],
   },
   {
     title: 'Cash to close — the check nobody warns you about',
@@ -24,6 +24,7 @@ const REASONS: Record<string, string> = {
   'home-affordability-calculator': 'Income and debts in, maximum and comfortable price out — taxes, insurance, and PMI already inside.',
   'mortgage-payment-calculator': 'Principal, interest, and the amortization schedule — see what rate changes do to 30 years.',
   'fha-loan-calculator': '3.5% down, 580 credit — the real payment with financed UFMIP and lifetime MIP included.',
+  'va-loan-calculator': 'Veterans: zero down, no monthly insurance ever, funding fee financed — priced against FHA and conventional on the same house.',
   '15-year-mortgage-calculator': 'Half the term, a third of the interest — tested honestly against investing the difference.',
   'rent-vs-buy-calculator': 'The true breakeven year with maintenance, appreciation, and selling costs — not the napkin version.',
   'closing-cost-calculator': 'Cash to close beyond the down payment: lender fees, title, escrow, prepaid taxes and insurance.',

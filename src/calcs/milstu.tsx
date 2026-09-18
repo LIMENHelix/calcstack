@@ -5,7 +5,7 @@ import { usd, num, monthlyPayment } from '@/lib/calc'
 
 /* ---------------- VA Funding Fee (schedule effective April 7, 2023 — current for 2026) ---------------- */
 
-function vaFeeRate(downPct: number, firstUse: boolean): number {
+export function vaFeeRate(downPct: number, firstUse: boolean): number {
   if (downPct >= 10) return 0.0125
   if (downPct >= 5) return 0.015
   return firstUse ? 0.0215 : 0.033

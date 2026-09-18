@@ -3468,6 +3468,40 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'va-loan-calculator',
+    title: 'VA Loan Calculator — Zero Down, Funding Fee & 3-Way Comparison (2026)',
+    shortTitle: 'VA Loan',
+    category: 'Loans & Debt',
+    description:
+      'Free VA loan calculator. Funding fee financed at current VA rates, exemption check, no PMI ever — and a side-by-side monthly comparison against FHA and conventional on the same house.',
+    tagline: 'Zero down, zero monthly insurance — but the funding fee deserves math too.',
+    intro:
+      'The VA loan is the strongest mortgage benefit in the country: no down payment, no monthly mortgage insurance at any LTV, and typically the lowest rates. The one cost is the funding fee — 2.15% for first use with nothing down — and most calculators ignore it. This one finances it properly, checks your exemption, and compares the same house across VA, FHA, and conventional so the benefit shows up in dollars.',
+    howItWorks: [
+      'Enter the home price, down payment (0% is the standard VA structure), rate, and term.',
+      'Mark first or subsequent use, and check the exemption box if you have a service-connected disability rating.',
+      'See the true monthly payment with the fee financed, then compare the same house as FHA (3.5% down + lifetime MIP) and conventional (5% down + PMI).',
+    ],
+    faq: [
+      {
+        q: 'Do VA loans really need no down payment?',
+        a: 'Yes — 0% down with full entitlement, and no monthly mortgage insurance regardless. There is also no VA loan limit with full entitlement since 2020; lenders will still cap you by income and DTI. Partial entitlement after a previous VA default can bring a down payment requirement back.',
+      },
+      {
+        q: 'What is the VA funding fee in 2026?',
+        a: 'For purchase loans (schedule effective April 7, 2023, still current): first use with under 5% down is 2.15% of the loan; 5–9.99% down drops it to 1.5%; 10%+ to 1.25%. Subsequent use with under 5% down is 3.3%. It is almost always financed into the loan. Veterans with service-connected disability ratings, DIC recipients, and active-duty Purple Heart recipients pay nothing.',
+      },
+      {
+        q: 'VA vs FHA — how big is the difference really?',
+        a: 'On a $400,000 home: VA at 0% down runs about $3,032/month all-in with $0 down. FHA at 3.5% down runs about $3,115/month AND needs $14,000 upfront — plus its MIP never expires, while the VA funding fee is a one-time cost. Over a 30-year hold, FHA\'s lifetime MIP alone adds roughly $40,000 the VA loan never charges.',
+      },
+      {
+        q: 'Should I put money down on a VA loan anyway?',
+        a: 'Only for two reasons: 5% down cuts the funding fee from 2.15% to 1.5% (10% cuts it to 1.25%), and a down payment lowers the payment if your budget is tight. Otherwise the math usually favors keeping the cash — invest it or hold it as reserves rather than prepaying a loan with no insurance penalty.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

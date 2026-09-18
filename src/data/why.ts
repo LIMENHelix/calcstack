@@ -229,4 +229,6 @@ export const WHY_USE: Record<string, string> = {
     'Buyers with 3.5% saved use it to see the payment lenders never quote upfront — with financed UFMIP and lifetime MIP included. The 15-year MIP discount and the life-of-loan MIP trap are the two facts that change real decisions.',
   '15-year-mortgage-calculator':
     'Buyers who can afford either term use it to settle the debate with the same monthly outlay on both sides — interest saved versus investing the difference. It makes the decision hinge on one honest question: can you beat the 15-year rate after tax?',
+  'va-loan-calculator':
+    'Veterans use it to see the benefit in dollars: funding fee financed, exemption checked, and the same house priced three ways so the FHA lifetime-MIP trap is visible next to the VA zero. The "should I put money down anyway" FAQ settles the most common mistake.',
 }
