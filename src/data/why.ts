@@ -101,6 +101,12 @@ export const WHY_USE: Record<string, string> = {
     'Investors use it in the first five minutes of screening a listing — honest NOI, cap rate, and GRM kill bad deals fast, and the financing layer shows whether the deal still cash-flows at today\'s rates. Agents use it to speak investor language with clients.',
   'gci-goal-calculator':
     'Agents building a business plan use it to convert "I want to make $150k" into "I need 21 closings, which is 1.8 a month" — the number that actually drives prospecting. Brokers use it in recruiting conversations to show agents what their split really produces.',
+  'sales-commission-calculator':
+    'Salespeople use it when the comp plan lands and again at every commission check: marginal tiers make the payout non-obvious, and the blended rate is the only honest way to compare plans. Managers use it to model what a proposed tier change costs.',
+  'quota-attainment-calculator':
+    'Reps use it mid-quarter to replace vibes with math — attainment, pace gap, and the monthly close rate needed to catch up. Sales leaders use the projected year-end number in forecast calls, and job changers use it to sanity-check the quota attached to an offer.',
+  'ote-calculator':
+    'Anyone comparing sales offers uses this: the OTE headline hides the quota behind it, and implied quota (variable ÷ commission rate) is the number that decides whether the offer is good. Recruiters use it too — it is the fastest way to explain why their plan is competitive.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }

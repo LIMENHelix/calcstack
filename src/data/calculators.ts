@@ -1551,6 +1551,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'sales-commission-calculator',
+    title: 'Sales Commission Calculator — Tiered Commission Structures',
+    shortTitle: 'Sales Commission Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free tiered sales commission calculator. Enter your sales and up to three marginal commission tiers to see exactly what each band pays, the total, and your blended rate.',
+    tagline: 'Tiers are marginal — see what each band really pays.',
+    intro:
+      'Tiered commission plans work like tax brackets: each rate applies only to the sales inside its band, so hitting the top tier does not retroactively raise the rate on everything. This calculator applies your plan\'s tiers marginally and shows the payout per band, the total commission, and your true blended rate — the number to compare across comp plans.',
+    howItWorks: [
+      'Enter your sales for the period.',
+      'Set up to three tiers: rate and upper bound for tiers 1 and 2, and the rate for everything above tier 2.',
+      'Read the commission per tier, the total, and the blended rate on your sales.',
+    ],
+    faq: [
+      {
+        q: 'How do tiered commissions work?',
+        a: 'Marginally. With tiers of 5% up to $50k, 8% up to $100k, and 12% above that, $120,000 in sales pays 5% × $50,000 + 8% × $50,000 + 12% × $20,000 = $8,900 — not 12% of $120,000 ($14,400). Always check whether your plan is marginal ("tiered") or retroactive ("the top rate applies to everything once you cross it"); the difference is enormous.',
+      },
+      {
+        q: 'What is a blended commission rate?',
+        a: 'Total commission divided by total sales. In the example above it is $8,900 ÷ $120,000 = 7.42%. Blended rate is the honest way to compare two comp plans with different tier structures.',
+      },
+      {
+        q: 'What about accelerators and decelerators?',
+        a: 'Accelerators raise your rate after you pass quota (e.g., 1.5× beyond 100% attainment) and decelerators cut it below a floor. Model an accelerator by entering your above-quota sales with the multiplied rate in tier 3. Commission-only draws and clawbacks are separate mechanics — check your plan document.',
+      },
+    ],
+  },
+  {
+    slug: 'quota-attainment-calculator',
+    title: 'Quota Attainment Calculator — Pace, Projection & Catch-Up Math',
+    shortTitle: 'Quota Attainment Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free quota attainment calculator. See your attainment %, whether you are ahead or behind pace, what you must close per remaining month, and your projected year-end finish.',
+    tagline: 'Are you actually on pace — or hoping?',
+    intro:
+      'Halfway through the year with 43% of quota closed feels fine until you do the math: a linear pace says you should have 50%. This calculator turns your year-to-date number into the four figures that matter — attainment, pace gap, the monthly close rate needed to catch up, and where you finish if nothing changes.',
+    howItWorks: [
+      'Enter your annual quota, closed-won so far, and months elapsed in the quota year.',
+      'Read attainment %, the on-pace target, and how far ahead or behind you are.',
+      'Check the required close rate per remaining month versus your current average — and the projected year-end finish.',
+    ],
+    faq: [
+      {
+        q: 'What is quota attainment?',
+        a: 'Closed-won business divided by quota, as a percentage. $520,000 closed against a $1.2M annual quota after 6 months is 43.3% attainment — behind the 50% linear pace, needing $113,333 per month for the rest of the year to catch up.',
+      },
+      {
+        q: 'Is linear pace realistic?',
+        a: 'Rarely — most businesses are seasonal, and Q4 is often the biggest quarter. Use linear pace as the early-warning line, then adjust for your cycle: if 40% of your annual business historically lands in Q4, being slightly behind in Q2 is normal. The projected year-end figure shows what "nothing changes" looks like.',
+      },
+      {
+        q: 'When should I worry about my number?',
+        a: 'A common rule of thumb: pipeline coverage of 3–4× the remaining gap. If you need $680k more this year and your qualified pipeline is $1.2M, you are short. The catch-up math gets brutal fast — each month behind raises the required monthly close rate for every month left.',
+      },
+    ],
+  },
+  {
+    slug: 'ote-calculator',
+    title: 'OTE Calculator — On-Target Earnings, Implied Quota & Offer Comparison',
+    shortTitle: 'OTE Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free OTE calculator for sales roles. Split on-target earnings into base and variable, find the implied quota behind the offer, and see earnings at 80%, 100%, and 120% attainment.',
+    tagline: 'OTE is a promise — find the quota behind it.',
+    intro:
+      'Two sales offers with the same OTE can be wildly different jobs. What matters is the implied quota: variable pay ÷ commission rate. This calculator splits any offer into base and variable, derives the quota you would carry, and shows what you actually earn at 80%, 100%, and 120% of that number — the honest way to compare offers.',
+    howItWorks: [
+      'Enter the base salary and the variable pay at 100% of quota.',
+      'Enter the commission rate on sales.',
+      'Read the OTE, the implied annual quota and monthly pace, and earnings at three attainment levels.',
+    ],
+    faq: [
+      {
+        q: 'What does OTE mean?',
+        a: 'On-target earnings: base salary plus the variable pay you earn at exactly 100% of quota. A $70k base + $60k variable is a $130k OTE. It is not a guarantee — it is what the plan pays if you hit your number exactly.',
+      },
+      {
+        q: 'How do I compare two offers with the same OTE?',
+        a: 'Derive the implied quota for each. $60k variable at 5% commission means a $1.2M quota; at 3% it means $2M. The second offer requires 67% more sales for the same pay. Then ask what attainment the team actually achieves — a $130k OTE where the median rep hits 75% pays $115k in reality.',
+      },
+      {
+        q: 'What base/variable split is normal?',
+        a: 'Common splits are 50/50 to 70/30 (base/variable) depending on role — higher base for longer, complex sales cycles; higher variable for transactional roles. A higher base percentage de-risks your income; a higher variable percentage pays more if you consistently overperform. The 80/100/120% earnings table shows both sides of that trade.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

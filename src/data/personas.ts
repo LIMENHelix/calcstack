@@ -421,6 +421,10 @@ export const PERSONAS: Persona[] = [
       'What discount can I offer without destroying the deal\'s margin?',
     ],
     calcSlugs: [
+      'sales-commission-calculator',
+      'quota-attainment-calculator',
+      'ote-calculator',
+      'markup-margin-calculator',
       'percentage-calculator',
       'salary-to-hourly-calculator',
       'discount-calculator',
