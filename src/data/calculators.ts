@@ -1556,6 +1556,86 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'rebar-calculator',
+    title: 'Rebar Calculator — Grid Count, Weight & Cost',
+    shortTitle: 'Rebar Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free rebar calculator for slabs. Compute bar count each way, total linear feet with laps, steel weight by bar size (#3–#6), and 20-ft stick count — with cost at your local price.',
+    tagline: 'The grid count, the weight, the stick order — before the pour.',
+    intro:
+      'Rebar is priced by weight and sold in 20-foot sticks, so a slab order needs three numbers: bars each way, total linear feet with lap allowance, and pounds at your bar size. This calculator runs the grid math (⌈dimension ÷ spacing⌉ + 1 per direction), applies ASTM nominal weights (#4 = 0.668 lb/ft), and converts to sticks and cost.',
+    howItWorks: [
+      'Enter slab length and width.',
+      'Pick grid spacing — 12" for driveways, 18" standard slab, 24" light patio.',
+      'Pick bar size (#3 patio, #4 slabs, #5+ driveways and heavy work).',
+      'Read the weight, stick count, and cost at your $/lb.',
+    ],
+    faq: [
+      {
+        q: 'How much rebar does a 24×24 slab need?',
+        a: 'At 18" on center with #4 bar: 17 bars each way = 816 linear feet, about 881 LF with 8% for laps and trim, which weighs ~589 lb — roughly 45 twenty-foot sticks. A 12" grid for a driveway of the same size would be 25 bars each way.',
+      },
+      {
+        q: 'Is rebar or wire mesh better for a slab?',
+        a: 'Rebar for driveways, structural slabs, and anything over 4–5 inches; wire mesh is adequate for light 4" patios and sidewalks. Either way, the steel must sit at mid-depth on chairs — steel lying on the ground adds almost no strength.',
+      },
+    ],
+  },
+  {
+    slug: 'footing-size-calculator',
+    title: 'Footing Size Calculator — Width & Thickness by Soil',
+    shortTitle: 'Footing Size Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free footing size calculator. Size continuous wall footings and column pads from load and soil bearing capacity using IRC prescriptive rules — width, thickness, and projection.',
+    tagline: 'Load ÷ soil = width. The prescriptive math, done right.',
+    intro:
+      'Footing sizing starts with one division: the load divided by what the soil can bear. This calculator runs that math for continuous wall footings and column pads, applies the prescriptive thickness rules (thickness ≥ projection, 6" minimum), and shows the projection each side. Soil capacity presets cover soft clay through bedrock — but the number that matters is the one from your site.',
+    howItWorks: [
+      'Pick continuous wall or column/pier pad.',
+      'Enter the load (lb per foot of wall, or total column load).',
+      'Pick the soil bearing estimate — or substitute your geotechnical report value.',
+      'Read the width, minimum thickness, and projection.',
+    ],
+    faq: [
+      {
+        q: 'How wide should a footing be for a house wall?',
+        a: 'Load per foot ÷ soil bearing. A typical two-story wall carrying 3,000 lb/ft on 2,000 psf soil needs 1.5 ft — an 18-inch footing, 6 inches thick. The IRC prescriptive minimum for light one-story construction on good soil is 12"×6".',
+      },
+      {
+        q: 'When do I need an engineer instead of a calculator?',
+        a: 'Multi-story construction, retaining walls, poor or unknown soils, steep sites, seismic zones D–F, and anything the building department stamps. Prescriptive math covers conventional light-frame work on decent soil; everything else is engineered.',
+      },
+    ],
+  },
+  {
+    slug: 'block-fill-calculator',
+    title: 'Block Fill Calculator — Grout Volume for CMU Walls',
+    shortTitle: 'Block Fill Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free block fill (grout) calculator. Compute cubic yards of grout to fill CMU cells — full grout or rebar cells only — with waste allowance and ready-mix cost.',
+    tagline: 'How much grout does that block wall actually swallow?',
+    intro:
+      'A grouted block wall is hollow until the truck arrives — and grout volumes surprise everyone. One 8×8×16 block holds about 0.24 cubic feet with both cells filled; a full wall runs roughly one cubic yard per 112 blocks. This calculator converts wall dimensions to grout yards with a waste allowance, full-fill or rebar-cells-only.',
+    howItWorks: [
+      'Enter wall length and height.',
+      'Pick all cells (full grout) or every other cell (rebar cells only).',
+      'Read the cubic yards with 10% waste, the block count, and the cost.',
+    ],
+    faq: [
+      {
+        q: 'How much grout per 100 blocks?',
+        a: 'Fully grouted 8-inch blocks: about 0.9 cubic yards per 100 blocks (0.24 cu ft per block × 100 ÷ 27). Filling only the rebar cells halves it. Always add 10% for spillage and pump priming.',
+      },
+      {
+        q: 'Does rebar go in before or after the grout?',
+        a: 'Before — vertical bars are placed in the cells as the wall is laid, then grout is poured around them in lifts of about 4–5 feet and consolidated. Grouting first and pushing bars in traps air and creates hidden voids.',
+      },
+    ],
+  },
+  {
     slug: 'voltage-drop-calculator',
     title: 'Voltage Drop Calculator — NEC Wire Run Check',
     shortTitle: 'Voltage Drop Calculator',

@@ -933,6 +933,171 @@ export function WallpaperCalc() {
   )
 }
 
+/* ---------------- Rebar grid ---------------- */
+
+const REBAR_WT: Record<string, number> = { '#3': 0.376, '#4': 0.668, '#5': 1.043, '#6': 1.502 } // lb per linear ft (ASTM)
+
+export function RebarCalc() {
+  const [length, setLength] = useNumber(24)
+  const [width, setWidth] = useNumber(24)
+  const [spacing, setSpacing] = useState('18')
+  const [bar, setBar] = useState('#4')
+  const [priceLb, setPriceLb] = useNumber(0.85)
+
+  const r = useMemo(() => {
+    const sp = parseFloat(spacing)
+    const barsL = Math.ceil((width * 12) / sp) + 1 // bars running lengthwise, spaced across width
+    const barsW = Math.ceil((length * 12) / sp) + 1
+    const lf = barsL * length + barsW * width
+    const withLap = lf * 1.08 // 8% for laps and trim
+    const weight = withLap * REBAR_WT[bar]
+    return { barsL, barsW, lf, withLap, weight, cost: weight * priceLb, sticks: Math.ceil(withLap / 20) }
+  }, [length, width, spacing, bar, priceLb])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Slab length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Slab width" value={width} onChange={setWidth} suffix="ft" />
+        <Select label="Grid spacing" value={spacing} onChange={setSpacing} options={[
+          ['12', '12" on center (driveway)'], ['18', '18" on center (slab standard)'], ['24', '24" on center (light patio)'],
+        ]} />
+        <Select label="Bar size" value={bar} onChange={setBar} options={[
+          ['#3', '#3 (3/8" — patios)'], ['#4', '#4 (1/2" — slabs)'], ['#5', '#5 (5/8" — driveways)'], ['#6', '#6 (3/4" — heavy)'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Total weight" value={`${num(r.weight, 0)} lb`} />
+        <Result label="20-ft sticks" value={String(r.sticks)} />
+        <Result label="Linear feet (incl. 8% laps)" value={num(r.withLap, 0)} />
+        <Result label="Grid" value={`${r.barsL} × ${r.barsW} bars`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Each direction: ⌈dimension ÷ spacing⌉ + 1 bar; 8% added for lap splices (30–40 bar
+        diameters) and trim. Weight uses ASTM nominal lb/ft (#4 = 0.668). Place the grid at
+        mid-depth on chairs — rebar on the ground does nothing. Wire mesh is the lighter
+        alternative for 4" patios; rebar earns its place in driveways and structural slabs.
+      </p>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Price per lb" value={priceLb} onChange={setPriceLb} prefix="$" />
+      </div>
+      <Result label="Steel cost" value={usd(r.cost, 2)} />
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Footing size ---------------- */
+
+const SOIL: Record<string, { psf: number; label: string }> = {
+  clay: { psf: 1500, label: 'Soft clay (~1,500 psf)' },
+  sand: { psf: 2000, label: 'Sand / sandy gravel (~2,000 psf)' },
+  gravel: { psf: 3000, label: 'Compact gravel (~3,000 psf)' },
+  rock: { psf: 10000, label: 'Bedrock (~10,000+ psf)' },
+}
+
+export function FootingCalc() {
+  const [mode, setMode] = useState('wall')
+  const [wallLoad, setWallLoad] = useNumber(3000)
+  const [colLoad, setColLoad] = useNumber(20000)
+  const [soil, setSoil] = useState('sand')
+  const [wallThick, setWallThick] = useNumber(8)
+
+  const r = useMemo(() => {
+    const bearing = SOIL[soil].psf
+    if (mode === 'wall') {
+      const widthIn = Math.max(12, Math.ceil((wallLoad / bearing) * 12))
+      const projection = Math.max(0, (widthIn - wallThick) / 2)
+      const thickness = Math.max(6, Math.ceil(projection))
+      return { bearing, widthIn, projection, thickness }
+    }
+    const area = colLoad / bearing
+    const sideIn = Math.ceil(Math.sqrt(area) * 12)
+    const thickness = Math.max(8, Math.ceil(sideIn / 2)) // prescriptive: T ≥ half the side, min 8"
+    return { bearing, area, sideIn, thickness }
+  }, [mode, wallLoad, colLoad, soil, wallThick])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Footing type" value={mode} onChange={setMode} options={[
+          ['wall', 'Continuous wall footing'], ['column', 'Column / pier pad'],
+        ]} />
+        {mode === 'wall'
+          ? <Field label="Load on wall" value={wallLoad} onChange={setWallLoad} suffix="lb/ft" />
+          : <Field label="Column load" value={colLoad} onChange={setColLoad} suffix="lb" />}
+        <Select label="Soil bearing (estimate)" value={soil} onChange={setSoil} options={
+          Object.entries(SOIL).map(([k, v]) => [k, v.label] as [string, string])
+        } />
+        {mode === 'wall' && <Field label="Wall thickness" value={wallThick} onChange={setWallThick} suffix="in" />}
+      </div>
+      {mode === 'wall' ? (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result big label="Footing width" value={`${r.widthIn}"`} />
+          <Result label="Footing thickness" value={`${r.thickness}" min`} />
+          <Result label="Projection each side" value={`${num(r.projection ?? 0, 1)}"`} />
+        </div>
+      ) : (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result big label="Pad size" value={`${r.sideIn}" × ${r.sideIn}"`} />
+          <Result label="Required area" value={`${num(r.area ?? 0, 1)} sq ft`} />
+          <Result label="Pad thickness" value={`${r.thickness}" min`} />
+        </div>
+      )}
+      <p className="text-sm text-muted-foreground">
+        Width = load ÷ soil bearing capacity; thickness ≥ the projection beyond the wall (6" min
+        for walls, 8" min for column pads) per IRC prescriptive rules. This is sizing math for
+        prescriptive-code residential work — actual soil capacity comes from the site, and
+        anything multi-story, retaining, or in poor soil needs an engineer. Footings must sit
+        below your local frost depth.
+      </p>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Block fill (grout) ---------------- */
+
+export function BlockFillCalc() {
+  const [length, setLength] = useNumber(40)
+  const [height, setHeight] = useNumber(4)
+  const [fill, setFill] = useState('full')
+  const [yardCost, setYardCost] = useNumber(165)
+
+  const r = useMemo(() => {
+    const blocks = Math.ceil((length * height) / 0.889)
+    // 8×8×16 block, both cells grouted ≈ 0.24 cu ft per block (~112 blocks per cu yd)
+    const cuft = blocks * (fill === 'full' ? 0.24 : 0.12)
+    const yards = (cuft / 27) * 1.1 // 10% waste/spillage
+    return { blocks, cuft, yards, cost: yards * yardCost }
+  }, [length, height, fill, yardCost])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Wall length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Wall height" value={height} onChange={setHeight} suffix="ft" />
+        <Select label="Cells to fill" value={fill} onChange={setFill} options={[
+          ['full', 'All cells (full grout)'], ['half', 'Every other cell (rebar cells only)'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Grout needed" value={`${num(r.yards, 2)} cu yd`} />
+        <Result label="Blocks in wall" value={String(r.blocks)} />
+        <Result label="Volume" value={`${num(r.cuft, 1)} cu ft`} />
+        <Result label="Cost at $/yd" value={usd(r.cost, 2)} />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Grout/ready-mix per yard" value={yardCost} onChange={setYardCost} prefix="$" />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        One 8×8×16 block holds ~0.24 cu ft with both cells grouted (about 112 blocks per cubic
+        yard); filling only the rebar cells halves that. Add the 10% shown for spillage and
+        pumping loss. Grout in lifts of about 4–5 ft and consolidate — honeycombed cells are
+        hidden structural defects. Rebar goes in BEFORE the grout, per your engineer's layout.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'framing-calculator': FramingCalc,
   'drywall-calculator': DrywallCalc,
@@ -952,6 +1117,9 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,
   'wallpaper-calculator': WallpaperCalc,
+  'rebar-calculator': RebarCalc,
+  'footing-size-calculator': FootingCalc,
+  'block-fill-calculator': BlockFillCalc,
 }
 
 /* ---------------- Concrete Mix Selector ---------------- */

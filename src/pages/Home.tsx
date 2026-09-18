@@ -54,12 +54,12 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — more project materials estimators: siding squares,
-          paver stacks, concrete block, and wallpaper that respects the pattern repeat.
+          The newest tools on the site — concrete engineering: rebar grids by weight, footing
+          sizing by soil, and grout volumes for block walls.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['siding-calculator', 'paver-calculator', 'block-calculator', 'wallpaper-calculator', 'asphalt-calculator', 'stair-calculator'].includes(c.slug),
+            ['rebar-calculator', 'footing-size-calculator', 'block-fill-calculator', 'siding-calculator', 'paver-calculator', 'block-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

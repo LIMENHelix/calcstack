@@ -105,6 +105,12 @@ export const WHY_USE: Record<string, string> = {
     'Anyone pricing a garden wall or foundation uses this: block-per-square-foot is simple, but the breakage factor and mortar ratio are where orders come up short mid-wall. The per-block labor field doubles as a check against a mason\'s quote.',
   'wallpaper-calculator':
     'DIY wallpaperers use this because the pattern repeat — not the wall area — decides the roll count, and the label math (straight vs drop match) is exactly what big-box estimators skip. The same-dye-lot warning has saved more walls than any calculator feature.',
+  'rebar-calculator':
+    'Anyone pouring a slab uses this the day before the steel order: the grid count is easy, but the laps allowance and the pounds-to-sticks conversion are where orders come up short. Concrete subs use the weight output as a quick check against the supplier quote.',
+  'footing-size-calculator':
+    'Owner-builders and garage/shed builders use this to size footings from load and soil before the building department asks; contractors use it as a five-second prescriptive check. It deliberately says when to stop calculating and call an engineer — that honesty is the feature.',
+  'block-fill-calculator':
+    'Masons and owner-builders use this because grout volume is the number everyone underestimates — a "small" 40-foot wall swallows almost two cubic yards. Ordering right means no cold joint while the second truck is dispatched.',
   'voltage-drop-calculator':
     'Electricians sizing runs to outbuildings, DIYers wiring a shed, and RV owners spec-ing a pedestal all hit the same wall: the wire is legal by ampacity but drops too many volts over distance. This catches that before the trench is backfilled.',
   'wire-size-calculator':
