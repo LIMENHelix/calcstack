@@ -223,4 +223,6 @@ export const WHY_USE: Record<string, string> = {
     'Anyone choosing between an HDHP and a PPO uses it to price the whole year instead of comparing monthly premiums. The break-even bill level is the number HR departments never show you.',
   'cobra-cost-calculator':
     'People between jobs use it inside the 60-day election window to decide on math instead of panic — the 102% full premium is a shock everyone should see coming. The retroactive-election FAQ is the piece most sites miss.',
+  'home-affordability-calculator':
+    'First-time buyers use it before talking to a lender, so the pre-approval number lands on a desk that already knows its own ceiling. It is the only affordability answer that solves for price with taxes, insurance, and PMI already inside the payment.',
 }

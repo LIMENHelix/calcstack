@@ -6,7 +6,7 @@ const SECTIONS: { title: string; blurb: string; slugs: readonly string[] }[] = [
   {
     title: 'Can you afford it — decide before you tour',
     blurb: 'The payment is only part of the cost. Run the numbers before the open house.',
-    slugs: ['mortgage-payment-calculator', 'rent-vs-buy-calculator'],
+    slugs: ['home-affordability-calculator', 'mortgage-payment-calculator', 'rent-vs-buy-calculator'],
   },
   {
     title: 'Cash to close — the check nobody warns you about',
@@ -21,6 +21,7 @@ const SECTIONS: { title: string; blurb: string; slugs: readonly string[] }[] = [
 ]
 
 const REASONS: Record<string, string> = {
+  'home-affordability-calculator': 'Income and debts in, maximum and comfortable price out — taxes, insurance, and PMI already inside.',
   'mortgage-payment-calculator': 'Principal, interest, and the amortization schedule — see what rate changes do to 30 years.',
   'rent-vs-buy-calculator': 'The true breakeven year with maintenance, appreciation, and selling costs — not the napkin version.',
   'closing-cost-calculator': 'Cash to close beyond the down payment: lender fees, title, escrow, prepaid taxes and insurance.',

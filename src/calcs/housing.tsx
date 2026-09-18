@@ -195,7 +195,108 @@ export function ClosingCostCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Home Affordability (28/36 rule) ---------------- */
+
+export function HomeAffordabilityCalc(_props: CalcProps) {
+  const [income, setIncome] = useNumber(95000)
+  const [debts, setDebts] = useNumber(500)
+  const [down, setDown] = useNumber(40000)
+  const [rate, setRate] = useNumber(6.5)
+  const [years, setYears] = useNumber(30)
+  const [taxRate, setTaxRate] = useNumber(1.1)
+  const [insurance, setInsurance] = useNumber(1800)
+  const [hoa, setHoa] = useNumber(0)
+  const [pmiRate, setPmiRate] = useNumber(0.5)
+
+  const r = useMemo(() => {
+    const grossMo = income / 12
+    const mr = rate / 100 / 12
+    const n = Math.round(years * 12)
+    const f = mr > 0 ? mr / (1 - Math.pow(1 + mr, -n)) : 1 / n
+    const insMo = insurance / 12
+    const t = taxRate / 100 / 12
+    const q = pmiRate / 100 / 12
+
+    // Closed-form price from a target total housing payment P:
+    //   (price − down)·(f [+ q if PMI]) + price·t + insMo + hoa = payment
+    // PMI applies only when the loan exceeds 80% of the price; solve both cases
+    // and keep the one consistent with its own assumption.
+    const priceFor = (payment: number) => {
+      const noPmi = Math.max(0, (payment - insMo - hoa + down * f) / (f + t))
+      if (down >= 0.2 * noPmi) return noPmi
+      return Math.max(0, (payment - insMo - hoa + down * (f + q)) / (f + q + t))
+    }
+
+    const maxPayment = Math.max(0, Math.min(0.28 * grossMo, 0.36 * grossMo - debts))
+    const comfyPayment = Math.max(0, Math.min(0.25 * grossMo, 0.33 * grossMo - debts))
+    const maxPrice = priceFor(maxPayment)
+    const comfyPrice = priceFor(comfyPayment)
+
+    // Payment breakdown at the max price
+    const loan = Math.max(0, maxPrice - down)
+    const pi = loan * f
+    const pmi = down < 0.2 * maxPrice ? loan * q : 0
+    const taxMo = maxPrice * t
+    const totalMo = pi + pmi + taxMo + insMo + hoa
+    const backEndDti = grossMo > 0 ? ((totalMo + debts) / grossMo) * 100 : 0
+    const frontEndDti = grossMo > 0 ? (totalMo / grossMo) * 100 : 0
+
+    return { maxPrice, comfyPrice, maxPayment, comfyPayment, loan, pi, pmi, taxMo, insMo, totalMo, backEndDti, frontEndDti }
+  }, [income, debts, down, rate, years, taxRate, insurance, hoa, pmiRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="Gross annual income" value={income} onChange={setIncome} prefix="$" />
+          <Field label="Monthly debt payments" value={debts} onChange={setDebts} prefix="$" suffix="/mo" />
+          <Field label="Down payment saved" value={down} onChange={setDown} prefix="$" />
+          <Field label="Mortgage rate" value={rate} onChange={setRate} suffix="%" />
+          <Field label="Term" value={years} onChange={setYears} suffix="yrs" />
+          <Field label="Property tax" value={taxRate} onChange={setTaxRate} suffix="%/yr" />
+          <Field label="Home insurance" value={insurance} onChange={setInsurance} prefix="$" suffix="/yr" />
+          <Field label="HOA dues" value={hoa} onChange={setHoa} prefix="$" suffix="/mo" />
+          <Field label="PMI rate (if under 20% down)" value={pmiRate} onChange={setPmiRate} suffix="%/yr" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label="Maximum home price (28/36 rule)" value={usd(r.maxPrice)} />
+          <Result big label="Comfortable price (25/33 rule)" value={usd(r.comfyPrice)} />
+          <Result label="Max monthly housing cost" value={usd(r.maxPayment, 2)} />
+          <Result label="Back-end DTI at max price" value={`${num(r.backEndDti, 1)}%`} />
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border">
+          <table className="w-full text-sm">
+            <thead className="bg-muted">
+              <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <th className="p-2">Monthly piece at max price</th>
+                <th className="p-2 text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t"><td className="p-2">Principal &amp; interest ({usd(r.loan / 1000, 0)}k loan)</td><td className="p-2 text-right">{usd(r.pi, 2)}</td></tr>
+              <tr className="border-t"><td className="p-2">Property tax</td><td className="p-2 text-right">{usd(r.taxMo, 2)}</td></tr>
+              <tr className="border-t"><td className="p-2">Home insurance</td><td className="p-2 text-right">{usd(r.insMo, 2)}</td></tr>
+              {r.pmi > 0 && <tr className="border-t"><td className="p-2">PMI (under 20% down)</td><td className="p-2 text-right">{usd(r.pmi, 2)}</td></tr>}
+              {hoa > 0 && <tr className="border-t"><td className="p-2">HOA dues</td><td className="p-2 text-right">{usd(hoa, 2)}</td></tr>}
+              <tr className="border-t font-medium"><td className="p-2">Total housing payment</td><td className="p-2 text-right">{usd(r.totalMo, 2)}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The 28/36 rule caps housing at 28% of gross income and all debts at 36%; the stricter of
+          the two wins. "Comfortable" uses 25/33 — the payment that leaves room for savings and
+          surprises. Price is solved with taxes, insurance, HOA, and PMI included, so the number is
+          a true ceiling, not just a loan amount. Lender limits are a ceiling, not a target.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const HOUSING_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   'rent-vs-buy-calculator': RentVsBuyCalc,
   'closing-cost-calculator': ClosingCostCalc,
+  'home-affordability-calculator': HomeAffordabilityCalc,
 }

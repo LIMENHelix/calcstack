@@ -840,6 +840,7 @@ export const PERSONAS: Persona[] = [
       'How long will it take to save the down payment?',
     ],
     calcSlugs: [
+      'home-affordability-calculator',
       'mortgage-payment-calculator',
       'rent-vs-buy-calculator',
       'closing-cost-calculator',

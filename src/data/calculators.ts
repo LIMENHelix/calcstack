@@ -3366,6 +3366,40 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'home-affordability-calculator',
+    title: 'Home Affordability Calculator — How Much House Can I Afford? (28/36 Rule)',
+    shortTitle: 'Home Affordability',
+    category: 'Loans & Debt',
+    description:
+      'Free home affordability calculator. Works backward from income and debts using the 28/36 rule to a maximum home price — with taxes, insurance, HOA, and PMI already inside the number.',
+    tagline: 'Lenders tell you the ceiling. This shows the ceiling and the comfortable floor.',
+    intro:
+      'Every affordability answer online stops at "multiply your income by three." This calculator works backward properly: it applies the 28/36 debt-to-income rule lenders actually use, then solves for the home price with property tax, insurance, HOA, and PMI already inside the payment — so the price you get is a true ceiling, not a loan amount that forgets the escrow.',
+    howItWorks: [
+      'Enter gross annual income, monthly debt payments, and your saved down payment.',
+      'Enter the mortgage rate, term, property tax rate, insurance, HOA, and PMI rate.',
+      'Get the maximum price under the 28/36 rule and a comfortable price under 25/33, with the full monthly payment breakdown at the max.',
+    ],
+    faq: [
+      {
+        q: 'What is the 28/36 rule?',
+        a: 'The guideline most lenders underwrite to: housing costs (principal, interest, taxes, insurance, HOA, PMI) should stay under 28% of gross monthly income, and housing plus all other debt payments under 36%. This calculator applies the stricter of the two — so if you carry a car loan or student debt, the back-end ratio is usually what actually caps you.',
+      },
+      {
+        q: 'Why is my number lower than what a lender pre-approved me for?',
+        a: 'Lenders routinely approve up to 43–50% back-end DTI on conventional and FHA loans — their ceiling is set by default statistics, not by your savings goals. The 28/36 number here is the classic conservative answer, and the 25/33 "comfortable" price is what leaves room for retirement contributions, maintenance surprises, and a life. Being approved for more is not a reason to spend more.',
+      },
+      {
+        q: 'How much does PMI actually cost me?',
+        a: 'With less than 20% down, private mortgage insurance typically runs 0.3–1.5% of the loan per year (0.5% is a fair planning default) — on a $265,000 loan that is roughly $110 a month, and it buys you nothing but the lender\'s protection. This calculator includes PMI in the price solution when your down payment is under 20%, which is why maxing the down payment can move the affordable price more than expected.',
+      },
+      {
+        q: 'Does this include closing costs and moving?',
+        a: 'No — the down payment field should be only what you can put down AFTER setting aside 2–5% of the price for closing costs and your moving budget. Run the Closing Costs and Moving Cost calculators next, and keep a post-move emergency fund out of the down payment pile entirely.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
