@@ -4074,6 +4074,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'hsa-contribution-limit-calculator',
+    title: 'HSA Contribution Limit Calculator — 2026 Limits, Catch-Up & Pro-Rating',
+    shortTitle: 'HSA Limit 2026',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 HSA contribution limit calculator. Pick self-only or family coverage, age-55 catch-ups, eligible months, and employer contributions — get your exact limit, remaining room, monthly amount, and the tax savings including the payroll FICA trick.',
+    tagline: 'The only triple-tax-advantaged account. Know your exact 2026 number.',
+    intro:
+      'HSA limits look simple — $4,400 self-only, $8,750 family for 2026 — until real life intervenes: employer contributions count against the same limit, part-year eligibility pro-rates it, each 55+ spouse needs their own catch-up in their own account, and Medicare enrollment ends the whole thing. This calculator applies the actual IRS rules from Rev. Proc. 2025-19 and Pub 969 and tells you the exact dollar room you have left.',
+    howItWorks: [
+      'Pick self-only or family HDHP coverage.',
+      'Check the age-55 catch-up boxes — each qualifying spouse gets their own $1,000.',
+      'Enter how many months you are HSA-eligible this year (the limit pro-rates by month).',
+      'Enter your employer\'s contribution — it counts toward the same limit.',
+      'Read your exact limit, remaining room, monthly auto-contribution, and tax savings.',
+    ],
+    faq: [
+      {
+        q: 'What is the HSA contribution limit for 2026?',
+        a: '$4,400 for self-only HDHP coverage and $8,750 for family coverage, per IRS Rev. Proc. 2025-19. If you are 55 or older (and not on Medicare), add a $1,000 catch-up — $5,400 or $9,750. Both spouses 55+ with family coverage can reach $10,750, but each catch-up must go into that spouse\'s own HSA. The limit covers all sources combined: your payroll deferrals plus anything your employer contributes.',
+      },
+      {
+        q: 'What if I was only HSA-eligible for part of the year?',
+        a: 'The limit pro-rates: 1/12 of the annual limit per eligible month. Self-only, eligible 7 months of 2026 → $4,400 × 7/12 ≈ $2,567. The exception is the last-month rule: if you are HSA-eligible on December 1, you may contribute the full year\'s limit — but you must stay eligible through the following December or the extra is taxed plus a 10% penalty.',
+      },
+      {
+        q: 'Why contribute through payroll instead of directly?',
+        a: 'Payroll contributions skip FICA — an extra 7.65% saved on top of the income-tax deduction. On a $4,400 contribution at the 24% bracket, that is $1,056 of income tax plus $337 of FICA, $1,393 total. Direct contributions still get the income-tax deduction but not the FICA break. Note the traps: Medicare enrollment ends eligibility (with a 6-month retroactive catch when delaying past 65), and excess contributions carry a 6% excise tax per year until removed.',
+      },
+    ],
+  },
+  {
     slug: 'roth-ira-contribution-limit-calculator',
     title: 'Roth IRA Contribution Limit Calculator — 2026 Income Phase-Outs',
     shortTitle: 'Roth IRA Limit 2026',

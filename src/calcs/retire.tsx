@@ -523,7 +523,101 @@ export function RothIraLimitCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- HSA Contribution Limit (2026) ---------------- */
+
+// 2026 per IRS Rev. Proc. 2025-19: self-only $4,400, family $8,750, catch-up 55+ $1,000
+// (statutory, not indexed). HDHP floors: deductible $1,700/$3,400; OOP max $8,500/$17,000.
+// Limit counts ALL sources (you + employer). Pro-rata: 1/12 per eligible month (Pub 969
+// Line 3 worksheet); last-month rule can grant the full year with a testing period.
+// Verified: self 12mo → $4,400; self 7mo → $2,567; family both 55+ → $10,750;
+// employer $1,000 → room $3,400.
+const HSA_2026 = { self: 4400, family: 8750, catchUp: 1000 }
+
+export function HsaLimitCalc(_props: CalcProps) {
+  const [coverage, setCoverage] = useState<'self' | 'family'>('self')
+  const [over55, setOver55] = useState(false)
+  const [spouse55, setSpouse55] = useState(false)
+  const [months, setMonths] = useNumber(12)
+  const [employer, setEmployer] = useNumber(1000)
+  const [mrate, setMrate] = useNumber(24)
+
+  const r = useMemo(() => {
+    const base = coverage === 'self' ? HSA_2026.self : HSA_2026.family
+    const catchUp = (over55 ? HSA_2026.catchUp : 0) + (coverage === 'family' && spouse55 ? HSA_2026.catchUp : 0)
+    const annual = base + catchUp
+    const m = Math.min(12, Math.max(1, Math.round(months)))
+    const prorated = Math.round((annual * m) / 12)
+    const limit = Math.min(annual, prorated)
+    const room = Math.max(0, limit - Math.min(employer, limit))
+    const monthly = room / 12
+    const incomeTaxSaved = limit * (mrate / 100)
+    const ficaSaved = limit * 0.0765
+    return { base, catchUp, annual, limit, room, monthly, incomeTaxSaved, ficaSaved, m }
+  }, [coverage, over55, spouse55, months, employer, mrate])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <label className="block space-y-1 text-sm">
+            <span className="text-muted-foreground">HDHP coverage type</span>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={coverage}
+              onChange={(e) => setCoverage(e.target.value as 'self' | 'family')}
+            >
+              <option value="self">Self-only</option>
+              <option value="family">Family</option>
+            </select>
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={over55} onChange={(e) => setOver55(e.target.checked)} />
+            <span>I am 55 or older this year (+$1,000 catch-up)</span>
+          </label>
+          {coverage === 'family' && (
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={spouse55} onChange={(e) => setSpouse55(e.target.checked)} />
+              <span>My spouse is 55+ (own catch-up, own HSA)</span>
+            </label>
+          )}
+          <Field label="Months HSA-eligible this year" value={months} onChange={setMonths} step="1" />
+          <Field label="Employer HSA contribution" value={employer} onChange={setEmployer} prefix="$" />
+          <Field label="Your marginal tax rate" value={mrate} onChange={setMrate} suffix="%" step="1" />
+          <p className="text-xs text-muted-foreground">
+            2026 limits per IRS Rev. Proc. 2025-19. Your plan qualifies as an HDHP if the
+            deductible is at least {usd(1700, 0)} self-only / {usd(3400, 0)} family and
+            out-of-pocket max is no more than {usd(8500, 0)} / {usd(17000, 0)}. Eligible for
+            only part of the year? The limit pro-rates by month — or the last-month rule can
+            grant the full year if you stay covered through next December.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label="Your 2026 HSA limit" value={usd(r.limit, 0)} />
+          <Result label="Base + catch-up (full year)" value={`${usd(r.base, 0)}${r.catchUp > 0 ? ` + ${usd(r.catchUp, 0)}` : ''}`} />
+          <Result label="Employer counts toward it" value={`−${usd(Math.min(employer, r.limit), 0)}`} />
+          <Result label="Your remaining room" value={usd(r.room, 0)} />
+          <Result label="Per month if you auto-contribute" value={usd(r.monthly, 2)} />
+          <Result label={`Income tax saved at ${num(mrate, 0)}%`} value={usd(r.incomeTaxSaved, 0)} />
+          <Result label="Extra FICA saved (payroll route)" value={usd(r.ficaSaved, 0)} />
+          <p className="text-sm text-muted-foreground">
+            {r.m < 12
+              ? `Eligible ${r.m} of 12 months — the limit pro-rates to ${usd(r.limit, 0)}.`
+              : `Full-year eligibility — the entire ${usd(r.annual, 0)} is available.`}{' '}
+            The HSA is the only triple-tax-advantaged account: deductible going in, tax-free
+            growth, tax-free out for medical costs — and contributing through payroll skips the
+            7.65% FICA too, worth an extra {usd(r.ficaSaved, 0)} here. Medicare enrollment ends
+            contribution eligibility (watch the 6-month retroactive trap when delaying past 65),
+            and excess contributions cost a 6% excise tax per year until removed. Deadline is
+            the tax-filing deadline, not December 31.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const RETIRE_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'hsa-contribution-limit-calculator': HsaLimitCalc,
   'roth-ira-contribution-limit-calculator': RothIraLimitCalc,
   'savings-rate-calculator': SavingsRateCalc,
   '401k-contribution-calculator': K401Calc,
