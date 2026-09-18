@@ -189,6 +189,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'nurse-shift-pay-calculator',
+      'overtime-calculator',
       'w4-withholding-calculator',
       'bonus-tax-calculator',
       'salary-to-hourly-calculator',
@@ -652,6 +653,7 @@ export const PERSONAS: Persona[] = [
       'tip-income-calculator',
       'tip-credit-calculator',
       'tip-pool-calculator',
+      'overtime-calculator',
       'salary-to-hourly-calculator',
       'tip-calculator',
       'savings-goal-calculator',

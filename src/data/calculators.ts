@@ -2978,6 +2978,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'overtime-calculator',
+    title: 'Overtime Calculator — Federal FLSA & California Daily OT / Double Time',
+    shortTitle: 'Overtime Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free overtime pay calculator. Federal FLSA mode (1.5× over 40 hours/week) and full California mode — daily overtime hours 9–12, double time past 12, weekly trigger with no double-counting, and the 7th-consecutive-day rule.',
+    tagline: 'California pays by the day. Federal pays by the week. Both, here.',
+    intro:
+      'Overtime math splits on geography: federal FLSA only cares about hours past 40 in the workweek, while California Labor Code §510 pays daily overtime (1.5× past 8 hours), double time (2× past 12), and a premium for the seventh consecutive day — and the employer owes whichever system pays more. This calculator runs both correctly, including the no-double-counting rule that keeps daily premium hours out of the weekly tally.',
+    howItWorks: [
+      'Pick Federal or California rules and enter your regular hourly rate.',
+      'Federal: enter total hours worked in the week — everything past 40 pays 1.5×.',
+      'California: enter hours day by day — the calculator applies the 9–12 hour tier, double time past 12, the weekly 40-hour trigger, and the 7th-day rule automatically.',
+      'Read straight-time pay, premium pay by tier, and your effective hourly rate.',
+    ],
+    faq: [
+      {
+        q: 'How is overtime calculated under federal law?',
+        a: 'The FLSA requires 1.5× your regular rate for hours worked past 40 in a workweek — nothing daily, nothing double. At $20/hour, a 45-hour week pays 40 × $20 + 5 × $30 = $950. The "regular rate" includes nondiscretionary bonuses and shift differentials, and only hours actually worked count — PTO and holidays do not push you over 40.',
+      },
+      {
+        q: 'How does California overtime differ?',
+        a: 'Three extra layers: 1.5× for hours 9–12 in any single workday, 2× (double time) past 12 hours in a day, and the 7th-consecutive-day rule (1.5× the first 8 hours, 2× beyond). The weekly 40-hour trigger still applies but daily premium hours are not counted twice. A 10-hour day pays 2 hours of daily OT even in a 30-hour week — federal law would pay nothing extra.',
+      },
+      {
+        q: 'Do salaried employees get overtime?',
+        a: 'Non-exempt salaried employees do: divide the weekly salary by 40 to get the regular hourly rate, then apply the same rules. Exemption requires both a duties test and a salary threshold — $684/week federally ($35,568/year, after the 2024 rule was vacated) and higher in states like California ($70,304 in 2026). Job title alone never decides it.',
+      },
+    ],
+  },
+  {
     slug: 'nurse-shift-pay-calculator',
     title: 'Nurse Shift Pay Calculator — Differentials & Overtime Stacked',
     shortTitle: 'Nurse Shift Pay',
