@@ -1098,6 +1098,146 @@ export function BlockFillCalc() {
   )
 }
 
+/* ---------------- Floor joist span (IRC R502.3.1(2), DFL #2, 40 LL / 10 DL) ---------------- */
+
+// 2012 IRC Table R502.3.1(2), residential living areas, 40 psf live / 10 psf dead, L/360.
+// Douglas Fir-Larch #2. Values in inches: [2x6, 2x8, 2x10, 2x12] per spacing.
+const JOIST_SPANS: Record<string, number[]> = {
+  '12': [129, 170, 213, 247],   // 10-9, 14-2, 17-9, 20-7
+  '16': [117, 151, 185, 214],   // 9-9, 12-7, 15-5, 17-10
+  '19.2': [109, 138, 169, 195], // 9-1, 11-6, 14-1, 16-3
+}
+const JOIST_SIZES = ['2×6', '2×8', '2×10', '2×12']
+
+function ftIn(inches: number) {
+  return `${Math.floor(inches / 12)}'-${inches % 12}"`
+}
+
+export function JoistSpanCalc() {
+  const [size, setSize] = useState('2')
+  const [spacing, setSpacing] = useState('16')
+  const [needed, setNeeded] = useNumber(14)
+
+  const r = useMemo(() => {
+    const maxIn = JOIST_SPANS[spacing][parseInt(size)]
+    const neededIn = needed * 12
+    const pass = neededIn <= maxIn
+    // deflection limit sanity: L/360 live-load limit is baked into the table values
+    return { maxIn, max: ftIn(maxIn), neededIn, pass }
+  }, [size, spacing, needed])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Joist size" value={size} onChange={setSize} options={
+          JOIST_SIZES.map((s, i) => [String(i), s] as [string, string])
+        } />
+        <Select label="Spacing" value={spacing} onChange={setSpacing} options={[
+          ['12', '12" on center'], ['16', '16" on center (standard)'], ['19.2', '19.2" on center'],
+        ]} />
+        <Field label="Span you need" value={needed} onChange={setNeeded} suffix="ft" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label={`Max span — DFL #2, ${spacing}" oc`} value={r.max} />
+        <Result label="Your span" value={ftIn(r.neededIn)} />
+        <Result label="Verdict" value={r.pass ? 'PASS' : 'FAILS — size up or tighten spacing'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Values from IRC Table R502.3.1(2): residential living areas, 40 psf live load, 10 psf
+        dead load, L/360 deflection, Douglas Fir-Larch #2 — the most common framing lumber.
+        Sleeping-room-only floors (30 psf) span slightly longer; Southern Pine and SPF differ.
+        Cantilevers, bearing-wall loads from above, tile floors, and hot tubs change the math —
+        and your local code edition controls. When in doubt, size up.
+      </p>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Board & batten spacing ---------------- */
+
+export function BoardBattenCalc() {
+  const [wallWidth, setWallWidth] = useNumber(120)
+  const [battenWidth, setBattenWidth] = useNumber(2.5)
+  const [targetGap, setTargetGap] = useNumber(16)
+
+  const r = useMemo(() => {
+    // n battens, battens at both ends: n·b + (n−1)·g = W  →  n = round((W + g) / (b + g))
+    const n = Math.max(2, Math.round((wallWidth + targetGap) / (battenWidth + targetGap)))
+    const gap = (wallWidth - n * battenWidth) / (n - 1)
+    return { n, gap }
+  }, [wallWidth, battenWidth, targetGap])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Wall width" value={wallWidth} onChange={setWallWidth} suffix="in" />
+        <Field label="Batten width" value={battenWidth} onChange={setBattenWidth} suffix="in" />
+        <Field label="Target gap between battens" value={targetGap} onChange={setTargetGap} suffix="in" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Battens (both ends)" value={String(r.n)} />
+        <Result label="Even gap" value={`${num(r.gap, 2)}"`} />
+        <Result label="Batten spacing on center" value={`${num(r.gap + battenWidth, 2)}"`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Layout math: n battens with one at each end — n × batten width + (n−1) × gap = wall width.
+        The calculator rounds n to the nearest whole batten and solves for the exact even gap,
+        which is what makes a wall look intentional instead of almost-right. Mark from one corner
+        with a story stick cut to the gap, not a tape, to avoid accumulated error.
+      </p>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Gutter sizing ---------------- */
+
+export function GutterCalc() {
+  const [area, setArea] = useNumber(1200)
+  const [pitch, setPitch] = useState('1.1')
+  const [rain, setRain] = useState('normal')
+  const [gutterFt, setGutterFt] = useNumber(120)
+
+  const r = useMemo(() => {
+    const adj = area * parseFloat(pitch)
+    // industry rules of thumb: 5" K-style ≈ 5,520 adj sq ft, 6" ≈ 7,960 (moderate rain);
+    // heavy-rain regions cut capacity by ~20%
+    const rainFactor = rain === 'heavy' ? 0.8 : 1
+    const cap5 = 5520 * rainFactor
+    const cap6 = 7960 * rainFactor
+    const size = adj <= cap5 ? '5" K-style' : adj <= cap6 ? '6" K-style' : '6" K-style + extra downspouts (or two runs)'
+    const downspouts = Math.max(Math.ceil(gutterFt / 30), Math.ceil(adj / 600))
+    return { adj, size, downspouts, cap5, cap6 }
+  }, [area, pitch, rain, gutterFt])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Roof footprint area draining here" value={area} onChange={setArea} suffix="sq ft" />
+        <Select label="Roof pitch factor" value={pitch} onChange={setPitch} options={[
+          ['1', 'Flat to 3/12 (×1.0)'], ['1.05', '4–5/12 (×1.05)'], ['1.1', '6–8/12 (×1.1)'],
+          ['1.2', '9–11/12 (×1.2)'], ['1.3', '12/12+ (×1.3)'],
+        ]} />
+        <Select label="Rainfall intensity" value={rain} onChange={setRain} options={[
+          ['normal', 'Normal (most of the US)'], ['heavy', 'Heavy (Gulf Coast, PNW storms, monsoon)'],
+        ]} />
+        <Field label="Gutter run length" value={gutterFt} onChange={setGutterFt} suffix="ft" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Recommended gutter" value={r.size} />
+        <Result label="Downspouts (min)" value={String(r.downspouts)} />
+        <Result label="Adjusted drainage area" value={`${num(r.adj, 0)} sq ft`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Capacity rules of thumb (K-style, moderate rainfall): 5" handles ~5,500 adjusted sq ft,
+        6" ~7,960. Steeper pitches drain faster — the pitch factor converts footprint to effective
+        area. Downspouts: at least one per 30 ft of run AND one per ~600 adjusted sq ft; 2×3"
+        spouts pair with 5" gutters, 3×4" with 6". Slope gutters 1/16–1/8" per foot toward
+        downspouts.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'framing-calculator': FramingCalc,
   'drywall-calculator': DrywallCalc,
@@ -1120,6 +1260,9 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'rebar-calculator': RebarCalc,
   'footing-size-calculator': FootingCalc,
   'block-fill-calculator': BlockFillCalc,
+  'joist-span-calculator': JoistSpanCalc,
+  'board-batten-calculator': BoardBattenCalc,
+  'gutter-size-calculator': GutterCalc,
 }
 
 /* ---------------- Concrete Mix Selector ---------------- */

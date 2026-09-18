@@ -111,6 +111,12 @@ export const WHY_USE: Record<string, string> = {
     'Owner-builders and garage/shed builders use this to size footings from load and soil before the building department asks; contractors use it as a five-second prescriptive check. It deliberately says when to stop calculating and call an engineer — that honesty is the feature.',
   'block-fill-calculator':
     'Masons and owner-builders use this because grout volume is the number everyone underestimates — a "small" 40-foot wall swallows almost two cubic yards. Ordering right means no cold joint while the second truck is dispatched.',
+  'joist-span-calculator':
+    'Deck builders, basement finishers, and anyone staring at an undersized floor use this: the IRC table answer to "will 2×10s at 16 inches cover 14 feet" without flipping through code tables. The pass/fail verdict is the feature — max span alone makes people do interpolation math in their heads.',
+  'board-batten-calculator':
+    'DIY accent-wall builders use this because uneven end bays are the tell of amateur work — the math is one equation but nobody wants to solve it on a ladder. Interior designers use it to spec layouts contractors can\'t mess up.',
+  'gutter-size-calculator':
+    'Homeowners getting gutter quotes use this to know whether they need 5-inch or 6-inch before the upsell conversation, and how many downspouts the run demands. The pitch factor is the part every free estimator skips — steep roofs need bigger gutters, full stop.',
   'voltage-drop-calculator':
     'Electricians sizing runs to outbuildings, DIYers wiring a shed, and RV owners spec-ing a pedestal all hit the same wall: the wire is legal by ampacity but drops too many volts over distance. This catches that before the trench is backfilled.',
   'wire-size-calculator':

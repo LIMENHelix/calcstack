@@ -1636,6 +1636,87 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'joist-span-calculator',
+    title: 'Floor Joist Span Calculator — IRC Table R502.3.1(2)',
+    shortTitle: 'Joist Span Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free floor joist span calculator using IRC Table R502.3.1(2) values for Douglas Fir-Larch #2 at 40 psf live load. Enter your span, get an instant pass/fail by size and spacing.',
+    tagline: 'The actual IRC span table, as a pass/fail check.',
+    intro:
+      'Every "can I span 14 feet with 2×10s?" question is a table lookup — but the table is a wall of numbers. This calculator turns IRC Table R502.3.1(2) into a direct answer: pick size and spacing, enter your span, get PASS or FAILS with the maximum shown. Values are Douglas Fir-Larch #2 at 40 psf live / 10 psf dead with L/360 deflection — the standard living-area floor case.',
+    howItWorks: [
+      'Pick the joist size (2×6 through 2×12) and spacing (12", 16", or 19.2" on center).',
+      'Enter the clear span you need to cover.',
+      'Read the maximum allowable span and the pass/fail verdict.',
+      'If it fails, tighten spacing or size up — or consider engineered joists for long spans.',
+    ],
+    faq: [
+      {
+        q: 'How far can a 2×10 floor joist span?',
+        a: 'Douglas Fir-Larch #2 at 16" on center, 40 psf live load: 15\'-5" maximum per IRC Table R502.3.1(2). At 12" spacing it stretches to 17\'-9"; at 19.2" it drops to 14\'-1". Southern Pine runs longer, SPF shorter — check the stamp on your lumber.',
+      },
+      {
+        q: 'Do these spans work for decks?',
+        a: 'No — deck joists use different tables (IRC R507) because exterior decks carry different loads and get no deflection credit from a ceiling below. Tile floors, hot tubs, and bearing walls from above also change the residential floor math. When the answer matters, your local code edition and building department control.',
+      },
+    ],
+  },
+  {
+    slug: 'board-batten-calculator',
+    title: 'Board and Batten Spacing Calculator — Even Layout Math',
+    shortTitle: 'Board & Batten Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free board and batten spacing calculator. Enter wall width, batten width, and target gap — get the exact number of battens and perfectly even spacing for accent walls and exteriors.',
+    tagline: 'Even gaps, both ends matched — no almost-right walls.',
+    intro:
+      'Board and batten walls live or die on even spacing, and the math is one equation: n battens plus (n−1) gaps equals the wall width. This calculator solves it exactly — battens at both ends, every gap identical to the hundredth of an inch — so the last bay matches the first instead of being visibly off.',
+    howItWorks: [
+      'Measure the wall width in inches (a 10-ft wall is 120).',
+      'Enter your batten width (a 1×3 is 2.5" actual; a 1×4 is 3.5").',
+      'Enter your target gap — 12–18 inches is the usual accent-wall range.',
+      'Read the batten count and the exact even gap, then lay out with a story stick.',
+    ],
+    faq: [
+      {
+        q: 'What spacing looks right for board and batten?',
+        a: '12–18 inches between battens suits most accent walls; exterior siding traditionally ran 16–24 inches. Lower walls and wainscot look better tighter (10–14"), tall walls wider. The calculator finds the batten count that lands closest to your target with perfectly even gaps.',
+      },
+      {
+        q: 'Do I start from the corner or center the layout?',
+        a: 'Corner-to-corner with battens at both ends is the standard accent-wall approach and what this calculator solves. Centering a middle batten works for walls broken by a focal point (fireplace, bed), but then you must still equalize the side bays — same equation, applied twice.',
+      },
+    ],
+  },
+  {
+    slug: 'gutter-size-calculator',
+    title: 'Gutter Size Calculator — 5" vs 6" & Downspout Count',
+    shortTitle: 'Gutter Size Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free gutter sizing calculator. Convert roof area and pitch to adjusted drainage area, get a 5-inch vs 6-inch K-style recommendation, and the minimum downspout count for your run.',
+    tagline: '5-inch or 6-inch? The roof area and pitch decide, not the price.',
+    intro:
+      'Gutters overflow because they were undersized, not because they were dirty. Sizing is drainage math: roof footprint times a pitch factor gives adjusted area, and that number maps to 5-inch or 6-inch K-style capacity. This calculator runs it, adjusts for heavy-rainfall regions, and counts the downspouts your run actually needs.',
+    howItWorks: [
+      'Enter the roof footprint area draining to this gutter run.',
+      'Pick the pitch factor (steeper roofs dump water faster) and your rainfall region.',
+      'Enter the gutter run length for the downspout count.',
+      'Read the size recommendation and minimum downspouts.',
+    ],
+    faq: [
+      {
+        q: 'When do I need 6-inch gutters instead of 5-inch?',
+        a: 'When adjusted drainage area exceeds ~5,500 sq ft (heavy-rain regions: ~4,400), on steep roofs (9/12+), or on long runs where one downspout can\'t keep up. A 6" K-style carries roughly 40% more water than a 5". The upgrade cost is small; the fascia-rot cost of overflow is not.',
+      },
+      {
+        q: 'How many downspouts do I need?',
+        a: 'At least one per 30 feet of gutter run AND one per ~600 adjusted square feet — whichever demands more. A 120-ft run needs 4 by spacing alone. Long runs with too few downspouts are the classic overflow setup even with correctly sized gutters.',
+      },
+    ],
+  },
+  {
     slug: 'voltage-drop-calculator',
     title: 'Voltage Drop Calculator — NEC Wire Run Check',
     shortTitle: 'Voltage Drop Calculator',
