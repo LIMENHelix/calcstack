@@ -1641,6 +1641,130 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'food-cost-calculator',
+    title: 'Food Cost Percentage Calculator — Actual Food Cost from Inventory',
+    shortTitle: 'Food Cost Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free food cost percentage calculator. Compute actual COGS from beginning inventory, purchases, and ending inventory, then food cost % against sales — the number restaurants live by.',
+    tagline: 'COGS ÷ sales — the number restaurants live by.',
+    intro:
+      'Theoretical food cost comes off your menu cards; actual food cost comes off your shelves. This calculator computes the actual number the way your accountant does — beginning inventory plus purchases minus ending inventory, divided by food sales — so you can see the gap between what dishes should cost and what the kitchen actually consumed.',
+    howItWorks: [
+      'Count or pull beginning inventory for the period (week or month).',
+      'Add all food purchases for the period, then subtract ending inventory.',
+      'Enter food sales for the same period.',
+      'Read COGS, food cost %, and gross profit — then compare against your theoretical cost to find the leak.',
+    ],
+    faq: [
+      {
+        q: 'What is a good food cost percentage?',
+        a: 'Most full-service restaurants target 28–35%; quick-service often runs 25–30%. Fine dining can run higher because labor runs lower. What matters most is consistency — a food cost that jumps 3 points in a month means waste, theft, portion drift, or a supplier price increase you missed.',
+      },
+      {
+        q: 'Why is my actual food cost higher than my menu-card cost?',
+        a: 'Theoretical cost assumes every ounce sold perfectly. Actual cost includes waste, spoilage, over-portioning, staff meals, comps, and theft. A gap of 2–4 points is normal; beyond that, count inventory more often and watch portioning on your five highest-cost proteins.',
+      },
+      {
+        q: 'How often should I calculate food cost?',
+        a: 'Weekly if you can. Monthly is the minimum to catch problems — but a monthly number tells you about a leak four weeks after it started. High-volume operations count key items daily and full inventory weekly.',
+      },
+    ],
+  },
+  {
+    slug: 'plate-cost-calculator',
+    title: 'Plate Cost Calculator — Menu Pricing from Ingredient Cost',
+    shortTitle: 'Plate Cost Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free plate cost calculator for menu pricing. Enter ingredient cost per plate and your target food cost % to get the menu price, a psychological price point, and margin per plate and month.',
+    tagline: 'Price the dish from the plate up.',
+    intro:
+      'Menu price = plate cost ÷ target food cost percentage. This calculator does that division honestly — including the little ingredients most people forget — then shows the margin each cover contributes, at both the exact target price and a rounded psychological price point, so you can see what the dish earns per month.',
+    howItWorks: [
+      'Enter the true ingredient cost per plate: protein, starch, vegetables, sauce, garnish, oil, breading — everything on the plate.',
+      'Set your target food cost % (30% is a common full-service target).',
+      'Read the target menu price, the .95 price-point version, and margin per plate.',
+      'Add covers per month to see what the dish contributes to overhead and profit.',
+    ],
+    faq: [
+      {
+        q: 'How do I price a menu item from its cost?',
+        a: 'Divide the plate cost by your target food cost percentage. A $4.20 plate at a 30% target prices at $14.00. Never price by multiplying competitors\' prices or gut feel — your cost structure is yours alone.',
+      },
+      {
+        q: 'What ingredients do people forget when costing a plate?',
+        a: 'Oil, butter, breading, spices, garnishes, sauce components, and the freebies — bread, chips, butter pats. These commonly add $0.50–$1.50 to a plate. Also fryer oil turnover and 5–10% cooking loss on proteins that shrink.',
+      },
+      {
+        q: 'Should every dish hit the same food cost %?',
+        a: 'No — mix matters. High-margin pasta dishes can run 20% to subsidize a 40% steak that sells the table. Manage the blended food cost across the menu, not each plate in isolation, and use this calculator on your ten best sellers first.',
+      },
+    ],
+  },
+  {
+    slug: 'prime-cost-calculator',
+    title: 'Prime Cost Calculator — COGS + Labor as a Percentage of Sales',
+    shortTitle: 'Prime Cost Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free prime cost calculator for restaurants. Combine food and beverage COGS with total labor and see prime cost as % of sales against the 60–65% benchmark.',
+    tagline: 'The two costs you control daily.',
+    intro:
+      'Prime cost — cost of goods sold plus total labor — is the single best health metric for a restaurant, because it covers the two expenses management actually controls day to day. This calculator combines your food and beverage COGS with fully-loaded labor (wages, payroll taxes, benefits) and scores the result against industry benchmarks.',
+    howItWorks: [
+      'Enter food COGS and beverage COGS for the period (from the food cost calculator or your P&L).',
+      'Enter total labor including payroll taxes and benefits, not just gross wages.',
+      'Enter total sales for the same period.',
+      'Read prime cost %, the COGS and labor splits, and what is left for rent, utilities, and profit.',
+    ],
+    faq: [
+      {
+        q: 'What is a good prime cost for a restaurant?',
+        a: 'The classic benchmark is 60–65% of sales for full-service restaurants; profitable quick-service operations often run 55–60%. Above 65% there is rarely enough left for occupancy costs, utilities, and profit — at 62% prime on $55,000 of sales, $21,000 covers everything else.',
+      },
+      {
+        q: 'Should labor include payroll taxes and benefits?',
+        a: 'Yes. Labor is fully loaded: wages, employer payroll taxes, workers\' comp, benefits, and staff meals. Using gross wages alone understates labor by roughly 15–25% and makes prime cost look healthier than it is.',
+      },
+      {
+        q: 'Which lever matters more — COGS or labor?',
+        a: 'Whichever is further from its benchmark. Food cost problems respond to portioning, waste tracking, and menu engineering; labor problems respond to scheduling against forecast sales, not habit. Fix the bigger gap first — one point of prime cost on $55,000 of monthly sales is $550 a month.',
+      },
+    ],
+  },
+  {
+    slug: 'pour-cost-calculator',
+    title: 'Pour Cost Calculator — Bar Profit per Bottle',
+    shortTitle: 'Pour Cost Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free pour cost calculator for bars and restaurants. See pours per bottle, cost per pour, pour cost %, and gross profit per bottle for any spirit, wine, or beer.',
+    tagline: 'What does that bottle really earn?',
+    intro:
+      'Bar math is where restaurant margins are made: a $24 bottle of spirits pouring $12 drinks earns more gross profit than most entrees. This calculator converts bottle size and pour size into pours per bottle (full pours only — the remainder is spillage), then shows cost per pour, pour cost %, and profit per bottle.',
+    howItWorks: [
+      'Enter the bottle cost and select the bottle size (750 ml, 1 L, or 1.75 L).',
+      'Select your pour size — 1.5 oz is the standard spirits pour.',
+      'Enter the drink price.',
+      'Read pours per bottle, cost per pour, pour cost %, and gross profit per bottle.',
+    ],
+    faq: [
+      {
+        q: 'What is a good pour cost?',
+        a: 'Bars typically target 18–24% pour cost on liquor, around 25% on wine by the glass, and 20–30% on draft beer. A $24 bottle of vodka pouring 16 one-and-a-half-ounce drinks at $12 each runs a 12.5% pour cost — premium pricing headroom most kitchens can only envy.',
+      },
+      {
+        q: 'How many pours are in a 750 ml bottle?',
+        a: 'A 750 ml bottle holds 25.4 oz, so sixteen full 1.5-oz pours with a little left over — the leftover plus spillage is why smart operators count full pours only. At 1-oz pours it is 25; at 2-oz pours, 12.',
+      },
+      {
+        q: 'Why is my bar\'s actual pour cost higher than the math?',
+        a: 'Over-pouring, unrecorded comps and spill tabs, bartender giveaways, and theft. A half-ounce over-pour on a 1.5-oz spec is a 33% cost increase on that drink. Measure actual pour cost monthly the same way as food cost: (beginning inventory + purchases − ending inventory) ÷ bar sales.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

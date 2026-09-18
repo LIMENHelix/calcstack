@@ -107,6 +107,14 @@ export const WHY_USE: Record<string, string> = {
     'Reps use it mid-quarter to replace vibes with math — attainment, pace gap, and the monthly close rate needed to catch up. Sales leaders use the projected year-end number in forecast calls, and job changers use it to sanity-check the quota attached to an offer.',
   'ote-calculator':
     'Anyone comparing sales offers uses this: the OTE headline hides the quota behind it, and implied quota (variable ÷ commission rate) is the number that decides whether the offer is good. Recruiters use it too — it is the fastest way to explain why their plan is competitive.',
+  'food-cost-calculator':
+    'Owners and chefs run it weekly: the gap between theoretical (menu-card) and actual (inventory) food cost is where profit leaks, and you cannot fix a leak you have not measured. It is also the first number a buyer or lender asks for.',
+  'plate-cost-calculator':
+    'Chefs use it when supplier prices move and before any menu reprint: plate cost ÷ target food cost is the price floor, and the per-cover margin shows which dishes actually pay the rent. Caterers use it to quote per-head menus without guessing.',
+  'prime-cost-calculator':
+    'Operators use it as the monthly health check — COGS plus labor against the 60–65% benchmark tells you whether the problem is the kitchen, the schedule, or neither. Lenders and franchise reviewers ask for prime cost before almost anything else.',
+  'pour-cost-calculator':
+    'Bar managers use it when pricing the drink menu and when bartender variance shows up in inventory: pours per bottle, cost per pour, and profit per bottle turn a liquor invoice into a pricing decision. New bar owners use it to discover why the bar subsidizes the kitchen.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }

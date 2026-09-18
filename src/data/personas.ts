@@ -537,6 +537,10 @@ export const PERSONAS: Persona[] = [
       'Are those promo discounts quietly losing us money?',
     ],
     calcSlugs: [
+      'food-cost-calculator',
+      'plate-cost-calculator',
+      'prime-cost-calculator',
+      'pour-cost-calculator',
       'break-even-calculator',
       'percentage-calculator',
       'discount-calculator',
