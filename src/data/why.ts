@@ -175,4 +175,10 @@ export const WHY_USE: Record<string, string> = {
     'Mechanical engineers and mechanics use it both directions: motor sizing from load torque, and decoding dyno sheets where peak torque and peak power happen at different RPM. Also settles bar arguments about why diesels tow.',
   'rc-circuit-calculator':
     'Electronics hobbyists use it for debounce and filter design; EE students live in it during circuits courses. The 1τ/63.2% benchmark is the fastest way to read a scope trace without a cursor.',
+  'wrvu-compensation-calculator':
+    'Physicians use it before contract negotiation: model the threshold and conversion factor against MGMA medians before the administrator names a number. Residents use it to understand what the attending contract they\'re about to sign actually pays.',
+  'rent-vs-buy-calculator':
+    'Anyone facing a move uses it to kill the "rent is throwing money away" argument with actual numbers — breakeven year included. Agents and lenders point clients at it because an honest comparison builds more trust than a sales pitch.',
+  'closing-cost-calculator':
+    'First-time buyers use it the week before making an offer — the down payment is not the whole check. Buyers use it again when the Loan Estimate arrives to catch padded fees line by line.',
 }

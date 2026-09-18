@@ -371,10 +371,12 @@ export const PERSONAS: Persona[] = [
       'How much do the lost compounding years of residency cost me?',
     ],
     calcSlugs: [
+      'wrvu-compensation-calculator',
       'loan-payoff-calculator',
       'salary-to-hourly-calculator',
       'compound-interest-calculator',
       'mortgage-payment-calculator',
+      'rent-vs-buy-calculator',
       'inflation-calculator',
       'savings-goal-calculator',
       'roi-calculator',
@@ -817,6 +819,8 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'mortgage-payment-calculator',
+      'rent-vs-buy-calculator',
+      'closing-cost-calculator',
       'fha-loan-calculator',
       '15-year-mortgage-calculator',
       'savings-goal-calculator',

@@ -2646,6 +2646,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'wrvu-compensation-calculator',
+    title: 'wRVU Compensation Calculator — Physician Productivity Pay',
+    shortTitle: 'wRVU Compensation',
+    category: 'Freelance & Career',
+    description:
+      'Free wRVU compensation calculator. Compute total physician pay from base salary, wRVU threshold, production, and conversion factor — plus effective dollars per wRVU.',
+    tagline: 'Your contract is a formula. Know it better than the administrator does.',
+    intro:
+      'Most physician contracts pay a base salary up to a wRVU threshold, then a conversion factor for every wRVU above it — and the difference between a $45 and $55 factor is six figures over a contract. This calculator computes your total comp, productivity bonus, and effective rate per wRVU so you can model offers before signing.',
+    howItWorks: [
+      'Enter base salary and the wRVU threshold it covers.',
+      'Enter your expected annual wRVUs and the conversion factor above threshold.',
+      'Read total compensation, bonus, and effective $/wRVU.',
+    ],
+    faq: [
+      {
+        q: 'What is a wRVU worth?',
+        a: 'Employers pay a conversion factor typically between $40 and $80 per wRVU depending on specialty and market, benchmarked against MGMA survey medians. Surgical specialties generate more wRVUs per clinic day; primary care generates fewer but with steadier volume. Always compare both your wRVU target and the factor against the specialty median — a high threshold with a low factor is a pay cut wearing a smile.',
+      },
+      {
+        q: 'Base plus productivity or pure productivity?',
+        a: 'Base-plus is safer early: guaranteed income while you build a panel. Pure productivity (100% conversion factor) pays more at high volume but leaves you exposed to slow quarters, payer mix shifts, and your own vacation. Model both here: pure productivity at $52/wRVU needs about 5,300 wRVUs just to match a $275k base.',
+      },
+      {
+        q: 'What happens if I miss the threshold?',
+        a: 'Usually nothing this year — you keep the base. But most contracts true-up at renewal: chronic below-threshold production renegotiates the base down at the next term. Some contracts also have negative accrual clauses that carry shortfalls forward. Read that clause twice.',
+      },
+    ],
+  },
+  {
+    slug: 'rent-vs-buy-calculator',
+    title: 'Rent vs Buy Calculator — True Breakeven Year',
+    shortTitle: 'Rent vs Buy',
+    category: 'Loans & Debt',
+    description:
+      'Free rent vs buy calculator. Compare the true net cost of buying versus renting year by year — mortgage, taxes, maintenance, closing costs, appreciation, and invested down payment.',
+    tagline: 'Rent is not throwing money away. Interest is not building equity.',
+    intro:
+      'The honest comparison is not rent vs mortgage payment — it is total cost of each path, including closing costs, maintenance, selling costs, appreciation, and what the renter earns investing the down payment. This calculator simulates both year by year and finds the breakeven point where buying finally wins.',
+    howItWorks: [
+      'Enter the home price, down payment, mortgage terms, and ownership costs (tax, insurance, maintenance).',
+      'Enter your rent, rent growth, home appreciation, and investment return assumptions.',
+      'Read the breakeven year and the year-by-year net cost of each path.',
+    ],
+    faq: [
+      {
+        q: 'Is renting really throwing money away?',
+        a: 'No — the first years of a mortgage are mostly interest, which is "thrown away" exactly like rent, plus closing and selling costs of 8–9% round trip. Buying wins over time through appreciation, principal paydown, and frozen housing costs while rent inflates. The crossover is typically 4–7 years; before that, renting is usually the cheaper path.',
+      },
+      {
+        q: 'What assumption moves the answer most?',
+        a: 'Appreciation. At 3% annual appreciation, buying a $400k home beats renting around year 5–7 in typical markets; at 1% it can push past year 10; at 5% it can arrive by year 3. Second most powerful: how long you stay. If you might move within 3 years, the transaction costs almost always make renting the winner.',
+      },
+      {
+        q: 'Should the renter really invest the difference?',
+        a: 'Mathematically yes — it is the honest comparison — behaviorally, most renters do not. If you know you won\'t invest the down payment and monthly savings, buying acts as forced savings, which is worth something real. Run the calculator with a 0% investment return to see the "I won\'t invest it" scenario.',
+      },
+    ],
+  },
+  {
+    slug: 'closing-cost-calculator',
+    title: 'Closing Cost Calculator — Cash to Close for Home Buyers',
+    shortTitle: 'Closing Costs',
+    category: 'Loans & Debt',
+    description:
+      'Free closing cost calculator. Estimate buyer closing costs item by item — origination, appraisal, title, escrow prepaids — and your total cash to close.',
+    tagline: 'The down payment is not the check you write.',
+    intro:
+      'First-time buyers budget the down payment and get ambushed by the rest: origination fees, appraisal, title insurance, and escrow prepaids typically add 2–5% of the price. This calculator itemizes the stack and gives you the real cash-to-close number — the check you actually write at the table.',
+    howItWorks: [
+      'Enter the home price and down payment percentage.',
+      'Adjust the fee estimates (origination, appraisal, title, recording) to match your Loan Estimate.',
+      'Read itemized costs, total closing costs, and total cash to close minus any credits.',
+    ],
+    faq: [
+      {
+        q: 'How much are closing costs for the buyer?',
+        a: 'Typically 2–5% of the purchase price: on a $400,000 home, $8,000–$20,000. The big items are loan origination (0.5–1% of the loan), title insurance, appraisal, and escrow prepaids — several months of property tax plus the first year of homeowner\'s insurance deposited upfront. State transfer taxes can add meaningfully in some states.',
+      },
+      {
+        q: 'Which closing costs are negotiable?',
+        a: 'Almost all of the lender side: origination points, application fees, and rate-buydowns are negotiable or shoppable between lenders. Title and escrow fees are shoppable in most states. Recording fees and transfer taxes are fixed by government. Seller credits are negotiated in the purchase contract — in slow markets, asking for 2–3% toward closing often works.',
+      },
+      {
+        q: 'Can I roll closing costs into the loan?',
+        a: 'Sometimes — lender credits (accept a higher rate in exchange for the lender covering costs) or financing costs into certain loan programs reduce upfront cash but raise the payment or rate for 30 years. A 0.25% higher rate on $320,000 costs about $50/month — roughly $18,000 over the full term. Do that math before choosing "no closing cost" offers.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
