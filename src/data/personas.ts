@@ -1346,6 +1346,46 @@ export const PERSONAS: Persona[] = [
     ],
   },
   {
+    slug: 'handymen',
+    job: 'Handymen & Home Repair Pros',
+    title: 'Calculators for Handymen — Materials, Small Jobs & Rate Math',
+    description: 'Free tools for handymen: drywall, paint, tile, and fence quantities for the daily mix of small jobs — plus bid sheets, markup vs margin, and the hourly rate that makes a one-man shop work.',
+    hero: 'Handyman work is ten trades a week: patch drywall Monday, tile a backsplash Tuesday, fence a yard Friday. Every one of those quotes starts as a materials count — these calculators turn each room or run into a number in seconds, and the rate tools make sure the business half adds up too.',
+    questions: [
+      'How many sheets, gallons, or boxes is this job?',
+      'What do I charge for a half-day small job?',
+      'Am I actually making money at my hourly rate?',
+    ],
+    calcSlugs: [
+      'drywall-calculator',
+      'paint-calculator',
+      'tile-calculator',
+      'fence-calculator',
+      'wallpaper-calculator',
+      'framing-calculator',
+      'bid-sheet-calculator',
+      'markup-margin-calculator',
+      'freelance-rate-calculator',
+      'break-even-calculator',
+      'salary-to-hourly-calculator',
+      'paycheck-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I price small jobs without losing money on drive time?',
+        a: 'Charge a half-day minimum. The freelance rate calculator shows why: if your floor is $65/hr and a job bills 2 hours but eats 3.5 with driving and the supply run, an hourly quote pays you for 57% of your day. A trip charge or half-day minimum moves the unbillable time back onto the invoice.',
+      },
+      {
+        q: 'How many drywall sheets is a basement room?',
+        a: 'Wall area (perimeter × height) minus openings, divided by sheet coverage — 32 sq ft for a 4×8, 48 for a 4×12 — plus 10% for cuts and mistakes. A 12×16 room with 8-ft ceilings is roughly 14 sheets of 4×8. The drywall calculator does the openings and waste for you.',
+      },
+      {
+        q: 'Why do my tile jobs always run short?',
+        a: 'Because the box count came from the raw floor area. Diagonal layouts and patterned floors need 15–20% waste, straight layouts 10% — and you always want an extra box for future repairs, since dye lots change. The tile calculator adds the right waste factor by layout.',
+      },
+    ],
+  },
+  {
     slug: 'pool-service-technicians',
     job: 'Pool Service Technicians',
     title: 'Calculators for Pool Service Techs — Volume, Dosing, Pump & Route Math',
