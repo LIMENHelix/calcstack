@@ -19,8 +19,9 @@ Product Hunt once we have some social proof.
 >
 > So I built the opposite:
 >
-> - 100+ free calculators and data tools (mortgage, freelance rates, sales tax
->   for every US state and 20 cities, BMI, compound interest…)
+> - 127 free calculators and data tools (mortgage, paycheck math for all 50 states
+>   verified against official DOR schedules, freelance rates, sales tax, sports science,
+>   construction bid sheets, physician wRVU comp…)
 > - Everything computes instantly as you type, entirely in your browser
 > - Bill Analyzer: paste your bills as plain text, get totals, categories, and
 >   flags on where you're overpaying — parsed locally, never uploaded
