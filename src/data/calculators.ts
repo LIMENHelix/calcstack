@@ -1717,6 +1717,86 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pool-volume-calculator',
+    title: 'Pool Volume Calculator — Gallons by Shape & Depth',
+    shortTitle: 'Pool Volume Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free pool volume calculator. Compute gallons for rectangular, oval, and round pools using exact geometry and the 7.48 gal/cu ft conversion — the number every chemical dose depends on.',
+    tagline: 'Every chemical dose starts here. Get the gallons right.',
+    intro:
+      'Every pool chemical instruction says "per 10,000 gallons" — which means every dose is wrong if your volume is wrong. This calculator computes exact volume from shape and dimensions: rectangles by length × width × average depth, ovals and rounds by proper ellipse and circle geometry, all converted at 7.48 gallons per cubic foot.',
+    howItWorks: [
+      'Pick your pool shape (freeform: use the bounding rectangle and subtract ~15%).',
+      'Enter dimensions; for sloped floors enter shallow and deep depths — the average is computed.',
+      'Read the gallons, and write it on the equipment pad — you will use it forever.',
+    ],
+    faq: [
+      {
+        q: 'How many gallons is a 16×32 pool?',
+        a: 'With a 3.5-ft shallow end and 8-ft deep end (5.75 ft average): 16 × 32 × 5.75 × 7.48 ≈ 22,000 gallons. A uniform 4.5-ft version of the same pool is about 17,200 gallons.',
+      },
+      {
+        q: 'How do I measure average depth accurately?',
+        a: '(Shallow depth + deep depth) ÷ 2 works for evenly sloped floors. If the pool has a flat hopper bottom or benches, take depth readings every few feet along the length and average them. When in doubt, err slightly low — overdosing chemicals is more dangerous than underdosing.',
+      },
+    ],
+  },
+  {
+    slug: 'pool-pump-calculator',
+    title: 'Pool Pump Calculator — Turnover Time & Required GPM',
+    shortTitle: 'Pool Pump Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free pool pump calculator. Compute turnover time from gallons and GPM, the flow rate needed for an 8-hour turnover, and what the pump costs to run monthly.',
+    tagline: 'Is your pump actually turning the water over? Do the math.',
+    intro:
+      'Cloudy water and algae usually trace back to filtration time, not chemicals — and filtration time is one division: gallons ÷ (GPM × 60). This calculator shows your actual turnover, the GPM needed to hit the 8-hour residential standard, and what each turnover costs in electricity (where the variable-speed-pump math gets persuasive).',
+    howItWorks: [
+      'Enter pool volume (use the Pool Volume calculator if unsure).',
+      'Enter your pump\'s actual flow rate — from the pump curve at your system head, not the box.',
+      'Pick the target turnover (8 hours is the residential standard).',
+      'Open the cost section for the monthly electricity number.',
+    ],
+    faq: [
+      {
+        q: 'How long should I run my pool pump?',
+        a: 'Long enough for one full turnover minimum — for a 20,000-gallon pool on a 50 GPM pump that is 6.7 hours. Many owners run 8–12 hours in summer for margin. A variable-speed pump run longer at low speed filters better AND costs less than a single-speed sprint.',
+      },
+      {
+        q: 'What GPM does my pump actually produce?',
+        a: 'Less than the label. Nameplate GPM is at zero head pressure; real systems run 30–60 feet of head (plumbing, filter, heater). Find your pump\'s curve chart and read the flow at your estimated head — typically 60–70% of nameplate for a clean filter.',
+      },
+    ],
+  },
+  {
+    slug: 'pool-heater-calculator',
+    title: 'Pool Heater Size Calculator — BTU by Surface Area',
+    shortTitle: 'Pool Heater Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free pool heater sizing calculator. Compute required BTU/hr from pool surface area, desired temperature, and coldest swim-month air temp — gas heater and heat pump sizing.',
+    tagline: 'BTU sizing is surface-area math, not gallon guessing.',
+    intro:
+      'Pool heaters are sized to hold temperature against surface heat loss, which is why the math runs on surface area, not gallons: BTU/hr = surface sq ft × temperature rise × 12, using the coldest month you intend to swim. This calculator runs the rule, adjusts for wind exposure, and tells you what size unit to quote.',
+    howItWorks: [
+      'Enter pool length and width (surface area drives heat loss).',
+      'Enter desired water temperature and the coldest swim-month air temperature.',
+      'Flag wind exposure — exposed pools need ~25% more capacity.',
+      'Read the minimum BTU/hr; size up one step for faster heat-up.',
+    ],
+    faq: [
+      {
+        q: 'What size heater for a 16×32 pool?',
+        a: '512 sq ft of surface, holding 80°F water against 65°F air (15° rise): 512 × 15 × 12 ≈ 92,000 BTU/hr minimum to maintain. In practice that pool gets quoted a 100–150k heat pump or 250–400k gas heater — gas heaters are oversized deliberately for fast weekend heat-up.',
+      },
+      {
+        q: 'Why do gas heaters and heat pumps size so differently?',
+        a: 'Gas heaters are cheap per BTU and oversized for speed (heating 2–3°F per hour); heat pumps are efficient but slow and sized to maintain temperature continuously. A heat pump also loses capacity as air temperature drops — check the output rating at YOUR coldest swim-month temp, not the 80°F nameplate condition.',
+      },
+    ],
+  },
+  {
     slug: 'voltage-drop-calculator',
     title: 'Voltage Drop Calculator — NEC Wire Run Check',
     shortTitle: 'Voltage Drop Calculator',

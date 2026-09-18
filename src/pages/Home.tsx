@@ -54,12 +54,12 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — concrete engineering: rebar grids by weight, footing
-          sizing by soil, and grout volumes for block walls.
+          The newest tools on the site — pool season math: exact volume gallons, pump turnover,
+          and honest heater BTU sizing.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['rebar-calculator', 'footing-size-calculator', 'block-fill-calculator', 'siding-calculator', 'paver-calculator', 'block-calculator'].includes(c.slug),
+            ['pool-volume-calculator', 'pool-pump-calculator', 'pool-heater-calculator', 'joist-span-calculator', 'board-batten-calculator', 'gutter-size-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

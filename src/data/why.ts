@@ -117,6 +117,12 @@ export const WHY_USE: Record<string, string> = {
     'DIY accent-wall builders use this because uneven end bays are the tell of amateur work — the math is one equation but nobody wants to solve it on a ladder. Interior designers use it to spec layouts contractors can\'t mess up.',
   'gutter-size-calculator':
     'Homeowners getting gutter quotes use this to know whether they need 5-inch or 6-inch before the upsell conversation, and how many downspouts the run demands. The pitch factor is the part every free estimator skips — steep roofs need bigger gutters, full stop.',
+  'pool-volume-calculator':
+    'Pool owners use this once and write the number on the equipment pad forever: every chemical dose, shock treatment, and heater spec keys off gallons, and most owners are guessing within ±30%. Pool service techs use it on new accounts where the owner has no idea.',
+  'pool-pump-calculator':
+    'Pool owners fighting cloudy water use this to find out whether the problem is runtime, not chemistry — one division tells you. The electricity cost layer makes the variable-speed upgrade math concrete: same turnover, a third of the watts.',
+  'pool-heater-calculator':
+    'Anyone pricing a heater or heat pump uses this before the sales call: the ×12 surface-area rule gives the honest minimum, so a 400k-BTU quote for a small pool reads as what it is. The solar-cover note saves more money than the calculator itself.',
   'voltage-drop-calculator':
     'Electricians sizing runs to outbuildings, DIYers wiring a shed, and RV owners spec-ing a pedestal all hit the same wall: the wire is legal by ampacity but drops too many volts over distance. This catches that before the trench is backfilled.',
   'wire-size-calculator':

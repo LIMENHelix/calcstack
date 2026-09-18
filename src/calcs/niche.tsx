@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Field, Result, useNumber } from './index'
-import { num } from '@/lib/calc'
+import { num, usd } from '@/lib/calc'
 
 function Select({ label, value, onChange, options }: {
   label: string
@@ -425,6 +425,168 @@ export function OhmsLawCalc() {
   )
 }
 
+/* ---------------- Pool volume ---------------- */
+
+export function PoolVolumeCalc() {
+  const [shape, setShape] = useState('rect')
+  const [length, setLength] = useNumber(32)
+  const [width, setWidth] = useNumber(16)
+  const [shallow, setShallow] = useNumber(3.5)
+  const [deep, setDeep] = useNumber(8)
+  const [diameter, setDiameter] = useNumber(24)
+  const [roundDepth, setRoundDepth] = useNumber(4.5)
+
+  const r = useMemo(() => {
+    // 7.48 US gallons per cubic foot
+    let cuft: number, avgDepth: number
+    if (shape === 'round') {
+      avgDepth = roundDepth
+      cuft = Math.PI * (diameter / 2) ** 2 * roundDepth
+    } else {
+      avgDepth = (shallow + deep) / 2
+      const area = shape === 'oval' ? Math.PI * (length / 2) * (width / 2) : length * width
+      cuft = area * avgDepth
+    }
+    const gallons = cuft * 7.48
+    return { cuft, gallons, avgDepth }
+  }, [shape, length, width, shallow, deep, diameter, roundDepth])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Pool shape" value={shape} onChange={setShape} options={[
+          ['rect', 'Rectangle / freeform (bounding box)'], ['oval', 'Oval'], ['round', 'Round'],
+        ]} />
+        {shape === 'round' ? (
+          <>
+            <Field label="Diameter" value={diameter} onChange={setDiameter} suffix="ft" />
+            <Field label="Depth (uniform)" value={roundDepth} onChange={setRoundDepth} suffix="ft" />
+          </>
+        ) : (
+          <>
+            <Field label="Length" value={length} onChange={setLength} suffix="ft" />
+            <Field label="Width" value={width} onChange={setWidth} suffix="ft" />
+            <Field label="Shallow-end depth" value={shallow} onChange={setShallow} suffix="ft" />
+            <Field label="Deep-end depth" value={deep} onChange={setDeep} suffix="ft" />
+          </>
+        )}
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Pool volume" value={`${num(r.gallons, 0)} gal`} />
+        <Result label="Cubic feet" value={num(r.cuft, 0)} />
+        {shape !== 'round' && <Result label="Average depth" value={`${num(r.avgDepth, 1)} ft`} />}
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Gallons = cubic feet × 7.48. Rectangles use length × width × average depth; ovals use
+        π × half-length × half-width × depth (the 5.9 multiplier rule); round pools use
+        πr² × depth. Freeform pools: measure the bounding box and subtract ~15% for the curves.
+        Slopes aren&apos;t always linear — if your pool has a flat hopper bottom, measure depths
+        at several points and average them.
+      </p>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Pool pump turnover ---------------- */
+
+export function PoolPumpCalc() {
+  const [gallons, setGallons] = useNumber(20000)
+  const [gpm, setGpm] = useNumber(50)
+  const [target, setTarget] = useState('8')
+  const [kwhPrice, setKwhPrice] = useNumber(0.16)
+  const [watts, setWatts] = useNumber(1200)
+
+  const r = useMemo(() => {
+    const turnoverHrs = gallons / (gpm * 60)
+    const neededGpm = gallons / (parseFloat(target) * 60)
+    const dailyKwh = (watts / 1000) * turnoverHrs
+    const monthlyCost = dailyKwh * 30 * kwhPrice
+    return { turnoverHrs, neededGpm, dailyKwh, monthlyCost }
+  }, [gallons, gpm, target, kwhPrice, watts])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Pool volume" value={gallons} onChange={setGallons} suffix="gal" />
+        <Field label="Pump flow rate" value={gpm} onChange={setGpm} suffix="GPM" />
+        <Select label="Target turnover" value={target} onChange={setTarget} options={[
+          ['6', '6 hrs (heavy use / commercial)'], ['8', '8 hrs (residential standard)'], ['10', '10 hrs'], ['12', '12 hrs (light use)'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Turnover time at your GPM" value={`${num(r.turnoverHrs, 1)} hrs`} />
+        <Result label={`GPM needed for ${target}-hr turnover`} value={num(r.neededGpm, 1)} />
+        <Result label="Turnovers per 24 hrs" value={num(24 / r.turnoverHrs, 1)} />
+      </div>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">What the pump costs to run (editable)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <Field label="Pump draw" value={watts} onChange={setWatts} suffix="W" />
+          <Field label="Electricity price" value={kwhPrice} onChange={setKwhPrice} prefix="$" suffix="/kWh" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <Result label="kWh per turnover" value={num(r.dailyKwh, 1)} />
+          <Result big label="Monthly cost (1 turnover/day)" value={usd(r.monthlyCost, 2)} />
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          Variable-speed pumps run the same turnover at 300–600 W instead of 1,200–2,000 W —
+          the single biggest pool-energy win. Actual flow drops as the filter loads; the GPM on
+          the pump curve at your system&apos;s head pressure is the number to use.
+        </p>
+      </details>
+      <p className="text-sm text-muted-foreground">
+        Turnover = gallons ÷ (GPM × 60). Health-department standard is a full turnover every 8
+        hours for residential pools; many codes require it. Faster isn&apos;t better — pushing
+        water faster than the filter rating just bypasses filtration.
+      </p>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Pool heater sizing ---------------- */
+
+export function PoolHeaterCalc() {
+  const [length, setLength] = useNumber(32)
+  const [width, setWidth] = useNumber(16)
+  const [desired, setDesired] = useNumber(80)
+  const [ambient, setAmbient] = useNumber(65)
+  const [windy, setWindy] = useState('no')
+
+  const r = useMemo(() => {
+    const surface = length * width
+    const rise = Math.max(0, desired - ambient)
+    // industry sizing rule: BTU/hr = surface sq ft × temp rise × 12 (uses coldest swimming-month ambient)
+    const btu = surface * rise * 12 * (windy === 'yes' ? 1.25 : 1)
+    return { surface, rise, btu }
+  }, [length, width, desired, ambient, windy])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Pool length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Pool width" value={width} onChange={setWidth} suffix="ft" />
+        <Field label="Desired water temp" value={desired} onChange={setDesired} suffix="°F" />
+        <Field label="Coldest swim-month air temp" value={ambient} onChange={setAmbient} suffix="°F" />
+        <Select label="Windy / exposed site?" value={windy} onChange={setWindy} options={[
+          ['no', 'Sheltered'], ['yes', 'Windy / exposed (+25%)'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Heater size" value={`${num(r.btu / 1000, 0)},000 BTU/hr`} />
+        <Result label="Surface area" value={`${num(r.surface, 0)} sq ft`} />
+        <Result label="Temperature rise" value={`${num(r.rise, 0)}°F`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Sizing rule: BTU/hr = surface area × temperature rise × 12, using the coldest month you
+        plan to swim. This sizes MAINTAINING temperature, not speed of heat-up — a bigger heater
+        heats faster but costs more to buy. A solar cover cuts heat loss (mostly evaporation) by
+        50–70% and is the cheapest &quot;heater&quot; you can buy. Heat pumps are sized the same
+        way but lose capacity in cold air — check the output rating at your ambient temperature.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const NICHE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'one-rep-max-calculator': OneRepMaxCalc,
   'heart-rate-zone-calculator': HeartRateZoneCalc,
@@ -436,4 +598,7 @@ export const NICHE_CALC_COMPONENTS: Record<string, (props: import('./index').Cal
   'body-fat-calculator': BodyFatCalc,
   'final-grade-calculator': FinalGradeCalc,
   'ohms-law-calculator': OhmsLawCalc,
+  'pool-volume-calculator': PoolVolumeCalc,
+  'pool-pump-calculator': PoolPumpCalc,
+  'pool-heater-calculator': PoolHeaterCalc,
 }
