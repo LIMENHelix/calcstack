@@ -1538,6 +1538,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'flooring-calculator',
+    title: 'Flooring Calculator — Boxes, Waste & Underlayment by Layout',
+    shortTitle: 'Flooring Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free flooring calculator. Room dimensions plus the right waste factor for your layout — straight 10%, diagonal 15%, herringbone 20% — gives exact box counts, cost, and underlayment rolls.',
+    tagline: 'The box count that doesn\'t leave you one plank short.',
+    intro:
+      'Flooring is sold by the box and rooms are measured by the square foot — and the waste factor is not one number: a straight lay needs 10%, a diagonal 15%, herringbone 20%. This calculator applies the right factor for your layout, divides by the coverage on your carton label, and rounds up to whole boxes so the dye lot matches and the job finishes.',
+    howItWorks: [
+      'Measure the room length × width in feet (split L-shaped rooms into rectangles and add).',
+      'Pick the layout — it sets the waste factor: 10% straight, 15% diagonal, 20% herringbone.',
+      'Enter the box coverage printed on your product\'s carton (LVP is typically 18–25 sq ft).',
+      'Read the order quantity, whole-box count, cost, and underlayment rolls if you need them.',
+    ],
+    faq: [
+      {
+        q: 'How many boxes of LVP do I need for a 12×12 room?',
+        a: 'The room is 144 sq ft; with the standard 10% straight-lay waste you order 158.4 sq ft. At 20 sq ft per box that is 7.9 — round up to 8 boxes. Diagonal the same room and you need 165.6 sq ft, still 9 boxes at some coverages — layout changes the count.',
+      },
+      {
+        q: 'Do I need separate underlayment?',
+        a: 'Only if the planks don\'t have an attached pad. Most modern click-lock LVP has one built in — and adding foam underneath an attached-pad product voids the warranty. Pad-free floating floors take one 100 sq ft roll per 100 sq ft of order quantity.',
+      },
+      {
+        q: 'Why round up to whole boxes instead of buying exact square footage?',
+        a: 'Boxes are sealed units — no store sells 0.3 of a box — and flooring varies by dye lot between production runs. If you run short, the replacement box may visibly not match. Rounding up plus one spare box for future repairs is the cheap insurance.',
+      },
+    ],
+  },
+  {
     slug: 'siding-calculator',
     title: 'Siding Calculator — Squares, Waste & Cost',
     shortTitle: 'Siding Calculator',

@@ -807,6 +807,68 @@ export function RafterCalc() {
   )
 }
 
+/* ---------------- Flooring ---------------- */
+
+const FLOOR_LAYOUTS: [string, number][] = [
+  ['Straight / staggered (10%)', 0.10],
+  ['Diagonal 45° (15%)', 0.15],
+  ['Herringbone / chevron (20%)', 0.20],
+  ['Hallway or cut-up room (15%)', 0.15],
+]
+
+export function FlooringCalc() {
+  const [length, setLength] = useNumber(15)
+  const [width, setWidth] = useNumber(20)
+  const [layout, setLayout] = useState('0.10')
+  const [coverage, setCoverage] = useNumber(20)
+  const [priceBox, setPriceBox] = useNumber(70)
+  const [underlay, setUnderlay] = useState('yes')
+
+  const r = useMemo(() => {
+    const area = length * width
+    const order = area * (1 + parseFloat(layout))
+    const boxes = coverage > 0 ? Math.ceil(order / coverage) : 0
+    const cost = boxes * priceBox
+    // separate underlayment pad: standard 100 sq ft roll, ordered against the with-waste area
+    const rolls = underlay === 'yes' ? Math.ceil(order / 100) : 0
+    return { area, order, boxes, cost, rolls }
+  }, [length, width, layout, coverage, priceBox, underlay])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Room length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Room width" value={width} onChange={setWidth} suffix="ft" />
+        <Select label="Layout / waste factor" value={layout} onChange={setLayout} options={
+          FLOOR_LAYOUTS.map(([l, v]) => [String(v), l] as [string, string])
+        } />
+        <Field label="Box coverage (from the label)" value={coverage} onChange={setCoverage} suffix="sq ft" />
+        <Field label="Price per box" value={priceBox} onChange={setPriceBox} prefix="$" />
+        <Select label="Separate underlayment pad" value={underlay} onChange={setUnderlay} options={[
+          ['yes', 'Yes — no attached pad'], ['no', 'No — pad attached / nail-down'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Net area" value={`${num(r.area, 0)} sq ft`} />
+        <Result label="Order quantity" value={`${num(r.order, 0)} sq ft`} />
+        <Result big label="Boxes to buy" value={String(r.boxes)} />
+        <Result label="Material cost" value={usd(r.cost, 0)} />
+      </div>
+      {r.rolls > 0 && <Result label="Underlayment rolls (100 sq ft)" value={String(r.rolls)} />}
+      <p className="text-sm text-muted-foreground">
+        Boxes = area × waste factor ÷ box coverage, rounded up — you cannot buy a partial box, and
+        a second order risks a different dye lot. Waste depends on layout: 10% straight, 15%
+        diagonal, 20% herringbone or chevron, and hallways deserve 15% because end cuts multiply at
+        doorways. Coverage comes from the carton label: LVP runs 18–25 sq ft per box, laminate
+        15–21, hardwood 20–25. For L-shaped rooms, split into rectangles and add the areas before
+        the waste factor. Keep one unopened box after the job for repairs — dye lots drift between
+        production runs. Underlayment: if the planks have an attached pad, adding foam underneath
+        voids most warranties; order separate rolls only for pad-free floating floors.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Siding ---------------- */
 
 export function SidingCalc() {
@@ -1356,6 +1418,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'board-foot-calculator': BoardFootCalc,
   'stair-calculator': StairCalc,
   'rafter-length-calculator': RafterCalc,
+  'flooring-calculator': FlooringCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,

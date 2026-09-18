@@ -103,6 +103,8 @@ export const WHY_USE: Record<string, string> = {
     'Deck builders and basement finishers use this to get equal, code-legal risers on the first layout — the 7.75" IRC limit and the treads-minus-one rule are where stair math goes wrong. The stringer length and 2R+T comfort check come free with the count.',
   'rafter-length-calculator':
     'Framers use it to order and cut rafters without climbing back up to re-measure: span, pitch, and ridge thickness in, exact cut length and plumb angle out — the same multipliers printed on a framing square. Homeowners pricing an addition use it to sanity-check the lumber list before the quote.',
+  'flooring-calculator':
+    'Installers use it to order once and order right — the waste factor changes with the layout, and a diagonal or herringbone job ordered at the straight-lay 10% runs short mid-room. Homeowners use it to check the installer\'s material line against the carton coverage before paying for boxes that never get opened.',
   'siding-calculator':
     'Homeowners collecting siding quotes use this to know their square count before the first salesman measures — it converts a black-box estimate into a conversation. Contractors use it as a five-second first pass before a formal takeoff.',
   'paver-calculator':
