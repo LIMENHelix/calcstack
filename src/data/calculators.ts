@@ -3536,6 +3536,40 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'debt-payoff-calculator',
+    title: 'Debt Payoff Calculator — Snowball vs Avalanche, Exact Dates & Interest',
+    shortTitle: 'Debt Payoff (Snowball vs Avalanche)',
+    category: 'Loans & Debt',
+    description:
+      'Free debt payoff calculator. Enter up to 3 debts with balances, rates, and minimums — compare snowball vs avalanche with exact payoff months, total interest, and what extra payments save.',
+    tagline: 'Two strategies, one winner — and the exact month you are free.',
+    intro:
+      'Every "snowball or avalanche" article argues philosophy. This calculator settles it with your actual debts: a month-by-month simulation of both strategies — minimums everywhere, your extra money aimed at the target, freed payments rolling forward — showing the payoff date and total interest for each, plus what your extra payment is worth versus minimums alone.',
+    howItWorks: [
+      'Enter each debt\'s balance, interest rate, and minimum payment (up to three).',
+      'Add the extra amount you can pay monthly beyond the minimums.',
+      'Compare avalanche (highest rate first) against snowball (smallest balance first) — payoff month, total interest, and the gap between them.',
+    ],
+    faq: [
+      {
+        q: 'Which is better — snowball or avalanche?',
+        a: 'Avalanche (highest interest rate first) always wins mathematically. Snowball (smallest balance first) wins behaviorally — Northwestern researchers found the early quick win keeps people paying. The honest answer: run yours here. If the interest gap is a few hundred dollars, pick whichever you will actually finish; if it is thousands, find a way to love the avalanche.',
+      },
+      {
+        q: 'How much does an extra $200 a month really matter?',
+        a: 'On a typical three-debt pile ($23,000 across a card, medical bill, and car loan), $200 extra cuts roughly 20 months and $4,600 in interest versus minimums alone. The freed minimums rolling into the next target are the engine — the strategy compounds.',
+      },
+      {
+        q: 'My minimum payment does not cover the interest. What now?',
+        a: 'That is negative amortization — the balance grows even when you pay on time, and no strategy fixes it. Raise that payment above the interest first (the calculator flags this), call the issuer about hardship rates, or look at a lower-rate consolidation loan. Then run both strategies.',
+      },
+      {
+        q: 'Should I consolidate instead?',
+        a: 'Consolidation helps when the new rate is clearly below your weighted average AND you do not run the cards back up — the second part is where it usually fails. Run your debts here first; if the avalanche finishes in under 3 years, the discipline path often beats the new loan.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

@@ -233,4 +233,6 @@ export const WHY_USE: Record<string, string> = {
     'Veterans use it to see the benefit in dollars: funding fee financed, exemption checked, and the same house priced three ways so the FHA lifetime-MIP trap is visible next to the VA zero. The "should I put money down anyway" FAQ settles the most common mistake.',
   'refinance-break-even-calculator':
     'Homeowners getting refi mailers use it to test the pitch: break-even month first, then the horizon total that exposes a reset clock. It is the calculator that separates a lower payment from actual savings — the confusion lenders profit from.',
+  'debt-payoff-calculator':
+    'Anyone carrying multiple balances uses it to end the snowball-versus-avalanche argument with their own numbers — exact payoff dates and the dollar gap between strategies. The negative-amortization flag catches the trap most calculators never mention.',
 }
