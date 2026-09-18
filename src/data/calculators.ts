@@ -2135,6 +2135,97 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'self-employment-tax-calculator',
+    title: 'Self-Employment Tax Calculator — 2026 SE Tax on 1099 Income',
+    shortTitle: 'Self-Employment Tax',
+    category: 'Freelance & Career',
+    description:
+      'Free self-employment tax calculator for 2026. Compute the 15.3% SE tax on net profit with the 92.35% base and the $184,500 Social Security cap — plus the employer-half deduction.',
+    tagline: 'The 15.3% surprise, computed before it surprises you.',
+    intro:
+      'The first year of freelancing comes with a shock: self-employment tax, both halves of Social Security and Medicare, charged on 92.35% of your net profit. This calculator breaks it into the Social Security part (capped at the 2026 wage base of $184,500), the Medicare part (uncapped), the total, and the employer-half deduction that reduces your income tax.',
+    howItWorks: [
+      'Enter your expected net self-employment profit (revenue minus business expenses — the Schedule C bottom line).',
+      'Read the SE-taxable earnings (92.35% of profit), the Social Security and Medicare parts, and the total.',
+      'Note the employer-half deduction — half of SE tax comes off your income before income tax is computed.',
+    ],
+    faq: [
+      {
+        q: 'How much is self-employment tax in 2026?',
+        a: '15.3% of 92.35% of net profit — an effective 14.13% on profit under the Social Security cap. On $90,000 of profit that is $12,716.60: $10,306.26 Social Security (12.4%) and $2,410.34 Medicare (2.9%). Above $184,500 the Social Security part stops and only Medicare (plus a 0.9% surtax over $200k/$250k) continues.',
+      },
+      {
+        q: 'Why 92.35% of profit?',
+        a: 'Employees pay 7.65% and employers pay 7.65%; the self-employed pay both. To equalize, the IRS lets you compute SE tax on 92.35% of profit (100% minus the 7.65% employer share) — then also deduct half the SE tax from income. The two adjustments roughly mirror what an employer would have paid and deducted.',
+      },
+      {
+        q: 'How do I reduce self-employment tax legally?',
+        a: 'Business expenses reduce the profit it is charged on — every legitimate deduction saves 14.13% in SE tax plus income tax. At higher incomes, an S-corp election splits income into salary (SE-taxed) and distributions (not), though it adds payroll costs and a reasonable-salary requirement. Retirement contributions (SEP-IRA, Solo 401k) cut income tax but not SE tax.',
+      },
+    ],
+  },
+  {
+    slug: 'quarterly-estimated-tax-calculator',
+    title: 'Quarterly Estimated Tax Calculator — 2026 Federal Payments',
+    shortTitle: 'Quarterly Estimated Tax',
+    category: 'Freelance & Career',
+    description:
+      'Free quarterly estimated tax calculator for freelancers. Combines 2026 federal brackets, self-employment tax, and the safe-harbor rule into the payment due each quarter.',
+    tagline: 'Four payments a year. Zero April panic.',
+    intro:
+      'Freelancers owe taxes as they earn, not in April — the IRS expects four estimated payments, and underpaying costs penalties even if you pay in full at filing. This calculator combines self-employment tax and income tax (2026 brackets, standard deduction, and the SE-tax deduction built in) into a quarterly payment, and shows the safe-harbor alternative based on last year\'s tax.',
+    howItWorks: [
+      'Enter expected self-employment profit and any other taxable income for the year.',
+      'Pick your filing status (2026 standard deduction applied automatically).',
+      'Enter last year\'s total tax for the safe-harbor comparison.',
+      'Read the quarterly payment and the safe-harbor amount — pay the smaller of the two if last year\'s return covered 12 months.',
+    ],
+    faq: [
+      {
+        q: 'How much should I pay quarterly as a freelancer?',
+        a: 'On $90,000 of profit filing single in 2026: SE tax is $12,716.60, income tax after the standard deduction and half-SE deduction is $9,571.17, total $22,287.77 — about $5,571.94 per quarter. If last year\'s total tax was lower, the safe-harbor rule (100% of prior-year tax, 110% over $150k AGI) may let you pay less without penalty.',
+      },
+      {
+        q: 'When are quarterly estimated taxes due?',
+        a: 'April 15, June 15, September 15, and January 15 of the following year. Note the quarters are uneven — the June payment covers only April and May. Pay via IRS Direct Pay or EFTPS; keep confirmation numbers.',
+      },
+      {
+        q: 'What happens if I underpay my quarterly estimates?',
+        a: 'The IRS charges an underpayment penalty (interest at the federal short-term rate plus 3 points) for each quarter you were short — even if you pay everything by April. The safe-harbor rule is the escape hatch: 100% (or 110%) of last year\'s tax, paid evenly, avoids the penalty regardless of this year\'s bill.',
+      },
+    ],
+  },
+  {
+    slug: 'invoice-late-fee-calculator',
+    title: 'Invoice Late Fee Calculator — Late Payment Interest & Total Due',
+    shortTitle: 'Invoice Late Fee',
+    category: 'Freelance & Career',
+    description:
+      'Free invoice late fee calculator. Compute late payment interest by days past due and monthly rate, the total now due, and the equivalent APR.',
+    tagline: 'Net-30 is a suggestion until you price the alternative.',
+    intro:
+      'A late fee clause turns "I\'ll pay you Friday" into a cost the client can see. This calculator computes the accrued fee from invoice amount, days past due, and your contracted monthly rate — plus the equivalent APR, so you can check the charge against your state\'s usury limits before it goes on an invoice.',
+    howItWorks: [
+      'Enter the invoice amount and days past due.',
+      'Enter the monthly late fee rate from your contract (1.5%/month is the common standard).',
+      'Read the accrued fee, total due, and the equivalent APR.',
+    ],
+    faq: [
+      {
+        q: 'How much can I charge for late invoice payments?',
+        a: '1–1.5% per month (12–18% APR) is the common commercial standard, but state usury laws cap it — ranging from about 6% to 18%+ APR depending on the state and whether the client is a business. The fee must be in the signed contract or terms accepted before work began; adding it after the fact rarely holds up.',
+      },
+      {
+        q: 'Is a late fee worth enforcing with a good client?',
+        a: 'Usually not the first time — the clause exists to change behavior, not to farm fees. Enforce it consistently for chronically late payers, waive it once for good clients with a reason, and always show the math (this calculator\'s total-due figure) in the reminder email. Visible arithmetic gets invoices paid faster than threats.',
+      },
+      {
+        q: 'Late fee or early-payment discount?',
+        a: 'Discounts outperform fees for cash flow. A 2% discount for payment within 10 days ("2/10 net 30") costs you less than the average late fee you would collect and gets money in weeks earlier. Offer both: the discount as the carrot, the fee clause as the stick.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

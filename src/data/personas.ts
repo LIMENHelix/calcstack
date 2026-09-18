@@ -22,6 +22,9 @@ export const PERSONAS: Persona[] = [
       'How much should I set aside each month for taxes and dry spells?',
     ],
     calcSlugs: [
+      'quarterly-estimated-tax-calculator',
+      'self-employment-tax-calculator',
+      'invoice-late-fee-calculator',
       'freelance-rate-calculator',
       'freelance-rate-calculator-web-developer',
       'freelance-rate-calculator-graphic-designer',
@@ -208,6 +211,10 @@ export const PERSONAS: Persona[] = [
       'How do different state tax rates hit my pricing?',
     ],
     calcSlugs: [
+      'quarterly-estimated-tax-calculator',
+      'self-employment-tax-calculator',
+      'markup-margin-calculator',
+      'bid-sheet-calculator',
       'break-even-calculator',
       'loan-payoff-calculator',
       'sales-tax-calculator',

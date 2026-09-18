@@ -139,6 +139,12 @@ export const WHY_USE: Record<string, string> = {
     'Teachers use it to plan the master\'s-degree lane change (the biggest raise lever in the profession) and to survive the 10-month paycheck schedule without a broke August. Career changers use it to see year 10 before signing up for year 1.',
   'truck-driver-pay-calculator':
     'Drivers use it to compare carriers honestly: CPM × miles ÷ on-duty hours converts any offer into an hourly rate you can hold against a local job. It is also the number that settles the "is OTR worth it" argument at home.',
+  'self-employment-tax-calculator':
+    'New freelancers use it the week they quit their job — the 15.3% nobody mentioned — and veterans use it to sanity-check their books. It separates the capped Social Security part from uncapped Medicare so high earners see exactly where the tax changes shape.',
+  'quarterly-estimated-tax-calculator':
+    'Every 1099 worker four times a year: it combines SE tax and income tax into the actual payment, and the safe-harbor line tells penalty-worriers the minimum that keeps them clean. Accountants point clients at it instead of explaining 1040-ES over the phone.',
+  'invoice-late-fee-calculator':
+    'Freelancers and agencies use it in the past-due reminder email — showing the client the exact accrued fee and total due gets checks written. Bookkeepers use it to apply contracted rates correctly across a whole aging report.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }
