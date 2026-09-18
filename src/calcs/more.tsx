@@ -450,7 +450,128 @@ export function BreakEvenCalc() {
   )
 }
 
+/* ---------------- Debt Avalanche vs Snowball ---------------- */
+
+interface DebtSim { name: string; bal: number; apr: number; min: number }
+
+function simulatePayoff(debts: DebtSim[], extra: number, strategy: 'avalanche' | 'snowball') {
+  const ds = debts.map((d) => ({ ...d, paidThisMonth: 0 }))
+  let months = 0
+  let totalInterest = 0
+  const order: string[] = []
+  while (ds.some((d) => d.bal > 0.005) && months < 600) {
+    months++
+    for (const d of ds) {
+      if (d.bal <= 0) continue
+      const i = (d.bal * d.apr) / 100 / 12
+      d.bal += i
+      totalInterest += i
+    }
+    for (const d of ds) {
+      if (d.bal <= 0) continue
+      const p = Math.min(d.min, d.bal)
+      d.bal -= p
+      d.paidThisMonth = p
+    }
+    const origMins = debts.reduce((s, d) => s + d.min, 0)
+    const minsPaid = ds.reduce((s, d) => s + (d.paidThisMonth || 0), 0)
+    let left = origMins - minsPaid + extra
+    let guard = 0
+    while (left > 0.005 && guard++ < 10) {
+      const active = ds.filter((d) => d.bal > 0.005)
+      if (!active.length) break
+      active.sort((a, b) =>
+        strategy === 'avalanche' ? b.apr - a.apr || a.bal - b.bal : a.bal - b.bal || b.apr - a.apr,
+      )
+      const t = active[0]
+      const p = Math.min(t.bal, left)
+      t.bal -= p
+      left -= p
+      if (t.bal <= 0.005 && !order.includes(t.name)) order.push(t.name)
+    }
+  }
+  return { months, totalInterest, order }
+}
+
+export function DebtPayoffCalc() {
+  const [b1, setB1] = useNumber(1500)
+  const [a1, setA1] = useNumber(12)
+  const [m1, setM1] = useNumber(40)
+  const [b2, setB2] = useNumber(4000)
+  const [a2, setA2] = useNumber(20)
+  const [m2, setM2] = useNumber(100)
+  const [b3, setB3] = useNumber(0)
+  const [a3, setA3] = useNumber(0)
+  const [m3, setM3] = useNumber(0)
+  const [extra, setExtra] = useNumber(100)
+
+  const r = useMemo(() => {
+    const debts: DebtSim[] = [
+      { name: 'Debt 1', bal: b1, apr: a1, min: m1 },
+      { name: 'Debt 2', bal: b2, apr: a2, min: m2 },
+      { name: 'Debt 3', bal: b3, apr: a3, min: m3 },
+    ].filter((d) => d.bal > 0)
+    if (!debts.length) return null
+    const av = simulatePayoff(debts, extra, 'avalanche')
+    const sn = simulatePayoff(debts, extra, 'snowball')
+    const totalBal = debts.reduce((s, d) => s + d.bal, 0)
+    const savings = sn.totalInterest - av.totalInterest
+    return { av, sn, totalBal, savings }
+  }, [b1, a1, m1, b2, a2, m2, b3, a3, m3, extra])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div className="space-y-3">
+          <p className="text-sm font-medium">Debt 1</p>
+          <Field label="Balance" value={b1} onChange={setB1} prefix="$" />
+          <Field label="APR" value={a1} onChange={setA1} suffix="%" step="0.5" />
+          <Field label="Minimum payment" value={m1} onChange={setM1} prefix="$" />
+        </div>
+        <div className="space-y-3">
+          <p className="text-sm font-medium">Debt 2</p>
+          <Field label="Balance" value={b2} onChange={setB2} prefix="$" />
+          <Field label="APR" value={a2} onChange={setA2} suffix="%" step="0.5" />
+          <Field label="Minimum payment" value={m2} onChange={setM2} prefix="$" />
+        </div>
+        <div className="space-y-3">
+          <p className="text-sm font-medium">Debt 3 (optional)</p>
+          <Field label="Balance" value={b3} onChange={setB3} prefix="$" />
+          <Field label="APR" value={a3} onChange={setA3} suffix="%" step="0.5" />
+          <Field label="Minimum payment" value={m3} onChange={setM3} prefix="$" />
+        </div>
+      </div>
+      <div className="max-w-xs">
+        <Field label="Extra you can pay each month" value={extra} onChange={setExtra} prefix="$" />
+      </div>
+      {r && (
+        <>
+          <div className="grid gap-3 sm:grid-cols-4">
+            <Result big label="Avalanche saves" value={`${usd(Math.max(0, r.savings), 0)}${r.savings >= 0.005 && r.av.months !== r.sn.months ? ` & ${Math.abs(r.sn.months - r.av.months)} mo` : ''}`} />
+            <Result label="Avalanche (highest APR first)" value={`${r.av.months} mo · ${usd(r.av.totalInterest, 0)} interest`} />
+            <Result label="Snowball (smallest balance first)" value={`${r.sn.months} mo · ${usd(r.sn.totalInterest, 0)} interest`} />
+            <Result label="Total debt" value={usd(r.totalBal, 0)} />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Result label="Avalanche payoff order" value={r.av.order.join(' → ') || '—'} />
+            <Result label="Snowball payoff order" value={r.sn.order.join(' → ') || '—'} />
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Both strategies pay every minimum every month; they differ only in where the extra money
+            (plus freed-up minimums from paid-off debts) goes. Avalanche attacks the highest APR and is
+            always the mathematical optimum; snowball attacks the smallest balance for faster
+            psychological wins. The simulation runs month by month with real interest accrual, so the
+            dollar difference is exact — then decide whether that difference or the motivation of quick
+            wins matters more to you. The best plan is the one you actually finish.
+          </p>
+        </>
+      )}
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'debt-avalanche-snowball-calculator': DebtPayoffCalc,
   'tip-calculator': TipCalc,
   'discount-calculator': DiscountCalc,
   'sales-tax-calculator': SalesTaxCalc,

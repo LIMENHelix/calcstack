@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'debt-avalanche-snowball-calculator',
+    title: 'Debt Avalanche vs Snowball Calculator — Exact Interest Difference',
+    shortTitle: 'Avalanche vs Snowball',
+    category: 'Loans & Debt',
+    description:
+      'Free debt avalanche vs snowball calculator. Enter up to 3 debts with balances, APRs, and minimums plus your extra monthly payment — see months to debt-free, total interest, and payoff order both ways, down to the dollar.',
+    tagline: 'The math says avalanche. The finish line says pick what you will actually do.',
+    intro:
+      'Both strategies pay every minimum every month — they differ only in where the extra money goes. Avalanche attacks the highest APR and is always the mathematical optimum; snowball attacks the smallest balance for faster psychological wins. This calculator runs a real month-by-month simulation of both on your actual debts — interest accrual, freed-up minimums rolling into the attack payment, payoff order — so the dollar difference is exact, not a rule of thumb.',
+    howItWorks: [
+      'Enter up to 3 debts: balance, APR, and minimum payment each.',
+      'Add the extra amount you can pay monthly beyond minimums.',
+      'The simulator runs both strategies month by month with real interest accrual; when a debt dies, its minimum rolls into the attack payment.',
+      'Compare months to debt-free, total interest, and payoff order — then choose based on whether the dollar difference or the motivation of quick wins matters more to you.',
+    ],
+    faq: [
+      {
+        q: 'Which is better, debt avalanche or snowball?',
+        a: 'Avalanche always wins mathematically — highest APR first minimizes total interest. Example: a $1,500 card at 12% and a $4,000 loan at 20%, with $100 extra monthly, avalanche saves $296 in interest and finishes 2 months sooner ($1,222 vs $1,519 interest, 31 vs 33 months). Snowball wins behaviorally for many people: the quick first payoff keeps them going. The best plan is the one you finish.',
+      },
+      {
+        q: 'How much difference does the strategy really make?',
+        a: 'Usually less than people expect — both strategies concentrate the same total payment on one debt at a time, so the gap is only the interest on the ordering difference. When your highest-APR debt is also your smallest, the two strategies are identical. The gap grows with big rate spreads and big balance differences in the wrong direction.',
+      },
+      {
+        q: 'Should I include my mortgage in an avalanche?',
+        a: 'Generally no. Mortgages carry the lowest rate in most portfolios and offer tax advantages and long fixed terms; avalanche logic applied across a whole life usually ranks them last anyway. Run this calculator on consumer debts — cards, personal loans, auto loans — and treat the mortgage separately.',
+      },
+    ],
+  },
+  {
     slug: 'loan-payoff-calculator',
     title: 'Loan Payoff Calculator — Extra Payments vs. Interest Saved',
     shortTitle: 'Loan Payoff Calculator',
