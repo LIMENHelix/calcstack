@@ -136,6 +136,17 @@ Lead with the tools competitors can't match, not the commodity ones.
 44. Fence/deck suppliers and installer blogs — Template A: "customers order right the first
     time" angle; fence + deck embeds keep shoppers on their page.
 
+## Wave 11 — pool & spa (see outreach-drafts/wave11-pool.md)
+
+45. Trouble Free Pool — NO pitch. Their PoolMath is beloved; answer chemistry threads with
+    worked math, 10:1 no-link ratio, mention only as cross-check.
+46. Pool supply retailers (In The Swim, Leslie's blogs) — Template B, "dose right the first
+    time = fewer returns" angle, chemical calculator on product pages.
+47. Pool-service software blogs (Skimmer, PoolBrain) — Template A, truck-tools trio + the
+    /for/pool-service-technicians toolkit link.
+48. Pool YouTube/DIY blogs — Template A, heater sizing and pump turnover embeds for
+    equipment-review content.
+
 ## Rules
 
 - Verify the embed renders on their platform BEFORE pitching (WordPress allows iframes in
