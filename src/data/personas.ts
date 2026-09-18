@@ -900,6 +900,9 @@ export const PERSONAS: Persona[] = [
       'Is this job priced above my real break-even?',
     ],
     calcSlugs: [
+      'lawn-care-pricing-calculator',
+      'lawn-revenue-planner',
+      'snow-removal-bid-calculator',
       'mulch-calculator',
       'gravel-calculator',
       'concrete-calculator',

@@ -121,6 +121,12 @@ export const WHY_USE: Record<string, string> = {
     'Trainers use it to price 10-packs without gut-feel discounts — the effective per-session rate shows exactly what the discount costs, and the monthly figure shows what each package client is worth. Studio owners use it to standardize pricing across a team.',
   'client-capacity-calculator':
     'Trainers use it to find their income ceiling before they hit it: slots, honest utilization, and sessions-per-client produce the max client count and the annual revenue at capacity. It answers "when do I raise rates" with a number instead of a feeling.',
+  'lawn-care-pricing-calculator':
+    'Landscapers use it in the driveway before quoting: square footage and obstacles become minutes, minutes become a defensible price, and the frequency surcharge stops biweekly clients from silently paying weekly prices. New operators use it to stop underbidding the established crews.',
+  'lawn-revenue-planner':
+    'Lawn care owners use it in the off-season to plan: clients × price × visits is the whole business, and seeing that each added client is worth $1,350 a season turns "I should advertise" into a specific target. It is also the loan-conversation number for equipment financing.',
+  'snow-removal-bid-calculator':
+    'Plow operators use it when a property manager calls mid-storm: area and depth become a per-push price in seconds, and the seasonal contract figure is already discounted correctly. Landscapers use it to keep winter revenue from being whatever the caller sounds willing to pay.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }

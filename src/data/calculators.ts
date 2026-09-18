@@ -1856,6 +1856,99 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'lawn-care-pricing-calculator',
+    title: 'Lawn Care Pricing Calculator — What to Charge Per Mow',
+    shortTitle: 'Lawn Pricing Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free lawn care pricing calculator. Turn mowable square footage, obstacles, and visit frequency into a defensible per-visit price, plus monthly and seasonal revenue per client.',
+    tagline: 'Price the lawn, not the neighbor\'s guess.',
+    intro:
+      'Lawn pricing is a time estimate wearing a price tag. This calculator converts mowable square footage, obstacle count, and visit frequency into minutes on site, then prices those minutes at your target hourly rate — with growth surcharges for biweekly and monthly lawns that take longer per cut. The output is a per-visit price you can defend, plus what that client is worth per month and per season.',
+    howItWorks: [
+      'Measure or estimate the mowable area in square feet (lot size minus house, beds, and driveway).',
+      'Count obstacles — trees, beds, fence lines, playsets — each one costs trimming time.',
+      'Pick the visit frequency and set your target hourly rate (which must cover labor, fuel, and equipment).',
+      'Read the per-visit price, monthly value, and seasonal value of the client.',
+    ],
+    faq: [
+      {
+        q: 'What should I charge to mow a lawn?',
+        a: 'Build it from time, not vibes. An 8,000 sq ft lawn with 5 obstacles is about 34 minutes on site; at a $70/hr target that is roughly $40 weekly, $50 biweekly. National averages ($30–$60 per visit) hide huge variation — your rate has to cover YOUR labor, fuel, equipment wear, insurance, and drive time.',
+      },
+      {
+        q: 'Should biweekly lawns cost the same as weekly?',
+        a: 'No — charge 20–30% more per cut. The grass is twice as tall, the mower slows down, and sometimes it takes two passes. Monthly lawns need 50–60% more per visit. Clients pay for total grass removed, not for your calendar.',
+      },
+      {
+        q: 'How do I estimate square footage without measuring?',
+        a: 'County assessor and GIS sites list lot size for any address; subtract the house footprint, driveway, and beds. Or pace it off on the first visit (a long stride is about 3 feet) and write it in the client record so every future quote on that property is instant.',
+      },
+    ],
+  },
+  {
+    slug: 'lawn-revenue-planner',
+    title: 'Lawn Care Revenue Planner — Season Income from Mowing Contracts',
+    shortTitle: 'Lawn Revenue Planner',
+    category: 'Freelance & Career',
+    description:
+      'Free lawn care revenue planner. Convert client count, price per visit, and season length into season revenue, direct costs, upsell income, and monthly net — the whole season on one screen.',
+    tagline: 'The client count IS the business plan.',
+    intro:
+      'A mowing business is multiplication: clients × price × visits. This planner runs that math for a full season, subtracts direct per-visit costs, adds the upsell revenue (mulch, cleanups, aeration) that good route density makes possible, and shows what the season is worth per month — so you know in March what the year looks like.',
+    howItWorks: [
+      'Enter your recurring client count and average price per visit.',
+      'Set visits per season (about 30 for weekly service, April through October, in most of the US).',
+      'Add your direct cost per visit and an upsell percentage.',
+      'Read season gross, costs, upsell revenue, net, and the monthly average.',
+    ],
+    faq: [
+      {
+        q: 'How much can a lawn care business make in a season?',
+        a: 'Pure arithmetic: 40 clients at $45 per visit for 30 visits grosses $54,000, and at 15% upsells plus $8/visit direct costs, nets about $52,500 before overhead. Solo operators with dense routes often run 40–60 recurring clients; a two-person crew can carry 80–120.',
+      },
+      {
+        q: 'Why does route density matter so much?',
+        a: 'Because drive time is unpaid. Two adjacent lawns share one stop; two lawns across town cost twenty minutes of windshield time each. A tight route of 40 clients can out-earn a scattered route of 55. Discount for referrals next door, never across town.',
+      },
+      {
+        q: 'What upsells should a mowing business push?',
+        a: 'Spring and fall cleanups, mulch installs (use the mulch calculator for the quote), aeration and overseeding in the fall, and shrub trimming. Upsells typically add 10–20% on top of mowing revenue and carry better margins because the crew is already on site.',
+      },
+    ],
+  },
+  {
+    slug: 'snow-removal-bid-calculator',
+    title: 'Snow Removal Bid Calculator — Per-Push and Seasonal Contract Pricing',
+    shortTitle: 'Snow Removal Bid Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free snow removal bid calculator. Price per-push residential and seasonal contracts from driveway size, depth trigger, and your hourly rate — with the seasonal discount math built in.',
+    tagline: 'Price the push, then price the season.',
+    intro:
+      'Snow bids fail when they ignore depth: six inches of wet snow is not two three-inch pushes. This calculator models time on site from area and depth trigger, prices a single push at your hourly rate, then converts it into a seasonal contract with the standard discount — so you can quote both on the spot.',
+    howItWorks: [
+      'Enter the driveway or lot area in square feet and the snow depth trigger.',
+      'Set your hourly rate (plow truck rates run higher than mowing rates — the equipment costs more).',
+      'Enter the average pushes per season for your area.',
+      'Read the per-push price and the seasonal contract price with the built-in 15% discount.',
+    ],
+    faq: [
+      {
+        q: 'Per-push or seasonal contract — which is better?',
+        a: 'Seasonal contracts win in light winters and lose in heavy ones — they are insurance for the client and a bet for you. Per-push pricing carries no risk but no guarantee. Most contractors blend: seasonal contracts for predictable base revenue, per-push for overflow. Price per-push about 15–20% above the seasonal rate to reflect the risk.',
+      },
+      {
+        q: 'What do snow removal services charge?',
+        a: 'Residential driveways commonly run $30–$70 per push depending on size, depth, and region; seasonal contracts for a standard driveway often run $300–$800. Commercial lots price by the acre or by the hour. Your rate must carry truck, plow wear, insurance, and the fact that you work at 4am in a storm.',
+      },
+      {
+        q: 'How does depth change the price?',
+        a: 'Directly: deep snow is slower per pass, may need two passes, and wet snow is heavier on the equipment. That is why this model adds time per inch of depth — and why contracts specify a trigger (service starts at 2 or 3 inches) and often a surcharge past 12 inches.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
