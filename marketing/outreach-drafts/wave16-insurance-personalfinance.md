@@ -1,10 +1,12 @@
-# Wave 16 outreach drafts — insurance & personal finance (DIME life insurance)
+# Wave 16 outreach drafts — insurance & personal finance (DIME life insurance + term-vs-whole)
 
 The hook: life insurance is the highest-CPC niche on the site, and the content angle writes
 itself — the 10×-income rule is wrong for almost everyone, and the DIME method proves it in
 five minutes. Our calculator shows the rule and the gap side by side, which is exactly the
-"wait, what?" moment personal finance content lives on. Send after Wave 15. Personalize every
-[bracket]. One per day.
+"wait, what?" moment personal finance content lives on. The natural follow-up question —
+"OK, so term or whole life?" — has its own calculator now (bundle both in every pitch):
+the buy-term-and-invest-the-difference test with the reader's own two quotes. Send after
+Wave 15. Personalize every [bracket]. One per day.
 
 Embed gallery: https://calcstack-eight.vercel.app/embeds
 
@@ -26,7 +28,14 @@ Subject: The DIME worksheet your clients should do before the first meeting
 > Live demo: https://calcstack-eight.vercel.app/embed/life-insurance-calculator
 > Full page: https://calcstack-eight.vercel.app/calculators/life-insurance-calculator
 >
-> One iframe embeds it on your site as client homework. Free forever, no signup, runs
+> And when the client asks the follow-up — "so term or whole life?" — the companion
+> calculator runs the buy-term-and-invest-the-difference test with their actual two quotes:
+> premiums paid on both sides, the difference compounded, and each side's end position
+> (what you hold minus what you paid). With typical quotes the gap is six figures:
+>
+> https://calcstack-eight.vercel.app/embed/term-vs-whole-life-calculator
+>
+> One iframe embeds either on your site as client homework. Free forever, no signup, runs
 > entirely in the browser — no client data leaves their machine.
 >
 > [Name], CalcStack
