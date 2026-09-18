@@ -1662,6 +1662,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'sump-pump-calculator',
+    title: 'Sump Pump Calculator — Inflow GPH, Total Dynamic Head & HP Sizing',
+    shortTitle: 'Sump Pump Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free sump pump sizing calculator. Measure pit inflow with the 60-second rise test, add the 1.5× safety margin, compute total dynamic head (lift + pipe friction + elbows + check valve), and get the right horsepower.',
+    tagline: 'Size to the pit, not the box.',
+    intro:
+      'Most sump pumps are bought by horsepower and the GPH printed on the box — a number measured at zero lift that no basement ever sees. The plumber\'s method is two real numbers: your pit\'s measured inflow rate (the 60-second rise test) times a 1.5× safety margin, checked against your total dynamic head — vertical lift plus pipe friction, elbows, and the check valve. This calculator runs both and matches you to the pump class whose capacity at your head actually covers the inflow.',
+    howItWorks: [
+      'On a wet day, unplug the pump and measure how many inches the pit rises in 60 seconds.',
+      'Enter pit diameter — each inch of rise is 1.10 gallons in an 18-inch pit, 1.96 in a 24-inch.',
+      'Enter vertical lift, horizontal run, elbows, and whether you have a check valve.',
+      'Read inflow GPH, the 1.5× target, total dynamic head, and the recommended pump class.',
+    ],
+    faq: [
+      {
+        q: 'What size sump pump do most homes need?',
+        a: 'A 1/3 HP pump delivering roughly 2,400–3,200 GPH at a 10-foot lift covers the average basement. Step to 1/2 HP (3,500–4,500 GPH at 10 ft) for a high water table, a finished basement, or a deep pit with long discharge. The deciding number is never horsepower alone — it is the pump\'s capacity at your total dynamic head, read from its curve.',
+      },
+      {
+        q: 'How do I measure my pit\'s inflow rate?',
+        a: 'On a rainy day, run the pump down to shutoff, unplug it, and measure how many inches the water rises in exactly 60 seconds. An 18-inch pit holds 1.10 gallons per inch, a 24-inch pit 1.96 — so 1 inch per minute in an 18-inch pit is 66 GPH of inflow. Multiply by 1.5 for the sizing target, and never let the water rise past the inlet pipe during the test.',
+      },
+      {
+        q: 'Why not just buy the biggest pump?',
+        a: 'Oversized pumps short-cycle: they empty the pit in seconds, then restart over and over, which is what actually kills sump motors and float switches. A pump that clears peak inflow with a 1.5× margin and runs a reasonable cycle outlasts a giant that cycles every ten seconds. Capacity and cycle time are separate checks — this calculator handles the first, pit size handles the second.',
+      },
+    ],
+  },
+  {
     slug: 'dry-well-calculator',
     title: 'Dry Well Calculator — Runoff Storage, Pit Count & Gravel Tonnage',
     shortTitle: 'Dry Well Calculator',

@@ -1064,6 +1064,82 @@ export function DeckFootingCalc() {
   )
 }
 
+/* ---------------- Sump Pump Sizing ---------------- */
+
+// Typical GPH by HP at lift height — midpoints of published residential ranges (Zoeller/Wayne/Liberty class)
+const SUMP_HP: Record<string, { label: string; gph: number[] }> = {
+  third: { label: '1/3 HP', gph: [3500, 2800, 1850, 1000] },
+  half: { label: '1/2 HP', gph: [5000, 4000, 3000, 1700] },
+  threeq: { label: '3/4 HP', gph: [6750, 5500, 4000, 2600] },
+  one: { label: '1 HP', gph: [9000, 7250, 5250, 3500] },
+}
+const SUMP_LIFTS = [5, 10, 15, 20]
+
+function sumpGphAt(hp: string, head: number): number {
+  const a = SUMP_HP[hp].gph
+  let i = SUMP_LIFTS.findIndex((x) => head <= x)
+  if (i <= 0) return a[0]
+  if (i < 0) return a[3]
+  const f = (head - SUMP_LIFTS[i - 1]) / (SUMP_LIFTS[i] - SUMP_LIFTS[i - 1])
+  return a[i - 1] + f * (a[i] - a[i - 1])
+}
+
+export function SumpPumpCalc() {
+  const [pit, setPit] = useState('18')
+  const [rise, setRise] = useNumber(0.5)
+  const [lift, setLift] = useNumber(8)
+  const [run, setRun] = useNumber(15)
+  const [elbows, setElbows] = useNumber(2)
+  const [check, setCheck] = useState('yes')
+
+  const r = useMemo(() => {
+    const d = Number(pit)
+    const gpi = (Math.PI * (d / 2) ** 2) / 231 // gallons per inch of pit rise
+    const inflowGpm = gpi * rise
+    const inflowGph = inflowGpm * 60
+    const targetGph = inflowGph * 1.5 // plumber safety factor
+    const tdh = lift + run / 25 + elbows * 2.5 + (check === 'yes' ? 2 : 0)
+    const pick = Object.keys(SUMP_HP).find((hp) => sumpGphAt(hp, tdh) >= targetGph)
+    const pickGph = pick ? sumpGphAt(pick, tdh) : 0
+    return { gpi, inflowGpm, inflowGph, targetGph, tdh, pick, pickGph }
+  }, [pit, rise, lift, run, elbows, check])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Pit diameter" value={pit} onChange={setPit} options={[
+          ['18', '18" — standard residential'], ['24', '24" — high inflow'],
+        ]} />
+        <Field label="Water rise in 60 seconds (pump off)" value={rise} onChange={setRise} suffix="in" step="0.25" />
+        <Field label="Vertical lift to discharge" value={lift} onChange={setLift} suffix="ft" />
+        <Field label="Horizontal discharge run" value={run} onChange={setRun} suffix="ft" />
+        <Field label="90° elbows" value={elbows} onChange={setElbows} step="1" />
+        <Select label="Check valve" value={check} onChange={setCheck} options={[
+          ['yes', 'Yes (recommended)'], ['no', 'No'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Recommended pump" value={r.pick ? SUMP_HP[r.pick].label : '1 HP+ / duplex'} />
+        <Result label="Measured inflow" value={`${num(r.inflowGph, 0)} GPH (${num(r.inflowGpm, 1)} GPM)`} />
+        <Result label="Target with 1.5× margin" value={`${num(r.targetGph, 0)} GPH`} />
+        <Result label="Total dynamic head" value={`${num(r.tdh, 1)} ft`} />
+        <Result label="Picked pump delivers @ TDH" value={r.pick ? `~${num(r.pickGph, 0)} GPH` : '—'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The only inflow number worth trusting is the one you measure: unplug the pump on a wet
+        day and time the rise — each inch is {num(r.gpi, 2)} gallons in your pit. Size to 1.5×
+        that peak inflow, and check capacity at your total dynamic head, never the box number —
+        the GPH on the box is at zero lift, and every pump loses capacity as head climbs (your
+        TDH here is {num(r.tdh, 1)} ft: lift + ~1 ft per 25 ft of horizontal run + 2.5 ft per
+        elbow + 2 ft for the check valve). Bigger is not better: an oversized pump short-cycles
+        in a small pit and burns out its switch years early. If the basement is finished, pair
+        the primary with a battery backup — the worst inflow and the power outage arrive in the
+        same storm.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Dry Well ---------------- */
 
 export function DryWellCalc() {
@@ -1938,6 +2014,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'roof-pitch-calculator': RoofPitchCalc,
   'french-drain-calculator': FrenchDrainCalc,
   'dry-well-calculator': DryWellCalc,
+  'sump-pump-calculator': SumpPumpCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,
