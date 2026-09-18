@@ -9,17 +9,17 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="CalcStack — Free Financial & Freelancer Calculators"
-        description="Free, instant calculators: freelance hourly rate, salary-to-hourly, mortgage payment, compound interest, savings goals, and loan payoff. No signup, runs in your browser."
+        title="CalcStack — Free Calculators for Your Job & Your Money"
+        description="Free, instant calculators organized by the job you do: contractor bid sheets and markup math, agent commission splits, trainer rates, gig-driver mileage deductions, paychecks by state, mortgages, and everyday money. No signup — runs in your browser."
       />
       <section className="mb-10 mt-4 text-center">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
           Money questions, <span className="text-primary">answered in seconds.</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          {CALCULATORS.length} free calculators for freelancers, lifters, landscapers, borrowers, students, and everyday
-          money. Results update as you type, and every calculation runs in your browser — no
-          accounts, no uploads, no email gates.
+          {CALCULATORS.length} free calculators — business math for contractors, agents, trainers, drivers, and
+          restaurant owners, plus paychecks by state and everyday money. Results update as you type, and every
+          calculation runs in your browser — no accounts, no uploads, no email gates.
         </p>
         <SearchBar />
         <p className="mt-3 text-sm text-muted-foreground">
@@ -49,6 +49,28 @@ export default function Home() {
           </span>
         </div>
       </Link>
+
+      <section className="mb-12">
+        <h2 className="mb-1 text-xl font-semibold">New: pro tools for your business</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          The math that decides whether a business makes money — bid sheets, pricing, quotas, and the tax deduction
+          every driver misses.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {CALCULATORS.filter((c) =>
+            ['bid-sheet-calculator', 'markup-margin-calculator', 'gci-goal-calculator', 'mileage-deduction-calculator', 'lawn-care-pricing-calculator', 'prime-cost-calculator'].includes(c.slug),
+          ).map((c) => (
+            <Link key={c.slug} to={`/calculators/${c.slug}`}>
+              <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
+                <CardContent className="p-4">
+                  <p className="text-sm font-semibold">{c.shortTitle}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{c.tagline}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Bet you didn&apos;t expect these 🤯</h2>
