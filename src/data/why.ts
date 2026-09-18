@@ -85,6 +85,18 @@ export const WHY_USE: Record<string, string> = {
     'Rural homeowners and contractors pricing driveways use it because tonnage-with-compaction is where base orders go 25% short. The material toggle (crushed vs recycled vs asphalt) matters because densities — and prices — differ enough to change the order.',
   'driveway-cost-comparison':
     'Homeowners staring at three wildly different contractor bids use this to compare them on equal terms: the 20-year cost-per-square-foot column converts sales pitches into math. It is the five minutes that prevents a five-figure mistake.',
+  'fence-calculator':
+    'DIYers pricing a backyard fence and fencing contractors building a first-pass estimate both use this: posts, rails, boards, and concrete all follow simple count rules, but the gate subtraction and doubled gate posts are where orders go wrong. The cost layer doubles as a homeowner\'s check against a fencing quote.',
+  'deck-calculator':
+    'Weekend deck builders use it to write one lumberyard order instead of three; estimators use it as a sanity check before quoting. The board-coverage math (5.625" per row) and the 350-screws-per-100-sqft rule are exactly the numbers people estimate by feel and get wrong.',
+  'insulation-calculator':
+    'Homeowners insulating a garage or attic use this to buy the right batt width for their framing and the right R-value for their climate zone — the two mistakes that waste the most money. The DOE zone guidance answers "how much R do I actually need" without a sales pitch.',
+  'asphalt-calculator':
+    'Anyone getting paving bids uses this: asphalt is sold by the ton, and knowing your tonnage before the salesman arrives converts a black-box quote into a conversation. The sq-ft-per-ton check catches bad math on both sides of the transaction.',
+  'board-foot-calculator':
+    'Woodworkers buying hardwood and anyone pricing rough lumber at a sawmill use this: board feet is a volume unit that looks like an area unit until the invoice arrives. Run the stack count before the lumberyard, not after.',
+  'stair-calculator':
+    'Deck builders and basement finishers use this to get equal, code-legal risers on the first layout — the 7.75" IRC limit and the treads-minus-one rule are where stair math goes wrong. The stringer length and 2R+T comfort check come free with the count.',
   'voltage-drop-calculator':
     'Electricians sizing runs to outbuildings, DIYers wiring a shed, and RV owners spec-ing a pedestal all hit the same wall: the wire is legal by ampacity but drops too many volts over distance. This catches that before the trench is backfilled.',
   'wire-size-calculator':

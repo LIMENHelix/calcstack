@@ -1288,6 +1288,167 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'fence-calculator',
+    title: 'Fence Calculator — Posts, Rails, Pickets & Concrete',
+    shortTitle: 'Fence Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free fence calculator. Get exact post, rail, and picket/board counts plus concrete bags for privacy or picket fences — with an editable materials and labor cost estimate.',
+    tagline: 'The whole fence order — posts to concrete — in one pass.',
+    intro:
+      'Fence material lists follow repeatable rules: a post every 8 feet plus a starter, doubled posts at every gate, two or three rails per section depending on height, and boards counted by coverage width. Getting any of these wrong means a mid-job supplier run. This calculator applies the standard counts and adds concrete at two 50-lb bags per post, so your order matches the plan.',
+    howItWorks: [
+      'Enter the total fence line in feet, then subtract gates with the gate count and width fields.',
+      'Pick height and style — privacy (5.5" boards, no gaps) or picket (3.5" boards with 2.5" gaps).',
+      'Read posts, rails, boards/pickets, and 50-lb concrete bags.',
+      'Open the cost section for editable unit costs and a labor rate per linear foot.',
+    ],
+    faq: [
+      {
+        q: 'How many posts do I need for 100 feet of fence?',
+        a: 'At 8-foot sections: ⌈100 ÷ 8⌉ + 1 = 14 posts for the fence line, plus 2 extra per gate (gate posts carry the load and are typically doubled or upsized). A 100-ft line with one 4-ft gate needs 15 posts and leaves 96 ft of actual fencing.',
+      },
+      {
+        q: 'How much concrete per fence post?',
+        a: 'Two 50-lb bags for a standard 4×4 post in an 8-inch-diameter hole set 24 inches deep (the hole holds about 0.7 cubic feet). Frost-line depths deeper than 24" or 6×6 gate posts need more — check your local frost depth before digging.',
+      },
+    ],
+  },
+  {
+    slug: 'deck-calculator',
+    title: 'Deck Calculator — Boards, Joists & Screws',
+    shortTitle: 'Deck Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free deck materials calculator. Compute decking board count with waste, joist count at 12/16/24" spacing, and screw quantities for any deck size — plus an editable cost estimate.',
+    tagline: 'Boards, joists, screws — order once, build once.',
+    intro:
+      'Deck material math is coverage math: each 5.5-inch board with a 1/8-inch gap covers 5.625 inches of width, rows multiply by length for total linear feet, and joists follow spacing rules plus one for the rim. This calculator runs the full count — boards with 10% waste, joists, and screws at ~350 per 100 square feet — so the lumberyard order is right the first time.',
+    howItWorks: [
+      'Enter deck length and width in feet.',
+      'Pick your decking board length and joist spacing (16" standard; 12" for many composites).',
+      'Read the board count (10% waste included), joist count, and screw quantity.',
+      'Open the cost section for editable decking, joist, and labor rates.',
+    ],
+    faq: [
+      {
+        q: 'How many deck boards do I need for a 16×12 deck?',
+        a: 'Rows across the 12-ft width: ⌈144 ÷ 5.625⌉ = 26 rows, times 16 ft = 416 linear feet. From 16-ft boards with 10% waste that is 29 boards. Shorter boards cost less each but add butt joints — keep joints staggered over joists.',
+      },
+      {
+        q: 'Does this include footings, beams, and railing?',
+        a: 'No — those are structural and code-driven. Footing count and depth depend on your frost line and soil, beam spans on lumber species and load, and railing on height. Check your local code and the IRC span tables before digging.',
+      },
+    ],
+  },
+  {
+    slug: 'insulation-calculator',
+    title: 'Insulation Calculator — Batt Count & R-Value by Climate Zone',
+    shortTitle: 'Insulation Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free insulation calculator. Compute batt counts for 16" or 24" framing, get DOE R-value guidance by climate zone, and estimate materials cost — walls and attics.',
+    tagline: 'How many batts, and how much R does your zone actually need?',
+    intro:
+      'Insulation orders go wrong two ways: wrong batt width for the framing spacing, and wrong R-value for the climate. This calculator handles both — pick 16" or 24" on-center framing and batt length for an exact batt count with trim waste, then check the DOE recommendation for your climate zone so the attic gets R-49 where R-49 is due.',
+    howItWorks: [
+      'Enter the area to insulate in square feet.',
+      'Pick framing spacing (16" oc takes 15" batts; 24" oc takes 23" batts) and batt length.',
+      'Pick your climate zone for DOE R-value guidance.',
+      'Read the batt count with 5% trim waste and the materials estimate.',
+    ],
+    faq: [
+      {
+        q: 'What R-value do I need in my attic?',
+        a: 'DOE guidance: warm climates (zones 1–2) R-30 to R-49, mixed (zones 3–4) R-38 to R-60, cold (zones 5–7) R-49 to R-60. Walls are typically R-13/R-15 in 2×4 framing and R-19/R-21 in 2×6. Attic targets usually mean stacking batts or blowing loose-fill on top.',
+      },
+      {
+        q: 'Does compressing a batt into a smaller cavity work?',
+        a: 'No — compressed fiberglass loses R-value roughly in proportion to compression. An R-19 batt squeezed into a 2×4 wall performs closer to R-13 and costs more than just buying R-15. Match the batt to the cavity depth.',
+      },
+    ],
+  },
+  {
+    slug: 'asphalt-calculator',
+    title: 'Asphalt Calculator — Tonnage for Driveways & Paving',
+    shortTitle: 'Asphalt Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free asphalt tonnage calculator. Compute hot-mix asphalt tons from area and compacted thickness using 145 lb/cu ft density — with a sq-ft-per-ton sanity check and editable cost estimate.',
+    tagline: 'Tons, not guesses — plus the coverage sanity check.',
+    intro:
+      'Asphalt is ordered by the ton and estimated by feel — which is how jobs come up short on the last pass. The math is simple: area times thickness times 145 lb per compacted cubic foot. This calculator runs it, shows the square-feet-per-ton coverage as a sanity check (about 80 sq ft per ton at 2 inches), and adds an editable cost layer.',
+    howItWorks: [
+      'Enter the paving length and width in feet.',
+      'Pick compacted thickness: 2" for resurfacing, 3" standard driveway, 4" for heavy vehicles.',
+      'Read the tonnage and the coverage check.',
+      'Open the cost section for per-ton material and per-sq-ft paving labor rates.',
+    ],
+    faq: [
+      {
+        q: 'How many tons of asphalt do I need for a driveway?',
+        a: 'Area × thickness × 145 lb/cu ft ÷ 2000. A 40×12 ft driveway at 3 inches: 480 sq ft × 0.25 ft = 120 cu ft × 145 = 17,400 lb ≈ 8.7 tons. Rule of thumb: one ton covers about 80 sq ft at 2" or 40 sq ft at 4".',
+      },
+      {
+        q: 'Is the gravel base included?',
+        a: 'No — tonnage here is paving only. A new driveway typically needs 4–8 inches of compacted road base under the asphalt; run that through the Road Base calculator with your excavation depth.',
+      },
+    ],
+  },
+  {
+    slug: 'board-foot-calculator',
+    title: 'Board Foot Calculator — Lumber Volume & Cost',
+    shortTitle: 'Board Foot Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free board foot calculator. Compute board feet from thickness, width, and length, multiply by piece count, and price at your local per-BF rate — hardwood buying made exact.',
+    tagline: 'Hardwood is sold by the board foot. Do the math before the lumberyard.',
+    intro:
+      'Hardwood and rough lumber are priced by the board foot — a volume unit that trips up everyone the first time: thickness in inches times width in inches times length in feet, divided by 12. This calculator runs the count for one board or a whole stack, and prices it at your supplier\'s per-BF rate.',
+    howItWorks: [
+      'Enter thickness and width in inches, length in feet.',
+      'Enter the piece count for the stack total.',
+      'Read board feet each and total, then set your local $/BF price for the cost.',
+    ],
+    faq: [
+      {
+        q: 'How many board feet is a 2×6×8?',
+        a: '2 × 6 × 8 ÷ 12 = 8 board feet, using nominal dimensions. That is the convention at the lumberyard — a "two by six" bills as a full 2"×6" even though the dressed board measures 1.5"×5.5".',
+      },
+      {
+        q: 'What does "four-quarter" mean?',
+        a: 'Rough hardwood thickness in quarter-inches: 4/4 = 1" rough, which planes to about ¾". You pay for the rough dimension — a finished ¾" board still bills as 1" (one BF per square foot per foot of length).',
+      },
+    ],
+  },
+  {
+    slug: 'stair-calculator',
+    title: 'Stair Calculator — Risers, Treads, Run & Stringer Length',
+    shortTitle: 'Stair Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free stair calculator with IRC code checks. Compute riser height, tread count, total run, and stringer length from total rise — with the 2R+T comfort rule built in.',
+    tagline: 'Code-legal risers and the exact stringer to cut.',
+    intro:
+      'Stairs fail inspection on two numbers: riser height (7.75" max under the IRC) and tread depth (10" min). This calculator divides your total rise into equal, code-legal risers, counts treads (one fewer than risers — the upper floor is the last landing), computes total run and stringer length, and checks the 2R+T comfort rule.',
+    howItWorks: [
+      'Measure total rise — finished floor to finished floor — in inches.',
+      'Pick tread depth (10" IRC minimum; 11" is noticeably more comfortable).',
+      'Read the riser count and exact riser height, tread count, total run, and stringer length.',
+      'Check the pass/fail line against IRC basics and the 24–26" comfort rule.',
+    ],
+    faq: [
+      {
+        q: 'How many risers for a 105-inch floor-to-floor rise?',
+        a: '⌈105 ÷ 7.75⌉ = 14 risers, which makes each riser exactly 7.5". That yields 13 treads, a 130-inch total run at 10" treads, and a 2R+T of 25" — comfortably in the ideal range.',
+      },
+      {
+        q: 'How many stringers do I need?',
+        a: 'Two for stairs under 36" wide cut from 2×12s; add a center stringer at 36" and wider, and composite treads often need stringers at 12" on center regardless of width. Check headroom (6\'8" minimum) and handrail rules with your local code before cutting.',
+      },
+    ],
+  },
+  {
     slug: 'voltage-drop-calculator',
     title: 'Voltage Drop Calculator — NEC Wire Run Check',
     shortTitle: 'Voltage Drop Calculator',

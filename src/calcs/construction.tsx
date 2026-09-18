@@ -369,6 +369,342 @@ export function TileCalc() {
   )
 }
 
+/* ---------------- Fence ---------------- */
+
+export function FenceCalc() {
+  const [length, setLength] = useNumber(100)
+  const [height, setHeight] = useState('6')
+  const [style, setStyle] = useState('privacy')
+  const [gates, setGates] = useNumber(1)
+  const [gateWidth, setGateWidth] = useNumber(4)
+  const [postCost, setPostCost] = useNumber(9)
+  const [railCost, setRailCost] = useNumber(4)
+  const [picketCost, setPicketCost] = useNumber(2.5)
+  const [bagCost, setBagCost] = useNumber(6)
+  const [laborLf, setLaborLf] = useNumber(12)
+
+  const r = useMemo(() => {
+    const fenceLf = Math.max(0, length - gates * gateWidth)
+    const sections = Math.ceil(fenceLf / 8)
+    const posts = sections + 1 + gates * 2 // gate posts are doubled
+    const rails = sections * (parseFloat(height) > 4 ? 3 : 2)
+    // privacy: 5.5" boards touching; picket: 3.5" board + 2.5" gap = 6" pitch
+    const pickets = style === 'privacy'
+      ? Math.ceil((fenceLf * 12) / 5.5)
+      : Math.ceil((fenceLf * 12) / 6)
+    const bags = posts * 2 // 2× 50-lb bags per 4×4 post set ~2 ft deep (8"Ø hole ≈ 0.7 cu ft)
+    const materials = posts * postCost + rails * railCost + pickets * picketCost + bags * bagCost
+    const labor = laborLf * fenceLf
+    return { fenceLf, sections, posts, rails, pickets, bags, materials, labor, total: materials + labor }
+  }, [length, height, style, gates, gateWidth, postCost, railCost, picketCost, bagCost, laborLf])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Total fence line" value={length} onChange={setLength} suffix="ft" />
+        <Select label="Height" value={height} onChange={setHeight} options={[
+          ['4', '4 ft'], ['6', '6 ft (privacy standard)'], ['8', '8 ft'],
+        ]} />
+        <Select label="Style" value={style} onChange={setStyle} options={[
+          ['privacy', 'Privacy (5.5" boards, no gaps)'], ['picket', 'Picket (3.5" boards, 2.5" gaps)'],
+        ]} />
+        <Field label="Gates" value={gates} onChange={setGates} step="1" />
+        <Field label="Gate width" value={gateWidth} onChange={setGateWidth} suffix="ft" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Posts (4×4)" value={String(r.posts)} />
+        <Result label="Rails (2×4 × 8 ft)" value={String(r.rails)} />
+        <Result label={style === 'privacy' ? 'Fence boards' : 'Pickets'} value={String(r.pickets)} />
+        <Result label="Concrete (50-lb bags)" value={String(r.bags)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Posts every 8 ft plus 1 starter, 2 extra per gate. Rails: 2 per section up to 4 ft, 3 for 6 ft+.
+        Concrete at 2 bags per post (8"Ø × 24" hole ≈ 0.7 cu ft). Add ~10% boards for culls and cuts.
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Cost estimate (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <Field label="Cost per post" value={postCost} onChange={setPostCost} prefix="$" />
+          <Field label="Cost per rail" value={railCost} onChange={setRailCost} prefix="$" />
+          <Field label="Cost per board/picket" value={picketCost} onChange={setPicketCost} prefix="$" />
+          <Field label="Cost per concrete bag" value={bagCost} onChange={setBagCost} prefix="$" />
+          <Field label="Labor per LF" value={laborLf} onChange={setLaborLf} prefix="$" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Result label="Materials" value={usd(r.materials, 2)} />
+          <Result label="Labor" value={usd(r.labor, 2)} />
+          <Result big label="Project total" value={usd(r.total, 2)} />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Deck ---------------- */
+
+export function DeckCalc() {
+  const [length, setLength] = useNumber(16)
+  const [width, setWidth] = useNumber(12)
+  const [boardLen, setBoardLen] = useState('16')
+  const [joistSpacing, setJoistSpacing] = useState('16')
+  const [deckCostLf, setDeckCostLf] = useNumber(2.2)
+  const [joistCost, setJoistCost] = useNumber(12)
+  const [laborSqft, setLaborSqft] = useNumber(8)
+
+  const r = useMemo(() => {
+    const area = length * width
+    // 5.5" board + 1/8" gap = 5.625" coverage; rows run along deck width
+    const rows = Math.ceil((width * 12) / 5.625)
+    const deckLf = rows * length
+    const boards = Math.ceil((deckLf / parseFloat(boardLen)) * 1.1) // 10% waste
+    const joists = Math.ceil((length * 12) / parseFloat(joistSpacing)) + 1
+    const screws = Math.ceil((area * 3.5) / 50) * 50 // ~350 screws per 100 sq ft, rounded to boxes
+    const materials = deckLf * 1.1 * deckCostLf + joists * joistCost
+    const labor = laborSqft * area
+    return { area, rows, deckLf, boards, joists, screws, materials, labor, total: materials + labor }
+  }, [length, width, boardLen, joistSpacing, deckCostLf, joistCost, laborSqft])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Deck length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Deck width" value={width} onChange={setWidth} suffix="ft" />
+        <Select label="Deck board length" value={boardLen} onChange={setBoardLen} options={[
+          ['8', '8 ft'], ['12', '12 ft'], ['16', '16 ft'], ['20', '20 ft'],
+        ]} />
+        <Select label="Joist spacing" value={joistSpacing} onChange={setJoistSpacing} options={[
+          ['16', '16" on center (standard)'], ['12', '12" on center (composite/heavy)'], ['24', '24" on center'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Deck boards (incl. 10% waste)" value={String(r.boards)} />
+        <Result label="Joists" value={String(r.joists)} />
+        <Result label="Deck screws" value={`~${num(r.screws, 0)}`} />
+        <Result label="Deck area" value={`${num(r.area, 0)} sq ft`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Boards: 5.5" wide + 1/8" gap = 5.625" of coverage per row; rows × length = total linear feet,
+        cut from your board length with 10% waste. Joists at your spacing + 1 rim side. Screws at ~350
+        per 100 sq ft (2 per joist crossing). Footings, beams, posts, and railing are separate —
+        check code for footing depth in your frost zone.
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Cost estimate (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <Field label="Decking cost per LF" value={deckCostLf} onChange={setDeckCostLf} prefix="$" />
+          <Field label="Cost per joist" value={joistCost} onChange={setJoistCost} prefix="$" />
+          <Field label="Labor per sq ft" value={laborSqft} onChange={setLaborSqft} prefix="$" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Result label="Materials (decking + joists)" value={usd(r.materials, 2)} />
+          <Result label="Labor" value={usd(r.labor, 2)} />
+          <Result big label="Project total" value={usd(r.total, 2)} />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Insulation ---------------- */
+
+export function InsulationCalc() {
+  const [area, setArea] = useNumber(400)
+  const [framing, setFraming] = useState('16')
+  const [battLen, setBattLen] = useState('93')
+  const [zone, setZone] = useState('mixed')
+  const [battCost, setBattCost] = useNumber(1.1)
+
+  const r = useMemo(() => {
+    const battWidth = framing === '16' ? 15 : 23 // standard batt widths for 16"/24" oc
+    const battSqft = (battWidth * parseFloat(battLen)) / 144
+    const batts = Math.ceil((area * 1.05) / battSqft) // 5% trim waste
+    const rec = zone === 'warm' ? 'R-30 to R-49 attic · R-13 to R-15 walls'
+      : zone === 'mixed' ? 'R-38 to R-60 attic · R-13 to R-21 walls'
+      : 'R-49 to R-60 attic · R-19 to R-21+ walls'
+    const materials = area * 1.05 * battCost
+    return { battWidth, battSqft, batts, rec, materials }
+  }, [area, framing, battLen, zone, battCost])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Area to insulate" value={area} onChange={setArea} suffix="sq ft" />
+        <Select label="Stud/joist spacing" value={framing} onChange={setFraming} options={[
+          ['16', '16" on center (15" batts)'], ['24', '24" on center (23" batts)'],
+        ]} />
+        <Select label="Batt length" value={battLen} onChange={setBattLen} options={[
+          ['93', '93" (8-ft walls)'], ['105', '105" (9-ft walls)'], ['48', '48" (attic joists)'],
+        ]} />
+        <Select label="Climate zone" value={zone} onChange={setZone} options={[
+          ['warm', 'Warm (south, DOE zones 1–2)'], ['mixed', 'Mixed (zones 3–4)'], ['cold', 'Cold (zones 5–7)'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Batts needed" value={String(r.batts)} />
+        <Result label="Batt coverage" value={`${num(r.battSqft, 1)} sq ft each`} />
+        <Result label="Materials (est.)" value={usd(r.materials, 2)} />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Batt cost per sq ft" value={battCost} onChange={setBattCost} prefix="$" />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        DOE guidance for your zone: <strong>{r.rec}</strong>. Count is area + 5% trim waste ÷ batt
+        coverage ({r.battWidth}" × {battLen}"). Walls are usually R-13/R-15 (2×4) or R-19/R-21 (2×6);
+        attics stack batts or blow loose-fill to reach the target R. Do not compress batts —
+        compressed fiberglass loses R-value.
+      </p>
+      <CostNote />
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Asphalt ---------------- */
+
+export function AsphaltCalc() {
+  const [length, setLength] = useNumber(40)
+  const [width, setWidth] = useNumber(12)
+  const [thickness, setThickness] = useState('2')
+  const [tonPrice, setTonPrice] = useNumber(120)
+  const [laborSqft, setLaborSqft] = useNumber(2.5)
+
+  const r = useMemo(() => {
+    const area = length * width
+    const t = parseFloat(thickness)
+    const cuft = area * (t / 12)
+    // compacted hot-mix asphalt ≈ 145 lb per cubic foot
+    const tons = (cuft * 145) / 2000
+    const materials = tons * tonPrice
+    const labor = laborSqft * area
+    return { area, cuft, tons, materials, labor, total: materials + labor }
+  }, [length, width, thickness, tonPrice, laborSqft])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Width" value={width} onChange={setWidth} suffix="ft" />
+        <Select label="Compacted thickness" value={thickness} onChange={setThickness} options={[
+          ['2', '2 in (resurface/light drive)'], ['3', '3 in (driveway standard)'], ['4', '4 in (heavy vehicles)'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Hot-mix asphalt" value={`${num(r.tons, 2)} tons`} />
+        <Result label="Coverage check" value={`${num(r.area / r.tons, 0)} sq ft/ton`} />
+        <Result label="Area" value={`${num(r.area, 0)} sq ft`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Tonnage = area × thickness × 145 lb/cu ft compacted density. Sanity rule: 1 ton covers ~80
+        sq ft at 2" or ~40 sq ft at 4" — thicker lifts and rough base need more. This is paving
+        tonnage only; excavation and gravel base are separate (use the Road Base calculator first).
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Cost estimate (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <Field label="Asphalt per ton" value={tonPrice} onChange={setTonPrice} prefix="$" />
+          <Field label="Paving labor per sq ft" value={laborSqft} onChange={setLaborSqft} prefix="$" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Result label="Materials" value={usd(r.materials, 2)} />
+          <Result label="Labor" value={usd(r.labor, 2)} />
+          <Result big label="Project total" value={usd(r.total, 2)} />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Board feet (lumber) ---------------- */
+
+export function BoardFootCalc() {
+  const [thickness, setThickness] = useNumber(2)
+  const [width, setWidth] = useNumber(6)
+  const [length, setLength] = useNumber(8)
+  const [pieces, setPieces] = useNumber(10)
+  const [priceBf, setPriceBf] = useNumber(3.5)
+
+  const r = useMemo(() => {
+    // board feet = thickness(in) × width(in) × length(ft) ÷ 12
+    const bfEach = (thickness * width * length) / 12
+    const totalBf = bfEach * pieces
+    return { bfEach, totalBf, cost: totalBf * priceBf }
+  }, [thickness, width, length, pieces, priceBf])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-4">
+        <Field label="Thickness" value={thickness} onChange={setThickness} suffix="in" />
+        <Field label="Width" value={width} onChange={setWidth} suffix="in" />
+        <Field label="Length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Pieces" value={pieces} onChange={setPieces} step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result label="Board feet each" value={num(r.bfEach, 2)} />
+        <Result big label="Total board feet" value={num(r.totalBf, 2)} />
+        <Result label="Cost at $/BF" value={usd(r.cost, 2)} />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Price per board foot" value={priceBf} onChange={setPriceBf} prefix="$" />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        BF = thickness (in) × width (in) × length (ft) ÷ 12. Hardwood is sold by the board foot;
+        remember rough lumber is measured full-dimension, so a planed ¾" board still bills as 1"
+        (four-quarter). A softwood 2×6×8 at the home center is 8 BF nominal.
+      </p>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Stairs ---------------- */
+
+export function StairCalc() {
+  const [rise, setRise] = useNumber(105)
+  const [tread, setTread] = useState('10')
+  const [width, setWidth] = useNumber(36)
+
+  const r = useMemo(() => {
+    // IRC: riser max 7.75", tread min 10", plus 2×riser + tread should be 24–26"
+    const risers = Math.ceil(rise / 7.75)
+    const actualRiser = rise / risers
+    const treads = risers - 1 // top landing counts as the last "step"
+    const treadD = parseFloat(tread)
+    const run = treads * treadD
+    const stringer = Math.sqrt(run * run + rise * rise) / 12
+    const comfort = 2 * actualRiser + treadD
+    const codeOk = actualRiser <= 7.75 && treadD >= 10
+    const comfortOk = comfort >= 24 && comfort <= 26
+    return { risers, actualRiser, treads, run, stringer, comfort, codeOk, comfortOk }
+  }, [rise, tread, width])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Total rise (floor to floor)" value={rise} onChange={setRise} suffix="in" />
+        <Select label="Tread depth" value={tread} onChange={setTread} options={[
+          ['10', '10 in (IRC minimum)'], ['11', '11 in (comfortable)'],
+        ]} />
+        <Field label="Stair width" value={width} onChange={setWidth} suffix="in" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Risers" value={`${r.risers} × ${num(r.actualRiser, 2)}"`} />
+        <Result label="Treads" value={String(r.treads)} />
+        <Result label="Total run" value={`${num(r.run / 12, 2)} ft`} />
+        <Result label="Stringer length" value={`${num(r.stringer, 1)} ft`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {r.codeOk
+          ? `Passes IRC basics (riser ≤ 7.75", tread ≥ 10"). Comfort rule 2R+T = ${num(r.comfort, 1)}" — ${r.comfortOk ? 'in the ideal 24–26" range.' : 'outside the ideal 24–26" range; adjust tread depth.'}`
+          : 'Fails IRC basics (riser ≤ 7.75", tread ≥ 10") — adjust inputs.'}
+        {' '}Treads = risers − 1 because the upper floor is the last landing. Stairs 36"+ wide need a
+        third stringer at center; cut stringers from 2×12. Check local code for headroom (6'8" min)
+        and handrail rules.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'framing-calculator': FramingCalc,
   'drywall-calculator': DrywallCalc,
@@ -378,6 +714,12 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'concrete-mix-calculator': ConcreteMixCalc,
   'road-base-calculator': RoadBaseCalc,
   'driveway-cost-comparison': DrivewayCompareCalc,
+  'fence-calculator': FenceCalc,
+  'deck-calculator': DeckCalc,
+  'insulation-calculator': InsulationCalc,
+  'asphalt-calculator': AsphaltCalc,
+  'board-foot-calculator': BoardFootCalc,
+  'stair-calculator': StairCalc,
 }
 
 /* ---------------- Concrete Mix Selector ---------------- */
