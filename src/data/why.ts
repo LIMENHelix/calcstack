@@ -111,6 +111,8 @@ export const WHY_USE: Record<string, string> = {
     'Contractors quoting accessibility work use it to show the client why a two-foot rise is a 24-foot structure — the landings do the talking. Families planning for aging-in-place use it to learn whether the yard has room for 1:12 at all, or whether a switchback or lift is the real answer.',
   'deck-footing-calculator':
     'Deck builders use it at the permit counter: tributary area in, the exact IRC R507.3.1 footing size out — no more upsizing every pier to 24 inches out of habit. Homeowners use it to check a contractor\'s plan before the holes are dug, because undersized footings are invisible until the deck starts to lean.',
+  'retaining-wall-calculator':
+    'Landscapers and hardscape crews use it to order once: courses × blocks-per-course is the supplier\'s language, and the buried course and drainage column are the two line items homeowners always leave off the DIY count. Homeowners comparing bids use it to see whether a quote actually includes base prep and drainage — the parts that decide whether the wall is still standing in ten years.',
   'siding-calculator':
     'Homeowners collecting siding quotes use this to know their square count before the first salesman measures — it converts a black-box estimate into a conversation. Contractors use it as a five-second first pass before a formal takeoff.',
   'paver-calculator':

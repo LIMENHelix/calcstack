@@ -1064,6 +1064,79 @@ export function DeckFootingCalc() {
   )
 }
 
+/* ---------------- Retaining Wall Blocks ---------------- */
+
+// Segmental retaining wall units — face width × face height in inches
+const RW_BLOCKS: Record<string, { faceL: number; faceH: number; label: string }> = {
+  '12x6': { faceL: 12, faceH: 6, label: '12" × 6" — small garden block' },
+  '16x6': { faceL: 16, faceH: 6, label: '16" × 6" — most common landscape block' },
+  '16x8': { faceL: 16, faceH: 8, label: '16" × 8" — standard split-face' },
+  '18x8': { faceL: 18, faceH: 8, label: '18" × 8" — large structural unit' },
+}
+
+export function RetainingWallCalc() {
+  const [length, setLength] = useNumber(20)
+  const [height, setHeight] = useNumber(3)
+  const [block, setBlock] = useState('16x6')
+  const [buried, setBuried] = useNumber(1)
+  const [waste, setWaste] = useState('10')
+  const [caps, setCaps] = useState('yes')
+  const [price, setPrice] = useNumber(4.5)
+
+  const r = useMemo(() => {
+    const b = RW_BLOCKS[block]
+    const visCourses = Math.ceil((height * 12) / b.faceH)
+    const courses = visCourses + Math.max(0, buried)
+    const perCourse = Math.ceil((length * 12) / b.faceL)
+    const w = Number(waste) / 100
+    const blocks = Math.ceil(perCourse * courses * (1 + w))
+    const capCount = caps === 'yes' ? Math.ceil(perCourse * (1 + w)) : 0
+    const stackH = (courses * b.faceH) / 12 // ft
+    const baseYd = (length * (18 / 12) * (6 / 12)) / 27 // 18" wide × 6" compacted
+    const drainYd = (length * 1 * stackH) / 27 // 12" wide column × full stack height
+    const cost = (blocks + capCount) * price
+    const totalH = height + (buried * b.faceH) / 12
+    return { visCourses, courses, perCourse, blocks, capCount, baseYd, drainYd, cost, totalH, face: b.label }
+  }, [length, height, block, buried, waste, caps, price])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Wall length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Visible height" value={height} onChange={setHeight} suffix="ft" />
+        <Field label="Buried courses" value={buried} onChange={setBuried} step="1" />
+        <Select label="Block face size" value={block} onChange={setBlock} options={Object.entries(RW_BLOCKS).map(([k, v]) => [k, v.label] as [string, string])} />
+        <Select label="Cuts & waste" value={waste} onChange={setWaste} options={[
+          ['10', '10% — straight wall'], ['15', '15% — curves or corners'],
+        ]} />
+        <Select label="Cap units" value={caps} onChange={setCaps} options={[
+          ['yes', 'Yes — one cap row on top'], ['no', 'No caps'],
+        ]} />
+        <Field label="Price per block" value={price} onChange={setPrice} prefix="$" step="0.25" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Blocks to buy" value={`${num(r.blocks)}`} />
+        <Result label="Courses (visible + buried)" value={`${r.visCourses} + ${r.courses - r.visCourses} = ${r.courses}`} />
+        <Result label="Blocks per course" value={`${num(r.perCourse)}`} />
+        <Result label="Cap units" value={r.capCount ? `${num(r.capCount)}` : '—'} />
+        <Result label="Base gravel (18&quot; × 6&quot;)" value={`${num(r.baseYd, 2)} yd³`} />
+        <Result label="Drainage gravel (12&quot; column)" value={`${num(r.drainYd, 2)} yd³`} />
+        <Result label="Estimated block cost" value={usd(r.cost)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Pros count by course: visible height in inches ÷ block face height gives visible courses
+        ({num(r.visCourses)} here), then add at least one fully buried base course — never skip it,
+        the buried course is what keeps the wall from kicking out. Total wall height including
+        burial is {num(r.totalH, 1)} ft. Drainage gravel is a 12-inch column of clean ¾&quot; stone
+        directly behind the block for the full stack height ({num(r.drainYd, 2)} yd³) — water
+        pressure, not soil, is what tips retaining walls over. Walls over 3 ft tall generally need
+        geogrid reinforcement every other course, and most jurisdictions require a permit and
+        engineered design over 4 ft measured from the bottom of the footing — check before you dig.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Siding ---------------- */
 
 export function SidingCalc() {
@@ -1617,6 +1690,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'ladder-angle-calculator': LadderCalc,
   'ramp-slope-calculator': RampCalc,
   'deck-footing-calculator': DeckFootingCalc,
+  'retaining-wall-calculator': RetainingWallCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,

@@ -1662,6 +1662,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'retaining-wall-calculator',
+    title: 'Retaining Wall Calculator — Block Courses, Caps & Drainage Gravel',
+    shortTitle: 'Retaining Wall Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free retaining wall block calculator. Course-by-course block count from wall length and height with a buried base course, cap units, base and drainage gravel tonnage, and material cost — the pro takeoff method.',
+    tagline: 'Count it by the course, like the crew does.',
+    intro:
+      'Retaining walls are ordered by the course, not by the square foot: visible height divided by block face height gives the course count, wall length divided by block face length gives blocks per course, and one buried base course is non-negotiable. This calculator runs the full takeoff — blocks, caps, compacted base gravel, and the 12-inch drainage column behind the wall that keeps water pressure from tipping it over.',
+    howItWorks: [
+      'Enter wall length and visible (exposed) height in feet.',
+      'Pick the block face size — 16×6 and 16×8 cover most landscape block.',
+      'Set buried courses (1 minimum), waste (10% straight, 15% curves), and cap row.',
+      'Read total blocks, caps, base gravel, drainage gravel, and estimated material cost.',
+    ],
+    faq: [
+      {
+        q: 'How many blocks do I need for a 20-foot wall 3 feet high?',
+        a: 'With 12×6 blocks: 3 ft visible is 6 courses, plus 1 buried course = 7. Each course takes 240 ÷ 12 = 20 blocks, so 7 × 20 = 140, and with the 10% allowance, 154 blocks. Add roughly 0.56 yd³ of base gravel (18 in wide × 6 in deep) and 2.6 yd³ of drainage stone behind the full 3.5 ft stack.',
+      },
+      {
+        q: 'Why does the first course have to be buried?',
+        a: 'The buried base course is the wall\'s anchor — it resists the sliding and overturning force of the soil behind it. Rule of thumb is at least 6 inches of embedment, or 1 inch per foot of wall height, whichever is greater. A wall that starts at grade will kick out at the base, usually within a few wet seasons.',
+      },
+      {
+        q: 'When does a retaining wall need engineering or a permit?',
+        a: 'Most jurisdictions require a permit and a stamped engineered design for walls over 4 feet measured from the bottom of the footing, and any wall over 3 feet should have geogrid reinforcement extending into the soil every other course. Walls holding a driveway, slope, or structure (a surcharge load) need engineering at any height.',
+      },
+    ],
+  },
+  {
     slug: 'siding-calculator',
     title: 'Siding Calculator — Squares, Waste & Cost',
     shortTitle: 'Siding Calculator',
