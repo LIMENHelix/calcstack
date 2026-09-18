@@ -4725,6 +4725,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'vent-size-calculator',
+    title: 'Vent Pipe Size Calculator — IPC Table 906.1 by DFU & Length',
+    shortTitle: 'Vent Size Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free plumbing vent sizing calculator. Enter the drain diameter served, DFU load, and developed length to open air — get the minimum vent diameter per IPC Table 906.1.',
+    tagline: 'Half the drain is the floor. The table is the truth.',
+    intro:
+      'Gurgling traps and slow drains on a perfectly sized drain system almost always mean undersized vents. This calculator applies IPC Table 906.1: your vent must be at least half the drain diameter and never under 1¼ inches, and the table then caps how far it can run to open air as the DFU load climbs. Enter the stack diameter, load, and developed length — get the minimum code-compliant vent size with the conservative table row shown.',
+    howItWorks: [
+      'Select the drain or stack diameter the vent serves.',
+      'Enter the total DFU being vented (the drain size calculator can total this for you).',
+      'Enter the developed length — every foot of pipe from the vent connection to open air.',
+      'Read the minimum vent diameter and its maximum allowed length; upsizing buys length.',
+    ],
+    faq: [
+      {
+        q: 'Why does a longer vent run need a bigger pipe?',
+        a: 'Friction. The vent\'s job is moving air freely enough to keep trap seals from siphoning, and air friction grows with pipe length the same way water friction does. Table 906.1 encodes that: at fixed DFU, every vent diameter has a maximum developed length — exceed it and the vent still "meets minimum size" on paper while failing in the walls.',
+      },
+      {
+        q: 'What does "developed length" include?',
+        a: 'Every foot of vent pipe measured along its centerline from the farthest connection at the drainage system to where it terminates in open air — vertical and horizontal runs both count. Offsets and long horizontal detours through attics are what push residential vents over the 1½-inch minimum.',
+      },
+      {
+        q: 'Is the "half the drain diameter" rule enough by itself?',
+        a: 'Only for short runs at light loads. It is the floor, not the answer: a 3-inch stack sets a 1½-inch floor, but at 102 DFU that 1½-inch vent is legal for only 25 feet of developed length. The table lookup above is the full requirement.',
+      },
+      {
+        q: 'My inspector cited 906.4.1 — what is that?',
+        a: 'The branch-vent upsize rule: any branch vent exceeding 40 feet of developed length must be increased one nominal pipe size for its entire run. It is the most-cited vent violation on island sinks and distant fixture groups.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

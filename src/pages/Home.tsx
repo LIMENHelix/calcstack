@@ -59,7 +59,7 @@ export default function Home() {
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['drain-size-calculator', 'superheat-subcooling-calculator', 'room-airflow-calculator', 'duct-size-calculator', 'service-load-calculator', 'motor-circuit-calculator'].includes(c.slug),
+            ['vent-size-calculator', 'drain-size-calculator', 'superheat-subcooling-calculator', 'room-airflow-calculator', 'duct-size-calculator', 'service-load-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

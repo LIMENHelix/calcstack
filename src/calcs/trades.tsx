@@ -979,6 +979,85 @@ export function DrainSizeCalc() {
   )
 }
 
+/* ---------------- Vent Sizing (IPC Table 906.1/916.1) ---------------- */
+
+// [stack dia in, dfu row, [[vent dia in, max developed length ft], ...]]
+const VENT_ROWS: [number, number, [number, number][]][] = [
+  [1.5, 8, [[1.25, 50], [1.5, 150]]],
+  [1.5, 10, [[1.25, 30], [1.5, 100]]],
+  [2, 12, [[1.5, 75], [2, 200]]],
+  [2, 20, [[1.25, 30], [1.5, 50], [2, 150]]],
+  [2.5, 42, [[1.25, 26], [1.5, 30], [2, 100], [2.5, 300]]],
+  [3, 10, [[1.5, 42], [2, 150], [2.5, 360], [3, 1040]]],
+  [3, 21, [[1.5, 32], [2, 110], [2.5, 270], [3, 810]]],
+  [3, 53, [[1.5, 27], [2, 94], [2.5, 230], [3, 680]]],
+  [3, 102, [[1.5, 25], [2, 86], [2.5, 210], [3, 620]]],
+  [4, 43, [[2, 35], [2.5, 85], [3, 250], [4, 980]]],
+  [4, 140, [[2, 27], [2.5, 65], [3, 200], [4, 750]]],
+  [4, 320, [[2, 23], [2.5, 55], [3, 170], [4, 640]]],
+  [4, 540, [[2, 21], [2.5, 50], [3, 150], [4, 580]]],
+  [5, 190, [[2.5, 28], [3, 82], [4, 320], [5, 990]]],
+  [5, 490, [[2.5, 21], [3, 63], [4, 250], [5, 760]]],
+  [5, 940, [[2.5, 18], [3, 53], [4, 210], [5, 670]]],
+  [5, 1400, [[2.5, 16], [3, 49], [4, 190], [5, 590]]],
+  [6, 500, [[3, 33], [4, 130], [5, 400], [6, 1000]]],
+  [6, 1100, [[3, 26], [4, 100], [5, 310], [6, 780]]],
+  [6, 2000, [[3, 22], [4, 84], [5, 260], [6, 660]]],
+]
+const diaLabel = (d: number) => `${Number.isInteger(d) ? d : d.toFixed(2).replace('1.25', '1-1/4').replace('1.50', '1-1/2').replace('2.50', '2-1/2')}"`
+
+export function VentSizeCalc() {
+  const [stackDia, setStackDia] = useState('3')
+  const [dfu, setDfu] = useNumber(24)
+  const [devLen, setDevLen] = useNumber(40)
+
+  const r = useMemo(() => {
+    const sd = parseFloat(stackDia)
+    const minVent = Math.max(1.25, sd / 2)
+    const rows = VENT_ROWS.filter(([d]) => d === sd)
+    if (!rows.length) return null
+    // conservative: use the next-higher DFU row that covers the load
+    const row = rows.filter(([, d]) => d >= dfu).sort((a, b) => a[1] - b[1])[0]
+    if (!row) return { beyondTable: true, minVent }
+    const [, rowDfu, vents] = row
+    let chosen: [number, number] | null = null
+    for (const [vd, len] of vents) {
+      if (vd >= minVent && len >= devLen) { chosen = [vd, len]; break }
+    }
+    return { beyondTable: false, rowDfu, minVent, chosen }
+  }, [stackDia, dfu, devLen])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Drain/stack diameter served" value={stackDia} onChange={setStackDia} options={[
+          ['1.5', '1-1/2"'], ['2', '2"'], ['2.5', '2-1/2"'], ['3', '3"'], ['4', '4"'], ['5', '5"'], ['6', '6"'],
+        ]} />
+        <Field label="Total DFU being vented" value={dfu} onChange={setDfu} suffix="DFU" />
+        <Field label="Developed length to open air" value={devLen} onChange={setDevLen} suffix="ft" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Minimum vent size" value={r.beyondTable ? 'Beyond table' : r.chosen ? diaLabel(r.chosen[0]) : 'Beyond table length'} />
+          <Result label="Rule floor (½ drain, ≥1¼&quot;)" value={diaLabel(r.minVent)} />
+          <Result label="Table row used (conservative)" value={r.beyondTable ? '—' : `${r.rowDfu} DFU`} />
+          <Result label="Max length at that size" value={r.chosen ? `${r.chosen[1]} ft` : '—'} />
+        </div>
+      )}
+      <p className="text-sm text-muted-foreground">
+        IPC Table 906.1 sizing: the vent must be at least half the diameter of the drain it serves
+        and never under 1¼&quot; — then the table caps how far that vent may travel from the
+        drainage connection to open air, shrinking as the DFU load grows. When your load falls
+        between table rows, the next-higher DFU row governs (the conservative read). A 3&quot;
+        stack venting a 2-bath house (~24 DFU) with 40 ft of run needs a 2&quot; vent — the
+        1½&quot; minimum tops out at 27 ft. Individual and branch vents follow the same table, and
+        branch vents over 40 ft must upsize one nominal size (906.4.1). Undersized vents announce
+        themselves as gurgling traps and slow drains even when the drain sizing is perfect.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
 
 // NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
@@ -1106,4 +1185,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'room-airflow-calculator': RoomAirflowCalc,
   'superheat-subcooling-calculator': SuperheatCalc,
   'drain-size-calculator': DrainSizeCalc,
+  'vent-size-calculator': VentSizeCalc,
 }

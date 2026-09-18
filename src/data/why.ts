@@ -313,4 +313,6 @@ export const WHY_USE: Record<string, string> = {
     'HVAC techs use it on every service call — gauges and clamp thermometers in, charge verdict out, without flipping through a PT card. The diagnosis matrix catches the classic misread: high superheat with high subcooling is a restriction, not an undercharge, and adding refrigerant to it kills compressors.',
   'drain-size-calculator':
     'Plumbers use it for remodels and additions: count the new fixtures, and know in seconds whether the existing 3-inch main swallows the load or the job needs a 4-inch upgrade. It also settles the crawlspace argument about whether ⅛-inch slope is legal — only at 3 inches and up.',
+  'vent-size-calculator':
+    'Plumbers use it when the inspector flags an island sink or a long attic run — the 1½-inch floor is not the answer once developed length enters. Pair it with the drain calculator: the DFU total from one feeds the other, and the conservative table row is shown so the plan check matches.',
 }
