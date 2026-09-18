@@ -187,6 +187,73 @@ export function CobraCalc() {
   )
 }
 
+/* ---------------- Disability insurance needs ---------------- */
+
+export function DisabilityInsuranceCalc() {
+  const [income, setIncome] = useNumber(100000)
+  const [target, setTarget] = useState('65')
+  const [empPct, setEmpPct] = useNumber(60)
+  const [empPays, setEmpPays] = useState('yes')
+  const [taxRate, setTaxRate] = useNumber(30)
+
+  const r = useMemo(() => {
+    const gm = income / 12
+    const targetMo = gm * (Number(target) / 100)
+    const empGross = gm * (empPct / 100)
+    // Employer-paid (pre-tax) premiums → taxable benefits; after-tax premiums → tax-free (IRC §104(a)(3))
+    const empNet = empPays === 'yes' ? empGross * (1 - taxRate / 100) : empGross
+    const gap = Math.max(0, targetMo - empNet)
+    const costLo = (income * 0.01) / 12
+    const costHi = (income * 0.03) / 12
+    return { gm, targetMo, empGross, empNet, gap, costLo, costHi }
+  }, [income, target, empPct, empPays, taxRate])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Gross annual income" value={income} onChange={setIncome} prefix="$" step="5000" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">Replacement target</label>
+            <select className={inputCls} value={target} onChange={(e) => setTarget(e.target.value)}>
+              <option value="60">60% of gross — lean budget</option>
+              <option value="65">65% of gross — typical target</option>
+              <option value="70">70% of gross — conservative</option>
+            </select>
+          </div>
+          <Field label="Employer group LTD benefit" value={empPct} onChange={setEmpPct} suffix="% of income" step="5" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">Who pays the group premium?</label>
+            <select className={inputCls} value={empPays} onChange={(e) => setEmpPays(e.target.value)}>
+              <option value="yes">Employer pays (benefits are taxable)</option>
+              <option value="no">I pay after-tax (benefits are tax-free)</option>
+            </select>
+          </div>
+          <Field label="Marginal tax rate on benefits" value={taxRate} onChange={setTaxRate} suffix="%" step="1" />
+          <p className="text-sm text-muted-foreground">
+            The standard target is 60–70% of gross income — close to take-home pay, because
+            individual benefits are tax-free when you pay the premiums with after-tax dollars
+            (IRC §104(a)(3)). The surprise most people find here: employer group LTD is usually
+            taxable, so a &quot;60%&quot; group benefit lands as ~42% of gross after tax — the
+            gap is what an individual policy fills. When shopping: own-occupation definition,
+            90-day elimination period (bridge it with your emergency fund), benefit period to
+            age 65, non-cancellable + guaranteed renewable, COLA rider if you can afford it.
+            Expect comprehensive individual coverage to run roughly 1–3% of annual income.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label="Individual policy gap" value={`${usd(r.gap, 0)}/mo`} />
+          <Result label="Gross monthly income" value={usd(r.gm, 0)} />
+          <Result label={`Target benefit (${target}%)`} value={`${usd(r.targetMo, 0)}/mo tax-free`} />
+          <Result label="Employer benefit (gross)" value={`${usd(r.empGross, 0)}/mo`} />
+          <Result label={`Employer benefit (after tax)`} value={`${usd(r.empNet, 0)}/mo`} />
+          <Result label="Typical individual premium" value={`${usd(r.costLo, 0)}–${usd(r.costHi, 0)}/mo`} />
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 /* ---------------- Term vs whole life: buy term & invest the difference ---------------- */
 
 export function TermVsWholeCalc() {
@@ -315,6 +382,7 @@ export const HEALTHMONEY_CALC_COMPONENTS: Record<string, (props: import('./index
   'hsa-growth-calculator': HsaGrowthCalc,
   'life-insurance-calculator': LifeInsuranceCalc,
   'term-vs-whole-life-calculator': TermVsWholeCalc,
+  'disability-insurance-calculator': DisabilityInsuranceCalc,
   'health-plan-comparison-calculator': HealthPlanCalc,
   'cobra-cost-calculator': CobraCalc,
 }

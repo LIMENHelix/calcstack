@@ -389,6 +389,8 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'wrvu-compensation-calculator',
+      'disability-insurance-calculator',
+      'life-insurance-calculator',
       'loan-payoff-calculator',
       'salary-to-hourly-calculator',
       'compound-interest-calculator',

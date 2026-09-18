@@ -4212,6 +4212,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'disability-insurance-calculator',
+    title: 'Disability Insurance Calculator — Income Replacement Gap After Tax',
+    shortTitle: 'Disability Insurance',
+    category: 'Health & Life',
+    description:
+      'Free disability insurance needs calculator. Target 60–70% of gross income, see what your employer group LTD actually pays after tax, and get the monthly gap an individual policy needs to fill — plus typical premium costs.',
+    tagline: 'Your group LTD pays less than you think — after tax.',
+    intro:
+      'The most common disability-insurance mistake is trusting the benefits booklet: employer group LTD is typically paid with pre-tax dollars, which makes the benefit taxable income — a "60%" plan lands as about 42% of gross after tax. This calculator applies the standard 60–70% replacement target, taxes the group benefit correctly (IRC §104(a)(3) — after-tax premiums make benefits tax-free), and shows the monthly gap an individual own-occupation policy needs to fill.',
+    howItWorks: [
+      'Enter gross annual income and pick a replacement target (65% is the typical design point).',
+      'Enter your employer group LTD percentage and who pays the premium — that decides whether the benefit is taxed.',
+      'Enter your marginal tax rate on the taxable benefit.',
+      'Read the after-tax employer benefit and the monthly gap an individual policy should cover.',
+    ],
+    faq: [
+      {
+        q: 'How much disability insurance do I need on a $100k salary?',
+        a: 'Target 60–70% of gross: $5,000–$5,833/month. If your employer group LTD pays 60% ($5,000/month) with employer-paid premiums, that benefit is taxable — at a 30% marginal rate you keep $3,500, leaving a gap of $1,500–$2,300/month for an individual policy. Individual benefits are tax-free when you pay the premiums after-tax, which is why the target percentages approximate take-home pay.',
+      },
+      {
+        q: 'Are disability insurance benefits taxable?',
+        a: 'It depends entirely on who paid the premium and how. Employer-paid (or pre-tax) premiums make benefits taxable as ordinary income. Premiums you pay with after-tax dollars make benefits tax-free under IRC §104(a)(3). Split funding splits the tax treatment proportionally. This single rule is why two "60%" policies can pay wildly different real checks.',
+      },
+      {
+        q: 'What policy features matter most when filling the gap?',
+        a: 'In order: a true own-occupation definition (pays if you cannot do YOUR job, not any job), a benefit period to age 65 rather than 2 or 5 years, non-cancellable and guaranteed-renewable terms, a 90-day elimination period bridged by your emergency fund, and a COLA rider for long claims. Comprehensive individual coverage typically costs 1–3% of annual income — and it is cheapest the younger and healthier you apply.',
+      },
+    ],
+  },
+  {
     slug: 'term-vs-whole-life-calculator',
     title: 'Term vs Whole Life Calculator — Buy Term & Invest the Difference Test',
     shortTitle: 'Term vs Whole Life',
