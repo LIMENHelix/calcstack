@@ -193,4 +193,10 @@ export const WHY_USE: Record<string, string> = {
     'Service members at the 10–15 year mark use it to price the decision to stay: 20 years is a cliff worth 50% of base pay for life, COLA-adjusted. BRS members use it to see why the TSP match matters more than the smaller multiplier.',
   'student-loan-idr-calculator':
     'Borrowers use it before recertification to predict the payment from this year\'s AGI — and to see whether the balance even matters. Financial aid offices point students at it to show that a $0 payment still counts toward forgiveness.',
+  'first-apartment-budget-calculator':
+    'New grads use it before apartment hunting to get one honest rent ceiling instead of three conflicting rules of thumb — and to see whether their savings survive signing day. Parents send it to kids to make the deposit math concrete before co-signing anything.',
+  'salary-offer-comparison-calculator':
+    'Job seekers with offers in different cities use it to compare purchasing power instead of headline salary. Recruiters and career offices link it to pre-answer the "but $15k more in NYC" question before the negotiation call.',
+  'student-loan-vs-investing-calculator':
+    'Borrowers with extra monthly cash use it to settle the pay-down-or-invest debate with fair same-outlay math instead of vibes. It makes the guaranteed-versus-expected tradeoff visible, which is the part most advice glosses over.',
 }

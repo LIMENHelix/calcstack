@@ -2916,6 +2916,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'first-apartment-budget-calculator',
+    title: 'First Apartment Budget Calculator — Rent You Can Actually Afford',
+    shortTitle: 'First Apartment Budget',
+    category: 'Everyday Money',
+    description:
+      'Free first-apartment budget calculator. Combines the 30% rule and the 50/30/20 budget into one rent ceiling, plus the cash you need on signing day.',
+    tagline: 'The deposit math nobody teaches you.',
+    intro:
+      'Landlords, budgeting rules, and your own bank account all answer "how much rent can I afford" differently. This calculator runs both classic guardrails — the 30%-of-take-home cap and the 50/30/20 needs bucket — takes the stricter one, then prices the upfront hit: first month, deposit, and fees.',
+    howItWorks: [
+      'Enter monthly take-home pay (not salary — run the paycheck calculator first if unsure).',
+      'Enter the monthly obligations you already have: loans, car, phone, subscriptions.',
+      'Enter cash saved; see the rent ceiling and whether your savings survive signing day.',
+    ],
+    faq: [
+      {
+        q: 'Is the 30% rule gross or take-home?',
+        a: 'Originally it was 30% of gross income (the old HUD guideline), but on a first salary with student loans, 30% of take-home is the safer read. This calculator uses take-home and cross-checks against the 50/30/20 budget so rent cannot crowd out food, transport, and minimum payments.',
+      },
+      {
+        q: 'How much cash do I need before moving into a first apartment?',
+        a: 'Plan on first month plus a security deposit equal to one month, plus $100–$200 in application and admin fees — roughly 2.1× monthly rent before movers, furniture, or utility deposits. Many landlords also require proof you earn 3× the rent monthly, which is its own affordability filter.',
+      },
+      {
+        q: 'What if the math says I cannot afford any apartment?',
+        a: 'Then the honest answers are roommates (splitting a 2BR usually beats a studio by 25–35% per person), a longer commute to a cheaper area, or a few months at home stacking the move-in fund. Signing a lease the math does not support is how the first credit-card spiral starts.',
+      },
+    ],
+  },
+  {
+    slug: 'salary-offer-comparison-calculator',
+    title: 'Salary Offer Comparison Calculator — Cost-of-Living Adjusted',
+    shortTitle: 'Compare Job Offers',
+    category: 'Freelance & Career',
+    description:
+      'Free salary offer comparison calculator. Adjusts two job offers for cost of living so you can compare purchasing power, not just headline salary.',
+    tagline: '$85k in Austin beats $100k in San Francisco. Usually.',
+    intro:
+      'A salary is only a number until you divide it by what life costs where you earn it. This calculator converts two offers into cost-of-living-adjusted dollars so the comparison is purchasing power versus purchasing power — and shows what the weaker offer would need to pay to tie.',
+    howItWorks: [
+      'Enter both salaries.',
+      'Enter each city\'s cost-of-living index (100 = national average; look it up on C2ER, NerdWallet, or Numbeo).',
+      'Compare the adjusted figures — then run both salaries through the paycheck calculator for state taxes.',
+    ],
+    faq: [
+      {
+        q: 'What is a cost-of-living index?',
+        a: 'A relative price level where 100 is the US average. An index of 120 means typical expenses run 20% above average; 85 means 15% below. Dividing salary by (index ÷ 100) converts any offer into equivalent national-average purchasing power, which makes cross-city offers comparable.',
+      },
+      {
+        q: 'Should I compare gross salary or take-home?',
+        a: 'Adjusted gross first, take-home second. State income tax can swing the answer several thousand dollars a year — an offer in Texas (no income tax) versus one in California is not the same comparison after taxes as before. Use this for the big sort, then the paycheck calculator for the final call.',
+      },
+      {
+        q: 'What does cost of living not capture?',
+        a: 'Career trajectory (some cities compound faster for your field), remote-work flexibility, state benefits, commute time, and whether you would actually enjoy living there. Use the adjusted number to negotiate from strength, not as the whole decision.',
+      },
+    ],
+  },
+  {
+    slug: 'student-loan-vs-investing-calculator',
+    title: 'Student Loan vs Investing Calculator — Pay Off or Invest?',
+    shortTitle: 'Loan vs Investing',
+    category: 'Savings & Investing',
+    description:
+      'Free student loan vs investing calculator. Compares extra loan payments against investing the same money over the loan term, with honest guaranteed-vs-expected framing.',
+    tagline: 'A guaranteed 6.5% beats a hoped-for 7% more often than you think.',
+    intro:
+      'The oldest question in personal finance, answered with fair math: both paths spend the same total dollars over your loan term. Paying extra kills the loan early and then invests the freed-up payment; investing puts the extra in the market from day one. This calculator runs both and shows the gap.',
+    howItWorks: [
+      'Enter loan balance, rate, and years remaining.',
+      'Enter the extra monthly cash you are deciding about.',
+      'Enter an expected investment return (7% is the long-run stock-market average after inflation; use less to be conservative).',
+    ],
+    faq: [
+      {
+        q: 'Is paying off a loan really a guaranteed return?',
+        a: 'Yes — every extra dollar of principal you kill stops accruing interest at the loan rate, permanently, with zero volatility and (for student loans) no tax on the benefit. A 6.5% loan payoff is a guaranteed 6.5% return. The stock market\'s 7% average arrives with years of −20% mixed in, which is why the guaranteed side wins ties.',
+      },
+      {
+        q: 'What about the employer 401(k) match?',
+        a: 'Grab the full match first, always — it is an instant 100% return, and neither loan payoff nor unmatched investing comes close. After the match, this calculator\'s comparison is the right frame: loan rate versus expected market return.',
+      },
+      {
+        q: 'Does this account for IDR forgiveness or the tax bomb?',
+        a: 'No — if you are on an income-driven plan heading toward forgiveness, extra payments can actually cost you money (you pay down a balance that would have been forgiven). Model that path with the student loan IDR calculator first, then use this one only if aggressive payoff is your real alternative.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
