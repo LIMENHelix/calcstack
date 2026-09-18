@@ -4904,6 +4904,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'mortgage-points-calculator',
+    title: 'Mortgage Points Calculator — Breakeven on Buying Down Your Rate',
+    shortTitle: 'Mortgage Points',
+    category: 'Housing & Mortgage',
+    description:
+      'Free mortgage points calculator. Enter loan, rate, and points to see the upfront cost, monthly savings, exact breakeven months, and whether buying down the rate pays off for how long you will keep the loan.',
+    tagline: 'Points are a bet on tenure. Know the breakeven before you place it.',
+    intro:
+      'Discount points trade upfront cash for a lower rate — one point costs 1% of the loan and typically cuts the rate 0.25%. Whether that trade wins depends on one thing: how long you keep the loan. This calculator prices it exactly — upfront cost, monthly savings, breakeven month, and net savings over your expected tenure — including the refinance caveat that resets the clock.',
+    howItWorks: [
+      'Enter the loan amount, term, and the no-points rate.',
+      'Enter how many points you would buy and the rate cut per point (0.25% is typical).',
+      'Enter how many years you realistically expect to keep this loan.',
+      'Read the verdict: breakeven month, and net savings or loss over your tenure.',
+    ],
+    faq: [
+      {
+        q: 'Are mortgage points worth it?',
+        a: 'Only if you keep the loan past breakeven. Example: $300,000 for 30 years, 1 point ($3,000) drops 7% to 6.75%, saving $50.11/month — breakeven at 60 months. Keep the loan 10 years and you net $3,014; sell at year 4 and the points cost you money. Falling-rate environments make points worse, because a refinance resets the clock before breakeven.',
+      },
+      {
+        q: 'How much does one mortgage point cost and save?',
+        a: 'One point costs 1% of the loan amount, paid at closing — $3,000 on a $300,000 loan — and typically reduces the rate by 0.25%, though the exact cut varies by lender and market (always get the quote in writing). Two points cost 2% and cut roughly 0.5%, with diminishing returns past that.',
+      },
+      {
+        q: 'Points or a bigger down payment?',
+        a: 'Run both. A bigger down payment reduces the loan balance (interest on less principal) and can eliminate PMI at 20% down — PMI removal often beats the rate cut. If you are already past 20% down, compare the point\'s breakeven against the down payment\'s interest savings over the same tenure; this calculator gives you the points side of that comparison.',
+      },
+    ],
+  },
+  {
     slug: 'refinance-break-even-calculator',
     title: 'Refinance Break-Even Calculator — Months to Recoup & True Savings',
     shortTitle: 'Refinance Break-Even',

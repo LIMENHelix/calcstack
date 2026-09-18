@@ -704,7 +704,68 @@ export function RefinanceCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Mortgage Discount Points ---------------- */
+
+// Verified: $300k/30yr, 1 point ($3,000) drops 7% → 6.75%, saves $50.11/mo, breakeven 60 months.
+export function MortgagePointsCalc(_props: CalcProps) {
+  const [loan, setLoan] = useNumber(300000)
+  const [years, setYears] = useNumber(30)
+  const [baseRate, setBaseRate] = useNumber(7)
+  const [points, setPoints] = useNumber(1)
+  const [ratePerPoint, setRatePerPoint] = useNumber(0.25)
+  const [stayYears, setStayYears] = useNumber(10)
+
+  const r = useMemo(() => {
+    const n = Math.max(1, Math.round(years * 12))
+    const newRate = Math.max(0, baseRate - points * ratePerPoint)
+    const cost = (loan * points) / 100
+    const pmtBase = monthlyPayment(loan, baseRate, years)
+    const pmtNew = monthlyPayment(loan, newRate, years)
+    const monthlySave = pmtBase - pmtNew
+    const breakevenMo = monthlySave > 0 ? Math.ceil(cost / monthlySave) : -1
+    const horizonMo = Math.min(Math.round(stayYears * 12), n)
+    const horizonSave = monthlySave * horizonMo - cost
+    const worthIt = horizonSave > 0
+    return { newRate, cost, pmtBase, pmtNew, monthlySave, breakevenMo, horizonMo, horizonSave, worthIt }
+  }, [loan, years, baseRate, points, ratePerPoint, stayYears])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="Loan amount" value={loan} onChange={setLoan} prefix="$" />
+          <Field label="Term" value={years} onChange={setYears} suffix="yrs" />
+          <Field label="Rate with no points" value={baseRate} onChange={setBaseRate} suffix="%" step="0.125" />
+          <Field label="Points you would buy" value={points} onChange={setPoints} step="0.5" />
+          <Field label="Rate cut per point" value={ratePerPoint} onChange={setRatePerPoint} suffix="%" step="0.0625" />
+          <Field label="Years you expect to keep the loan" value={stayYears} onChange={setStayYears} step="1" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label={r.worthIt ? 'Points pay off' : 'Skip the points'} value={r.worthIt ? `+${usd(r.horizonSave, 0)} over ${num(r.horizonMo / 12, 0)} yrs` : `−${usd(-r.horizonSave, 0)} if you keep ${num(r.horizonMo / 12, 0)} yrs`} />
+          <Result label="Cost of points (upfront)" value={usd(r.cost, 0)} />
+          <Result label="New rate" value={`${num(r.newRate, 3)}%`} />
+          <Result label="Monthly savings" value={usd(r.monthlySave, 2)} />
+          <Result label="Breakeven" value={r.breakevenMo > 0 ? `${r.breakevenMo} mo (${num(r.breakevenMo / 12, 1)} yrs)` : 'Never'} />
+          <Result label="Payment (no points)" value={usd(r.pmtBase, 2)} />
+          <Result label="Payment (with points)" value={usd(r.pmtNew, 2)} />
+        </div>
+
+        <p className="text-xs text-muted-foreground">
+          One point costs 1% of the loan and typically cuts the rate 0.25% — here {usd(r.cost, 0)} buys{' '}
+          {usd(r.monthlySave, 2)}/month, a {r.breakevenMo > 0 ? `${r.breakevenMo}-month` : 'never'} breakeven.
+          The decision rule is tenure, not rate: keep the loan past breakeven and points win; sell or
+          refinance before it and the upfront cash is gone. "Keep the loan" means exactly that — a
+          refinance resets the clock, which is why points are a worse bet when rates are falling.
+          Compare the same cash against a bigger down payment or a 15-year term before committing.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const HOUSING_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'mortgage-points-calculator': MortgagePointsCalc,
   'rent-vs-buy-calculator': RentVsBuyCalc,
   'closing-cost-calculator': ClosingCostCalc,
   'home-affordability-calculator': HomeAffordabilityCalc,
