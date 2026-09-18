@@ -31,7 +31,7 @@ import { HEALTHMONEY_CALC_COMPONENTS } from '@/calcs/healthmoney'
 import { PaycheckCalc } from '@/calcs/paycheck'
 import type { CalcProps } from '@/calcs'
 import { Seo } from '@/components/Seo'
-import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
+import { AdSlot, AffiliateCard, affiliatesFor } from '@/components/Monetization'
 import { EmbedSnippet } from '@/components/EmbedSnippet'
 import { WHY_USE } from '@/data/why'
 
@@ -168,7 +168,7 @@ export default function CalculatorPage() {
         </section>
       </article>
 
-      <AffiliateCard items={DEFAULT_AFFILIATES} />
+      <AffiliateCard items={affiliatesFor(meta.category)} />
 
       <EmbedSnippet slug={meta.slug} title={meta.shortTitle} />
 

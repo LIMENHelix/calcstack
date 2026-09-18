@@ -115,3 +115,73 @@ export const DEFAULT_AFFILIATES = [
     href: '#affiliate-accounting',
   },
 ]
+
+export interface AffiliateItem {
+  name: string
+  blurb: string
+  href: string
+}
+
+/**
+ * Category-matched affiliate lineups. A visitor running mortgage math should see
+ * lender-marketplace CTAs, not freelancer banking — matching intent is where the
+ * conversion rate lives. Replace placeholder hrefs with real program links as
+ * applications get approved (see marketing/LAUNCH.md Phase 0).
+ */
+export const CATEGORY_AFFILIATES: Record<string, AffiliateItem[]> = {
+  'Loans & Debt': [
+    { name: 'Compare mortgage rates', blurb: 'The rate you just modeled — get it quoted by real lenders.', href: '#affiliate-mortgage-rates' },
+    { name: 'Free credit score monitoring', blurb: 'Your score moves the rate more than the price does.', href: '#affiliate-credit-monitoring' },
+    { name: 'Debt consolidation options', blurb: 'When the payoff calculator says the hole is deep.', href: '#affiliate-debt-consolidation' },
+  ],
+  'Savings & Investing': [
+    { name: 'High-yield savings comparison', blurb: 'The growth you just projected deserves a real rate.', href: '#affiliate-high-yield-savings' },
+    { name: 'Commission-free brokerage', blurb: 'Where compound interest stops being hypothetical.', href: '#affiliate-brokerage' },
+    { name: 'CD rate comparison', blurb: 'Lock the rate when the goal has a date.', href: '#affiliate-cd-rates' },
+  ],
+  'Investing & Crypto': [
+    { name: 'Regulated crypto exchange', blurb: 'If you are going to trade, fees are the first loss to control.', href: '#affiliate-crypto-exchange' },
+    { name: 'Portfolio tracking app', blurb: 'See the ROI you calculated across everything you own.', href: '#affiliate-portfolio-tracker' },
+    { name: 'Commission-free brokerage', blurb: 'The boring index fund usually wins the comparison.', href: '#affiliate-brokerage' },
+  ],
+  'Freelance & Career': [
+    { name: 'Business banking for freelancers', blurb: 'Separate the rate income from the spending.', href: '#affiliate-business-banking' },
+    { name: 'Invoicing & accounting software', blurb: 'Bill the hours this calculator just priced.', href: '#affiliate-accounting' },
+    { name: 'LLC formation service', blurb: 'When the 1099 math starts beating the W-2.', href: '#affiliate-llc-formation' },
+  ],
+  'Everyday Money': [
+    { name: 'Budgeting app', blurb: 'Put the numbers you just ran on autopilot.', href: '#affiliate-budgeting-app' },
+    { name: 'High-yield savings comparison', blurb: 'The emergency fund should earn while it waits.', href: '#affiliate-high-yield-savings' },
+    { name: 'Cash-back credit card comparison', blurb: 'Only if the balance gets paid — run it in the loan calculator first.', href: '#affiliate-cashback-card' },
+  ],
+  'Health & Life': [
+    { name: 'HSA provider comparison', blurb: 'Invest the HSA you just projected — fees differ wildly.', href: '#affiliate-hsa-provider' },
+    { name: 'Health insurance marketplace', blurb: 'Price the marketplace side of the COBRA comparison.', href: '#affiliate-health-marketplace' },
+    { name: 'Term life insurance quotes', blurb: 'The income this math protects needs a backstop.', href: '#affiliate-life-insurance' },
+  ],
+  'Fitness & Sports': [
+    { name: 'Training program app', blurb: 'Put the zones and numbers into a plan that adapts.', href: '#affiliate-training-app' },
+    { name: 'Nutrition coaching certification', blurb: 'For the trainers running these numbers for clients.', href: '#affiliate-nutrition-cert' },
+    { name: 'Home gym equipment', blurb: 'The one-time cost that replaces the monthly membership.', href: '#affiliate-home-gym' },
+  ],
+  'Home & Yard': [
+    { name: 'Project materials delivered', blurb: 'Price the mulch, gravel, and concrete you just measured.', href: '#affiliate-materials-delivery' },
+    { name: 'Hire a vetted local pro', blurb: 'When the DIY math says the weekend is not worth it.', href: '#affiliate-hire-pro' },
+    { name: 'Home improvement financing', blurb: 'Compare the loan against the cash price before signing.', href: '#affiliate-home-improvement-loan' },
+  ],
+  'Trades & Engineering': [
+    { name: 'Estimating & invoicing software', blurb: 'Turn the bid sheet math into the actual invoice.', href: '#affiliate-estimating-software' },
+    { name: 'Small business insurance', blurb: 'The bid should price risk — so should the business.', href: '#affiliate-business-insurance' },
+    { name: 'Pro tools retailer', blurb: 'The markup calculator says the right tool pays for itself.', href: '#affiliate-tools-retailer' },
+  ],
+  'School & Science': [
+    { name: 'Student loan refinancing', blurb: 'If the IDR math says you will pay it off anyway, refi cheaper.', href: '#affiliate-student-refi' },
+    { name: 'Textbook rental & course tools', blurb: 'The GPA calculator is free; the textbooks are not.', href: '#affiliate-textbooks' },
+    { name: 'Online tutoring platforms', blurb: 'When the final-grade math says you need the points.', href: '#affiliate-tutoring' },
+  ],
+}
+
+/** Pick the lineup for a calculator's category, falling back to the default. */
+export function affiliatesFor(category: string): AffiliateItem[] {
+  return CATEGORY_AFFILIATES[category] ?? DEFAULT_AFFILIATES
+}
