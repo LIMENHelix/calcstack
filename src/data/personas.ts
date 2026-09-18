@@ -541,6 +541,7 @@ export const PERSONAS: Persona[] = [
       'framing-calculator',
       'drywall-calculator',
       'roofing-calculator',
+      'roof-pitch-calculator',
       'paint-calculator',
       'tile-calculator',
       'concrete-mix-calculator',
@@ -1289,6 +1290,7 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'roofing-calculator',
       'gutter-size-calculator',
+      'roof-pitch-calculator',
       'rafter-length-calculator',
       'ladder-angle-calculator',
       'stair-calculator',

@@ -1662,6 +1662,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'roof-pitch-calculator',
+    title: 'Roof Pitch Calculator — Degrees, Slope %, Area & Hip Multipliers',
+    shortTitle: 'Roof Pitch Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free roof pitch calculator. Convert rise-over-12 pitch to degrees, percent slope, the slope factor that turns footprint into real roof area, and the hip/valley multiplier — with IRC shingle minimums.',
+    tagline: 'Pitch to degrees to square footage, in one step.',
+    intro:
+      'Roof pitch is quoted as rise over a 12-inch run, but the number you actually need is usually something else: degrees for the saw, percent slope for drainage, or the slope factor that converts a footprint into the real surface area you buy shingles for. This converter does all of it — arctan for the angle, √(1 + (pitch/12)²) for the area multiplier, and √(2 + (pitch/12)²) for hips and valleys — plus the code minimums that decide what material is even allowed.',
+    howItWorks: [
+      'Enter the rise per 12 inches of run — a 6/12 roof rises 6 inches per foot.',
+      'Optionally enter a horizontal run in feet to get the true slope length.',
+      'Read the angle in degrees, slope as a percent, and the area multiplier.',
+      'Check the material and walkability guidance against IRC minimum shingle slopes.',
+    ],
+    faq: [
+      {
+        q: 'What is a 6/12 pitch in degrees?',
+        a: 'arctan(6 ÷ 12) = 26.57°. Its slope factor is √1.25 = 1.118, so a 2,000 sq ft footprint under a straight gable at 6/12 carries 2,236 sq ft of actual roof surface — the 11.8% difference is why "squares by footprint" estimates come up short.',
+      },
+      {
+        q: 'What is the lowest pitch for asphalt shingles?',
+        a: 'Per IRC R905.2, asphalt shingles require at least 2/12, and slopes between 2/12 and 4/12 require double-coverage underlayment. From 4/12 up, standard application applies. Below 2/12 you need a membrane or a low-slope-rated metal system.',
+      },
+      {
+        q: 'Why is the hip factor different from the slope factor?',
+        a: 'A hip or valley rafter travels the diagonal of the roof plan, so its run is the hypotenuse of the common run: the multiplier is √(2 + (pitch/12)²) instead of √(1 + (pitch/12)²). At 6/12 that is 1.500 vs 1.118 — a 20 ft common run becomes a 30 ft hip before the pitch even steepens it further.',
+      },
+    ],
+  },
+  {
     slug: 'excavation-calculator',
     title: 'Excavation Calculator — Bank vs Loose Yards, Swell & Truckloads',
     shortTitle: 'Excavation Calculator',

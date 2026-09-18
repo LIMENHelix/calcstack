@@ -1064,6 +1064,60 @@ export function DeckFootingCalc() {
   )
 }
 
+/* ---------------- Roof Pitch Converter ---------------- */
+
+function pitchGuidance(p: number): { material: string; walk: string } {
+  const material =
+    p < 2 ? 'Below 2/12 — asphalt shingles not permitted (IRC R905.2); use membrane or standing-seam metal rated for low slope'
+    : p < 4 ? '2/12–4/12 — shingles allowed only with double-coverage underlayment (IRC R905.2.7.1); metal is the better call'
+    : '4/12 and up — standard shingle application; every common roofing material works'
+  const walk =
+    p <= 6 ? 'Walkable with soft-soled shoes and care'
+    : p <= 8 ? 'Steep — toe boards or a roof jack for any real work'
+    : 'Too steep to walk — staging, harnesses, and anchors required'
+  return { material, walk }
+}
+
+export function RoofPitchCalc() {
+  const [rise, setRise] = useNumber(6)
+  const [run, setRun] = useNumber(20)
+
+  const r = useMemo(() => {
+    const p = Math.max(0, rise)
+    const deg = (Math.atan(p / 12) * 180) / Math.PI
+    const slopePct = (p / 12) * 100
+    const factor = Math.sqrt(1 + (p / 12) ** 2)
+    const hip = Math.sqrt(2 + (p / 12) ** 2)
+    const slopeLen = run > 0 ? run * factor : 0
+    const g = pitchGuidance(p)
+    return { deg, slopePct, factor, hip, slopeLen, g }
+  }, [rise, run])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Rise per 12&quot; of run (pitch)" value={rise} onChange={setRise} suffix="/12" step="0.5" />
+        <Field label="Horizontal run (optional)" value={run} onChange={setRun} suffix="ft" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Angle" value={`${num(r.deg, 2)}°`} />
+        <Result label="Slope as percent" value={`${num(r.slopePct, 1)}%`} />
+        <Result label="Slope factor (area multiplier)" value={`${num(r.factor, 4)}`} />
+        <Result label="Hip / valley factor" value={`${num(r.hip, 4)}`} />
+        <Result label="Slope length over run" value={r.slopeLen ? `${num(r.slopeLen, 2)} ft` : '—'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The angle is arctan(rise ÷ 12) — {num(r.deg, 2)}° here. The slope factor converts any
+        horizontal measurement to the sloped surface: multiply a roof&apos;s footprint area by{' '}
+        {num(r.factor, 4)} to get the real shingle area, or a rafter&apos;s horizontal run by it
+        to get cut length — the same multipliers stamped on a framing square. Hip and valley
+        rafters run longer because they travel the diagonal: their factor is {num(r.hip, 4)}.{' '}
+        {r.g.material}. {r.g.walk}.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Excavation & Haul (FM 5-434 swell factors) ---------------- */
 
 // US Army FM 5-434 Table 1-2 typical swell percentages (bank → loose)
@@ -1755,6 +1809,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'deck-footing-calculator': DeckFootingCalc,
   'retaining-wall-calculator': RetainingWallCalc,
   'excavation-calculator': ExcavationCalc,
+  'roof-pitch-calculator': RoofPitchCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,
