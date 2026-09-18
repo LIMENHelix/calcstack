@@ -552,6 +552,7 @@ export const PERSONAS: Persona[] = [
       'asphalt-calculator',
       'board-foot-calculator',
       'stair-calculator',
+      'rafter-length-calculator',
       'siding-calculator',
       'paver-calculator',
       'block-calculator',

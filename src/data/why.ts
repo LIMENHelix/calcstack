@@ -97,6 +97,8 @@ export const WHY_USE: Record<string, string> = {
     'Woodworkers buying hardwood and anyone pricing rough lumber at a sawmill use this: board feet is a volume unit that looks like an area unit until the invoice arrives. Run the stack count before the lumberyard, not after.',
   'stair-calculator':
     'Deck builders and basement finishers use this to get equal, code-legal risers on the first layout — the 7.75" IRC limit and the treads-minus-one rule are where stair math goes wrong. The stringer length and 2R+T comfort check come free with the count.',
+  'rafter-length-calculator':
+    'Framers use it to order and cut rafters without climbing back up to re-measure: span, pitch, and ridge thickness in, exact cut length and plumb angle out — the same multipliers printed on a framing square. Homeowners pricing an addition use it to sanity-check the lumber list before the quote.',
   'siding-calculator':
     'Homeowners collecting siding quotes use this to know their square count before the first salesman measures — it converts a black-box estimate into a conversation. Contractors use it as a five-second first pass before a formal takeoff.',
   'paver-calculator':

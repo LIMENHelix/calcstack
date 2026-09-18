@@ -1449,6 +1449,33 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'rafter-length-calculator',
+    title: 'Rafter Length Calculator — Common & Hip, Pitch Multipliers',
+    shortTitle: 'Rafter Length',
+    category: 'Home & Yard',
+    description:
+      'Free rafter length calculator. Common and hip rafters from span and pitch with ridge deduction, overhang tail, plumb cut angle, and stock board length — the exact rafter-table multipliers.',
+    tagline: 'Span and pitch in — the exact board to order out.',
+    intro:
+      'Every rafter is the same right triangle: run × √(1 + (pitch/12)²). This calculator does the classic rafter-table math — deducting half the ridge board before the multiplier, stretching the overhang along the slope, and switching to the hip multiplier √(2 + (pitch/12)²) for hips — then rounds up to the lumber yard\'s 2-foot increments.',
+    howItWorks: [
+      'Enter building span (wall to wall) and pitch — the run is half the span.',
+      'Pick ridge thickness; half of it is deducted from the run, measured horizontally.',
+      'Read the rafter length, tail length, total to cut, and plumb cut angle.',
+      'Order the shown stock length — next 2-foot increment up.',
+    ],
+    faq: [
+      {
+        q: 'How long is a common rafter for a 24-ft span at 6/12 pitch?',
+        a: 'Run is 12 ft (144"), rise 6 ft. The 6/12 multiplier is √(1 + 0.5²) = 1.1180, so the rafter is 144 × 1.1180 = 161" ≈ 13\' 5" before the ridge deduction; with a standard 1½" ridge board it is 13\' 4". A 16-ft 2× covers it with the tail.',
+      },
+      {
+        q: 'Why is a hip rafter longer at the same pitch?',
+        a: 'The hip runs on the plan diagonal, so its horizontal run is the common run × √2 while the rise is unchanged. Its multiplier is √(2 + (pitch/12)²) — exactly 1.5 at 6/12 — which is why hips also sit at a shallower effective slope and need a different (compound) plumb cut.',
+      },
+    ],
+  },
+  {
     slug: 'siding-calculator',
     title: 'Siding Calculator — Squares, Waste & Cost',
     shortTitle: 'Siding Calculator',

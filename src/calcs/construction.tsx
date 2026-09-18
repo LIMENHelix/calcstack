@@ -730,6 +730,83 @@ export function StairCalc() {
   )
 }
 
+/* ---------------- Rafter Length ---------------- */
+
+// inches -> "13' 4 3/8\"" style string (fracIn handles the inch part)
+function ftInFrac(x: number): string {
+  let ft = Math.floor(x / 12)
+  const inch = x - ft * 12
+  const s = fracIn(inch)
+  if (s === '12"') { ft += 1; return `${ft}' 0"` }
+  return `${ft}' ${s}`
+}
+
+export function RafterCalc() {
+  const [span, setSpan] = useNumber(24)
+  const [pitch, setPitch] = useState('6')
+  const [overhang, setOverhang] = useNumber(12)
+  const [ridge, setRidge] = useState('1.5')
+  const [kind, setKind] = useState('common')
+
+  const r = useMemo(() => {
+    const p = parseFloat(pitch)
+    const runIn = (span / 2) * 12
+    const riseIn = runIn * p / 12
+    // ridge board: deduct half its thickness measured horizontally (R802 framing convention)
+    const effRunIn = runIn - parseFloat(ridge) / 2
+    const mult = Math.sqrt(1 + (p / 12) ** 2)       // common: slope length per inch of run
+    const hipMult = Math.sqrt(2 + (p / 12) ** 2)    // hip: run lies on the 45° diagonal
+    const commonLen = effRunIn * mult
+    const hipLen = effRunIn * hipMult
+    const tail = overhang * mult                    // overhang is horizontal; tail runs on slope
+    const body = kind === 'hip' ? hipLen : commonLen
+    const total = body + tail
+    const plumb = Math.atan(p / 12) * 180 / Math.PI
+    const stockFt = Math.ceil(total / 12 / 2) * 2
+    return { runIn, riseIn, effRunIn, mult, commonLen, hipLen, tail, body, total, plumb, stockFt }
+  }, [span, pitch, overhang, ridge, kind])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Building span (wall to wall)" value={span} onChange={setSpan} suffix="ft" />
+        <Select label="Pitch (rise per 12 of run)" value={pitch} onChange={setPitch} options={
+          ['3','4','5','6','7','8','9','10','12'].map((x) => [x, `${x}/12`])
+        } />
+        <Field label="Overhang (horizontal)" value={overhang} onChange={setOverhang} suffix="in" />
+        <Select label="Ridge board thickness" value={ridge} onChange={setRidge} options={[
+          ['1.5', '1½ in (standard 2×)'], ['0.75', '¾ in (LVL / single ply)'], ['0', 'None (truss / gusset)'],
+        ]} />
+        <Select label="Rafter type" value={kind} onChange={setKind} options={[
+          ['common', 'Common rafter'], ['hip', 'Hip rafter (45° plan)'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label={kind === 'hip' ? 'Hip rafter length' : 'Common rafter length'} value={ftInFrac(r.body)} />
+        <Result label="Tail (overhang on slope)" value={ftInFrac(r.tail)} />
+        <Result label="Total to cut" value={ftInFrac(r.total)} />
+        <Result label="Stock per rafter" value={`${r.stockFt} ft`} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Run (half span − ½ ridge)" value={ftInFrac(r.effRunIn)} />
+        <Result label="Rise at ridge" value={ftInFrac(r.riseIn)} />
+        <Result label="Plumb cut angle" value={`${num(r.plumb, 1)}°`} />
+        <Result label="Multiplier (per in of run)" value={num(r.mult, 4)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Rafter length is the slope hypotenuse: run × √(1 + (pitch/12)²) — the classic rafter-table
+        multiplier (1.1180 for 6/12, 1.4142 for 12/12). Half the ridge thickness comes off the run
+        before the multiplier, because that deduction is measured horizontally. Hips run on the
+        plan diagonal, so their multiplier is √(2 + (pitch/12)²) — exactly 1.5 at 6/12. The
+        overhang you measure on the wall line stretches by the same multiplier along the tail.
+        Cut the plumb cut at the shown angle; seat (birdsmouth) depth is typically 3½" for a 2×4
+        wall. Layout math for ordering and cutting — spans and species sizing are a span-table
+        question (see the joist span calculator).
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Siding ---------------- */
 
 export function SidingCalc() {
@@ -1278,6 +1355,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'asphalt-calculator': AsphaltCalc,
   'board-foot-calculator': BoardFootCalc,
   'stair-calculator': StairCalc,
+  'rafter-length-calculator': RafterCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,
