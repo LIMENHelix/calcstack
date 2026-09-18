@@ -4589,6 +4589,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'duct-size-calculator',
+    title: 'Duct Size Calculator — Ductulator Math (Equal Friction, ASHRAE)',
+    shortTitle: 'Duct Size Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free HVAC duct sizing calculator. Enter CFM and friction rate — get round duct diameter, velocity, actual friction, and rectangular equivalent via the ASHRAE equal-friction method.',
+    tagline: 'The cardboard ductulator, minus the cardboard.',
+    intro:
+      'Every duct in a building is sized by one question: how much air must it move at an acceptable pressure loss? This calculator runs the ASHRAE equal-friction correlation — the same math printed on a slide-rule ductulator — to turn CFM and a design friction rate into round duct diameter, air velocity, actual friction rate, and the rectangular equivalent that fits your joist space, with a 4:1 aspect-ratio guard and a 400 CFM-per-ton sanity check.',
+    howItWorks: [
+      'Enter the airflow the duct must carry in CFM (figure roughly 400 CFM per ton of load).',
+      'Pick a design friction rate — 0.10 in./100 ft residential standard, 0.08 for run-outs, 0.05 for quiet trunks, 0.02 for returns.',
+      'Read the exact and rounded-up round diameter, velocity, and the friction rate you actually get.',
+      'Set your rectangular height constraint (joist depth) and get the matching width — keep the aspect ratio under 4:1.',
+    ],
+    faq: [
+      {
+        q: 'What friction rate should I design to?',
+        a: '0.08–0.10 in. w.c. per 100 ft is the residential standard for supply run-outs. Dropping to 0.05 for trunks costs about 15% more sheet metal but cuts the duct share of pressure drop in half and saves 15–20% on fan energy — and it is quieter. Returns are designed lower, around 0.02–0.05.',
+      },
+      {
+        q: 'Why does aspect ratio matter for rectangular ducts?',
+        a: 'A wide, thin duct has far more surface area per unit of airflow, which raises friction and material cost. Above a 4:1 width-to-height ratio the penalty grows steeply — the equivalent-diameter math still works, but you are paying for metal and static pressure you did not need to spend.',
+      },
+      {
+        q: 'How do I know the CFM for each room?',
+        a: 'Room CFM comes from the room\'s load: CFM = BTU/h ÷ (1.08 × temperature difference). A 2.5-ton house at 400 CFM/ton moves 1,000 CFM total, split among rooms in proportion to their loads. Run the BTU load calculator first, then divide the airflow by room share.',
+      },
+      {
+        q: 'Is bigger always safer for ducts?',
+        a: 'Undersized ducts are the epidemic — they starve airflow, freeze coils, and roar. But wildly oversized trunks waste money and can drop velocity so low that air stratifies and balancing gets weird. Size to the friction rate and the velocity bands (600–900 fpm branches, 800–1,200 mains); that is the sweet spot.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

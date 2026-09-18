@@ -305,4 +305,6 @@ export const WHY_USE: Record<string, string> = {
     'Electricians and maintenance techs use it when a motor gets swapped or a compressor gets added: table FLC, 125% wire, 250% breaker, 115% disconnect — the four numbers on every motor inspection tag. The nameplate-vs-table rule is the part apprentices get wrong, and the calculator makes it impossible.',
   'service-load-calculator':
     'Electricians use it to justify a panel upgrade to the inspector — the demand-factored VA total is the number on the permit. Homeowners quoted a 200A upgrade use it to check whether the house actually calculates past 100A, or whether the EV charger is the only thing pushing it over.',
+  'duct-size-calculator':
+    'HVAC techs use it when a room runs hot — is the run-out even big enough for its CFM share? Installers use it to convert round trunk sizes to the rectangular duct that fits the joist bay, and the friction-rate toggle shows exactly what the "quiet upgrade" to 0.05 costs in sheet metal.',
 }

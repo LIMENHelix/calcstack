@@ -629,6 +629,76 @@ export function ServiceLoadCalc() {
   )
 }
 
+/* ---------------- Duct Sizing (ASHRAE equal-friction) ---------------- */
+
+// Friction rate for round duct: FR = 0.109136 × Q^1.9 / D^5.02 (ASHRAE, Q cfm, D inches)
+function frFor(q: number, d: number) { return 0.109136 * Math.pow(q, 1.9) / Math.pow(d, 5.02) }
+function dFor(q: number, fr: number) { return Math.pow(0.109136 * Math.pow(q, 1.9) / fr, 1 / 5.02) }
+// Huebscher equivalent round: De = 1.3 (a·b)^0.625 / (a+b)^0.25 — solve width a given height b
+function rectWidthFor(de: number, b: number): number {
+  let lo = b / 8, hi = b * 40
+  for (let i = 0; i < 60; i++) {
+    const a = (lo + hi) / 2
+    const eq = 1.3 * Math.pow(a * b, 0.625) / Math.pow(a + b, 0.25)
+    if (eq < de) lo = a; else hi = a
+  }
+  return (lo + hi) / 2
+}
+
+export function DuctSizeCalc() {
+  const [cfm, setCfm] = useNumber(1000)
+  const [fr, setFr] = useState('0.1')
+  const [rectH, setRectH] = useNumber(10)
+
+  const r = useMemo(() => {
+    const frv = parseFloat(fr)
+    const dExact = dFor(cfm, frv)
+    const dStd = Math.max(4, Math.ceil(dExact)) // next whole inch up
+    const area = Math.PI * Math.pow(dStd / 12, 2) / 4
+    const velocity = cfm / area
+    const frActual = frFor(cfm, dStd)
+    const width = rectWidthFor(dStd, rectH)
+    const widthIn = Math.ceil(width) // round up to whole inch
+    const rectArea = (widthIn * rectH) / 144
+    const rectVel = cfm / rectArea
+    const aspect = widthIn / rectH
+    return { dExact, dStd, area, velocity, frActual, widthIn, rectVel, aspect }
+  }, [cfm, fr, rectH])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Airflow" value={cfm} onChange={setCfm} suffix="CFM" />
+        <Select label="Friction rate (design)" value={fr} onChange={setFr} options={[
+          ['0.1', '0.10 — residential standard'], ['0.08', '0.08 — supply run-outs'], ['0.05', '0.05 — trunk / quiet'], ['0.02', '0.02 — return ducts'],
+        ]} />
+        <Field label="Rectangular duct height" value={rectH} onChange={setRectH} suffix="in" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Round duct" value={`${r.dStd}" dia (calc ${num(r.dExact, 1)}")`} />
+        <Result label="Velocity at that size" value={`${num(r.velocity, 0)} fpm`} />
+        <Result label="Actual friction rate" value={`${num(r.frActual, 3)} in./100 ft`} />
+        <Result label="Rectangular equivalent" value={`${r.widthIn}" × ${rectH}"`} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result label="Rectangular velocity" value={`${num(r.rectVel, 0)} fpm`} />
+        <Result label="Aspect ratio" value={`${num(r.aspect, 1)}:1 ${r.aspect > 4 ? '— over 4:1 limit' : '✓'}`} />
+        <Result label="CFM per ton check" value={`${num(cfm / 400, 2)} tons at 400 CFM/ton`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Equal-friction method per ASHRAE Fundamentals Ch. 21 — the same correlation inside a
+        cardboard ductulator: friction rate = 0.109136 × CFM^1.9 ÷ D^5.02, solved for diameter at
+        your design friction rate. Rectangular equivalents use the Huebscher equation
+        De = 1.3(ab)^0.625/(a+b)^0.25 — keep aspect ratio under 4:1 or surface friction eats the
+        savings. Design targets: 0.08–0.10 in./100 ft for supply run-outs, 0.05 for trunks
+        (15–20% fan energy savings vs 0.10), lower for returns. Velocity sanity check: 600–900
+        fpm branches, 800–1200 mains, 400–700 returns. For room CFM, figure 400 CFM per ton of
+        load — or run the BTU load calculator first.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
 
 // NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
@@ -752,4 +822,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'ampacity-derating-calculator': AmpacityDerateCalc,
   'motor-circuit-calculator': MotorCircuitCalc,
   'service-load-calculator': ServiceLoadCalc,
+  'duct-size-calculator': DuctSizeCalc,
 }
