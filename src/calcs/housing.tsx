@@ -295,8 +295,189 @@ export function HomeAffordabilityCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- FHA Loan (UFMIP + annual MIP, ML 2023-05) ---------------- */
+
+// Annual MIP matrix per HUD Mortgagee Letter 2023-05 (base loan ≤ $726,200 tier):
+//   term > 15yr: LTV ≤95% → 0.50%, LTV >95% → 0.55%
+//   term ≤ 15yr: LTV ≤90% → 0.15%, LTV >90% → 0.40%
+// Duration: LTV ≤90% → 11 years; otherwise life of loan.
+const FHA_FLOOR_LIMIT_2026 = 541287 // one-unit floor, ML 2025-23
+
+export function FHALoanCalc(_props: CalcProps) {
+  const [price, setPrice] = useNumber(350000)
+  const [downPct, setDownPct] = useNumber(3.5)
+  const [rate, setRate] = useNumber(6.25)
+  const [term, setTerm] = useNumber(30)
+  const [taxRate, setTaxRate] = useNumber(1.1)
+  const [insurance, setInsurance] = useNumber(1800)
+
+  const r = useMemo(() => {
+    const down = price * (downPct / 100)
+    const base = Math.max(0, price - down)
+    const ufmip = base * 0.0175
+    const loan = base + ufmip // UFMIP financed
+    const ltv = price > 0 ? (base / price) * 100 : 0
+    const over15 = term > 15
+    const mipRate = over15 ? (ltv > 95 ? 0.55 : 0.5) : ltv > 90 ? 0.4 : 0.15
+    const mipYears = ltv <= 90 ? 11 : term
+    const mr = rate / 100 / 12
+    const n = Math.round(term * 12)
+    const pmt = mr > 0 ? (loan * mr) / (1 - Math.pow(1 + mr, -n)) : loan / n
+    const mipMo = (loan * (mipRate / 100)) / 12 // year-1 amount
+    const mipMonths = Math.min(n, Math.round(mipYears * 12))
+    let bal = loan
+    let mipTotal = 0
+    for (let m = 1; m <= mipMonths; m++) {
+      mipTotal += (bal * (mipRate / 100)) / 12
+      bal = Math.max(0, bal - (pmt - bal * mr))
+    }
+    const totalInterest = pmt * n - loan
+    const taxMo = (price * (taxRate / 100)) / 12
+    const insMo = insurance / 12
+    const totalMo = pmt + mipMo + taxMo + insMo
+    const overFloor = base > FHA_FLOOR_LIMIT_2026
+    return { down, base, ufmip, loan, ltv, mipRate, mipYears, pmt, mipMo, mipTotal, totalInterest, taxMo, insMo, totalMo, overFloor }
+  }, [price, downPct, rate, term, taxRate, insurance])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="Home price" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Down payment" value={downPct} onChange={setDownPct} suffix="%" />
+          <Field label="Interest rate" value={rate} onChange={setRate} suffix="%" />
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Term</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+            >
+              <option value={30}>30 years</option>
+              <option value={15}>15 years</option>
+            </select>
+          </div>
+          <Field label="Property tax" value={taxRate} onChange={setTaxRate} suffix="%/yr" />
+          <Field label="Home insurance" value={insurance} onChange={setInsurance} prefix="$" suffix="/yr" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label="Total monthly (PITI + MIP)" value={usd(r.totalMo, 2)} />
+          <Result label="P&I (on financed loan)" value={usd(r.pmt, 2)} />
+          <Result label="Monthly MIP (year 1)" value={usd(r.mipMo, 2)} />
+          <Result label="MIP over its full life" value={usd(r.mipTotal)} />
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border">
+          <table className="w-full text-sm">
+            <tbody>
+              <tr className="border-t"><td className="p-2">Down payment ({num(downPct, 1)}%)</td><td className="p-2 text-right">{usd(r.down)}</td></tr>
+              <tr className="border-t"><td className="p-2">Base loan (price − down)</td><td className="p-2 text-right">{usd(r.base)}</td></tr>
+              <tr className="border-t"><td className="p-2">Upfront MIP (1.75%, financed)</td><td className="p-2 text-right">{usd(r.ufmip)}</td></tr>
+              <tr className="border-t font-medium"><td className="p-2">Total financed loan</td><td className="p-2 text-right">{usd(r.loan)}</td></tr>
+              <tr className="border-t"><td className="p-2">Annual MIP rate (LTV {num(r.ltv, 1)}%, {term}-yr)</td><td className="p-2 text-right">{num(r.mipRate, 2)}%</td></tr>
+              <tr className="border-t"><td className="p-2">MIP duration</td><td className="p-2 text-right">{r.ltv <= 90 ? '11 years' : 'Life of loan'}</td></tr>
+              <tr className="border-t"><td className="p-2">Total interest over {term} years</td><td className="p-2 text-right">{usd(r.totalInterest)}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        {r.overFloor && (
+          <p className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">
+            Base loan exceeds the 2026 FHA floor limit of {usd(FHA_FLOOR_LIMIT_2026)} — this only
+            works in a high-cost county. Check your county limit at hud.gov before shopping at
+            this price with FHA.
+          </p>
+        )}
+        <p className="text-xs text-muted-foreground">
+          MIP rates per HUD Mortgagee Letter 2023-05 (still current for 2026); upfront MIP 1.75%
+          per HUD Handbook 4000.1. With under 10% down, annual MIP runs the life of the loan — it
+          does not cancel at 80% like conventional PMI. With 10%+ down it ends after 11 years.
+          Minimum down is 3.5% with a 580+ credit score (10% for 500–579).
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+/* ---------------- 15-Year vs 30-Year Mortgage ---------------- */
+
+export function FifteenVsThirtyCalc(_props: CalcProps) {
+  const [loan, setLoan] = useNumber(320000)
+  const [rate30, setRate30] = useNumber(6.5)
+  const [rate15, setRate15] = useNumber(5.9)
+  const [investReturn, setInvestReturn] = useNumber(5)
+
+  const r = useMemo(() => {
+    const r30 = rate30 / 100 / 12
+    const r15 = rate15 / 100 / 12
+    const p30 = r30 > 0 ? (loan * r30) / (1 - Math.pow(1 + r30, -360)) : loan / 360
+    const p15 = r15 > 0 ? (loan * r15) / (1 - Math.pow(1 + r15, -180)) : loan / 180
+    const int30 = p30 * 360 - loan
+    const int15 = p15 * 180 - loan
+    const diff = p15 - p30
+    // Honest wealth comparison at year 30 (both own the home free and clear):
+    //   30-yr strategy: invest the payment difference (p15 − p30) for all 360 months.
+    //   15-yr strategy: pay more now, then invest the full p15 for months 181–360.
+    const i = investReturn / 100 / 12
+    const fv = (mo: number, months: number) => (i > 0 ? mo * ((Math.pow(1 + i, months) - 1) / i) : mo * months)
+    const wealth30 = fv(diff, 360)
+    const wealth15 = fv(p15, 180)
+    return { p30, p15, int30, int15, diff, wealth30, wealth15, saved: int30 - int15 }
+  }, [loan, rate30, rate15, investReturn])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Field label="Loan amount" value={loan} onChange={setLoan} prefix="$" />
+          <Field label="30-year rate" value={rate30} onChange={setRate30} suffix="%" />
+          <Field label="15-year rate" value={rate15} onChange={setRate15} suffix="%" />
+          <Field label="Investment return (for the diff)" value={investReturn} onChange={setInvestReturn} suffix="%/yr" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label="Interest saved by 15-year" value={usd(r.saved)} />
+          <Result label="30-year payment" value={usd(r.p30, 2)} />
+          <Result label="15-year payment" value={usd(r.p15, 2)} />
+          <Result label="Monthly difference" value={usd(r.diff, 2)} />
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border">
+          <table className="w-full text-sm">
+            <thead className="bg-muted">
+              <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <th className="p-2">At year 30 — both homes owned outright</th>
+                <th className="p-2 text-right">30-yr + invest diff</th>
+                <th className="p-2 text-right">15-yr + invest after</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t"><td className="p-2">Total interest paid</td><td className="p-2 text-right">{usd(r.int30)}</td><td className="p-2 text-right">{usd(r.int15)}</td></tr>
+              <tr className="border-t"><td className="p-2">Investment balance at year 30</td><td className="p-2 text-right">{usd(r.wealth30)}</td><td className="p-2 text-right">{usd(r.wealth15)}</td></tr>
+              <tr className="border-t font-medium">
+                <td className="p-2">Net position at year 30 (investments − interest)</td>
+                <td className="p-2 text-right">{usd(r.wealth30 - r.int30)}</td>
+                <td className="p-2 text-right">{usd(r.wealth15 - r.int15)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The 15-year loan wins when its rate beats your investment return — paying it is a
+          guaranteed {num(rate15, 2)}%. If you can reliably invest above the 15-year rate, the
+          30-year plus disciplined investing can come out ahead; the table above runs both
+          strategies honestly with the same monthly outlay ({usd(r.p15, 2)}/mo). The catch is
+          behavioral: the 30-year strategy only works if the difference actually gets invested.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const HOUSING_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   'rent-vs-buy-calculator': RentVsBuyCalc,
   'closing-cost-calculator': ClosingCostCalc,
   'home-affordability-calculator': HomeAffordabilityCalc,
+  'fha-loan-calculator': FHALoanCalc,
+  '15-year-mortgage-calculator': FifteenVsThirtyCalc,
 }

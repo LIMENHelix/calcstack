@@ -3400,6 +3400,74 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'fha-loan-calculator',
+    title: 'FHA Loan Calculator — True Payment with UFMIP & MIP (2026)',
+    shortTitle: 'FHA Loan',
+    category: 'Loans & Debt',
+    description:
+      'Free FHA loan calculator. Includes the 1.75% upfront MIP financed into the loan, annual MIP at HUD 2026 rates (0.55%/0.50%/0.15%), MIP duration rules, and the 2026 loan limit floor.',
+    tagline: 'The FHA payment is never just P&I — here is the real monthly number.',
+    intro:
+      'FHA loans let you buy with 3.5% down and a 580 credit score — but the payment quote you see online almost never includes both layers of mortgage insurance. This calculator finances the 1.75% upfront MIP into the loan, applies the correct annual MIP rate from HUD Mortgagee Letter 2023-05 for your exact LTV and term, and totals what MIP costs over its entire life.',
+    howItWorks: [
+      'Enter the home price, down payment percent, rate, and term (30 or 15 years).',
+      'The calculator computes the base loan, adds financed UFMIP, and picks the MIP rate and duration from your LTV.',
+      'See the true monthly payment (PITI + MIP), total interest, and lifetime MIP cost — plus a flag if you exceed the 2026 FHA limit floor.',
+    ],
+    faq: [
+      {
+        q: 'How much is FHA mortgage insurance in 2026?',
+        a: 'Two pieces: a 1.75% upfront premium (almost always financed into the loan) and an annual premium of 0.55% for 30-year loans with under 5% down, 0.50% with 5–10% down, and 0.15–0.40% on 15-year loans. On a typical $344,000 financed FHA loan that is about $158 a month — before it declines slowly with the balance.',
+      },
+      {
+        q: 'Does FHA MIP ever go away?',
+        a: 'Only if you put 10% or more down — then annual MIP ends automatically after 11 years. With less than 10% down (including the standard 3.5%), MIP runs for the entire loan term, and the only exit is refinancing into a conventional loan once you have the equity and credit. It does NOT cancel at 78% LTV the way conventional PMI does.',
+      },
+      {
+        q: 'What is the 2026 FHA loan limit?',
+        a: 'The one-unit floor is $541,287 in standard counties, rising to $1,249,125 in high-cost areas (per HUD Mortgagee Letter 2025-23). This calculator flags when your base loan exceeds the floor so you know to check your county limit at hud.gov.',
+      },
+      {
+        q: 'Is a 15-year FHA loan worth it for the lower MIP?',
+        a: 'The MIP rate drops to 0.15% with 10%+ down on a 15-year term — on a $300,000 loan that saves over $1,200 a year in insurance alone, and MIP expires at year 11. But the higher P&I payment is permanent, so run both terms here and compare total monthly, not just the insurance line.',
+      },
+    ],
+  },
+  {
+    slug: '15-year-mortgage-calculator',
+    title: '15 vs 30 Year Mortgage Calculator — Interest Saved & Invest-the-Difference',
+    shortTitle: '15 vs 30 Year',
+    category: 'Loans & Debt',
+    description:
+      'Free 15 vs 30 year mortgage calculator. Compares payments and lifetime interest, then runs the honest test: investing the payment difference versus the 15-year payoff.',
+    tagline: 'Same house, same monthly outlay — which strategy ends richer at year 30?',
+    intro:
+      'The 15-vs-30 debate is usually argued with vibes: "interest saved" versus "flexibility." This calculator runs the complete comparison — both homes owned free and clear at year 30, both strategies spending the same monthly amount, with the difference invested at your assumed return. The answer depends on one number: whether your investment return beats the 15-year rate.',
+    howItWorks: [
+      'Enter the loan amount, the 30-year and 15-year rates you are quoted, and your expected investment return.',
+      'See both payments, lifetime interest on each, and the interest saved by the shorter term.',
+      'The wealth table compares investing the payment difference (30-year) against investing the full payment after payoff (15-year) — same outlay, honest math.',
+    ],
+    faq: [
+      {
+        q: 'How much interest does a 15-year mortgage actually save?',
+        a: 'On a $320,000 loan at typical spreads (6.5% vs 5.9%), roughly $245,000 — about 60% less total interest. But the raw savings number is not the decision: the question is whether the higher payment beats what you would earn investing the difference, which is exactly what the wealth table computes.',
+      },
+      {
+        q: 'Is it smarter to invest the difference instead?',
+        a: 'Only if your investment return reliably beats the 15-year mortgage rate — paying down a 5.9% loan is a guaranteed, tax-free 5.9% return. At a 5% expected investment return the 15-year wins; at 8% the 30-year-plus-investing wins on paper. The behavioral catch: the strategy fails completely if the difference gets spent instead of invested.',
+      },
+      {
+        q: 'Why is the 15-year rate lower?',
+        a: 'Lenders price shorter terms lower because their money is at risk for half the time — the spread typically runs 0.5–0.75 percentage points. That spread is a second, often ignored, source of savings on top of the shorter amortization.',
+      },
+      {
+        q: 'What about a compromise — 30-year loan, pay it like a 15?',
+        a: 'That preserves flexibility (drop back to the lower required payment in a bad month) but you pay the higher 30-year rate for the privilege — roughly 0.6% more on the full balance. On $320,000 that insurance policy costs about $120 a month in extra interest. Some buyers happily pay it; run your exact spread here.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
