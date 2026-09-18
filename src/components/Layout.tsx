@@ -85,6 +85,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
               </li>
               <li>
+                <Link to="/open-enrollment" className="hover:text-foreground">
+                  Open enrollment hub
+                </Link>
+              </li>
+              <li>
                 <Link to="/embeds" className="hover:text-foreground">
                   Embed these calculators
                 </Link>
