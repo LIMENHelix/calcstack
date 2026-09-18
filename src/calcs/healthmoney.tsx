@@ -187,6 +187,67 @@ export function CobraCalc() {
   )
 }
 
+/* ---------------- Term vs whole life: buy term & invest the difference ---------------- */
+
+export function TermVsWholeCalc() {
+  const [coverage, setCoverage] = useNumber(1000000)
+  const [years, setYears] = useNumber(20)
+  const [termMo, setTermMo] = useNumber(45)
+  const [wholeMo, setWholeMo] = useNumber(450)
+  const [ret, setRet] = useNumber(7)
+  const [cashValue, setCashValue] = useNumber(60000)
+
+  const r = useMemo(() => {
+    const months = years * 12
+    const i = ret / 100 / 12
+    const termTotal = termMo * months
+    const wholeTotal = wholeMo * months
+    const diff = Math.max(0, wholeMo - termMo)
+    const fv = i === 0 ? diff * months : diff * ((Math.pow(1 + i, months) - 1) / i)
+    const netWhole = wholeTotal - cashValue
+    // BTID end position: paid termTotal, holds fv invested. WL end position: paid wholeTotal, holds cashValue.
+    const btidNet = fv - termTotal
+    const wlNet = cashValue - wholeTotal
+    const ahead = btidNet - wlNet
+    return { termTotal, wholeTotal, diff, fv, netWhole, btidNet, wlNet, ahead }
+  }, [years, termMo, wholeMo, ret, cashValue])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Coverage amount" value={coverage} onChange={setCoverage} prefix="$" step="50000" />
+          <Field label="Term length" value={years} onChange={setYears} suffix="yrs" step="5" />
+          <Field label="Term monthly premium (your quote)" value={termMo} onChange={setTermMo} prefix="$" step="5" />
+          <Field label="Whole life monthly premium (your quote)" value={wholeMo} onChange={setWholeMo} prefix="$" step="10" />
+          <Field label="Investment return on the difference" value={ret} onChange={setRet} suffix="%" step="0.5" />
+          <Field label="Illustrated whole-life cash value at term end" value={cashValue} onChange={setCashValue} prefix="$" step="5000" />
+          <p className="text-sm text-muted-foreground">
+            &quot;Buy term and invest the difference&quot; (BTID) tested with your real quotes:
+            both sides carry {usd(coverage)} of protection for {num(years, 0)} years, and the
+            premium difference goes into an index fund earning {num(ret, 1)}%. The honest
+            comparison is each side&apos;s end position — premiums paid minus what you still
+            hold. Whole life&apos;s hold is the illustrated cash surrender value (get it from
+            the policy illustration — it is usually far less than premiums paid in the first
+            two decades). Whole life wins when the need is truly permanent — estate liquidity,
+            lifelong dependents, final expenses — not when the need ends with the mortgage and
+            the kids.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label="BTID advantage at term end" value={usd(r.ahead)} />
+          <Result label="Term premiums paid" value={usd(r.termTotal)} />
+          <Result label="Whole life premiums paid" value={usd(r.wholeTotal)} />
+          <Result label={`Monthly difference invested`} value={`${usd(r.diff, 2)}/mo`} />
+          <Result label={`Invested difference at ${num(years, 0)} yrs`} value={usd(r.fv)} />
+          <Result label="BTID end position (fund − premiums)" value={usd(r.btidNet)} />
+          <Result label="Whole life end position (cash value − premiums)" value={usd(r.wlNet)} />
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 /* ---------------- Life insurance needs (DIME method) ---------------- */
 
 export function LifeInsuranceCalc() {
@@ -253,6 +314,7 @@ export function LifeInsuranceCalc() {
 export const HEALTHMONEY_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'hsa-growth-calculator': HsaGrowthCalc,
   'life-insurance-calculator': LifeInsuranceCalc,
+  'term-vs-whole-life-calculator': TermVsWholeCalc,
   'health-plan-comparison-calculator': HealthPlanCalc,
   'cobra-cost-calculator': CobraCalc,
 }

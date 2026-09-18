@@ -4212,6 +4212,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'term-vs-whole-life-calculator',
+    title: 'Term vs Whole Life Calculator — Buy Term & Invest the Difference Test',
+    shortTitle: 'Term vs Whole Life',
+    category: 'Health & Life',
+    description:
+      'Free term vs whole life insurance calculator. Enter both quotes and see total premiums, the invested difference at your return rate, and each side\'s true end position — the buy-term-and-invest-the-difference test with your numbers.',
+    tagline: 'The oldest argument in insurance, settled with your quotes.',
+    intro:
+      'The term-vs-whole-life debate is usually argued with slogans. The honest test is arithmetic: both sides carry the same death benefit for the same window, the premium difference gets invested, and at the end you compare what each side holds against what each side paid. This calculator runs that comparison with your actual quotes — including the whole-life policy\'s illustrated cash surrender value, which is the number agents show least eagerly.',
+    howItWorks: [
+      'Enter the coverage amount and term length (20–30 years covers most families\' needs window).',
+      'Enter both monthly quotes — term and whole life for the same death benefit.',
+      'Set an investment return for the premium difference (7% is a common long-run assumption).',
+      'Enter the whole-life policy\'s illustrated cash value at term end, from the policy illustration.',
+      'Compare end positions: invested fund minus premiums vs cash value minus premiums.',
+    ],
+    faq: [
+      {
+        q: 'How does buy term and invest the difference usually end?',
+        a: 'With typical quotes — $45/month term vs $450/month whole life for $1M over 20 years — the $405 monthly difference invested at 7% grows to roughly $211,000 while term premiums total $10,800. Whole life over the same window costs $108,000 in premiums, and 20-year cash surrender values on recent policies are commonly well under premiums paid. The gap between the two end positions is usually six figures in BTID\'s favor.',
+      },
+      {
+        q: 'When does whole life actually win?',
+        a: 'When the need is permanent rather than temporary: estate liquidity for taxable estates, a lifelong dependent who will outlive you, burial and final expenses guaranteed to age 100+, or business buy-sell funding. For those needs the "difference" never gets invested for 30 years anyway — the insurance itself is the point. For income replacement during the mortgage-and-kids window, term is the consensus tool among fee-only planners.',
+      },
+      {
+        q: 'Why is the cash value input so important?',
+        a: 'Because whole life illustrations show a "cash value" that builds slowly — policyholders who surrender in the first 10–20 years routinely get back less than they paid in, sometimes much less. Without that illustrated number, the comparison defaults to pretending premiums come back, which they do not. Ask the agent for the guaranteed and illustrated cash surrender value at your term-end year and enter it here.',
+      },
+    ],
+  },
+  {
     slug: 'life-insurance-calculator',
     title: 'Life Insurance Calculator — DIME Method Coverage Needs',
     shortTitle: 'Life Insurance Calculator',

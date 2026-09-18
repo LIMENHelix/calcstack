@@ -285,6 +285,8 @@ export const WHY_USE: Record<string, string> = {
     'Tenants use it before signing to convert the quoted base rate into the real all-in commitment, and to see what escalations do to a 5-year term. Brokers respect tenants who show up knowing the NNN actuals.',
   'hsa-growth-calculator':
     'HDHP enrollees use it during open enrollment to see what the triple tax advantage is actually worth in dollars — it converts "HSAs are good" into a five-figure 20-year advantage. The receipt-shoebox strategy FAQ alone changes how people spend.',
+  'term-vs-whole-life-calculator':
+    'Anyone sitting across from an insurance agent uses this to turn the oldest sales argument in the industry into arithmetic with their own two quotes — the end-position comparison (what you hold minus what you paid) is the framing no illustration ever leads with. Fee-only planners use it to show clients why the "permanent" pitch only wins for permanent needs.',
   'life-insurance-calculator':
     'New parents and new homeowners use it before the first agent call, so the coverage conversation starts from their obligations instead of a sales script — the DIME-vs-10× gap is the moment people realize the rule of thumb was never about their family. Fee-only planners use it as the client homework that makes the first meeting productive.',
   'health-plan-comparison-calculator':
