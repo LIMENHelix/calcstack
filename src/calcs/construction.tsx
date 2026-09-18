@@ -869,6 +869,65 @@ export function FlooringCalc() {
   )
 }
 
+/* ---------------- Ladder Angle & Size (OSHA 4:1) ---------------- */
+
+// ANSI A14.2 Table: nominal size -> maximum working (extended) length
+const LADDERS: [number, number][] = [[16, 13], [20, 17], [24, 21], [28, 25], [32, 29], [36, 33], [40, 36]]
+const SLOPE_41 = Math.sqrt(1.0625) // rail length per foot of vertical rise at 4:1 (75.5°)
+
+export function LadderCalc() {
+  const [height, setHeight] = useNumber(17)
+  const [mode, setMode] = useState('roof')
+  const [owned, setOwned] = useState('24')
+
+  const r = useMemo(() => {
+    const base = height / 4
+    const slopeToSupport = height * SLOPE_41
+    // roof access: rails must extend 3 ft above the landing surface (OSHA 1926.1053(b)(1))
+    const needWorking = mode === 'roof' ? slopeToSupport + 3 : slopeToSupport
+    const pick = LADDERS.find(([, w]) => w >= needWorking) ?? null
+    // verdict for the ladder you own
+    const ownedWorking = LADDERS.find(([n]) => n === parseInt(owned))?.[1] ?? null
+    const ownedMaxSupport = ownedWorking === null
+      ? null
+      : mode === 'roof'
+        ? (ownedWorking - 3) / SLOPE_41
+        : ownedWorking / SLOPE_41
+    const ownedOk = ownedMaxSupport !== null && ownedMaxSupport >= height
+    return { base, slopeToSupport, needWorking, pick, ownedMaxSupport, ownedOk }
+  }, [height, mode, owned])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label={mode === 'roof' ? 'Height to roof edge / eave' : 'Height to upper support point'} value={height} onChange={setHeight} suffix="ft" />
+        <Select label="Access type" value={mode} onChange={setMode} options={[
+          ['roof', 'Roof access (step off at top)'], ['wall', 'Wall work (lean & work)'],
+        ]} />
+        <Select label="Ladder you own" value={owned} onChange={setOwned} options={
+          LADDERS.map(([n, w]) => [String(n), `${n} ft (works to ${w} ft)`] as [string, string])
+        } />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Base distance from wall" value={`${num(r.base, 1)} ft (4:1)`} />
+        <Result label="Rail length to support" value={`${num(r.slopeToSupport, 1)} ft`} />
+        <Result big label="Ladder size to buy" value={r.pick ? `${r.pick[0]} ft (works ${r.pick[1]} ft)` : 'Over 40 ft — lift equipment'} />
+        <Result label="Your ladder verdict" value={r.ownedMaxSupport === null ? '—' : r.ownedOk ? `OK (max ${num(r.ownedMaxSupport, 1)} ft)` : `TOO SHORT (max ${num(r.ownedMaxSupport, 1)} ft)`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The 4:1 rule is the whole setup: base out one foot for every four feet of height, which puts
+        the rails at 75.5° — steep enough not to slide, shallow enough not to tip back. Rail length
+        is the slope hypotenuse (height × 1.031), not the height itself. For roof access, OSHA
+        requires the rails to extend 3 ft above the landing edge so you step off holding something.
+        Ladder &quot;size&quot; is not reach: sections overlap, so a 24-footer works to 21 ft (ANSI
+        A14.2). Field check: toes at the rails, arms straight out — your palms should land on a rung.
+        Match the duty rating to you plus tools (Type II 225 lb, Type I 250, IA 300) and use
+        fiberglass anywhere near electrical work.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Siding ---------------- */
 
 export function SidingCalc() {
@@ -1419,6 +1478,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'stair-calculator': StairCalc,
   'rafter-length-calculator': RafterCalc,
   'flooring-calculator': FlooringCalc,
+  'ladder-angle-calculator': LadderCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,

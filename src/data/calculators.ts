@@ -1569,6 +1569,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ladder-angle-calculator',
+    title: 'Ladder Angle & Size Calculator — OSHA 4:1 Rule, Working Length',
+    shortTitle: 'Ladder Angle & Size',
+    category: 'Home & Yard',
+    description:
+      'Free ladder calculator. Base distance by the OSHA 4:1 rule, rail length to the support point, the right ladder size to buy (ANSI working lengths), and a verdict on the ladder you own.',
+    tagline: 'A 24-foot ladder works to 21. Know that before you climb.',
+    intro:
+      'Ladder falls are the most common jobsite injury, and the setup math is four numbers: base out one foot for every four of height (the 4:1 rule, 75.5°), rail length along the slope, three feet of rail above a roof landing, and the fact that a ladder\'s nominal size is not its reach — sections overlap. This calculator runs all four against the ANSI A14.2 working-length table.',
+    howItWorks: [
+      'Enter the height to your upper support point — or the eave for roof access.',
+      'Pick access type: roof access adds the OSHA-required 3 ft of rail above the landing.',
+      'Read the base distance (4:1), rail length to support, and the ladder size that covers it.',
+      'Select the ladder you own for an OK / TOO SHORT verdict with its real max support height.',
+    ],
+    faq: [
+      {
+        q: 'How high can I reach with a 24 ft extension ladder?',
+        a: 'The sections overlap, so a 24-footer\'s maximum working length is 21 ft (ANSI A14.2). At the proper 4:1 angle that serves a wall support point up to about 20 ft, or a roof edge at 17–19 ft with the required 3 ft of rail above the landing. A 24 ft ladder never reaches 24 ft.',
+      },
+      {
+        q: 'What is the 4:1 ladder rule?',
+        a: 'For every 4 feet of height to the support point, the base sits 1 foot out from the wall — an angle of about 75.5°. Too steep and the ladder tips backward; too shallow and the feet slide out. The field check: stand with your toes at the rails, arms straight out — your palms should land on a rung.',
+      },
+      {
+        q: 'How far above the roof should the ladder extend?',
+        a: 'At least 3 feet (OSHA 1926.1053(b)(1)) — and not more than 4. That rail above the edge is your handhold for stepping on and off; stepping around the top of a short ladder is how eave falls happen.',
+      },
+    ],
+  },
+  {
     slug: 'siding-calculator',
     title: 'Siding Calculator — Squares, Waste & Cost',
     shortTitle: 'Siding Calculator',

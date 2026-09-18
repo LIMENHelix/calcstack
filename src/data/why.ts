@@ -105,6 +105,8 @@ export const WHY_USE: Record<string, string> = {
     'Framers use it to order and cut rafters without climbing back up to re-measure: span, pitch, and ridge thickness in, exact cut length and plumb angle out — the same multipliers printed on a framing square. Homeowners pricing an addition use it to sanity-check the lumber list before the quote.',
   'flooring-calculator':
     'Installers use it to order once and order right — the waste factor changes with the layout, and a diagonal or herringbone job ordered at the straight-lay 10% runs short mid-room. Homeowners use it to check the installer\'s material line against the carton coverage before paying for boxes that never get opened.',
+  'ladder-angle-calculator':
+    'Roofers and gutter crews use it before the ladder leaves the truck: eave height in, and it tells you whether the ladder on the rack reaches with the required 3 feet above the edge — or whether today needs the 28. Homeowners use it to learn that their 24-footer only works to 21, before finding out at the top.',
   'siding-calculator':
     'Homeowners collecting siding quotes use this to know their square count before the first salesman measures — it converts a black-box estimate into a conversation. Contractors use it as a five-second first pass before a formal takeoff.',
   'paver-calculator':
