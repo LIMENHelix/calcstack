@@ -711,7 +711,81 @@ export function EmergencyFundCalc() {
   )
 }
 
+/* ---------------- 50/30/20 Budget ---------------- */
+
+const BUDGET_PRESETS: Record<string, [number, number, number, string]> = {
+  '50-30-20': [50, 30, 20, 'The classic — Elizabeth Warren\'s All Your Worth split'],
+  '60-20-20': [60, 20, 20, 'High cost-of-living areas where needs run hot'],
+  '70-20-10': [70, 20, 10, 'Survival mode — debt payoff or income shock'],
+  '80-20-0': [80, 20, 0, 'Bare-bones triage (temporary only)'],
+}
+
+export function BudgetRuleCalc() {
+  const [income, setIncome] = useNumber(5000)
+  const [preset, setPreset] = useState('50-30-20')
+  const [needs, setNeeds] = useNumber(2900)
+  const [wants, setWants] = useNumber(1400)
+  const [savings, setSavings] = useNumber(700)
+
+  const r = useMemo(() => {
+    const [nP, wP, sP] = BUDGET_PRESETS[preset]
+    const tN = (income * nP) / 100
+    const tW = (income * wP) / 100
+    const tS = (income * sP) / 100
+    const dN = needs - tN
+    const dW = wants - tW
+    const dS = savings - tS
+    const actualTotal = needs + wants + savings
+    const unallocated = income - actualTotal
+    return { nP, wP, sP, tN, tW, tS, dN, dW, dS, actualTotal, unallocated }
+  }, [income, preset, needs, wants, savings])
+
+  const delta = (d: number) => (Math.abs(d) < 0.005 ? 'On target' : d > 0 ? `${usd(d, 0)} over` : `${usd(-d, 0)} under`)
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Monthly after-tax income" value={income} onChange={setIncome} prefix="$" />
+        <div>
+          <label className="mb-1 block text-sm font-medium">Budget rule</label>
+          <select
+            className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+            value={preset}
+            onChange={(e) => setPreset(e.target.value)}
+          >
+            {Object.entries(BUDGET_PRESETS).map(([k, [n, w, s, note]]) => (
+              <option key={k} value={k}>{`${n}/${w}/${s} — ${note}`}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Your actual needs spending" value={needs} onChange={setNeeds} prefix="$" />
+        <Field label="Your actual wants spending" value={wants} onChange={setWants} prefix="$" />
+        <Field label="Your actual saving & debt payoff" value={savings} onChange={setSavings} prefix="$" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label={`Needs (${r.nP}%) — target ${usd(r.tN, 0)}`} value={delta(r.dN)} />
+        <Result big label={`Wants (${r.wP}%) — target ${usd(r.tW, 0)}`} value={delta(r.dW)} />
+        <Result big label={`Savings (${r.sP}%) — target ${usd(r.tS, 0)}`} value={delta(r.dS)} />
+        <Result label="Unallocated income" value={Math.abs(r.unallocated) < 0.005 ? 'Fully allocated' : usd(r.unallocated, 0)} />
+        <Result label="Needs bucket per week" value={usd(r.tN / 4.33, 0)} />
+        <Result label="Annual savings at target" value={usd(r.tS * 12, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Needs are bills you cannot skip — housing, utilities, groceries, insurance, minimum debt
+        payments. Wants are everything you could cancel tomorrow. Savings includes extra debt payoff
+        beyond minimums. On {usd(income, 0)} after-tax, the {r.nP}/{r.wP}/{r.sP} split means{' '}
+        {usd(r.tN, 0)} / {usd(r.tW, 0)} / {usd(r.tS, 0)}. The most common break is needs running over —
+        that is a housing-or-car problem, not a coffee problem, and no amount of skipped lattes fixes
+        a bucket that is {delta(r.dN)}.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  '50-30-20-budget-calculator': BudgetRuleCalc,
   'emergency-fund-calculator': EmergencyFundCalc,
   'credit-card-minimum-payment-calculator': CreditCardMinimumCalc,
   'debt-avalanche-snowball-calculator': DebtPayoffCalc,

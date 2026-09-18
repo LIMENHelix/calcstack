@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: '50-30-20-budget-calculator',
+    title: '50/30/20 Budget Calculator — Needs, Wants & Savings Targets',
+    shortTitle: '50/30/20 Budget',
+    category: 'Savings & Investing',
+    description:
+      'Free 50/30/20 budget calculator. Enter after-tax income, pick a rule (50/30/20, 60/20/20, 70/20/10), and compare your actual spending against the targets for needs, wants, and savings.',
+    tagline: 'A budget you can hold in your head beats one you abandon in a spreadsheet.',
+    intro:
+      'The 50/30/20 rule divides after-tax income into needs (50%), wants (30%), and savings including extra debt payoff (20%) — simple enough to survive contact with real life. This calculator applies the rule to your actual income, offers variants for high-cost cities and survival mode, and shows exactly which bucket is breaking and by how much, so you fix the right problem.',
+    howItWorks: [
+      'Enter your monthly after-tax income.',
+      'Pick a budget rule — classic 50/30/20, 60/20/20 for high cost-of-living, or 70/20/10 survival mode.',
+      'Enter what you actually spend on needs, wants, and savings/debt payoff.',
+      'See each bucket\'s target, your over/under in dollars, the weekly needs allowance, and annual savings at target.',
+    ],
+    faq: [
+      {
+        q: 'How does the 50/30/20 rule work?',
+        a: 'Split after-tax income: 50% needs (housing, utilities, groceries, insurance, minimum payments), 30% wants (dining out, streaming, travel), 20% savings and extra debt payoff. On $5,000 take-home that is $2,500 / $1,500 / $1,000 — about $577 a week in the needs bucket. It comes from Elizabeth Warren\'s book All Your Worth.',
+      },
+      {
+        q: 'What if my needs are way over 50%?',
+        a: 'That is structural, not behavioral — housing or a car payment is eating the budget, and no skipped subscription fixes a bucket $400 over target. Options are big levers (cheaper housing, refinancing, a second income) or a temporary rule change: 60/20/20 for high-cost cities, 70/20/10 in survival mode, with a date to climb back.',
+      },
+      {
+        q: 'Does the 20% savings include debt payments?',
+        a: 'Minimum payments count as needs — they are not optional. Extra payments beyond the minimum count in the 20% bucket, because every extra dollar of principal is functionally savings at the debt\'s interest rate. Retirement contributions count too, including anything already withheld from your paycheck.',
+      },
+    ],
+  },
+  {
     slug: 'emergency-fund-calculator',
     title: 'Emergency Fund Calculator — Target, Gap & Months to Funded',
     shortTitle: 'Emergency Fund',
