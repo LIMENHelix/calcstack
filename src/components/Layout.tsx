@@ -46,7 +46,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">{children}</main>
 
       <footer className="border-t">
-        <div className="mx-auto grid max-w-5xl gap-8 px-4 py-10 text-sm sm:grid-cols-3">
+        <div className="mx-auto grid max-w-5xl gap-8 px-4 py-10 text-sm sm:grid-cols-4">
           <div>
             <p className="mb-2 font-semibold">CalcStack</p>
             <p className="text-muted-foreground">
@@ -64,6 +64,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+          <div>
+            <p className="mb-2 font-semibold">Explore</p>
+            <ul className="space-y-1 text-muted-foreground">
+              <li>
+                <Link to="/directory" className="hover:text-foreground">
+                  Full directory
+                </Link>
+              </li>
+              <li>
+                <Link to="/for" className="hover:text-foreground">
+                  By profession
+                </Link>
+              </li>
+              <li>
+                <Link to="/embeds" className="hover:text-foreground">
+                  Embed these calculators
+                </Link>
+              </li>
             </ul>
           </div>
           <div>

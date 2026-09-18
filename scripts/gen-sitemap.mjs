@@ -32,6 +32,7 @@ const urls = [
   `  <url><loc>${SITE}/data/mortgage-payment-by-state</loc><priority>0.8</priority></url>`,
   `  <url><loc>${SITE}/data/average-salary-by-job</loc><priority>0.8</priority></url>`,
   `  <url><loc>${SITE}/directory</loc><priority>0.7</priority></url>`,
+  `  <url><loc>${SITE}/embeds</loc><priority>0.7</priority></url>`,
   `  <url><loc>${SITE}/for</loc><priority>0.8</priority></url>`,
   ...personaSlugs.map((s) => `  <url><loc>${SITE}/for/${s}</loc><priority>0.8</priority></url>`),
   ...stateDataSlugs.map((s) => `  <url><loc>${SITE}/data/mortgage-payment-in/${s}</loc></url>`),
