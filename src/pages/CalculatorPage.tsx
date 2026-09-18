@@ -31,7 +31,7 @@ import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetiza
 import { EmbedSnippet } from '@/components/EmbedSnippet'
 import { WHY_USE } from '@/data/why'
 
-const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+export const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   ...CALC_COMPONENTS,
   ...MORE_CALC_COMPONENTS,
   ...NICHE_CALC_COMPONENTS,

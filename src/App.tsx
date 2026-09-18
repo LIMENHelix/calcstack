@@ -11,6 +11,7 @@ import PersonaPage from './pages/PersonaPage'
 import PersonaIndex from './pages/PersonaIndex'
 import EmbedPage from './pages/EmbedPage'
 import EmbedTablePage from './pages/EmbedTablePage'
+import AuditAll from './pages/AuditAll'
 
 export default function App() {
   return (
@@ -18,6 +19,8 @@ export default function App() {
       {/* Bare widget route for iframes — no site chrome */}
       <Route path="/embed/:slug" element={<EmbedPage />} />
       <Route path="/embed/table/:name" element={<EmbedTablePage />} />
+      {/* QA audit route — not linked, not in sitemap */}
+      <Route path="/audit-all" element={<AuditAll />} />
       <Route
         path="*"
         element={
