@@ -54,14 +54,14 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — the defensive-money cluster: the emergency fund
-          finish date, the credit-card minimum-payment trap in real dollars, avalanche vs
-          snowball settled on your own debts, plus the retirement pair (401(k) with 2026
-          limits, Roth vs Traditional).
+          The newest tools on the site — the life-events pair (vacation and wedding budgets
+          with the per-day and per-guest truth), the car lease decoder (money factor → APR),
+          plus the defensive-money cluster (emergency fund, minimum-payment trap, avalanche
+          vs snowball).
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['emergency-fund-calculator', 'credit-card-minimum-payment-calculator', 'debt-avalanche-snowball-calculator', '401k-contribution-calculator', 'roth-vs-traditional-calculator', 'pto-accrual-calculator'].includes(c.slug),
+            ['vacation-budget-calculator', 'wedding-budget-calculator', 'car-lease-payment-calculator', 'savings-rate-calculator', 'emergency-fund-calculator', 'credit-card-minimum-payment-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
