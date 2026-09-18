@@ -51,7 +51,29 @@ export default function Home() {
       </Link>
 
       <section className="mb-12">
-        <h2 className="mb-1 text-xl font-semibold">New: pro tools for your business</h2>
+        <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          The newest tools on the site — retirement math, the rent-vs-buy breakeven, the VA funding
+          fee, and the powerlifting scoreboard.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {CALCULATORS.filter((c) =>
+            ['rent-vs-buy-calculator', 'rmd-calculator', 'social-security-breakeven-calculator', 'va-funding-fee-calculator', 'dots-score-calculator', 'tip-pool-calculator'].includes(c.slug),
+          ).map((c) => (
+            <Link key={c.slug} to={`/calculators/${c.slug}`}>
+              <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
+                <CardContent className="p-4">
+                  <p className="text-sm font-semibold">{c.shortTitle}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{c.tagline}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="mb-1 text-xl font-semibold">Pro tools for your business</h2>
         <p className="mb-4 text-sm text-muted-foreground">
           The math that decides whether a business makes money — bid sheets, pricing, quotas, and the tax deduction
           every driver misses.
