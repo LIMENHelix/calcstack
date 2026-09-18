@@ -111,6 +111,8 @@ export const WHY_USE: Record<string, string> = {
     'Contractors quoting accessibility work use it to show the client why a two-foot rise is a 24-foot structure — the landings do the talking. Families planning for aging-in-place use it to learn whether the yard has room for 1:12 at all, or whether a switchback or lift is the real answer.',
   'deck-footing-calculator':
     'Deck builders use it at the permit counter: tributary area in, the exact IRC R507.3.1 footing size out — no more upsizing every pier to 24 inches out of habit. Homeowners use it to check a contractor\'s plan before the holes are dug, because undersized footings are invisible until the deck starts to lean.',
+  'dry-well-calculator':
+    'Homeowners with downspouts dumping at the foundation and no downhill outlet use this to find out what underground storage actually takes — the 40% void ratio is the surprise that turns "dig a hole" into four pits and nine yards of stone. Drainage contractors use the runoff-to-pit math as the first pass before soil percolation tests refine it.',
   'french-drain-calculator':
     'Landscapers and drainage contractors use it to quote materials in one pass — gravel tonnage with pipe displacement already out, fabric for the burrito wrap, and the 1% slope check that decides whether the job needs a sump instead. Homeowners use it to learn why the "holes down" detail and the fabric wrap are the difference between a 30-year drain and a clogged trench.',
   'roof-pitch-calculator':

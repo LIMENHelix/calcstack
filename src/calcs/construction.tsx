@@ -1064,6 +1064,65 @@ export function DeckFootingCalc() {
   )
 }
 
+/* ---------------- Dry Well ---------------- */
+
+export function DryWellCalc() {
+  const [area, setArea] = useNumber(1000)
+  const [storm, setStorm] = useNumber(1)
+  const [pitL, setPitL] = useNumber(4)
+  const [pitW, setPitW] = useNumber(4)
+  const [pitD, setPitD] = useNumber(4)
+  const [tonCost, setTonCost] = useNumber(45)
+
+  const r = useMemo(() => {
+    const runoffCf = (area * storm) / 12 // UC ANR: area × inches ÷ 12
+    const runoffGal = runoffCf * 7.48
+    const needCf = runoffCf / 0.4 // NJDEP: crushed stone ~40% voids
+    const pitCf = pitL * pitW * pitD
+    const storagePerPit = pitCf * 0.4
+    const pits = pitCf > 0 ? Math.ceil(needCf / pitCf) : 0
+    const gravelYd = (pits * pitCf) / 27
+    const tons = gravelYd * 1.4
+    const capacityGal = pits * storagePerPit * 7.48
+    const cost = tons * tonCost
+    return { runoffCf, runoffGal, needCf, pits, gravelYd, tons, capacityGal, cost, storagePerPit }
+  }, [area, storm, pitL, pitW, pitD, tonCost])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Contributing roof area" value={area} onChange={setArea} suffix="sq ft" />
+        <Field label="Design storm" value={storm} onChange={setStorm} suffix="in of rain" step="0.25" />
+        <Field label="Pit length" value={pitL} onChange={setPitL} suffix="ft" />
+        <Field label="Pit width" value={pitW} onChange={setPitW} suffix="ft" />
+        <Field label="Pit depth" value={pitD} onChange={setPitD} suffix="ft" />
+        <Field label="Gravel price" value={tonCost} onChange={setTonCost} prefix="$" suffix="/ton" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Dry wells needed" value={`${num(r.pits)}`} />
+        <Result label="Runoff to store" value={`${num(r.runoffGal, 0)} gal (${num(r.runoffCf, 1)} ft³)`} />
+        <Result label="Required pit volume" value={`${num(r.needCf, 0)} ft³`} />
+        <Result label="Storage per pit" value={`${num(r.storagePerPit * 7.48, 0)} gal`} />
+        <Result label="Gravel (#57 / AASHTO #3)" value={`${num(r.tons, 1)} tons`} />
+        <Result label="Gravel volume" value={`${num(r.gravelYd, 1)} yd³`} />
+        <Result label="System capacity" value={`${num(r.capacityGal, 0)} gal`} />
+        <Result label="Estimated gravel cost" value={usd(r.cost)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Runoff is roof footprint × rainfall ÷ 12 — one inch on 1,000 sq ft is 623 gallons — and
+        gravel only stores water in its voids, about 40% for clean crushed stone (the figure NJ
+        DEP and AASHTO specs assume), so the pit must be roughly 2.5× the runoff volume. Sizing
+        here is deliberately conservative: it ignores infiltration during the storm, which sandy
+        soils help with and clay barely does. Line the pit with non-woven geotextile, keep dry
+        wells at least 10 ft from foundations and clear of septic fields and property lines per
+        local code, and always give the system an overflow path for storms bigger than the design
+        storm. High water table or bedrock within a couple feet of the pit bottom means a dry well
+        won&apos;t percolate — test-dig first.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- French Drain ---------------- */
 
 export function FrenchDrainCalc() {
@@ -1878,6 +1937,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'excavation-calculator': ExcavationCalc,
   'roof-pitch-calculator': RoofPitchCalc,
   'french-drain-calculator': FrenchDrainCalc,
+  'dry-well-calculator': DryWellCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,

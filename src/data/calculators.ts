@@ -1662,6 +1662,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'dry-well-calculator',
+    title: 'Dry Well Calculator — Runoff Storage, Pit Count & Gravel Tonnage',
+    shortTitle: 'Dry Well Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free dry well calculator. Roof area and design storm to runoff gallons, required pit volume at the 40% gravel void ratio, number of dry wells, and crushed stone tonnage — NJ DEP sizing method.',
+    tagline: 'Gravel only holds water in the gaps — size for the gaps.',
+    intro:
+      'A dry well is underground storage for roof runoff where no gravity outlet exists, and the sizing surprise is the void ratio: gravel stores water only in the 40% of its volume that is air, so the pit must be about 2.5 times the runoff it holds. This calculator runs the same method state stormwater manuals use — roof footprint × design storm ÷ 12 for runoff, divided by 0.40 for required pit volume — then converts to pit count and crushed stone tonnage.',
+    howItWorks: [
+      'Enter the roof area draining to the dry well (footprint, not slope area).',
+      'Enter the design storm in inches of rain (1 inch is the common residential standard).',
+      'Enter your planned pit dimensions — 4×4×4 ft is a typical residential dig.',
+      'Read pits needed, total storage, gravel yards and tons, and estimated cost.',
+    ],
+    faq: [
+      {
+        q: 'How big a dry well do I need for a 1,000 sq ft roof?',
+        a: 'One inch of rain on 1,000 sq ft is 623 gallons (83.3 cu ft) of runoff. At the 40% void ratio of clean crushed stone, that needs 208 cu ft of pit — four 4×4×4 ft dry wells, holding about 765 gallons between them. Sandy soil infiltrating during the storm reduces the real requirement; clay does not, so the conservative count stands.',
+      },
+      {
+        q: 'Why is the pit 2.5 times bigger than the water it holds?',
+        a: 'Because water can only occupy the void space between stones — roughly 40% of the pit volume for clean ¾–2½ inch crushed stone (AASHTO #3 / #57), the figure NJ DEP dry well guidance and AASHTO specs assume. Divide runoff by 0.40 and you get the required excavation.',
+      },
+      {
+        q: 'Where can a dry well NOT go?',
+        a: 'Keep it at least 10 ft from foundations (closer risks undermining footings), clear of septic tanks and leach fields, off property lines per local setback rules, and out of soil with a high water table or shallow bedrock — a pit bottomed in groundwater is a wet well, not a dry one. Always plan an overflow route for storms beyond the design storm, and call 811 before digging.',
+      },
+    ],
+  },
+  {
     slug: 'french-drain-calculator',
     title: 'French Drain Calculator — Gravel Tons, Pipe, Fabric & Slope Check',
     shortTitle: 'French Drain Calculator',
