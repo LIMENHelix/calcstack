@@ -44,6 +44,19 @@ physicians who love free tools and routinely embed calculators.
 17. City subreddits in answer threads (Template C) — rent-vs-buy questions are constant.
 18. Local lender/CU resource pages — Template B; credit unions love linking free honest tools.
 
+## Wave 6 — gig economy (highest-share audience; "true hourly" content spreads itself)
+
+19. /r/doordash, /r/uberdrivers, /r/AmazonFlexDrivers — Template C only: answer "what am I
+    really making" threads with the math inline (earnings − miles × cost − tax set-aside),
+    link Gig Driver Hourly only when it IS the answer. These communities ban self-promo
+    posters on sight — be a driver who happens to have a tool.
+20. Gig-worker blogs (therideshareguy.com, entrecourier.com) — pitch Gig Driver Hourly +
+    Mileage vs Actual embeds. Template A. Their readers re-run these numbers weekly.
+21. Delivery-driver YouTube/TikTok creators — offer the embed for "my real hourly" videos;
+    the on-screen math IS their content genre.
+22. Tax-time angle (Jan–Mar): pitch Quarterly Estimated Tax + Mileage vs Actual to
+    gig-economy newsletters and tax-prep blogs — searches spike hard in Q1.
+
 ## Rules
 
 - Verify the embed renders on their platform BEFORE pitching (WordPress allows iframes in

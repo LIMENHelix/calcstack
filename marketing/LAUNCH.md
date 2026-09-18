@@ -48,6 +48,12 @@ Follow-up template:
 Wave 2 (legal/consulting) in week 2, Wave 3 (sports science) week 3,
 Wave 4 (hospitality) week 4, Wave 5 (homebuying) week 5–6 or hold for spring season.
 
+## Phase 5 — Wave 6, gig economy (Week 6+, or Week 1 if launching Jan–Mar)
+
+Gig-driver communities are the highest-share audience — "true hourly" math is their
+native content. If launch lands in tax season (Jan–Mar), promote Wave 6 to Week 1 and
+lead with Quarterly Estimated Tax + Mileage vs Actual while searches spike.
+
 ## Success metrics (review weekly)
 
 - Embeds live (the only metric that compounds): target 5 by day 30
