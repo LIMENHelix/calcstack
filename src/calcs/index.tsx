@@ -647,6 +647,81 @@ export function DebtPayoffCalc() {
   )
 }
 
+/* ---------------- DTI (Debt-to-Income) ---------------- */
+
+export function DtiCalc() {
+  const [income, setIncome] = useNumber(7500)
+  const [housing, setHousing] = useNumber(1800)
+  const [car, setCar] = useNumber(400)
+  const [student, setStudent] = useNumber(250)
+  const [cards, setCards] = useNumber(150)
+  const [other, setOther] = useNumber(0)
+
+  const r = useMemo(() => {
+    const debts = car + student + cards + other
+    const front = income > 0 ? (housing / income) * 100 : 0
+    const back = income > 0 ? ((housing + debts) / income) * 100 : 0
+    const room36 = Math.max(0, 0.36 * income - debts)
+    const room43 = Math.max(0, 0.43 * income - debts)
+    const room50 = Math.max(0, 0.5 * income - debts)
+    const grade =
+      back <= 36 && front <= 28
+        ? { label: 'Comfortable (28/36 zone)', tone: 'text-emerald-600' }
+        : back <= 43
+          ? { label: 'Approvable — conventional range', tone: 'text-amber-600' }
+          : back <= 50
+            ? { label: 'Stretched — FHA-with-factors range', tone: 'text-amber-700' }
+            : { label: 'Over lender limits', tone: 'text-red-600' }
+    return { debts, front, back, room36, room43, room50, grade }
+  }, [income, housing, car, student, cards, other])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="Gross monthly income (before tax)" value={income} onChange={setIncome} prefix="$" />
+          <Field label="Housing payment (PITI, current or proposed)" value={housing} onChange={setHousing} prefix="$" suffix="/mo" />
+          <Field label="Car payments" value={car} onChange={setCar} prefix="$" suffix="/mo" />
+          <Field label="Student loan payments" value={student} onChange={setStudent} prefix="$" suffix="/mo" />
+          <Field label="Credit card minimums" value={cards} onChange={setCards} prefix="$" suffix="/mo" />
+          <Field label="Other debt payments" value={other} onChange={setOther} prefix="$" suffix="/mo" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label="Back-end DTI (the one lenders quote)" value={`${num(r.back, 1)}%`} />
+          <Result label="Front-end DTI (housing only)" value={`${num(r.front, 1)}%`} />
+          <Result label="Non-housing debt load" value={usd(r.debts, 2)} />
+          <Result label="Lender read" value={r.grade.label} />
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border">
+          <table className="w-full text-sm">
+            <thead className="bg-muted">
+              <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <th className="p-2">Lending rule</th>
+                <th className="p-2 text-right">Max housing payment you have room for</th>
+                <th className="p-2 text-right">Your status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t"><td className="p-2">Comfortable (36% back-end)</td><td className="p-2 text-right">{usd(r.room36, 2)}/mo</td><td className="p-2 text-right">{housing <= r.room36 ? 'Inside' : 'Over'}</td></tr>
+              <tr className="border-t"><td className="p-2">Conventional cap (43%)</td><td className="p-2 text-right">{usd(r.room43, 2)}/mo</td><td className="p-2 text-right">{housing <= r.room43 ? 'Inside' : 'Over'}</td></tr>
+              <tr className="border-t"><td className="p-2">FHA stretch cap (50% w/ factors)</td><td className="p-2 text-right">{usd(r.room50, 2)}/mo</td><td className="p-2 text-right">{housing <= r.room50 ? 'Inside' : 'Over'}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Lenders count gross income (before taxes) against monthly obligations: housing
+          (principal, interest, taxes, insurance, HOA) plus minimum payments on every debt on your
+          credit report. Gross — not take-home — which is why the approved number always feels
+          richer than your budget. Rent, utilities, groceries, and subscriptions do not count;
+          judgments, alimony, and deferred student loans do.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   'freelance-rate-calculator': FreelanceRateCalc,
   'salary-to-hourly-calculator': SalaryHourlyCalc,
@@ -655,4 +730,5 @@ export const CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactEl
   'savings-goal-calculator': SavingsGoalCalc,
   'loan-payoff-calculator': LoanPayoffCalc,
   'debt-payoff-calculator': DebtPayoffCalc,
+  'dti-calculator': DtiCalc,
 }

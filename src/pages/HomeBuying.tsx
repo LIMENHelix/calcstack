@@ -7,7 +7,7 @@ const SECTIONS: { title: string; blurb: string; slugs: readonly string[] }[] = [
   {
     title: 'Can you afford it — decide before you tour',
     blurb: 'The payment is only part of the cost. Run the numbers before the open house.',
-    slugs: ['home-affordability-calculator', 'mortgage-payment-calculator', 'fha-loan-calculator', 'va-loan-calculator', '15-year-mortgage-calculator', 'rent-vs-buy-calculator'],
+    slugs: ['home-affordability-calculator', 'dti-calculator', 'mortgage-payment-calculator', 'fha-loan-calculator', 'va-loan-calculator', '15-year-mortgage-calculator', 'rent-vs-buy-calculator'],
   },
   {
     title: 'Cash to close — the check nobody warns you about',
@@ -28,6 +28,7 @@ const SECTIONS: { title: string; blurb: string; slugs: readonly string[] }[] = [
 
 const REASONS: Record<string, string> = {
   'home-affordability-calculator': 'Income and debts in, maximum and comfortable price out — taxes, insurance, and PMI already inside.',
+  'dti-calculator': 'The ratio lenders gate on — both ratios, your tier, and the housing payment you have room for.',
   'mortgage-payment-calculator': 'Principal, interest, and the amortization schedule — see what rate changes do to 30 years.',
   'fha-loan-calculator': '3.5% down, 580 credit — the real payment with financed UFMIP and lifetime MIP included.',
   'va-loan-calculator': 'Veterans: zero down, no monthly insurance ever, funding fee financed — priced against FHA and conventional on the same house.',

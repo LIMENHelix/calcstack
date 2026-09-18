@@ -3570,6 +3570,40 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'dti-calculator',
+    title: 'DTI Calculator — Debt-to-Income Ratio Lenders Use (Front & Back End)',
+    shortTitle: 'DTI Calculator',
+    category: 'Loans & Debt',
+    description:
+      'Free debt-to-income calculator. Front-end and back-end DTI with the exact thresholds lenders use — 28/36 comfortable, 43% conventional, 50% FHA — and the housing payment you have room for.',
+    tagline: 'The single number that decides your mortgage, computed the lender\'s way.',
+    intro:
+      'DTI is the gate every loan application walks through first, and it is computed in a way that surprises people: gross income, not take-home, against housing plus minimum debt payments. This calculator shows both ratios, grades them against the real lending tiers, and converts the rules into the number you actually need — how much housing payment you have room for.',
+    howItWorks: [
+      'Enter gross monthly income (before taxes) and your housing payment — current or proposed.',
+      'Add car, student loan, credit card minimums, and other monthly debt payments.',
+      'Read front-end and back-end DTI, your lender tier, and the max housing payment under each rule.',
+    ],
+    faq: [
+      {
+        q: 'What DTI do lenders actually require?',
+        a: 'Conventional loans cap at 43% back-end for most borrowers (45–50% with strong compensating factors), FHA stretches to about 50%, and VA has no hard cap but uses residual income tests. The classic 28/36 rule (28% housing, 36% total) is the comfortable zone — approval above it is possible, but the budget gets tight fast.',
+      },
+      {
+        q: 'What counts as income and debt in DTI?',
+        a: 'Income is gross — before taxes — including salary, documented overtime, and provable side income. Debts are the minimum payments on your credit report: cards, car, student loans, personal loans, plus court-ordered payments. Renters: your CURRENT rent does not count once you are applying with a mortgage payment. Utilities, groceries, and subscriptions never count.',
+      },
+      {
+        q: 'My DTI is too high — what moves it fastest?',
+        a: 'Paying OFF a small debt beats paying DOWN a big one: eliminating a $250/month car payment drops your back-end by 3+ points instantly, while the same cash against a credit card balance barely moves the minimum. The second lever is a co-borrower\'s income. Run both scenarios here before touching anything.',
+      },
+      {
+        q: 'Is DTI computed before or after taxes?',
+        a: 'Before — lenders use gross income, which is why the approved payment always feels larger than your real budget can hold. Use the 36% "comfortable" row for planning your life and the 43% row only to know what you could be approved for.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

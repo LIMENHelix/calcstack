@@ -235,4 +235,6 @@ export const WHY_USE: Record<string, string> = {
     'Homeowners getting refi mailers use it to test the pitch: break-even month first, then the horizon total that exposes a reset clock. It is the calculator that separates a lower payment from actual savings — the confusion lenders profit from.',
   'debt-payoff-calculator':
     'Anyone carrying multiple balances uses it to end the snowball-versus-avalanche argument with their own numbers — exact payoff dates and the dollar gap between strategies. The negative-amortization flag catches the trap most calculators never mention.',
+  'dti-calculator':
+    'Mortgage shoppers use it before applying, so the lender\'s first gate is never a surprise — and the "max housing payment per rule" table converts an abstract ratio into a shopping number. The gross-vs-take-home FAQ explains why approvals always feel generous.',
 }
