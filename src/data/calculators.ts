@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'credit-card-minimum-payment-calculator',
+    title: 'Credit Card Minimum Payment Calculator — The True Cost of Minimums',
+    shortTitle: 'Minimum Payment Cost',
+    category: 'Loans & Debt',
+    description:
+      'Free credit card minimum payment calculator. See how long paying only the minimum really takes and what it costs — then compare fixing your payment at today\'s amount. The trap, in dollars.',
+    tagline: 'The minimum payment is designed to keep you paying.',
+    intro:
+      'The minimum payment trap is structural: issuers set it at about 1% of your balance plus that month\'s interest, so as the balance shrinks, the payment shrinks — and the debt stretches toward two decades. This calculator simulates the minimum-only path month by month, then shows the single most powerful fix: freeze your payment at today\'s amount and watch years and thousands of dollars of interest fall off.',
+    howItWorks: [
+      'Enter your card balance, APR, and the minimum payment floor (typically $25).',
+      'The simulator runs the issuer\'s formula — 1% of balance plus interest — month by month until the debt dies.',
+      'Then it reruns with your payment fixed at today\'s minimum, plus any extra you can add.',
+      'Compare years, total interest, and the exact savings from refusing to let the payment shrink.',
+    ],
+    faq: [
+      {
+        q: 'How long does paying only the minimum take?',
+        a: 'Far longer than anyone expects. A $5,000 balance at 22% APR with a typical 1%-plus-interest minimum takes 227 months — 18.9 years — and costs $7,964 in interest, more than 1.5× the original balance. Your statement is required by the CARD Act to show this timeline; check it.',
+      },
+      {
+        q: 'What is the fastest cheap fix?',
+        a: 'Freeze the payment. Fix your payment at today\'s minimum instead of letting it shrink: that same $5,000 at 22% dies in 58 months instead of 227, saving $4,842 in interest — without paying a single dollar more than you paid this month. Every extra dollar on top shortens it further.',
+      },
+      {
+        q: 'Why does the minimum payment shrink over time?',
+        a: 'Because it is a percentage of the remaining balance (typically 1%) plus that month\'s interest, with a small floor like $25. A shrinking payment keeps principal reduction crawling — the issuer collects interest for years longer. It is legal, disclosed, and entirely designed around the hope that you never do this math.',
+      },
+    ],
+  },
+  {
     slug: 'debt-avalanche-snowball-calculator',
     title: 'Debt Avalanche vs Snowball Calculator — Exact Interest Difference',
     shortTitle: 'Avalanche vs Snowball',

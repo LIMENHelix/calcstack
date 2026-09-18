@@ -15,6 +15,8 @@ export const WHY_USE: Record<string, string> = {
     'A house deposit, an emergency fund, a wedding, a sabbatical — every goal is a wish until it has a monthly number. People use this to convert "I want $20,000 in two years" into "$812 a month," and to find out honestly whether the plan fits the budget before committing to it.',
   'loan-payoff-calculator':
     'People use this when they get a raise, a bonus, or a tax refund and face the classic question: throw it at the loan or not? It shows exactly what an extra $50 or $500 a month does to a car loan, student loan, or personal loan — the months erased and the interest saved, in dollars.',
+  'credit-card-minimum-payment-calculator':
+    'Cardholders use it the month they realize the balance has not moved in a year: the simulation shows exactly where the payments went and the one change — freezing the payment — that ends it. It is the math behind the warning box on every statement.',
   'debt-avalanche-snowball-calculator':
     'Anyone carrying two or more debts uses it to end the strategy debate with their own numbers: the exact dollar and month difference between attacking the highest rate and attacking the smallest balance. It turns the loudest argument in personal finance into a five-minute decision.',
   'tip-calculator':

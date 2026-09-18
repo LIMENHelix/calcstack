@@ -570,7 +570,88 @@ export function DebtPayoffCalc() {
   )
 }
 
+/* ---------------- Credit Card Minimum Payment Trap ---------------- */
+
+// Issuer model: minimum = max(floor, 1% of balance + month's interest)
+function minPaymentSim(bal: number, apr: number, floor: number) {
+  let months = 0
+  let interest = 0
+  let b = bal
+  while (b > 0.005 && months < 1200) {
+    months++
+    const i = (b * apr) / 100 / 12
+    interest += i
+    b += i
+    const pmt = Math.max(floor, b * 0.01 + i)
+    b -= Math.min(pmt, b)
+  }
+  return { months, interest }
+}
+
+function fixedPaymentSim(bal: number, apr: number, payment: number) {
+  let months = 0
+  let interest = 0
+  let b = bal
+  const firstI = (bal * apr) / 100 / 12
+  if (payment <= firstI) return { months: -1, interest: -1 } // never pays off
+  while (b > 0.005 && months < 1200) {
+    months++
+    const i = (b * apr) / 100 / 12
+    interest += i
+    b += i
+    b -= Math.min(payment, b)
+  }
+  return { months, interest }
+}
+
+export function CreditCardMinimumCalc() {
+  const [bal, setBal] = useNumber(5000)
+  const [apr, setApr] = useNumber(22)
+  const [floor, setFloor] = useNumber(25)
+  const [extra, setExtra] = useNumber(0)
+
+  const r = useMemo(() => {
+    if (bal <= 0) return null
+    const minOnly = minPaymentSim(bal, apr, floor)
+    const firstMin = Math.max(floor, bal * 0.01 + (bal * apr) / 100 / 12)
+    const fixed = fixedPaymentSim(bal, apr, firstMin + extra)
+    const savedInterest = fixed.months > 0 ? minOnly.interest - fixed.interest : 0
+    const savedMonths = fixed.months > 0 ? minOnly.months - fixed.months : 0
+    return { minOnly, firstMin, fixed, savedInterest, savedMonths }
+  }, [bal, apr, floor, extra])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-4">
+        <Field label="Card balance" value={bal} onChange={setBal} prefix="$" />
+        <Field label="APR" value={apr} onChange={setApr} suffix="%" step="0.5" />
+        <Field label="Minimum payment floor" value={floor} onChange={setFloor} prefix="$" />
+        <Field label="Extra above first minimum" value={extra} onChange={setExtra} prefix="$" />
+      </div>
+      {r && (
+        <>
+          <div className="grid gap-3 sm:grid-cols-4">
+            <Result big label="Paying only minimums" value={`${r.minOnly.months} mo (${num(r.minOnly.months / 12, 1)} yrs)`} />
+            <Result label="Interest on minimums" value={usd(r.minOnly.interest, 0)} />
+            <Result label={r.fixed.months > 0 ? `Fixed at ${usd(r.firstMin + extra, 2)}/mo` : 'Payment too small'} value={r.fixed.months > 0 ? `${r.fixed.months} mo · ${usd(r.fixed.interest, 0)} interest` : 'Never pays off'} />
+            <Result label="Saved by fixing the payment" value={`${usd(r.savedInterest, 0)} & ${r.savedMonths} mo`} />
+          </div>
+          <p className="text-sm text-muted-foreground">
+            The trap is structural: the minimum is 1% of the balance plus interest, so as the balance
+            falls, the payment falls — stretching a {usd(bal, 0)} balance at {num(apr, 1)}% to{' '}
+            {num(r.minOnly.months / 12, 1)} years and {usd(r.minOnly.interest, 0)} of interest. Fix the
+            payment at today's {usd(r.firstMin, 2)} and the same debt dies in {r.fixed.months > 0 ? `${r.fixed.months} months` : '—'}.
+            The CARD Act requires your statement to show this minimum-payment timeline — check it
+            against this number.
+          </p>
+        </>
+      )}
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'credit-card-minimum-payment-calculator': CreditCardMinimumCalc,
   'debt-avalanche-snowball-calculator': DebtPayoffCalc,
   'tip-calculator': TipCalc,
   'discount-calculator': DiscountCalc,
