@@ -3764,6 +3764,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: '401k-contribution-calculator',
+    title: '401(k) Contribution Calculator — 2026 Limits, Employer Match & Tax Savings',
+    shortTitle: '401(k) Contribution',
+    category: 'Savings & Investing',
+    description:
+      'Free 401(k) contribution calculator with official 2026 IRS limits ($24,500, catch-up $8,000, super catch-up $11,250). See per-check deferral, employer match, match left on the table, tax savings, and real take-home cost.',
+    tagline: 'The match is part of your salary. Take all of it.',
+    intro:
+      'A 401(k) decision is three numbers: what you defer, what the employer adds, and what the tax saving refunds. This calculator runs all three against the official 2026 IRS limits — $24,500 under 50, $32,500 with the age-50 catch-up, $35,750 at ages 60–63 — and shows the per-paycheck amount, any employer match left on the table, and what the contribution really costs your take-home pay after the pre-tax deduction.',
+    howItWorks: [
+      'Enter your salary and contribution percentage, and pick your age bracket — the 2026 IRS deferral limit adjusts automatically.',
+      'Model the employer match (e.g., 50% of the first 6% of salary) to see the free-money dollars and anything left on the table.',
+      'Enter your combined marginal tax rate — pre-tax contributions cost less than face value because they skip that tax.',
+      'Read annual and per-check contributions, tax savings, real take-home cost, and the percentage needed to max the limit.',
+    ],
+    faq: [
+      {
+        q: 'What is the 401(k) contribution limit for 2026?',
+        a: '$24,500 for employee elective deferrals under IRS Notice 2025-67, up $1,000 from 2025. Workers 50 and older add an $8,000 catch-up ($32,500 total), and ages 60–63 get a super catch-up of $11,250 ($35,750 total) if the plan offers it. The limit is per person across all plans, not per account.',
+      },
+      {
+        q: 'Does the employer match count toward my limit?',
+        a: 'No. The match never counts against your $24,500 deferral limit — it counts only toward the §415(c) annual-additions cap of $72,000 (2026), which covers deferrals plus all employer money. Example: $85,000 salary at 10% defers $8,500, and a 50%-of-6% match adds $2,550 — total $11,050 into the plan, all under both caps.',
+      },
+      {
+        q: 'What does contributing actually cost my paycheck?',
+        a: 'Less than the contribution. Pre-tax deferrals skip your marginal tax rate, so $8,500 deferred at a 22% marginal rate saves $1,870 in tax and costs $6,630 of take-home — $326.92 per biweekly check on an $85,000 salary. And contributing below the match threshold is worse than any fee: at 4% with a 50%-of-6% match, you leave $850 a year of pay unclaimed.',
+      },
+    ],
+  },
+  {
     slug: 'social-security-breakeven-calculator',
     title: 'Social Security Breakeven Calculator — Claim at 62, 67, or 70?',
     shortTitle: 'SS Breakeven Age',

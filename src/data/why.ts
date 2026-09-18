@@ -253,6 +253,8 @@ export const WHY_USE: Record<string, string> = {
     'First-time buyers use it the week before making an offer — the down payment is not the whole check. Buyers use it again when the Loan Estimate arrives to catch padded fees line by line.',
   'rmd-calculator':
     'Retirees use it every December: the divisor shrinks every year, so the RMD percentage climbs — this shows both. Advisors use it to size Roth conversions in the gap years between retirement and age 73.',
+  '401k-contribution-calculator':
+    'Employees use it at open enrollment and after every raise: what does 1% more actually cost per check, and is the full match being captured? It is the answer to the two most common 401(k) questions — "how much should I put in" and "what will my paycheck look like."',
   'social-security-breakeven-calculator':
     'People approaching 62 use it to see the real trade: a 30% haircut for eight extra years of checks, with the crossover age made explicit. Couples use it for the higher earner — delaying to 70 is really buying the survivor a bigger check.',
   'safe-withdrawal-calculator':

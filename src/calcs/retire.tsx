@@ -212,7 +212,106 @@ export function SafeWithdrawalCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- 401(k) Contribution & Match ---------------- */
+
+// IRS Notice 2025-67 (2026 limits): deferral $24,500; catch-up $8,000 (age 50+);
+// $11,250 (ages 60–63); §415(c) annual additions cap $72,000 (match doesn't count against deferral limit).
+const K401_LIMITS: Record<string, number> = { under50: 24500, age50: 32500, age60: 35750 }
+
+export function K401Calc(_props: CalcProps) {
+  const [salary, setSalary] = useNumber(85000)
+  const [pct, setPct] = useNumber(10)
+  const [bracket, setBracket] = useState('under50')
+  const [matchPct, setMatchPct] = useNumber(50)
+  const [matchUpTo, setMatchUpTo] = useNumber(6)
+  const [taxRate, setTaxRate] = useNumber(22)
+  const [freq, setFreq] = useState('26')
+
+  const periods = Number(freq) || 26
+
+  const r = useMemo(() => {
+    const limit = K401_LIMITS[bracket]
+    const raw = salary * (pct / 100)
+    const contrib = Math.min(raw, limit)
+    const capped = raw > limit + 0.005
+    // Employer match: matchPct% of the first matchUpTo% of salary deferred. Match does NOT count against the §402(g) deferral limit.
+    const match = (Math.min(pct, matchUpTo) / 100) * salary * (matchPct / 100)
+    const matchFull = (matchUpTo / 100) * salary * (matchPct / 100)
+    const leftOnTable = Math.max(0, matchFull - match)
+    const taxSaved = contrib * (taxRate / 100)
+    const netCost = contrib - taxSaved
+    const additions = contrib + match
+    const overAdditions = additions > 72000
+    const maxPct = salary > 0 ? (limit / salary) * 100 : 0
+    return { limit, contrib, capped, match, leftOnTable, taxSaved, netCost, additions, overAdditions, maxPct, perCheck: contrib / periods }
+  }, [salary, pct, bracket, matchPct, matchUpTo, taxRate, periods])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Annual salary" value={salary} onChange={setSalary} prefix="$" />
+          <Field label="Your contribution" value={pct} onChange={setPct} suffix="%" step="0.5" />
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Age bracket (2026 limit)</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={bracket}
+              onChange={(e) => setBracket(e.target.value)}
+            >
+              <option value="under50">Under 50 — $24,500</option>
+              <option value="age50">50–59 or 64+ — $32,500 with catch-up</option>
+              <option value="age60">60–63 — $35,750 with super catch-up</option>
+            </select>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Employer matches" value={matchPct} onChange={setMatchPct} suffix="%" />
+            <Field label="Of first % of salary" value={matchUpTo} onChange={setMatchUpTo} suffix="%" step="0.5" />
+          </div>
+          <Field label="Marginal tax rate (fed + state)" value={taxRate} onChange={setTaxRate} suffix="%" step="1" />
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Pay frequency</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={freq}
+              onChange={(e) => setFreq(e.target.value)}
+            >
+              <option value="52">Weekly (52)</option>
+              <option value="26">Biweekly (26)</option>
+              <option value="24">Semi-monthly (24)</option>
+              <option value="12">Monthly (12)</option>
+            </select>
+          </div>
+        </div>
+        <div className="space-y-3">
+          <Result big label="Your annual contribution" value={usd(r.contrib, 0)} />
+          {r.capped && <Result label="IRS deferral cap reached" value={`Capped at ${usd(r.limit, 0)}`} />}
+          <Result label="Per paycheck" value={usd(r.perCheck, 2)} />
+          <Result label="Employer match (free money)" value={usd(r.match, 0)} />
+          {r.leftOnTable > 0.005 && <Result label="Match left on the table" value={usd(r.leftOnTable, 0)} />}
+          <Result label="Tax saved this year (pre-tax)" value={usd(r.taxSaved, 0)} />
+          <Result label="Real take-home cost" value={usd(r.netCost, 0)} />
+          <Result label="Total into the plan (you + match)" value={usd(r.additions, 0)} />
+          <Result label={`% of salary to max the ${usd(r.limit, 0)} limit`} value={`${num(r.maxPct, 1)}%`} />
+          {r.overAdditions && (
+            <Result label="§415(c) warning" value="Over $72,000 annual-additions cap" />
+          )}
+          <p className="text-sm text-muted-foreground">
+            2026 IRS limits (Notice 2025-67): $24,500 elective deferral, +$8,000 catch-up at 50+, +$11,250
+            at ages 60–63. The employer match does not count against your deferral limit — it counts only
+            toward the $72,000 total annual-additions cap. Contributing {num(pct, 1)}% of {usd(salary, 0)}{' '}
+            defers {usd(r.contrib, 0)} but costs only {usd(r.netCost, 0)} of take-home at a {num(taxRate, 0)}%
+            marginal rate — the tax saving funds the rest. Contributing under the match threshold is turning
+            down part of your pay.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const RETIRE_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  '401k-contribution-calculator': K401Calc,
   'rmd-calculator': RmdCalc,
   'social-security-breakeven-calculator': SsBreakevenCalc,
   'safe-withdrawal-calculator': SafeWithdrawalCalc,

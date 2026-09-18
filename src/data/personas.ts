@@ -109,6 +109,7 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'beam-load-calculator',
       'load-combination-calculator',
+      '401k-contribution-calculator',
       'horsepower-torque-calculator',
       'rc-circuit-calculator',
       'ohms-law-calculator',
@@ -189,6 +190,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'nurse-shift-pay-calculator',
+      '401k-contribution-calculator',
       'overtime-calculator',
       'pto-accrual-calculator',
       'w4-withholding-calculator',
@@ -315,6 +317,7 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'salary-to-hourly-calculator',
       'freelance-rate-calculator-web-developer',
+      '401k-contribution-calculator',
       'compound-interest-calculator',
       'roi-calculator',
       'loan-payoff-calculator',
@@ -392,6 +395,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'wrvu-compensation-calculator',
+      '401k-contribution-calculator',
       'disability-insurance-calculator',
       'life-insurance-calculator',
       'loan-payoff-calculator',
@@ -782,6 +786,7 @@ export const PERSONAS: Persona[] = [
       'first-apartment-budget-calculator',
       'salary-offer-comparison-calculator',
       'student-loan-vs-investing-calculator',
+      '401k-contribution-calculator',
       'moving-cost-calculator',
       'compound-interest-calculator',
       'savings-goal-calculator',
