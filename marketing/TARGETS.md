@@ -123,6 +123,19 @@ Lead with the tools competitors can't match, not the commodity ones.
 39. Tax-time cross-pitch (Feb–Apr): Rental Depreciation to CPA/tax-prep blogs serving
     real-estate investors — Schedule E content spikes in Q1.
 
+## Wave 10 — construction & DIY (13-tool materials cluster; see outreach-drafts/wave10-construction.md)
+
+40. Family Handyman / The Spruce-style DIY sites — Template B, pitch the embed gallery as a
+    project-guide companion. Deck + framing calculators are the hook.
+41. Contractor business blogs (Jobber, Buildertrend, Housecall Pro) — Template A, bid-accuracy
+    angle: framing + concrete + bid-sheet embeds.
+42. Lumberyard / building-supply blogs — Template B, pitch /for/contractors as one link that
+    saves their counter staff phone math.
+43. /r/DIY and /r/HomeImprovement — Template C only: answer span and concrete-yardage threads
+    with the math inline, IRC table cited.
+44. Fence/deck suppliers and installer blogs — Template A: "customers order right the first
+    time" angle; fence + deck embeds keep shoppers on their page.
+
 ## Rules
 
 - Verify the embed renders on their platform BEFORE pitching (WordPress allows iframes in
