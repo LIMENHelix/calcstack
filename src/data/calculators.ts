@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'vacation-budget-calculator',
+    title: 'Vacation Budget Calculator — True Trip Cost & Monthly Savings Plan',
+    shortTitle: 'Vacation Budget',
+    category: 'Savings & Investing',
+    description:
+      'Free vacation budget calculator. Enter travelers, nights, hotel, flights, food, and activities with a surprise buffer — see the true total, cost per person and per day, and exactly what to save monthly.',
+    tagline: 'The trip costs what it costs. Find out before you book, not after you land.',
+    intro:
+      'Vacations blow budgets in the same places every time: the food estimate was per person but the flights were for two, and nobody budgeted the buffer. This calculator builds the trip from its real parts — lodging, transport, food per person per day, activities, and a surprise buffer — then converts the total into the number that actually matters: what you need to save each month before you leave.',
+    howItWorks: [
+      'Enter travelers, nights, hotel rate, and total transport (flights or gas).',
+      'Add food per person per day, activities and tickets, and local transport/misc.',
+      'Set a surprise buffer — 10% is the honest minimum — and how many months until the trip.',
+      'Read the true total, per-person and per-day cost, and the monthly savings target.',
+    ],
+    faq: [
+      {
+        q: 'How much should I budget for a vacation?',
+        a: 'Build it, don\'t guess it. Example: 2 travelers, 5 nights at $180, $700 flights, $60/day food each, $400 activities, $200 misc, 10% buffer → $3,080 total, $1,540 per person, $616 per day. The per-day figure is the honest way to compare trips against each other — and against staying home.',
+      },
+      {
+        q: 'What do people forget to budget for?',
+        a: 'The buffer items: resort and parking fees, tips, baggage fees, airport food, the one rainy-day activity, and the "we\'re on vacation" splurge dinner. That is why the 10% buffer is a line, not an option — trips reliably produce unbudgeted costs, and the buffer is what keeps them off a credit card at 22%.',
+      },
+      {
+        q: 'How do I save for a trip without touching my emergency fund?',
+        a: 'Reverse the math: total cost ÷ months until departure = monthly savings. A $3,080 trip 4 months out is $770/month; 8 months out is $385. If the monthly number doesn\'t fit, adjust the trip — one fewer night, one hotel tier down — not the emergency fund. The fund is for disasters, not departures.',
+      },
+    ],
+  },
+  {
     slug: '50-30-20-budget-calculator',
     title: '50/30/20 Budget Calculator — Needs, Wants & Savings Targets',
     shortTitle: '50/30/20 Budget',

@@ -784,7 +784,65 @@ export function BudgetRuleCalc() {
   )
 }
 
+/* ---------------- Vacation Budget ---------------- */
+
+export function VacationBudgetCalc() {
+  const [travelers, setTravelers] = useNumber(2)
+  const [nights, setNights] = useNumber(5)
+  const [hotelRate, setHotelRate] = useNumber(180)
+  const [flights, setFlights] = useNumber(700)
+  const [foodDay, setFoodDay] = useNumber(60)
+  const [activities, setActivities] = useNumber(400)
+  const [misc, setMisc] = useNumber(200)
+  const [bufferPct, setBufferPct] = useNumber(10)
+  const [monthsAway, setMonthsAway] = useNumber(4)
+
+  const r = useMemo(() => {
+    const hotel = nights * hotelRate
+    const food = foodDay * travelers * nights
+    const base = hotel + flights + food + activities + misc
+    const total = base * (1 + bufferPct / 100)
+    const perPerson = travelers > 0 ? total / travelers : 0
+    const perDay = nights > 0 ? total / nights : 0
+    const monthly = monthsAway > 0 ? total / monthsAway : total
+    return { hotel, food, base, total, perPerson, perDay, monthly }
+  }, [travelers, nights, hotelRate, flights, foodDay, activities, misc, bufferPct, monthsAway])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Travelers" value={travelers} onChange={setTravelers} step="1" />
+        <Field label="Nights" value={nights} onChange={setNights} step="1" />
+        <Field label="Hotel per night" value={hotelRate} onChange={setHotelRate} prefix="$" />
+        <Field label="Flights / gas (total)" value={flights} onChange={setFlights} prefix="$" />
+        <Field label="Food per person per day" value={foodDay} onChange={setFoodDay} prefix="$" />
+        <Field label="Activities & tickets (total)" value={activities} onChange={setActivities} prefix="$" />
+        <Field label="Local transport & misc (total)" value={misc} onChange={setMisc} prefix="$" />
+        <Field label="Surprise buffer" value={bufferPct} onChange={setBufferPct} suffix="%" />
+        <Field label="Trip is months away" value={monthsAway} onChange={setMonthsAway} step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Total trip cost" value={usd(r.total, 0)} />
+        <Result label="Per person" value={usd(r.perPerson, 0)} />
+        <Result label="Per day" value={usd(r.perDay, 0)} />
+        <Result label="Save monthly to afford it" value={usd(r.monthly, 0)} />
+        <Result label="Lodging" value={usd(r.hotel, 0)} />
+        <Result label="Food" value={usd(r.food, 0)} />
+        <Result label="Buffer for surprises" value={usd(r.total - r.base, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The base cost is {usd(r.base, 0)}; the {num(bufferPct, 0)}% buffer covers the things every trip
+        produces and nobody budgets — resort fees, tips, the rainy-day tour, the airport meal. Per-day
+        cost is the honest comparison number between trips: {usd(r.perDay, 0)}/day here. If the monthly
+        savings line stings, the levers in order of painlessness: trim a night, drop the hotel tier,
+        then cut an activity — not the buffer. The buffer is what keeps the vacation off a credit card.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'vacation-budget-calculator': VacationBudgetCalc,
   '50-30-20-budget-calculator': BudgetRuleCalc,
   'emergency-fund-calculator': EmergencyFundCalc,
   'credit-card-minimum-payment-calculator': CreditCardMinimumCalc,
