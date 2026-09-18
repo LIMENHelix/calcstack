@@ -841,7 +841,66 @@ export function VacationBudgetCalc() {
   )
 }
 
+/* ---------------- Wedding Budget ---------------- */
+
+export function WeddingBudgetCalc() {
+  const [guests, setGuests] = useNumber(100)
+  const [perGuest, setPerGuest] = useNumber(120)
+  const [attire, setAttire] = useNumber(2500)
+  const [photo, setPhoto] = useNumber(3000)
+  const [flowers, setFlowers] = useNumber(2000)
+  const [music, setMusic] = useNumber(1200)
+  const [rings, setRings] = useNumber(1000)
+  const [misc, setMisc] = useNumber(800)
+  const [bufferPct, setBufferPct] = useNumber(10)
+  const [monthsAway, setMonthsAway] = useNumber(12)
+
+  const r = useMemo(() => {
+    const venueFood = guests * perGuest
+    const base = venueFood + attire + photo + flowers + music + rings + misc
+    const total = base * (1 + bufferPct / 100)
+    const perGuestAll = guests > 0 ? total / guests : 0
+    const monthly = monthsAway > 0 ? total / monthsAway : total
+    const venuePct = base > 0 ? (venueFood / base) * 100 : 0
+    return { venueFood, base, total, perGuestAll, monthly, venuePct }
+  }, [guests, perGuest, attire, photo, flowers, music, rings, misc, bufferPct, monthsAway])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Guests" value={guests} onChange={setGuests} step="5" />
+        <Field label="Venue + catering per guest" value={perGuest} onChange={setPerGuest} prefix="$" />
+        <Field label="Attire & beauty" value={attire} onChange={setAttire} prefix="$" />
+        <Field label="Photo & video" value={photo} onChange={setPhoto} prefix="$" />
+        <Field label="Flowers & decor" value={flowers} onChange={setFlowers} prefix="$" />
+        <Field label="Music & entertainment" value={music} onChange={setMusic} prefix="$" />
+        <Field label="Rings" value={rings} onChange={setRings} prefix="$" />
+        <Field label="Invites, favors & misc" value={misc} onChange={setMisc} prefix="$" />
+        <Field label="Surprise buffer" value={bufferPct} onChange={setBufferPct} suffix="%" />
+        <Field label="Wedding is months away" value={monthsAway} onChange={setMonthsAway} step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Total wedding cost" value={usd(r.total, 0)} />
+        <Result label="All-in cost per guest" value={usd(r.perGuestAll, 0)} />
+        <Result label="Save monthly to pay cash" value={usd(r.monthly, 0)} />
+        <Result label="Venue + food share" value={`${num(r.venuePct, 0)}% of budget`} />
+        <Result label="Venue + catering" value={usd(r.venueFood, 0)} />
+        <Result label="Buffer for surprises" value={usd(r.total - r.base, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Venue and catering run about half of most wedding budgets — here {num(r.venuePct, 0)}% — so the
+        guest list is the budget: every 10 guests at {usd(perGuest, 0)} a head moves the total{' '}
+        {usd(perGuest * 10 * (1 + bufferPct / 100), 0)}. The {num(bufferPct, 0)}% buffer covers the
+        costs that appear after the quotes: service charges, gratuities, alterations, the vendor meals
+        nobody mentions. If the monthly line is impossible, cut guests before cutting quality —
+        80 guests done well beats 120 done thin, and nobody remembers your centerpieces anyway.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'wedding-budget-calculator': WeddingBudgetCalc,
   'vacation-budget-calculator': VacationBudgetCalc,
   '50-30-20-budget-calculator': BudgetRuleCalc,
   'emergency-fund-calculator': EmergencyFundCalc,

@@ -15,6 +15,8 @@ export const WHY_USE: Record<string, string> = {
     'A house deposit, an emergency fund, a wedding, a sabbatical — every goal is a wish until it has a monthly number. People use this to convert "I want $20,000 in two years" into "$812 a month," and to find out honestly whether the plan fits the budget before committing to it.',
   'loan-payoff-calculator':
     'People use this when they get a raise, a bonus, or a tax refund and face the classic question: throw it at the loan or not? It shows exactly what an extra $50 or $500 a month does to a car loan, student loan, or personal loan — the months erased and the interest saved, in dollars.',
+  'wedding-budget-calculator':
+    'Engaged couples use it before the first venue tour, when "what can we afford" needs to be a number instead of a fight. The per-guest math reframes the guest list conversation, and the monthly savings line sets the date honestly.',
   'vacation-budget-calculator':
     'Families use it in the planning argument: "can we afford this trip" becomes a per-day number and a monthly savings target instead of a vibe. It is also the antidote to the post-vacation credit card bill — the trip gets paid before it happens.',
   '50-30-20-budget-calculator':

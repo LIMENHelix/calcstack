@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'wedding-budget-calculator',
+    title: 'Wedding Budget Calculator — True Cost, Per-Guest Math & Savings Plan',
+    shortTitle: 'Wedding Budget',
+    category: 'Savings & Investing',
+    description:
+      'Free wedding budget calculator. Enter guests, per-guest venue cost, and every major category with a surprise buffer — see the true total, all-in cost per guest, and exactly what to save monthly.',
+    tagline: 'The guest list IS the budget. Do the math before the venue tour.',
+    intro:
+      'Wedding budgets break in two places: the per-guest costs that scale silently, and the charges that appear after the quotes (service fees, gratuities, alterations). This calculator builds the wedding from its real categories — venue and catering per head, attire, photo, flowers, music, rings, and a surprise buffer — then converts the total into the monthly savings number that decides the date.',
+    howItWorks: [
+      'Enter guest count and the venue + catering quote per guest — usually half the whole budget.',
+      'Add the fixed categories: attire, photo/video, flowers, music, rings, and misc.',
+      'Set a surprise buffer (10% minimum) and how many months until the wedding.',
+      'Read the true total, all-in per-guest cost, and the monthly savings target to pay cash.',
+    ],
+    faq: [
+      {
+        q: 'How much does a wedding really cost per guest?',
+        a: 'All-in, more than the catering quote. Example: 100 guests at $120 venue+catering, with $2,500 attire, $3,000 photo, $2,000 flowers, $1,200 music, $1,000 rings, $800 misc, and a 10% buffer → $24,750 total, or $247.50 per guest. The catering line is $120 of that; the other half is everything else.',
+      },
+      {
+        q: 'What is the fastest way to cut a wedding budget?',
+        a: 'Cut guests, not categories. Venue and catering are about half the budget, so every 10 guests at $120 a head moves the total $1,320 with the buffer. Cutting the guest list from 120 to 80 saves more than any amount of DIY centerpieces — and the guests you cut genuinely do not mind.',
+      },
+      {
+        q: 'What costs do couples forget?',
+        a: 'Service charges (often 18–22% on catering, not included in the per-plate quote), gratuities, alterations, vendor meals, marriage license, postage for invites, and the rehearsal dinner. That is why the buffer is a line item: 10% minimum, 15% if the venue quote says "plus plus."',
+      },
+    ],
+  },
+  {
     slug: 'vacation-budget-calculator',
     title: 'Vacation Budget Calculator — True Trip Cost & Monthly Savings Plan',
     shortTitle: 'Vacation Budget',
