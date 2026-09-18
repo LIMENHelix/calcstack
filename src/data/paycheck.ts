@@ -56,7 +56,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'maryland', name: 'Maryland', kind: 'brackets', ded: 2700, brackets: [[0, 2], [1000, 3], [2000, 4], [3000, 4.75], [100000, 5], [150000, 5.25], [250000, 5.5], [500000, 6.25], [1000000, 6.5]], note: 'Excludes county income taxes, which average roughly 2.5% — most Marylanders owe them.' },
   { slug: 'massachusetts', name: 'Massachusetts', kind: 'flat', ded: 0, rate: 5.0, note: 'Excludes the 4% surtax over ~$1M and the 0.46% paid family leave payroll tax.' },
   { slug: 'michigan', name: 'Michigan', kind: 'flat', ded: 0, rate: 4.25, note: 'Some cities (Detroit, Grand Rapids) levy local income taxes not modeled here.' },
-  { slug: 'minnesota', name: 'Minnesota', kind: 'brackets', ded: 14575, brackets: [[0, 5.35], [31690, 6.8], [104090, 7.85], [193240, 9.85]] },
+  { slug: 'minnesota', name: 'Minnesota', kind: 'brackets', ded: 14950, dedMfj: 29900, brackets: [[0, 5.35], [32570, 6.8], [106990, 7.85], [198630, 9.85]], bracketsMfj: [[0, 5.35], [47620, 6.8], [189180, 7.85], [330410, 9.85]], note: '2025 MN DOR schedule. Standard deduction phases down for AGI over ~$238,950; not modeled.' },
   { slug: 'mississippi', name: 'Mississippi', kind: 'flat', ded: 10000, rate: 4.4 },
   { slug: 'missouri', name: 'Missouri', kind: 'flat', ded: 15000, rate: 4.7, note: 'Kansas City and St. Louis each levy a 1% earnings tax not modeled here.' },
   { slug: 'montana', name: 'Montana', kind: 'brackets', ded: 15000, brackets: [[0, 4.7], [20500, 5.9]] },
@@ -70,7 +70,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'north-dakota', name: 'North Dakota', kind: 'brackets', ded: 15000, brackets: [[0, 0], [44725, 1.95], [225975, 2.5]] },
   { slug: 'ohio', name: 'Ohio', kind: 'brackets', ded: 0, brackets: [[0, 0], [26050, 2.75], [100000, 3.5]], note: 'Excludes municipal income taxes (often 1–3% in Ohio cities).' },
   { slug: 'oklahoma', name: 'Oklahoma', kind: 'brackets', ded: 7350, brackets: [[0, 0.25], [1000, 0.75], [2500, 1.75], [3750, 2.75], [4900, 3.75], [7200, 4.75]] },
-  { slug: 'oregon', name: 'Oregon', kind: 'brackets', ded: 2745, brackets: [[0, 4.75], [4300, 6.75], [10750, 8.75], [125000, 9.9]] },
+  { slug: 'oregon', name: 'Oregon', kind: 'brackets', ded: 2835, dedMfj: 5670, brackets: [[0, 4.75], [4300, 6.75], [10750, 8.75], [125000, 9.9]], note: '2025 DOR brackets and deduction. Oregon also allows a federal-tax subtraction (up to $8,500) that phases out at higher incomes — not modeled; treat high-income estimates as slightly high.' },
   { slug: 'pennsylvania', name: 'Pennsylvania', kind: 'flat', ded: 0, rate: 3.07, note: 'Excludes local earned income taxes (commonly 1–3.9%, highest in Philadelphia).' },
   { slug: 'rhode-island', name: 'Rhode Island', kind: 'brackets', ded: 10000, brackets: [[0, 3.75], [78350, 4.75], [159500, 5.99]] },
   { slug: 'south-carolina', name: 'South Carolina', kind: 'brackets', ded: 15000, brackets: [[0, 0], [3460, 3], [17330, 6.2]] },
@@ -82,7 +82,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'virginia', name: 'Virginia', kind: 'brackets', ded: 8500, brackets: [[0, 2], [3000, 3], [5000, 5], [17000, 5.75]] },
   { slug: 'washington', name: 'Washington', kind: 'none', ded: 0, note: 'Washington has no wage income tax; excludes the 0.58% WA Cares long-term care payroll tax.' },
   { slug: 'west-virginia', name: 'West Virginia', kind: 'brackets', ded: 0, brackets: [[0, 2.36], [10000, 3.15], [25000, 3.54], [40000, 4.72], [60000, 5.12]] },
-  { slug: 'wisconsin', name: 'Wisconsin', kind: 'brackets', ded: 13230, brackets: [[0, 3.5], [14680, 4.4], [176790, 5.3], [322920, 7.65]] },
+  { slug: 'wisconsin', name: 'Wisconsin', kind: 'brackets', ded: 13560, dedMfj: 25110, brackets: [[0, 3.5], [14680, 4.4], [50480, 5.3], [323290, 7.65]], bracketsMfj: [[0, 3.5], [19580, 4.4], [67300, 5.3], [431060, 7.65]], note: '2025 WI DOR schedule (Act 15 widened the 4.4% bracket to $50,480 single). Standard deduction slides down with income — shown at maximum; modest incomes see less.' },
   { slug: 'wyoming', name: 'Wyoming', kind: 'none', ded: 0, note: 'Wyoming has no state income tax.' },
 ]
 
