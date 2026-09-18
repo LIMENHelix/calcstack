@@ -40,6 +40,7 @@
   <url><loc>https://calcstack-eight.vercel.app/for/electricians</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/hvac-technicians</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/plumbers</loc><priority>0.8</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/for/pool-service-technicians</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/alabama</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/alaska</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/data/mortgage-payment-in/arizona</loc></url>
@@ -240,6 +241,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/periodization-planner</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/pipe-size-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/plate-cost-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/pool-chemical-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/pool-heater-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/pool-pump-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/pool-volume-calculator</loc></url>

@@ -1215,4 +1215,42 @@ export const PERSONAS: Persona[] = [
       },
     ],
   },
+  {
+    slug: 'pool-service-technicians',
+    job: 'Pool Service Technicians',
+    title: 'Calculators for Pool Service Techs — Volume, Dosing, Pump & Route Math',
+    description: 'Free tools for pool service technicians: exact chemical dosing scaled to any pool, volume by shape, pump turnover checks, and the business math for route pricing.',
+    hero: 'A new account starts with two unknowns: how many gallons, and what does it need. The volume and dosing calculators turn label rates into exact ounces at the truck; the route-pricing math turns stops into a salary.',
+    questions: [
+      'How many gallons is this account\'s pool, actually?',
+      'What is the exact chlorine dose for a 3 ppm raise in a 27,000-gallon pool?',
+      'Does this pump actually turn the water over in 8 hours?',
+      'What per-stop price covers drive time and chemicals at 60 stops a week?',
+    ],
+    calcSlugs: [
+      'pool-volume-calculator',
+      'pool-chemical-calculator',
+      'pool-pump-calculator',
+      'pool-heater-calculator',
+      'freelance-rate-calculator',
+      'break-even-calculator',
+      'markup-margin-calculator',
+      'mileage-deduction-calculator',
+      'paycheck-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I dose a pool whose volume I don\'t know?',
+        a: 'Measure it once: length × width × average depth × 7.48 for rectangles (the volume calculator handles ovals and rounds). Write it on the account notes. From then on every dose is the label rate scaled by that number — no more eyeballing a "big pool" as 30k when it is 19k.',
+      },
+      {
+        q: 'How do I prove to a customer their pump schedule is the problem?',
+        a: 'Run the pump turnover calculator with their pool\'s gallons and the pump\'s real GPM: if the answer is 14 hours and the timer is set to 4, the green pool is a runtime problem, not a chemistry problem. One screenshot ends that argument.',
+      },
+      {
+        q: 'What should a pool route charge per stop?',
+        a: 'Work backwards from income: target salary + vehicle, insurance, chemicals, and licensing, divided by realistic billable stops (drive time between stops is not billable). The freelance rate calculator builds that floor; typical routes land $120–180/month for weekly service depending on market and chemical inclusion.',
+      },
+    ],
+  },
 ]

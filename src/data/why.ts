@@ -123,6 +123,8 @@ export const WHY_USE: Record<string, string> = {
     'Pool owners fighting cloudy water use this to find out whether the problem is runtime, not chemistry — one division tells you. The electricity cost layer makes the variable-speed upgrade math concrete: same turnover, a third of the watts.',
   'pool-heater-calculator':
     'Anyone pricing a heater or heat pump uses this before the sales call: the ×12 surface-area rule gives the honest minimum, so a 400k-BTU quote for a small pool reads as what it is. The solar-cover note saves more money than the calculator itself.',
+  'pool-chemical-calculator':
+    'Pool owners and route techs use this on every green-to-clean and every new account: the per-10k label rates are universal, but nobody\'s pool is 10,000 gallons. The CYA warnings (dichlor adds stabilizer, nothing removes it) prevent the most expensive chemistry mistake in the hobby.',
   'voltage-drop-calculator':
     'Electricians sizing runs to outbuildings, DIYers wiring a shed, and RV owners spec-ing a pedestal all hit the same wall: the wire is legal by ampacity but drops too many volts over distance. This catches that before the trench is backfilled.',
   'wire-size-calculator':

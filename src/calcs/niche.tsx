@@ -587,6 +587,55 @@ export function PoolHeaterCalc() {
   )
 }
 
+/* ---------------- Pool chemical dosing ---------------- */
+
+// Standard pool-math dosing rates per 10,000 gallons (industry-published values)
+const CHEMS: Record<string, { name: string; per10k: number; unit: string; per: string; warn: string; costUnit: number }> = {
+  fc_liquid: { name: 'Liquid chlorine 12.5% (raise FC 1 ppm)', per10k: 10.7, unit: 'oz', per: 'per 1 ppm FC', warn: 'Adds salt over time; no CYA. Add at dusk, circulate 4+ hrs.', costUnit: 0.07 },
+  fc_bleach: { name: 'Household bleach 6% (raise FC 1 ppm)', per10k: 21.3, unit: 'oz', per: 'per 1 ppm FC', warn: 'Check the label — 6% vs 8.25% changes the dose by a third.', costUnit: 0.05 },
+  fc_dichlor: { name: 'Dichlor granules 56% (raise FC 1 ppm)', per10k: 2.4, unit: 'oz', per: 'per 1 ppm FC', warn: 'Adds ~0.9 ppm CYA per ppm FC — fine for shocking, wrong as a daily source.', costUnit: 0.35 },
+  ta: { name: 'Baking soda (raise TA 10 ppm)', per10k: 24, unit: 'oz', per: 'per 10 ppm TA', warn: 'Raises pH slightly. Add with pump running, retest after 6 hrs.', costUnit: 0.06 },
+  ch: { name: 'Calcium chloride 77% (raise CH 10 ppm)', per10k: 20, unit: 'oz', per: 'per 10 ppm CH', warn: 'Dissolve in a bucket first — adding dry clouds the pool and can scale.', costUnit: 0.12 },
+  cya: { name: 'Cyanuric acid / stabilizer (raise CYA 10 ppm)', per10k: 13, unit: 'oz', per: 'per 10 ppm CYA', warn: 'Slow to dissolve (days). There is no chemical that lowers CYA — only dilution.', costUnit: 0.22 },
+  ph_down: { name: 'Muriatic acid 31.45% (lower pH ~0.2)', per10k: 26, unit: 'oz', per: 'per ~0.2 pH drop', warn: 'Rough guide only — actual pH shift depends on TA. Never more than half the dose at once; retest in 4 hrs.', costUnit: 0.09 },
+}
+
+export function PoolChemCalc() {
+  const [gallons, setGallons] = useNumber(20000)
+  const [chem, setChem] = useState('fc_liquid')
+  const [amount, setAmount] = useNumber(3)
+
+  const r = useMemo(() => {
+    const c = CHEMS[chem]
+    const dose = (gallons / 10000) * c.per10k * amount
+    const lb = dose / 16
+    return { c, dose, lb, cost: dose * c.costUnit }
+  }, [gallons, chem, amount])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Pool volume" value={gallons} onChange={setGallons} suffix="gal" />
+        <Select label="Chemical & goal" value={chem} onChange={setChem} options={
+          Object.entries(CHEMS).map(([k, v]) => [k, v.name] as [string, string])
+        } />
+        <Field label="Adjustment size" value={amount} onChange={setAmount} suffix="×" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Dose to add" value={`${num(r.dose, 1)} ${r.c.unit} (${num(r.lb, 2)} lb)`} />
+        <Result label="Rate used" value={`${r.c.per10k} ${r.c.unit} ${r.c.per} / 10k gal`} />
+        <Result label="Chemical cost (est.)" value={usd(r.cost, 2)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        <strong>{r.c.warn}</strong> Adjustment size is the multiplier: raising FC by 3 ppm = 3×
+        the per-ppm rate. Standard rates per 10,000 gallons: 10.7 oz of 12.5% liquid chlorine per
+        1 ppm FC; 1.5 lb baking soda per 10 ppm TA; 1.25 lb calcium chloride per 10 ppm CH; 13 oz
+        stabilizer per 10 ppm CYA. Test before AND after — the dose is only as good as the test.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const NICHE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'one-rep-max-calculator': OneRepMaxCalc,
   'heart-rate-zone-calculator': HeartRateZoneCalc,
@@ -601,4 +650,5 @@ export const NICHE_CALC_COMPONENTS: Record<string, (props: import('./index').Cal
   'pool-volume-calculator': PoolVolumeCalc,
   'pool-pump-calculator': PoolPumpCalc,
   'pool-heater-calculator': PoolHeaterCalc,
+  'pool-chemical-calculator': PoolChemCalc,
 }

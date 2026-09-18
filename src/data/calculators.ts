@@ -1797,6 +1797,33 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pool-chemical-calculator',
+    title: 'Pool Chemical Calculator — Chlorine, pH, TA, CYA Dosing',
+    shortTitle: 'Pool Chemical Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free pool chemical dosing calculator. Exact amounts for liquid chlorine, bleach, dichlor, baking soda (TA), calcium chloride (CH), stabilizer (CYA), and muriatic acid — scaled to your gallons.',
+    tagline: 'Per-10,000-gallon dosing rates, scaled to YOUR pool.',
+    intro:
+      'Chemical labels say "per 10,000 gallons" and every pool is a different size — that gap is where algae and scale come from. This calculator applies the standard industry dosing rates (10.7 oz of 12.5% liquid chlorine per ppm FC, 1.5 lb baking soda per 10 ppm TA, 13 oz stabilizer per 10 ppm CYA) scaled exactly to your volume, with the handling warnings that matter.',
+    howItWorks: [
+      'Enter your pool volume in gallons (use the Pool Volume calculator if unsure).',
+      'Pick the chemical and goal — chlorine, alkalinity, hardness, stabilizer, or pH.',
+      'Enter the adjustment size (e.g., 3 to raise FC by 3 ppm).',
+      'Read the exact dose, then retest in 4–6 hours.',
+    ],
+    faq: [
+      {
+        q: 'How much liquid chlorine do I add to raise FC by 3 ppm?',
+        a: 'Per 10,000 gallons: 3 × 10.7 = 32 oz of 12.5% liquid chlorine (about a quart). A 20,000-gallon pool doubles that to 64 oz — roughly half a jug. Household 6% bleach needs about twice the volume of 12.5% liquid.',
+      },
+      {
+        q: 'Why does my CYA keep climbing?',
+        a: 'Trichlor tablets and dichlor granules are chlorine PLUS stabilizer — every puck adds roughly 0.6 ppm CYA. By late summer, tablet-fed pools often hit 100+ ppm CYA, where normal chlorine levels stop working. Liquid chlorine adds none. There is no chemical that lowers CYA: only partial drains and refills.',
+      },
+    ],
+  },
+  {
     slug: 'voltage-drop-calculator',
     title: 'Voltage Drop Calculator — NEC Wire Run Check',
     shortTitle: 'Voltage Drop Calculator',
