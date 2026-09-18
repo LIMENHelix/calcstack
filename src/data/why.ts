@@ -299,4 +299,6 @@ export const WHY_USE: Record<string, string> = {
     'Electricians use it before rough-in inspection because box fill is the math inspectors actually check — and it fails more jobs than any other count. DIYers use it before buying boxes: the smallest box that passes is rarely the one on the shelf at eye level.',
   'conduit-fill-calculator':
     'Electricians use it at the design table and again in the field when the pull plan changes — the 40% limit is the difference between a clean pull and stripped insulation. The grounds-count rule is the violation nobody sees coming; this counts them automatically.',
+  'ampacity-derating-calculator':
+    'Electricians in hot climates use it every summer — an attic at 122°F quietly strips a third of a conductor\'s rating. Solar installers and EV-circuit runners use it to prove the 125% continuous-load math holds after derating, which is the first thing a plan reviewer checks.',
 }

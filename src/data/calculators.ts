@@ -4484,6 +4484,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'ampacity-derating-calculator',
+    title: 'Ampacity Derating Calculator — NEC 310.15 Temp & Bundling Factors',
+    shortTitle: 'Ampacity Derating',
+    category: 'Trades & Engineering',
+    description:
+      'Free NEC ampacity derating calculator. Apply 310.15(B)(1) ambient temperature correction and 310.15(C)(1) bundling adjustment to Table 310.16 values, capped by termination rating per 110.14.',
+    tagline: 'The table ampacity is not the ampacity. Derate it.',
+    intro:
+      'The number in Table 310.16 assumes 86°F air and no more than three current-carrying conductors — conditions that vanish in attics, rooftops, and stuffed conduits. This calculator runs the full NEC 310.15 method: start at the conductor\'s insulation column, apply ambient temperature correction and bundling adjustment, then cap the result at the termination-temperature column per 110.14(C), because the weakest link governs. It also applies the 240.4(D) small-conductor breaker caps and the 125% continuous-load rule.',
+    howItWorks: [
+      'Pick wire gauge (copper) and insulation rating — 90°C for THHN/THWN-2, 75°C for THWN/XHHW, 60°C for TW/UF.',
+      'Set the termination rating (most modern equipment is 75°C) and the real ambient temperature at the installation.',
+      'Enter current-carrying conductor count and your load; mark continuous loads for the 125% rule.',
+      'Read final allowable ampacity, PASS/FAIL against required ampacity, and the maximum legal breaker.',
+    ],
+    faq: [
+      {
+        q: 'Why is the final ampacity sometimes lower than the temperature-derated value?',
+        a: 'The termination cap. NEC 110.14(C) says the circuit ampacity cannot exceed the column matching the lowest-rated termination in the circuit — usually 75°C for modern breakers. So even though 12 AWG THHN starts at 30A in the 90°C column, it can never exceed the 25A in the 75°C column after derating. You derate from the high column, then cap at the low one.',
+      },
+      {
+        q: 'Do neutrals and grounds count as current-carrying conductors?',
+        a: 'Grounds never count. Neutrals only count when they carry substantial harmonic current (nonlinear loads like VFDs and LED drivers on 3-phase systems). For a typical single-phase circuit, only the ungrounded (hot) conductors count.',
+      },
+      {
+        q: 'What does the 125% continuous-load rule do to my wire size?',
+        a: 'A continuous load (3+ hours: lighting, HVAC, EV charging) must be multiplied by 1.25 before comparing to conductor ampacity — a 20A continuous load requires conductors rated for 25A after all derating. On a 12 AWG run at 75°C terminations, that uses the entire 25A allowance with zero margin.',
+      },
+      {
+        q: 'My ampacity came out between breaker sizes — can I round up?',
+        a: 'Often yes: NEC 240.4(B) allows rounding to the next standard breaker size when the ampacity doesn\'t match one, but this calculator reports the largest breaker not exceeding your final ampacity — the conservative answer — and applies the 240.4(D) hard caps of 15/20/30A for 14/12/10 AWG copper, where rounding up is not allowed.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

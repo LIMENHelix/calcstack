@@ -431,6 +431,119 @@ export function ConduitFillCalc() {
   )
 }
 
+/* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
+
+// NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
+const AMP_CU: Record<string, [number, number, number]> = {
+  '14': [15, 20, 25], '12': [20, 25, 30], '10': [30, 35, 40], '8': [40, 50, 55],
+  '6': [55, 65, 75], '4': [70, 85, 95], '3': [85, 100, 110], '2': [95, 115, 130],
+  '1': [110, 130, 145], '1/0': [125, 150, 170], '2/0': [145, 175, 195],
+  '3/0': [165, 200, 225], '4/0': [195, 230, 260],
+}
+// NEC Table 310.15(B)(1) — ambient temp correction factors by °F bin [60, 75, 90] (null = not usable)
+const TEMP_BINS: [number, number, (number | null)[]][] = [
+  [0, 50, [1.29, 1.20, 1.15]],
+  [51, 59, [1.22, 1.15, 1.12]],
+  [60, 68, [1.15, 1.11, 1.08]],
+  [69, 77, [1.08, 1.05, 1.04]],
+  [78, 86, [1.00, 1.00, 1.00]],
+  [87, 95, [0.91, 0.94, 0.96]],
+  [96, 104, [0.82, 0.88, 0.91]],
+  [105, 113, [0.71, 0.82, 0.87]],
+  [114, 122, [0.58, 0.75, 0.82]],
+  [123, 131, [0.41, 0.67, 0.76]],
+  [132, 140, [null, 0.58, 0.71]],
+  [141, 149, [null, 0.47, 0.65]],
+  [150, 158, [null, 0.33, 0.58]],
+  [159, 167, [null, null, 0.50]],
+  [168, 176, [null, null, 0.41]],
+  [177, 185, [null, null, 0.29]],
+]
+// NEC Table 310.15(C)(1) — adjustment factors for >3 current-carrying conductors
+function bundleFactor(n: number): number {
+  if (n <= 3) return 1.0
+  if (n <= 6) return 0.8
+  if (n <= 9) return 0.7
+  if (n <= 20) return 0.5
+  if (n <= 30) return 0.45
+  if (n <= 40) return 0.4
+  return 0.35
+}
+// NEC 240.4(D) small-conductor overcurrent caps (copper)
+const SMALL_CAP: Record<string, number> = { '14': 15, '12': 20, '10': 30 }
+
+export function AmpacityDerateCalc() {
+  const [gauge, setGauge] = useState('12')
+  const [insul, setInsul] = useState('90')
+  const [term, setTerm] = useState('75')
+  const [ambientF, setAmbientF] = useNumber(86)
+  const [ccc, setCcc] = useNumber(3)
+  const [load, setLoad] = useNumber(20)
+  const [continuous, setContinuous] = useState('yes')
+
+  const r = useMemo(() => {
+    const ci = insul === '60' ? 0 : insul === '75' ? 1 : 2
+    const ti = term === '60' ? 0 : 1
+    const bin = TEMP_BINS.find(([lo, hi]) => ambientF >= lo && ambientF <= hi)
+    const tFactor = bin ? bin[2][ci] : null
+    const bFactor = bundleFactor(ccc)
+    const base = AMP_CU[gauge][ci]
+    const termCap = AMP_CU[gauge][ti]
+    const derated = tFactor === null ? null : base * tFactor * bFactor
+    const finalAmp = derated === null ? null : Math.min(derated, termCap)
+    const required = continuous === 'yes' ? load * 1.25 : load
+    const pass = finalAmp !== null && finalAmp >= required
+    // Max breaker: largest standard ≤ final ampacity, capped by 240.4(D)
+    let breaker: number | null = null
+    if (finalAmp !== null) {
+      for (const b of BREAKERS) if (b <= finalAmp) breaker = b
+      const cap = SMALL_CAP[gauge]
+      if (cap !== undefined && (breaker === null || breaker > cap)) breaker = cap
+    }
+    return { tFactor, bFactor, base, termCap, derated, finalAmp, required, pass, breaker }
+  }, [gauge, insul, term, ambientF, ccc, load, continuous])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Wire gauge (copper)" value={gauge} onChange={setGauge} options={GAUGES.map((g) => [g, `${g} AWG`])} />
+        <Select label="Conductor insulation rating" value={insul} onChange={setInsul} options={[
+          ['60', '60°C (TW, UF)'], ['75', '75°C (THWN, XHHW)'], ['90', '90°C (THHN, THWN-2)'],
+        ]} />
+        <Select label="Termination rating" value={term} onChange={setTerm} options={[
+          ['75', '75°C (most modern gear)'], ['60', '60°C (older gear, NM cable)'],
+        ]} />
+        <Field label="Ambient temperature" value={ambientF} onChange={setAmbientF} suffix="°F" />
+        <Field label="Current-carrying conductors in raceway" value={ccc} onChange={setCcc} step="1" />
+        <Field label="Load current" value={load} onChange={setLoad} suffix="A" />
+        <Select label="Continuous load (≥3 hrs)?" value={continuous} onChange={setContinuous} options={[
+          ['yes', 'Yes — apply the 125% rule'], ['no', 'No'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Final allowable ampacity" value={r.finalAmp === null ? 'Not usable' : `${num(r.finalAmp, 1)} A`} />
+        <Result label="Required ampacity" value={`${num(r.required, 1)} A`} />
+        <Result label="Verdict" value={r.finalAmp === null ? 'INSULATION OVER TEMP LIMIT' : r.pass ? 'PASS' : 'FAIL'} />
+        <Result label="Max breaker (240.4)" value={r.breaker === null ? '—' : `${r.breaker} A`} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Base ampacity (conductor column)" value={`${r.base} A (${insul}°C)`} />
+        <Result label="Temp correction factor" value={r.tFactor === null ? '—' : `${r.tFactor}`} />
+        <Result label="Bundling factor" value={`${r.bFactor}`} />
+        <Result label="Termination cap (110.14)" value={`${r.termCap} A (${term}°C)`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Method per NEC 310.15: start at the conductor's insulation-rating column of Table 310.16,
+        apply ambient-temperature correction (Table 310.15(B)(1)) and the bundling adjustment
+        (Table 310.15(C)(1)) — then cap the result at the termination-temperature column per
+        110.14(C), because the weakest link governs. Neutrals and grounds don't count as
+        current-carrying except with harmonic loads. 240.4(D) caps small conductors at
+        15/20/30 A for 14/12/10 AWG copper regardless of derating results.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'voltage-drop-calculator': VoltageDropCalc,
   'wire-size-calculator': WireSizeCalc,
@@ -438,4 +551,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'pipe-size-calculator': PipeSizeCalc,
   'box-fill-calculator': BoxFillCalc,
   'conduit-fill-calculator': ConduitFillCalc,
+  'ampacity-derating-calculator': AmpacityDerateCalc,
 }
