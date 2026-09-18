@@ -1200,6 +1200,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'pipe-size-calculator',
+      'drain-size-calculator',
       'markup-margin-calculator',
       'freelance-rate-calculator',
       'break-even-calculator',

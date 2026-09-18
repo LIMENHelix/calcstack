@@ -4690,6 +4690,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'drain-size-calculator',
+    title: 'Drain Pipe Size Calculator — IPC DFU to Pipe Diameter',
+    shortTitle: 'Drain Size Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free drain pipe sizing calculator. Count fixtures into drainage fixture units (IPC 709.1) and get the minimum drain diameter at your slope per Table 710.1 — building drain or branch.',
+    tagline: 'Count the fixtures, slope the pipe, size the drain.',
+    intro:
+      'Drain sizing is the mirror image of supply sizing: drainage fixture units encode how much a fixture dumps and how often, and the pipe just has to swallow the probable peak at code slope. This calculator totals your DFU per IPC Table 709.1, then selects the smallest diameter from Table 710.1 at your slope — for the building drain or a horizontal branch — enforcing the 3-inch toilet minimum and the ¼-inch-per-foot rule for small pipe.',
+    howItWorks: [
+      'Count each fixture type draining into the pipe — toilets, sinks, tubs, showers, appliances, floor drains.',
+      'Pick the slope (¼ inch per foot is the residential standard; ⅛ inch is legal only at 3 inches and up).',
+      'Choose the pipe section — building drain/sewer or horizontal branch/stack; the capacity tables differ.',
+      'Read the minimum diameter, its DFU capacity, and your spare headroom for future fixtures.',
+    ],
+    faq: [
+      {
+        q: 'How many fixture units is a typical house?',
+        a: 'A two-bathroom single-family home totals roughly 18–24 DFU — two toilets (3 each), lavatories (1 each), a tub and shower (2 each), kitchen sink, dishwasher, and washer (2 each). That fits a 3-inch building drain at ¼-inch-per-foot with comfortable margin, which is why 3-inch is the de facto residential main.',
+      },
+      {
+        q: 'Why is 3-inch the minimum for a toilet drain?',
+        a: 'Solids. A water closet discharges a surge of waste that needs the pipe\'s full diameter to carry — IPC sets 3 inches as the floor for any drain serving a toilet regardless of what the DFU arithmetic allows.',
+      },
+      {
+        q: 'Can I flatten a drain below ¼ inch per foot where framing is tight?',
+        a: 'Only at 3 inches and larger — the ⅛-inch-per-foot column exists for bigger pipe because larger diameters maintain scouring velocity at flatter slopes. Two-inch and smaller must keep ¼ inch per foot. Too flat clogs; too steep (over about 2 inches per foot vertical-ish runs) lets liquids outrun solids, which also clogs.',
+      },
+      {
+        q: 'Is UPC sizing different?',
+        a: 'Slightly — the UPC counts a clothes washer as 3 DFU instead of 2 and uses its own capacity tables, though the pipe sizes usually come out the same for residential loads. Count and size with whichever code your jurisdiction adopted, and never mix tables between codes.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

@@ -895,6 +895,90 @@ export function SuperheatCalc() {
   )
 }
 
+/* ---------------- Drain Pipe Sizing (IPC 709/710) ---------------- */
+
+// IPC Table 709.1 drainage fixture units (private use)
+const DFU_FIXTURES: [string, number][] = [
+  ['Toilet (≤1.6 gpf)', 3], ['Lavatory / bath sink', 1], ['Bathtub', 2], ['Shower (1 head)', 2],
+  ['Kitchen sink', 2], ['Dishwasher', 2], ['Clothes washer', 2], ['Laundry / utility sink', 2],
+  ['Floor drain (2")', 2],
+]
+// IPC Table 710.1(1) building drain/sewer max DFU [size, 1/8", 1/4", 1/2"]  (— = not permitted)
+const DRAIN_TABLE: [string, (number | null)[]][] = [
+  ['2"', [null, 21, 26]], ['2-1/2"', [null, 24, 31]], ['3"', [36, 42, 50]],
+  ['4"', [180, 216, 250]], ['5"', [390, 480, 575]], ['6"', [700, 840, 1000]],
+  ['8"', [1600, 1920, 2300]],
+]
+// IPC Table 710.1(2) horizontal fixture branches & stacks max DFU
+const BRANCH_TABLE: [string, number][] = [
+  ['1-1/2"', 3], ['2"', 6], ['2-1/2"', 12], ['3"', 20], ['4"', 160], ['5"', 360], ['6"', 620], ['8"', 1400],
+]
+
+export function DrainSizeCalc() {
+  // default: 2-bath home
+  const [counts, setCounts] = useState<number[]>([2, 2, 1, 1, 1, 1, 1, 0, 0])
+  const [slope, setSlope] = useState('1') // index into slope columns: 0=1/8, 1=1/4, 2=1/2
+  const [section, setSection] = useState('drain')
+
+  const r = useMemo(() => {
+    const total = DFU_FIXTURES.reduce((a, [, dfu], i) => a + dfu * (counts[i] || 0), 0)
+    const hasToilet = (counts[0] || 0) > 0
+    const si = parseInt(slope)
+    let size: string | null = null
+    let cap = 0
+    if (section === 'drain') {
+      for (const [s, caps] of DRAIN_TABLE) {
+        const c = caps[si]
+        if (c !== null && c >= total && (!hasToilet || parseFloat(s) >= 3)) { size = s; cap = c; break }
+      }
+    } else {
+      for (const [s, c] of BRANCH_TABLE) {
+        if (c >= total && (!hasToilet || parseFloat(s) >= 3)) { size = s; cap = c; break }
+      }
+    }
+    return { total, size, cap, hasToilet, si }
+  }, [counts, slope, section])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        {DFU_FIXTURES.map(([label, dfu], i) => (
+          <div key={label} className="space-y-1.5">
+            <p className="text-sm font-medium">{label} <span className="text-muted-foreground">({dfu} DFU)</span></p>
+            <input
+              type="number" min={0} value={counts[i] || ''} placeholder="0"
+              onChange={(e) => setCounts((p) => p.map((c, j) => (j === i ? parseInt(e.target.value) || 0 : c)))}
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+            />
+          </div>
+        ))}
+        <Select label="Pipe slope" value={slope} onChange={setSlope} options={[
+          ['1', '1/4" per foot (standard)'], ['0', '1/8" per foot (3"+ only)'], ['2', '1/2" per foot'],
+        ]} />
+        <Select label="Pipe section" value={section} onChange={setSection} options={[
+          ['drain', 'Building drain / sewer (710.1(1))'], ['branch', 'Horizontal branch / stack (710.1(2))'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Total load" value={`${num(r.total, 1)} DFU`} />
+        <Result label="Minimum pipe size" value={r.size ?? 'Beyond table'} />
+        <Result label="Capacity at that size" value={r.size ? `${r.cap} DFU` : '—'} />
+        <Result label="Spare capacity" value={r.size ? `${num(((r.cap - r.total) / r.cap) * 100, 0)}%` : '—'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        IPC sizing: fixtures count as drainage fixture units (Table 709.1 — a toilet is 3 DFU, a
+        lavatory 1, most other fixtures 2), then the smallest pipe whose capacity covers the total
+        is selected from Table 710.1 at your slope. Slope rules: 2&quot; and smaller must run at
+        least 1/4&quot; per foot (Section 704.1); the 1/8&quot; column is legal only at 3&quot; and
+        larger. Any drain serving a toilet is 3&quot; minimum regardless of the DFU math. A
+        typical 2-bath house totals 18–24 DFU — 3&quot; at 1/4&quot;/ft with room to spare. Zero
+        spare capacity means any future half-bath forces repiping; upsizing one step is cheap
+        insurance. UPC values differ slightly (washer = 3 DFU) — confirm your adopted code.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
 
 // NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
@@ -1021,4 +1105,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'duct-size-calculator': DuctSizeCalc,
   'room-airflow-calculator': RoomAirflowCalc,
   'superheat-subcooling-calculator': SuperheatCalc,
+  'drain-size-calculator': DrainSizeCalc,
 }
