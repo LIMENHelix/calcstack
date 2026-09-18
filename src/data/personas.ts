@@ -151,6 +151,8 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'teacher-pay-calculator',
+      'w4-withholding-calculator',
+      'raise-worth-calculator',
       'loan-payoff-calculator',
       'salary-to-hourly-calculator',
       'savings-goal-calculator',
@@ -187,6 +189,8 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'nurse-shift-pay-calculator',
+      'w4-withholding-calculator',
+      'bonus-tax-calculator',
       'salary-to-hourly-calculator',
       'paycheck-calculator',
       'loan-payoff-calculator',
@@ -342,6 +346,9 @@ export const PERSONAS: Persona[] = [
       'How does this state\'s sales tax change the client\'s pricing?',
     ],
     calcSlugs: [
+      'marginal-tax-bracket-calculator',
+      'w4-withholding-calculator',
+      'bonus-tax-calculator',
       'billable-hours-calculator',
       'realization-rate-calculator',
       'consultant-day-rate-calculator',

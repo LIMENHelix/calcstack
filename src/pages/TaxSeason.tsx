@@ -4,7 +4,13 @@ import { Seo } from '@/components/Seo'
 import { AdSlot } from '@/components/Monetization'
 
 const TAX_SLUGS = {
-  w2: ['paycheck-calculator'],
+  w2: [
+    'paycheck-calculator',
+    'w4-withholding-calculator',
+    'bonus-tax-calculator',
+    'marginal-tax-bracket-calculator',
+    'raise-worth-calculator',
+  ],
   selfEmployed: [
     'quarterly-estimated-tax-calculator',
     'self-employment-tax-calculator',
@@ -18,6 +24,10 @@ const TAX_SLUGS = {
 
 const REASONS: Record<string, string> = {
   'paycheck-calculator': 'All 50 states + DC — check withholding before the W-4 deadline, not after.',
+  'w4-withholding-calculator': 'Paystub in, exact Line 4(c) per-check amount out — land at zero, not a loan to the IRS.',
+  'bonus-tax-calculator': 'The 22% flat withholding vs your real marginal liability on supplemental pay.',
+  'marginal-tax-bracket-calculator': 'See your income fill each 2026 bracket — and the headroom left before the next one.',
+  'raise-worth-calculator': 'Year-end raise? Here is what actually lands in your check after taxes.',
   'quarterly-estimated-tax-calculator': 'The four-payment number for 1099 income, with 2026 brackets and safe harbor.',
   'self-employment-tax-calculator': 'The 15.3% both-sides-of-FICA bill, computed exactly.',
   'mileage-deduction-calculator': 'Business miles × the 2026 split-year IRS rate (72.5¢ / 76¢).',

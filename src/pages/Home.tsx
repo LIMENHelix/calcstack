@@ -54,12 +54,12 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — your net worth against the Fed data, what a raise keeps
-          after taxes, and salary equivalence between any two states.
+          The newest tools on the site — dial in your W-4 to the dollar, see what a bonus really
+          keeps, and watch your income fill the 2026 brackets.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['net-worth-calculator', 'cost-of-living-comparison-calculator', 'raise-worth-calculator', 'car-true-cost-calculator', 'car-affordability-calculator', 'lease-vs-buy-calculator'].includes(c.slug),
+            ['w4-withholding-calculator', 'bonus-tax-calculator', 'marginal-tax-bracket-calculator', 'net-worth-calculator', 'cost-of-living-comparison-calculator', 'raise-worth-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
