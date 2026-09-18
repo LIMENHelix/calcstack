@@ -135,6 +135,7 @@ export const PERSONAS: Persona[] = [
       'How much do I need to save monthly for summer gap or a house deposit?',
     ],
     calcSlugs: [
+      'teacher-pay-calculator',
       'loan-payoff-calculator',
       'salary-to-hourly-calculator',
       'savings-goal-calculator',
@@ -170,6 +171,7 @@ export const PERSONAS: Persona[] = [
       'How fast can I kill my nursing school loans?',
     ],
     calcSlugs: [
+      'nurse-shift-pay-calculator',
       'salary-to-hourly-calculator',
       'paycheck-calculator',
       'loan-payoff-calculator',
@@ -460,6 +462,7 @@ export const PERSONAS: Persona[] = [
       'Company driver or owner-operator — which actually nets more?',
     ],
     calcSlugs: [
+      'truck-driver-pay-calculator',
       'salary-to-hourly-calculator',
       'loan-payoff-calculator',
       'break-even-calculator',

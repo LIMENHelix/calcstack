@@ -133,6 +133,12 @@ export const WHY_USE: Record<string, string> = {
     'Every self-employed driver at tax time: 2026 is a split-rate year and most calculators apply one rate all year, which is wrong both directions. Gig drivers, realtors, and mobile service pros use it to turn a mileage log into an actual deduction figure.',
   'delivery-offer-calculator':
     'Drivers use it in the parking lot with the accept timer running: payout per mile and net per hour after costs, with a verdict. Multi-appers keep the vehicle inputs set and just punch in each offer as it pings.',
+  'nurse-shift-pay-calculator':
+    'Nurses use it when comparing facilities or deciding whether to pick up the night shift: base rate is marketing, the differential stack is money. Travel nurses use it to convert blended rates back into an honest hourly.',
+  'teacher-pay-calculator':
+    'Teachers use it to plan the master\'s-degree lane change (the biggest raise lever in the profession) and to survive the 10-month paycheck schedule without a broke August. Career changers use it to see year 10 before signing up for year 1.',
+  'truck-driver-pay-calculator':
+    'Drivers use it to compare carriers honestly: CPM × miles ÷ on-duty hours converts any offer into an hourly rate you can hold against a local job. It is also the number that settles the "is OTR worth it" argument at home.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }

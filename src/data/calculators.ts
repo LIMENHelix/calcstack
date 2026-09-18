@@ -2042,6 +2042,99 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'nurse-shift-pay-calculator',
+    title: 'Nurse Shift Pay Calculator — Differentials & Overtime Stacked',
+    shortTitle: 'Nurse Shift Pay',
+    category: 'Freelance & Career',
+    description:
+      'Free nurse shift pay calculator. Stack base hours, night differential %, and 1.5× overtime to see true weekly and annual gross — and what the extras are worth alone.',
+    tagline: 'The differential is a raise hiding in plain sight.',
+    intro:
+      'Nursing pay is never just the base rate: night differentials, weekend premiums, and overtime stack into a number the job posting never mentions. This calculator stacks them properly — day hours at base, night hours with the differential, OT at time-and-a-half — and annualizes the result, so you can compare offers, units, and schedules on real money.',
+    howItWorks: [
+      'Enter your base hourly rate.',
+      'Split your weekly hours between day and night shifts, and enter the night differential %.',
+      'Add typical weekly overtime hours (paid at 1.5×).',
+      'Read weekly and annualized gross, plus what the differential and OT premium each add per year.',
+    ],
+    faq: [
+      {
+        q: 'How much is a night shift differential worth?',
+        a: 'A 12% differential on a $38 base adds $4.56 per night hour — 12 night hours a week is $2,845 a year over working straight days. Weekend and charge-nurse differentials stack on top at most facilities. When comparing offers, always compare rate × your actual shift mix, not the posted base.',
+      },
+      {
+        q: 'How is overtime calculated for nurses?',
+        a: 'Federal law (FLSA) requires 1.5× your regular rate past 40 hours in a week; some states (like California) also require OT past 8 or 12 hours in a day. The "regular rate" includes shift differentials in the OT base — this calculator applies the differential first, then OT on top, which matches how payroll computes it.',
+      },
+      {
+        q: 'Is picking up extra shifts worth it?',
+        a: 'Run it both ways. An extra 4 OT hours a week at $38 base adds $228/week or about $11,856/year gross — but only the $76/week OT premium is the "extra" over picking up straight-time hours. Check your true hourly on the extra shifts and weigh it against burnout; the annualized figure is the honest one.',
+      },
+    ],
+  },
+  {
+    slug: 'teacher-pay-calculator',
+    title: 'Teacher Pay Calculator — Step, Lane & 10 vs 12-Month Paychecks',
+    shortTitle: 'Teacher Pay Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free teacher salary calculator. Project salary growth through steps and lane changes, and compare 10-month vs 12-month paycheck schedules with the set-aside you need.',
+    tagline: 'Steps compound. Lanes multiply. Plan both.',
+    intro:
+      'Teacher salaries are a grid: steps move you down (annual increases), lanes move you across (degree and credit bumps). This calculator projects your salary to any year with both movements, then shows what that salary means per paycheck on a 10-month versus 12-month schedule — including exactly what to set aside each check if you are paid over 10 months.',
+    howItWorks: [
+      'Enter your year-1 salary and the annual step increase %.',
+      'Add a lane-change bump % and the year it takes effect (e.g., finishing a master\'s in year 5).',
+      'Pick the projection year.',
+      'Read the salary, total growth, and per-check amounts on both pay schedules.',
+    ],
+    faq: [
+      {
+        q: 'How do teacher salary steps and lanes work?',
+        a: 'Steps are annual raises for each year of service (often 1.5–3%); lanes are jumps for education credits or degrees (commonly 3–8%). They compound: a 5% lane bump increases every future step\'s value. A $48,000 start with 2% steps and a 5% lane at year 5 reaches about $60,233 by year 10.',
+      },
+      {
+        q: 'Should I take 10-month or 12-month pay?',
+        a: 'Same money, different timing. 10-month checks are bigger ($6,023 vs $5,019 on a $60,233 salary) but June and August pay nothing. If you choose 10-month, set aside the difference — about $1,004 per check — into a summer account. Disciplined savers can even earn interest on the set-aside; everyone else should take the 12-month spread.',
+      },
+      {
+        q: 'What is the fastest way to raise a teacher salary?',
+        a: 'Lane changes, by far. A master\'s degree or credit threshold often adds 5%+ permanently and compounds with every step after it. Run the degree cost against the projected salary difference here — most lane changes pay back within a few years and keep paying for a career.',
+      },
+    ],
+  },
+  {
+    slug: 'truck-driver-pay-calculator',
+    title: 'Truck Driver Pay Calculator — CPM to Real Hourly & Annual Pay',
+    shortTitle: 'Truck Driver Pay',
+    category: 'Freelance & Career',
+    description:
+      'Free truck driver pay calculator. Convert cents-per-mile into weekly, monthly, and annual gross — and the honest per-on-duty-hour rate after docks, traffic, and inspections.',
+    tagline: 'CPM pays the miles. You live the hours.',
+    intro:
+      'Cents-per-mile sounds simple until you divide by the hours you actually gave. This calculator converts CPM into weekly and annual gross, then divides by your real on-duty hours — driving, docks, fueling, inspections — to show the effective hourly rate, the only honest way to compare OTR pay to a local hourly job.',
+    howItWorks: [
+      'Enter your pay per mile (CPM) and average miles per week.',
+      'Set working weeks per year — 46 to 48 after home time, not 52.',
+      'Enter your real on-duty hours per week (the 70-hour rule is the ceiling; most run 60–70).',
+      'Read weekly gross, annual gross, monthly average, and dollars per on-duty hour.',
+    ],
+    faq: [
+      {
+        q: 'How much do truck drivers make per mile?',
+        a: 'Company OTR drivers commonly see 50–70¢ per mile depending on experience, freight type, and carrier; specialized and team driving runs higher. At 58¢ and 2,500 miles a week, that is $1,450/week or about $69,600 over 48 working weeks.',
+      },
+      {
+        q: 'Why does my CPM pay feel low per hour?',
+        a: 'Because CPM only pays rolling miles. 2,500 miles in a 65-hour on-duty week is 38.5 effective mph — so 58¢/mile equals $22.31 per on-duty hour. Every unpaid dock delay, inspection, and traffic jam drags the hourly rate down. That is why detention pay and drop-pay matter more than a penny of CPM.',
+      },
+      {
+        q: 'CPM or percentage-of-load or salary — which is best?',
+        a: 'Convert each to per-on-duty-hour and compare. Percentage pay wins in strong rate markets and loses in weak ones; salary is predictable but caps upside. Owner-operators should run the truck\'s true cost per mile (fuel, maintenance, insurance, truck payment) before celebrating any linehaul rate.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
