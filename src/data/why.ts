@@ -159,4 +159,12 @@ export const WHY_USE: Record<string, string> = {
     'Tipped workers use it after a slow week: if cash wage plus tips misses the minimum, the employer owes the difference — this computes the exact top-up. Workers moving states use it to learn whether they just landed in a no-tip-credit state with full minimum wage plus tips.',
   'tip-income-calculator':
     'Servers and bartenders use it to answer "can I afford this apartment?" honestly — fixed bills go against the guaranteed base-pay floor, tips go to savings and debt. It is the antidote to budgeting on your best Friday.',
+  'glycogen-calculator':
+    'Keto dieters use it to decode the week-one scale crash; athletes use it to size the fuel tank before race week. Coaches point athletes at it when the post-refeed scale spike causes a panic — 3 g of water per gram of glycogen explains everything.',
+  'carb-loading-calculator':
+    'Marathoners and triathletes use it in race week: 10–12 g/kg/day is the evidence-based target, and this turns body weight into actual grams per meal. Coaches use it to write the two-day fueling plan instead of saying "eat more pasta."',
+  'sweat-rate-calculator':
+    'Runners and field-sport athletes use it once per season per climate: weigh before and after, get your personal L/hr, and hydration stops being guesswork. It also answers the "why do I cramp and you don\'t" question between training partners.',
+  'dots-score-calculator':
+    'Powerlifters use it to compare against lifters in other weight classes and to pick the right weight class before a meet. Coaches track athlete progress with it when body weight is moving — the total can stall while the score quietly climbs.',
 }

@@ -18,6 +18,7 @@ import { CAREERS_CALC_COMPONENTS } from '@/calcs/careers'
 import { FREELANCETAX_CALC_COMPONENTS } from '@/calcs/freelancetax'
 import { PRO_CALC_COMPONENTS } from '@/calcs/proservices'
 import { TIP_CALC_COMPONENTS } from '@/calcs/tips'
+import { SPORTSCI_CALC_COMPONENTS } from '@/calcs/sportsci'
 import { PaycheckCalc } from '@/calcs/paycheck'
 import type { CalcProps } from '@/calcs'
 
@@ -40,6 +41,7 @@ const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> =
   ...FREELANCETAX_CALC_COMPONENTS,
   ...PRO_CALC_COMPONENTS,
   ...TIP_CALC_COMPONENTS,
+  ...SPORTSCI_CALC_COMPONENTS,
   'paycheck-calculator': PaycheckCalc,
 }
 

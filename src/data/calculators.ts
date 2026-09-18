@@ -2406,6 +2406,126 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'glycogen-calculator',
+    title: 'Glycogen Calculator — Muscle Glycogen Stores, Energy & Scale Impact',
+    shortTitle: 'Glycogen Stores',
+    category: 'Fitness & Sports',
+    description:
+      'Free glycogen calculator. Estimate muscle and liver glycogen stores from body weight, body fat, and training status — plus stored energy and the glycogen-water scale swing.',
+    tagline: 'The 4-pound overnight swing is fuel and water, not fat.',
+    intro:
+      'Your muscles and liver store carbohydrate as glycogen — roughly 12 g per kg of muscle if untrained, up to 20 g/kg when endurance-trained, plus about 100 g in the liver. Every gram binds ~3 g of water, which is why keto dieters "lose 5 pounds" in week one and carb-ups put it back. This calculator estimates your tank size, its energy content, and its real scale impact.',
+    howItWorks: [
+      'Enter body weight and body fat percentage.',
+      'Choose your training status (untrained, recreational, or endurance-trained).',
+      'Read estimated muscle and liver glycogen, stored energy, and the glycogen-plus-water scale weight.',
+    ],
+    faq: [
+      {
+        q: 'How much glycogen can the body store?',
+        a: 'A typical 180 lb trained athlete stores roughly 700–800 g total — about 600–700 g in muscle and ~100 g in the liver — worth around 3,000 kcal. Storage capacity scales with muscle mass and rises with endurance training and carb-rich diets; supercompensation protocols can push muscle stores above 20 g/kg.',
+      },
+      {
+        q: 'Why does the scale jump after eating carbs?',
+        a: 'Each gram of stored glycogen binds about 3 g of water. Refilling 400 g of glycogen puts roughly 3.5 lb of glycogen-plus-water on the scale — fuel in the tank, not fat gained. This is also why low-carb diets show dramatic first-week losses: mostly the glycogen tank and its water draining.',
+      },
+      {
+        q: 'How fast do you deplete glycogen?',
+        a: 'A hard lifting session burns roughly 25–40% of the glycogen in the muscles worked. High-intensity endurance work at 70–80% VO₂max empties most of the tank in 90–120 minutes — the marathon "wall" around mile 20 is glycogen running out. Liver glycogen falls steadily between meals and overnight.',
+      },
+    ],
+  },
+  {
+    slug: 'carb-loading-calculator',
+    title: 'Carb Loading Calculator — Race-Day Glycogen Supercompensation',
+    shortTitle: 'Carb Loading',
+    category: 'Fitness & Sports',
+    description:
+      'Free carb loading calculator. Compute daily and per-meal carbohydrate targets (10–12 g/kg) for the 36–48 hours before a marathon, triathlon, or long event.',
+    tagline: 'Two days of pasta is a protocol, not a craving.',
+    intro:
+      'The evidence-based carb-load (Burke, ACSM position stand) is 10–12 g of carbohydrate per kg of body weight per day for 36–48 hours before a 90+ minute event, paired with a training taper. Done right, it supercompensates muscle glycogen 20–40% above normal and can add minutes to a marathon. This calculator turns your weight into daily and per-meal targets.',
+    howItWorks: [
+      'Enter your body weight and loading days before the event (2 is classic).',
+      'Read the daily carb range (10–12 g/kg), per-meal targets, and event-total grams.',
+      'Split across 4 meals plus snacks; keep fat and fiber low so the volume is eatable.',
+    ],
+    faq: [
+      {
+        q: 'Does carb loading actually work?',
+        a: 'For events longer than ~90 minutes, yes — it is one of the most replicated findings in sports nutrition, raising muscle glycogen 20–40% above normal and improving time-trial performance by 2–3%. For anything under 90 minutes, normal glycogen stores are already sufficient and loading adds weight without benefit.',
+      },
+      {
+        q: 'What should I eat to hit 10 g/kg?',
+        a: 'For an 82 kg athlete that is 820 g of carbs a day — genuinely hard. Think rice, pasta, bread, bagels, jam, juice, and sports drink, not vegetables and chicken breast (fiber and protein crowd out the volume). White carbs over whole grains for these two days; low fat, low fiber, frequent meals.',
+      },
+      {
+        q: 'Why did I gain weight carb loading?',
+        a: 'That is the point. Each gram of stored glycogen carries ~3 g of water, so a successful load adds 2–4 lb of glycogen-plus-water. You are heavier at the start line and faster at mile 20 — the trade is worth it. The weight drains within days after the event.',
+      },
+    ],
+  },
+  {
+    slug: 'sweat-rate-calculator',
+    title: 'Sweat Rate Calculator — Hydration Plan from Pre/Post Weight',
+    shortTitle: 'Sweat Rate',
+    category: 'Fitness & Sports',
+    description:
+      'Free sweat rate calculator. Compute your hourly sweat rate from pre/post workout weight and fluid intake, plus personalized during- and after-exercise hydration targets.',
+    tagline: 'Generic hydration advice fails because sweat rates vary 5×.',
+    intro:
+      'Sweat rates range from under 0.5 L/hr to over 2.5 L/hr between athletes — so "drink eight glasses" is useless for training. The field test is simple: weigh before and after, account for what you drank, divide by hours. This calculator gives your rate, your dehydration percentage against the 2% performance threshold, and exactly how much to drink during and after similar sessions.',
+    howItWorks: [
+      'Weigh yourself dry, minimal clothing, before the session.',
+      'Track all fluid consumed (and any urine) during.',
+      'Weigh again right after, toweled off. Enter everything plus session length.',
+    ],
+    faq: [
+      {
+        q: 'How much should I drink during exercise?',
+        a: 'Enough to keep body-mass loss under 2% — beyond that, endurance performance and cognition measurably decline. Your sweat rate from this calculator sets the target: someone at 1.5 L/hr needs roughly double the fluids of someone at 0.75 L/hr in the same workout. In practice, gut absorption caps intake around 0.8–1.2 L/hr for most people.',
+      },
+      {
+        q: 'Why replace 125–150% of losses afterward?',
+        a: 'You keep losing fluid to urine after the session ends, and rapid drinking triggers diuresis before full rehydration. ACSM guidance is to replace 125–150% of the deficit over the following hours, ideally with sodium included — plain water alone dilutes blood sodium and blunts the thirst drive before you are actually rehydrated.',
+      },
+      {
+        q: 'Do I need electrolytes or is water fine?',
+        a: 'Under an hour: water is fine. Over an hour, or heavy/salty sweaters (white streaks on clothes, stinging eyes): include sodium — sweat carries roughly 500–1,000 mg per liter, and replacing large volumes with plain water risks hyponatremia, which has hospitalized marathoners.',
+      },
+    ],
+  },
+  {
+    slug: 'dots-score-calculator',
+    title: 'DOTS Score Calculator — Powerlifting Pound-for-Pound Strength',
+    shortTitle: 'DOTS Score',
+    category: 'Fitness & Sports',
+    description:
+      'Free DOTS score calculator. Compute your powerlifting coefficient from squat, bench, deadlift, and body weight — the modern standard for comparing lifters across weight classes.',
+    tagline: 'A 400 lb total means nothing until you know the body weight.',
+    intro:
+      'DOTS (Dynamic Objective Team Scoring, 2019) normalizes your powerlifting total against body weight with a 4th-degree polynomial fitted to modern competition data — the system USAPL and USPA use for best-lifter awards. This calculator computes your score and classification from your squat, bench, deadlift, and body weight.',
+    howItWorks: [
+      'Select sex division (the coefficients differ).',
+      'Enter body weight and your best squat, bench press, and deadlift (pounds or kilos — it converts).',
+      'Read your DOTS score and classification band.',
+    ],
+    faq: [
+      {
+        q: 'What is a good DOTS score?',
+        a: 'Under 200 is beginner, 200–300 novice, 300–400 intermediate, 400–500 advanced, and 500+ elite. Regional meet winners typically score 350–420; national-level lifters exceed 400. Scores are only comparable within the same sex division — the coefficient sets differ.',
+      },
+      {
+        q: 'DOTS vs Wilks vs IPF GL points?',
+        a: 'Wilks (1994) is the classic; DOTS (2019) and IPF GL (2020) are modern replacements fitted on current competition data, and both correct Wilks\' bias at extreme body weights. USAPL/USPA use DOTS for best-lifter awards; the IPF itself uses GL points. For personal tracking any of them works — consistency matters more than the system.',
+      },
+      {
+        q: 'Should I cut weight to raise my DOTS?',
+        a: 'Usually no, unless you are near a class boundary with muscle to spare. The polynomial rewards leanness only when the total holds — cutting hard enough to lose 5% off your total while dropping a class almost always nets a lower score. Compute both scenarios here before deciding.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
