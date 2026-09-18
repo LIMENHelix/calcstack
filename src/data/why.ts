@@ -205,4 +205,10 @@ export const WHY_USE: Record<string, string> = {
     'Rideshare drivers use it at tax time to confirm the standard rate really is the bigger deduction — and new gig drivers use it in year one because the lock-in rule makes that first-year choice permanent. It turns a shrug into a four-figure difference.',
   '1099-vs-w2-calculator':
     'Anyone weighing a contract offer against a salary offer uses it to make the numbers comparable — recruiters quote 1099 rates knowing they look bigger. It prices the invisible costs (FICA, insurance, unpaid weeks) that decide whether the contract is actually a raise.',
+  'brrrr-calculator':
+    'Investors use it before tying up cash: the refi proceeds math decides whether the deal recycles capital or traps it, and the new-payment cash flow is the honest check most BRRRR hype skips. Hard-money lenders point borrowers at it to pre-screen deals.',
+  'rental-depreciation-calculator':
+    'Landlords use it at tax time to see the deduction that shelters their cash flow — and before selling, to price the recapture bill nobody warned them about. CPAs use it to show clients why "the rental loses money on paper" is a feature.',
+  'prorated-rent-calculator':
+    'Tenants use it to check a mid-month move-in quote before paying; landlords use it to charge the lease-specified method and end the argument with arithmetic. It settles the February discrepancy that calculators using 30-day months get wrong.',
 }

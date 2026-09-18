@@ -3096,6 +3096,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'brrrr-calculator',
+    title: 'BRRRR Calculator — Cash Left In, Refi Proceeds & Cash-on-Cash Return',
+    shortTitle: 'BRRRR Deal',
+    category: 'Savings & Investing',
+    description:
+      'Free BRRRR calculator. Model Buy-Rehab-Rent-Refinance-Repeat deals: all-in cost, refinance proceeds at your LTV, cash left in the deal, new payment, and true cash-on-cash return.',
+    tagline: 'The whole strategy is one question: how much of your money comes back out?',
+    intro:
+      'BRRRR works when the refinance returns most or all of your invested cash while the property still cash-flows on the new, bigger loan. This calculator runs the full chain — all-in cost, refi proceeds at your LTV, cash recovered, and then the honest part: whether the rent actually covers the new payment at current rates.',
+    howItWorks: [
+      'Enter purchase, rehab, and closing/holding costs (your all-in basis).',
+      'Enter the ARV and the refinance LTV — the new loan is ARV × LTV.',
+      'Enter rent, rate, and a realistic expense ratio; read cash left in and cash-on-cash.',
+    ],
+    faq: [
+      {
+        q: 'What is a good BRRRR result?',
+        a: 'The textbook win is leaving under 25% of your all-in cost in the deal while cash-flowing positive — recovering 75%+ of your capital while owning an asset with equity. Infinite returns (all cash out) are rare at current rates; the default example here is deliberately realistic: a solid equity capture with slightly negative cash flow at 7.5% money.',
+      },
+      {
+        q: 'When can I refinance after buying?',
+        a: 'Most lenders require 6–12 months of "seasoning" before a cash-out refinance, and the appraisal must support your ARV. Delayed-financing programs (Fannie Mae) allow cash-out immediately after a cash purchase, up to the original purchase price — beyond that needs seasoning.',
+      },
+      {
+        q: 'What kills BRRRR deals?',
+        a: 'The same three things every time: rehab overruns (budget +20% contingency), an ARV the appraiser does not support (use sold comps, not listings), and refinancing into a payment the rent cannot carry at current rates. Run the downside case — ARV 10% lower, rate 1% higher — before committing.',
+      },
+    ],
+  },
+  {
+    slug: 'rental-depreciation-calculator',
+    title: 'Rental Property Depreciation Calculator — 27.5-Year Deduction',
+    shortTitle: 'Rental Depreciation',
+    category: 'Savings & Investing',
+    description:
+      'Free rental property depreciation calculator. Computes the annual 27.5-year straight-line deduction, tax savings at your bracket, and the depreciation recapture bill at sale.',
+    tagline: 'The IRS pays you for a building that is usually gaining value.',
+    intro:
+      'Depreciation is the strangest gift in the tax code: a deduction for wear on an asset that typically appreciates. Residential rentals depreciate over 27.5 years on the building value only — and the bill comes due at sale through recapture. This calculator shows both sides so the "paper loss" is never a surprise later.',
+    howItWorks: [
+      'Enter purchase price including closing costs (your starting basis).',
+      'Enter the land share — from your county assessment; land never depreciates.',
+      'Enter your marginal bracket to see the annual tax saved, and the 10-year recapture estimate.',
+    ],
+    faq: [
+      {
+        q: 'How is the 27.5-year deduction calculated?',
+        a: '(Purchase price + closing costs − land value) ÷ 27.5, straight-line, starting the month the property is placed in service (mid-month convention: half a month for the first and last month). Residential rental is 27.5 years; commercial is 39. Appliances and improvements depreciate separately on faster schedules.',
+      },
+      {
+        q: 'What is depreciation recapture?',
+        a: 'When you sell, all depreciation you claimed (or could have claimed) is taxed as unrecaptured §1250 gain at up to 25% — even if you never took the deduction. It is deferral, not forgiveness. Strategies that legally avoid it: hold until death (stepped-up basis) or a 1031 exchange into the next property.',
+      },
+      {
+        q: 'Should I do a cost segregation study instead?',
+        a: 'For properties roughly $300k+, cost segregation reclassifies 20–30% of the building into 5/7/15-year property for front-loaded deductions — worth it for high-bracket owners, especially with bonus depreciation. The study runs $1,500–$5,000, so the property value and your bracket decide.',
+      },
+    ],
+  },
+  {
+    slug: 'prorated-rent-calculator',
+    title: 'Prorated Rent Calculator — Partial First Month Done Right',
+    shortTitle: 'Prorated Rent',
+    category: 'Everyday Money',
+    description:
+      'Free prorated rent calculator. Computes the partial first month from move-in day and days in month, with both actual-days and 30-day banker\'s-month methods.',
+    tagline: 'Move in on the 14th, pay for 17 days. Not 30.',
+    intro:
+      'Mid-month move-ins mean partial rent, and the proration method matters more than people think — actual-days and 30-day-month conventions disagree by real money in February. This calculator shows both so tenants know what is fair and landlords charge what the lease says.',
+    howItWorks: [
+      'Enter the monthly rent.',
+      'Enter the move-in day and the days in that month.',
+      'Read the prorated amount under both conventions — then match whichever your lease specifies.',
+    ],
+    faq: [
+      {
+        q: 'Which proration method is correct?',
+        a: 'Whichever the signed lease says — both are legal in most states. Actual-days (rent ÷ days in the month) is the fairest and most common; the banker\'s 30-day month is simpler but overcharges in February and undercharges in 31-day months. Some states mandate a specific method, so landlords should check local law.',
+      },
+      {
+        q: 'Is the move-in day itself charged?',
+        a: 'Conventionally yes — you pay from the day you get the keys. This calculator includes the move-in day. If your lease says occupancy starts the following day, subtract one day from the result.',
+      },
+      {
+        q: 'Does the security deposit prorate too?',
+        a: 'No — deposits are fixed (typically one month\'s rent) regardless of move-in day. Only rent prorates. Budget first month as: prorated rent + full deposit + any pet or admin fees.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

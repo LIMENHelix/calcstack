@@ -25,6 +25,7 @@ import { HOUSING_CALC_COMPONENTS } from '@/calcs/housing'
 import { RETIRE_CALC_COMPONENTS } from '@/calcs/retire'
 import { MILSTU_CALC_COMPONENTS } from '@/calcs/milstu'
 import { NEWGRAD_CALC_COMPONENTS } from '@/calcs/newgrad'
+import { LANDLORD_CALC_COMPONENTS } from '@/calcs/landlord'
 import { PaycheckCalc } from '@/calcs/paycheck'
 import type { CalcProps } from '@/calcs'
 import { Seo } from '@/components/Seo'
@@ -57,6 +58,7 @@ export const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactEle
   ...RETIRE_CALC_COMPONENTS,
   ...MILSTU_CALC_COMPONENTS,
   ...NEWGRAD_CALC_COMPONENTS,
+  ...LANDLORD_CALC_COMPONENTS,
   'paycheck-calculator': PaycheckCalc,
 }
 
