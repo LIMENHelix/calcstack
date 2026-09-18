@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { DATA_YEAR } from '@/data/stats'
+import { SALARY_DATA_YEAR } from '@/data/stats'
 import { SalaryTable } from '@/components/SalaryTable'
 import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, DEFAULT_AFFILIATES } from '@/components/Monetization'
@@ -16,7 +16,7 @@ const FAQ = [
   },
   {
     q: 'Are these exact salaries?',
-    a: `No — rounded medians based on publicly reported federal wage statistics (~${DATA_YEAR}). Pay varies widely by metro, experience, and employer; treat these as ballpark medians and negotiate from role-specific data.`,
+    a: `No — rounded medians based on publicly reported federal wage statistics (~${SALARY_DATA_YEAR}). Pay varies widely by metro, experience, and employer; treat these as ballpark medians and negotiate from role-specific data.`,
   },
   {
     q: 'Which jobs punch above their salary?',
@@ -53,7 +53,7 @@ export default function SalaryByJob() {
       <h1 className="mb-2 text-3xl font-extrabold tracking-tight">Average Salary by Job</h1>
       <p className="mb-6 max-w-3xl text-muted-foreground">
         Typical US pay for 40 popular occupations, with the hourly and monthly equivalents people
-        actually think in. Figures are rounded medians (~{DATA_YEAR} estimates from publicly
+        actually think in. Figures are rounded medians (~{SALARY_DATA_YEAR} estimates from publicly
         reported wage statistics) — use them for orientation, then convert your own offer with the{' '}
         <Link to="/calculators/salary-to-hourly-calculator" className="text-primary underline-offset-4 hover:underline">salary-to-hourly calculator</Link>{' '}
         or price freelance work with the{' '}
@@ -62,7 +62,7 @@ export default function SalaryByJob() {
 
       <SalaryTable />
       <p className="mt-2 text-xs text-muted-foreground">
-        * Rounded median figures (~{DATA_YEAR}), gross pay before taxes. Hourly assumes 2,080
+        * Rounded median figures (~{SALARY_DATA_YEAR}), gross pay before taxes. Hourly assumes 2,080
         hours/year. Verify with current wage data before negotiations.
       </p>
 

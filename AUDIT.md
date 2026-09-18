@@ -115,8 +115,9 @@ wage base $184,500 (verified against SSA announcement).
 1. **Quarterly re-audit** of state tax data against Tax Foundation releases.
 2. **January re-audit** of federal brackets/deductions when the IRS publishes inflation adjustments.
 3. Every calculator page carries a methodology note and a "verify against your official source" disclaimer.
-4. Known data-year flag: the standalone home-value/salary stats pages use 2025 source data
-   (separate dataset from calculator math); scheduled for refresh.
+4. ~~Known data-year flag~~ **Resolved 2026-09-17**: home values refreshed to Redfin
+   May 2026 state medians (ND/WY from Zillow Aug 2026); salaries refreshed to BLS OEWS
+   May 2025 national medians (released May 2026). See `src/data/stats.ts` header.
 
 *Audit performed 2026-09-17. Method: full line-by-line code read of `src/calcs/index.tsx`,
 `src/calcs/more.tsx`, `src/calcs/niche.tsx`, `src/calcs/sports.tsx`, `src/calcs/paycheck.tsx`,
