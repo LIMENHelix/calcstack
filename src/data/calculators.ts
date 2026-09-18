@@ -3604,6 +3604,108 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'car-affordability-calculator',
+    title: 'Car Affordability Calculator — How Much Car Can I Afford? (20/4/10 Rule)',
+    shortTitle: 'Car Affordability',
+    category: 'Loans & Debt',
+    description:
+      'Free car affordability calculator. Works backward from income using the 20/4/10 rule — insurance and fuel inside the cap — to the maximum car price and a stretch ceiling.',
+    tagline: 'The dealer asks "what payment do you want?" Ask the better question first.',
+    intro:
+      'Dealers sell payments because payments hide prices. This calculator works backward: the 20/4/10 rule (20% down, 4-year max loan, transport under 10% of gross income) with insurance and fuel already inside the cap — so the price it gives you is the whole-car answer, not a loan amount that forgets the insurance bill doubles on a new car.',
+    howItWorks: [
+      'Enter gross monthly income and your insurance and fuel estimates.',
+      'Set the loan rate, term, and down payment percent.',
+      'Get the max price under the 10% transport cap, plus the absolute 15% stretch ceiling.',
+    ],
+    faq: [
+      {
+        q: 'What is the 20/4/10 rule for cars?',
+        a: '20% down, a loan no longer than 4 years, and total transport costs — payment, insurance, fuel — under 10% of gross income. It is stricter than what lenders approve on purpose: cars depreciate roughly 20% in year one, so a long loan on a new car means years of owing more than the car is worth.',
+      },
+      {
+        q: 'Why is my number so much lower than what the dealer approved me for?',
+        a: 'Because the dealer\'s math stops at the payment fitting your DTI — 72- and 84-month loans exist to make any price "fit." The 10% cap here includes insurance and fuel, which is where new-car budgets actually break. If the rule\'s price feels low, that is the information: the car market\'s norms are the outlier, not the rule.',
+      },
+      {
+        q: 'Is a longer loan ever okay if the rate is low?',
+        a: 'At 0–3% promotional rates, stretching the term costs little in interest — but it still extends the underwater years, and one accident or job change while upside-down turns a car problem into a debt problem. If you must stretch, gap insurance and a bigger down payment are the seatbelts.',
+      },
+      {
+        q: 'What about used cars?',
+        a: 'The rule works even better used: someone else paid the brutal first-year depreciation, reliability data exists, and insurance runs cheaper. A 3-year-old car at 65% of the new price with 80% of the life left is usually the value sweet spot.',
+      },
+    ],
+  },
+  {
+    slug: 'lease-vs-buy-calculator',
+    title: 'Lease vs Buy Car Calculator — True Cost with Equity & Money Factor APR',
+    shortTitle: 'Lease vs Buy (Car)',
+    category: 'Loans & Debt',
+    description:
+      'Free lease vs buy calculator. Compares total outlay minus what you still own, converts money factor to APR (×2400), and shows what happens after the lease ends.',
+    tagline: 'Leasing is renting depreciation. Here is the receipt.',
+    intro:
+      'The lease pitch is always the lower monthly payment. This calculator runs the honest version over the lease term: total outlay on both sides, minus the equity you still own if you buy, plus the money factor converted to a real APR — because MF 0.00167 is 4% and dealers quote it precisely because it looks small.',
+    howItWorks: [
+      'Enter the car price, lease payment, due-at-signing, and lease term.',
+      'Enter the buy scenario: down payment, loan rate and term, and resale value at the horizon.',
+      'Compare total outlay, net cost after equity, and the lease\'s APR equivalent.',
+    ],
+    faq: [
+      {
+        q: 'Is leasing ever cheaper than buying?',
+        a: 'Over a single 3-year horizon, leasing sometimes costs less in pure outlay — you are only paying for the steepest depreciation years. The trap is the day after: the leaseholder owns nothing and starts over at full price, while the buyer\'s payments end at month 60 and the car keeps going. Over 6+ years buying almost always wins by thousands.',
+      },
+      {
+        q: 'What is a money factor and how do I compare it to an APR?',
+        a: 'Multiply by 2400. A money factor of 0.00167 is a 4.0% APR; 0.00250 is 6%. Dealers quote the tiny decimal because it feels trivial — always convert before signing, and negotiate it exactly like an interest rate. Anything above the current prime-ish rates is markup.',
+      },
+      {
+        q: 'What costs does this comparison leave out?',
+        a: 'Mileage overage fees (typically 15–30¢ per mile past 10–12K/year), wear-and-tear charges, and disposition fees at lease end — all of which push real lease costs above the advertised payment. On the buy side, maintenance rises after warranty. If you drive over 12,000 miles a year, leasing\'s fine print usually ends the debate.',
+      },
+      {
+        q: 'Who should actually lease?',
+        a: 'People who genuinely want a new car every 3 years and would trade in anyway (leasing just structures that habit), and business owners who can deduct lease payments. For everyone else, buying a slightly older car and keeping it past the loan is the wealth move.',
+      },
+    ],
+  },
+  {
+    slug: 'car-true-cost-calculator',
+    title: 'Car True Cost Calculator — Cost Per Mile & Per Month (Depreciation Included)',
+    shortTitle: 'Car True Cost',
+    category: 'Everyday Money',
+    description:
+      'Free car true cost calculator. Depreciation, insurance, fuel, maintenance, registration, and interest combined into real cost per mile and per month.',
+    tagline: 'The payment is a third of it. Here is the whole bill.',
+    intro:
+      'A $700 car payment feels like the cost of the car. It is not — depreciation, insurance, fuel, maintenance, registration, and loan interest roughly double it. This calculator totals all of it into the two numbers that matter: true cost per month and per mile, so comparisons against transit, used cars, or keeping the old one alive are honest.',
+    howItWorks: [
+      'Enter purchase price, years kept, and expected resale percent.',
+      'Add loan terms, insurance, annual miles, fuel economy and price, maintenance, and registration.',
+      'Read the true monthly and per-mile cost — depreciation shown separately because it is the cost nobody feels.',
+    ],
+    faq: [
+      {
+        q: 'What does a car really cost per mile in 2026?',
+        a: 'AAA pegs a new car around $0.80–0.90 per mile all-in at 12,000 miles a year — our default scenario lands at $0.84. The biggest line is not fuel: it is depreciation, typically $3,000–5,000 a year on a new car, invisible because it only shows up when you sell.',
+      },
+      {
+        q: 'Why does depreciation get its own line?',
+        a: 'Because it is the largest cost and the only one with no monthly bill. A $38,000 car worth $17,000 after 5 years spent $4,200 a year evaporating — more than fuel and insurance combined for most drivers. Buying 3 years old lets someone else pay the steepest part of that curve.',
+      },
+      {
+        q: 'How do I lower the per-mile number?',
+        a: 'Keep the car longer (depreciation flattens after year 5 while reliability holds), buy used, and drive it more — per-mile cost falls as fixed costs spread. The worst move is the common one: trading a new car every 3 years, which concentrates the steepest depreciation into every year you own.',
+      },
+      {
+        q: 'Is an EV cheaper per mile?',
+        a: 'Usually on fuel and maintenance (charging at home runs 3–5¢/mile versus 12–15¢ for gas), often not on depreciation and insurance yet. Run both here — swap the fuel line for your kWh cost and compare the per-mile numbers directly.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

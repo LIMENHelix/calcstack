@@ -237,4 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Anyone carrying multiple balances uses it to end the snowball-versus-avalanche argument with their own numbers — exact payoff dates and the dollar gap between strategies. The negative-amortization flag catches the trap most calculators never mention.',
   'dti-calculator':
     'Mortgage shoppers use it before applying, so the lender\'s first gate is never a surprise — and the "max housing payment per rule" table converts an abstract ratio into a shopping number. The gross-vs-take-home FAQ explains why approvals always feel generous.',
+  'car-affordability-calculator':
+    'Car shoppers use it before the dealership, because the dealer\'s first question ("what payment works?") is designed to hide the price. The 10%-cap-with-insurance-inside answer is the one no car site leads with.',
+  'lease-vs-buy-calculator':
+    'Anyone handed a lease offer uses it to convert the money factor to a real APR and see the outlay-minus-equity comparison. The month-after-the-lease row is the argument that settles it.',
+  'car-true-cost-calculator':
+    'Drivers comparing "new car vs keeping the old one" use it to see depreciation as a line item — usually the largest cost and the only one without a bill. Per-mile pricing makes transit and EV comparisons honest.',
 }
