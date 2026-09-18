@@ -54,13 +54,13 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — the water-management chain is complete end to end:
-          sump pump sizing, dry wells, French drains, roof pitch, excavation haul math (FM
-          5-434), and retaining walls.
+          The newest tools on the site — the insurance cluster is complete: DIME life
+          insurance needs, the term-vs-whole-life end-position test, disability income gap,
+          plus the water-management chain (sump pump, dry well, French drain).
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['sump-pump-calculator', 'dry-well-calculator', 'french-drain-calculator', 'roof-pitch-calculator', 'excavation-calculator', 'retaining-wall-calculator'].includes(c.slug),
+            ['life-insurance-calculator', 'term-vs-whole-life-calculator', 'disability-insurance-calculator', 'sump-pump-calculator', 'dry-well-calculator', 'french-drain-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
