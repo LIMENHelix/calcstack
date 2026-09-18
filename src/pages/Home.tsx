@@ -54,13 +54,14 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — the retirement cluster: 401(k) contributions with
-          official 2026 IRS limits, Roth vs Traditional decided by one tax-rate comparison,
-          plus the workplace-money pair (California-correct overtime, PTO accrual with caps).
+          The newest tools on the site — the defensive-money cluster: the emergency fund
+          finish date, the credit-card minimum-payment trap in real dollars, avalanche vs
+          snowball settled on your own debts, plus the retirement pair (401(k) with 2026
+          limits, Roth vs Traditional).
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['401k-contribution-calculator', 'roth-vs-traditional-calculator', 'pto-accrual-calculator', 'overtime-calculator', 'life-insurance-calculator', 'term-vs-whole-life-calculator'].includes(c.slug),
+            ['emergency-fund-calculator', 'credit-card-minimum-payment-calculator', 'debt-avalanche-snowball-calculator', '401k-contribution-calculator', 'roth-vs-traditional-calculator', 'pto-accrual-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
