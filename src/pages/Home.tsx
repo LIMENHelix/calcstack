@@ -54,12 +54,12 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — landscapers get sod ordering and irrigation zone checks
-          (GPM capacity + precipitation rate), framers get rafter-table math.
+          The newest tools on the site — exterior carpentry is covered end to end: deck footings
+          (IRC R507.3.1), ADA ramps, ladder sizing, flooring, rafters, and stairs.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['sod-calculator', 'irrigation-zone-calculator', 'rafter-length-calculator', 'stair-calculator', 'water-heater-size-calculator', 'vent-size-calculator'].includes(c.slug),
+            ['deck-footing-calculator', 'ramp-slope-calculator', 'ladder-angle-calculator', 'flooring-calculator', 'sod-calculator', 'irrigation-zone-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

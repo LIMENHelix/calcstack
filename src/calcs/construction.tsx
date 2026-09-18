@@ -997,6 +997,73 @@ export function RampCalc() {
   )
 }
 
+/* ---------------- Deck Footing Size (IRC Table R507.3.1, 50 psf) ---------------- */
+
+// [tributary sqft, square side in, round dia in, thickness in] at 50 psf total load
+const FOOT_1500: number[][] = [[20,12,14,6],[40,14,16,6],[60,17,19,6],[80,20,22,7],[100,22,25,8],[120,24,27,9],[140,26,29,10],[160,28,31,11]]
+const FOOT_2000: number[][] = [[20,10,11,6],[40,13,15,6],[60,16,18,6],[80,19,21,6],[100,21,23,7],[120,23,26,8],[140,25,28,9],[160,26,30,10]]
+
+function footingLookup(table: number[][], ta: number): number[] | null {
+  const maxTa = table[table.length - 1][0]
+  if (ta > maxTa) return null
+  if (ta <= table[0][0]) return table[0].slice(1)
+  const hi = table.findIndex((row) => ta <= row[0])
+  const [a0, s0, d0, t0] = table[hi - 1]
+  const [a1, s1, d1, t1] = table[hi]
+  const f = (ta - a0) / (a1 - a0) // IRC: interpolation permitted, extrapolation not
+  return [Math.ceil(s0 + f * (s1 - s0)), Math.ceil(d0 + f * (d1 - d0)), Math.ceil(t0 + f * (t1 - t0))]
+}
+
+export function DeckFootingCalc() {
+  const [length, setLength] = useNumber(16)
+  const [width, setWidth] = useNumber(12)
+  const [footings, setFootings] = useNumber(3)
+  const [attach, setAttach] = useState('attached')
+  const [soil, setSoil] = useState('1500')
+
+  const r = useMemo(() => {
+    const area = length * width
+    // attached: ledger carries half the deck, footings split the other half
+    const ta = attach === 'attached' ? area / (2 * footings) : area / footings
+    const table = soil === '1500' ? FOOT_1500 : FOOT_2000
+    const size = footingLookup(table, ta)
+    const load = ta * 50
+    return { area, ta, size, load }
+  }, [length, width, footings, attach, soil])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Deck length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Deck width" value={width} onChange={setWidth} suffix="ft" />
+        <Field label="Footings on the beam line" value={footings} onChange={setFootings} step="1" />
+        <Select label="Deck type" value={attach} onChange={setAttach} options={[
+          ['attached', 'Attached (ledger carries half)'], ['freestanding', 'Freestanding (footings carry all)'],
+        ]} />
+        <Select label="Soil bearing capacity" value={soil} onChange={setSoil} options={[
+          ['1500', '1,500 psf — clay, silt (assume this if unknown)'], ['2000', '2,000 psf — sandy, silty sand, gravel mix'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Tributary area per footing" value={`${num(r.ta, 1)} sq ft`} />
+        <Result label="Load per footing (50 psf)" value={`${num(r.load, 0)} lb`} />
+        <Result big label="Round footing" value={r.size ? `${r.size[1]}" dia × ${r.size[2]}" thick` : 'Beyond table (>160 sq ft) — engineered design'} />
+        <Result label="Square footing" value={r.size ? `${r.size[0]}" × ${r.size[0]}" × ${r.size[2]}" thick` : '—'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Sizes come straight from IRC Table R507.3.1 at 50 psf (40 live + 10 dead) with linear
+        interpolation between tributary rows, which the table permits — extrapolation past 160 sq ft
+        is not, and gets an engineered design instead. Tributary area is the deck area each footing
+        carries: on a ledger-attached deck the house takes half, so the beam footings split only
+        their half. Footings bear on undisturbed soil below the frost line (12&quot; minimum, deeper
+        in cold states — your building department has the number). Snow country: where ground snow
+        load beats the 40 psf live load, the 60/70 psf table rows govern, not these. Hot tubs and
+        masonry outdoor kitchens are a separate engineered check entirely.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Siding ---------------- */
 
 export function SidingCalc() {
@@ -1549,6 +1616,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'flooring-calculator': FlooringCalc,
   'ladder-angle-calculator': LadderCalc,
   'ramp-slope-calculator': RampCalc,
+  'deck-footing-calculator': DeckFootingCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,

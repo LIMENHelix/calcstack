@@ -548,6 +548,7 @@ export const PERSONAS: Persona[] = [
       'driveway-cost-comparison',
       'fence-calculator',
       'deck-calculator',
+      'deck-footing-calculator',
       'insulation-calculator',
       'asphalt-calculator',
       'board-foot-calculator',

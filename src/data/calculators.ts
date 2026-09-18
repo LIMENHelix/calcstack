@@ -1631,6 +1631,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'deck-footing-calculator',
+    title: 'Deck Footing Calculator — IRC R507.3.1 Sizes by Tributary Area',
+    shortTitle: 'Deck Footing Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free deck footing calculator. Tributary area per footing from deck size and footing count, then exact IRC Table R507.3.1 footing sizes — square or round with thickness — at 1,500 or 2,000 psf soil.',
+    tagline: 'The table the inspector checks, in three inputs.',
+    intro:
+      'Deck permits fail on footing size more than anything else, and the answer is a lookup, not a guess: tributary area per footing against soil bearing capacity in IRC Table R507.3.1. This calculator computes the tributary area (with the ledger-carries-half rule for attached decks) and interpolates the exact table — square or round, thickness included.',
+    howItWorks: [
+      'Enter deck length × width and the number of footings on the beam line.',
+      'Pick attached (ledger carries half the load) or freestanding.',
+      'Pick soil: 1,500 psf clay/silt (assume this if unknown) or 2,000 psf sandy.',
+      'Read the tributary area and the exact IRC footing size — round or square with thickness.',
+    ],
+    faq: [
+      {
+        q: 'What size footings does a 12×16 deck need?',
+        a: 'Attached with 3 footings on the beam, each carries 192 ÷ 6 = 32 sq ft. On 1,500 psf soil that interpolates to a 14-inch square or 16-inch round footing, 6 inches thick; on 2,000 psf it drops to 12×12 or 14-inch round. Footings still go below the frost line regardless of size.',
+      },
+      {
+        q: 'What is tributary area?',
+        a: 'The share of deck surface one footing carries — measured to the midway point between that footing and the next bearing point on each side, including any cantilever. On a ledger-attached deck the house carries half the deck, so beam footings only split their half.',
+      },
+      {
+        q: 'When is this table NOT enough?',
+        a: 'Tributary areas over 160 sq ft (extrapolation is not permitted), ground snow loads above 50 psf (the 60/70 psf rows govern instead), hot tubs and masonry kitchens (point loads need engineering), and soils below 1,500 psf bearing (a soils investigation is required).',
+      },
+    ],
+  },
+  {
     slug: 'siding-calculator',
     title: 'Siding Calculator — Squares, Waste & Cost',
     shortTitle: 'Siding Calculator',
