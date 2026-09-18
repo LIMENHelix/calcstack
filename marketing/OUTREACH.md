@@ -78,6 +78,23 @@ they keep the person who clearly knows the subject.
 | Trainers | Trainer Rate, Session Package, Client Capacity, 1RM, Macros | Certification org blogs (NASM/ACE/ISSA), gym-owner communities, fitness subreddits |
 | Gig drivers | True Hourly, Mileage Deduction, Offer Scorer | Rideshare Guy-style blogs, driver YouTube descriptions, tax-prep blogs |
 | Landscapers | Lawn Pricing, Revenue Planner, Snow Bid, Mulch | Lawn Care Forum, equipment dealer blogs, /r/landscaping |
+| Physicians | wRVU Compensation, Loan Payoff, Rent vs Buy | Physician finance blogs (White Coat Investor-style), residency program coordinators, /r/whitecoatinvestor |
+| Retirees / FIRE | RMD, Social Security Breakeven, Safe Withdrawal | Retirement blogs, Bogleheads forum (politely, in answer threads), AARP-style content sites, fee-only advisor blogs |
+| Homebuyers | Rent vs Buy, Closing Costs, Mortgage | First-time-buyer blogs, housing YouTube descriptions, city subreddits (in answer threads), lender resource pages |
+| Law & consulting | Billable Hours, Realization Rate, Consultant Day Rate | Legal-tech blogs, law practice management newsletters, consultant communities, accounting firm blogs |
+| Tipped workers | Tip Pool, Tip Credit, Tip Income Budget | Server/bartender forums, /r/Serverlife, hospitality workforce blogs, restaurant staffing agencies |
+| Sports science | DOTS Score, CKD Carb-Up, Glycogen, Carb Loading, Sweat Rate | Powerlifting federation blogs, keto/CKD communities, marathon training blogs, strength coaching newsletters |
+| Engineers & STEM | Beam Load, Load Combinations, HP↔Torque, RC Circuit, Ohm's Law | Engineering school resource pages, hobbyist electronics blogs, /r/AskEngineers wiki, maker sites |
+| Teachers & public sector | Teacher Pay, Pension math | Teacher blogs, education degree program pages, union local sites |
+
+## New-vertical pitch angles (what makes OURS different)
+
+- **RMD:** uses the current IRS Table III divisors (in effect since 2022) and shows the 25% excise penalty — most ranking RMD calculators never mention the penalty.
+- **Rent vs Buy:** honest breakeven year with invested-difference math — NOT a lender tool that always says "buy." That honesty IS the pitch to independent blogs.
+- **wRVU:** almost no free wRVU calculators exist; physician finance bloggers desperately need one to embed.
+- **Tip Credit Checker:** computes the employer top-up owed — a worker-protection angle no competitor touches.
+- **DOTS:** coefficients verified against published IPF sources; powerlifting blogs embed scoring tools their readers use weekly.
+- **Student Loan IDR:** uses current-year HHS poverty guidelines and flags the post-2025 forgiveness tax bomb.
 
 ## Timing plays
 
