@@ -802,6 +802,99 @@ export function RoomAirflowCalc() {
   )
 }
 
+/* ---------------- Superheat & Subcooling (PT conversion) ---------------- */
+
+// Saturation tables [°F, psig] — R-410A: National Refrigerants/Hudson; R-22: standard chart
+const PT_410A: [number, number][] = [
+  [-40, 11.6], [-35, 14.9], [-30, 18.5], [-25, 22.5], [-20, 26.9], [-15, 31.7], [-10, 36.8],
+  [-5, 42.5], [0, 48.6], [5, 55.2], [10, 62.3], [15, 70.0], [20, 78.3], [25, 87.3], [30, 96.8],
+  [35, 107], [40, 118], [45, 130], [50, 142], [55, 155], [60, 170], [65, 185], [70, 201],
+  [75, 217], [80, 235], [85, 254], [90, 274], [95, 295], [100, 317], [105, 340], [110, 365],
+  [115, 391], [120, 418], [125, 446], [130, 476], [135, 507], [140, 539], [145, 573], [150, 608],
+]
+const PT_R22: [number, number][] = [
+  [-20, 10.1], [-15, 13.2], [-10, 16.5], [-5, 20.6], [0, 24.0], [5, 28.2], [10, 32.8],
+  [15, 37.8], [20, 43.1], [25, 48.8], [30, 54.9], [35, 61.5], [40, 68.5], [45, 76.0],
+  [50, 84.0], [55, 92.6], [60, 101.6], [65, 111.3], [70, 121.4], [75, 132.2], [80, 143.6],
+  [85, 155.7], [90, 168.4], [95, 181.8], [100, 195.9], [105, 210.8], [110, 226.4], [115, 242.7],
+  [120, 259.9], [125, 277.8], [130, 296.8], [135, 316.6], [140, 335.9], [145, 357], [150, 381],
+]
+// Linear-interpolated saturation temp (°F) for a gauge pressure
+function satTemp(table: [number, number][], psig: number): number | null {
+  if (psig < table[0][1] || psig > table[table.length - 1][1]) return null
+  for (let i = 1; i < table.length; i++) {
+    const [t1, p1] = table[i - 1], [t2, p2] = table[i]
+    if (psig <= p2) return t1 + ((psig - p1) / (p2 - p1)) * (t2 - t1)
+  }
+  return null
+}
+
+export function SuperheatCalc() {
+  const [refrig, setRefrig] = useState('410a')
+  const [metering, setMetering] = useState('txv')
+  const [suctP, setSuctP] = useNumber(118)
+  const [suctT, setSuctT] = useNumber(51)
+  const [liqP, setLiqP] = useNumber(365)
+  const [liqT, setLiqT] = useNumber(100)
+  const [targetSc, setTargetSc] = useNumber(10)
+
+  const r = useMemo(() => {
+    const table = refrig === '410a' ? PT_410A : PT_R22
+    const satSuct = satTemp(table, suctP)
+    const satLiq = satTemp(table, liqP)
+    const sh = satSuct === null ? null : suctT - satSuct
+    const sc = satLiq === null ? null : satLiq - liqT
+    let diagnosis = '—'
+    if (sh !== null && sc !== null) {
+      const shHigh = sh > 14, shLow = sh < 5
+      const scHigh = sc > targetSc + 4, scLow = sc < targetSc - 4
+      if (shHigh && scLow) diagnosis = 'Likely UNDERCHARGED (high superheat, low subcooling)'
+      else if (shLow && scHigh) diagnosis = 'Likely OVERCHARGED (low superheat, high subcooling)'
+      else if (shHigh && scHigh) diagnosis = 'Restriction or low evaporator airflow — check filters, coil, metering device'
+      else if (shLow && sc < 5) diagnosis = 'Floodback risk — do NOT add charge; verify conditions stabilized'
+      else diagnosis = 'Within normal field bands — verify against manufacturer charging spec'
+    }
+    return { satSuct, satLiq, sh, sc, diagnosis }
+  }, [refrig, metering, suctP, suctT, liqP, liqT, targetSc])
+
+  const verdict = (v: number | null, lo: number, hi: number) =>
+    v === null ? 'Out of PT range' : v < lo ? `LOW (${num(v, 1)}°F)` : v > hi ? `HIGH (${num(v, 1)}°F)` : `✓ ${num(v, 1)}°F`
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Refrigerant" value={refrig} onChange={setRefrig} options={[
+          ['410a', 'R-410A'], ['r22', 'R-22'],
+        ]} />
+        <Select label="Metering device" value={metering} onChange={setMetering} options={[
+          ['txv', 'TXV — charge by subcooling'], ['fixed', 'Fixed orifice — charge by superheat'],
+        ]} />
+        <Field label="Target subcooling (mfr spec)" value={targetSc} onChange={setTargetSc} suffix="°F" />
+        <Field label="Suction pressure" value={suctP} onChange={setSuctP} suffix="psig" />
+        <Field label="Suction line temp" value={suctT} onChange={setSuctT} suffix="°F" />
+        <Field label="Liquid pressure" value={liqP} onChange={setLiqP} suffix="psig" />
+        <Field label="Liquid line temp" value={liqT} onChange={setLiqT} suffix="°F" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Superheat" value={verdict(r.sh, 8, 14)} />
+        <Result big label="Subcooling" value={verdict(r.sc, Math.max(3, targetSc - 4), targetSc + 4)} />
+        <Result label="Suction saturation" value={r.satSuct === null ? '—' : `${num(r.satSuct, 1)}°F`} />
+        <Result label="Liquid saturation" value={r.satLiq === null ? '—' : `${num(r.satLiq, 1)}°F`} />
+      </div>
+      <div className="rounded-lg border p-3 text-sm font-medium">{r.diagnosis}</div>
+      <p className="text-sm text-muted-foreground">
+        Superheat = suction line temp − saturation temp at suction pressure (protects the
+        compressor from liquid floodback). Subcooling = saturation temp at liquid pressure −
+        liquid line temp (guarantees pure liquid at the metering device). TXV systems charge by
+        subcooling to the manufacturer spec (often 8–12°F); fixed-orifice systems charge by
+        superheat against the mfr chart (indoor wet-bulb × outdoor dry-bulb), with 8–14°F a common
+        field band. Let the system stabilize 10–15 minutes before reading, and never adjust charge
+        on superheat below 5°F. EPA 608 certification is required to handle refrigerant.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
 
 // NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
@@ -927,4 +1020,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'service-load-calculator': ServiceLoadCalc,
   'duct-size-calculator': DuctSizeCalc,
   'room-airflow-calculator': RoomAirflowCalc,
+  'superheat-subcooling-calculator': SuperheatCalc,
 }

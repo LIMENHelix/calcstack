@@ -309,4 +309,6 @@ export const WHY_USE: Record<string, string> = {
     'HVAC techs use it when a room runs hot — is the run-out even big enough for its CFM share? Installers use it to convert round trunk sizes to the rectangular duct that fits the joist bay, and the friction-rate toggle shows exactly what the "quiet upgrade" to 0.05 costs in sheet metal.',
   'room-airflow-calculator':
     'HVAC techs use it for balance complaints: turn each room\'s load into its target CFM, then measure what the register actually delivers — the gap is the diagnosis. It is also the front end of every duct design: room CFM targets feed straight into duct sizing.',
+  'superheat-subcooling-calculator':
+    'HVAC techs use it on every service call — gauges and clamp thermometers in, charge verdict out, without flipping through a PT card. The diagnosis matrix catches the classic misread: high superheat with high subcooling is a restriction, not an undercharge, and adding refrigerant to it kills compressors.',
 }

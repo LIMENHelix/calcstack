@@ -4655,6 +4655,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'superheat-subcooling-calculator',
+    title: 'Superheat & Subcooling Calculator — R-410A / R-22 PT Conversion',
+    shortTitle: 'Superheat & Subcooling',
+    category: 'Trades & Engineering',
+    description:
+      'Free superheat and subcooling calculator. Convert suction and liquid pressures to saturation temps for R-410A or R-22, get superheat/subcooling, verdicts, and charge diagnosis.',
+    tagline: 'Pressures in, diagnosis out.',
+    intro:
+      'Charging by "beer can cold" is how compressors die. The correct method reads pressures and line temperatures, converts them through the refrigerant\'s pressure-temperature relationship, and compares superheat and subcooling against the manufacturer target. This calculator does the PT conversion for R-410A and R-22, flags values outside field bands, and names the likely fault from the classic diagnosis matrix — undercharge, overcharge, or restriction.',
+    howItWorks: [
+      'Pick the refrigerant and metering device — TXV systems charge by subcooling; fixed-orifice by superheat.',
+      'Enter suction pressure and suction line temperature → superheat appears with its verdict.',
+      'Enter liquid pressure and liquid line temperature → subcooling appears against the manufacturer target.',
+      'Read the combined diagnosis: high superheat + low subcooling means undercharged; the reverse means overcharged.',
+    ],
+    faq: [
+      {
+        q: 'Which do I use to charge — superheat or subcooling?',
+        a: 'It depends on the metering device. TXV systems hold superheat constant by design, so you charge to the manufacturer\'s subcooling spec (commonly 8–12°F). Fixed-orifice (piston) systems let superheat float with load, so you charge to a superheat target from the manufacturer chart based on indoor wet-bulb and outdoor dry-bulb temperatures.',
+      },
+      {
+        q: 'What does high superheat with low subcooling mean?',
+        a: 'The classic undercharge signature: not enough refrigerant mass, so the evaporator starves (high superheat) and the condenser cannot stack liquid (low subcooling). The reverse — low superheat with high subcooling — points to overcharge. High on both suggests a restriction or low evaporator airflow, not a charge problem.',
+      },
+      {
+        q: 'How long should the system run before I read gauges?',
+        a: 'Ten to fifteen minutes minimum at stable conditions — pressures drift while the coil pulls down. Reading early is the most common way techs misdiagnose charge. Also insulate your temperature clamps and wait for them to settle; a bad line-temp reading corrupts both numbers.',
+      },
+      {
+        q: 'Can I top off R-410A like R-22?',
+        a: 'Not ideally. R-410A is a near-azeotropic blend; significant leaks can shift its composition, so best practice is recover and recharge by weight. R-22 is a single-component refrigerant and tolerates topping off — though as a phased-out HCFC, it is expensive and reclaimed-only. Either way, refrigerant handling requires EPA Section 608 certification.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
