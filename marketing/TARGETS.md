@@ -70,6 +70,40 @@ physicians who love free tools and routinely embed calculators.
 26. Payroll-adjacent blogs and bookkeeper newsletters — Employee True Cost embed; every
     bookkeeper fields "what does an employee actually cost me" monthly.
 
+## Wave 8 — healthcare & benefits (Oct–Dec seasonal spike; open enrollment hub is the pitch)
+
+27. Benefits/HR newsletters (HR Dive, BenefitsPRO, SHRM blog roll) — pitch the
+    /open-enrollment hub as a reader resource in September, when editors plan
+    enrollment-season content. Template B. One hub link beats five calculator links here.
+28. HSA/FSA administrators' blogs (HSA Bank, HealthEquity, Fidelity workplace blogs accept
+    contributed tools) — HSA Growth embed; "what is my HSA worth in 20 years" is their
+    favorite engagement topic. Template A.
+29. Personal-finance subreddits during enrollment season (/r/personalfinance,
+    /r/HealthInsurance) — Template C only: answer "HDHP or PPO?" threads with total-cost
+    math inline, link Health Plan Comparison when it is the answer. October–December only;
+    off-season it reads as spam.
+30. Early-retirement / FIRE blogs beyond the physician niche (Root of Good, Millennial
+    Revolution, Mad Fientist) — pitch COBRA Cost + Health Plan Comparison; healthcare in
+    early retirement is the #1 reader question on these blogs.
+31. Medicare-adjacent content sites (MedicareWire, 65 Incorporated) — the hub's Medicare
+    deadline strip (Oct 15–Dec 7) is the hook; pitch link, not embed (their platforms vary).
+
+## Wave 9 — landlords & rental investors (BiggerPockets orbit; numbers-obsessed audience)
+
+32. BiggerPockets (biggerpockets.com) — forums: Template C on depreciation and rent
+    proration threads; blog: pitch BRRRR Calculator embed, their flagship strategy.
+    Do the forum work for 2 weeks BEFORE pitching the blog.
+33. Landlord software blogs (Avail, TurboTenant, Stessa, RentRedi) — all run resource
+    blogs hungry for free tools; pitch Prorated Rent + Rental Depreciation embeds.
+    Template A. These are the easiest yeses in the entire list.
+34. Real-estate investor YouTube channels — BRRRR embed for deal-analysis videos; the
+    calculator on screen is their content format. Offer co-branded embed if asked.
+35. /r/Landlord and local landlord associations — Template C for the subreddit
+    (proration disputes and depreciation questions are weekly), Template B for state
+    landlord associations' resource pages.
+36. Tax-time cross-pitch (Feb–Apr): Rental Depreciation to CPA/tax-prep blogs serving
+    real-estate investors — Schedule E content spikes in Q1.
+
 ## Rules
 
 - Verify the embed renders on their platform BEFORE pitching (WordPress allows iframes in
