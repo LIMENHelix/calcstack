@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Field, Result, useNumber } from './index'
-import { usd } from '@/lib/calc'
+import { usd, num } from '@/lib/calc'
 
 const inputCls = 'flex h-9 w-full rounded-md border bg-background px-3 text-sm'
 
@@ -187,8 +187,72 @@ export function CobraCalc() {
   )
 }
 
+/* ---------------- Life insurance needs (DIME method) ---------------- */
+
+export function LifeInsuranceCalc() {
+  const [income, setIncome] = useNumber(75000)
+  const [years, setYears] = useNumber(10)
+  const [mortgage, setMortgage] = useNumber(250000)
+  const [debts, setDebts] = useNumber(15000)
+  const [kids, setKids] = useNumber(2)
+  const [perChild, setPerChild] = useNumber(100000)
+  const [final, setFinal] = useNumber(15000)
+  const [existing, setExisting] = useNumber(0)
+  const [savings, setSavings] = useNumber(25000)
+
+  const r = useMemo(() => {
+    const i = income * years
+    const e = kids * perChild
+    const gross = debts + i + mortgage + e + final
+    const net = Math.max(0, gross - existing - savings)
+    const tenX = income * 10
+    const gap10x = net - tenX
+    return { i, e, gross, net, tenX, gap10x }
+  }, [income, years, mortgage, debts, kids, perChild, final, existing, savings])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Annual income" value={income} onChange={setIncome} prefix="$" step="1000" />
+          <Field label="Years of income to replace" value={years} onChange={setYears} step="1" />
+          <Field label="Mortgage balance" value={mortgage} onChange={setMortgage} prefix="$" step="5000" />
+          <Field label="Other debts (cards, loans)" value={debts} onChange={setDebts} prefix="$" step="1000" />
+          <Field label="Children" value={kids} onChange={setKids} step="1" />
+          <Field label="Education cost per child" value={perChild} onChange={setPerChild} prefix="$" step="5000" />
+          <Field label="Final expenses" value={final} onChange={setFinal} prefix="$" step="1000" />
+          <Field label="Existing life insurance" value={existing} onChange={setExisting} prefix="$" step="10000" />
+          <Field label="Liquid savings & investments" value={savings} onChange={setSavings} prefix="$" step="5000" />
+          <p className="text-sm text-muted-foreground">
+            The DIME method — Debt, Income, Mortgage, Education — is the framework fee-only
+            planners start from: add the four obligations, subtract what you already have, and
+            the gap is the death benefit to shop for. The 10×-income rule is shown for contrast;
+            for most families with a mortgage and kids it comes in hundreds of thousands low.
+            Term life is usually the right tool for a need this size and this temporary — a
+            20–30 year level term covers the mortgage years and the kids-to-college years at a
+            fraction of whole-life cost.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label="Coverage to shop for" value={usd(r.net)} />
+          <Result label="D — debts" value={usd(debts)} />
+          <Result label={`I — income × ${num(years, 0)} yrs`} value={usd(r.i)} />
+          <Result label="M — mortgage payoff" value={usd(mortgage)} />
+          <Result label={`E — education (${num(kids, 0)} × ${usd(perChild)})`} value={usd(r.e)} />
+          <Result label="Final expenses" value={usd(final)} />
+          <Result label="Gross need" value={usd(r.gross)} />
+          <Result label="Minus existing coverage + savings" value={`−${usd(existing + savings)}`} />
+          <Result label="10×-income rule" value={usd(r.tenX)} />
+          <Result label="DIME vs 10× rule" value={r.gap10x > 0 ? `DIME is ${usd(r.gap10x)} higher` : `10× rule is ${usd(-r.gap10x)} higher`} />
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const HEALTHMONEY_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'hsa-growth-calculator': HsaGrowthCalc,
+  'life-insurance-calculator': LifeInsuranceCalc,
   'health-plan-comparison-calculator': HealthPlanCalc,
   'cobra-cost-calculator': CobraCalc,
 }

@@ -4212,6 +4212,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'life-insurance-calculator',
+    title: 'Life Insurance Calculator — DIME Method Coverage Needs',
+    shortTitle: 'Life Insurance Calculator',
+    category: 'Health & Life',
+    description:
+      'Free life insurance needs calculator using the DIME method — Debt, Income, Mortgage, Education — minus existing coverage and savings, with the 10×-income rule shown for contrast.',
+    tagline: 'The number a fee-only planner would start from.',
+    intro:
+      'Most people buy life insurance by round number or by the 10×-income rule, and both miss the actual obligations. The DIME method adds what your family would actually face — debts, years of replaced income, the mortgage payoff, and education costs — then subtracts the coverage and savings you already have. The gap is the death benefit worth shopping for, and for most families it is hundreds of thousands away from the rule of thumb.',
+    howItWorks: [
+      'Enter annual income and how many years your household would need it replaced (10 is a common start).',
+      'Add the mortgage balance, non-mortgage debts, children and education cost per child, and final expenses.',
+      'Subtract existing life insurance and liquid savings.',
+      'Read the coverage gap — and how far the 10×-income rule lands from it.',
+    ],
+    faq: [
+      {
+        q: 'How much life insurance does a $75k earner with a mortgage and two kids need?',
+        a: 'DIME with typical numbers — $15k debts, 10 years of income ($750k), a $250k mortgage, $100k per child education, $15k final expenses — totals $1,215,000 gross. Subtract $25k of savings and the coverage to shop for is about $1.19 million. The 10×-income rule says $750k — roughly $440k short for this family.',
+      },
+      {
+        q: 'Is the 10× income rule good enough?',
+        a: 'It is a starting benchmark, not a needs analysis. It ignores the mortgage (usually the largest single obligation), education costs, and the savings you already have. For families with young kids and a big mortgage it routinely underestimates by $300k–$600k; for a single renter with no dependents it overestimates. DIME costs you five minutes and lands much closer.',
+      },
+      {
+        q: 'Term or whole life for this amount?',
+        a: 'For most families the need is large but temporary — it peaks while the mortgage is big and the kids are young, and shrinks as both wind down. A 20–30 year level term policy covers exactly that window at a fraction of whole-life cost, which is why fee-only planners default to term for income replacement. Permanent insurance fits permanent needs: final expenses, estate liquidity, lifelong dependents.',
+      },
+    ],
+  },
+  {
     slug: 'hsa-growth-calculator',
     title: 'HSA Growth Calculator — The Triple Tax Advantage in Dollars',
     shortTitle: 'HSA Growth',
