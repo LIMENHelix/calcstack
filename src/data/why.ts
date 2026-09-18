@@ -339,6 +339,8 @@ export const WHY_USE: Record<string, string> = {
     'Drivers comparing "new car vs keeping the old one" use it to see depreciation as a line item — usually the largest cost and the only one without a bill. Per-mile pricing makes transit and EV comparisons honest.',
   'car-lease-payment-calculator':
     'Shoppers sitting in the dealership use it on their phones: the salesperson quotes a payment, and this splits it into depreciation and finance charges with the money factor converted to APR. It is the difference between negotiating a price and accepting a payment.',
+  'cd-interest-calculator':
+    'Savers use it before locking anything up: the maturity number is the easy half — the early-withdrawal scenario against a plain HYSA is what decides whether the CD\'s rate premium is real for their timeline. It is the check that turns "great rate" into an actual decision.',
   'net-worth-calculator':
     'Anyone doing an annual money checkup uses it to turn scattered accounts into one number with context — the Fed SCF median comparison and the illiquidity share are the parts generic net-worth tools skip.',
   'cost-of-living-comparison-calculator':

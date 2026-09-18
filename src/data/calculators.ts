@@ -5108,6 +5108,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'cd-interest-calculator',
+    title: 'CD Interest Calculator — Maturity Value & Early-Withdrawal Penalty Truth',
+    shortTitle: 'CD Interest',
+    category: 'Savings & Investing',
+    description:
+      'Free CD interest calculator. Enter deposit, APY, and term to see maturity value — then model breaking the CD early with the penalty, compared honestly against just staying in a high-yield savings account.',
+    tagline: 'The rate is only good if you never need the money. Check the break-even.',
+    intro:
+      'A CD trades liquidity for rate, and the trade is only visible when you price the exit. This calculator grows your deposit at the APY to maturity, then runs the scenario banks hope you skip: breaking early — the balance at that month, the penalty in months of interest, and whether you would have done better simply staying in a high-yield savings account.',
+    howItWorks: [
+      'Enter your deposit, the CD\'s APY, and term in months.',
+      'Set the early-withdrawal penalty (typically 3–12 months of interest) and the month you might need the money.',
+      'The calculator shows maturity value, then the early-break net versus a high-yield savings account for the same period.',
+      'Read which side wins — the CD even after the penalty, or staying liquid.',
+    ],
+    faq: [
+      {
+        q: 'How is CD interest calculated?',
+        a: 'Balance = deposit × (1 + APY)^(years). APY already includes compounding, so no extra math: $10,000 at 4.5% APY grows to $10,450.00 in 12 months, $10,920.25 in 24, and $12,461.82 in 60. Interest is taxable as ordinary income in the year it is credited, even inside the CD term.',
+      },
+      {
+        q: 'What happens if I break a CD early?',
+        a: 'You pay a penalty in months of interest — typically 3 months on short CDs, 6–12 on longer ones. Example: $10,000 at 4.5%, 12-month term, 6-month penalty, broken at month 6: balance $10,222.52, penalty $227.48, net $9,995.05 — less than you deposited, and behind the $10,198.04 a 4% HYSA would have paid. The rate premium only survives if you do not touch the money.',
+      },
+      {
+        q: 'How do I get CD rates without the lockup risk?',
+        a: 'A CD ladder: split the deposit across staggered terms (e.g., 6, 12, 18, 24 months) so something matures every few months, then roll each maturity into the longest rung. You capture most of the long-term rate with a near-term maturity always approaching — the penalty scenario rarely triggers.',
+      },
+    ],
+  },
+  {
     slug: 'net-worth-calculator',
     title: 'Net Worth Calculator — Assets Minus Debts, Benchmarked Against the Fed Data',
     shortTitle: 'Net Worth',

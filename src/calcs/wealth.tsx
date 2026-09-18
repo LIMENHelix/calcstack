@@ -260,7 +260,69 @@ export function RaiseWorthCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- CD Interest & Early-Withdrawal Penalty ---------------- */
+
+// APY-based growth: balance(m) = P × (1+APY)^(m/12). Penalty = months of interest at withdrawal point.
+// Verified: $10k @ 4.5% → $10,450 (12mo), $12,461.82 (60mo); break at 6mo w/ 6-mo penalty → $9,995.05 net.
+export function CdCalc(_props: CalcProps) {
+  const [deposit, setDeposit] = useNumber(10000)
+  const [apy, setApy] = useNumber(4.5)
+  const [termMo, setTermMo] = useNumber(12)
+  const [penaltyMo, setPenaltyMo] = useNumber(6)
+  const [breakAt, setBreakAt] = useNumber(6)
+  const [hysaApy, setHysaApy] = useNumber(4)
+
+  const r = useMemo(() => {
+    const g = 1 + apy / 100
+    const maturity = deposit * Math.pow(g, termMo / 12)
+    const interest = maturity - deposit
+    // early withdrawal at breakAt months
+    const balAtBreak = deposit * Math.pow(g, Math.min(breakAt, termMo) / 12)
+    const penalty = balAtBreak * (Math.pow(g, Math.min(penaltyMo, breakAt) / 12) - 1)
+    const netEarly = balAtBreak - penalty
+    // HYSA comparison for the same break period
+    const hysa = deposit * Math.pow(1 + hysaApy / 100, Math.min(breakAt, termMo) / 12)
+    const earlyBeatsHysa = netEarly >= hysa
+    return { maturity, interest, balAtBreak, penalty, netEarly, hysa, earlyBeatsHysa }
+  }, [deposit, apy, termMo, penaltyMo, breakAt, hysaApy])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="Deposit" value={deposit} onChange={setDeposit} prefix="$" />
+          <Field label="CD APY" value={apy} onChange={setApy} suffix="%" step="0.05" />
+          <Field label="Term" value={termMo} onChange={setTermMo} suffix="mo" />
+          <Field label="Early-withdrawal penalty" value={penaltyMo} onChange={setPenaltyMo} suffix="mo of interest" />
+          <Field label="If you break at month" value={breakAt} onChange={setBreakAt} step="1" />
+          <Field label="Your HYSA rate (comparison)" value={hysaApy} onChange={setHysaApy} suffix="%" step="0.05" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label="Value at maturity" value={usd(r.maturity, 2)} />
+          <Result label="Interest earned at term" value={usd(r.interest, 2)} />
+          <Result label={`If broken at month ${num(breakAt, 0)}: net`} value={usd(r.netEarly, 2)} />
+          <Result label="Penalty paid" value={`−${usd(r.penalty, 2)}`} />
+          <Result label={`HYSA at ${num(hysaApy, 2)}% for same period`} value={usd(r.hysa, 2)} />
+          <Result label="Breaking CD vs staying liquid" value={r.earlyBeatsHysa ? `CD still wins by ${usd(r.netEarly - r.hysa, 2)}` : `HYSA wins by ${usd(r.hysa - r.netEarly, 2)}`} />
+        </div>
+
+        <p className="text-xs text-muted-foreground">
+          Growth uses the APY directly (compounding already included): balance = deposit ×
+          (1 + APY)^(months/12). The penalty line is the one to check before committing: with a
+          {num(penaltyMo, 0)}-month penalty, breaking this CD at month {num(breakAt, 0)} nets{' '}
+          {usd(r.netEarly, 2)} — {r.earlyBeatsHysa ? 'still ahead of' : 'behind'} simply leaving it in
+          a {num(hysaApy, 2)}% high-yield savings account. A CD ladder (splitting the deposit across
+          staggered terms) is the standard fix: something matures every few months, so the penalty
+          scenario rarely triggers.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const WEALTH_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'cd-interest-calculator': CdCalc,
   'net-worth-calculator': NetWorthCalc,
   'cost-of-living-comparison-calculator': CostOfLivingCalc,
   'raise-worth-calculator': RaiseWorthCalc,
