@@ -3919,6 +3919,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'savings-rate-calculator',
+    title: 'Savings Rate Calculator — Years to Financial Independence',
+    shortTitle: 'Savings Rate & FI Date',
+    category: 'Savings & Investing',
+    description:
+      'Free savings rate calculator. Enter income, spending, and current savings to see your savings rate and the exact years to financial independence (25× spending, 4% rule) at any real return assumption.',
+    tagline: 'Your savings rate is your retirement date.',
+    intro:
+      'The shockingly simple math of early retirement: your savings rate — not your income, not your stock picks — sets the date. A 50% rate buys financial independence in about 17 years; 65% in 10.5; 75% in 7. This calculator runs the closed-form projection on your actual income, spending, and current stash, and shows what each 5-point bump buys you in years.',
+    howItWorks: [
+      'Enter annual after-tax income and annual spending — the difference is your savings rate.',
+      'Add current invested savings and a real return assumption (5% is the canonical choice).',
+      'The calculator solves the exact year your portfolio reaches 25× annual spending (the 4% rule).',
+      'See your years-to-FI, the FI number, and what saving 5 points more would do.',
+    ],
+    faq: [
+      {
+        q: 'How does savings rate determine my retirement date?',
+        a: 'Two ways at once: a higher rate adds more to the portfolio and shrinks the annual spending the portfolio must cover. The math at 5% real return from zero: 10% takes 51 years, 30% takes 28, 50% takes 16.6, 65% takes 10.5, 75% takes 7.1, 90% takes under 3. The rate, not the return, is the dominant variable.',
+      },
+      {
+        q: 'What counts toward the savings rate?',
+        a: 'Everything that increases net worth: 401(k) and IRA contributions (including the employer match), HSA contributions, extra principal on debt beyond minimums, and taxable investing — all divided by after-tax income. Counting the match is legitimate: it is compensation you converted to assets.',
+      },
+      {
+        q: 'Is the 4% rule safe for early retirement?',
+        a: 'For 30-year retirements it survived every historical window; for 40–60 year early-retirement horizons, the researched floor is closer to 3.25–3.5%, which means a target of 28–30× spending rather than 25×. Use the safe withdrawal calculator to stress-test the number this one gives you.',
+      },
+    ],
+  },
+  {
     slug: 'roth-vs-traditional-calculator',
     title: 'Roth vs Traditional Calculator — Which Account Wins After Tax?',
     shortTitle: 'Roth vs Traditional',

@@ -263,6 +263,8 @@ export const WHY_USE: Record<string, string> = {
     'Retirees use it every December: the divisor shrinks every year, so the RMD percentage climbs — this shows both. Advisors use it to size Roth conversions in the gap years between retirement and age 73.',
   '401k-contribution-calculator':
     'Employees use it at open enrollment and after every raise: what does 1% more actually cost per check, and is the full match being captured? It is the answer to the two most common 401(k) questions — "how much should I put in" and "what will my paycheck look like."',
+  'savings-rate-calculator':
+    'The FIRE-curious use it to convert a vague "I should save more" into a date: raise the rate five points and watch years fall off. It is also the honest mirror for high earners — a big salary at a 10% rate retires later than a modest one at 40%.',
   'roth-vs-traditional-calculator':
     'Savers use it every time income changes: the first job (low bracket — Roth), the peak-earning years (high bracket — Traditional), and the in-between years where splitting is the honest answer. It converts a tax-law guessing game into one rate comparison.',
   'social-security-breakeven-calculator':

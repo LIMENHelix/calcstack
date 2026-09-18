@@ -366,7 +366,73 @@ export function RothVsTraditionalCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Savings Rate & Years to Financial Independence ---------------- */
+
+// FI at 25× annual spending (4% rule). Closed form: n = ln((target + A/r)/(stash + A/r)) / ln(1+r)
+// Reproduces the canonical MMM table at 5% real: 50% → 16.6, 65% → 10.5, 75% → 7.1 yrs.
+export function SavingsRateCalc(_props: CalcProps) {
+  const [income, setIncome] = useNumber(80000)
+  const [spending, setSpending] = useNumber(56000)
+  const [stash, setStash] = useNumber(50000)
+  const [ret, setRet] = useNumber(5)
+
+  const r = useMemo(() => {
+    const annualSave = income - spending
+    const sr = income > 0 ? annualSave / income : 0
+    const target = 25 * spending
+    const rr = ret / 100
+    let years: number | null = null
+    if (sr > 0 && annualSave > 0 && rr > 0) {
+      years = Math.log((target + annualSave / rr) / (stash + annualSave / rr)) / Math.log(1 + rr)
+      if (!isFinite(years) || years < 0) years = 0
+    } else if (stash >= target) {
+      years = 0
+    }
+    // reference: years at classic rates from zero
+    const ref = (s: number) => {
+      const A = spending * (s / (1 - s))
+      return Math.log((target + A / rr) / (stash + A / rr)) / Math.log(1 + rr)
+    }
+    const plus5 = sr + 0.05 < 0.95 ? ref(sr + 0.05) : null
+    return { annualSave, sr, target, years, plus5, monthlySave: annualSave / 12 }
+  }, [income, spending, stash, ret])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Annual after-tax income" value={income} onChange={setIncome} prefix="$" />
+          <Field label="Annual spending" value={spending} onChange={setSpending} prefix="$" />
+          <Field label="Current invested savings" value={stash} onChange={setStash} prefix="$" />
+          <Field label="Real return assumption" value={ret} onChange={setRet} suffix="%" step="0.5" />
+          <p className="text-xs text-muted-foreground">
+            FI defined as 25× annual spending (the 4% rule). Uses real (inflation-adjusted) return —
+            5% is the canonical assumption from the shockingly-simple-math analysis. Savings rate is
+            the only lever that moves the date fast: it raises the attack and shrinks the target at once.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label="Your savings rate" value={`${num(r.sr * 100, 1)}%`} />
+          <Result label="Annual savings" value={`${usd(r.annualSave, 0)} (${usd(r.monthlySave, 0)}/mo)`} />
+          <Result label="FI number (25× spending)" value={usd(r.target, 0)} />
+          <Result label="Years to financial independence" value={r.years === null ? '— (savings rate ≤ 0)' : `${num(r.years, 1)} yrs`} />
+          {r.plus5 !== null && r.years !== null && (
+            <Result label="If you saved 5 points more" value={`${num(r.plus5, 1)} yrs (${num(r.years - r.plus5, 1)} sooner)`} />
+          )}
+          <p className="text-sm text-muted-foreground">
+            Reference points at {num(ret, 1)}% real return: a 30% rate gets there in 28 years, 50% in
+            16.6, 65% in 10.5, 75% in 7.1. Your rate of {num(r.sr * 100, 1)}%
+            {r.years !== null ? ` projects ${num(r.years, 1)} years` : ''} — and every 5-point bump
+            compounds twice, adding savings while shrinking the spending target the fund must cover.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const RETIRE_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'savings-rate-calculator': SavingsRateCalc,
   '401k-contribution-calculator': K401Calc,
   'roth-vs-traditional-calculator': RothVsTraditionalCalc,
   'rmd-calculator': RmdCalc,
