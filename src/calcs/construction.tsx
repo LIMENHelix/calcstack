@@ -659,6 +659,17 @@ export function BoardFootCalc() {
 
 /* ---------------- Stairs ---------------- */
 
+// inches -> "7 3/4"" style fraction string, rounded to nearest 1/16
+function fracIn(x: number): string {
+  const whole = Math.floor(x)
+  let six = Math.round((x - whole) * 16)
+  if (six === 0) return `${whole}"`
+  if (six === 16) return `${whole + 1}"`
+  let d = 16
+  while (six % 2 === 0) { six /= 2; d /= 2 }
+  return `${whole} ${six}/${d}"`
+}
+
 export function StairCalc() {
   const [rise, setRise] = useNumber(105)
   const [tread, setTread] = useState('10')
@@ -672,10 +683,15 @@ export function StairCalc() {
     const treadD = parseFloat(tread)
     const run = treads * treadD
     const stringer = Math.sqrt(run * run + rise * rise) / 12
+    const angle = Math.atan(rise / run) * 180 / Math.PI
     const comfort = 2 * actualRiser + treadD
     const codeOk = actualRiser <= 7.75 && treadD >= 10
     const comfortOk = comfort >= 24 && comfort <= 26
-    return { risers, actualRiser, treads, run, stringer, comfort, codeOk, comfortOk }
+    // stringer count: edges + intermediates sized for 2× treads (≤24" OC); round stock to next 2-ft board
+    const stringers = width < 36 ? 2 : width < 54 ? 3 : Math.ceil(width / 16) + 1
+    const spacing = width / (stringers - 1)
+    const stockFt = Math.ceil(stringer / 2) * 2
+    return { risers, actualRiser, treads, run, stringer, angle, comfort, codeOk, comfortOk, stringers, spacing, stockFt }
   }, [rise, tread, width])
 
   return (
@@ -688,18 +704,27 @@ export function StairCalc() {
         <Field label="Stair width" value={width} onChange={setWidth} suffix="in" />
       </div>
       <div className="grid gap-3 sm:grid-cols-4">
-        <Result big label="Risers" value={`${r.risers} × ${num(r.actualRiser, 2)}"`} />
+        <Result big label="Risers" value={`${r.risers} × ${fracIn(r.actualRiser)}`} />
         <Result label="Treads" value={String(r.treads)} />
         <Result label="Total run" value={`${num(r.run / 12, 2)} ft`} />
         <Result label="Stringer length" value={`${num(r.stringer, 1)} ft`} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Stair angle" value={`${num(r.angle, 1)}° (ideal 30–37°)`} />
+        <Result label="Comfort 2R+T" value={`${num(r.comfort, 1)}" (ideal 24–26")`} />
+        <Result label="Stringers needed" value={`${r.stringers} (${num(r.spacing, 1)}" OC, 2× treads)`} />
+        <Result label="2×12 stock per stringer" value={`${r.stockFt} ft`} />
       </div>
       <p className="text-sm text-muted-foreground">
         {r.codeOk
           ? `Passes IRC basics (riser ≤ 7.75", tread ≥ 10"). Comfort rule 2R+T = ${num(r.comfort, 1)}" — ${r.comfortOk ? 'in the ideal 24–26" range.' : 'outside the ideal 24–26" range; adjust tread depth.'}`
           : 'Fails IRC basics (riser ≤ 7.75", tread ≥ 10") — adjust inputs.'}
-        {' '}Treads = risers − 1 because the upper floor is the last landing. Stairs 36"+ wide need a
-        third stringer at center; cut stringers from 2×12. Check local code for headroom (6'8" min)
-        and handrail rules.
+        {' '}Treads = risers − 1 because the upper floor is the last landing. Stringer count assumes
+        2× lumber treads (up to 24" on-center); 5/4 deck boards want 16" and composite treads often
+        demand 12" — add stringers accordingly. All risers must match within
+        3/8" (R311.7.5): divide the rise exactly, never leave the remainder in one step. Cut
+        stringers from 2×12 with at least 3.5" of solid throat left below the notches; handrail
+        required at 4+ risers (34–38"), headroom minimum 6'8". Verify local amendments.
       </p>
     </CardContent></Card>
   )
