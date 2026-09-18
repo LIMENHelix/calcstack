@@ -2226,6 +2226,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'billable-hours-calculator',
+    title: 'Billable Hours Calculator — Hours Needed to Hit an Income Goal',
+    shortTitle: 'Billable Hours',
+    category: 'Freelance & Career',
+    description:
+      'Free billable hours calculator. Compute the billable hours required to hit a revenue goal at your hourly rate, compare against realistic capacity, and see weekly pace.',
+    tagline: 'The goal is not the rate — it is the hours you can actually sell.',
+    intro:
+      'A $300,000 year at $250/hour means 1,200 billable hours — but at a realistic 70% utilization a 40-hour week only yields 1,344 of them. This calculator works out the required hours, compares them against your true capacity, and shows the weekly pace you must hold — before you promise anyone the number.',
+    howItWorks: [
+      'Enter your annual revenue goal and hourly rate.',
+      'Enter utilization (the share of worked hours you can actually bill), hours per week, and working weeks per year.',
+      'Read required billable hours, your capacity, the slack or shortfall, and the weekly billing pace.',
+    ],
+    faq: [
+      {
+        q: 'What is a realistic utilization rate?',
+        a: 'Law firm associates are often targeted at 1,800–2,000 billable hours per year, which implies 75–85% utilization of a 40-hour week — and most report working far more than 40 hours to get there. Solo consultants and freelancers typically land at 50–65%: the rest goes to sales, admin, invoicing, and marketing. Plan with 60–70% unless your numbers prove otherwise.',
+      },
+      {
+        q: 'How many billable hours are in a year?',
+        a: 'A 40-hour week for 48 weeks is 1,920 worked hours; at 70% utilization that is 1,344 billable. The BigLaw 2,000-hour standard requires roughly 2,700–3,000 total hours — which is why it is described as a lifestyle, not a schedule.',
+      },
+      {
+        q: 'What if my capacity falls short of the goal?',
+        a: 'Three levers: raise the rate, raise utilization (better admin discipline or productized services), or add leverage (junior staff, subcontractors). Cutting vacation weeks is the fourth lever, and it is the one most people quietly pull first — the calculator makes that trade visible.',
+      },
+    ],
+  },
+  {
+    slug: 'realization-rate-calculator',
+    title: 'Realization Rate Calculator — Billing & Collection Realization',
+    shortTitle: 'Realization Rate',
+    category: 'Freelance & Career',
+    description:
+      'Free realization rate calculator for law firms and consultants. Compute billing realization, collection realization, and total leakage from worked value to cash.',
+    tagline: 'Worked value is a rumor until it is collected cash.',
+    intro:
+      'Professional services lose revenue in three leaks: hours worked but never billed, bills discounted before invoicing, and invoices never collected. This calculator computes billing realization, invoice realization, collection realization, and the overall rate — plus the dollar leakage — so you can see which leak is actually costing you.',
+    howItWorks: [
+      'Enter hours worked, hours billed, and your standard rate.',
+      'Enter the amount actually invoiced and the amount collected.',
+      'Read the three realization stages, overall realization, and total leakage in dollars.',
+    ],
+    faq: [
+      {
+        q: 'What is a good realization rate for a law firm?',
+        a: 'Industry surveys put average billing realization around 88–91% and collection realization around 85–91%, for an overall rate near 80–84%. Elite firms hold overall realization above 90%. Below 80%, the problem is usually write-downs at billing time, not client payment behavior.',
+      },
+      {
+        q: 'Where does revenue usually leak?',
+        a: 'In order of typical size: write-downs before the invoice goes out (partners discounting to keep clients happy), unbilled time that never makes it onto a bill, and then collections. Most firms watch collections hardest while the bigger leak is the silent discount at billing.',
+      },
+      {
+        q: 'How do I improve realization without raising rates?',
+        a: 'Bill promptly (invoices sent within a week of month-end collect faster and with fewer disputes), record time daily instead of reconstructing it, scope fixed-fee work tightly, and require retainers from clients with slow-pay history. A 5-point realization gain on a $400,000 practice is $20,000 — with zero new clients.',
+      },
+    ],
+  },
+  {
+    slug: 'consultant-day-rate-calculator',
+    title: 'Consultant Day Rate Calculator — Price Your Independent Rate',
+    shortTitle: 'Consultant Day Rate',
+    category: 'Freelance & Career',
+    description:
+      'Free consultant day rate calculator. Convert an income goal, overhead, and realistic billable days into the day rate and hourly rate you must charge.',
+    tagline: 'Your old salary is the floor of the math, not the price.',
+    intro:
+      'Leaving a $150,000 job to consult does not mean charging $150,000 worth of time — overhead, taxes, insurance, and unpaid bench time mean you must bill roughly $195,000 to land the same income. This calculator converts your income goal, overhead share, and realistic billable days into the day rate and hourly rate you actually need.',
+    howItWorks: [
+      'Enter your target take-home income and overhead percentage (tools, insurance, taxes, marketing).',
+      'Enter how many days per year you can realistically bill.',
+      'Read the required revenue, day rate, hourly equivalent, and weekly rate.',
+    ],
+    faq: [
+      {
+        q: 'How many billable days should I plan for?',
+        a: '220 weekdays minus 15–25 days of vacation/sick time, minus business development, admin, and gaps between engagements. Most independent consultants who track it honestly land at 100–150 billable days. Planning at 200 is the classic first-year mistake.',
+      },
+      {
+        q: 'Is day rate or hourly better?',
+        a: 'Day rates sell better for project work — clients compare a $1,600 day to their loaded cost of an employee day (often $800–1,200) and it reads as reasonable, while $200/hour reads as expensive. Hourly is safer for open-ended support work where scope creep is likely. Quote days, track hours.',
+      },
+      {
+        q: 'What overhead percentage should I use?',
+        a: 'Solo consultants with no office: 25–35% covers self-employment tax, health insurance, software, accounting, and marketing. Add 10 points if you rent space or carry subcontractors. The common error is counting only visible expenses and forgetting the employer-side payroll tax you now pay yourself.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

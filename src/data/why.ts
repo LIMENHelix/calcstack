@@ -147,4 +147,10 @@ export const WHY_USE: Record<string, string> = {
     'Freelancers and agencies use it in the past-due reminder email — showing the client the exact accrued fee and total due gets checks written. Bookkeepers use it to apply contracted rates correctly across a whole aging report.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
+  'billable-hours-calculator':
+    'Law associates use it to see whether the firm\'s hours target is even reachable at their utilization. Solo consultants use it in January: revenue goal ÷ rate ÷ honest utilization, then they find out what the year actually requires before booking anything.',
+  'realization-rate-calculator':
+    'Firm partners use it at year-end to find which leak is costing them — write-downs, unbilled time, or collections. Solo attorneys and consultants run it quarterly; a 5-point realization gain is pure found revenue with zero new clients.',
+  'consultant-day-rate-calculator':
+    'People quitting salaried jobs to consult use it the week before they give notice: income goal plus overhead divided by realistic billable days. It replaces the classic mistake of dividing old salary by 2,080 and wondering why year one went broke.',
 }

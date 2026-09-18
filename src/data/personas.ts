@@ -25,6 +25,8 @@ export const PERSONAS: Persona[] = [
       'quarterly-estimated-tax-calculator',
       'self-employment-tax-calculator',
       'invoice-late-fee-calculator',
+      'consultant-day-rate-calculator',
+      'billable-hours-calculator',
       'freelance-rate-calculator',
       'freelance-rate-calculator-web-developer',
       'freelance-rate-calculator-graphic-designer',
@@ -324,6 +326,9 @@ export const PERSONAS: Persona[] = [
       'How does this state\'s sales tax change the client\'s pricing?',
     ],
     calcSlugs: [
+      'billable-hours-calculator',
+      'realization-rate-calculator',
+      'consultant-day-rate-calculator',
       'loan-payoff-calculator',
       'break-even-calculator',
       'sales-tax-calculator',
@@ -395,6 +400,9 @@ export const PERSONAS: Persona[] = [
       'What does going solo require to match my current income?',
     ],
     calcSlugs: [
+      'billable-hours-calculator',
+      'realization-rate-calculator',
+      'consultant-day-rate-calculator',
       'salary-to-hourly-calculator',
       'loan-payoff-calculator',
       'freelance-rate-calculator',
