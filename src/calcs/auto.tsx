@@ -196,7 +196,69 @@ export function CarTrueCostCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Car Lease Payment ---------------- */
+
+// Standard lease formula: payment = (cap cost − residual)/term + (cap cost + residual) × money factor
+// Verified: $30k cap, $18k residual, 36 mo, MF 0.0025 → $333.33 + $120.00 = $453.33/mo
+export function CarLeaseCalc(_props: CalcProps) {
+  const [msrp, setMsrp] = useNumber(30000)
+  const [capCost, setCapCost] = useNumber(28500)
+  const [residualPct, setResidualPct] = useNumber(60)
+  const [term, setTerm] = useNumber(36)
+  const [mf, setMf] = useNumber(0.0025)
+  const [tax, setTax] = useNumber(7)
+
+  const r = useMemo(() => {
+    const residual = (msrp * residualPct) / 100
+    const n = Math.max(1, Math.round(term))
+    const depFee = (capCost - residual) / n
+    const finFee = (capCost + residual) * mf
+    const preTax = depFee + finFee
+    const payment = preTax * (1 + tax / 100)
+    const aprEquiv = mf * 2400
+    const totalPayments = payment * n
+    const totalInterest = finFee * n
+    const perYear = payment * 12
+    return { residual, depFee, finFee, preTax, payment, aprEquiv, totalPayments, totalInterest, perYear, n }
+  }, [msrp, capCost, residualPct, term, mf, tax])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="MSRP (sticker price)" value={msrp} onChange={setMsrp} prefix="$" />
+          <Field label="Negotiated cap cost" value={capCost} onChange={setCapCost} prefix="$" />
+          <Field label="Residual" value={residualPct} onChange={setResidualPct} suffix="% of MSRP" />
+          <Field label="Lease term" value={term} onChange={setTerm} suffix="mo" />
+          <Field label="Money factor" value={mf} onChange={setMf} step="0.0001" />
+          <Field label="Sales tax on payment" value={tax} onChange={setTax} suffix="%" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label="Monthly payment" value={usd(r.payment, 2)} />
+          <Result label="Pre-tax payment" value={usd(r.preTax, 2)} />
+          <Result label="Money factor as APR" value={`${num(r.aprEquiv, 2)}%`} />
+          <Result label="Residual value" value={usd(r.residual, 0)} />
+          <Result label="Depreciation portion" value={`${usd(r.depFee, 2)}/mo`} />
+          <Result label="Finance portion" value={`${usd(r.finFee, 2)}/mo`} />
+          <Result label="Total finance charges" value={usd(r.totalInterest, 0)} />
+          <Result label={`Total of ${r.n} payments`} value={usd(r.totalPayments, 0)} />
+        </div>
+
+        <p className="text-xs text-muted-foreground">
+          Payment = (cap cost − residual) ÷ term + (cap cost + residual) × money factor. The money
+          factor × 2400 is your APR — dealers quote it as a decimal precisely so it sounds small;
+          0.0025 is 6%. Negotiate the cap cost like a purchase price, not the payment: every $1,000
+          off the cap cost cuts the payment about ${num(1000 / Math.max(1, r.n), 0)}/month on this term.
+          A higher residual lowers the payment but raises the buyout price at lease end.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const AUTO_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'car-lease-payment-calculator': CarLeaseCalc,
   'car-affordability-calculator': CarAffordabilityCalc,
   'lease-vs-buy-calculator': LeaseVsBuyCalc,
   'car-true-cost-calculator': CarTrueCostCalc,

@@ -333,6 +333,8 @@ export const WHY_USE: Record<string, string> = {
     'Anyone handed a lease offer uses it to convert the money factor to a real APR and see the outlay-minus-equity comparison. The month-after-the-lease row is the argument that settles it.',
   'car-true-cost-calculator':
     'Drivers comparing "new car vs keeping the old one" use it to see depreciation as a line item — usually the largest cost and the only one without a bill. Per-mile pricing makes transit and EV comparisons honest.',
+  'car-lease-payment-calculator':
+    'Shoppers sitting in the dealership use it on their phones: the salesperson quotes a payment, and this splits it into depreciation and finance charges with the money factor converted to APR. It is the difference between negotiating a price and accepting a payment.',
   'net-worth-calculator':
     'Anyone doing an annual money checkup uses it to turn scattered accounts into one number with context — the Fed SCF median comparison and the illiquidity share are the parts generic net-worth tools skip.',
   'cost-of-living-comparison-calculator':

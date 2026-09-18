@@ -4947,6 +4947,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'car-lease-payment-calculator',
+    title: 'Car Lease Payment Calculator — Money Factor, Residual & True Monthly Cost',
+    shortTitle: 'Car Lease Payment',
+    category: 'Auto & Transport',
+    description:
+      'Free car lease payment calculator. Enter MSRP, negotiated cap cost, residual %, term, and money factor to see the real monthly payment, the APR hidden in the money factor, and total lease cost.',
+    tagline: 'The money factor × 2400 is your APR. They hope you never multiply.',
+    intro:
+      'A lease payment is two charges: depreciation (what the car loses while you drive it) and finance (interest on the car\'s full value, disguised as a "money factor"). This calculator runs the dealer\'s actual formula — (cap cost − residual) ÷ term + (cap cost + residual) × money factor — and translates the money factor into an APR, so you can compare the lease against a loan on honest terms.',
+    howItWorks: [
+      'Enter the MSRP and your negotiated capitalized cost — negotiate this like a purchase price.',
+      'Enter the residual percentage, term, and money factor from the lease quote.',
+      'The calculator splits the payment into depreciation and finance portions and adds sales tax.',
+      'Read the true monthly payment, the APR equivalent of the money factor, and the total cost of the lease.',
+    ],
+    faq: [
+      {
+        q: 'How is a car lease payment calculated?',
+        a: 'Depreciation fee = (cap cost − residual) ÷ months; finance fee = (cap cost + residual) × money factor. Example: $28,500 cap cost, 60% residual on a $30,000 MSRP ($18,000), 36 months, 0.0025 money factor → $291.67 + $116.25 = $407.92 pre-tax, about $436.47 with 7% tax. Total finance charges over the lease: $4,185.',
+      },
+      {
+        q: 'What is the money factor in APR terms?',
+        a: 'Multiply by 2400. A 0.0025 money factor is 6% APR; 0.00375 is 9%. Dealers quote the decimal because it looks tiny — always convert before signing, and compare it against loan rates you qualify for. A marked-up money factor is pure dealer profit and is negotiable.',
+      },
+      {
+        q: 'Should I put money down on a lease?',
+        a: 'Generally no. A large down payment (cap cost reduction) lowers the payment but is lost if the car is totaled or stolen shortly after — gap insurance covers the lender, not your down payment. Keep the due-at-signing to first payment, fees, and taxes, and negotiate the cap cost instead.',
+      },
+    ],
+  },
+  {
     slug: 'lease-vs-buy-calculator',
     title: 'Lease vs Buy Car Calculator — True Cost with Equity & Money Factor APR',
     shortTitle: 'Lease vs Buy (Car)',

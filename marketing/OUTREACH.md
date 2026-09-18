@@ -1,12 +1,12 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 184 calculators live (410 indexed pages). See LAUNCH.md for the domain-day
+**Status: 185 calculators live (411 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
 
 The outreach destination is the embed gallery: https://calcstack-eight.vercel.app/embeds —
-live working preview on-page, size presets, one-click copy for all 184 tools.
+live working preview on-page, size presets, one-click copy for all 185 tools.
 
 ## Rules of engagement
 
