@@ -955,7 +955,69 @@ export function BabyCostCalc() {
   )
 }
 
+export function PetCostCalc() {
+  const [fee, setFee] = useNumber(150)
+  const [initialVet, setInitialVet] = useNumber(500)
+  const [gear, setGear] = useNumber(250)
+  const [foodMo, setFoodMo] = useNumber(60)
+  const [vetYr, setVetYr] = useNumber(200)
+  const [insMo, setInsMo] = useNumber(45)
+  const [groomYr, setGroomYr] = useNumber(300)
+  const [trainYr, setTrainYr] = useNumber(150)
+  const [toysMo, setToysMo] = useNumber(15)
+  const [bufferPct, setBufferPct] = useNumber(10)
+
+  const r = useMemo(() => {
+    const food = foodMo * 12
+    const ins = insMo * 12
+    const toys = toysMo * 12
+    const oneTime = fee + initialVet + gear
+    const base = oneTime + food + vetYr + ins + groomYr + trainYr + toys
+    const total = base * (1 + bufferPct / 100)
+    const monthly = total / 12
+    const insShare = base > 0 ? (ins / base) * 100 : 0
+    const yr2 = (food + vetYr + ins + groomYr + toys) * (1 + bufferPct / 100)
+    return { food, ins, toys, oneTime, base, total, monthly, insShare, yr2 }
+  }, [fee, initialVet, gear, foodMo, vetYr, insMo, groomYr, trainYr, toysMo, bufferPct])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Adoption / purchase fee" value={fee} onChange={setFee} prefix="$" />
+        <Field label="Initial vet (spay/neuter, vaccines, microchip)" value={initialVet} onChange={setInitialVet} prefix="$" />
+        <Field label="One-time gear (crate, bed, leash, bowls)" value={gear} onChange={setGear} prefix="$" />
+        <Field label="Food per month" value={foodMo} onChange={setFoodMo} prefix="$" />
+        <Field label="Routine vet per year" value={vetYr} onChange={setVetYr} prefix="$" />
+        <Field label="Pet insurance per month (0 if self-insuring)" value={insMo} onChange={setInsMo} prefix="$" />
+        <Field label="Grooming per year" value={groomYr} onChange={setGroomYr} prefix="$" />
+        <Field label="Training per year" value={trainYr} onChange={setTrainYr} prefix="$" />
+        <Field label="Toys & treats per month" value={toysMo} onChange={setToysMo} prefix="$" />
+        <Field label="Surprise buffer" value={bufferPct} onChange={setBufferPct} suffix="%" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="First-year total" value={usd(r.total, 0)} />
+        <Result label="Monthly average" value={usd(r.monthly, 0)} />
+        <Result label="Years 2+ run rate" value={usd(r.yr2, 0)} />
+        <Result label="One-time costs" value={usd(r.oneTime, 0)} />
+        <Result label="Food (year)" value={usd(r.food, 0)} />
+        <Result label="Insurance (year)" value={usd(r.ins, 0)} />
+        <Result label="Insurance share" value={`${num(r.insShare, 0)}% of budget`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Year one is the expensive year — one-time costs here are {usd(r.oneTime, 0)} on top of
+        the recurring run rate, and years 2+ drop to {usd(r.yr2, 0)} once gear and the initial
+        vet work are behind you. The insurance-versus-emergency-fund decision is the biggest
+        lever: at {usd(r.ins, 0)}/year, insurance only beats self-insuring if a major claim
+        (surgery, $3,000+) happens early — the math-fair alternative is banking that premium
+        into a dedicated vet fund instead. The monthly average ({usd(r.monthly, 0)}) is the
+        number to add to the household budget before bringing the pet home.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'pet-first-year-cost-calculator': PetCostCalc,
   'baby-first-year-cost-calculator': BabyCostCalc,
   'wedding-budget-calculator': WeddingBudgetCalc,
   'vacation-budget-calculator': VacationBudgetCalc,

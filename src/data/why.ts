@@ -15,6 +15,8 @@ export const WHY_USE: Record<string, string> = {
     'A house deposit, an emergency fund, a wedding, a sabbatical — every goal is a wish until it has a monthly number. People use this to convert "I want $20,000 in two years" into "$812 a month," and to find out honestly whether the plan fits the budget before committing to it.',
   'loan-payoff-calculator':
     'People use this when they get a raise, a bonus, or a tax refund and face the classic question: throw it at the loan or not? It shows exactly what an extra $50 or $500 a month does to a car loan, student loan, or personal loan — the months erased and the interest saved, in dollars.',
+  'pet-first-year-cost-calculator':
+    'Prospective pet owners use it before the shelter visit, when the adoption fee feels like the whole cost. It separates the one-time expenses from the recurring run rate and forces the insurance-versus-vet-fund decision while it is still hypothetical.',
   'baby-first-year-cost-calculator':
     'Expecting parents use it to replace anxiety with a number: the daycare-dominated first year, priced by category, ending at a monthly figure they can test-drive before the due date. It turns "can we afford a baby" into a budget question with an answer.',
   'wedding-budget-calculator':

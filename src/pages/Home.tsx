@@ -54,14 +54,14 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — the life-events pair (vacation and wedding budgets
-          with the per-day and per-guest truth), the car lease decoder (money factor → APR),
-          plus the defensive-money cluster (emergency fund, minimum-payment trap, avalanche
-          vs snowball).
+          The newest tools on the site — the new-member-of-the-household pair (baby and pet
+          first-year costs, with the run rate separated from the one-time spend), the mortgage
+          points breakeven (is the rate buydown worth it), plus the car lease decoder
+          (money factor → APR).
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['vacation-budget-calculator', 'wedding-budget-calculator', 'car-lease-payment-calculator', 'savings-rate-calculator', 'emergency-fund-calculator', 'credit-card-minimum-payment-calculator'].includes(c.slug),
+            ['pet-first-year-cost-calculator', 'baby-first-year-cost-calculator', 'mortgage-points-calculator', 'car-lease-payment-calculator', 'wedding-budget-calculator', 'savings-rate-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

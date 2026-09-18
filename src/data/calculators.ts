@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pet-first-year-cost-calculator',
+    title: 'Pet First-Year Cost Calculator — Dog & Cat Budget With Insurance Math',
+    shortTitle: 'Pet First-Year Cost',
+    category: 'Savings & Investing',
+    description:
+      'Free pet first-year cost calculator. Enter adoption fee, initial vet work, gear, food, insurance, grooming, training, and a surprise buffer — see the true first-year total, the monthly budget number, and the year-2 run rate for a dog or cat.',
+    tagline: 'Year one is the expensive year. Budget the run rate, not the adoption fee.',
+    intro:
+      'Pet budgets fail the same way baby budgets do: people price the adoption fee and the cute gear, then discover the recurring run rate — food, vet visits, insurance, grooming — is the real commitment. This calculator builds the first year from its actual categories, separates the one-time costs from the run rate, and lands on the monthly number that has to fit the household budget before the pet comes home.',
+    howItWorks: [
+      'Enter the adoption or purchase fee, initial vet work (spay/neuter, vaccines, microchip), and one-time gear.',
+      'Add the recurring costs: food per month, routine vet per year, grooming, and training.',
+      'Enter pet insurance per month — or 0 if you plan to self-insure with a dedicated vet fund.',
+      'Read the first-year total, the monthly budget number, and what years 2+ will actually cost.',
+    ],
+    faq: [
+      {
+        q: 'How much does a dog cost in the first year?',
+        a: 'A typical first-year dog budget: $150 adoption, $500 initial vet work, $250 gear, $60/month food, $200 routine vet, $45/month insurance, $300 grooming, $150 training, $15/month toys, 10% buffer → $3,289 for the year, about $274/month. Years 2+ drop to roughly $2,134 once the one-time costs are behind you. Large breeds run higher on food and vet; the adoption fee is never the number that matters.',
+      },
+      {
+        q: 'How much does a cat cost in the first year?',
+        a: 'Cats run lower — no training and no grooming for most. Example: $100 adoption, $400 initial vet, $150 gear, $35/month food, $150 routine vet, $30/month insurance, $10/month toys, 10% buffer → $1,870 for the year, about $156/month. Litter adds $15–25/month depending on brand and number of cats.',
+      },
+      {
+        q: 'Is pet insurance worth it?',
+        a: 'It depends on when the claim lands. At $540/year, insurance only beats self-insuring if a major claim (a $3,000+ surgery) happens early in the policy — premiums rise with age and pre-existing conditions are excluded, so waiting to enroll later is usually not an option. The math-fair alternative: bank the premium into a dedicated vet fund. If no claim comes, you keep the money; if one comes in year one, insurance wins. It is a hedge against early bad luck, not a savings plan.',
+      },
+    ],
+  },
+  {
     slug: 'baby-first-year-cost-calculator',
     title: 'Baby First-Year Cost Calculator — Childcare, Diapers & the Real Monthly Number',
     shortTitle: 'Baby First-Year Cost',
