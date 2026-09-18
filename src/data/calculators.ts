@@ -4074,6 +4074,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'roth-ira-contribution-limit-calculator',
+    title: 'Roth IRA Contribution Limit Calculator — 2026 Income Phase-Outs',
+    shortTitle: 'Roth IRA Limit 2026',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 Roth IRA contribution limit calculator. Enter filing status, MAGI, and age — get your exact allowed contribution with the IRS phase-out formula, the $200 floor, the monthly auto-invest number, and the backdoor path if you are over the limit.',
+    tagline: 'Over $153k single or $242k joint, your Roth limit starts shrinking. Know your number.',
+    intro:
+      'Roth IRA eligibility disappears gradually, not all at once: the 2026 phase-out runs from $153,000 to $168,000 MAGI for single filers and $242,000 to $252,000 for joint filers, trimming your $7,500 limit ($8,600 at 50+) as income rises through the band. This calculator applies the actual IRS formula — including the round-up-to-$10 rule and the $200 floor — and tells you the exact dollar amount you can contribute, or the backdoor route if you are past the top.',
+    howItWorks: [
+      'Pick your filing status — the phase-out band depends on it.',
+      'Enter your modified AGI (MAGI) for the year.',
+      'Check the box if you are 50 or older — the catch-up raises the base limit to $8,600.',
+      'Read your exact allowed contribution, the monthly auto-invest amount, and how far through the phase-out you are.',
+    ],
+    faq: [
+      {
+        q: 'What is the Roth IRA contribution limit for 2026?',
+        a: '$7,500 if you are under 50, $8,600 if you are 50 or older (the catch-up rose to $1,100 under SECURE 2.0 indexing). The limit covers all IRAs combined — Roth and traditional together. Full contribution requires MAGI under $153,000 (single/head of household) or $242,000 (married filing jointly).',
+      },
+      {
+        q: 'How does the Roth phase-out work?',
+        a: 'Inside the band, your limit shrinks proportionally: limit × (top of range − your MAGI) ÷ width of range, rounded up to the nearest $10, with a $200 floor near the top. Example: single filer, $160,000 MAGI, under 50 → $7,500 × $8,000/$15,000 = $4,000. At $167,900 the formula yields $50, so the $200 floor applies. At $168,000 the direct Roth is gone.',
+      },
+      {
+        q: 'What can I do if my income is too high for a Roth IRA?',
+        a: 'Three standard moves. One: lower MAGI — more pre-tax 401(k) or HSA contributions can pull you back under the threshold. Two: the backdoor Roth — contribute to a traditional IRA (no income limit) and convert to Roth; watch the pro-rata rule if you hold other pre-tax IRA balances. Three: if your employer plan allows it, a mega backdoor via after-tax 401(k) contributions. Exceeding the limit without fixing it costs a 6% penalty per year on the excess.',
+      },
+    ],
+  },
+  {
     slug: 'roth-vs-traditional-calculator',
     title: 'Roth vs Traditional Calculator — Which Account Wins After Tax?',
     shortTitle: 'Roth vs Traditional',

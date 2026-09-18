@@ -273,6 +273,8 @@ export const WHY_USE: Record<string, string> = {
     'Employees use it at open enrollment and after every raise: what does 1% more actually cost per check, and is the full match being captured? It is the answer to the two most common 401(k) questions — "how much should I put in" and "what will my paycheck look like."',
   'savings-rate-calculator':
     'The FIRE-curious use it to convert a vague "I should save more" into a date: raise the rate five points and watch years fall off. It is also the honest mirror for high earners — a big salary at a 10% rate retires later than a modest one at 40%.',
+  'roth-ira-contribution-limit-calculator':
+    'Anyone whose income crossed into six figures uses it in January or at bonus time: the phase-out trims the limit gradually, and guessing wrong either wastes Roth space or triggers the 6% excess-contribution penalty. It turns "am I still eligible" into an exact dollar amount.',
   'roth-vs-traditional-calculator':
     'Savers use it every time income changes: the first job (low bracket — Roth), the peak-earning years (high bracket — Traditional), and the in-between years where splitting is the honest answer. It converts a tax-law guessing game into one rate comparison.',
   'social-security-breakeven-calculator':

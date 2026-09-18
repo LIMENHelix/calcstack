@@ -111,6 +111,7 @@ export const PERSONAS: Persona[] = [
       'load-combination-calculator',
       '401k-contribution-calculator',
       'roth-vs-traditional-calculator',
+      'roth-ira-contribution-limit-calculator',
       'savings-rate-calculator',
       'horsepower-torque-calculator',
       'rc-circuit-calculator',

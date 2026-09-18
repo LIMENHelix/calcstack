@@ -431,7 +431,100 @@ export function SavingsRateCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Roth IRA Contribution Limit (2026) ---------------- */
+
+// 2026 per IRS Notice 2025-67: limit $7,500 under 50, $8,600 age 50+ ($1,100 catch-up).
+// Phase-outs: single/HoH $153k–$168k MAGI; MFJ $242k–$252k; MFS (lived w/ spouse) $0–$10k.
+// Reduced = base × (hi − MAGI)/(hi − lo), rounded UP to nearest $10, $200 floor (Pub 590-A).
+// Verified: single $160k u50 → $4,000; single $160k 50+ → $4,590; single $167.9k → $200;
+// MFJ $247k → $3,750; MFJ $251.9k → $200; MFS $5k → $3,750.
+const ROTH_2026 = {
+  limitU50: 7500,
+  limit50: 8600,
+  phase: {
+    single: [153000, 168000] as [number, number],
+    mfj: [242000, 252000] as [number, number],
+    mfs: [0, 10000] as [number, number],
+  },
+}
+
+export function RothIraLimitCalc(_props: CalcProps) {
+  const [status, setStatus] = useState<'single' | 'mfj' | 'mfs'>('single')
+  const [magi, setMagi] = useNumber(140000)
+  const [over50, setOver50] = useState(false)
+
+  const r = useMemo(() => {
+    const base = over50 ? ROTH_2026.limit50 : ROTH_2026.limitU50
+    const [lo, hi] = ROTH_2026.phase[status]
+    let allowed = base
+    let zone: 'full' | 'phased' | 'zero' = 'full'
+    if (magi >= hi) {
+      allowed = 0
+      zone = 'zero'
+    } else if (magi >= lo) {
+      let red = (base * (hi - magi)) / (hi - lo)
+      red = Math.ceil(red / 10) * 10
+      if (red < 200) red = 200
+      allowed = red
+      zone = 'phased'
+    }
+    const monthly = allowed / 12
+    const reducedBy = base - allowed
+    const pctInto = hi > lo ? Math.min(100, Math.max(0, ((magi - lo) / (hi - lo)) * 100)) : 100
+    return { base, allowed, monthly, reducedBy, zone, lo, hi, pctInto }
+  }, [status, magi, over50])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <label className="block space-y-1 text-sm">
+            <span className="text-muted-foreground">Filing status</span>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={status}
+              onChange={(e) => setStatus(e.target.value as 'single' | 'mfj' | 'mfs')}
+            >
+              <option value="single">Single / head of household</option>
+              <option value="mfj">Married filing jointly</option>
+              <option value="mfs">Married filing separately (lived together)</option>
+            </select>
+          </label>
+          <Field label="Modified AGI (MAGI)" value={magi} onChange={setMagi} prefix="$" step="1000" />
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={over50} onChange={(e) => setOver50(e.target.checked)} />
+            <span>Age 50 or older this year (catch-up eligible)</span>
+          </label>
+          <p className="text-xs text-muted-foreground">
+            2026 limits per IRS Notice 2025-67. Phase-out range for your status:{' '}
+            {usd(r.lo, 0)}–{usd(r.hi, 0)} MAGI. The reduction rounds up to the nearest $10, and a
+            $200 floor keeps a small contribution alive near the top of the range (IRS Pub 590-A).
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big
+            label={r.zone === 'full' ? 'Full contribution allowed' : r.zone === 'phased' ? 'Reduced Roth limit' : 'No direct Roth contribution'}
+            value={usd(r.allowed, 0)} />
+          <Result label="Per month if you auto-invest" value={usd(r.monthly, 2)} />
+          <Result label="Base limit (2026)" value={usd(r.base, 0)} />
+          <Result label="Reduced by phase-out" value={r.reducedBy > 0 ? `−${usd(r.reducedBy, 0)}` : '—'} />
+          {r.zone === 'phased' && <Result label="Through the phase-out range" value={`${num(r.pctInto, 0)}%`} />}
+          <p className="text-sm text-muted-foreground">
+            {r.zone === 'full'
+              ? `Under ${usd(r.lo, 0)} MAGI the full ${usd(r.base, 0)} is yours. Both spouses can each fund their own Roth at this limit, and a non-working spouse qualifies through a spousal IRA if joint compensation covers it.`
+              : r.zone === 'phased'
+                ? `You are ${num(r.pctInto, 0)}% through the phase-out band — the IRS formula trims your limit to ${usd(r.allowed, 0)}. Lowering MAGI (more pre-tax 401(k), HSA) can pull you back under ${usd(r.lo, 0)}.`
+                : `Over ${usd(r.hi, 0)} MAGI, direct Roth contributions are off the table — any amount contributed is an excess contribution with a 6%/year penalty until fixed. The standard workaround is the backdoor Roth: contribute to a traditional IRA (no income limit) and convert, minding the pro-rata rule if you hold other pre-tax IRA money.`}{' '}
+            Contribution deadline is the tax-filing deadline, not December 31.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const RETIRE_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'roth-ira-contribution-limit-calculator': RothIraLimitCalc,
   'savings-rate-calculator': SavingsRateCalc,
   '401k-contribution-calculator': K401Calc,
   'roth-vs-traditional-calculator': RothVsTraditionalCalc,
