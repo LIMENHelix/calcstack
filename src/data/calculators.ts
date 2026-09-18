@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'baby-first-year-cost-calculator',
+    title: 'Baby First-Year Cost Calculator — Childcare, Diapers & the Real Monthly Number',
+    shortTitle: 'Baby First-Year Cost',
+    category: 'Savings & Investing',
+    description:
+      'Free baby first-year cost calculator. Enter childcare, diapers, formula, gear, medical, and clothes with a surprise buffer — see the true first-year total and the monthly number to test-drive before the baby arrives.',
+    tagline: 'The stroller is not the expense. The daycare is.',
+    intro:
+      'First-year baby budgets fail because people price the gear and forget the childcare — one is a one-time $1,200, the other is $1,200 a month. This calculator builds the year from its real categories, dominated by the childcare line, and lands on the monthly number that matters: the amount to pull from your budget now, before the baby arrives, to prove the budget survives.',
+    howItWorks: [
+      'Enter monthly childcare and how many months of year 1 you will need it.',
+      'Add diapers, formula (0 if breastfeeding), one-time gear, medical costs, and clothes.',
+      'Set a surprise buffer — babies produce unbudgeted costs monthly.',
+      'Read the first-year total, the monthly average, and how much of the budget childcare owns.',
+    ],
+    faq: [
+      {
+        q: 'How much does a baby cost in the first year?',
+        a: 'Childcare decides it. Example: $1,200/month childcare for 12 months, $70 diapers, $150 formula, $1,200 gear, $800 medical, $50 clothes, 10% buffer → $19,640 for the year, about $1,637/month, with childcare at 73% of the budget. Without paid childcare the same year runs closer to $5,800. Price your local daycare first; everything else is rounding.',
+      },
+      {
+        q: 'How do I prepare financially for a baby?',
+        a: 'Test-drive the budget: starting 4–6 months out, live on your current income minus the projected monthly baby cost and bank the difference. It proves the budget works and builds the newborn buffer. Also check the health insurance math — adding a dependent changes premiums and the deductible you will likely hit in the birth year.',
+      },
+      {
+        q: 'Does the second kid cost as much?',
+        a: 'No — the gear already exists (crib, car seat is the one item to check for expiration), the clothes pipeline is built, and you know which "essentials" were not. Childcare is the exception: two kids in daycare can exceed a mortgage, which is why some families re-run the one-income math for the daycare years.',
+      },
+    ],
+  },
+  {
     slug: 'wedding-budget-calculator',
     title: 'Wedding Budget Calculator — True Cost, Per-Guest Math & Savings Plan',
     shortTitle: 'Wedding Budget',

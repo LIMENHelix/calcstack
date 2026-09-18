@@ -899,7 +899,64 @@ export function WeddingBudgetCalc() {
   )
 }
 
+/* ---------------- Baby First-Year Cost ---------------- */
+
+export function BabyCostCalc() {
+  const [childcare, setChildcare] = useNumber(1200)
+  const [childcareMo, setChildcareMo] = useNumber(12)
+  const [diapers, setDiapers] = useNumber(70)
+  const [formula, setFormula] = useNumber(150)
+  const [gear, setGear] = useNumber(1200)
+  const [medical, setMedical] = useNumber(800)
+  const [clothes, setClothes] = useNumber(50)
+  const [bufferPct, setBufferPct] = useNumber(10)
+
+  const r = useMemo(() => {
+    const cc = childcare * Math.min(childcareMo, 12)
+    const dia = diapers * 12
+    const form = formula * 12
+    const clo = clothes * 12
+    const base = cc + dia + form + gear + medical + clo
+    const total = base * (1 + bufferPct / 100)
+    const monthly = total / 12
+    const ccShare = base > 0 ? (cc / base) * 100 : 0
+    return { cc, dia, form, clo, base, total, monthly, ccShare }
+  }, [childcare, childcareMo, diapers, formula, gear, medical, clothes, bufferPct])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Childcare per month" value={childcare} onChange={setChildcare} prefix="$" />
+        <Field label="Months of childcare in year 1" value={childcareMo} onChange={setChildcareMo} step="1" />
+        <Field label="Diapers & wipes per month" value={diapers} onChange={setDiapers} prefix="$" />
+        <Field label="Formula per month (0 if breastfeeding)" value={formula} onChange={setFormula} prefix="$" />
+        <Field label="One-time gear (crib, car seat, stroller)" value={gear} onChange={setGear} prefix="$" />
+        <Field label="Medical (deductibles, visits)" value={medical} onChange={setMedical} prefix="$" />
+        <Field label="Clothes per month" value={clothes} onChange={setClothes} prefix="$" />
+        <Field label="Surprise buffer" value={bufferPct} onChange={setBufferPct} suffix="%" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="First-year total" value={usd(r.total, 0)} />
+        <Result label="Monthly average" value={usd(r.monthly, 0)} />
+        <Result label="Childcare share" value={`${num(r.ccShare, 0)}% of budget`} />
+        <Result label="Childcare (year)" value={usd(r.cc, 0)} />
+        <Result label="Diapers (year)" value={usd(r.dia, 0)} />
+        <Result label="Formula (year)" value={usd(r.form, 0)} />
+        <Result label="Gear + medical + clothes" value={usd(r.base - r.cc - r.dia - r.form, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Childcare dominates — {num(r.ccShare, 0)}% of this budget — which is why the daycare waitlist
+        matters more than the stroller brand. The monthly average ({usd(r.monthly, 0)}) is the number
+        to test-drive before the baby arrives: live on your current budget minus that amount for a few
+        months and bank the difference — it builds the newborn buffer and proves the budget survives.
+        Second kids cost less: gear is already bought, and the clothes pipeline exists.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'baby-first-year-cost-calculator': BabyCostCalc,
   'wedding-budget-calculator': WeddingBudgetCalc,
   'vacation-budget-calculator': VacationBudgetCalc,
   '50-30-20-budget-calculator': BudgetRuleCalc,
