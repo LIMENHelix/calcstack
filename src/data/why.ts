@@ -127,6 +127,12 @@ export const WHY_USE: Record<string, string> = {
     'Lawn care owners use it in the off-season to plan: clients × price × visits is the whole business, and seeing that each added client is worth $1,350 a season turns "I should advertise" into a specific target. It is also the loan-conversation number for equipment financing.',
   'snow-removal-bid-calculator':
     'Plow operators use it when a property manager calls mid-storm: area and depth become a per-push price in seconds, and the seasonal contract figure is already discounted correctly. Landscapers use it to keep winter revenue from being whatever the caller sounds willing to pay.',
+  'gig-driver-hourly-calculator':
+    'Gig drivers use it weekly to answer the only question that matters — is this beating a job? — with fuel and wear subtracted and every online hour counted. People considering signing up use it with the app\'s promised earnings before buying the "make $30/hour" pitch.',
+  'mileage-deduction-calculator':
+    'Every self-employed driver at tax time: 2026 is a split-rate year and most calculators apply one rate all year, which is wrong both directions. Gig drivers, realtors, and mobile service pros use it to turn a mileage log into an actual deduction figure.',
+  'delivery-offer-calculator':
+    'Drivers use it in the parking lot with the accept timer running: payout per mile and net per hour after costs, with a verdict. Multi-appers keep the vehicle inputs set and just punch in each offer as it pings.',
   'pipe-size-calculator':
     'Remodelers adding a bathroom use this to answer "can I tee off the existing line?" with fixture-unit math instead of hope. Plumbers use it as a fast first pass before the official UPC/IPC design.',
 }

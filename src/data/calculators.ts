@@ -1949,6 +1949,99 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'gig-driver-hourly-calculator',
+    title: 'Gig Driver True Hourly Calculator — Earnings After Gas & Wear',
+    shortTitle: 'True Hourly (Gig)',
+    category: 'Freelance & Career',
+    description:
+      'Free true hourly calculator for Uber, Lyft, DoorDash and delivery drivers. Subtract fuel and vehicle wear from gross earnings to see your real per-hour pay.',
+    tagline: 'The app shows earnings. This shows what you kept.',
+    intro:
+      'Gig apps report gross earnings against active time, which flatters the number on both ends. This calculator counts every hour online and every mile driven, subtracts fuel and a per-mile wear allowance (oil, tires, brakes, depreciation), and shows the hourly rate you actually earned — the only number worth comparing to a job.',
+    howItWorks: [
+      'Enter gross earnings for the shift or week, including tips.',
+      'Enter ALL hours online (waiting counts) and ALL miles driven (deadhead miles to pickups count).',
+      'Add your MPG, local gas price, and a wear-per-mile figure (10–20¢ for an economy car).',
+      'Read fuel cost, wear cost, net earnings, and your true hourly rate.',
+    ],
+    faq: [
+      {
+        q: 'What do gig drivers really make per hour?',
+        a: 'Studies and driver logs consistently put gross app pay at $20–30/hr in busy metros, but after fuel and vehicle costs the true figure often lands at $12–18/hr — before self-employment tax. A $250 day over 12 hours and 180 miles nets about $16.76/hr after $49 of vehicle costs.',
+      },
+      {
+        q: 'What should I count as vehicle cost per mile?',
+        a: 'Fuel is obvious; the silent cost is wear — oil, tires, brakes, and depreciation. AAA-style estimates put total operating cost at 30–60¢/mile depending on the vehicle; a frugal economy car with cheap gas can run 20–30¢. The IRS standard mileage rate (76¢/mile from July 2026) bundles everything, which is why the tax deduction usually exceeds what you feel going out of pocket.',
+      },
+      {
+        q: 'Should I count waiting time as hours worked?',
+        a: 'Yes. If you are online and unable to do anything else, that is work time. Apps define "active time" narrowly because it raises the displayed hourly rate. Your bank account does not care about the distinction — neither should your math.',
+      },
+    ],
+  },
+  {
+    slug: 'mileage-deduction-calculator',
+    title: 'Mileage Deduction Calculator — 2026 IRS Rates (Split Year)',
+    shortTitle: 'Mileage Deduction',
+    category: 'Freelance & Career',
+    description:
+      'Free 2026 mileage deduction calculator with the correct split-year IRS rates: 72.5¢/mi Jan–Jun and 76¢/mi Jul–Dec. See your deduction and estimated tax savings.',
+    tagline: '2026 has two rates. This handles both.',
+    intro:
+      'The IRS raised the business mileage rate mid-year in 2026 — 72.5¢ through June 30, then 76¢ from July 1 (Notice 2026-10, modified by Announcement 2026-11). Running the whole year at one rate gets the math wrong in both directions. This calculator applies the correct rate to each half and estimates what the deduction saves you in income tax and self-employment tax.',
+    howItWorks: [
+      'Enter business miles driven January through June 2026.',
+      'Enter business miles driven July through December 2026.',
+      'Pick your marginal income tax bracket.',
+      'Read the deduction per period, the total, and the estimated tax savings.',
+    ],
+    faq: [
+      {
+        q: 'What is the IRS mileage rate for 2026?',
+        a: 'Two rates: 72.5¢ per business mile from January 1 to June 30, and 76¢ per mile from July 1 to December 31. The IRS raised the rate mid-year (Announcement 2026-11) citing fuel prices — the first mid-year adjustment in years. Charitable miles stay at 14¢; medical/moving went to 23.5¢ in the second half.',
+      },
+      {
+        q: 'How much is the mileage deduction worth in tax savings?',
+        a: 'For a self-employed driver in the 22% bracket, roughly 36¢ per deducted dollar: the deduction cuts income tax at 22% and self-employment tax at about 14.1% (15.3% applied to the 92.35% SE base). A 20,000-mile year deducts about $14,900 and saves around $5,400 in tax.',
+      },
+      {
+        q: 'Do I need records to claim mileage?',
+        a: 'Yes — a contemporaneous mileage log with date, miles, and business purpose. Reconstructed logs are the first thing audits kill. Apps that auto-track trips satisfy this; a notebook works too. Also remember: parking and tolls are deductible separately, on top of the standard rate.',
+      },
+    ],
+  },
+  {
+    slug: 'delivery-offer-calculator',
+    title: 'Delivery Offer Calculator — Should You Accept This Order?',
+    shortTitle: 'Delivery Offer Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free delivery offer calculator. Score any DoorDash, Uber Eats, or Instacart offer by dollars per mile and net per hour after fuel and wear — with an accept/decline verdict.',
+    tagline: 'Five seconds of math before you tap accept.',
+    intro:
+      'Veteran drivers screen every offer on dollars per mile — $1.50 or better is the common accept line — because payout without distance is meaningless. This calculator scores an offer on payout per mile AND net per hour after fuel and vehicle wear, then gives a plain accept/borderline/decline verdict you can act on in the seconds before the timer runs out.',
+    howItWorks: [
+      'Enter the offer payout (including any shown tip).',
+      'Enter total miles — the drive to the pickup counts too — and estimated minutes.',
+      'Set your vehicle MPG, gas price, and wear per mile once; they persist between offers.',
+      'Read cost, net profit, payout per mile, net per hour, and the verdict.',
+    ],
+    faq: [
+      {
+        q: 'What is a good dollars-per-mile for delivery offers?',
+        a: 'The community rule of thumb is $1.50+ per mile gross as the accept line, $1.00–$1.50 is borderline (take it only if it routes you home or toward a hot zone), and under $1.00 pays you less than your car costs to run long-term. A $9.50 offer over 6.5 miles is $1.46/mile — borderline — and nets about $7.74 after vehicle costs.',
+      },
+      {
+        q: 'Why count the miles to the pickup?',
+        a: 'Because the app pays neither gas nor time for them. A 2-mile drive to the restaurant on a 4-mile delivery makes it a 6-mile trip on your odometer and your maintenance schedule. Drivers who count only the delivery leg overestimate their per-mile pay by a third or more.',
+      },
+      {
+        q: 'Is declining offers penalized?',
+        a: 'It depends on the platform and market. Acceptance rate affects priority access on some apps, but cherry-picking profitable offers almost always beats a high acceptance rate full of $3 base-pay runs. Do the per-offer math — the algorithm optimizes for the platform, not for you.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

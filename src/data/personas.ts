@@ -610,6 +610,9 @@ export const PERSONAS: Persona[] = [
       'How much should I set aside for taxes and car repairs?',
     ],
     calcSlugs: [
+      'gig-driver-hourly-calculator',
+      'mileage-deduction-calculator',
+      'delivery-offer-calculator',
       'salary-to-hourly-calculator',
       'tip-calculator-uber',
       'tip-calculator-delivery',
