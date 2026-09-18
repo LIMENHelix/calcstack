@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { track } from '@vercel/analytics'
 
 const SITE = 'https://calcstack-eight.vercel.app'
 
@@ -27,6 +28,7 @@ export function EmbedSnippet({ slug, title }: { slug: string; title: string }) {
       ta.remove()
     }
     setCopied(true)
+    track('embed_copy', { slug, size })
     setTimeout(() => setCopied(false), 2000)
   }
 

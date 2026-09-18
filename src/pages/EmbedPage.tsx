@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { useParams } from 'react-router'
+import { track } from '@vercel/analytics'
 import { CALCULATORS } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
@@ -72,6 +74,18 @@ export default function EmbedPage() {
   const variant = VARIANTS.find((v) => v.slug === slug)
   const meta = CALCULATORS.find((c) => c.slug === slug) ?? variant
   const Calc = (variant ? ALL_COMPONENTS[variant.baseSlug] : slug ? ALL_COMPONENTS[slug] : undefined)
+
+  useEffect(() => {
+    // Count every iframe view with the host page's referrer — this is how we
+    // know which outreach placements actually drive traffic.
+    if (meta) {
+      track('embed_view', {
+        slug: meta.slug,
+        host: document.referrer ? new URL(document.referrer).hostname : 'direct',
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [meta?.slug])
 
   if (!meta || !Calc) {
     return <div className="p-6 text-sm">Unknown calculator.</div>

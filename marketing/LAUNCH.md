@@ -20,6 +20,10 @@ math runs in your browser.**
    Until then, slots render as invisible-to-nobody dashed placeholders.
 6. Smoke-test live: homepage, one calculator per category, /embeds, one /embed/ iframe,
    one persona page, one data page. Fix before announcing anything.
+7. Vercel dashboard → enable Web Analytics on the project (free, cookieless). The
+   `<Analytics />` component and custom events are already wired: `embed_view`
+   (slug + referring host — proves which placements drive traffic) and
+   `embed_copy` (slug + size — measures embed intent before placement).
 
 ## Phase 1 — Embed outreach, Wave 1 (Days 1–7)
 
