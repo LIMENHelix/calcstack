@@ -292,9 +292,150 @@ export function PipeSizeCalc() {
   )
 }
 
+/* ---------------- Box fill (NEC 314.16) ---------------- */
+
+// NEC Table 314.16(B)(1) volume allowances, cu in per conductor
+const WIRE_VOL: Record<string, number> = { '14': 2.0, '12': 2.25, '10': 2.5, '8': 3.0, '6': 5.0 }
+// NEC Table 314.16(A) standard metal box volumes, cu in
+const BOXES: [string, number][] = [
+  ['3×2×2 device (10.0)', 10.0], ['3×2×2½ device (12.5)', 12.5], ['3×2×2¾ device (14.0)', 14.0],
+  ['3×2×3½ deep device (18.0)', 18.0], ['4×1½ octagon (15.5)', 15.5], ['4×2⅛ octagon (21.5)', 21.5],
+  ['4×1¼ square (18.0)', 18.0], ['4×1½ square (21.0)', 21.0], ['4×2⅛ square (30.3)', 30.3],
+  ['4-11/16×1½ square (29.5)', 29.5], ['4-11/16×2⅛ square (42.0)', 42.0],
+  ['Handy 4×2⅛×1⅞ (13.0)', 13.0],
+]
+
+export function BoxFillCalc() {
+  const [n14, setN14] = useNumber(4)
+  const [n12, setN12] = useNumber(0)
+  const [n10, setN10] = useNumber(0)
+  const [devices, setDevices] = useNumber(1)
+  const [clamps, setClamps] = useState('yes')
+  const [grounds, setGrounds] = useNumber(1)
+  const [largest, setLargest] = useState('14')
+  const [boxIdx, setBoxIdx] = useState('7')
+
+  const r = useMemo(() => {
+    // NEC 314.16(B): conductors 1 allowance each; all grounds together 1 (largest ground);
+    // internal clamps 1 (largest conductor); each device yoke 2 (largest conductor on it);
+    // pigtails originating and ending in the box are free.
+    const lw = WIRE_VOL[largest]
+    const conductors = n14 * WIRE_VOL['14'] + n12 * WIRE_VOL['12'] + n10 * WIRE_VOL['10']
+    const groundAllow = grounds > 0 ? lw : 0 // simplified: grounds sized with circuit
+    const clampAllow = clamps === 'yes' ? lw : 0
+    const deviceAllow = devices * 2 * lw
+    const total = conductors + groundAllow + clampAllow + deviceAllow
+    const boxVol = BOXES[parseInt(boxIdx)][1]
+    const smallest = BOXES.find(([, v]) => v >= total)
+    return { conductors, groundAllow, clampAllow, deviceAllow, total, boxVol, pass: total <= boxVol, smallest }
+  }, [n14, n12, n10, devices, clamps, grounds, largest, boxIdx])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="14 AWG conductors" value={n14} onChange={setN14} step="1" />
+        <Field label="12 AWG conductors" value={n12} onChange={setN12} step="1" />
+        <Field label="10 AWG conductors" value={n10} onChange={setN10} step="1" />
+        <Field label="Devices (receptacles/switches)" value={devices} onChange={setDevices} step="1" />
+        <Field label="Ground wires entering" value={grounds} onChange={setGrounds} step="1" />
+        <Select label="Internal cable clamps?" value={clamps} onChange={setClamps} options={[['yes', 'Yes'], ['no', 'No']]} />
+        <Select label="Largest conductor in box" value={largest} onChange={setLargest} options={[
+          ['14', '14 AWG (2.00 cu in)'], ['12', '12 AWG (2.25 cu in)'], ['10', '10 AWG (2.50 cu in)'], ['8', '8 AWG (3.00 cu in)'], ['6', '6 AWG (5.00 cu in)'],
+        ]} />
+        <Select label="Box to check" value={boxIdx} onChange={setBoxIdx} options={
+          BOXES.map(([l], i) => [String(i), l] as [string, string])
+        } />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Fill required" value={`${num(r.total, 2)} cu in`} />
+        <Result label="Box volume" value={`${num(r.boxVol, 1)} cu in`} />
+        <Result label="Verdict" value={r.pass ? 'PASS' : 'FAILS'} />
+        <Result label="Smallest box that fits" value={r.smallest ? r.smallest[0].replace(/ \([\d.]+\)/, '') : 'None standard — use a deeper box'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        NEC 314.16 rules applied: conductors 1 allowance each (Table 314.16(B): 14 AWG = 2.00,
+        12 = 2.25, 10 = 2.50 cu in), ALL grounds together = 1 allowance, internal clamps = 1,
+        each device yoke = 2. Pigtails starting and ending in the box are free. Deep devices
+        (GFCIs, smart switches) physically crowd even code-legal boxes — size up when close.
+      </p>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Conduit fill (NEC Chapter 9) ---------------- */
+
+// NEC Chapter 9 Table 5, THHN/THWN areas (sq in)
+const THHN_AREA: Record<string, number> = { '14': 0.0097, '12': 0.0133, '10': 0.0211, '8': 0.0366, '6': 0.0507, '4': 0.0824 }
+// NEC Chapter 9 Table 4, 100% internal areas (sq in)
+const CONDUIT_AREA: Record<string, Record<string, number>> = {
+  emt: { '1/2': 0.304, '3/4': 0.533, '1': 0.864, '1-1/4': 1.496 },
+  pvc40: { '1/2': 0.285, '3/4': 0.508, '1': 0.832, '1-1/4': 1.453 },
+}
+
+export function ConduitFillCalc() {
+  const [ctype, setCtype] = useState('emt')
+  const [size, setSize] = useState('3/4')
+  const [c14, setC14] = useNumber(0)
+  const [c12, setC12] = useNumber(6)
+  const [c10, setC10] = useNumber(0)
+  const [c8, setC8] = useNumber(0)
+  const [c6, setC6] = useNumber(0)
+
+  const r = useMemo(() => {
+    const total = c14 + c12 + c10 + c8 + c6
+    const area = c14 * THHN_AREA['14'] + c12 * THHN_AREA['12'] + c10 * THHN_AREA['10'] + c8 * THHN_AREA['8'] + c6 * THHN_AREA['6']
+    // NEC Chapter 9 Table 1: 1 conductor 53%, 2 conductors 31%, 3+ conductors 40%
+    const limit = total > 2 ? 0.40 : total === 2 ? 0.31 : 0.53
+    const internal = CONDUIT_AREA[ctype][size]
+    const allowed = internal * limit
+    const pct = area / internal * 100
+    const pass = area <= allowed
+    // max same-size count per gauge for this conduit at 40% (Note 7: decimals ≥ 0.8 round up)
+    const maxByGauge = Object.entries(THHN_AREA).map(([g, a]) => {
+      const raw = (internal * 0.40) / a
+      const frac = raw - Math.floor(raw)
+      return [g, frac >= 0.8 ? Math.ceil(raw) : Math.floor(raw)] as [string, number]
+    })
+    return { total, area, limit, internal, allowed, pct, pass, maxByGauge }
+  }, [ctype, size, c14, c12, c10, c8, c6])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Conduit type" value={ctype} onChange={setCtype} options={[
+          ['emt', 'EMT (thinwall)'], ['pvc40', 'PVC Schedule 40'],
+        ]} />
+        <Select label="Trade size" value={size} onChange={setSize} options={[
+          ['1/2', '1/2"'], ['3/4', '3/4"'], ['1', '1"'], ['1-1/4', '1-1/4"'],
+        ]} />
+        <Field label="14 AWG THHN" value={c14} onChange={setC14} step="1" />
+        <Field label="12 AWG THHN" value={c12} onChange={setC12} step="1" />
+        <Field label="10 AWG THHN" value={c10} onChange={setC10} step="1" />
+        <Field label="8 AWG THHN" value={c8} onChange={setC8} step="1" />
+        <Field label="6 AWG THHN" value={c6} onChange={setC6} step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Fill" value={`${num(r.pct, 1)}%`} />
+        <Result label="NEC limit" value={`${r.limit * 100}% (${r.total} conductor${r.total === 1 ? '' : 's'})`} />
+        <Result label="Verdict" value={r.pass ? 'PASS' : 'OVERFILLED'} />
+        <Result label="Conductor area" value={`${num(r.area, 4)} sq in`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Max same-size THHN in {size}" {ctype === 'emt' ? 'EMT' : 'PVC-40'} at 40%:{' '}
+        {r.maxByGauge.map(([g, n]) => `${n}×${g} AWG`).join(' · ')}. Ground wires COUNT toward
+        fill — the most common violation. Areas from NEC Chapter 9 Tables 4–5; the 40% rule is
+        for 3+ conductors (2 wires get only 31%, 1 wire 53%; nipples under 24" get 60%).
+        Pulling tension, not fill, is often the real limit on long runs with bends.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'voltage-drop-calculator': VoltageDropCalc,
   'wire-size-calculator': WireSizeCalc,
   'hvac-btu-calculator': BtuLoadCalc,
   'pipe-size-calculator': PipeSizeCalc,
+  'box-fill-calculator': BoxFillCalc,
+  'conduit-fill-calculator': ConduitFillCalc,
 }

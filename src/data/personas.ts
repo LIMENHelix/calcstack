@@ -1121,6 +1121,8 @@ export const PERSONAS: Persona[] = [
       'voltage-drop-calculator',
       'wire-size-calculator',
       'ohms-law-calculator',
+      'box-fill-calculator',
+      'conduit-fill-calculator',
       'markup-margin-calculator',
       'freelance-rate-calculator',
       'break-even-calculator',

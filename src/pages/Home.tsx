@@ -54,12 +54,12 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — pool season math: exact chemical dosing, volume gallons,
-          pump turnover, and honest heater BTU sizing.
+          The newest tools on the site — NEC electrical math: box fill per 314.16 and conduit
+          fill per Chapter 9, the numbers inspectors actually check.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['pool-chemical-calculator', 'pool-volume-calculator', 'pool-pump-calculator', 'pool-heater-calculator', 'joist-span-calculator', 'board-batten-calculator'].includes(c.slug),
+            ['box-fill-calculator', 'conduit-fill-calculator', 'pool-chemical-calculator', 'pool-volume-calculator', 'pool-pump-calculator', 'pool-heater-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

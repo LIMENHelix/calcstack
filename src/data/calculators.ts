@@ -4422,6 +4422,68 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'box-fill-calculator',
+    title: 'Box Fill Calculator — NEC 314.16 Conductor Volume Check',
+    shortTitle: 'Box Fill Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free electrical box fill calculator per NEC 314.16. Count conductors, devices, clamps, and grounds — get required cubic inches, whether your box passes, and the smallest standard box that fits.',
+    tagline: 'The math inspectors check before they approve your rough-in.',
+    intro:
+      'Every wire, device, clamp, and ground crammed into an electrical box consumes a code-defined volume, and overstuffed boxes are one of the most common inspection failures — overheated splices and damaged insulation start fires. This calculator applies NEC Table 314.16(B) conductor volumes to your wire count, adds the allowances for devices, clamps, and grounds, then checks the total against Table 314.16(A) box volumes to tell you pass or fail — and the smallest standard box that passes.',
+    howItWorks: [
+      'Count conductors of each gauge entering the box (each wire counts once; pigtails are free).',
+      'Add the number of devices (switches/receptacles), whether internal clamps are present, and how many ground wires terminate in the box.',
+      'The calculator sums required cubic inches: conductors × volume each, devices × 2, clamps × 1, grounds × 1 (all at the volume of the largest conductor present).',
+      'Pick a box — see PASS/FAIL with margin, plus the smallest standard box that fits your count.',
+    ],
+    faq: [
+      {
+        q: 'Do pigtails count toward box fill?',
+        a: 'No. Under NEC 314.16(B)(1), conductors originating inside the box and terminating inside it — like pigtails — do not count. Only conductors that pass through or terminate from outside the box count, plus one allowance for all grounds combined, one for internal clamps, and two per yoke-mounted device.',
+      },
+      {
+        q: 'Does a GFCI or dimmer count differently than a regular switch?',
+        a: 'Same count — two volume allowances per yoke — but deep devices like GFCIs and dimmers physically crowd the box, so electricians often upsize beyond the minimum. A box that barely passes the fill math can still be miserable to close up; going one size deeper costs pennies.',
+      },
+      {
+        q: 'What is the most common box fill violation?',
+        a: 'Forgetting that grounds count. Four 12 AWG conductors in a standard 3×2×2½ box seem fine until the ground allowance, clamp allowance, and device allowances push the requirement past 12.5 cubic inches. This calculator counts every allowance the inspector counts.',
+      },
+    ],
+  },
+  {
+    slug: 'conduit-fill-calculator',
+    title: 'Conduit Fill Calculator — NEC Chapter 9 (EMT & PVC)',
+    shortTitle: 'Conduit Fill Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free conduit fill calculator per NEC Chapter 9. Pick conductor gauge and count, conduit type and size — get exact fill percentage against the 53%/31%/40% limits and max conductor count.',
+    tagline: 'Forty percent is the ceiling. Know it before you pull.',
+    intro:
+      'The NEC caps conduit fill at 53% for one conductor, 31% for two, and 40% for three or more — because pulling tension and heat dissipation, not empty space, are the real limits. This calculator cross-references THHN conductor areas against EMT and Schedule 40 PVC internal areas, reports your exact fill percentage, and tells you the maximum conductors of one size that fit each conduit size — the same numbers as NEC Chapter 9 Table C.',
+    howItWorks: [
+      'Select conductor gauge (THHN) and how many you plan to pull — include grounds; they count.',
+      'Choose conduit type (EMT or Schedule 40 PVC) and trade size.',
+      'Read total conductor area, fill percentage, and PASS/FAIL against the NEC limit for your conductor count.',
+      'Check the max-count table for one conductor size across all conduit sizes.',
+    ],
+    faq: [
+      {
+        q: 'Why can only one conductor fill 53% but three can only fill 40%?',
+        a: 'Pulling geometry. A single cable slides cleanly; multiple conductors wedge against each other and the conduit wall, multiplying friction and trapping heat. The 40% limit for three or more conductors is what keeps long pulls possible and insulation intact.',
+      },
+      {
+        q: 'Do equipment grounding wires count toward conduit fill?',
+        a: 'Yes — every conductor in the conduit counts toward fill, including grounds. The classic violation: nine 12 AWG THHN conductors fit in ½-inch EMT, and adding a tenth as a ground pushes it over 40%. Count the ground in the calculator above and it will catch it.',
+      },
+      {
+        q: 'What is the difference between EMT and PVC for fill?',
+        a: 'Same trade size, different internal area — ¾-inch EMT has 0.533 sq in inside while Schedule 40 PVC has 0.508 sq in, because the plastic wall is thicker. Conduit fill tables are specific to raceway type; this calculator carries both.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
