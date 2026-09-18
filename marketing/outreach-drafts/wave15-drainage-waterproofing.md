@@ -1,11 +1,11 @@
-# Wave 15 outreach drafts — drainage & waterproofing (French drain, water chain complete)
+# Wave 15 outreach drafts — drainage & waterproofing (French drain, dry well, sump pump)
 
 The hook: wet-basement and yard-drainage content is evergreen, and every article in the niche
 teaches the same material list — washed #57 stone, holes-down pipe, fabric wrap, 1% slope. Our
 French drain calculator quantifies that list with pipe displacement subtracted and a live slope
 check, and it completes a water-management chain no competitor has: gutters → roof drainage →
-French drain → the excavation to dig it. Send after Wave 14. Personalize every [bracket]. One
-per day.
+French drain → dry well → sump pump → the excavation to dig it all. Send after Wave 14.
+Personalize every [bracket]. One per day.
 
 Embed gallery: https://calcstack-eight.vercel.app/embeds
 
@@ -27,8 +27,16 @@ Subject: A French drain calculator with the slope check built in
 > Full page: https://calcstack-eight.vercel.app/calculators/french-drain-calculator
 >
 > The 50-ft worked example on the page reconciles to 2.6 yards / 3.7 tons — the same number
-> your estimators would quote. One iframe embeds it on any drainage article. Free forever,
-> no signup, all math in the browser.
+> your estimators would quote. And where there's no daylight outlet, the chain continues:
+> a dry well calculator (roof runoff ÷ the 40% gravel void ratio → pit count and stone
+> tonnage, the NJ DEP sizing method) and a sump pump sizer (the 60-second pit rise test →
+> GPH at your total dynamic head → the right horsepower, not the box number):
+>
+> https://calcstack-eight.vercel.app/embed/dry-well-calculator
+> https://calcstack-eight.vercel.app/embed/sump-pump-calculator
+>
+> One iframe embeds any of them on a drainage article. Free forever, no signup, all math
+> in the browser.
 >
 > [Name], CalcStack
 
