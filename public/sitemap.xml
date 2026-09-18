@@ -6,6 +6,7 @@
   <url><loc>https://calcstack-eight.vercel.app/data/average-salary-by-job</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/directory</loc><priority>0.7</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/embeds</loc><priority>0.7</priority></url>
+  <url><loc>https://calcstack-eight.vercel.app/tax-season</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/freelancers</loc><priority>0.8</priority></url>
   <url><loc>https://calcstack-eight.vercel.app/for/real-estate-agents</loc><priority>0.8</priority></url>

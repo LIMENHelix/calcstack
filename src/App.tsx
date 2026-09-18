@@ -12,6 +12,7 @@ import PersonaIndex from './pages/PersonaIndex'
 import EmbedPage from './pages/EmbedPage'
 import EmbedTablePage from './pages/EmbedTablePage'
 import EmbedGallery from './pages/EmbedGallery'
+import TaxSeason from './pages/TaxSeason'
 import AuditAll from './pages/AuditAll'
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
               <Route path="/data/average-salary-by-job" element={<DataSalaries />} />
               <Route path="/directory" element={<Directory />} />
               <Route path="/embeds" element={<EmbedGallery />} />
+              <Route path="/tax-season" element={<TaxSeason />} />
               <Route path="/for" element={<PersonaIndex />} />
               <Route path="/for/:slug" element={<PersonaPage />} />
               <Route path="*" element={<CalculatorPage />} />

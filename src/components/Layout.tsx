@@ -80,6 +80,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
               </li>
               <li>
+                <Link to="/tax-season" className="hover:text-foreground">
+                  Tax season hub
+                </Link>
+              </li>
+              <li>
                 <Link to="/embeds" className="hover:text-foreground">
                   Embed these calculators
                 </Link>
