@@ -1662,6 +1662,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'french-drain-calculator',
+    title: 'French Drain Calculator — Gravel Tons, Pipe, Fabric & Slope Check',
+    shortTitle: 'French Drain Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free French drain calculator. Trench dimensions to washed #57 gravel tons (pipe displacement subtracted), perforated pipe footage, geotextile fabric square feet, and a 1% minimum slope check.',
+    tagline: 'The burrito method, quantified.',
+    intro:
+      'French drains fail in three predictable ways: too little slope, the wrong gravel, or no fabric wrap. This calculator handles the material side completely — trench volume minus pipe displacement gives the true gravel tonnage in washed #57 stone, plus perforated pipe footage and the geotextile burrito wrap — and checks your available fall against the 1% gravity minimum before you dig.',
+    howItWorks: [
+      'Enter drain length and trench width × depth (12 in × 18–24 in is the residential standard).',
+      'Pick 4-inch or 6-inch perforated pipe — displacement is subtracted from the gravel.',
+      'Enter the fall available to your outlet for the slope check (minimum 1% = 1 inch per 8 feet).',
+      'Read gravel tons and yards, pipe footage, fabric square feet, and estimated material cost.',
+    ],
+    faq: [
+      {
+        q: 'How much gravel does a 50-foot French drain need?',
+        a: 'A 12 in wide × 18 in deep trench is 75 cu ft gross; subtract the 4-inch pipe\'s displacement (about 4.4 cu ft) and you need roughly 70.6 cu ft — 2.6 cubic yards, or about 3.7 tons at 1.4 tons per yard. Round the order up; leftover stone always finds a use.',
+      },
+      {
+        q: 'Do the pipe holes face up or down?',
+        a: 'DOWN — this is the most-made mistake. A French drain collects subsurface water that rises up through the gravel from below; holes on the bottom let water enter and flow away. Holes facing up clog and defeat the purpose.',
+      },
+      {
+        q: 'What slope does a French drain need?',
+        a: 'A minimum of 1% — 1 inch of fall per 8 feet of run, so a 50-foot drain needs at least 6 inches of drop to its outlet. Two percent is better where the terrain allows. No fall at all means the water needs a sump basin and pump instead of a gravity outlet.',
+      },
+    ],
+  },
+  {
     slug: 'roof-pitch-calculator',
     title: 'Roof Pitch Calculator — Degrees, Slope %, Area & Hip Multipliers',
     shortTitle: 'Roof Pitch Calculator',

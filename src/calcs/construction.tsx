@@ -1064,6 +1064,73 @@ export function DeckFootingCalc() {
   )
 }
 
+/* ---------------- French Drain ---------------- */
+
+export function FrenchDrainCalc() {
+  const [length, setLength] = useNumber(50)
+  const [width, setWidth] = useNumber(12)
+  const [depth, setDepth] = useNumber(18)
+  const [pipe, setPipe] = useState('4')
+  const [fall, setFall] = useNumber(6)
+  const [tonCost, setTonCost] = useNumber(45)
+  const [pipeCost, setPipeCost] = useNumber(1.5)
+
+  const r = useMemo(() => {
+    const wF = width / 12
+    const dF = depth / 12
+    const gross = length * wF * dF
+    const pipeR = Number(pipe) / 2 / 12 // ft
+    const disp = Math.PI * pipeR * pipeR * length
+    const netCuFt = Math.max(0, gross - disp)
+    const yd3 = netCuFt / 27
+    const tons = yd3 * 1.4 // washed #57 stone ~1.4 t/yd³
+    const pipeLf = Math.ceil(length * 1.1) // 10% for fittings & outlet
+    const fabricSqFt = Math.ceil((wF + 2 * dF) * length * 1.1) // burrito wrap + overlap
+    const slopePct = length > 0 ? (fall / (length * 12)) * 100 : 0
+    const slopeOk = slopePct >= 1
+    const needFall = length * 12 * 0.01
+    const cost = tons * tonCost + pipeLf * pipeCost
+    return { netCuFt, yd3, tons, pipeLf, fabricSqFt, slopePct, slopeOk, needFall, cost }
+  }, [length, width, depth, pipe, fall, tonCost, pipeCost])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Drain length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Trench width" value={width} onChange={setWidth} suffix="in" />
+        <Field label="Trench depth" value={depth} onChange={setDepth} suffix="in" />
+        <Select label="Perforated pipe" value={pipe} onChange={setPipe} options={[
+          ['4', '4" — standard residential'], ['6', '6" — heavy water / clay soil'],
+        ]} />
+        <Field label="Fall available to outlet" value={fall} onChange={setFall} suffix="in" />
+        <Field label="Gravel price" value={tonCost} onChange={setTonCost} prefix="$" suffix="/ton" />
+        <Field label="Pipe price" value={pipeCost} onChange={setPipeCost} prefix="$" suffix="/ft" step="0.1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Gravel (#57 washed stone)" value={`${num(r.tons, 1)} tons`} />
+        <Result label="Gravel volume" value={`${num(r.yd3, 2)} yd³`} />
+        <Result label="Perforated pipe" value={`${num(r.pipeLf)} ft`} />
+        <Result label="Geotextile fabric" value={`${num(r.fabricSqFt)} sq ft`} />
+        <Result label="Slope check" value={r.slopeOk ? `${num(r.slopePct, 2)}% — drains ✓` : `${num(r.slopePct, 2)}% — too flat`} />
+        <Result label="Minimum fall needed (1%)" value={`${num(r.needFall, 1)} in`} />
+        <Result label="Estimated materials" value={usd(r.cost)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Gravel is the trench volume minus the pipe&apos;s displacement ({num(r.netCuFt, 1)} cu ft
+        here), ordered as washed, angular #57 stone — never pea gravel or anything with fines,
+        which clogs the perforations within a few seasons. Pipe goes in holes-DOWN (subsurface
+        water rises into the pipe from below) on 2–3 inches of bedding stone, with at least
+        6 inches of stone above it. The whole gravel-and-pipe assembly gets wrapped in non-woven
+        geotextile fabric — the burrito method — which is what separates a 30-year drain from a
+        5-year one. Slope must be at least 1% (1 inch of fall per 8 feet of run) to gravity-feed
+        the outlet; on flat lots that means digging deeper at the far end or adding a sump.
+        Standard residential trench is 12&quot; wide × 18–24&quot; deep; foundation drains follow
+        IRC R405.1 and go to footing depth. Call 811 before any dig.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Roof Pitch Converter ---------------- */
 
 function pitchGuidance(p: number): { material: string; walk: string } {
@@ -1810,6 +1877,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'retaining-wall-calculator': RetainingWallCalc,
   'excavation-calculator': ExcavationCalc,
   'roof-pitch-calculator': RoofPitchCalc,
+  'french-drain-calculator': FrenchDrainCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,
