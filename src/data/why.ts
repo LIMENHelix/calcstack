@@ -217,4 +217,10 @@ export const WHY_USE: Record<string, string> = {
     'Founders and small business owners run it monthly — it is the survival countdown. The zero-growth case is the floor investors and lenders ask for, and having both numbers in seconds beats a spreadsheet nobody updates.',
   'commercial-lease-calculator':
     'Tenants use it before signing to convert the quoted base rate into the real all-in commitment, and to see what escalations do to a 5-year term. Brokers respect tenants who show up knowing the NNN actuals.',
+  'hsa-growth-calculator':
+    'HDHP enrollees use it during open enrollment to see what the triple tax advantage is actually worth in dollars — it converts "HSAs are good" into a five-figure 20-year advantage. The receipt-shoebox strategy FAQ alone changes how people spend.',
+  'health-plan-comparison-calculator':
+    'Anyone choosing between an HDHP and a PPO uses it to price the whole year instead of comparing monthly premiums. The break-even bill level is the number HR departments never show you.',
+  'cobra-cost-calculator':
+    'People between jobs use it inside the 60-day election window to decide on math instead of panic — the 102% full premium is a shock everyone should see coming. The retroactive-election FAQ is the piece most sites miss.',
 }

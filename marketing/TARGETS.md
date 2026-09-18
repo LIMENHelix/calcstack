@@ -57,6 +57,19 @@ physicians who love free tools and routinely embed calculators.
 22. Tax-time angle (Jan–Mar): pitch Quarterly Estimated Tax + Mileage vs Actual to
     gig-economy newsletters and tax-prep blogs — searches spike hard in Q1.
 
+## Wave 7 — small business (premium advertiser niche, trust-driven links)
+
+23. SCORE chapters + local SBDCs — Template B (resource pages); these organizations exist
+    to hand free tools to small businesses and link generously. Pitch Employee True Cost +
+    Cash Runway + Break-Even as a starter toolkit.
+24. Small-biz newsletters (Morning Brew Small Business, Indie Hackers, /r/smallbusiness) —
+    Template C for the subreddit (answer hiring-cost and runway threads), Template A for
+    newsletters. Runway math is the eternal topic.
+25. Commercial real estate blogs + coworking spaces — pitch Commercial Lease embed;
+    "what does office space really cost" is evergreen content for them.
+26. Payroll-adjacent blogs and bookkeeper newsletters — Employee True Cost embed; every
+    bookkeeper fields "what does an employee actually cost me" monthly.
+
 ## Rules
 
 - Verify the embed renders on their platform BEFORE pitching (WordPress allows iframes in

@@ -24,6 +24,10 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'quarterly-estimated-tax-calculator',
       'self-employment-tax-calculator',
+      'hsa-growth-calculator',
+      'health-plan-comparison-calculator',
+      'cobra-cost-calculator',
+      '1099-vs-w2-calculator',
       'invoice-late-fee-calculator',
       'consultant-day-rate-calculator',
       'billable-hours-calculator',

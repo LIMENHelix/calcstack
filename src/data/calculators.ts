@@ -3276,6 +3276,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'hsa-growth-calculator',
+    title: 'HSA Growth Calculator — The Triple Tax Advantage in Dollars',
+    shortTitle: 'HSA Growth',
+    category: 'Health & Life',
+    description:
+      'Free HSA growth calculator. Projects health savings account growth with 2026 IRS limits, annual tax savings at your marginal rate, and the advantage over a taxable account.',
+    tagline: 'The only account that is tax-free three times.',
+    intro:
+      'An HSA is the most tax-favored account in the code: deductible going in, untaxed while it grows, untaxed coming out for medical costs. This calculator projects what maxing it actually becomes — and prices the difference versus investing the same money in a taxable account.',
+    howItWorks: [
+      'Pick your coverage type (2026 limits: $4,400 self-only / $8,750 family, IRS Rev. Proc. 2025-19).',
+      'Enter contribution, years, expected return, and your combined marginal tax rate.',
+      'Compare the HSA balance against the same dollars in a taxable account.',
+    ],
+    faq: [
+      {
+        q: 'What are the 2026 HSA limits?',
+        a: '$4,400 for self-only HDHP coverage and $8,750 for family coverage, plus a $1,000 catch-up at 55+ (IRS Rev. Proc. 2025-19). Your HDHP must have a deductible of at least $1,700 self / $3,400 family and an out-of-pocket max under $8,500 / $17,000. Employer contributions count toward the same cap.',
+      },
+      {
+        q: 'Should I spend the HSA or invest it?',
+        a: 'If you can pay medical bills from cash flow, invest the HSA and save the receipts — there is no deadline to reimburse yourself, so a $3,000 ER visit in 2026 can be claimed tax-free in 2046 after two decades of growth. Keep receipts scanned and organized; the audit burden is yours.',
+      },
+      {
+        q: 'What happens to my HSA at 65?',
+        a: 'It becomes the best of both worlds: medical withdrawals stay tax-free forever, and non-medical withdrawals are simply taxed like a traditional IRA — the 20% penalty disappears at 65. Medicare premiums can even be paid from it. An overfunded HSA is never a problem.',
+      },
+    ],
+  },
+  {
+    slug: 'health-plan-comparison-calculator',
+    title: 'Health Plan Comparison Calculator — HDHP vs PPO Total Cost',
+    shortTitle: 'Compare Health Plans',
+    category: 'Health & Life',
+    description:
+      'Free health insurance plan comparison calculator. Totals premiums, deductible, coinsurance, and out-of-pocket max for two plans at your expected usage, with break-even analysis and HSA eligibility.',
+    tagline: 'The cheaper premium is not the cheaper plan. Run the year, not the month.',
+    intro:
+      'Open enrollment forces a bet on your health for the next 12 months. This calculator prices both plans across the whole year — premiums plus what you would actually pay at your expected usage — and finds the break-even bill level where the answer flips.',
+    howItWorks: [
+      'Enter both plans\' premiums, deductibles, and out-of-pocket maximums.',
+      'Enter your expected medical bills for the year (last year\'s EOBs are the best guess).',
+      'Read the winner — then run a healthy year and a bad year to see the range.',
+    ],
+    faq: [
+      {
+        q: 'When does the high-deductible plan win?',
+        a: 'When the annual premium savings exceed the extra exposure. Compare premium gap (×12) against the deductible gap: if premiums save $2,400/yr and the deductible is $2,500 higher, the HDHP wins in any year you stay healthy and roughly breaks even in a bad one — plus it unlocks the HSA, worth $1,300+/yr more in tax savings at a 30% rate.',
+      },
+      {
+        q: 'What does this calculator not capture?',
+        a: 'Copay structures (common in PPOs for office visits and prescriptions), network differences, and employer HSA contributions — an employer seed of $1,000 into the HSA is real money that belongs in the Plan A column. Also check whether your specific doctors and drugs are covered; no math fixes a bad network.',
+      },
+      {
+        q: 'How do I estimate my medical bills?',
+        a: 'Pull last year\'s explanation-of-benefits statements and total the allowed amounts, then adjust for known changes (a planned surgery, a new prescription, a pregnancy). Then run three scenarios: healthy year (routine visits only), expected year, and bad year (hit the out-of-pocket max). The right plan wins your expected year without catastrophic regret in the bad one.',
+      },
+    ],
+  },
+  {
+    slug: 'cobra-cost-calculator',
+    title: 'COBRA Cost Calculator — COBRA vs Marketplace After Job Loss',
+    shortTitle: 'COBRA vs Marketplace',
+    category: 'Health & Life',
+    description:
+      'Free COBRA cost calculator. Shows the 102% full-premium COBRA price, the sticker shock versus your old payroll deduction, and the marketplace alternative with subsidies.',
+    tagline: 'Your $150 plan is about to cost $714. Know before you elect.',
+    intro:
+      'The COBRA letter shocks everyone the same way: the plan that cost $150/month now costs $714, because you were never paying the real premium. This calculator shows the statutory 102% price, the monthly shock, and the marketplace alternative — so the 60-day election window gets used on math, not panic.',
+    howItWorks: [
+      'Enter the full monthly premium (your old share plus the employer\'s — HR or the COBRA letter has it).',
+      'Enter a marketplace premium and any subsidy you qualify for.',
+      'Enter months needed and compare totals for the coverage gap.',
+    ],
+    faq: [
+      {
+        q: 'Why is COBRA so expensive?',
+        a: 'Because employers typically pay 70–85% of the real premium invisibly. COBRA charges you the full premium plus a 2% admin fee — 102% by statute. Nothing about the plan got worse; you are just finally seeing the price. The silver lining: it is the same network and deductible progress you already had.',
+      },
+      {
+        q: 'When is COBRA actually the right choice?',
+        a: 'Three cases: you have already met most of this year\'s deductible (a new plan resets it to zero), your specific doctors or ongoing treatment are in the old network, or the gap is one or two months and the hassle premium is worth it. Otherwise the marketplace usually wins on price — especially with a subsidy.',
+      },
+      {
+        q: 'What are the deadlines?',
+        a: 'You have 60 days from losing coverage (or the notice, whichever is later) to elect COBRA, and it can be retroactive to the loss date — so you can wait, stay uninsured briefly, and elect only if a big bill appears. Job loss is also a 60-day Special Enrollment Period for the marketplace. Missing both windows means waiting for open enrollment.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
