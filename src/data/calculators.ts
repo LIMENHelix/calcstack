@@ -5201,6 +5201,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'apy-apr-converter',
+    title: 'APY to APR Converter — and APR to APY, With Compounding Shown',
+    shortTitle: 'APY ↔ APR Converter',
+    category: 'Savings & Investing',
+    description:
+      'Free APY↔APR converter. Enter a rate, pick the direction and compounding frequency (annual to daily), and see the equivalent rate with the compounding premium spelled out — plus what $10,000 actually earns in a year.',
+    tagline: 'Banks quote APY on savings and APR on loans. Convert before you compare.',
+    intro:
+      'APY and APR describe the same money two different ways, and banks pick whichever looks better: savings accounts advertise APY because compounding makes it bigger, loans advertise APR because excluding compounding makes it smaller. This converter translates between them at any compounding frequency, so a 5.00% APR loan and a 5.12% APY savings account stop looking like different universes.',
+    howItWorks: [
+      'Pick the direction: APR → APY, or APY → APR.',
+      'Enter the rate you have.',
+      'Choose the compounding frequency — monthly for most savings, daily for most credit cards.',
+      'Read the equivalent rate, the compounding premium in points, and what $10,000 does in a year.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between APY and APR?',
+        a: 'APR is the nominal annual rate without compounding; APY includes it. At monthly compounding, 5.00% APR works out to 5.1162% APY — the extra 0.1162 points is interest earning interest. The more frequent the compounding, the wider the gap: 22% APR on a credit card compounded daily is really 24.60% APY.',
+      },
+      {
+        q: 'How do I convert APY back to APR?',
+        a: 'APR = n × ((1 + APY)^(1/n) − 1), where n is the number of compounding periods per year. Example: a savings account advertising 4.50% APY with monthly compounding is paying a nominal 4.4098% APR — the APY looks bigger because it assumes you leave the interest in.',
+      },
+      {
+        q: 'Why do credit cards quote APR instead of APY?',
+        a: 'Because APR understates the true cost. A card at 22% APR compounded daily costs 24.60% APY — about 2.6 points more than the number on the statement. Issuers are required to disclose APR under Truth-in-Lending rules, which also fold fees into loan APRs; this converter handles the pure rate math only.',
+      },
+    ],
+  },
+  {
     slug: 'cd-interest-calculator',
     title: 'CD Interest Calculator — Maturity Value & Early-Withdrawal Penalty Truth',
     shortTitle: 'CD Interest',

@@ -321,7 +321,84 @@ export function CdCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- APY ↔ APR Converter ---------------- */
+
+// APY = (1 + APR/n)^n − 1; APR = n × ((1+APY)^(1/n) − 1).
+// Verified: 5% APR monthly → 5.1162% APY (textbook value); roundtrip exact.
+// 22% APR daily → 24.60% APY; 4.50% APY → 4.4098% APR monthly.
+const COMPOUND_OPTIONS: [string, number][] = [
+  ['Annually (1×/yr)', 1],
+  ['Semiannually (2×/yr)', 2],
+  ['Quarterly (4×/yr)', 4],
+  ['Monthly (12×/yr)', 12],
+  ['Daily (365×/yr)', 365],
+]
+
+export function ApyAprCalc(_props: CalcProps) {
+  const [direction, setDirection] = useState<'apr-to-apy' | 'apy-to-apr'>('apr-to-apy')
+  const [rate, setRate] = useNumber(5)
+  const [nIdx, setNIdx] = useState(3) // monthly default
+  const n = COMPOUND_OPTIONS[nIdx][1]
+
+  const r = useMemo(() => {
+    const x = rate / 100
+    const out = direction === 'apr-to-apy' ? Math.pow(1 + x / n, n) - 1 : n * (Math.pow(1 + x, 1 / n) - 1)
+    const outPct = out * 100
+    const diff = direction === 'apr-to-apy' ? outPct - rate : rate - outPct
+    // what $10,000 earns/costs in one year at the effective rate
+    const effApy = direction === 'apr-to-apy' ? outPct / 100 : x
+    const tenK = 10000 * (1 + effApy)
+    return { outPct, diff, tenK }
+  }, [direction, rate, n])
+
+  const fromLabel = direction === 'apr-to-apy' ? 'APR' : 'APY'
+  const toLabel = direction === 'apr-to-apy' ? 'APY' : 'APR'
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <label className="space-y-1 text-sm">
+            <span className="text-muted-foreground">Convert</span>
+            <select className={inputCls} value={direction} onChange={(e) => setDirection(e.target.value as 'apr-to-apy' | 'apy-to-apr')}>
+              <option value="apr-to-apy">APR → APY (loan rate → true annual yield)</option>
+              <option value="apy-to-apr">APY → APR (yield → nominal rate)</option>
+            </select>
+          </label>
+          <Field label={`${fromLabel} rate`} value={rate} onChange={setRate} suffix="%" step="0.01" />
+          <label className="space-y-1 text-sm">
+            <span className="text-muted-foreground">Compounding frequency</span>
+            <select className={inputCls} value={nIdx} onChange={(e) => setNIdx(Number(e.target.value))}>
+              {COMPOUND_OPTIONS.map(([label], i) => (
+                <option key={label} value={i}>{label}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label={`${toLabel} (compounded ${COMPOUND_OPTIONS[nIdx][0].split(' ')[0].toLowerCase()})`} value={`${num(r.outPct, 4)}%`} />
+          <Result label="Compounding adds" value={`${num(r.diff, 4)} pts`} />
+          <Result label="$10,000 after 1 year" value={usd(r.tenK, 2)} />
+          <Result label="Effective annual yield" value={`${num(direction === 'apr-to-apy' ? r.outPct : rate, 4)}%`} />
+        </div>
+
+        <p className="text-xs text-muted-foreground">
+          {direction === 'apr-to-apy'
+            ? `${num(rate, 2)}% APR compounded ${COMPOUND_OPTIONS[nIdx][0].split(' ')[0].toLowerCase()} works out to ${num(r.outPct, 4)}% APY — the compounding is worth an extra ${num(r.diff, 4)} percentage points.`
+            : `${num(rate, 2)}% APY corresponds to a nominal ${num(r.outPct, 4)}% APR compounded ${COMPOUND_OPTIONS[nIdx][0].split(' ')[0].toLowerCase()}.`}{' '}
+          Banks quote whichever number looks better for them: APY on savings (it looks bigger),
+          APR on loans (it looks smaller). This converter puts both on the same footing. Note:
+          APR on a real loan also folds in fees under Truth-in-Lending rules — this tool converts
+          the pure rate only.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const WEALTH_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'apy-apr-converter': ApyAprCalc,
   'cd-interest-calculator': CdCalc,
   'net-worth-calculator': NetWorthCalc,
   'cost-of-living-comparison-calculator': CostOfLivingCalc,
