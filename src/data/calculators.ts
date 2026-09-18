@@ -3006,6 +3006,36 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'moving-cost-calculator',
+    title: 'Moving Cost Calculator — DIY Truck vs Full-Service Movers',
+    shortTitle: 'Moving Cost',
+    category: 'Everyday Money',
+    description:
+      'Free moving cost calculator. Compare a DIY rental truck against full-service movers for your distance and home size, with fuel, supplies, and weight estimates.',
+    tagline: 'The truck is cheaper. The question is how much cheaper.',
+    intro:
+      'Every move is the same decision: sweat or money. This calculator prices both — a one-way rental truck with fuel and supplies versus full-service movers estimated from typical shipment weight and distance — so you can see the dollar value of your own labor before committing a weekend to it.',
+    howItWorks: [
+      'Enter the one-way distance and your home size (sets the typical shipment weight).',
+      'Enter your local gas price — rental trucks average about 8 mpg.',
+      'Compare the DIY total against the full-service estimate and judge the savings against your time.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is this moving estimate?',
+        a: 'It is a rule-of-thumb model, not a quote — real prices swing 30% or more with season (May–September is peak), stairs vs elevator, long carries, and how far ahead you book. Use it to decide DIY vs movers and to sanity-check quotes, then get three binding written estimates from licensed movers (check their USDOT number) before signing anything.',
+      },
+      {
+        q: 'What hidden costs does DIY moving have?',
+        a: 'Beyond truck and fuel: insurance on the rental (your auto policy usually does not cover it), tolls, parking permits in dense cities, hotel nights on long hauls, and the value of two or three days of your labor. Also the damage risk — movers carry liability; your friends carrying a couch do not.',
+      },
+      {
+        q: 'Is moving still tax-deductible?',
+        a: 'For most people, no — the moving expense deduction has been suspended since 2018 and remains suspended in 2026 for everyone except active-duty military moving under orders. Some employers offer relocation assistance instead; that is usually taxable income, so negotiate it grossed up if you can.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

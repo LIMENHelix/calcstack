@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Field, Result, useNumber, type CalcProps } from './index'
 import { Card, CardContent } from '@/components/ui/card'
 import { usd, num, monthlyPayment, monthsToPayoff } from '@/lib/calc'
@@ -165,8 +165,78 @@ export function LoanVsInvestCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Moving cost: DIY truck vs full-service movers ---------------- */
+
+// Typical shipment weight by home size (industry rule-of-thumb pounds).
+const MOVE_WEIGHTS: Record<string, number> = {
+  'Studio': 1800,
+  '1 bedroom': 2500,
+  '2 bedroom': 5000,
+  '3 bedroom': 9000,
+  '4+ bedroom': 12500,
+}
+
+export function MovingCostCalc(_props: CalcProps) {
+  const [miles, setMiles] = useNumber(1000)
+  const [size, setSize] = useState('2 bedroom')
+  const [gas, setGas] = useNumber(3.5)
+
+  const r = useMemo(() => {
+    const weight = MOVE_WEIGHTS[size] ?? 5000
+    // Full-service long-distance model: ~$0.30/lb base + ~$0.0004/lb per mile.
+    // Sanity: 2BR 1,000 mi ≈ $3,500; 3BR 1,000 mi ≈ $6,300 — inside published ranges.
+    const fullService = weight * (0.3 + 0.0004 * miles)
+    // DIY: one-way truck ≈ $300 base + ~$1.20/mile; rental trucks average ~8 mpg.
+    const truck = 300 + 1.2 * miles
+    const gallons = miles / 8
+    const fuel = gallons * gas
+    const supplies = 200 // boxes, tape, pads, dollies
+    const diy = truck + fuel + supplies
+    return { weight, fullService, truck, fuel, gallons, supplies, diy, savings: fullService - diy }
+  }, [miles, size, gas])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Move distance (one way)" value={miles} onChange={setMiles} suffix="mi" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">Home size</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={size}
+              onChange={(e) => setSize(e.target.value)}
+            >
+              {Object.keys(MOVE_WEIGHTS).map((k) => (
+                <option key={k} value={k}>
+                  {k}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Field label="Gas price" value={gas} onChange={setGas} prefix="$" suffix="/gal" />
+          <p className="text-xs text-muted-foreground">
+            Rule-of-thumb model, not a quote. Full-service uses typical shipment weight times a
+            per-pound rate that scales with distance; DIY is a one-way truck rental plus fuel at
+            8 mpg plus ~$200 of supplies. Real quotes swing 30%+ with season (summer is peak),
+            stairs, and scheduling — get three binding estimates before booking.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label="DIY saves you roughly" value={usd(r.savings)} />
+          <Result label="Full-service movers (est.)" value={usd(r.fullService)} />
+          <Result label={`DIY total: truck ${usd(r.truck)} + fuel ${usd(r.fuel)} + supplies`} value={usd(r.diy)} />
+          <Result label="Estimated shipment weight" value={`${num(r.weight, 0)} lbs`} />
+          <Result label="Fuel needed" value={`${num(r.gallons, 0)} gal`} />
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const NEWGRAD_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   'first-apartment-budget-calculator': FirstApartmentCalc,
   'salary-offer-comparison-calculator': SalaryOfferCalc,
   'student-loan-vs-investing-calculator': LoanVsInvestCalc,
+  'moving-cost-calculator': MovingCostCalc,
 }

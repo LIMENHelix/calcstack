@@ -199,4 +199,6 @@ export const WHY_USE: Record<string, string> = {
     'Job seekers with offers in different cities use it to compare purchasing power instead of headline salary. Recruiters and career offices link it to pre-answer the "but $15k more in NYC" question before the negotiation call.',
   'student-loan-vs-investing-calculator':
     'Borrowers with extra monthly cash use it to settle the pay-down-or-invest debate with fair same-outlay math instead of vibes. It makes the guaranteed-versus-expected tradeoff visible, which is the part most advice glosses over.',
+  'moving-cost-calculator':
+    'People relocating for a job use it right after the offer lands to price the sweat-versus-money decision before booking anything. Pair it with the salary offer comparison and the whole "should I take the job in Denver" question becomes arithmetic.',
 }

@@ -719,6 +719,7 @@ export const PERSONAS: Persona[] = [
       'first-apartment-budget-calculator',
       'salary-offer-comparison-calculator',
       'student-loan-vs-investing-calculator',
+      'moving-cost-calculator',
       'compound-interest-calculator',
       'savings-goal-calculator',
       'inflation-calculator',
