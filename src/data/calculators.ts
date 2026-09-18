@@ -1449,6 +1449,113 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'siding-calculator',
+    title: 'Siding Calculator — Squares, Waste & Cost',
+    shortTitle: 'Siding Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free siding calculator. Compute squares of siding (100 sq ft units) from house dimensions minus openings, with 10% waste and an editable materials and labor estimate.',
+    tagline: 'Siding is sold by the square. Know your count before the quote.',
+    intro:
+      'A siding quote is only as honest as the square count behind it. This calculator computes net wall area from your house dimensions minus door and window openings, adds the standard 10% cutting waste, and converts to squares — the unit every supplier and installer prices in. Walk into the quote conversation knowing your number.',
+    howItWorks: [
+      'Enter house length, width, and wall height.',
+      'Count doors and windows — 21 sq ft and 15 sq ft are deducted each.',
+      'Read the squares to order with 10% waste included.',
+      'Open the cost section for editable per-square materials and labor rates.',
+    ],
+    faq: [
+      {
+        q: 'What is a "square" of siding?',
+        a: '100 square feet of coverage — the universal pricing unit for siding, like roofing. A typical one-story 1,500 sq ft ranch has roughly 10–12 squares of wall area after openings and waste.',
+      },
+      {
+        q: 'Are gables included?',
+        a: 'No — gable ends are triangular and measured separately: ½ × base × height each, then added to the wall total before the waste factor. Soffit, fascia, and trim are separate line items too.',
+      },
+    ],
+  },
+  {
+    slug: 'paver-calculator',
+    title: 'Paver Calculator — Pavers, Base & Sand',
+    shortTitle: 'Paver Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free paver calculator. Compute paver count with waste, crushed gravel base tonnage, and bedding sand for patios and walkways — with an editable cost estimate.',
+    tagline: 'Pavers on top, tons of base underneath — the full order.',
+    intro:
+      'Paver jobs fail from below, not above: the base is 80% of the work and most of the material weight. This calculator runs the full stack — paver count with cutting waste, compacted gravel base tonnage at your depth, and the 1-inch bedding sand layer — so nothing gets forgotten between the patio and the quote.',
+    howItWorks: [
+      'Enter patio or walkway length and width.',
+      'Pick the paver size and base depth (4" pedestrian, 6" driveway).',
+      'Read the paver count, base tonnage, and bedding sand volume.',
+      'Open the cost section for per-paver and labor rates.',
+    ],
+    faq: [
+      {
+        q: 'How many 4×8 pavers do I need per square foot?',
+        a: 'A 4×8-inch paver covers 0.222 sq ft, so 4.5 pavers per square foot — order 4.8 with the 7% waste factor, or about 5 per sq ft for herringbone patterns that generate more cuts.',
+      },
+      {
+        q: 'How deep should the gravel base be?',
+        a: '4 inches of compacted crushed gravel for pedestrian patios and walkways, 6+ inches for driveways. Compact in 2-inch lifts — one thick lift never compacts properly and the pavers will telegraph the failure within a season.',
+      },
+    ],
+  },
+  {
+    slug: 'block-calculator',
+    title: 'Concrete Block Calculator — CMU Count & Mortar',
+    shortTitle: 'Block Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free concrete block (CMU) calculator. Compute 8×8×16 block count with breakage, mortar bags, and course count for any wall — plus an editable materials and labor estimate.',
+    tagline: 'Blocks, mortar, courses — the masonry order in one pass.',
+    intro:
+      'Masonry counts are coverage math: one standard 8×8×16 block shows 0.889 sq ft of face. This calculator converts your wall dimensions to a block count with 5% breakage, mortar at ~3 bags per 100 blocks, and the course count — the same numbers a mason writes on the order.',
+    howItWorks: [
+      'Enter wall length and height in feet.',
+      'Read the block count (breakage included), mortar bags, and courses.',
+      'Open the cost section for per-block, mortar, and laying-labor rates.',
+    ],
+    faq: [
+      {
+        q: 'How many concrete blocks per square foot of wall?',
+        a: '1.125 blocks per square foot for standard 8×8×16 units (each shows 0.889 sq ft of face). A 40×4 ft wall is 160 sq ft = 180 blocks, or 189 with 5% breakage.',
+      },
+      {
+        q: 'When does a block wall need rebar and grout?',
+        a: 'Generally any wall over 4 feet, any retaining wall, and anything structural — vertical rebar in grout-filled cells every 32–48 inches is the common code pattern, with footings sized to the soil. Check your local code before laying the first course.',
+      },
+    ],
+  },
+  {
+    slug: 'wallpaper-calculator',
+    title: 'Wallpaper Calculator — Double Rolls by Pattern Match',
+    shortTitle: 'Wallpaper Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free wallpaper calculator. Compute double rolls needed from room dimensions, adjusted for pattern repeat (none, straight, drop) — because matching costs real yield.',
+    tagline: 'The pattern repeat decides how many rolls. So does this.',
+    intro:
+      'Wallpaper estimates go wrong on the pattern repeat, not the wall area. A double roll covers ~56 square feet before matching — but a straight match costs 10% of that yield and a drop match 15%. This calculator measures your room, deducts full-size openings, applies the repeat factor, and rounds to whole double rolls from the same dye lot.',
+    howItWorks: [
+      'Enter room length, width, and wall height.',
+      'Count full-size doors and windows to deduct.',
+      'Pick the pattern match type from the wallpaper label.',
+      'Read the double-roll count and cost at your roll price.',
+    ],
+    faq: [
+      {
+        q: 'How much wallpaper does a 12×14 room need?',
+        a: 'Walls: 2×(14+12)×9 ft = 468 sq ft, minus a door and two windows ≈ 417 sq ft. With a drop-match pattern (56 ÷ 1.15 ≈ 49 usable sq ft per double roll) that is 9 double rolls. No-match paper would need 8.',
+      },
+      {
+        q: 'Why buy from the same dye lot?',
+        a: 'Color varies subtly between production runs — visible as stripes at the seams once hung. Every roll on one wall should share a lot number; buying the full count up front (plus one spare for repairs) is the only reliable way.',
+      },
+    ],
+  },
+  {
     slug: 'voltage-drop-calculator',
     title: 'Voltage Drop Calculator — NEC Wire Run Check',
     shortTitle: 'Voltage Drop Calculator',

@@ -705,6 +705,234 @@ export function StairCalc() {
   )
 }
 
+/* ---------------- Siding ---------------- */
+
+export function SidingCalc() {
+  const [length, setLength] = useNumber(40)
+  const [width, setWidth] = useNumber(28)
+  const [height, setHeight] = useNumber(9)
+  const [doors, setDoors] = useNumber(2)
+  const [windows, setWindows] = useNumber(8)
+  const [squareCost, setSquareCost] = useNumber(350)
+  const [laborSquare, setLaborSquare] = useNumber(200)
+
+  const r = useMemo(() => {
+    const wallArea = 2 * (length + width) * height - doors * 21 - windows * 15
+    const area = Math.max(0, wallArea)
+    const withWaste = area * 1.1 // 10% cutting/waste standard
+    const squares = withWaste / 100
+    const materials = squares * squareCost
+    const labor = squares * laborSquare
+    return { area, withWaste, squares, materials, labor, total: materials + labor }
+  }, [length, width, height, doors, windows, squareCost, laborSquare])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="House length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="House width" value={width} onChange={setWidth} suffix="ft" />
+        <Field label="Wall height" value={height} onChange={setHeight} suffix="ft" />
+        <Field label="Doors" value={doors} onChange={setDoors} step="1" />
+        <Field label="Windows" value={windows} onChange={setWindows} step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Squares to order (100 sq ft)" value={num(r.squares, 1)} />
+        <Result label="Net wall area" value={`${num(r.area, 0)} sq ft`} />
+        <Result label="With 10% waste" value={`${num(r.withWaste, 0)} sq ft`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Siding is sold by the &quot;square&quot; (100 sq ft). Net walls = perimeter × height −
+        openings (21 sq ft per door, 15 per window) + 10% for cuts and gables. Gable ends,
+        soffit, fascia, and trim are extra — measure triangular gables separately
+        (½ base × height). Vinyl typically needs 2 panels per square per course layout.
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Cost estimate (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <Field label="Materials per square" value={squareCost} onChange={setSquareCost} prefix="$" />
+          <Field label="Labor per square" value={laborSquare} onChange={setLaborSquare} prefix="$" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Result label="Materials" value={usd(r.materials, 2)} />
+          <Result label="Labor" value={usd(r.labor, 2)} />
+          <Result big label="Project total" value={usd(r.total, 2)} />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Pavers ---------------- */
+
+export function PaverCalc() {
+  const [length, setLength] = useNumber(20)
+  const [width, setWidth] = useNumber(15)
+  const [paver, setPaver] = useState('0.222') // 4×8 in
+  const [baseDepth, setBaseDepth] = useState('4')
+  const [paverCost, setPaverCost] = useNumber(0.6)
+  const [laborSqft, setLaborSqft] = useNumber(6)
+
+  const r = useMemo(() => {
+    const area = length * width
+    const each = parseFloat(paver)
+    const pavers = Math.ceil((area / each) * 1.07) // 7% cuts/breakage
+    const baseCuyd = (area * parseFloat(baseDepth)) / 12 / 27
+    const sandCuyd = (area * 1) / 12 / 27 // 1" bedding sand
+    const baseTons = baseCuyd * 1.4 // crushed gravel ~1.4 tons per cubic yard
+    const materials = pavers * paverCost
+    const labor = laborSqft * area
+    return { area, pavers, baseCuyd, sandCuyd, baseTons, materials, labor, total: materials + labor }
+  }, [length, width, paver, baseDepth, paverCost, laborSqft])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Patio length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Patio width" value={width} onChange={setWidth} suffix="ft" />
+        <Select label="Paver size" value={paver} onChange={setPaver} options={[
+          ['0.222', '4" × 8" (holland/brick)'], ['0.5', '6" × 12"'], ['1', '12" × 12"'], ['2.25', '18" × 18"'],
+        ]} />
+        <Select label="Gravel base depth" value={baseDepth} onChange={setBaseDepth} options={[
+          ['4', '4 in (pedestrian patio)'], ['6', '6 in (driveway)'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Pavers (incl. 7% waste)" value={String(r.pavers)} />
+        <Result label="Gravel base" value={`${num(r.baseTons, 1)} tons`} />
+        <Result label="Bedding sand (1 in)" value={`${num(r.sandCuyd, 1)} cu yd`} />
+        <Result label="Area" value={`${num(r.area, 0)} sq ft`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Pavers = area ÷ paver coverage + 7% for cuts and breakage (herringbone needs ~10%).
+        Base is compacted crushed gravel at ~1.4 tons per cubic yard, plus a 1-inch bedding-sand
+        layer. Compact the base in 2-inch lifts and slope 1/4" per foot away from the house.
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Cost estimate (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <Field label="Cost per paver" value={paverCost} onChange={setPaverCost} prefix="$" />
+          <Field label="Install labor per sq ft" value={laborSqft} onChange={setLaborSqft} prefix="$" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Result label="Paver materials" value={usd(r.materials, 2)} />
+          <Result label="Labor" value={usd(r.labor, 2)} />
+          <Result big label="Project total" value={usd(r.total, 2)} />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Concrete block (CMU) ---------------- */
+
+export function BlockCalc() {
+  const [length, setLength] = useNumber(40)
+  const [height, setHeight] = useNumber(4)
+  const [blockCost, setBlockCost] = useNumber(2.2)
+  const [mortarCost, setMortarCost] = useNumber(8)
+  const [laborBlock, setLaborBlock] = useNumber(4)
+
+  const r = useMemo(() => {
+    const area = length * height
+    // standard 8×8×16 block face = 8"×16" = 0.889 sq ft
+    const blocks = Math.ceil((area / 0.889) * 1.05) // 5% breakage
+    const mortarBags = Math.ceil(blocks / 33) // ~3 bags per 100 block
+    const materials = blocks * blockCost + mortarBags * mortarCost
+    const labor = laborBlock * blocks
+    const courses = Math.ceil(height * 12 / 8)
+    return { area, blocks, mortarBags, materials, labor, total: materials + labor, courses }
+  }, [length, height, blockCost, mortarCost, laborBlock])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Wall length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Wall height" value={height} onChange={setHeight} suffix="ft" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="8×8×16 blocks" value={String(r.blocks)} />
+        <Result label="Mortar (bags)" value={String(r.mortarBags)} />
+        <Result label="Courses" value={String(r.courses)} />
+        <Result label="Wall area" value={`${num(r.area, 0)} sq ft`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Block count = wall area ÷ 0.889 sq ft per block face + 5% breakage; mortar at ~3 bags per
+        100 blocks. Walls over 4 ft typically need vertical rebar and grout-filled cells (every
+        32–48 inches per code) and footings sized to soil — check local code for retaining or
+        structural walls.
+      </p>
+      <details className="rounded-lg border p-4">
+        <summary className="cursor-pointer text-sm font-medium">Cost estimate (editable typical-range defaults)</summary>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <Field label="Cost per block" value={blockCost} onChange={setBlockCost} prefix="$" />
+          <Field label="Cost per mortar bag" value={mortarCost} onChange={setMortarCost} prefix="$" />
+          <Field label="Labor per block laid" value={laborBlock} onChange={setLaborBlock} prefix="$" />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <Result label="Materials" value={usd(r.materials, 2)} />
+          <Result label="Labor" value={usd(r.labor, 2)} />
+          <Result big label="Project total" value={usd(r.total, 2)} />
+        </div>
+        <CostNote />
+      </details>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Wallpaper ---------------- */
+
+export function WallpaperCalc() {
+  const [length, setLength] = useNumber(14)
+  const [width, setWidth] = useNumber(12)
+  const [height, setHeight] = useNumber(9)
+  const [doors, setDoors] = useNumber(1)
+  const [windows, setWindows] = useNumber(2)
+  const [repeat, setRepeat] = useState('drop')
+  const [rollCost, setRollCost] = useNumber(45)
+
+  const r = useMemo(() => {
+    const wallArea = 2 * (length + width) * height - doors * 21 - windows * 15
+    const area = Math.max(0, wallArea)
+    // usable coverage per double roll ≈ 56 sq ft; pattern repeat cuts yield
+    const factor = repeat === 'none' ? 1 : repeat === 'straight' ? 1.1 : 1.15
+    const usable = 56 / factor
+    const doubleRolls = Math.ceil(area / usable)
+    return { area, usable, doubleRolls, cost: doubleRolls * rollCost, factor }
+  }, [length, width, height, doors, windows, repeat, rollCost])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Room length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Room width" value={width} onChange={setWidth} suffix="ft" />
+        <Field label="Wall height" value={height} onChange={setHeight} suffix="ft" />
+        <Field label="Doors" value={doors} onChange={setDoors} step="1" />
+        <Field label="Windows" value={windows} onChange={setWindows} step="1" />
+        <Select label="Pattern repeat" value={repeat} onChange={setRepeat} options={[
+          ['none', 'No match (solid/texture)'], ['straight', 'Straight match'], ['drop', 'Drop match'],
+        ]} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result big label="Double rolls to buy" value={String(r.doubleRolls)} />
+        <Result label="Usable coverage per roll" value={`${num(r.usable, 0)} sq ft`} />
+        <Result label="Wallpaper cost" value={usd(r.cost, 2)} />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Cost per double roll" value={rollCost} onChange={setRollCost} prefix="$" />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Double rolls (the standard retail unit) cover ~56 sq ft before matching; straight match
+        costs ~10% yield, drop match ~15%. Walls are measured gross (openings only deducted for
+        full-size doors/windows — the strips above them are usable). Buy all rolls from the same
+        dye lot.
+      </p>
+      <CostNote />
+    </CardContent></Card>
+  )
+}
+
 export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'framing-calculator': FramingCalc,
   'drywall-calculator': DrywallCalc,
@@ -720,6 +948,10 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'asphalt-calculator': AsphaltCalc,
   'board-foot-calculator': BoardFootCalc,
   'stair-calculator': StairCalc,
+  'siding-calculator': SidingCalc,
+  'paver-calculator': PaverCalc,
+  'block-calculator': BlockCalc,
+  'wallpaper-calculator': WallpaperCalc,
 }
 
 /* ---------------- Concrete Mix Selector ---------------- */

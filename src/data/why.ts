@@ -97,6 +97,14 @@ export const WHY_USE: Record<string, string> = {
     'Woodworkers buying hardwood and anyone pricing rough lumber at a sawmill use this: board feet is a volume unit that looks like an area unit until the invoice arrives. Run the stack count before the lumberyard, not after.',
   'stair-calculator':
     'Deck builders and basement finishers use this to get equal, code-legal risers on the first layout — the 7.75" IRC limit and the treads-minus-one rule are where stair math goes wrong. The stringer length and 2R+T comfort check come free with the count.',
+  'siding-calculator':
+    'Homeowners collecting siding quotes use this to know their square count before the first salesman measures — it converts a black-box estimate into a conversation. Contractors use it as a five-second first pass before a formal takeoff.',
+  'paver-calculator':
+    'DIY patio builders use this because the base is what everyone forgets: the pavers are the cheap, visible 20% — the tonnage underneath is the job. Landscapers use the full-stack output (pavers, base, sand) as a bid starting point.',
+  'block-calculator':
+    'Anyone pricing a garden wall or foundation uses this: block-per-square-foot is simple, but the breakage factor and mortar ratio are where orders come up short mid-wall. The per-block labor field doubles as a check against a mason\'s quote.',
+  'wallpaper-calculator':
+    'DIY wallpaperers use this because the pattern repeat — not the wall area — decides the roll count, and the label math (straight vs drop match) is exactly what big-box estimators skip. The same-dye-lot warning has saved more walls than any calculator feature.',
   'voltage-drop-calculator':
     'Electricians sizing runs to outbuildings, DIYers wiring a shed, and RV owners spec-ing a pedestal all hit the same wall: the wire is legal by ampacity but drops too many volts over distance. This catches that before the trench is backfilled.',
   'wire-size-calculator':
