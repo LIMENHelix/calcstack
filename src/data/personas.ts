@@ -748,6 +748,9 @@ export const PERSONAS: Persona[] = [
       'Should I pay off the mortgage with a lump sum?',
     ],
     calcSlugs: [
+      'rmd-calculator',
+      'social-security-breakeven-calculator',
+      'safe-withdrawal-calculator',
       'compound-interest-calculator',
       'inflation-calculator',
       'loan-payoff-calculator',

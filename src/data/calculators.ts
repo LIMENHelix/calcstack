@@ -2736,6 +2736,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'rmd-calculator',
+    title: 'RMD Calculator — Required Minimum Distribution by Age (IRS Table III)',
+    shortTitle: 'RMD Calculator',
+    category: 'Savings & Investing',
+    description:
+      'Free RMD calculator. Compute your required minimum distribution from age and prior year-end balance using the current IRS Uniform Lifetime Table (in effect since 2022).',
+    tagline: 'The IRS set a floor under your patience.',
+    intro:
+      'Once you reach age 73 (75 if born 1960 or later), the IRS requires annual withdrawals from traditional IRAs and 401(k)s: your prior December 31 balance divided by the Uniform Lifetime Table divisor for your age. Miss it and the excise tax is 25% of the shortfall. This calculator applies the current Table III divisors — unchanged since 2022 — and shows the monthly equivalent and the penalty you\'re avoiding.',
+    howItWorks: [
+      'Enter the age you reach this calendar year.',
+      'Enter your traditional IRA/401(k) balance as of last December 31.',
+      'Read your RMD, the implied percentage, and the monthly equivalent.',
+    ],
+    faq: [
+      {
+        q: 'When do RMDs start in 2026?',
+        a: 'Age 73 for anyone born 1951–1959; age 75 for those born 1960 or later (SECURE 2.0). Your first RMD can be delayed to April 1 of the following year — but every later one is due December 31, so delaying the first means two taxable RMDs in one year.',
+      },
+      {
+        q: 'What is the penalty for missing an RMD?',
+        a: '25% of the amount you failed to withdraw — on a $20,000 RMD, a $5,000 tax. It drops to 10% if you correct the shortfall within the IRS correction window and file the amended return. The penalty applies per year, so catching up quickly matters.',
+      },
+      {
+        q: 'Do Roth IRAs have RMDs?',
+        a: 'Not for the original owner — Roth IRAs are exempt during the owner\'s lifetime, which is a core argument for Roth conversions in low-income years before 73. Inherited Roth IRAs do have beneficiary distribution rules (the 10-year rule). And since 2024, Roth 401(k)s are RMD-free too.',
+      },
+    ],
+  },
+  {
+    slug: 'social-security-breakeven-calculator',
+    title: 'Social Security Breakeven Calculator — Claim at 62, 67, or 70?',
+    shortTitle: 'SS Breakeven Age',
+    category: 'Savings & Investing',
+    description:
+      'Free Social Security breakeven calculator. Compare claiming ages 62–70 with official SSA reduction and delayed-credit rules, and find the age where waiting pulls ahead.',
+    tagline: 'Claiming at 62 costs 30%; waiting to 70 pays 124%. The crossover is the question.',
+    intro:
+      'Social Security reduces benefits 5/9 of 1% per month claimed early (30% less at 62) and credits 8% per year delayed past full retirement age (24% more at 70). Whether waiting wins depends on one thing: how long you live. This calculator applies the official SSA adjustment rules and computes the exact breakeven age between any two claiming ages.',
+    howItWorks: [
+      'Enter your full-retirement-age benefit (PIA) from your SSA statement.',
+      'Pick two claiming ages to compare.',
+      'Read both monthly amounts, the breakeven age, and lifetime totals at 85.',
+    ],
+    faq: [
+      {
+        q: 'What is the breakeven age for claiming at 62 vs 70?',
+        a: 'Roughly age 80–81 for a FRA-67 worker: the 62-claimant\'s eight-year head start is overtaken by the 70-claimant\'s 77% larger monthly check around age 80.4. Median life expectancy at 62 is about 82 for men and 85 for women — past the breakeven — which is why most analysts say delaying is the better bet for healthy singles.',
+      },
+      {
+        q: 'Does delaying past 70 help?',
+        a: 'No — delayed retirement credits stop at 70, so there is never a financial reason to claim later. But credits also stop accumulating the month you claim, and the earnings test can withhold benefits before FRA if you work. The window that matters is 62–70.',
+      },
+      {
+        q: 'What about my spouse?',
+        a: 'Couples change everything: the higher earner delaying to 70 effectively buys the survivor a 24% larger check for life, since the surviving spouse keeps the larger benefit. That survivor insurance is often worth more than the breakeven math — model it before the lower earner claims early.',
+      },
+    ],
+  },
+  {
+    slug: 'safe-withdrawal-calculator',
+    title: 'Safe Withdrawal Rate Calculator — Will the 4% Rule Outlive You?',
+    shortTitle: 'Safe Withdrawal',
+    category: 'Savings & Investing',
+    description:
+      'Free safe withdrawal rate calculator. Test the 4% rule against your portfolio: initial withdrawal, monthly income, and the year the money runs out under your return and inflation assumptions.',
+    tagline: 'Retirement fails on arithmetic, not vibes.',
+    intro:
+      'The 4% rule (Trinity study) says withdrawing 4% of your starting portfolio, adjusted for inflation, survived nearly every 30-year window in market history. This calculator stress-tests the rule with your own numbers: portfolio size, withdrawal rate, assumed return, and inflation — and tells you the exact year the money runs out if it does.',
+    howItWorks: [
+      'Enter your retirement portfolio and initial withdrawal rate.',
+      'Set your return and inflation assumptions.',
+      'Read year-one withdrawal, monthly income, and portfolio longevity.',
+    ],
+    faq: [
+      {
+        q: 'Is the 4% rule still valid?',
+        a: 'For 30-year retirements, historically yes — it survived every window including the Depression, though 1966 retirees came close to failing. For 40+ year early retirements, 3.25–3.5% is the safer researched floor. The rule assumes a diversified stock/bond portfolio; 100% cash or 100% crypto breaks the premise.',
+      },
+      {
+        q: 'What is sequence-of-returns risk?',
+        a: 'Average return does not determine survival — the ORDER of returns does. A 30% crash in year 2 of retirement while withdrawing is far deadlier than the same crash in year 20. This calculator uses constant returns, so it shows the average case; real planning adds a bad-first-decade stress test. That\'s the guardrail answer: flexible spending.',
+      },
+      {
+        q: 'How do I make withdrawals safer?',
+        a: 'Three levers: start lower (3.5% instead of 4%), hold 1–2 years of spending in cash so crashes don\'t force selling at the bottom, and build in flexibility — committing to skip inflation raises after down years historically rescues most failing scenarios. A part-time income of even $1,000/month in early retirement moves the math dramatically.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

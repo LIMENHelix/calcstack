@@ -181,4 +181,10 @@ export const WHY_USE: Record<string, string> = {
     'Anyone facing a move uses it to kill the "rent is throwing money away" argument with actual numbers — breakeven year included. Agents and lenders point clients at it because an honest comparison builds more trust than a sales pitch.',
   'closing-cost-calculator':
     'First-time buyers use it the week before making an offer — the down payment is not the whole check. Buyers use it again when the Loan Estimate arrives to catch padded fees line by line.',
+  'rmd-calculator':
+    'Retirees use it every December: the divisor shrinks every year, so the RMD percentage climbs — this shows both. Advisors use it to size Roth conversions in the gap years between retirement and age 73.',
+  'social-security-breakeven-calculator':
+    'People approaching 62 use it to see the real trade: a 30% haircut for eight extra years of checks, with the crossover age made explicit. Couples use it for the higher earner — delaying to 70 is really buying the survivor a bigger check.',
+  'safe-withdrawal-calculator':
+    'Near-retirees use it to turn a portfolio balance into an income number, and FIRE planners use it to test 40-year horizons at 3.5%. It answers the only question that matters: what can I spend without the money dying first?',
 }
