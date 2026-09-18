@@ -1306,6 +1306,46 @@ export const PERSONAS: Persona[] = [
     ],
   },
   {
+    slug: 'concrete-masonry-contractors',
+    job: 'Concrete & Masonry Contractors',
+    title: 'Calculators for Concrete & Masonry — Yards, Bags, Rebar & Block Fill',
+    description: 'Free tools for concrete and masonry contractors: slab volume and bag counts, rebar quantities, footing sizing, block counts and core fill — plus the bid math that keeps a pour profitable.',
+    hero: 'Concrete math is unforgiving because the pour cannot pause: order short and you are hand-mixing while the truck waits. These calculators size the pour, the rebar, the footing, and the block wall before the truck is booked — and the bid tools price the job after.',
+    questions: [
+      'How many yards — or bags — does this slab take?',
+      'What rebar and footing does this wall need?',
+      'How much fill do the block cores swallow?',
+    ],
+    calcSlugs: [
+      'concrete-calculator',
+      'concrete-mix-calculator',
+      'road-base-calculator',
+      'rebar-calculator',
+      'footing-size-calculator',
+      'block-calculator',
+      'block-fill-calculator',
+      'bid-sheet-calculator',
+      'markup-margin-calculator',
+      'break-even-calculator',
+      'freelance-rate-calculator',
+      'paycheck-calculator',
+    ],
+    faq: [
+      {
+        q: 'When do bags stop making sense versus a truck?',
+        a: 'An 80-lb bag yields 0.60 cu ft — 45 bags per cubic yard, roughly $250 of bags at typical prices against $130–160 a yard for ready-mix. Below about half a yard, bags win on short-load fees; past a yard, the truck wins on price and your back. A 10×12 pad at 4 inches is 1.5 yards — truck territory.',
+      },
+      {
+        q: 'How much rebar does a slab need?',
+        a: 'For a 4-inch residential slab, #3 or #4 rebar on 18–24 inch centers both ways is the common spec — the rebar calculator turns slab dimensions and spacing into stick counts and weight. Wire mesh is the lighter alternative for patios; driveways and shop floors want the bar.',
+      },
+      {
+        q: 'Why do block jobs under-order on mortar and fill?',
+        a: 'Because the blocks get counted and the cores don\'t. An 8-inch block wall swallows roughly a cubic yard of fill per 100 sq ft of wall when cores are poured solid — the block-fill calculator sizes grout or concrete for the cores separately from the block count itself.',
+      },
+    ],
+  },
+  {
     slug: 'pool-service-technicians',
     job: 'Pool Service Technicians',
     title: 'Calculators for Pool Service Techs — Volume, Dosing, Pump & Route Math',
