@@ -3009,6 +3009,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pto-accrual-calculator',
+    title: 'PTO Accrual Calculator — Per-Period Accrual, Caps & Year-End Balance',
+    shortTitle: 'PTO Accrual Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Free PTO accrual calculator. Fixed annual allowance or per-hours-worked accrual (like California sick leave 1-per-30), any pay frequency, accrual caps, planned usage, and a full year-end balance projection.',
+    tagline: 'Know exactly how much PTO you will have — before you book the trip.',
+    intro:
+      'PTO accrual is simple arithmetic that almost nobody does: divide the annual allowance by pay periods, walk the balance forward, subtract what you plan to use, and watch the cap. This calculator does that walk for you — fixed annual grants (120 hours a year is 4.62 hours per biweekly check) or per-hours-worked systems like California sick leave (1 hour per 30 worked), with the cap losses and year-end balance spelled out.',
+    howItWorks: [
+      'Pick the accrual method: a fixed annual allowance, or hours earned per hours worked (e.g., 1 per 30 for California sick leave).',
+      'Choose your pay frequency — weekly, biweekly, semi-monthly, or monthly — to see per-period accrual.',
+      'Enter your current balance, accrual cap, and planned usage per pay period.',
+      'The calculator walks the full year: accrual per period, total earned, hours lost to the cap, and your year-end balance in hours and 8-hour days.',
+    ],
+    faq: [
+      {
+        q: 'How do I calculate PTO accrual per pay period?',
+        a: 'Divide the annual allowance by the number of pay periods. A 120-hour (15-day) allowance accrues 4.62 hours per biweekly check (120 ÷ 26), 5.00 hours semi-monthly (120 ÷ 24), or 2.31 hours weekly (120 ÷ 52). Employers that front-load skip this entirely — the full grant lands January 1.',
+      },
+      {
+        q: 'How does per-hours-worked accrual work?',
+        a: 'You earn a fixed fraction of an hour for every hour worked — California\'s sick leave floor is 1 hour per 30 worked. A full-time employee (2,080 hours/year) earns 69.3 hours (8.7 days) per year at that rate. This method scales automatically for part-time staff, which is why hourly-workforces use it.',
+      },
+      {
+        q: 'Can my employer cap my PTO balance?',
+        a: 'In most states, yes — a reasonable cap stops accrual until you use some. But California, Montana, and Nebraska treat vacation as earned wages: use-it-or-lose-it forfeiture is illegal there, and even caps must be "reasonable" (typically 1.5–1.75× the annual allowance). Example: with a 120-hour allowance, 100 hours banked, and a 120-hour cap, you lose about 100 hours of accrual to the cap over the year if you take no time off.',
+      },
+    ],
+  },
+  {
     slug: 'nurse-shift-pay-calculator',
     title: 'Nurse Shift Pay Calculator — Differentials & Overtime Stacked',
     shortTitle: 'Nurse Shift Pay',

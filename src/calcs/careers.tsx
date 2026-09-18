@@ -231,9 +231,95 @@ export function TruckDriverPayCalc() {
   )
 }
 
+/* ---------------- PTO Accrual & Balance Projection ---------------- */
+
+export function PtoAccrualCalc() {
+  const [mode, setMode] = useState('annual')
+  const [freq, setFreq] = useState('26')
+  const [annualHrs, setAnnualHrs] = useNumber(120)
+  const [ratio, setRatio] = useNumber(30)
+  const [weeklyHrs, setWeeklyHrs] = useNumber(40)
+  const [startBal, setStartBal] = useNumber(24)
+  const [cap, setCap] = useNumber(160)
+  const [usePerPeriod, setUsePerPeriod] = useNumber(8)
+
+  const periods = Number(freq) || 26
+
+  const r = useMemo(() => {
+    // Accrual per period
+    const perPeriod =
+      mode === 'annual'
+        ? annualHrs / periods
+        : (weeklyHrs / Math.max(1, ratio)) * (52 / periods) // 1 hr per `ratio` hrs worked
+    const annualAccrual = perPeriod * periods
+    // Walk the year: accrue (capped), then use
+    let bal = startBal
+    let capped = 0
+    for (let i = 0; i < periods; i++) {
+      const after = bal + perPeriod
+      if (after > cap) {
+        capped += after - cap
+        bal = cap
+      } else {
+        bal = after
+      }
+      bal = Math.max(0, bal - usePerPeriod)
+    }
+    const totalUsed = usePerPeriod * periods
+    const daysPerPeriod = perPeriod / 8
+    return { perPeriod, annualAccrual, bal, capped, totalUsed, daysPerPeriod, daysEnd: bal / 8 }
+  }, [mode, annualHrs, periods, weeklyHrs, ratio, startBal, cap, usePerPeriod])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Accrual method</label>
+          <select className={selCls} value={mode} onChange={(e) => setMode(e.target.value)}>
+            <option value="annual">Fixed annual allowance (e.g., 15 days/yr)</option>
+            <option value="worked">Per hours worked (e.g., CA sick leave 1 per 30)</option>
+          </select>
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">Pay frequency</label>
+          <select className={selCls} value={freq} onChange={(e) => setFreq(e.target.value)}>
+            <option value="52">Weekly (52 periods)</option>
+            <option value="26">Biweekly (26 periods)</option>
+            <option value="24">Semi-monthly (24 periods)</option>
+            <option value="12">Monthly (12 periods)</option>
+          </select>
+        </div>
+        {mode === 'annual'
+          ? <Field label="PTO hours per year" value={annualHrs} onChange={setAnnualHrs} step="8" suffix="hrs" />
+          : <Field label="1 hour earned per hours worked" value={ratio} onChange={setRatio} step="1" />}
+        {mode === 'worked' && <Field label="Hours worked per week" value={weeklyHrs} onChange={setWeeklyHrs} step="1" />}
+      </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Current balance" value={startBal} onChange={setStartBal} step="4" suffix="hrs" />
+        <Field label="Accrual cap (0 = none)" value={cap} onChange={setCap} step="8" suffix="hrs" />
+        <Field label="Planned use per period" value={usePerPeriod} onChange={setUsePerPeriod} step="1" suffix="hrs" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Accrual per period" value={`${num(r.perPeriod, 2)} hrs`} />
+        <Result label="Earned per year" value={`${num(r.annualAccrual, 1)} hrs (${num(r.annualAccrual / 8, 1)} days)`} />
+        <Result label="Balance at year end" value={`${num(r.bal, 1)} hrs (${num(r.daysEnd, 1)} days)`} />
+        <Result label="Total used in year" value={`${num(r.totalUsed, 0)} hrs`} />
+        <Result label="Lost to accrual cap" value={r.capped > 0.005 ? `${num(r.capped, 1)} hrs` : 'None'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {mode === 'annual'
+          ? `A ${num(annualHrs, 0)}-hour annual allowance over ${freq} pay periods accrues ${num(r.perPeriod, 2)} hours (${num(r.daysPerPeriod, 1)} days) per check. The projection walks the whole year: accrue up to the cap, then subtract planned use.`
+          : `At 1 hour per ${num(ratio, 0)} worked and ${num(weeklyHrs, 0)} hours a week, you earn ${num(weeklyHrs / Math.max(1, ratio), 2)} hours weekly — ${num(r.annualAccrual, 1)} hours a year. California's Healthy Workplaces Act sets exactly this 1-per-30 floor for sick leave, with employer caps of 40 hours/year use permitted.`}
+        {' '}Use-it-or-lose-it caps on vacation are illegal in California, Montana, and Nebraska — a "reasonable cap" that stops accrual is legal there, forfeiture is not. Front-loaded PTO (grant on January 1) avoids accrual tracking entirely but pays out the full grant if someone leaves in February.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const CAREERS_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'nurse-shift-pay-calculator': NurseShiftPayCalc,
   'teacher-pay-calculator': TeacherPayCalc,
   'truck-driver-pay-calculator': TruckDriverPayCalc,
   'overtime-calculator': OvertimeCalc,
+  'pto-accrual-calculator': PtoAccrualCalc,
 }

@@ -203,6 +203,8 @@ export const WHY_USE: Record<string, string> = {
     'Nurses use it when comparing facilities or deciding whether to pick up the night shift: base rate is marketing, the differential stack is money. Travel nurses use it to convert blended rates back into an honest hourly.',
   'overtime-calculator':
     'Hourly workers use it to check a paycheck before cashing it — the federal 40-hour rule is simple, but the California daily tiers and double time are where payroll errors (and back-pay claims) actually live. Small business owners use it to cost out a long week before promising the deadline.',
+  'pto-accrual-calculator':
+    'Employees use it before booking a trip: will the balance actually cover the dates, or does the trip land two pay periods early? HR and small-business owners use it to sanity-check a PTO policy — how much a 15-day allowance really costs, and where the cap quietly eats accrual.',
   'teacher-pay-calculator':
     'Teachers use it to plan the master\'s-degree lane change (the biggest raise lever in the profession) and to survive the 10-month paycheck schedule without a broke August. Career changers use it to see year 10 before signing up for year 1.',
   'truck-driver-pay-calculator':
