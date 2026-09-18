@@ -2826,6 +2826,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'va-funding-fee-calculator',
+    title: 'VA Funding Fee Calculator — 2026 Rates, Exemptions & Financed Cost',
+    shortTitle: 'VA Funding Fee',
+    category: 'Loans & Debt',
+    description:
+      'Free VA funding fee calculator. Current rates by down payment and first/subsequent use, exemption check, and the true cost of financing the fee into the loan.',
+    tagline: 'No PMI — but not free. Know the fee before the closing disclosure does.',
+    intro:
+      'The VA loan\'s trade for zero down and no mortgage insurance is the funding fee: 2.15% of the loan on first use under 5% down, 3.3% on subsequent use — dropping to 1.5% with 5% down. This calculator applies the current VA schedule, checks the exemption (service-connected disability pays nothing), and shows what financing the fee actually costs over 30 years.',
+    howItWorks: [
+      'Enter the purchase price and down payment.',
+      'Select first or subsequent VA loan use, and check the exemption box if it applies.',
+      'Read the fee, the financed loan amount, and the monthly payment difference.',
+    ],
+    faq: [
+      {
+        q: 'Who is exempt from the VA funding fee?',
+        a: 'Veterans receiving VA compensation for a service-connected disability (any rating), those eligible for compensation but taking retirement pay instead, surviving spouses receiving DIC, and active-duty Purple Heart recipients. If your disability claim is approved with an effective date before closing, you can claim a full refund of a fee already paid.',
+      },
+      {
+        q: 'Is it worth putting 5% down on a VA loan?',
+        a: 'Often yes on subsequent use: the fee falls from 3.3% to 1.5%, saving $7,200 on a $400,000 purchase — an instant 144% return on the $20,000 down payment if you count avoided fee. On first use the drop is 2.15% to 1.5%, saving $2,600. The funding-fee tiers make a small down payment unusually powerful for repeat VA users.',
+      },
+      {
+        q: 'Should I finance the fee or pay it cash?',
+        a: 'Financing adds the fee to the loan — on $8,600 at 6.5% over 30 years, about $54/month and roughly $11,000 in total payments. Paying cash avoids that, but the VA loan\'s real advantage is preserving liquidity. If cash is tight, financing is fine; if you have it, compare against what the cash earns elsewhere.',
+      },
+    ],
+  },
+  {
+    slug: 'military-retirement-calculator',
+    title: 'Military Retirement Calculator — High-36 vs BRS Pension Estimator',
+    shortTitle: 'Military Retirement',
+    category: 'Freelance & Career',
+    description:
+      'Free military retirement calculator. Estimate your pension under legacy High-36 (2.5%/year) or BRS (2.0%/year) from years of service and high-3 base pay.',
+    tagline: 'Twenty years is a cliff: 50% for life, or nothing at 19.',
+    intro:
+      'The military pension is one of the last true pensions: legacy High-36 pays 2.5% of your high-3 base pay per year of service — 50% at 20 years, for life, with COLA. BRS pays 2.0% per year plus TSP matching. This calculator estimates the pension both ways and shows what each additional year of service is worth.',
+    howItWorks: [
+      'Choose your retirement system (High-36 legacy or BRS).',
+      'Enter years of service and your high-3 average monthly base pay.',
+      'Read the annual and monthly pension, plus the value of each extra year.',
+    ],
+    faq: [
+      {
+        q: 'How is the military pension calculated?',
+        a: 'Legacy High-36: 2.5% × years of service × average of your highest 36 months of base pay. At 20 years that is exactly 50%; at 30 years, 75%. BRS (members joining 2018+): 2.0% per year — 40% at 20 — plus government TSP matching up to 5% and mid-career continuation pay. Base pay only: BAH and BAS are excluded.',
+      },
+      {
+        q: 'What happens if I leave at 18 years?',
+        a: 'Under either system, the pension is cliff-vested at 20 years — separating at 18 or 19 pays nothing from the pension. This is why "just two more years" is the most consequential decision in a military career. Under BRS at least your TSP and its matching are fully portable.',
+      },
+      {
+        q: 'Is the pension inflation-protected?',
+        a: 'Yes — military retired pay receives annual cost-of-living adjustments tied to CPI, making it one of the few inflation-indexed annuities available anywhere. At 3% inflation, a $36,000 pension at 38 is worth roughly $66,000 at 58 in nominal dollars. That COLA is the hidden crown jewel of the benefit.',
+      },
+    ],
+  },
+  {
+    slug: 'student-loan-idr-calculator',
+    title: 'Student Loan IDR Calculator — IBR Payment & Forgiveness Estimate',
+    shortTitle: 'Student Loan IDR',
+    category: 'Loans & Debt',
+    description:
+      'Free income-driven repayment calculator. Estimate your IBR payment from income and family size, compare against the 10-year standard, and see the forgiveness horizon.',
+    tagline: 'Your payment is a percentage of your life, not your balance.',
+    intro:
+      'Income-Based Repayment ignores your balance and prices your payment off your life: 10% (new IBR) or 15% (old IBR) of discretionary income — AGI minus 150% of the poverty guideline — capped at the 10-year standard payment, with forgiveness after 20 or 25 years. This calculator runs that math with the current poverty guidelines.',
+    howItWorks: [
+      'Enter your AGI and family size (discretionary income uses 150% of the poverty guideline).',
+      'Enter your loan balance and rate.',
+      'Compare the IDR payment against the standard cap, and note the forgiveness year.',
+    ],
+    faq: [
+      {
+        q: 'Which IDR plan should I be on in 2026?',
+        a: 'The SAVE plan is in litigation and effectively unavailable; IBR is the stable statutory option. New IBR (borrowers after July 1, 2014) charges 10% of discretionary income with 20-year forgiveness; old IBR is 15% with 25-year forgiveness. PAYE phases out in 2027–2028. Confirm current availability at studentaid.gov before applying — the plan landscape has been volatile.',
+      },
+      {
+        q: 'Can my IDR payment be zero?',
+        a: 'Yes — if your AGI is below 150% of the poverty guideline for your family size ($23,940 for a single person in 2026), discretionary income is zero and so is the payment. Those $0 months still count toward the 20/25-year forgiveness clock, which is why certifying income even when broke matters.',
+      },
+      {
+        q: 'Is forgiven student loan debt taxable?',
+        a: 'Federal tax exemption on forgiven student debt expired after 2025 — forgiveness under IDR after 2025 is generally taxable as income again under current law (the "tax bomb"), unless Congress extends the exemption. Several states also tax it regardless. Model a potential tax bill of 20–30% of the forgiven amount when comparing IDR to aggressive payoff.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

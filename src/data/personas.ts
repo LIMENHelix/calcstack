@@ -678,6 +678,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'gpa-calculator',
+      'student-loan-idr-calculator',
       'loan-payoff-calculator',
       'salary-to-hourly-calculator',
       'percentage-calculator',
@@ -786,6 +787,8 @@ export const PERSONAS: Persona[] = [
       'What can a deployment savings sprint become?',
     ],
     calcSlugs: [
+      'va-funding-fee-calculator',
+      'military-retirement-calculator',
       'va-loan-calculator',
       'salary-to-hourly-calculator',
       'mortgage-payment-calculator',

@@ -187,4 +187,10 @@ export const WHY_USE: Record<string, string> = {
     'People approaching 62 use it to see the real trade: a 30% haircut for eight extra years of checks, with the crossover age made explicit. Couples use it for the higher earner — delaying to 70 is really buying the survivor a bigger check.',
   'safe-withdrawal-calculator':
     'Near-retirees use it to turn a portfolio balance into an income number, and FIRE planners use it to test 40-year horizons at 3.5%. It answers the only question that matters: what can I spend without the money dying first?',
+  'va-funding-fee-calculator':
+    'Veterans use it before house-hunting: the fee tiers make 5% down worth real money on subsequent use, and the exemption check catches the disability waiver people leave on the table. Lenders embed it to pre-answer the "what is this fee?" call.',
+  'military-retirement-calculator':
+    'Service members at the 10–15 year mark use it to price the decision to stay: 20 years is a cliff worth 50% of base pay for life, COLA-adjusted. BRS members use it to see why the TSP match matters more than the smaller multiplier.',
+  'student-loan-idr-calculator':
+    'Borrowers use it before recertification to predict the payment from this year\'s AGI — and to see whether the balance even matters. Financial aid offices point students at it to show that a $0 payment still counts toward forgiveness.',
 }
