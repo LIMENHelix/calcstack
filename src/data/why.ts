@@ -301,4 +301,6 @@ export const WHY_USE: Record<string, string> = {
     'Electricians use it at the design table and again in the field when the pull plan changes — the 40% limit is the difference between a clean pull and stripped insulation. The grounds-count rule is the violation nobody sees coming; this counts them automatically.',
   'ampacity-derating-calculator':
     'Electricians in hot climates use it every summer — an attic at 122°F quietly strips a third of a conductor\'s rating. Solar installers and EV-circuit runners use it to prove the 125% continuous-load math holds after derating, which is the first thing a plan reviewer checks.',
+  'motor-circuit-calculator':
+    'Electricians and maintenance techs use it when a motor gets swapped or a compressor gets added: table FLC, 125% wire, 250% breaker, 115% disconnect — the four numbers on every motor inspection tag. The nameplate-vs-table rule is the part apprentices get wrong, and the calculator makes it impossible.',
 }

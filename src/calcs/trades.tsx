@@ -431,6 +431,126 @@ export function ConduitFillCalc() {
   )
 }
 
+/* ---------------- Motor Circuit Sizing (NEC 430) ---------------- */
+
+// NEC Table 430.250 — 3-phase induction FLC [208V, 230V, 460V, 575V]
+const FLC_3PH: [string, number[]][] = [
+  ['1/2', [2.4, 2.2, 1.1, 0.9]], ['3/4', [3.5, 3.2, 1.6, 1.3]], ['1', [4.6, 4.2, 2.1, 1.7]],
+  ['1-1/2', [6.6, 6.0, 3.0, 2.4]], ['2', [7.5, 6.8, 3.4, 2.7]], ['3', [10.6, 9.6, 4.8, 3.9]],
+  ['5', [16.7, 15.2, 7.6, 6.1]], ['7-1/2', [24.2, 22, 11, 9]], ['10', [30.8, 28, 14, 11]],
+  ['15', [46.2, 42, 21, 17]], ['20', [59.4, 54, 27, 22]], ['25', [74.8, 68, 34, 27]],
+  ['30', [88, 80, 40, 32]], ['40', [114, 104, 52, 41]], ['50', [143, 130, 65, 52]],
+  ['60', [169, 154, 77, 62]], ['75', [211, 192, 96, 77]], ['100', [273, 248, 124, 99]],
+]
+// NEC Table 430.248 — single-phase FLC [115V, 230V]
+const FLC_1PH: [string, number[]][] = [
+  ['1/6', [4.4, 2.2]], ['1/4', [5.8, 2.9]], ['1/3', [7.2, 3.6]], ['1/2', [9.8, 4.9]],
+  ['3/4', [13.8, 6.9]], ['1', [16, 8.0]], ['1-1/2', [20, 10]], ['2', [24, 12]],
+  ['3', [34, 17]], ['5', [56, 28]], ['7-1/2', [80, 40]], ['10', [100, 50]],
+]
+// NEC 240.6(A) standard OCPD sizes
+const STD_SIZES = [15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100, 110, 125, 150, 175, 200, 225, 250, 300, 350, 400]
+// 75°C copper ampacities (Table 310.16) extended to kcmil for large motors
+// Table 310.16 copper ampacities, 60°C and 75°C columns, extended to kcmil
+const WIRE_60: [string, number][] = [
+  ['14 AWG', 15], ['12 AWG', 20], ['10 AWG', 30], ['8 AWG', 40], ['6 AWG', 55], ['4 AWG', 70],
+  ['3 AWG', 85], ['2 AWG', 95], ['1 AWG', 110], ['1/0 AWG', 125], ['2/0 AWG', 145],
+  ['3/0 AWG', 165], ['4/0 AWG', 195], ['250 kcmil', 215], ['300 kcmil', 240], ['350 kcmil', 260],
+  ['400 kcmil', 280], ['500 kcmil', 320],
+]
+const WIRE_75: [string, number][] = [
+  ['14 AWG', 20], ['12 AWG', 25], ['10 AWG', 35], ['8 AWG', 50], ['6 AWG', 65], ['4 AWG', 85],
+  ['3 AWG', 100], ['2 AWG', 115], ['1 AWG', 130], ['1/0 AWG', 150], ['2/0 AWG', 175],
+  ['3/0 AWG', 200], ['4/0 AWG', 230], ['250 kcmil', 255], ['300 kcmil', 285], ['350 kcmil', 310],
+  ['400 kcmil', 335], ['500 kcmil', 380],
+]
+// Table 430.52 max OCPD % of FLC by device type
+const OCPD_PCT: Record<string, number> = { itb: 2.50, tdf: 1.75, ntd: 3.00 }
+
+export function MotorCircuitCalc() {
+  const [phase, setPhase] = useState('3')
+  const [hp, setHp] = useState('10')
+  const [volts3, setVolts3] = useState('460')
+  const [volts1, setVolts1] = useState('230')
+  const [device, setDevice] = useState('itb')
+  const [termCol, setTermCol] = useState('75')
+
+  const r = useMemo(() => {
+    let flc: number | null = null
+    let volts = volts3
+    if (phase === '3') {
+      const vi = ['208', '230', '460', '575'].indexOf(volts3)
+      const row = FLC_3PH.find(([h]) => h === hp)
+      if (row) flc = row[1][vi]
+      volts = volts3
+    } else {
+      const vi = ['115', '230'].indexOf(volts1)
+      const row = FLC_1PH.find(([h]) => h === hp)
+      if (row) flc = row[1][vi]
+      volts = volts1
+    }
+    if (flc === null) return null
+    const mca = flc * 1.25 // 430.22 conductor ampacity
+    const wireTable = termCol === '60' ? WIRE_60 : WIRE_75
+    const wire = wireTable.find(([, a]) => a >= mca)
+    const ocpdCalc = flc * OCPD_PCT[device]
+    // 430.52(C)(1) Ex.1: may round UP to next standard size
+    const ocpd = STD_SIZES.find((s) => s >= ocpdCalc) ?? null
+    const disconnect = flc * 1.15 // 430.110
+    const discStd = STD_SIZES.find((s) => s >= disconnect) ?? null
+    return { flc, mca, wire, ocpdCalc, ocpd, disconnect, discStd, volts }
+  }, [phase, hp, volts3, volts1, device, termCol])
+
+  const hpOptions = phase === '3' ? FLC_3PH.map(([h]) => h) : FLC_1PH.map(([h]) => h)
+  const hpSafe = hpOptions.includes(hp) ? hp : hpOptions[0]
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Select label="Phase" value={phase} onChange={(v) => { setPhase(v); if (!(v === '3' ? FLC_3PH : FLC_1PH).some(([h]) => h === hp)) setHp(v === '3' ? '10' : '5') }} options={[
+          ['3', 'Three-phase (Table 430.250)'], ['1', 'Single-phase (Table 430.248)'],
+        ]} />
+        <Select label="Motor size" value={hpSafe} onChange={setHp} options={hpOptions.map((h) => [h, `${h} HP`])} />
+        {phase === '3'
+          ? <Select label="Voltage" value={volts3} onChange={setVolts3} options={[['208', '208 V'], ['230', '230 V'], ['460', '460 V'], ['575', '575 V']]} />
+          : <Select label="Voltage" value={volts1} onChange={setVolts1} options={[['115', '115 V'], ['230', '230 V']]} />}
+        <Select label="Branch protection device" value={device} onChange={setDevice} options={[
+          ['itb', 'Inverse-time breaker (250%)'], ['tdf', 'Dual-element / time-delay fuse (175%)'], ['ntd', 'Non-time-delay fuse (300%)'],
+        ]} />
+        <Select label="Termination rating (110.14)" value={termCol} onChange={setTermCol} options={[
+          ['75', '75°C — equipment marked 75°C'], ['60', '60°C — unmarked gear ≤100A, NM cable'],
+        ]} />
+      </div>
+      {r && (
+        <>
+          <div className="grid gap-3 sm:grid-cols-4">
+            <Result big label="Table FLC (not nameplate!)" value={`${num(r.flc, 1)} A`} />
+            <Result label="Min conductor ampacity (125%)" value={`${num(r.mca, 1)} A`} />
+            <Result label={`Min copper wire (${termCol}°C column)`} value={r.wire ? r.wire[0] : '>500 kcmil'} />
+            <Result label="Max OCPD" value={r.ocpd ? `${r.ocpd} A` : '>400 A'} />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <Result label="OCPD calculated (430.52)" value={`${num(r.ocpdCalc, 1)} A → round up`} />
+            <Result label="Min disconnect (430.110, 115%)" value={r.discStd ? `${r.discStd} A switch` : `${num(r.disconnect, 1)} A`} />
+            <Result label="Overload relay basis" value="Nameplate FLA ×115–125%" />
+          </div>
+        </>
+      )}
+      <p className="text-sm text-muted-foreground">
+        NEC 430.6 requires sizing from the TABLE full-load current (430.248/430.250), not the motor
+        nameplate — so the circuit survives a future motor swap. Conductors: 125% of table FLC
+        (430.22). Termination rating decides which ampacity column the wire comes from — per
+        110.14(C), circuits ≤100A use the 60°C column unless the equipment is marked 75°C, which is
+        why a 5 HP single-phase motor lands on 8 AWG in most panels. The breaker is intentionally
+        oversized (250% inverse-time) to ride through 6–8× starting inrush; running overload
+        protection comes from the separate overload relay, set on nameplate amps (430.32). If the
+        calculated OCPD isn&apos;t a standard size, rounding UP is permitted (430.52(C)(1)
+        Exception 1). HVAC compressors follow Article 440 instead — use the equipment nameplate MCA/MOP.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
 
 // NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
@@ -552,4 +672,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'box-fill-calculator': BoxFillCalc,
   'conduit-fill-calculator': ConduitFillCalc,
   'ampacity-derating-calculator': AmpacityDerateCalc,
+  'motor-circuit-calculator': MotorCircuitCalc,
 }

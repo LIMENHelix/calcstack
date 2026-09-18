@@ -4519,6 +4519,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'motor-circuit-calculator',
+    title: 'Motor Circuit Calculator — NEC 430 FLC, Wire & Breaker Sizing',
+    shortTitle: 'Motor Circuit Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'Free NEC motor circuit calculator. Look up Table 430.248/430.250 full-load current by HP and voltage, then get 125% conductor size, max breaker per 430.52, and disconnect rating.',
+    tagline: 'Size it from the table, not the nameplate.',
+    intro:
+      'Motor circuits break the normal wiring intuition: the breaker is deliberately oversized to survive starting inrush, and the wire is sized from NEC table current — not the motor nameplate — so the circuit stays legal when the motor is eventually swapped. This calculator runs the full Article 430 workflow: table FLC by horsepower and voltage, minimum conductor ampacity at 125%, minimum wire size on the correct termination column, maximum breaker or fuse per Table 430.52, and the 115% disconnect rating.',
+    howItWorks: [
+      'Pick phase, motor horsepower, and voltage — the FLC comes from NEC Table 430.248 (single-phase) or 430.250 (three-phase).',
+      'Choose the branch protection device: inverse-time breaker (250% FLC), dual-element fuse (175%), or non-time-delay fuse (300%).',
+      'Set the termination rating — 60°C for unmarked gear under 100A per 110.14(C), 75°C for marked equipment.',
+      'Read minimum wire size, max OCPD (rounded up to standard size per the 430.52 exception), and minimum disconnect rating.',
+    ],
+    faq: [
+      {
+        q: 'Why is the motor breaker allowed to be 250% of the running current?',
+        a: 'Starting inrush. Motors draw 6–8× their running current for the moments it takes the rotor to spin up, so a breaker sized at the normal 125% rule would trip on every start. The oversized breaker only protects against short circuits and ground faults — the separate overload relay, set at 115–125% of nameplate amps, protects the motor while it runs.',
+      },
+      {
+        q: 'Why can\'t I just use the nameplate amps?',
+        a: 'NEC 430.6 requires the table values for conductor and breaker sizing precisely because nameplates vary — a high-efficiency replacement motor draws less than a cheap one, and the circuit must stay safe across swaps. The nameplate is reserved for the overload relay setting (430.32).',
+      },
+      {
+        q: 'Why does the termination rating change my wire size?',
+        a: 'Per 110.14(C), circuits rated 100A or less use the 60°C ampacity column unless the equipment is marked for 75°C. A 5 HP 230V single-phase motor needs 35A conductors — that is 8 AWG on the 60°C column (10 AWG tops out at 30A) but 10 AWG exactly meets it on the 75°C column. When in doubt, use 60°C.',
+      },
+      {
+        q: 'Does this work for air conditioner compressors?',
+        a: 'No — hermetic refrigerant motor-compressors follow NEC Article 440, not 430. Use the equipment nameplate MCA and MOP values, which already include the 125% factor. Applying Article 430 multipliers to HVAC equipment is a classic and dangerous mistake.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
