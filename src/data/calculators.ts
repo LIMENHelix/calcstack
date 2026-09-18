@@ -4760,6 +4760,41 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'water-heater-size-calculator',
+    title: 'Water Heater Size Calculator — Tank FHR vs Tankless BTU',
+    shortTitle: 'Water Heater Sizing',
+    category: 'Trades & Engineering',
+    description:
+      'Free water heater sizing calculator. Total your peak-hour hot water use, compare first-hour ratings across tank sizes for gas and electric, and size a tankless unit by GPM and temperature rise.',
+    tagline: 'Cold shower math, before it happens to you.',
+    intro:
+      'Water heaters fail households at 7 AM, not on the showroom floor — the question is whether the first-hour rating beats your family\'s peak hour. This calculator totals your peak demand from actual uses, computes recovery rates from burner input and temperature rise, picks the smallest tank that covers the peak for gas or electric, and separately sizes a tankless unit from simultaneous flow and incoming water temperature.',
+    howItWorks: [
+      'Count what happens in your busiest hour — showers, baths, dishwasher, washer, sink uses.',
+      'Set incoming water temperature (colder in winter, colder up north) and the tank setpoint.',
+      'Pick the heater input — gas BTU or electric kW — and read recovery rate plus the smallest adequate tank.',
+      'For tankless, enter simultaneous GPM and read the required input in BTU/h.',
+    ],
+    faq: [
+      {
+        q: 'Why does electric need a bigger tank than gas?',
+        a: 'Recovery speed. A 40,000 BTU gas burner pours back about 55 gallons per hour at a 70°F rise; a standard 4.5 kW electric element manages about 26. Since first-hour rating is roughly 70% of the tank plus one hour of recovery, the gas unit\'s burner does the work of 15 extra gallons of storage.',
+      },
+      {
+        q: 'How does incoming water temperature change the answer?',
+        a: 'It is the hidden variable in every sizing chart. Heating 40°F groundwater to 120°F is an 80°F rise; the same tankless unit that feeds two showers in Florida feeds barely one in a Minnesota January. Re-run the calculator with your winter inlet temperature — that is the number to size to.',
+      },
+      {
+        q: 'Is a bigger tank always better?',
+        a: 'Up to your actual peak — past it, you are paying standby losses to keep water hot nobody uses. A household peaking at 42 gallons gains nothing from an 80-gallon tank over a 50, except a higher gas bill and a shorter floor life from the bigger footprint.',
+      },
+      {
+        q: 'What about heat pump water heaters?',
+        a: 'They recover slower than gas but faster than standard electric in efficient modes, and most carry hybrid elements for high-demand hours. Size them like electric with the hybrid element active, then enjoy using about a third of the energy the rest of the year.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

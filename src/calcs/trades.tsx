@@ -1058,6 +1058,77 @@ export function VentSizeCalc() {
   )
 }
 
+/* ---------------- Water Heater Sizing (FHR + recovery + tankless) ---------------- */
+
+// typical hot-water draw per use in the peak hour (gallons of ~105-120°F water)
+const WH_USES: [string, number][] = [
+  ['Shower (10 min)', 12], ['Bath', 15], ['Dishwasher cycle', 6],
+  ['Clothes washer (warm)', 7], ['Kitchen sink use', 3], ['Hand/face sink', 2],
+]
+const TANK_SIZES = [30, 40, 50, 65, 80]
+
+export function WaterHeaterCalc() {
+  const [uses, setUses] = useState<number[]>([2, 0, 1, 1, 1, 1])
+  const [inlet, setInlet] = useNumber(50)
+  const [setpoint, setSetpoint] = useNumber(120)
+  const [fuel, setFuel] = useState('gas40')
+  const [simulGpm, setSimulGpm] = useNumber(4)
+
+  const r = useMemo(() => {
+    const peakGal = WH_USES.reduce((a, [, g], i) => a + g * (uses[i] || 0), 0)
+    const dT = Math.max(1, setpoint - inlet)
+    // effective hourly input (BTU/h): gas 40k/50k at 80% eff, electric 4.5/5.5 kW at ~98%
+    const input = fuel === 'gas40' ? 40000 * 0.8 : fuel === 'gas50' ? 50000 * 0.8 : fuel === 'elec45' ? 4.5 * 3412 : 5.5 * 3412
+    const recoveryGph = input / (8.34 * dT)
+    // first-hour rating ≈ 70% of tank + 1-hour recovery
+    const fhr = TANK_SIZES.map((t) => [t, t * 0.7 + recoveryGph] as [number, number])
+    const pick = fhr.find(([, f]) => f >= peakGal) ?? null
+    // tankless: required input for simultaneous GPM at this rise
+    const tanklessBtu = simulGpm * 500 * dT
+    return { peakGal, dT, recoveryGph, fhr, pick, tanklessBtu }
+  }, [uses, inlet, setpoint, fuel, simulGpm])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        {WH_USES.map(([label, g], i) => (
+          <div key={label} className="space-y-1.5">
+            <p className="text-sm font-medium">{label} <span className="text-muted-foreground">(~{g} gal)</span></p>
+            <input
+              type="number" min={0} value={uses[i] || ''} placeholder="0"
+              onChange={(e) => setUses((p) => p.map((c, j) => (j === i ? parseInt(e.target.value) || 0 : c)))}
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+            />
+          </div>
+        ))}
+        <Field label="Incoming water temp" value={inlet} onChange={setInlet} suffix="°F" />
+        <Field label="Setpoint" value={setpoint} onChange={setSetpoint} suffix="°F" />
+        <Select label="Heater input" value={fuel} onChange={setFuel} options={[
+          ['gas40', 'Gas 40,000 BTU/h'], ['gas50', 'Gas 50,000 BTU/h'], ['elec45', 'Electric 4.5 kW'], ['elec55', 'Electric 5.5 kW'],
+        ]} />
+        <Field label="Simultaneous flow (tankless)" value={simulGpm} onChange={setSimulGpm} suffix="GPM" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Peak-hour demand" value={`${num(r.peakGal, 0)} gal`} />
+        <Result label="Recovery rate" value={`${num(r.recoveryGph, 0)} GPH`} />
+        <Result label="Recommended tank" value={r.pick ? `${r.pick[0]} gal (FHR ${num(r.pick[1], 0)})` : '80+ gal / go tankless'} />
+        <Result label="Tankless input needed" value={`${num(r.tanklessBtu / 1000, 0)}k BTU/h`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Tank sizing is first-hour rating vs peak-hour demand: FHR ≈ 70% of tank volume plus one
+        hour of recovery, and recovery = heater input ÷ (8.34 × temperature rise) — at a 70°F rise,
+        a 40k BTU gas burner recovers ~55 GPH while a 4.5 kW electric element manages ~26, which
+        is why electric tanks run bigger for the same family. A 2-shower household with a
+        dishwasher, washer, and sinks peaks near 55 gallons: a 40-gal gas tank (FHR ~83) covers
+        it; a 4.5 kW electric needs 50–65 gallons. Tankless skips storage entirely but must heat
+        the flow in real time: GPM × 500 × rise — two simultaneous showers at a 70°F rise demand
+        ~140k BTU/h, and cold-climate inlets are what turn a 199k unit into a one-shower device.
+        Planning estimates; nameplate FHR and manufacturer sizing govern.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Ampacity Derating (NEC 310.15/310.16) ---------------- */
 
 // NEC Table 310.16 — copper ampacities [60°C, 75°C, 90°C]
@@ -1186,4 +1257,5 @@ export const TRADES_CALC_COMPONENTS: Record<string, (props: import('./index').Ca
   'superheat-subcooling-calculator': SuperheatCalc,
   'drain-size-calculator': DrainSizeCalc,
   'vent-size-calculator': VentSizeCalc,
+  'water-heater-size-calculator': WaterHeaterCalc,
 }
