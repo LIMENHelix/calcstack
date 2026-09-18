@@ -3706,6 +3706,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'net-worth-calculator',
+    title: 'Net Worth Calculator — Assets Minus Debts, Benchmarked Against the Fed Data',
+    shortTitle: 'Net Worth',
+    category: 'Savings & Investing',
+    description:
+      'Free net worth calculator. Add assets and debts, see your net worth, debt-to-asset ratio, and how you compare to the Federal Reserve household median.',
+    tagline: 'One number that summarizes your entire financial life.',
+    intro:
+      'Income is a flow; net worth is the scoreboard. This calculator totals what you own (cash, investments, retirement, home equity, property) and subtracts what you owe (mortgage, student, car, cards), then benchmarks the result against the Federal Reserve\'s Survey of Consumer Finances so the number has context, not just digits.',
+    howItWorks: [
+      'Enter current market values for assets — what things would sell for today, not what you paid.',
+      'Enter every liability balance: mortgage, student loans, car loans, credit cards, other debts.',
+      'Read net worth, the debt-to-asset ratio, and where you stand versus the US household median.',
+    ],
+    faq: [
+      {
+        q: 'What is the median US household net worth?',
+        a: '$192,900, per the Federal Reserve\'s 2022 Survey of Consumer Finances (the triennial gold standard, published October 2023). The mean is $1,063,700 — the enormous gap between mean and median is wealth concentration at the top, which is why the median is the honest benchmark.',
+      },
+      {
+        q: 'Should I count my house in net worth?',
+        a: 'Yes, but honestly: market value minus mortgage balance is your home equity, and that is what counts. This calculator also shows what share of your assets are illiquid — a high net worth that is 90% house cannot pay for an emergency.',
+      },
+      {
+        q: 'What is a good debt-to-asset ratio?',
+        a: 'Under 40% is comfortable; over 60% means debt is compounding against you faster than assets compound for you. The ratio matters more than the absolute number — a $50,000 net worth with no debt beats a $200,000 one that is 80% leveraged.',
+      },
+    ],
+  },
+  {
+    slug: 'cost-of-living-comparison-calculator',
+    title: 'Cost of Living Comparison Calculator — Salary Equivalence Between States (BEA Data)',
+    shortTitle: 'Cost of Living Compare',
+    category: 'Everyday Money',
+    description:
+      'Free cost of living comparison calculator using official BEA Regional Price Parities. See the salary you would need in another state to keep the same buying power.',
+    tagline: 'A $85,000 offer in California is not the same $85,000.',
+    intro:
+      'Comparing salaries across states with nominal dollars is how people accidentally take pay cuts. This calculator uses the Bureau of Economic Analysis Regional Price Parities — the official measure of state price levels — to compute the salary that preserves your exact purchasing power after a move.',
+    howItWorks: [
+      'Enter your current salary and pick the state you are leaving and the state you are considering.',
+      'Read the equivalent salary: the number that buys the same life in the destination state.',
+      'Optionally override with a metro-level index if you have one — state averages hide big city gaps.',
+    ],
+    faq: [
+      {
+        q: 'Where does the data come from?',
+        a: 'The Bureau of Economic Analysis Regional Price Parities, all items, 2023 (released December 12, 2024) — the same dataset the Federal Reserve and researchers use to compute real income by state. California is the most expensive state at 112.6; Arkansas the least at 86.5, with the national average at 100.',
+      },
+      {
+        q: 'Is the equivalent salary really what I should ask for?',
+        a: 'It is the floor for a lateral move in living standards, not the ask. Ask for more — but if an offer comes in below the equivalent, you are accepting a real-terms pay cut no matter how big the nominal number looks.',
+      },
+      {
+        q: 'Why add taxes separately?',
+        a: 'RPP measures prices, not taxes — and a move from Texas to California swaps a 0% income tax for one of the highest. Run both states through the paycheck calculator and combine the two answers for the full picture.',
+      },
+    ],
+  },
+  {
+    slug: 'raise-worth-calculator',
+    title: 'Raise Calculator — What a Raise Is Worth After Taxes (2026 Brackets)',
+    shortTitle: 'Raise Worth After Tax',
+    category: 'Freelance & Career',
+    description:
+      'Free raise calculator. See what a percentage raise is actually worth after federal, FICA, and state taxes — per year, per month, and per paycheck, with 2026 brackets.',
+    tagline: 'The raise is 5%. What lands in your check is not.',
+    intro:
+      'A 5% raise never arrives as 5% more take-home — federal brackets, Social Security, Medicare, and state tax each take their cut first. This calculator applies 2026 tax brackets to just the new dollars and shows the after-tax raise per paycheck, plus your true marginal rate on new income.',
+    howItWorks: [
+      'Enter your current salary and the raise percentage (or back into it from a new offer).',
+      'Set filing status and a flat state estimate.',
+      'Read the after-tax raise per year, month, and biweekly paycheck — and the keep rate.',
+    ],
+    faq: [
+      {
+        q: 'Will a raise push me into a higher tax bracket and cost me money?',
+        a: 'No — that is the most persistent myth in personal finance. Brackets are marginal: only the dollars above a threshold pay the higher rate, never your whole salary. A raise always increases your take-home. The table shows your exact marginal rate on the new dollars.',
+      },
+      {
+        q: 'How much of a raise do I typically keep?',
+        a: 'For most single filers in the 12% or 22% federal brackets, roughly 70–80 cents per raise dollar after federal income tax, Social Security (6.2%), Medicare (1.45%), and a typical state rate. At default settings — $62,000 salary, 5% raise — it is $2,336 of the $3,100, a 75.4% keep rate.',
+      },
+      {
+        q: 'Should I negotiate gross or after-tax?',
+        a: 'Negotiate gross, but think after-tax. A $5,000 bump is ~$140 per biweekly check after taxes for most people — knowing that number keeps negotiations honest about what the raise actually buys.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [

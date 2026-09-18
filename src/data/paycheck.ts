@@ -85,7 +85,7 @@ export const PAYCHECK_STATES: StateRule[] = [
   { slug: 'wyoming', name: 'Wyoming', kind: 'none', ded: 0, note: 'Wyoming has no state income tax.' },
 ]
 
-function bracketTax(brackets: [number, number][], taxable: number): number {
+export function bracketTax(brackets: [number, number][], taxable: number): number {
   let tax = 0
   for (let i = 0; i < brackets.length; i++) {
     const [start, rate] = brackets[i]
