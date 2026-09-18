@@ -1268,6 +1268,44 @@ export const PERSONAS: Persona[] = [
     ],
   },
   {
+    slug: 'roofers',
+    job: 'Roofers & Roofing Contractors',
+    title: 'Calculators for Roofers — Squares, Gutters, Rafters & Bid Math',
+    description: 'Free tools for roofers: roof area in squares from footprint and pitch, gutter sizing from drainage area, rafter lengths for repairs, and the bid math — markup vs margin and hourly rate floors.',
+    hero: 'A roofing bid lives or dies on the square count and the pitch factor — measure the footprint, apply the slope multiplier, and the shingles, underlayment, and labor all follow. These calculators do the geometry instantly so the number you hand the homeowner is the number the supplier sees.',
+    questions: [
+      'How many squares is this roof really?',
+      'What gutter size does this drainage area need?',
+      'How long are the rafters on this repair?',
+    ],
+    calcSlugs: [
+      'roofing-calculator',
+      'gutter-size-calculator',
+      'rafter-length-calculator',
+      'stair-calculator',
+      'bid-sheet-calculator',
+      'markup-margin-calculator',
+      'freelance-rate-calculator',
+      'break-even-calculator',
+      'salary-to-hourly-calculator',
+      'paycheck-calculator',
+    ],
+    faq: [
+      {
+        q: 'How do I convert a roof footprint to squares?',
+        a: 'Footprint area × the pitch factor: 1.054 for 4/12, 1.118 for 6/12, 1.414 for 12/12 — the same √(1 + (pitch/12)²) multiplier as rafter math. A 2,000 sq ft footprint at 6/12 is about 2,236 sq ft of roof — 22.4 squares, plus 10% waste for hips and valleys. The roofing calculator applies the factor and waste so the order is right.',
+      },
+      {
+        q: 'What size gutters does a roof need?',
+        a: 'It depends on the drainage area and your local rainfall intensity: 5-inch K-style handles most homes up to roughly 5,500 sq ft of drainage area; steep roofs and heavy-rain regions push you to 6-inch. The gutter calculator sizes it from the roof\'s actual drainage area, not a guess.',
+      },
+      {
+        q: 'Why do roofing bids fail on margin?',
+        a: 'Because markup and margin get swapped: a 40% markup on a $7,000 job is a $9,800 price — only 29% margin after tear-off disposal, underlayment, and the dump fees people forget to line-item. The bid sheet calculator forces every cost into the open before the price is set.',
+      },
+    ],
+  },
+  {
     slug: 'pool-service-technicians',
     job: 'Pool Service Technicians',
     title: 'Calculators for Pool Service Techs — Volume, Dosing, Pump & Route Math',
