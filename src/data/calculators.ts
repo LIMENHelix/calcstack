@@ -727,6 +727,68 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'sod-calculator',
+    title: 'Sod Calculator — Rolls, Pallets & Cost With Waste',
+    shortTitle: 'Sod Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free sod calculator. Enter lawn dimensions to get exact square footage to order with the right waste factor, 10 sq ft roll counts, pallet counts (400/450/500 sq ft), and a material cost estimate.',
+    tagline: 'Order the right pallet count the first time — sod doesn\'t wait.',
+    intro:
+      'Sod is sold by the roll and the pallet, priced by the square foot, and dead within a day of delivery if it sits. That makes the order quantity the whole job: too little and you pay a second delivery for scraps, too much and it cooks on the pallet. This calculator adds the right waste factor for your yard shape and converts to rolls and pallets in your region\'s standard sizes.',
+    howItWorks: [
+      'Measure lawn length × width in feet (break odd shapes into rectangles and add them).',
+      'Pick a waste factor: 5% for clean rectangles, 10% typical, 15% for curves and first installs.',
+      'Choose your pallet size — 400 sq ft (warm-season slabs), 450 (common), or 500 (cool-season rolls).',
+      'Read the square feet to order, roll count, pallet count, and material cost.',
+    ],
+    faq: [
+      {
+        q: 'How many pallets do I need for 2,000 square feet?',
+        a: 'With the typical 10% waste factor you order 2,200 sq ft. At 450 sq ft per pallet that is 4.9 pallets — round up to 5. At a 500 sq ft pallet it is 4.4, so 5 as well (or 4 full pallets plus a few rolls if the farm splits).',
+      },
+      {
+        q: 'How fast do I have to lay sod after delivery?',
+        a: 'Within 12–24 hours in warm weather — sod stacked on a pallet heats from the inside and dies. In cool weather you may get 48 hours. Schedule delivery for the morning you install, and water each section within 30 minutes of laying it.',
+      },
+      {
+        q: 'What does sod cost?',
+        a: 'Material typically runs $0.35–0.80 per square foot depending on grass variety — Bermuda and Fescue at the low end, Zoysia and St. Augustine at the high end. Delivery and professional installation typically add another 20–40%.',
+      },
+    ],
+  },
+  {
+    slug: 'irrigation-zone-calculator',
+    title: 'Irrigation Zone Calculator — GPM Capacity & Precipitation Rate',
+    shortTitle: 'Irrigation Zone Check',
+    category: 'Home & Yard',
+    description:
+      'Free irrigation zone calculator. Bucket-test your supply GPM, total up sprinkler heads, and check zone capacity, precipitation rate (96.25 formula), soil intake, and runoff risk.',
+    tagline: 'Find out if the zone fits your water supply before you trench.',
+    intro:
+      'Every irrigation zone is a budget: your supply delivers so many GPM, and every head on the zone spends it. Overdraw and the last heads on the line barely spit. This calculator runs the two checks pros do — capacity (bucket-test supply × 80% vs zone demand) and precipitation rate against your soil\'s intake rate — so you know the zone works before the pipe goes in.',
+    howItWorks: [
+      'Bucket test: time how long a 5-gallon bucket takes to fill at the hose bib, everything else off.',
+      'Enter the heads planned for the zone by type — sprays, rotors, MP rotators, bubblers.',
+      'Enter the zone\'s square footage and pick your soil type.',
+      'Read the capacity verdict, precipitation rate, runoff risk, and runtime for a half-inch of water.',
+    ],
+    faq: [
+      {
+        q: 'Why design to only 80% of my measured GPM?',
+        a: 'Because the bucket test is a best case. Static pressure sags when neighbors water, municipal pressure varies through the day, and valves and pipe lose capacity as they age. Designing to 100% of measured flow is how you get a zone that works in June and fails in August.',
+      },
+      {
+        q: 'Why can\'t sprays and rotors share a zone?',
+        a: 'Spray heads put down roughly 1.5–2 inches per hour while rotors put down about 0.5. On one zone with one runtime, the spray areas get 3–4× the water of the rotor areas — drowned spots next to dry spots. Separate zones, separate runtimes, matched precipitation within each.',
+      },
+      {
+        q: 'What if my precipitation rate exceeds my soil intake rate?',
+        a: 'The water runs off instead of soaking in — wasted water and dry roots. Fix it with cycle-and-soak scheduling: split the runtime into two or three short cycles an hour apart, or switch to lower-precipitation nozzles like MP rotators.',
+      },
+    ],
+  },
+  {
     slug: 'mulch-calculator',
     title: 'Mulch Calculator — Cubic Yards & Bags From Area and Depth',
     shortTitle: 'Mulch Calculator',

@@ -51,6 +51,10 @@ export const WHY_USE: Record<string, string> = {
     'Runners use this mid-training-block to convert treadmill speed to pace, to see what a 10K time predicts for a marathon, and to set honest race-day targets. Coaches use it to write workouts — "4:55/km" means nothing until you see it per mile or as a finish time.',
   'mulch-calculator':
     'Homeowners use this to avoid the second trip to the garden center; landscapers use it to quote jobs on-site in front of the client. The bulk-yards-to-bags conversion is the money question: above two yards, ordering wrong costs real cash.',
+  'sod-calculator':
+    'Landscapers use it to quote sod installs on the spot — area, waste factor, pallet count, done in front of the client. Homeowners use it because sod dies on the pallet in a day: ordering short means a second delivery of scraps, ordering long means cooked grass you paid for.',
+  'irrigation-zone-calculator':
+    'Irrigation techs use it to check a zone against the property\'s real supply before trenching — bucket test in, capacity verdict out. Homeowners adding heads to an existing zone use it to learn why the last head on the line barely spits: the zone was already overdrawn.',
   'gravel-calculator':
     'Driveway and path projects live here. People use this to order once and order right — gravel is sold by the ton but planned by the yard, and the conversion is exactly where DIY estimates go wrong. Landscapers use it to sanity-check supplier quotes.',
   'concrete-calculator':

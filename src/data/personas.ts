@@ -1006,6 +1006,8 @@ export const PERSONAS: Persona[] = [
       'lawn-revenue-planner',
       'snow-removal-bid-calculator',
       'mulch-calculator',
+      'sod-calculator',
+      'irrigation-zone-calculator',
       'gravel-calculator',
       'concrete-calculator',
       'break-even-calculator',

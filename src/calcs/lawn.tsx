@@ -144,8 +144,151 @@ export function SnowBidCalc() {
   )
 }
 
+/* ---------------- Sod Order ---------------- */
+
+export function SodCalc() {
+  const [length, setLength] = useNumber(40)
+  const [width, setWidth] = useNumber(50)
+  const [waste, setWaste] = useState('10')
+  const [pallet, setPallet] = useState('450')
+  const [price, setPrice] = useNumber(0.5)
+
+  const r = useMemo(() => {
+    const area = length * width
+    const order = area * (1 + parseFloat(waste) / 100)
+    const rolls = Math.ceil(order / 10) // standard roll = 2 ft × 5 ft = 10 sq ft
+    const pallets = Math.ceil(order / parseFloat(pallet))
+    const cost = order * price
+    return { area, order, rolls, pallets, cost }
+  }, [length, width, waste, pallet, price])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Lawn length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Lawn width" value={width} onChange={setWidth} suffix="ft" />
+        <div className="space-y-1.5">
+          <p className="text-sm font-medium">Waste factor</p>
+          <select className={inputCls} value={waste} onChange={(e) => setWaste(e.target.value)}>
+            <option value="5">5% — rectangular, few obstacles</option>
+            <option value="10">10% — typical yard</option>
+            <option value="15">15% — curves, beds, first install</option>
+          </select>
+        </div>
+        <div className="space-y-1.5">
+          <p className="text-sm font-medium">Pallet size</p>
+          <select className={inputCls} value={pallet} onChange={(e) => setPallet(e.target.value)}>
+            <option value="400">400 sq ft (warm-season slabs)</option>
+            <option value="450">450 sq ft (common standard)</option>
+            <option value="500">500 sq ft (cool-season rolls)</option>
+          </select>
+        </div>
+        <Field label="Sod price" value={price} onChange={setPrice} prefix="$" suffix="/sq ft" step="0.05" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Net area" value={`${num(r.area, 0)} sq ft`} />
+        <Result big label="Order quantity" value={`${num(r.order, 0)} sq ft`} />
+        <Result label="10 sq ft rolls" value={String(r.rolls)} />
+        <Result label="Pallets to order" value={String(r.pallets)} />
+      </div>
+      <Result label="Material estimate" value={usd(r.cost, 0)} />
+      <p className="text-sm text-muted-foreground">
+        A standard roll is 2 ft × 5 ft = 10 sq ft; pallets run 400–500 sq ft depending on grass and
+        region (warm-season slabs trend 400, cool-season rolls 500) — confirm the farm's number before
+        ordering, because it changes the count. Sod is perishable: it heats up and dies on the pallet
+        within 12–24 hours in warm weather, so schedule delivery for the morning you install and water
+        each section within 30 minutes of laying it. Typical material runs $0.35–0.80 per sq ft;
+        delivery and install are extra.
+      </p>
+    </CardContent></Card>
+  )
+}
+
+/* ---------------- Irrigation Zone Check ---------------- */
+
+const HEAD_TYPES: [string, number][] = [
+  ['Pop-up spray (~1.5 GPM)', 1.5],
+  ['Rotor (~3.0 GPM)', 3.0],
+  ['MP rotator (~1.0 GPM)', 1.0],
+  ['Bubbler (~2.0 GPM)', 2.0],
+]
+const SOIL_INTAKE: [string, number][] = [
+  ['Sandy (~1.5 in/hr)', 1.5],
+  ['Loam (~0.75 in/hr)', 0.75],
+  ['Clay (~0.3 in/hr)', 0.3],
+]
+
+export function IrrigationZoneCalc() {
+  const [bucketGal, setBucketGal] = useNumber(5)
+  const [bucketSec, setBucketSec] = useNumber(20)
+  const [heads, setHeads] = useState<number[]>([6, 2, 0, 0])
+  const [area, setArea] = useNumber(1500)
+  const [soil, setSoil] = useState('0.75')
+
+  const r = useMemo(() => {
+    const measured = bucketSec > 0 ? (60 * bucketGal) / bucketSec : 0
+    const design = measured * 0.8 // never design to 100% of measured flow — pressure swings, future demand
+    const demand = HEAD_TYPES.reduce((a, [, g], i) => a + g * (heads[i] || 0), 0)
+    const fits = demand <= design
+    const margin = design - demand
+    const pr = area > 0 ? (96.25 * demand) / area : 0
+    const intake = parseFloat(soil)
+    const runoff = pr > intake
+    return { measured, design, demand, fits, margin, pr, intake, runoff }
+  }, [bucketGal, bucketSec, heads, area, soil])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Bucket test — gallons caught" value={bucketGal} onChange={setBucketGal} suffix="gal" />
+        <Field label="Bucket test — seconds to fill" value={bucketSec} onChange={setBucketSec} suffix="s" />
+        <Field label="Zone area watered" value={area} onChange={setArea} suffix="sq ft" />
+        {HEAD_TYPES.map(([label], i) => (
+          <div key={label} className="space-y-1.5">
+            <p className="text-sm font-medium">{label}</p>
+            <input
+              type="number" min={0} value={heads[i] || ''} placeholder="0"
+              onChange={(e) => setHeads((p) => p.map((c, j) => (j === i ? parseInt(e.target.value) || 0 : c)))}
+              className={inputCls}
+            />
+          </div>
+        ))}
+        <div className="space-y-1.5">
+          <p className="text-sm font-medium">Soil type</p>
+          <select className={inputCls} value={soil} onChange={(e) => setSoil(e.target.value)}>
+            {SOIL_INTAKE.map(([l, v]) => <option key={l} value={v}>{l}</option>)}
+          </select>
+        </div>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Measured supply" value={`${num(r.measured, 1)} GPM`} />
+        <Result label="Design capacity (80%)" value={`${num(r.design, 1)} GPM`} />
+        <Result big label="Zone demand" value={`${num(r.demand, 1)} GPM`} />
+        <Result label="Verdict" value={r.fits ? `FITS (${num(r.margin, 1)} GPM spare)` : `TOO BIG (${num(-r.margin, 1)} GPM over)`} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Precipitation rate" value={`${num(r.pr, 2)} in/hr`} />
+        <Result label="Soil intake (typical)" value={`${num(r.intake, 2)} in/hr`} />
+        <Result label="Runoff risk" value={r.runoff ? 'HIGH — cycle & soak' : 'Low'} />
+        <Result label="Runtime for 0.5 inch" value={r.pr > 0 ? `${num(0.5 / r.pr * 60, 0)} min` : '—'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Supply is a bucket test: GPM = 60 × gallons ÷ seconds, measured at the hose bib with
+        everything else off. Design to 80% of that — pressure sags when the neighborhood waters, and
+        valves lose flow over time. Precipitation rate is the industry formula PR = 96.25 × zone GPM
+        ÷ zone sq ft (the constant converts gallons to inches over square feet per hour); sprays run
+        ~1.5–2 in/hr, rotors ~0.5, which is why they never share a zone. If PR beats your soil's
+        intake rate, split runtime into cycle-and-soak repeats or the water sheets off instead of
+        soaking in. Head GPMs are typical defaults — nozzle charts from the manufacturer govern.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const LAWN_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'lawn-care-pricing-calculator': LawnPricingCalc,
   'lawn-revenue-planner': LawnRevenueCalc,
   'snow-removal-bid-calculator': SnowBidCalc,
+  'sod-calculator': SodCalc,
+  'irrigation-zone-calculator': IrrigationZoneCalc,
 }
