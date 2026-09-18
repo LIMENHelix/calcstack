@@ -928,6 +928,75 @@ export function LadderCalc() {
   )
 }
 
+/* ---------------- Ramp Slope (ADA §405) ---------------- */
+
+const RAMP_SLOPES: [string, number][] = [
+  ['1:12 — ADA maximum (new construction)', 12],
+  ['1:16 — comfortable (elderly, manual chairs)', 16],
+  ['1:20 — gentlest (barely a ramp by ADA)', 20],
+  ['1:10 — existing sites only, rise ≤ 6 in', 10],
+  ['1:8 — existing/IRC residential, rise ≤ 3 in (ADA)', 8],
+]
+
+export function RampCalc() {
+  const [rise, setRise] = useNumber(24)
+  const [slope, setSlope] = useState('12')
+  const [landingFt, setLandingFt] = useNumber(5)
+
+  const r = useMemo(() => {
+    const ratio = parseFloat(slope)
+    const runIn = rise * ratio
+    const surfIn = Math.sqrt(rise * rise + runIn * runIn)
+    const angle = Math.atan(1 / ratio) * 180 / Math.PI
+    const grade = 100 / ratio
+    // ADA §405.6: max 30 in rise per run, intermediate 60-in landings between runs
+    const runs = Math.ceil(rise / 30)
+    const landings = runs - 1
+    const footprintFt = runIn / 12 + landings * landingFt
+    const handrails = rise > 6 || runIn > 72
+    // exception legality under ADA
+    const slopeNote =
+      ratio <= 8 && rise > 3 ? '1:8 is legal only at ≤3 in rise (ADA existing sites); IRC residential allows 1:8 generally.' :
+      ratio === 10 && rise > 6 ? '1:10 is legal only at ≤6 in rise (ADA existing sites).' : null
+    return { runIn, surfIn, angle, grade, runs, landings, footprintFt, handrails, slopeNote }
+  }, [rise, slope, landingFt])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Total rise (ground to threshold)" value={rise} onChange={setRise} suffix="in" />
+        <Select label="Slope" value={slope} onChange={setSlope} options={
+          RAMP_SLOPES.map(([l, v]) => [String(v), l] as [string, string])
+        } />
+        <Field label="Landing length" value={landingFt} onChange={setLandingFt} suffix="ft" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Ramp run needed" value={`${num(r.runIn / 12, 1)} ft`} />
+        <Result label="Ramp surface (on slope)" value={`${num(r.surfIn / 12, 1)} ft`} />
+        <Result label="Angle / grade" value={`${num(r.angle, 1)}° / ${num(r.grade, 2)}%`} />
+        <Result label="Runs (30 in max rise each)" value={`${r.runs} run${r.runs > 1 ? 's' : ''}${r.landings ? ` + ${r.landings} landing${r.landings > 1 ? 's' : ''}` : ''}`} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result label="Total footprint (with landings)" value={`${num(r.footprintFt, 1)} ft`} />
+        <Result label="Handrails (ADA §505)" value={r.handrails ? 'Required both sides (34–38")' : 'Not required'} />
+        <Result label="Clear width" value="36 in minimum" />
+        <Result label="Cross slope" value="≤ 1:48 (2.08%)" />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {r.slopeNote ? `${r.slopeNote} ` : ''}
+        ADA §405 caps new-construction ramps at 1:12 (8.33%, 4.76°) with a 30-inch maximum rise per
+        run — so anything taller than 30 inches needs intermediate 60-inch landings, which is why
+        the footprint outruns the pure slope math. Steeper 1:10 and 1:8 slopes are exceptions for
+        existing sites at very low rises only; IRC R311.8 allows 1:8 for residential ramps
+        generally. Handrails are required on both sides once the rise passes 6 inches (or the run
+        passes 72 inches), mounted 34–38 inches above the surface with 12-inch extensions beyond
+        top and bottom. Landing slopes max out at 1:48 in every direction. Verify against your
+        local building department — they enforce the adopted edition.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Siding ---------------- */
 
 export function SidingCalc() {
@@ -1479,6 +1548,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'rafter-length-calculator': RafterCalc,
   'flooring-calculator': FlooringCalc,
   'ladder-angle-calculator': LadderCalc,
+  'ramp-slope-calculator': RampCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,

@@ -1600,6 +1600,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ramp-slope-calculator',
+    title: 'Ramp Slope Calculator — ADA 1:12 Run, Landings & Handrails',
+    shortTitle: 'Ramp Slope Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free ADA ramp calculator. Enter the rise to get required run at 1:12 (or gentler), ramp surface length, run count with 30-inch rule, intermediate landings, footprint, and handrail requirements.',
+    tagline: 'A 24-inch rise needs 24 feet of ramp. Know the footprint before you build.',
+    intro:
+      'Ramp math surprises everyone the first time: the ADA maximum slope of 1:12 turns even a modest porch rise into a long structure, and the 30-inch rise-per-run rule inserts 60-inch landings that stretch the footprint further. This calculator does the whole layout — run, surface length, run count, landings, handrail triggers — against ADA Section 405 and the IRC residential alternative.',
+    howItWorks: [
+      'Measure total rise — ground to threshold — in inches.',
+      'Pick a slope: 1:12 ADA maximum, 1:16 or 1:20 for comfort, or the restricted 1:10 / 1:8 exceptions.',
+      'Read the required run, ramp surface length, and angle/grade.',
+      'Check the run count and intermediate landings (30-inch rise rule) and the handrail verdict.',
+    ],
+    faq: [
+      {
+        q: 'How long does a ramp need to be for a 24-inch rise?',
+        a: 'At the ADA maximum slope of 1:12, 24 inches of rise needs 24 feet of horizontal run — plus landings. At the kinder 1:16 it needs 32 feet. That is why porch ramps so often become switchbacks: the footprint, not the slope, is the constraint.',
+      },
+      {
+        q: 'When can I use a steeper slope like 1:8?',
+        a: 'Under the ADA, only on existing sites where 1:12 is infeasible — 1:10 for rises up to 6 inches and 1:8 for rises up to 3 inches. The IRC residential code is looser: R311.8 allows 1:8 generally for ramps serving a dwelling. New public or commercial construction is 1:12, full stop.',
+      },
+      {
+        q: 'When are handrails required on a ramp?',
+        a: 'Whenever a run rises more than 6 inches (or projects more than 72 inches horizontally) — on both sides, 34–38 inches above the surface, with 12-inch extensions beyond the top and bottom of each run. Almost every real ramp trips this rule.',
+      },
+    ],
+  },
+  {
     slug: 'siding-calculator',
     title: 'Siding Calculator — Squares, Waste & Cost',
     shortTitle: 'Siding Calculator',
