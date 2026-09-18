@@ -249,4 +249,10 @@ export const WHY_USE: Record<string, string> = {
     'Job changers comparing offers across states use it to convert nominal salaries into real purchasing power with official BEA price parities — the difference between a raise and a hidden pay cut.',
   'raise-worth-calculator':
     'Anyone negotiating pay uses it to translate a percentage raise into after-tax dollars per paycheck — and to kill the "higher bracket means I lose money" myth with their own numbers.',
+  'w4-withholding-calculator':
+    'Anyone who got a surprise tax bill or a giant refund uses it mid-year with real paystub numbers to set the exact W-4 Line 4(c) amount — the correction no checkbox-only guide computes.',
+  'bonus-tax-calculator':
+    'Bonus recipients confused by a shrunken bonus check use it to separate the 22% flat withholding from their true marginal liability — and to know whether April brings money back.',
+  'marginal-tax-bracket-calculator':
+    'Anyone weighing overtime, a side gig, or a Roth conversion uses it to see their real marginal rate and bracket headroom — the two numbers every year-end tax decision depends on.',
 }

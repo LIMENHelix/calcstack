@@ -99,6 +99,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/billable-hours-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/bmi-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/body-fat-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/bonus-tax-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/break-even-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/brrrr-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/calorie-calculator</loc></url>
@@ -157,6 +158,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/load-combination-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/loan-payoff-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/macro-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/marginal-tax-bracket-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/markup-margin-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/mileage-deduction-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/mileage-vs-actual-expense-calculator</loc></url>
@@ -344,6 +346,7 @@
   <url><loc>https://calcstack-eight.vercel.app/calculators/velocity-based-training-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/vo2max-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/voltage-drop-calculator</loc></url>
+  <url><loc>https://calcstack-eight.vercel.app/calculators/w4-withholding-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/wire-size-calculator</loc></url>
   <url><loc>https://calcstack-eight.vercel.app/calculators/wrvu-compensation-calculator</loc></url>
 </urlset>

@@ -30,6 +30,7 @@ import { SMALLBIZ_CALC_COMPONENTS } from '@/calcs/smallbiz'
 import { HEALTHMONEY_CALC_COMPONENTS } from '@/calcs/healthmoney'
 import { AUTO_CALC_COMPONENTS } from '@/calcs/auto'
 import { WEALTH_CALC_COMPONENTS } from '@/calcs/wealth'
+import { TAXSEASON_CALC_COMPONENTS } from '@/calcs/taxseason'
 import { PaycheckCalc } from '@/calcs/paycheck'
 import type { CalcProps } from '@/calcs'
 import { Seo } from '@/components/Seo'
@@ -67,6 +68,7 @@ export const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactEle
   ...HEALTHMONEY_CALC_COMPONENTS,
   ...AUTO_CALC_COMPONENTS,
   ...WEALTH_CALC_COMPONENTS,
+  ...TAXSEASON_CALC_COMPONENTS,
   'paycheck-calculator': PaycheckCalc,
 }
 

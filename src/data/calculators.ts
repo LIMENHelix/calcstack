@@ -3796,6 +3796,96 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
     ],
   },
+  {
+    slug: 'w4-withholding-calculator',
+    title: 'W-4 Withholding Calculator — Dial In the Exact Per-Paycheck Amount (2026)',
+    shortTitle: 'W-4 Withholding',
+    category: 'Everyday Money',
+    description:
+      'Free W-4 withholding calculator. Enter your paystub numbers and see the exact per-check withholding that lands you at zero owed — no giant refund, no surprise bill.',
+    tagline: 'A big refund is an interest-free loan you gave the IRS.',
+    intro:
+      'Most W-4 advice stops at "check a box." This calculator does the real work: from your salary, year-to-date withholding, and paychecks remaining, it computes your actual 2026 federal liability and the exact per-check amount that hits your target — so April brings neither a surprise bill nor a refund you could have been investing all year.',
+    howItWorks: [
+      'Grab your latest paystub: enter annual salary, federal withheld year-to-date, and current per-check withholding.',
+      'Enter how many paychecks remain this year and your target refund (zero is optimal).',
+      'Read the exact per-check withholding to set on W-4 Line 4(c), and your projected year-end position.',
+    ],
+    faq: [
+      {
+        q: 'Is a big tax refund a good thing?',
+        a: 'No — it means you overpaid every paycheck and got the excess back months later with zero interest. A $4,600 refund is $177 per biweekly check that could have been in a Roth IRA compounding instead. This calculator\'s default target is exactly $0 for that reason.',
+      },
+      {
+        q: 'How do I actually change my withholding?',
+        a: 'Submit a new Form W-4 to payroll. To withhold a specific extra amount per check, put it on Line 4(c) — that is exactly what this calculator computes. Changes usually take effect within one or two pay cycles.',
+      },
+      {
+        q: 'Why does my withholding never match my real tax bill?',
+        a: 'Because payroll annualizes each check in isolation — a big commission check gets taxed as if you earn that every check. Pre-tax 401(k) and HSA contributions also lower your liability below what the standard tables assume. Mid-year correction with real paystub numbers is the only accurate fix.',
+      },
+    ],
+  },
+  {
+    slug: 'bonus-tax-calculator',
+    title: 'Bonus Tax Calculator — Why Your Bonus Check Looks Overtaxed (22% Flat Rate)',
+    shortTitle: 'Bonus Tax',
+    category: 'Everyday Money',
+    description:
+      'Free bonus tax calculator. See the 22% flat supplemental withholding versus your true marginal liability on a bonus — and whether the gap comes back as a refund.',
+    tagline: 'Your bonus isn\'t taxed higher. It\'s withheld higher.',
+    intro:
+      'The shock of a bonus check missing a third of its value is withholding, not tax. Payroll applies a flat 22% federal rate to supplemental wages, but your actual liability is the bonus stacked on your salary at marginal 2026 brackets. This calculator shows both numbers and what the difference means at filing time.',
+    howItWorks: [
+      'Enter your base salary, bonus amount, filing status, and a flat state estimate.',
+      'See what payroll withholds (22% flat federal + FICA + state) versus your true tax on the bonus.',
+      'Read the refund gap — for most filers, part of the withholding comes back in April.',
+    ],
+    faq: [
+      {
+        q: 'Are bonuses taxed at a higher rate than salary?',
+        a: 'No. Bonuses are ordinary income taxed at your regular marginal brackets. They only LOOK overtaxed because employers withhold a flat 22% federal on supplemental wages (IRS rule for bonuses under $1M). At filing, the withholding is credited against your real liability and any excess refunds.',
+      },
+      {
+        q: 'When would I actually owe more than the 22% withheld?',
+        a: 'When your salary plus bonus puts your top dollars in the 24%, 32%, or higher brackets — roughly above $105,700 taxable for single filers in 2026. In that case the flat withholding falls short and setting aside the difference avoids an April surprise.',
+      },
+      {
+        q: 'Can I reduce the tax on a bonus?',
+        a: 'The cleanest lever: increase your pre-tax 401(k) contribution for the bonus paycheck — every dollar deferred dodges your marginal rate (22% or 24% for most bonus recipients) plus state tax. An HSA contribution works the same way if you are eligible.',
+      },
+    ],
+  },
+  {
+    slug: 'marginal-tax-bracket-calculator',
+    title: 'Marginal Tax Bracket Calculator 2026 — Visualize Every Bracket Your Income Fills',
+    shortTitle: 'Tax Bracket Visualizer',
+    category: 'Everyday Money',
+    description:
+      'Free 2026 tax bracket calculator. See your income fill each federal bracket, your marginal versus effective rate, and exactly how much room is left before the next bracket.',
+    tagline: 'Your bracket is not your tax rate. See the difference.',
+    intro:
+      'The single most misunderstood idea in personal finance: only the dollars inside a bracket pay that bracket\'s rate. This visualizer fills each 2026 federal bracket with your taxable income, shows marginal versus effective rates side by side, and tells you the room left before your next dollar gets more expensive.',
+    howItWorks: [
+      'Enter gross income and filing status — the standard deduction is subtracted automatically.',
+      'Watch each bracket fill and see the tax assessed per bracket.',
+      'Read marginal rate (your next dollar\'s cost), effective rate (what you actually pay overall), and room left in the current bracket.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between marginal and effective tax rate?',
+        a: 'Marginal is the rate on your NEXT dollar of income — the one that matters for decisions about raises, overtime, and Roth conversions. Effective is total tax divided by income — always lower, because early dollars are taxed at 10% and 12% no matter what bracket you top out in.',
+      },
+      {
+        q: 'If I cross into the 22% bracket, does my whole salary get taxed at 22%?',
+        a: 'Never. Only the dollars above $50,400 of taxable income (single, 2026) pay 22%. Everything below keeps its original 10% or 12% rate. A dollar that crosses the line cannot raise the tax on a single earlier dollar — the visualizer above shows this layer by layer.',
+      },
+      {
+        q: 'Why does the room-left number matter?',
+        a: 'It is the amount of extra income — overtime, a side gig, a Roth conversion — you can add at your current rate before the next bracket makes each new dollar costlier. For tax planning at year-end, that headroom number is the whole game.',
+      },
+    ],
+  },
 ]
 
 export const CATEGORIES = [
