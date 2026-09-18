@@ -1064,6 +1064,69 @@ export function DeckFootingCalc() {
   )
 }
 
+/* ---------------- Excavation & Haul (FM 5-434 swell factors) ---------------- */
+
+// US Army FM 5-434 Table 1-2 typical swell percentages (bank → loose)
+const EX_SOILS: Record<string, { swell: number; label: string }> = {
+  sand: { swell: 0.12, label: 'Sand — 12% swell' },
+  gravel: { swell: 0.12, label: 'Gravel — 12% swell' },
+  loam: { swell: 0.25, label: 'Topsoil / loam / common earth — 25% swell' },
+  clay: { swell: 0.4, label: 'Clay — 40% swell' },
+  rock: { swell: 0.65, label: 'Blasted rock — 65% swell' },
+}
+
+export function ExcavationCalc() {
+  const [length, setLength] = useNumber(30)
+  const [width, setWidth] = useNumber(12)
+  const [depth, setDepth] = useNumber(18)
+  const [soil, setSoil] = useState('loam')
+  const [truck, setTruck] = useState('12')
+  const [perLoad, setPerLoad] = useNumber(150)
+
+  const r = useMemo(() => {
+    const bcy = (length * width * (depth / 12)) / 27
+    const s = EX_SOILS[soil]
+    const lcy = bcy * (1 + s.swell)
+    const cap = Number(truck)
+    const loads = Math.ceil(lcy / cap)
+    const cost = loads * perLoad
+    return { bcy, lcy, loads, cost, swell: s.swell, cap }
+  }, [length, width, depth, soil, truck, perLoad])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Dig length" value={length} onChange={setLength} suffix="ft" />
+        <Field label="Dig width" value={width} onChange={setWidth} suffix="ft" />
+        <Field label="Dig depth" value={depth} onChange={setDepth} suffix="in" />
+        <Select label="Soil type" value={soil} onChange={setSoil} options={Object.entries(EX_SOILS).map(([k, v]) => [k, v.label] as [string, string])} />
+        <Select label="Truck capacity" value={truck} onChange={setTruck} options={[
+          ['10', '10 yd³ — single axle dump'], ['12', '12 yd³ — standard dump truck'],
+          ['15', '15 yd³ — tandem'], ['20', '20 yd³ — tri-axle'],
+        ]} />
+        <Field label="Haul + dump fee per load" value={perLoad} onChange={setPerLoad} prefix="$" step="10" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Loose volume to haul" value={`${num(r.lcy, 1)} yd³`} />
+        <Result label="Bank volume in ground" value={`${num(r.bcy, 1)} yd³`} />
+        <Result label="Swell factor" value={`+${r.swell * 100}%`} />
+        <Result label={`Truckloads (${r.cap} yd³)`} value={`${num(r.loads)}`} />
+        <Result label="Estimated haul cost" value={usd(r.cost)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Dirt gets bigger when you dig it: a yard of common earth in the ground becomes about
+        1.25 loose yards in the truck — {num(r.lcy, 1)} loose yards here vs {num(r.bcy, 1)} in
+        the bank. Swell factors are the US Army Corps of Engineers FM 5-434 Table 1-2 values
+        (sand and gravel ~12%, loam/common earth ~25%, clay ~40%, blasted rock ~65%), the same
+        table earthwork estimators quote from. Truck count divides loose volume by bed capacity
+        and rounds up — the last load is always a partial. Tapered digs (basements, pools):
+        use the average depth. If some spoil stays on site as backfill, subtract that bank
+        volume from the result before counting loads.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 /* ---------------- Retaining Wall Blocks ---------------- */
 
 // Segmental retaining wall units — face width × face height in inches
@@ -1691,6 +1754,7 @@ export const CONSTRUCTION_CALC_COMPONENTS: Record<string, (props: import('./inde
   'ramp-slope-calculator': RampCalc,
   'deck-footing-calculator': DeckFootingCalc,
   'retaining-wall-calculator': RetainingWallCalc,
+  'excavation-calculator': ExcavationCalc,
   'siding-calculator': SidingCalc,
   'paver-calculator': PaverCalc,
   'block-calculator': BlockCalc,

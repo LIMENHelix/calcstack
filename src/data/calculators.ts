@@ -1662,6 +1662,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'excavation-calculator',
+    title: 'Excavation Calculator — Bank vs Loose Yards, Swell & Truckloads',
+    shortTitle: 'Excavation Calculator',
+    category: 'Home & Yard',
+    description:
+      'Free excavation calculator. Convert dig dimensions to bank cubic yards, apply the FM 5-434 soil swell factor, and get loose yards to haul, dump truck loads, and haul-away cost.',
+    tagline: 'Dirt gets bigger when you dig it — order trucks for the bigger number.',
+    intro:
+      'The most expensive excavation mistake is ordering trucks for the in-ground volume. Soil swells when dug — 25% for common earth, 40% for clay, 65% for blasted rock — so loose volume, not bank volume, sets the truck count. This calculator runs the full chain: dimensions to bank yards, bank to loose with the US Army Corps of Engineers FM 5-434 Table 1-2 swell factors, loose yards to truckloads, and loads to haul-away cost.',
+    howItWorks: [
+      'Enter the dig length, width, and average depth.',
+      'Pick the soil type — sand and gravel swell ~12%, loam ~25%, clay ~40%, blasted rock ~65%.',
+      'Pick the truck bed capacity (10–20 yd³) and your per-load haul + dump fee.',
+      'Read bank yards, loose yards to haul, truckloads, and estimated haul cost.',
+    ],
+    faq: [
+      {
+        q: 'How much does soil swell when excavated?',
+        a: 'Per US Army FM 5-434 Table 1-2: sand and gravel about 10–15%, common earth and loam about 25%, clay about 40%, and blasted rock 50–65%. One bank cubic yard of loam becomes roughly 1.25 loose yards in the truck — that 25% is the line item that blows up DIY haul budgets.',
+      },
+      {
+        q: 'How many truckloads is a 30×12 ft dig 18 inches deep?',
+        a: 'Bank volume is 30 × 12 × 1.5 ÷ 27 = 20 bank yards. In common earth at 25% swell that is 25 loose yards — three loads in a 12-yard dump truck (25 ÷ 12 = 2.08, round up; the last load is always partial). In clay at 40% it becomes 28 loose yards — still three loads, but barely.',
+      },
+      {
+        q: 'What if some of the spoil stays as backfill?',
+        a: 'Subtract the backfill bank volume from the total before computing loads — but remember compacted backfill shrinks below its bank volume, so a dig rarely backfills itself with its own spoil. Whatever does get hauled is priced on loose volume, which is why the swell factor matters.',
+      },
+    ],
+  },
+  {
     slug: 'retaining-wall-calculator',
     title: 'Retaining Wall Calculator — Block Courses, Caps & Drainage Gravel',
     shortTitle: 'Retaining Wall Calculator',
