@@ -1230,6 +1230,44 @@ export const PERSONAS: Persona[] = [
     ],
   },
   {
+    slug: 'painters',
+    job: 'Painters & Painting Contractors',
+    title: 'Calculators for Painters — Coverage, Materials & Bid Math',
+    description: 'Free tools for painters: paint and drywall quantities from room dimensions, wallpaper rolls, and the business math — bid sheets, markup vs margin, and the hourly rate floor that keeps a one-man shop profitable.',
+    hero: 'A paint bid is coverage math plus time math: gallons from wall area, hours from prep and coats. Get either side wrong and the job pays you less than the last one. These calculators do the coverage side instantly so the bid conversation starts from a real number.',
+    questions: [
+      'How many gallons does this house actually take?',
+      'What do I quote per square foot and still make money?',
+      'Is my markup giving me the margin I think it is?',
+    ],
+    calcSlugs: [
+      'paint-calculator',
+      'drywall-calculator',
+      'wallpaper-calculator',
+      'bid-sheet-calculator',
+      'markup-margin-calculator',
+      'freelance-rate-calculator',
+      'break-even-calculator',
+      'salary-to-hourly-calculator',
+      'paycheck-calculator',
+      'loan-payoff-calculator',
+    ],
+    faq: [
+      {
+        q: 'How much paint does a room really need?',
+        a: 'A gallon covers roughly 350–400 sq ft per coat. A 12×14 room with 8-ft ceilings has about 400 sq ft of wall after door and window deductions — one gallon per coat, two coats for color changes. The paint calculator does the deduction math and coat count so the order is right the first time.',
+      },
+      {
+        q: 'What\'s the difference between markup and margin on a paint job?',
+        a: 'A 50% markup on $1,000 of cost gives a $1,500 price — which is only a 33% margin. Quoting "50% margin" when you mean markup is how bids come in thin. The markup-margin calculator converts both directions so the number you say is the number you get.',
+      },
+      {
+        q: 'What should a self-employed painter charge per hour?',
+        a: 'Start from the rate floor: target income plus insurance, vehicle, ladders, sprayer maintenance, and marketing, divided by realistic billable hours — typically 55–65% of the week, because estimates, color consultations, and prep runs don\'t bill. The freelance rate calculator builds that floor from your actual numbers.',
+      },
+    ],
+  },
+  {
     slug: 'pool-service-technicians',
     job: 'Pool Service Technicians',
     title: 'Calculators for Pool Service Techs — Volume, Dosing, Pump & Route Math',

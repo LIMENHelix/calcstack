@@ -54,12 +54,12 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — rafter-table math for framers, and a full residential
-          plumbing cluster: supply GPM, drain DFU, vent sizing, water heater capacity.
+          The newest tools on the site — landscapers get sod ordering and irrigation zone checks
+          (GPM capacity + precipitation rate), framers get rafter-table math.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['rafter-length-calculator', 'stair-calculator', 'water-heater-size-calculator', 'vent-size-calculator', 'drain-size-calculator', 'superheat-subcooling-calculator'].includes(c.slug),
+            ['sod-calculator', 'irrigation-zone-calculator', 'rafter-length-calculator', 'stair-calculator', 'water-heater-size-calculator', 'vent-size-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
