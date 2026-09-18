@@ -90,6 +90,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
               </li>
               <li>
+                <Link to="/home-buying" className="hover:text-foreground">
+                  Home buying hub
+                </Link>
+              </li>
+              <li>
                 <Link to="/embeds" className="hover:text-foreground">
                   Embed these calculators
                 </Link>
