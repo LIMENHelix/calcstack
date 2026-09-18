@@ -4,6 +4,7 @@ import { PERSONAS } from '@/data/personas'
 import { Seo } from '@/components/Seo'
 import { SearchBar } from '@/components/SearchBar'
 import { Card, CardContent } from '@/components/ui/card'
+import { AdSlot } from '@/components/Monetization'
 
 export default function Home() {
   return (
@@ -114,6 +115,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <AdSlot />
 
       {CATEGORIES.map((cat) => (
         <section key={cat} className="mb-10">

@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { CALCULATORS } from '@/data/calculators'
 import { Seo } from '@/components/Seo'
+import { AdSlot } from '@/components/Monetization'
 
 const SECTIONS: { title: string; blurb: string; slugs: readonly string[] }[] = [
   {
@@ -69,6 +70,8 @@ export default function OpenEnrollment() {
           </section>
         )
       })}
+
+      <AdSlot />
 
       <section className="mt-12 max-w-2xl space-y-4 text-sm">
         <h2 className="text-xl font-semibold">Open enrollment questions, answered</h2>

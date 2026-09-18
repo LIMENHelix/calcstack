@@ -14,6 +14,10 @@ math runs in your browser.**
 4. Bing Webmaster Tools: import from Search Console (free second engine, 5 minutes).
 5. AdSense application — submit only AFTER the domain shows 50+ indexed pages
    (check `site:domain.com`); thin-looking new domains get rejected.
+   When approved: add Vercel env vars `VITE_ADSENSE_CLIENT` (ca-pub-…) and
+   `VITE_ADSENSE_SLOT`, redeploy — every AdSlot on the site (all calculator
+   pages, data pages, personas, all three hubs, homepage) goes live instantly.
+   Until then, slots render as invisible-to-nobody dashed placeholders.
 6. Smoke-test live: homepage, one calculator per category, /embeds, one /embed/ iframe,
    one persona page, one data page. Fix before announcing anything.
 

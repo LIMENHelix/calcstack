@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { CALCULATORS } from '@/data/calculators'
 import { Seo } from '@/components/Seo'
+import { AdSlot } from '@/components/Monetization'
 
 const TAX_SLUGS = {
   w2: ['paycheck-calculator'],
@@ -77,6 +78,8 @@ export default function TaxSeason() {
       <TaxSection title="Self-employed, freelancers & gig workers" slugs={TAX_SLUGS.selfEmployed} />
       <TaxSection title="Savers & investors" slugs={TAX_SLUGS.savers} />
       <TaxSection title="Households, homeowners & landlords" slugs={TAX_SLUGS.households} />
+
+      <AdSlot />
 
       <section className="mt-12 max-w-2xl space-y-4 text-sm">
         <h2 className="text-xl font-semibold">Tax season questions, answered</h2>
