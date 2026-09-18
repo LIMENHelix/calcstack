@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'emergency-fund-calculator',
+    title: 'Emergency Fund Calculator — Target, Gap & Months to Funded',
+    shortTitle: 'Emergency Fund',
+    category: 'Savings & Investing',
+    description:
+      'Free emergency fund calculator. Enter essential monthly expenses, pick 3–12 months of coverage, and see your exact fund target, the gap, and how many months of saving closes it.',
+    tagline: 'The buffer that keeps an emergency off a credit card.',
+    intro:
+      'The emergency fund question is two numbers: how much, and how long to get there. This calculator computes both from your real essentials — rent, utilities, food, insurance, minimum debt payments — with coverage targets matched to your situation: 3 months for stable dual incomes, 6 as the standard, 9–12 for single incomes, kids, or commission pay. Then it turns your monthly savings rate into a finish date.',
+    howItWorks: [
+      'Enter your monthly essential expenses — not your full budget, just what you could not skip.',
+      'Pick a coverage target matched to income stability (3, 6, 9, or 12 months).',
+      'Enter current savings and what you can add monthly.',
+      'Read your fund target, the remaining gap, months to fully funded, and how many months of coverage you have today.',
+    ],
+    faq: [
+      {
+        q: 'How much should my emergency fund be?',
+        a: 'Essential monthly expenses times your coverage target. At $3,500 in essentials: $10,500 for 3 months (stable dual income), $21,000 for 6 months (the standard advice), $31,500 for 9, $42,000 for 12 (variable or commission income). Only essentials count — the fund covers survival, not lifestyle.',
+      },
+      {
+        q: 'Should I build the fund before paying off debt?',
+        a: 'In stages. Grab the full employer 401(k) match first (it is an instant 50–100% return), then a $1,000 starter buffer so small emergencies stay off the card, then attack high-interest debt, then finish the full 3–12 month fund. A $3,500-essential household saving $800/month closes a $16,000 gap in 20 months.',
+      },
+      {
+        q: 'Where should the emergency fund live?',
+        a: 'A high-yield savings account — liquid, FDIC-insured, and paying meaningful interest. Not invested: the fund\'s job is to be there on the worst day, which is exactly when markets are down. Not checking: a small barrier between you and a "mergency" is a feature.',
+      },
+    ],
+  },
+  {
     slug: 'credit-card-minimum-payment-calculator',
     title: 'Credit Card Minimum Payment Calculator — The True Cost of Minimums',
     shortTitle: 'Minimum Payment Cost',

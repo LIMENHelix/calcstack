@@ -650,7 +650,69 @@ export function CreditCardMinimumCalc() {
   )
 }
 
+/* ---------------- Emergency Fund ---------------- */
+
+export function EmergencyFundCalc() {
+  const [expenses, setExpenses] = useNumber(3500)
+  const [months, setMonths] = useState('6')
+  const [current, setCurrent] = useNumber(5000)
+  const [save, setSave] = useNumber(800)
+
+  const r = useMemo(() => {
+    const targetMonths = Number(months) || 6
+    const target = expenses * targetMonths
+    const gap = Math.max(0, target - current)
+    const monthsToFull = save > 0 ? Math.ceil(gap / save) : gap > 0 ? -1 : 0
+    const starterGap = Math.max(0, 1000 - current)
+    const monthsToStarter = save > 0 ? Math.ceil(starterGap / save) : starterGap > 0 ? -1 : 0
+    const coverageNow = expenses > 0 ? current / expenses : 0
+    return { target, gap, monthsToFull, monthsToStarter, coverageNow, targetMonths }
+  }, [expenses, months, current, save])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-4">
+        <Field label="Monthly essential expenses" value={expenses} onChange={setExpenses} prefix="$" />
+        <div>
+          <label className="mb-1 block text-sm font-medium">Target coverage</label>
+          <select
+            className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+            value={months}
+            onChange={(e) => setMonths(e.target.value)}
+          >
+            <option value="3">3 months — dual income, stable jobs</option>
+            <option value="6">6 months — the standard advice</option>
+            <option value="9">9 months — single income or kids</option>
+            <option value="12">12 months — variable/commission income</option>
+          </select>
+        </div>
+        <Field label="Current savings" value={current} onChange={setCurrent} prefix="$" />
+        <Field label="You can save monthly" value={save} onChange={setSave} prefix="$" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Your emergency fund target" value={usd(r.target, 0)} />
+        <Result label="Gap to close" value={usd(r.gap, 0)} />
+        <Result label="Months to fully funded" value={r.monthsToFull < 0 ? '— (raise savings)' : `${r.monthsToFull} mo`} />
+        <Result label="Covered today" value={`${num(r.coverageNow, 1)} months`} />
+        {r.monthsToStarter >= 0 && r.gap > 0 && (
+          <Result label="$1,000 starter fund" value={r.monthsToStarter === 0 ? 'Done ✓' : `${r.monthsToStarter} mo away`} />
+        )}
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Essentials only — rent, utilities, food, insurance, minimum debt payments — not your full
+        lifestyle budget. At {usd(expenses, 0)} essentials, {r.targetMonths} months of coverage is{' '}
+        {usd(r.target, 0)}, and saving {usd(save, 0)} a month gets there in{' '}
+        {r.monthsToFull >= 0 ? `${r.monthsToFull} months` : '—'}. Order of operations matters: grab the
+        full 401(k) match first, build a $1,000 starter buffer, kill high-interest debt, then finish
+        the fund — and keep it in a high-yield savings account, not invested. The fund's job is not
+        growth; it is making sure a transmission or a layoff never touches a credit card at 22%.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'emergency-fund-calculator': EmergencyFundCalc,
   'credit-card-minimum-payment-calculator': CreditCardMinimumCalc,
   'debt-avalanche-snowball-calculator': DebtPayoffCalc,
   'tip-calculator': TipCalc,
