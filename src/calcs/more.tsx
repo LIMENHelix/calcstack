@@ -2323,6 +2323,58 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Adoption tax credit — IRC §23, 2026 (Rev. Proc. 2025-32 + OBBBA §70424): max $17,670/child of qualified expenses; NEW: $5,120/child is REFUNDABLE (first time since 2011); remaining $12,550 nonrefundable with 5-yr carryforward. Phaseout: MAGI $265,080–$305,080 ratable ($40k band) — reduces BOTH pieces proportionally; refundable piece never carries forward. Special-needs (state determination): full credit regardless of expenses. Foreign adoptions: everything claims in the finalization year. Employer adoption assistance (§137) reduces qualified expenses. Node-verified: $19k exp/MAGI $180k/liab $10k → credit $17,670 = $5,120 cash + $10,000 absorbed + $2,550 carryforward; MAGI $290k → $6,662 (62.3% phased); special-needs $5k exp → full $17,670; 2 kids → $35,340 / $10,240 refundable.
+export function AdoptionCreditCalc() {
+  const [exp, setExp] = useNumber(19000)
+  const [kids, setKids] = useNumber(1)
+  const [magi, setMagi] = useNumber(180000)
+  const [liab, setLiab] = useNumber(10000)
+  const [sn, setSn] = useState(false)
+
+  const r = useMemo(() => {
+    const per = sn ? 17670 : Math.min(exp, 17670)
+    const base = per * kids
+    const frac = Math.min(1, Math.max(0, (magi - 265080) / 40000))
+    const credit = base * (1 - frac)
+    const ref = 5120 * kids * (1 - frac)
+    const nonref = credit - ref
+    const absorb = Math.min(nonref, liab)
+    const carry = nonref - absorb
+    return { base, frac, credit, ref, nonref, absorb, carry }
+  }, [exp, kids, magi, liab, sn])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Qualified expenses (per child)" value={exp} onChange={setExp} prefix="$" />
+          <Field label="Children adopted this year" value={kids} onChange={setKids} />
+          <Field label="MAGI (usually = AGI)" value={magi} onChange={setMagi} prefix="$" />
+          <Field label="Federal tax before credits" value={liab} onChange={setLiab} prefix="$" />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={sn} onChange={(e) => setSn(e.target.checked)} className="h-4 w-4" />
+            State-determined special needs (full credit regardless of expenses)
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Total 2026 credit" value={usd(r.credit)} />
+          <Result label="Refundable (cash back)" value={usd(r.ref)} />
+          <Result label="Used against this year's tax" value={usd(r.absorb)} />
+          <Result label="Carries to 2027+" value={usd(r.carry)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.frac > 0 && r.frac < 1 && <>⚠ You're {num(r.frac * 100, 1)}% through the phaseout band — the credit dropped from {usd(r.base)} to <span className="font-medium">{usd(r.credit)}</span>. MAGI management (defer a Roth conversion, harvest losses, shift a December bonus to January) directly buys credit back. </>}
+          {r.frac >= 1 && <>⚠ MAGI over $305,080 eliminates the credit entirely. </>}
+          <span className="font-medium">{usd(r.ref)} comes back as cash</span> even with zero tax liability — new for 2026. The remaining {usd(r.nonref)} offsets this year's tax first{liab > 0 ? <> ({usd(r.absorb)} absorbed)</> : ''}{r.carry > 0 && <>, with <span className="font-medium">{usd(r.carry)} carrying forward</span> up to 5 years</>}. Employer adoption assistance reduces qualified expenses dollar-for-dollar — claim the credit on what's left.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 rules (§23, Rev. Proc. 2025-32): $17,670 max per child; phaseout $265,080–$305,080 MAGI ratable; OBBBA made $5,120/child refundable — the foster-to-adopt headline, since special-needs determinations grant the full credit regardless of spending and low-income years no longer waste it. Timing: domestic adoptions claim expenses the year paid (or finalization year if paid earlier); FOREIGN adoptions claim everything in the finalization year — the phaseout reads THAT year's MAGI, so December finalizations are worth income-shifting. Qualified expenses: agency/attorney/court fees, travel, re-adoption for foreign; NOT stepparent adoptions, surrogacy, or employer-reimbursed amounts. Carryforward is 5 years; the refundable piece is use-it-or-lose-it in the finalization year. Per-child caps mean sibling groups multiply: three kids = up to $53,010 with $15,360 refundable.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Layoff runway — the survival number: (liquid savings + NET severance) vs monthly drain. Two phases: while unemployment lasts (typical max 26 weeks; average weekly benefit ~$450 but state caps range ~$235 MS to $900+ MA — user enters their state's), drain = burn + COBRA − UI; after UI exhausts, drain = burn + COBRA. UI is taxable federally (Form 1099-G) — honest model notes it. Severance timing: many states delay UI until severance-covered weeks pass. Node-verified: $20k savings + $32,311 net severance (from the severance calculator), $4,500 burn + $800 COBRA, $450/wk UI × 26 wks → UI ≈ $1,950/mo → 12.1 months runway; without UI → 9.9; $5k/$0 sev/$3,000 burn/$700 COBRA/$500 wk → 3.3 months.
 export function LayoffRunwayCalc() {
   const [sav, setSav] = useNumber(20000)
@@ -6620,6 +6672,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'adoption-credit-calculator': AdoptionCreditCalc,
   'layoff-runway-calculator': LayoffRunwayCalc,
   'severance-pay-calculator': SeveranceCalc,
   'stock-donation-calculator': StockDonationCalc,

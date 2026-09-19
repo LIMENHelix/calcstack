@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'adoption-credit-calculator',
+    title: 'Adoption Tax Credit Calculator 2026 — $17,670/Child, Now $5,120 Refundable',
+    shortTitle: 'Adoption Credit Calculator',
+    category: 'Everyday Money',
+    description:
+      'The 2026 adoption credit: up to $17,670 per child, with $5,120 refundable for the first time under OBBBA. Phaseout runs $265,080–$305,080 MAGI. Special-needs adoptions get the full credit regardless of expenses. Price your exact benefit.',
+    tagline: 'New for 2026: $5,120 per child comes back as cash, even if you owe zero tax.',
+    intro:
+      'The adoption credit just had its biggest upgrade in fifteen years: for 2026, $5,120 of the $17,670 per-child credit is REFUNDABLE — cash back even with zero tax liability — fixing the old trap where low-income finalization years wasted the credit. The rest ($12,550) still offsets tax with a five-year carryforward. The rules have real edges: the MAGI phaseout runs $265,080–$305,080 and reduces both pieces proportionally; special-needs adoptions (state determination) get the FULL credit regardless of what you spent; foreign adoptions claim everything in the finalization year; and employer adoption assistance reduces your qualified expenses first. Sibling groups multiply per child — three kids finalizing in 2026 means up to $53,010 of credit with $15,360 refundable. This calculator prices all of it.',
+    howItWorks: [
+      'Enter qualified expenses per child — agency, attorney, court, travel; not stepparent or surrogacy costs.',
+      'Enter the number of children finalizing this year — the credit is per child.',
+      'Enter MAGI to test the $265,080–$305,080 phaseout band.',
+      'Enter your federal tax before credits to split the credit into absorbed vs carryforward.',
+    ],
+    faq: [
+      {
+        q: 'What\'s actually new for 2026?',
+        a: 'Refundability. From 2012 through 2024 the entire credit was nonrefundable — families who finalized during a low-income year (parental leave, one spouse home, a business loss) computed a big credit and used almost none of it, hoping the 5-year carryforward was enough. OBBBA made $5,120 per child refundable: it\'s paid as cash regardless of liability. A foster-to-adopt family finalizing three special-needs siblings now gets $15,360 in cash from the refundable piece alone. The refundable portion is use-it-or-lose-it in the finalization year — only the nonrefundable remainder carries forward.',
+      },
+      {
+        q: 'We\'re near the $265,080 phaseout — what can we do?',
+        a: 'The band is $40,000 wide and ratable: at $285,080 you lose exactly half. Every dollar of MAGI inside the band costs 0.44¢ of credit per child — so MAGI management is real money. Defer a Roth conversion to next year, harvest capital losses, ask HR to push a December bonus to January, maximize pre-tax 401(k)/HSA. For foreign adoptions the phaseout reads the FINALIZATION year\'s MAGI regardless of when you spent the money — a December finalization with January-level income planning can be worth the entire credit.',
+      },
+      {
+        q: 'What counts as a qualified expense — and what special-needs really means?',
+        a: 'Qualified: agency and placement fees, attorney and court costs, travel and lodging for the adoption, and re-adoption costs for foreign children. Not qualified: stepparent adoptions, surrogacy arrangements, amounts your employer reimbursed (those are excluded from income under §137 instead — claim the credit only on what\'s left). "Special needs" is a STATE determination — typically foster-care children with factors making placement harder (age, sibling groups, medical conditions). If the state made the determination, you claim the full $17,670 even if your out-of-pocket was zero, which is exactly how foster-to-adopt is designed to work.',
+      },
+    ],
+  },
+  {
     slug: 'layoff-runway-calculator',
     title: 'Layoff Runway Calculator 2026 — How Many Months Can You Actually Last?',
     shortTitle: 'Layoff Runway',

@@ -54,15 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          270 calculators and counting. Newest: the family money & estate set —
-          the step-up in basis calculator with the community-property double,
-          the inherited IRA 10-year rule with steady-vs-lump crossover math,
-          and the kiddie tax three-layer pricer — alongside the estate tax,
-          Social Security break-even, and RMD tools already live.
+          275 calculators and counting. Newest: the career-shock toolkit — the
+          layoff runway calculator with two-phase unemployment burn math, the
+          severance calculator proving why January beats December, the bonus
+          tax tool with BOTH IRS withholding methods, plus the 2026 adoption
+          credit with its new $5,120 refundable piece.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['step-up-basis-calculator', 'inherited-ira-calculator', 'kiddie-tax-calculator', 'estate-tax-calculator', 'social-security-breakeven-calculator', 'rmd-calculator'].includes(c.slug),
+            ['layoff-runway-calculator', 'severance-pay-calculator', 'bonus-tax-calculator', 'adoption-credit-calculator', 'cobra-cost-calculator', 'w4-withholding-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
