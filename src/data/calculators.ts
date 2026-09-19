@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'aca-subsidy-calculator',
+    title: 'ACA Subsidy Calculator 2026 — Premium Tax Credit & the Returning 400% Cliff',
+    shortTitle: 'ACA Subsidy 2026',
+    category: 'Health & Life',
+    description:
+      'Free 2026 ACA premium tax credit calculator. Enter household size, MAGI, and your benchmark silver premium — get your exact subsidy with the reverted 2026 applicable percentages, and see your headroom before the 400% FPL cliff zeroes it out.',
+    tagline: 'The subsidy cliff is back. One dollar over 400% FPL, and the whole credit is gone.',
+    intro:
+      'The enhanced ACA subsidies expired December 31, 2025 — and with them went two things: the 8.5%-of-income cap and the removal of the income ceiling. For 2026 coverage, the original rules are back: applicable percentages run 2.10%–9.96% (Rev. Proc. 2025-25), and above 400% of the federal poverty line the credit is zero — not reduced, zero. For a 60-year-old with a $12,720 benchmark plan, that single dollar of income is a $6,500 swing. This calculator runs the exact Form 8962 methodology with linear interpolation inside each band, all three FPL regions, and shows your cliff headroom in dollars.',
+    howItWorks: [
+      'Pick your state group and household size — 2026 coverage uses the January 2025 FPL guidelines ($15,650 single contiguous, $19,550 Alaska, $17,990 Hawaii).',
+      'Enter your household MAGI for the coverage year.',
+      'Enter the annual premium of your benchmark plan — the second-lowest-cost silver in your county, from HealthCare.gov.',
+      'Read your applicable percentage, expected contribution, yearly and monthly credit, and exactly how much MAGI headroom stands between you and the cliff.',
+    ],
+    faq: [
+      {
+        q: 'How is the 2026 ACA subsidy calculated?',
+        a: 'Credit = benchmark silver premium − (your MAGI × applicable percentage). The percentage comes from a six-band table interpolated linearly: 2.10% under 133% FPL, rising to 9.96% at 300–400% FPL. Example: single filer at $62,000 (396% FPL) with a $12,720 benchmark pays $6,175 (9.96%) and the credit covers the remaining $6,545/yr — about $545/month.',
+      },
+      {
+        q: 'Is the subsidy cliff really back for 2026?',
+        a: 'Yes. From 2021–2025 the ARPA/IRA enhancements removed the 400% ceiling and capped contributions at 8.5%. Those expired 12/31/2025 and were not extended (a House extension passed January 2026 but stalled in the Senate). For 2026: at 400.01% FPL the credit is $0. Also new for 2026 under OBBBA: excess advance-credit repayment caps are removed, so an income underestimate is repaid in full at tax time. Legislation could still change 2026 retroactively — verify before filing.',
+      },
+      {
+        q: 'What can I do if I am just over the cliff?',
+        a: 'MAGI management. Pre-tax 401(k)/403(b), SEP-IRA, HSA contributions and the self-employed health-insurance deduction all reduce MAGI dollar-for-dollar. A freelancer $5,000 over the line who routes $6,000 into a SEP-IRA restores a credit that can be worth $6,000–$13,000+ depending on age and county — on top of the deduction itself. Run the number before December: the credit is reconciled on the full year\'s MAGI via Form 8962.',
+      },
+    ],
+  },
+  {
     slug: 'savers-credit-calculator',
     title: "Saver's Credit Calculator 2026 — 50/20/10% Retirement Savings Credit & the Cliffs",
     shortTitle: "Saver's Credit 2026",

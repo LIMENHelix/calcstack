@@ -30,6 +30,7 @@ export const PERSONAS: Persona[] = [
       'paycheck-withholding-calculator',
       'hsa-growth-calculator',
       'health-plan-comparison-calculator',
+      'aca-subsidy-calculator',
       'cobra-cost-calculator',
       '1099-vs-w2-calculator',
       'invoice-late-fee-calculator',

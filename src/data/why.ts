@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'aca-subsidy-calculator':
+    'Freelancers, early retirees, and anyone buying marketplace coverage use it to price the returned 400% cliff — the enhanced subsidies expired for 2026, so one dollar of MAGI over the line zeroes a credit that can run $6,000–$13,000 a year, and the pre-tax moves that pull income back under pay for themselves twice.',
   'savers-credit-calculator':
     'Lower- and moderate-income savers use it to claim the government match most people never file for — up to $1,000 per person — and to see the rate cliffs: $1 of AGI over $48,500 joint cuts a couple\'s credit from $2,000 to $800, which makes the pre-tax contribution that pulls AGI back under worth double.',
   'student-loan-interest-deduction-calculator':

@@ -2322,6 +2322,125 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// ACA premium tax credit — IRC §36B. 2026 applicable percentages per Rev. Proc. 2025-25 (enhanced ARPA/IRA schedule expired 12/31/2025; 400% cliff restored). 2026 coverage uses Jan 2025 FPL guidelines (26 CFR §1.36B-1(h)).
+const FPL_2025 = { con: [15650, 5500], ak: [19550, 6880], hi: [17990, 6330] } as const
+const AP_2026: readonly (readonly [number, number, number])[] = [
+  // [band top as %FPL, rate at band bottom, rate at band top] — linear interpolation within band
+  [133, 0.021, 0.021],
+  [150, 0.0314, 0.0419],
+  [200, 0.0419, 0.066],
+  [250, 0.066, 0.0844],
+  [300, 0.0844, 0.0996],
+  [400, 0.0996, 0.0996],
+]
+
+function acaApplicablePct(fplPct: number): number | null {
+  if (fplPct > 400) return null
+  let prev = 100
+  for (const [top, lo, hi] of AP_2026) {
+    if (fplPct <= top) return top === 133 ? 0.021 : lo + ((hi - lo) * (fplPct - prev)) / (top - prev)
+    prev = top
+  }
+  return null
+}
+
+export function AcaSubsidyCalc() {
+  const [region, setRegion] = useState('con')
+  const [hh, setHh] = useState('2')
+  const [magi, setMagi] = useNumber(60000)
+  const [benchmark, setBenchmark] = useNumber(12000)
+
+  const r = useMemo(() => {
+    const [base, inc] = FPL_2025[region as keyof typeof FPL_2025]
+    const size = Math.min(Math.max(parseInt(hh, 10) || 1, 1), 8)
+    const fpl = base + (size - 1) * inc
+    const pct = (magi / fpl) * 100
+    const cliff = fpl * 4
+    const ap = acaApplicablePct(pct)
+    const under100 = pct < 100
+    const expected = ap !== null ? magi * ap : null
+    const credit = ap !== null && !under100 ? Math.max(0, benchmark - magi * ap) : 0
+    const headroom = ap !== null ? cliff - magi : null
+    const overBy = ap === null ? magi - cliff : null
+    return { fpl, pct, ap, expected, credit, headroom, overBy, cliff, under100, size }
+  }, [region, hh, magi, benchmark])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">State group</span>
+            <select value={region} onChange={(e) => setRegion(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="con">48 contiguous states / DC</option>
+              <option value="ak">Alaska</option>
+              <option value="hi">Hawaii</option>
+            </select>
+          </label>
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Household size</span>
+            <select value={hh} onChange={(e) => setHh(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+          </label>
+          <Field label="Household MAGI (2026)" value={magi} onChange={setMagi} prefix="$" />
+          <Field label="Benchmark silver premium (annual)" value={benchmark} onChange={setBenchmark} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Income vs poverty line" value={`${r.pct.toFixed(0)}% FPL`} />
+          <Result label="Expected contribution" value={r.ap !== null ? `${(r.ap * 100).toFixed(2)}% = ${usd(r.expected ?? 0)}/yr` : 'n/a'} />
+          <Result label="Premium tax credit" value={`${usd(r.credit)}/yr`} />
+          <Result label="Monthly subsidy" value={`${usd(r.credit / 12)}/mo`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.under100 ? (
+            <>
+              <span className="font-medium">Under 100% FPL ({usd(r.fpl)} for a household of {r.size}).</span> No premium tax credit below the poverty line — in Medicaid-expansion states you qualify for Medicaid instead (up to 138% FPL); in non-expansion states this is the coverage gap.
+            </>
+          ) : r.ap === null ? (
+            <>
+              <span className="font-medium">Over the cliff.</span> At {usd(magi)} you are <span className="font-medium">{usd(r.overBy ?? 0)}</span> past 400% FPL ({usd(r.cliff)} for your household) — the credit is $0, no matter how large the premium. Every pre-tax dollar (401(k)/SEP-IRA/HSA, SE health-insurance deduction) reduces MAGI dollar-for-dollar; getting back under restores a credit worth up to {usd(Math.max(0, benchmark - r.cliff * 0.0996))}/yr at the line.
+            </>
+          ) : (
+            <>
+              <span className="font-medium">Eligible — {(r.ap * 100).toFixed(2)}% applicable percentage.</span> Your benchmark silver is capped at {usd((r.expected ?? 0) / 12)}/mo; the credit covers the rest. <span className="font-medium">Cliff watch:</span> {usd(r.headroom ?? 0)} of MAGI headroom before 400% FPL ({usd(r.cliff)}), where the entire {usd(r.credit)}/yr credit goes to zero — a $1 Roth conversion or bonus can cost five figures for older households.
+            </>
+          )}
+        </div>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b text-left text-muted-foreground">
+              <th className="py-1 pr-2 font-medium">2026 income (% of FPL)</th>
+              <th className="py-1 font-medium">Expected contribution to benchmark</th>
+            </tr>
+          </thead>
+          <tbody>
+            {AP_2026.map(([top, lo, hi], i) => {
+              const loBound = i === 0 ? 100 : AP_2026[i - 1][0]
+              const active = r.ap !== null && r.pct > loBound && r.pct <= top
+              return (
+                <tr key={i} className={`border-b ${active ? 'bg-muted/60 font-medium' : ''}`}>
+                  <td className="py-1 pr-2">{i === 0 ? 'Under 133%' : `${loBound}% – ${top}%`}{active ? ' ← you' : ''}</td>
+                  <td className="py-1">{lo === hi ? `${(lo * 100).toFixed(2)}%` : `${(lo * 100).toFixed(2)}% → ${(hi * 100).toFixed(2)}% (interpolated)`}</td>
+                </tr>
+              )
+            })}
+            <tr className={r.ap === null && !r.under100 ? 'bg-muted/60 font-medium' : ''}>
+              <td className="py-1 pr-2">Over 400%{r.ap === null && !r.under100 ? ' ← you' : ''}</td>
+              <td className="py-1">No credit — the cliff</td>
+            </tr>
+          </tbody>
+        </table>
+        <p className="text-xs text-muted-foreground">
+          2026 rules: enhanced ARPA/IRA subsidies expired 12/31/2025 — applicable percentages reverted to Rev. Proc. 2025-25 (2.10%–9.96%) and the 400% FPL eligibility cliff returned. 2026 coverage uses the January 2025 FPL guidelines ($15,650 single contiguous, +$5,500/person; AK $19,550; HI $17,990). Get your exact benchmark (second-lowest-cost silver) from HealthCare.gov — it varies by county and age. New for 2026: excess APTC repayment caps are gone — estimate income honestly. Pending legislation could still change 2026 retroactively.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Saver's Credit (Retirement Savings Contributions Credit) — IRC §25B, 2026 thresholds per IRS Notice 2025-67. Final year before the Saver's Match replaces it in 2027.
 const SAVERS_2026: Record<string, readonly (readonly [number, number])[]> = {
   single: [[24250, 0.5], [26250, 0.2], [40250, 0.1]],
@@ -3938,6 +4057,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'traditional-ira-deduction-calculator': TraditionalIraDeductionCalc,
   'student-loan-interest-deduction-calculator': StudentLoanInterestCalc,
   'savers-credit-calculator': SaversCreditCalc,
+  'aca-subsidy-calculator': AcaSubsidyCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,
