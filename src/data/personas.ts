@@ -867,6 +867,7 @@ export const PERSONAS: Persona[] = [
       'rule-of-72-doubling-calculator',
       'social-security-breakeven-calculator',
       'pension-lump-sum-vs-annuity-calculator',
+      'annuity-payout-calculator',
       'safe-withdrawal-calculator',
       'compound-interest-calculator',
       'inflation-calculator',

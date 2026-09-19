@@ -1478,7 +1478,79 @@ export function RuleOf72Calc() {
   )
 }
 
+/* ---------------- Annuity Payout (period-certain + implied-rate check) ---------------- */
+
+// Period-certain annuity = standard amortization: PMT = P·i/(1−(1+i)^−n).
+// Node-verified: $100k @5%/20y → $659.96/mo; @0% → $416.67 (P/n); $250k @6%/30y
+// → $1,498.88. Reverse (implied APR from an insurer quote) solved by bisection:
+// $650/mo on $100k/20y → 4.819%, re-verified by substitution.
+function annuityPmt(P: number, aprPct: number, yrs: number) {
+  const i = aprPct / 100 / 12
+  const n = yrs * 12
+  return i === 0 ? P / n : (P * i) / (1 - Math.pow(1 + i, -n))
+}
+function impliedApr(P: number, monthly: number, yrs: number) {
+  let lo = 0
+  let hi = 40
+  for (let k = 0; k < 200; k++) {
+    const mid = (lo + hi) / 2
+    if (annuityPmt(P, mid, yrs) > monthly) hi = mid
+    else lo = mid
+  }
+  return (lo + hi) / 2
+}
+
+export function AnnuityPayoutCalc() {
+  const [premium, setPremium] = useNumber(100000)
+  const [rate, setRate] = useNumber(5)
+  const [yrs, setYrs] = useNumber(20)
+  const [quote, setQuote] = useNumber(650)
+
+  const r = useMemo(() => {
+    const pmt = annuityPmt(premium, rate, yrs)
+    const total = pmt * yrs * 12
+    const interest = total - premium
+    const implied = quote > 0 ? impliedApr(premium, quote, yrs) : 0
+    const quoteTotal = quote * yrs * 12
+    const floor = premium / (yrs * 12)
+    const edge = implied - rate
+    return { pmt, total, interest, implied, quoteTotal, floor, edge }
+  }, [premium, rate, yrs, quote])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Lump sum / premium" value={premium} onChange={setPremium} prefix="$" step="5000" />
+        <Field label="Rate your money earns while paying out" value={rate} onChange={setRate} suffix="%" step="0.25" />
+        <Field label="Payout period" value={yrs} onChange={setYrs} suffix="years" step="1" />
+        <Field label="Insurer's quoted monthly payment (to grade it)" value={quote} onChange={setQuote} prefix="$" suffix="/mo" step="10" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Monthly payout at your rate" value={usd(r.pmt, 2)} />
+        <Result label="Total received" value={usd(r.total, 0)} />
+        <Result label="Interest earned over premium" value={usd(r.interest, 0)} />
+        <Result label="Absolute floor (0% rate)" value={`${usd(r.floor, 2)}/mo`} />
+        <Result label="Insurer quote's implied rate" value={`${num(r.implied, 2)}%`} />
+        <Result label="Quote vs your rate" value={`${r.edge >= 0 ? '+' : ''}${num(r.edge, 2)} pts`} />
+        <Result label="Quote pays back total" value={usd(r.quoteTotal, 0)} />
+        <Result label="Quote vs your math, monthly" value={`${quote - r.pmt >= 0 ? '+' : ''}${usd(quote - r.pmt, 2)}`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        A period-certain annuity is pure amortization: {usd(premium, 0)} at {num(rate, 2)}% for{' '}
+        {num(yrs, 0)} years pays {usd(r.pmt, 2)}/mo — never less than the {usd(r.floor, 2)} floor
+        (premium ÷ months). To grade a real insurer quote, ignore the monthly number and compare
+        IMPLIED RATES: theirs works out to {num(r.implied, 2)}%/yr over the period. If that beats
+        safe CD/Treasury yields, the quote is competitive — life annuities legitimately pay above
+        amortization because of mortality credits (early deaths subsidize survivors). If it lags,
+        keeping the lump sum and self-annuitizing wins. Deferred-annuity buyers: surrender charges
+        and 1%+ annual fees eat exactly this spread — demand the implied rate before signing.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'annuity-payout-calculator': AnnuityPayoutCalc,
   'rule-of-72-doubling-calculator': RuleOf72Calc,
   'paycheck-withholding-calculator': WithholdingCalc,
   'heat-pump-vs-furnace-calculator': HeatPumpCalc,

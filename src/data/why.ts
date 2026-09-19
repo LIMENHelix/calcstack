@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'annuity-payout-calculator':
+    'Anyone holding an insurer\'s monthly-income quote uses it to compute what the agent never volunteers: the implied interest rate. A $650/month promise on $100k is a 4.82% rate — and whether that beats Treasuries is the entire decision, hidden in plain sight.',
   'rule-of-72-doubling-calculator':
     'Anyone quoting the 72 shortcut uses it to see the exact answer beside the estimate — the rule is off a full year at savings-account rates — and the inflation flip: at 3%, idle cash loses half its purchasing power every 23.4 years. It turns a cocktail-party rule into a precision tool.',
   'paycheck-withholding-calculator':

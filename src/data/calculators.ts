@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'annuity-payout-calculator',
+    title: 'Annuity Payout Calculator — Monthly Income & the Implied-Rate Test for Any Quote',
+    shortTitle: 'Annuity Payout',
+    category: 'Savings & Investing',
+    description:
+      'Free annuity payout calculator. See the exact monthly income a lump sum buys at any rate and period, then grade any insurer quote by its implied interest rate — the number agents never volunteer.',
+    tagline: 'A $650/month quote on $100k is a 4.82% implied rate. Now you can check any offer.',
+    intro:
+      'Annuity quotes are sold as a monthly number precisely because a monthly number is hard to grade. This calculator converts both directions: forward — the exact period-certain payout any lump sum produces at a given rate — and reverse — the implied interest rate hiding inside any insurer quote, solved to the hundredth of a percent. Compare that implied rate against safe CD and Treasury yields and the "is this annuity any good?" question answers itself.',
+    howItWorks: [
+      'Enter the lump sum (premium), the rate the money earns, and the payout period.',
+      'Read the exact monthly payout, total received, and interest over premium.',
+      'Enter an insurer\'s quoted monthly payment for the same premium and period.',
+      'Compare implied rates: theirs vs yours vs safe CD/Treasury yields — the better rate wins.',
+    ],
+    faq: [
+      {
+        q: 'How much does a $100,000 annuity pay per month?',
+        a: 'As a 20-year period-certain annuity: $659.96/month at 5%, $554.60 at 3%, $416.67 at 0% (the absolute floor — premium ÷ months). A real life annuity at 65 often pays more than these because of mortality credits: buyers who die early subsidize those who live long. That is why the right comparison is never the monthly check — it is the implied interest rate over your expected payout period.',
+      },
+      {
+        q: 'How do I tell if an annuity quote is a good deal?',
+        a: 'Compute its implied rate: $650/month for 20 years on a $100,000 premium is a 4.82% internal rate of return. If 20-year Treasuries or top CDs yield more, self-annuitizing wins and the insurer keeps the spread. If the implied rate beats safe yields and you value the longevity insurance, it is competitive. Any agent who will not put the surrender schedule and annual fees in writing is telling you the implied rate cannot survive daylight.',
+      },
+      {
+        q: 'Why do life annuities pay more than the amortization math says?',
+        a: 'Mortality credits. A period-certain annuity pays your money back with interest, full stop. A life annuity pools risk: the premiums of those who die early fund the checks of those who live past life expectancy, so survivors collect more than interest alone could pay. The trade: die early and the insurer keeps the remainder unless you bought a period-certain or refund rider — which lowers the monthly check by exactly the value of that guarantee.',
+      },
+    ],
+  },
+  {
     slug: 'rule-of-72-doubling-calculator',
     title: 'Rule of 72 Calculator — Exact Doubling Time vs the Mental-Math Rule',
     shortTitle: 'Rule of 72 & Doubling',
