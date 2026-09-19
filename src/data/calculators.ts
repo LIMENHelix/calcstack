@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'str-reps-loophole-calculator',
+    title: 'STR Loophole & REPS Calculator 2026 — Can Rental Losses Offset W-2 Income?',
+    shortTitle: 'STR Loophole / REPS Calculator',
+    category: 'Housing & Mortgage',
+    description:
+      'The two escapes from passive-loss rules: the short-term-rental loophole (≤7-day average stay + material participation) and real estate professional status (750 hours + half your time). Find out how much of your loss is deductible now.',
+    tagline: 'A six-day average stay can move $60,000 of losses onto your W-2. Seven days can\'t.',
+    intro:
+      'Rental losses are passive by default — they can only offset passive income, and the $25,000 allowance dies at $150,000 MAGI. Two legal escapes move those losses onto your regular income. The STR loophole: if your average guest stay is 7 days or less, the property isn\'t a "rental activity" at all — you only need material participation (100+ hours and more than anyone else, or 500+ hours). REPS: 750+ hours in real estate work AND more than half of all your working hours. Either path makes cost-segregation losses deductible against a W-2 salary. This calculator runs the whole decision tree and shows what deducts now versus what suspends.',
+    howItWorks: [
+      'Enter your average guest stay — the ≤7-day line decides if the STR loophole is even available.',
+      'Enter your hours on the rental and the most anyone else worked (cleaners count).',
+      'Enter real-estate hours and total work hours for the REPS test.',
+      'Read which path you qualify for, the deductible loss, and what suspends.',
+    ],
+    faq: [
+      {
+        q: 'How does the STR loophole actually work?',
+        a: 'Treas. Reg. §1.469-1T(e)(3)(ii): if the average customer stay is 7 days or less (or 30 with substantial services like daily cleaning), the activity isn\'t a "rental" — so the rental-is-always-passive rule never applies. You still need material participation: the practical tests are 500+ hours, or 100+ hours and more than any other individual. The cleaner is the classic failure — if your cleaner logs 200 hours and you log 150, you fail the 100-hour test. Average stay = total guest-nights ÷ number of stays, computed per year.',
+      },
+      {
+        q: 'Why is REPS nearly impossible with a full-time W-2?',
+        a: 'The two-part test: more than 750 hours in real property trades AND more hours than ALL your other work combined. A 2,000-hour W-2 job means you need 2,001+ real estate hours — 40 hours a week — on top of the job. That\'s why the classic play is the spouse: one spouse without a W-2 (or part-time) qualifies for REPS while the other\'s salary gets sheltered. Married filing jointly combines the benefit. The 750 hours alone isn\'t enough — the half-time prong is what kills it for most W-2 holders.',
+      },
+      {
+        q: 'What happens to suspended losses?',
+        a: 'They carry forward indefinitely and deduct against future passive income — and release IN FULL against any income in the year you sell the property in a fully taxable disposition. So suspended losses aren\'t lost, just timed. Two audit notes: document hours contemporaneously (a log reconstructed before an audit loses; STR platform calendars plus a time-tracking app win), and the grouping election for REPS must be filed with your return — you can\'t decide to group properties retroactively.',
+      },
+    ],
+  },
+  {
     slug: 'cost-segregation-calculator',
     title: 'Cost Segregation Calculator 2026 — 100% Bonus Depreciation Benefit & Recapture Trade',
     shortTitle: 'Cost Segregation Calculator',

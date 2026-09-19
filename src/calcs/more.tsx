@@ -2322,6 +2322,61 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// STR loophole & REPS — §469: rental losses are passive by default. Two escapes: (1) STR loophole — average guest stay ≤7 days makes it NOT a "rental activity" (Treas. Reg. §1.469-1T(e)(3)(ii)), so only material participation is needed (main tests: >500 hrs, or >100 hrs and more than any other person); (2) REPS §469(c)(7) — >750 hrs in real property trades AND more than half of ALL working hours, plus material participation per property (or grouping election). Otherwise: $25,000 active-participation allowance phasing out $100k–$150k MAGI ($0 above $150k), suspended losses carry forward and release at sale. Node-verified: STR 5-day avg/120 hrs (cleaner 80) → fully non-passive; W-2 landlord 40 hrs, MAGI $120k → $15k of $30k deductible; REPS spouse 900 RE hrs of 1,500 total → full $80k; MAGI $160k → allowance $0.
+export function STRRepsCalc() {
+  const [stay, setStay] = useNumber(5)
+  const [hrs, setHrs] = useNumber(120)
+  const [others, setOthers] = useNumber(80)
+  const [reHrs, setReHrs] = useNumber(120)
+  const [totHrs, setTotHrs] = useNumber(2000)
+  const [loss, setLoss] = useNumber(60000)
+  const [magi, setMagi] = useNumber(180000)
+  const [passive, setPassive] = useNumber(0)
+
+  const r = useMemo(() => {
+    const str = stay <= 7
+    const mp = hrs >= 500 || (hrs >= 100 && hrs > others)
+    const reps = reHrs > 750 && reHrs > totHrs / 2
+    const nonPassive = (str && mp) || (reps && mp)
+    const allow = Math.max(0, 25000 - 0.5 * Math.max(0, magi - 100000))
+    const ded = nonPassive ? loss : Math.min(loss, passive + allow)
+    return { str, mp, reps, nonPassive, allow, ded, susp: loss - ded }
+  }, [stay, hrs, others, reHrs, totHrs, loss, magi, passive])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Average guest stay (days)" value={stay} onChange={setStay} />
+          <Field label="YOUR hours on the rental this year" value={hrs} onChange={setHrs} />
+          <Field label="Most hours anyone else worked (cleaner, manager)" value={others} onChange={setOthers} />
+          <Field label="Hours in real estate work (all properties)" value={reHrs} onChange={setReHrs} />
+          <Field label="Your TOTAL work hours (all jobs)" value={totHrs} onChange={setTotHrs} />
+          <Field label="Rental loss (after depreciation/cost seg)" value={loss} onChange={setLoss} prefix="$" />
+          <Field label="MAGI" value={magi} onChange={setMagi} prefix="$" />
+          <Field label="Other passive income" value={passive} onChange={setPassive} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Path" value={r.nonPassive ? (r.str ? 'STR loophole' : 'REPS') : 'Passive rules'} />
+          <Result label="Loss deductible this year" value={usd(r.ded)} />
+          <Result label="Suspended (carries forward)" value={usd(r.susp)} />
+          <Result label="$25k allowance left" value={usd(r.allow)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.nonPassive ? (
+            <><span className="font-medium">Non-passive — the full {usd(r.ded)} offsets W-2 and business income.</span> {r.str && r.mp ? `Average stay of ${num(stay, 1)} days (≤7) means this isn't a "rental activity" at all, and your ${num(hrs, 0)} hours pass material participation (${hrs >= 500 ? 'the 500-hour test' : 'the 100-hour nobody-did-more test'}).` : ''}{r.reps && r.mp ? `REPS qualifies: ${num(reHrs, 0)} real-estate hours beats both 750 and half of your ${num(totHrs, 0)} total working hours.` : ''} This is exactly how cost-segregation losses reach your W-2. </>
+          ) : (
+            <>Passive. {r.str && !r.mp ? <>The ≤7-day stay qualifies you for the STR loophole, but material participation fails: {hrs < 100 ? `${num(hrs, 0)} hours is under the 100-hour minimum` : `someone else logged ${num(others, 0)} hours vs your ${num(hrs, 0)} — the cleaner counts`}. </> : ''}{!r.str && !r.reps ? <>Stay over 7 days = rental activity, and REPS fails ({num(reHrs, 0)} RE hours needs &gt;750 AND more than half your {num(totHrs, 0)} total hours — a full-time W-2 makes that nearly impossible). </> : ''}You deduct {usd(r.ded)} (other passive income + the $25k allowance{r.allow === 0 ? ' — fully phased out over $150k MAGI' : ''}); {usd(r.susp)} suspends and releases when you sell or generate passive income. </>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          §469 framework: rentals are passive unless an exception applies. STR loophole (Treas. Reg. §1.469-1T(e)(3)(ii)): average stay ≤7 days (or ≤30 with substantial services) removes "rental" status — then only material participation is needed: &gt;500 hours, OR &gt;100 hours and more than any other individual (property managers and cleaners count), OR substantially-all, among seven tests. REPS (§469(c)(7)): &gt;750 hours in real property trades AND more than half of ALL your working time — then each property still needs material participation (or make the grouping election). The $25,000 allowance requires active participation and ≥10% ownership, phasing out $100k–$150k MAGI. Document hours contemporaneously — a log built the week before an audit loses; STR platforms' calendars plus a time-tracking app win. Suspended losses release in full against any income the year you sell the property in a taxable disposition.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Cost segregation + bonus depreciation — OBBBA §70301: 100% bonus depreciation PERMANENT for qualified property (≤20-yr recovery) acquired after Jan 19, 2025 (binding-contract grandfathering keeps old 40%/20% phase-down for pre-1/20/2025 acquisitions). Studies reclassify 20–45% of building basis into 5/7/15-yr property (carpet, cabinetry, appliances → 5yr; parking, landscaping, signage → 15yr), fully expensed year 1. Structure stays 27.5yr residential / 39yr commercial straight-line; land never depreciates. The trade: §1245 recapture at ORDINARY rates on reclassified components at sale (vs 25% §1250) — net benefit = year-1 savings − study cost − recapture delta (before time value, which adds more). Node-verified: $1M rental (25% land, 25% reclass, 32% bracket, $5k study) → year-1 savings $57,818, net $39,693; $4M commercial (30% reclass, 37%) → $346,092 year-1, net $218,892.
 export function CostSegCalc() {
   const [price, setPrice] = useNumber(1000000)
@@ -5901,6 +5956,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'str-reps-loophole-calculator': STRRepsCalc,
   'cost-segregation-calculator': CostSegCalc,
   'depreciation-recapture-calculator': DepRecaptureCalc,
   '1031-exchange-calculator': Exchange1031Calc,

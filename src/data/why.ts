@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'str-reps-loophole-calculator':
+    'W-2 earners with an Airbnb use it before counting on the paper loss: a ≤7-day average stay plus 100 honest hours moves the whole cost-seg deduction onto their salary — but the cleaner\'s hours count, and one day of average stay is the line between deductible and suspended.',
   'cost-segregation-calculator':
     'Rental and commercial owners use it before commissioning the study: 100% bonus is permanent now, so the year-one deduction jumps 7–10×, and the honest net — minus the study fee and the ordinary-rate recapture at sale — decides whether the engineering report pays for itself.',
   'depreciation-recapture-calculator':
