@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'net-investment-income-tax-calculator',
+    title: 'Net Investment Income Tax Calculator 2026 — The 3.8% + 0.9% Medicare Surtaxes',
+    shortTitle: 'NIIT Calculator',
+    category: 'Everyday Money',
+    description:
+      'The 3.8% Net Investment Income Tax hits the lesser of your investment income or MAGI over $200k/$250k — thresholds frozen since 2013, never inflation-adjusted. Plus the 0.9% Additional Medicare Tax on wages. Price both surtaxes.',
+    tagline: 'Two surtaxes, one frozen threshold from 2013 — and bracket creep is doing the rest.',
+    intro:
+      'Since 2013, crossing $200,000 (single) or $250,000 (married) of MAGI triggers a 3.8% surtax on investment income — interest, dividends, capital gains, rental income — on top of everything else. The thresholds are written into the statute and have never been inflation-adjusted, so every year more households fall in. Wages and IRA distributions aren\'t investment income themselves, but they raise MAGI and drag your investment income into the zone — a big Roth conversion can trigger NIIT on income that was never converted. High earners also owe a separate 0.9% Additional Medicare Tax on wages and self-employment income over the same thresholds. This calculator prices both surtaxes so the real marginal cost of that next dollar of gains is visible.',
+    howItWorks: [
+      'Pick your filing status — thresholds are $200k single/HoH, $250k joint, $125k separate.',
+      'Enter modified AGI (for most people, that\'s just AGI).',
+      'Enter net investment income: interest, dividends, capital gains, rents, royalties, passive business income.',
+      'Enter wages plus self-employment income for the 0.9% Additional Medicare Tax.',
+    ],
+    faq: [
+      {
+        q: 'Does a Roth conversion trigger the 3.8% tax?',
+        a: 'Indirectly, yes. Converted amounts are NOT investment income, but they count fully in MAGI. A $150,000 conversion that pushes MAGI past the threshold exposes your dividends, interest, and capital gains to the 3.8% — up to $5,700 of extra tax that has nothing to do with the conversion\'s own income tax. Size conversions to stop below the line, or split them across December and January.',
+      },
+      {
+        q: 'What counts as investment income — and what doesn\'t?',
+        a: 'Counts: taxable interest, nonqualified dividends, capital gains (including the taxable part of a home sale above the $250k/$500k exclusion), rental and royalty income, and business income where you don\'t materially participate. Doesn\'t count: wages, active S-corp/partnership income, Social Security, pension and IRA/401(k) distributions, tax-exempt municipal bond interest, and veterans\' benefits. Note the trap: muni interest is excluded from BOTH MAGI and NII — one of the few planning levers that moves both.',
+      },
+      {
+        q: 'Why does my employer withhold 0.9% when I\'m married and we\'re under $250k combined?',
+        a: 'Because employers must withhold the Additional Medicare Tax once YOUR wages pass $200,000 in a calendar year — they can\'t see your spouse\'s income or your filing status. If you\'re MFJ and under the real $250,000 threshold, the excess withholding comes back as a credit on Form 8959. The reverse trap is worse: two spouses each earning $150k have $300k combined, owe 0.9% on $50k, and had nothing withheld — that\'s an underpayment surprise at filing.',
+      },
+    ],
+  },
+  {
     slug: 's-corp-reasonable-salary-calculator',
     title: 'S-Corp Reasonable Salary Calculator 2026 — Payroll Tax Saved vs QBI Lost',
     shortTitle: 'S-Corp Salary Calculator',

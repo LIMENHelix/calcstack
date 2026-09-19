@@ -2322,6 +2322,67 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Net Investment Income Tax + Additional Medicare Tax — IRC §1411/§3101(b)(2): 3.8% NIIT on the LESSER of net investment income or MAGI over the threshold; 0.9% Additional Medicare on wages/SE over the threshold. Thresholds are statutory since 2013 and NOT inflation-indexed: $200k single/HoH, $250k MFJ, $125k MFS — bracket creep by design. NII includes interest, nonqualified dividends, capital gains, rental/royalty and passive business income; EXCLUDES wages, active/pass-through business income, Social Security, pensions, and IRA/401(k) distributions (but Roth conversions raise MAGI and can drag OTHER income into NIIT). Employer withholding for the 0.9% kicks in at $200k regardless of status — reconcile on the 1040. Node-verified: single MAGI $250k/NII $40k → $1,520; MFJ $300k/$80k → $1,900; MAGI under threshold → $0; MFJ $500k/$100k → $3,800; wages $300k single → 0.9% × $100k = $900.
+export function NiitCalc() {
+  const [status, setStatus] = useState('single')
+  const [magi, setMagi] = useNumber(250000)
+  const [nii, setNii] = useNumber(40000)
+  const [wages, setWages] = useNumber(210000)
+
+  const r = useMemo(() => {
+    const thr = status === 'mfj' ? 250000 : status === 'mfs' ? 125000 : 200000
+    const excess = Math.max(0, magi - thr)
+    const niit = 0.038 * Math.min(nii, excess)
+    const med = 0.009 * Math.max(0, wages - thr)
+    return { thr, excess, niit, med, total: niit + med }
+  }, [status, magi, nii, wages])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium">Filing status</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="single">Single / Head of household — $200,000</option>
+              <option value="mfj">Married filing jointly — $250,000</option>
+              <option value="mfs">Married filing separately — $125,000</option>
+            </select>
+          </div>
+          <Field label="Modified AGI" value={magi} onChange={setMagi} prefix="$" />
+          <Field label="Net investment income" value={nii} onChange={setNii} prefix="$" />
+          <Field label="Wages + self-employment" value={wages} onChange={setWages} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Total surtaxes / year" value={usd(r.total)} />
+          <Result label="3.8% NIIT" value={usd(r.niit)} />
+          <Result label="0.9% Additional Medicare" value={usd(r.med)} />
+          <Result label="MAGI over threshold" value={usd(r.excess)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.niit > 0 ? (
+            <>Your MAGI exceeds the {usd(r.thr)} threshold by <span className="font-medium">{usd(r.excess)}</span>, so the 3.8% hits {usd(Math.min(nii, r.excess))} of investment income = <span className="font-medium">{usd(r.niit)}</span>. </>
+          ) : (
+            <>MAGI is under the {usd(r.thr)} threshold — <span className="font-medium">no NIIT</span> regardless of how much investment income you have. </>
+          )}
+          {r.med > 0 ? (
+            <>Wages run {usd(wages - r.thr)} past the threshold, adding the 0.9% Additional Medicare Tax: <span className="font-medium">{usd(r.med)}</span>.</>
+          ) : (
+            <>Wages stay under the threshold, so the 0.9% Additional Medicare Tax doesn't apply.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Net investment income = interest, nonqualified dividends, capital gains (including home-sale gains above the §121 exclusion), rental and royalty income, and passive business income. It excludes wages, active pass-through business income, Social Security, pensions, and IRA/401(k) distributions — BUT a Roth conversion or big IRA withdrawal raises MAGI and can pull your other investment income into the 3.8% zone. The thresholds are fixed in the statute (2013) and never inflation-adjusted — every year more households cross them. Planning levers: tax-loss harvesting, municipal-bond interest (excluded from NII AND MAGI), timing capital gains across years, installment sales to spread MAGI, and maxing pre-tax retirement contributions to hold MAGI under the line. Note: employers withhold the 0.9% once wages pass $200,000 regardless of filing status — if you're MFJ that's early; reconcile on Form 8959 and Form 8960.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // S-corp reasonable salary — the core S-corp trade: salary pays FICA (12.4% SS up to the $184,500 wage base + 2.9% Medicare, both halves) while distributions pay neither. Sole-prop baseline: SE tax on 92.35% of profit, same 12.4%/2.9%. But every salary dollar also cuts QBI — S-corp QBI = 20% × (profit − salary), so salary costs 0.20 × salary × marginal bracket in lost deduction. And salary set unreasonably low invites IRS reclassification of distributions as wages (Rev. Rul. 59-221; no bright line — common heuristics 40–60% of profit or market wage for the role). Node-verified: profit $200k, salary $80k → FICA $12,240 vs SE $28,234 → payroll saved $15,994; QBI lost 0.20×80,000×0.32 = $5,120 → net $10,874; salary $200k (over SS base) → FICA $28,678.
 export function SCorpSalaryCalc() {
   const [profit, setProfit] = useNumber(200000)
@@ -6100,6 +6161,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'net-investment-income-tax-calculator': NiitCalc,
   's-corp-reasonable-salary-calculator': SCorpSalaryCalc,
   'accountable-plan-calculator': AccountablePlanCalc,
   'augusta-rule-calculator': AugustaRuleCalc,

@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'net-investment-income-tax-calculator':
+    'High earners use it before a big gain or Roth conversion: MAGI over $200k/$250k (frozen since 2013) drags investment income into the 3.8%, and wages over the line add 0.9% — the tool prices both surtaxes before they\'re committed.',
   's-corp-reasonable-salary-calculator':
     'S-corp owners use it at salary-setting time: payroll tax saved (15.3% on distributions) minus QBI lost (6.4¢ per salary dollar at the 32% bracket) is the real net — and the <40%-of-profit flag marks where reclassification risk starts.',
   'accountable-plan-calculator':
