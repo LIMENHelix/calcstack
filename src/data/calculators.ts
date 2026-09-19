@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'step-up-basis-calculator',
+    title: 'Step-Up in Basis Calculator 2026 — The Capital Gain That Dies With You',
+    shortTitle: 'Step-Up Basis Calculator',
+    category: 'Investing & Crypto',
+    description:
+      'Assets inherited at death get a fresh basis at fair market value — decades of capital gains and depreciation recapture, erased. Price the step-up, the community-property double, and the gifting mistake.',
+    tagline: 'Sell it and pay 23.8%. Hold it and pay 0%. The step-up is the biggest tax break nobody plans around.',
+    intro:
+      'Internal Revenue Code §1014 is the quiet giant of family tax planning: when an asset passes at death, its basis resets to fair market value, and every dollar of unrealized capital gain — plus every dollar of depreciation recapture on rental property — is simply erased. A $100,000 rental now worth $600,000 generates $119,000 of tax if sold during life and $0 if held to death. In the nine community-property states, BOTH halves of a married couple\'s community property step up at the first death; in common-law states only the decedent\'s half does. The one asset class left out: traditional IRAs and 401(k)s get no step-up — heirs pay ordinary rates on the 10-year clock. With the 2026 estate exemption at $15 million per person, the basis step-up — not the estate tax — is the break that matters for almost everyone. This calculator prices it for your exact numbers.',
+    howItWorks: [
+      'Enter the asset\'s original cost basis and its value today.',
+      'Enter your combined capital-gains rate — 15% or 20% federal, plus 3.8% NIIT and state if applicable.',
+      'Pick the ownership form: sole owner, joint in a common-law state, or community property.',
+      'Read the tax if sold today versus the tax erased at death — and what survivors still owe.',
+    ],
+    faq: [
+      {
+        q: 'Why is gifting appreciated stock to my kids a mistake?',
+        a: 'Because §1015 gives gifts a carryover basis — your kids inherit your $20 basis along with the stock, and owe capital-gains tax on decades of appreciation when they sell. The same stock passed at death gets a stepped-up basis: they could sell the next day and owe nothing. If you want to help kids now, gift cash or high-basis assets, and let the low-basis ones pass through the estate. The reverse move — gifting appreciated assets UP to an elderly parent and inheriting them back — is the legal maneuver planners call upstream gifting, and it works precisely because of the step-up.',
+      },
+      {
+        q: 'We live in a community-property state — is it really double?',
+        a: 'Yes, and it\'s routinely missed. In Arizona, California, Idaho, Louisiana, Nevada, New Mexico, Texas, Washington, and Wisconsin, community property receives a full step-up on BOTH halves when the first spouse dies — the surviving spouse can sell immediately with zero gain. In a common-law state, jointly-held property gets only the decedent\'s half stepped up; the survivor\'s half keeps its old basis. On $500,000 of joint gain at 23.8%, that difference is $59,500. Some couples in common-law states use community-property trusts or agreements to capture it — worth asking an estate attorney.',
+      },
+      {
+        q: 'Does the step-up erase depreciation recapture on my rental?',
+        a: 'Yes — this is the real estate sleeper. All that §1250 depreciation you deducted at 25% recapture exposure, plus the appreciation, disappears into the stepped-up basis. The heirs inherit at market value, start depreciating fresh from the new basis, and the recapture bill never arrives. Combined with the 1031 exchange (defer during life) and the step-up (erase at death), the "swap \'til you drop" strategy is why rental empires pass largely income-tax-free. What does NOT get erased: traditional IRA and 401(k) balances — income in respect of a decedent — which is why Roth conversions late in life are partly a basis play.',
+      },
+    ],
+  },
+  {
     slug: 'inherited-ira-calculator',
     title: 'Inherited IRA Calculator 2026 — The 10-Year Rule, Steady vs Lump-Sum Withdrawals',
     shortTitle: 'Inherited IRA Calculator',

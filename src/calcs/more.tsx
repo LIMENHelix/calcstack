@@ -2322,6 +2322,63 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Step-up in basis — IRC §1014: assets passing at death get basis reset to fair market value, erasing ALL unrealized capital gain (and all depreciation recapture — rentals' §1250 gain dies with the owner). Gifts during life carry over the donor's basis (§1015) — the classic mistake: gifting appreciated stock to mom vs inheriting it. Community property states (AZ, CA, ID, LA, NV, NM, TX, WA, WI): BOTH halves of community property step up at first death; common-law joint property: only the decedent's half. NO step-up for income in respect of a decedent (IRD): traditional IRA/401(k) balances, deferred comp — heirs pay ordinary rates (see inherited-ira-calculator). Estate exemption 2026: $15M/person (OBBBA §70106, indexed) — so for nearly everyone the BASIS story matters more than the estate tax. Node-verified: basis $100k→FMV $600k single at 23.8% → $119,000 erased; joint common-law → $59,500 erased, $59,500 still taxable; basis $150k→$1M at 20% → $170,000 erased.
+export function StepUpBasisCalc() {
+  const [basis, setBasis] = useNumber(100000)
+  const [fmv, setFmv] = useNumber(600000)
+  const [rate, setRate] = useNumber(23.8)
+  const [own, setOwn] = useState('single')
+
+  const r = useMemo(() => {
+    const frac = own === 'joint' ? 0.5 : 1
+    const gain = Math.max(0, fmv - basis)
+    const ifSold = gain * (rate / 100)
+    const erased = gain * frac * (rate / 100)
+    const stillTaxable = gain * (1 - frac) * (rate / 100)
+    return { gain, ifSold, erased, stillTaxable }
+  }, [basis, fmv, rate, own])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Original cost basis" value={basis} onChange={setBasis} prefix="$" />
+          <Field label="Value today" value={fmv} onChange={setFmv} prefix="$" />
+          <Field label="Combined cap-gains rate" value={rate} onChange={setRate} suffix="%" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">Ownership</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={own}
+              onChange={(e) => setOwn(e.target.value)}
+            >
+              <option value="single">Single / sole owner — full step-up</option>
+              <option value="joint">Joint, common-law state — half steps up</option>
+              <option value="community">Community property state — both halves</option>
+            </select>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Tax erased at death" value={usd(r.erased)} />
+          <Result label="Unrealized gain" value={usd(r.gain)} />
+          <Result label="Tax if sold today" value={usd(r.ifSold)} />
+          <Result label="Still taxable to survivors" value={usd(r.stillTaxable)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.gain > 0 ? (
+            <>Selling today costs <span className="font-medium">{usd(r.ifSold)}</span>. Dying holding it erases <span className="font-medium">{usd(r.erased)}</span> of that — heirs get a fresh basis at {own === 'joint' ? 'half the gain erased; the survivor still carries' : 'fair market value, so'} {r.stillTaxable > 0 ? usd(r.stillTaxable) + ' of tax on the survivor\'s half.' : 'zero taxable gain.'} {own === 'joint' && <> In a community-property state BOTH halves would step up — {usd(r.gain * (rate / 100))} erased instead.</>}</>
+          ) : (
+            <>No unrealized gain — basis meets or exceeds today's value, so the step-up changes nothing here. (It can also step DOWN; basis resets to value either way.)</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          §1014 resets basis to fair market value at death — every dollar of appreciation, and every dollar of depreciation recapture on rentals, vanishes for income-tax purposes. The flip side nobody mentions: gifts during life carry over YOUR basis (§1015), so gifting appreciated stock to an elderly parent and inheriting it back ("upstream gifting") converts a taxable gain into a tax-free one — while gifting the same stock to your kids hands them your tax bill. Community property states (AZ, CA, ID, LA, NV, NM, TX, WA, WI) double the benefit at the first spouse's death. The big exception: traditional IRAs, 401(k)s, and deferred comp get NO step-up — that's income in respect of a decedent, taxed at heirs' ordinary rates on the 10-year clock. With the 2026 estate exemption at $15M/person, the basis step-up — not the estate tax — is the tax break that matters for almost every estate.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Inherited IRA 10-year rule — SECURE Act §401 (deaths after 12/31/2019): non-spouse beneficiaries must EMPTY the account by end of year 10. Final regs (T.D. 10001, July 2024): if the owner died ON/AFTER their required beginning date, annual RMDs (Single Life Table) are ALSO required years 1–9 — the empty-by-year-10-only reading died with the regs. Eligible designated beneficiaries (spouse, minor children until majority, disabled/chronically ill, beneficiaries ≤10 years younger) can still stretch. Missed RMD penalty: 25%, cut to 10% if corrected within 2 years (SECURE 2.0 §302). Inherited Roth: same 10-year clock but withdrawals are tax-free — waiting to year 10 is nearly always optimal. Strategy math node-verified: $500k/10yr/6% → even withdrawals $67,934/yr, total $679,340, net $516,298 at 24%; lump year 10 = $895,424, net $564,117 at 37% — lump wins unless lump bracket > 42.3% (crossover = 1 − evenNet/lumpFV). $200k/7yr/5%: even $34,564/yr net $188,719 at 22%; lump $281,420 net $191,366 at 32%.
 export function InheritedIraCalc() {
   const [bal, setBal] = useNumber(500000)
@@ -6335,6 +6392,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'step-up-basis-calculator': StepUpBasisCalc,
   'inherited-ira-calculator': InheritedIraCalc,
   'kiddie-tax-calculator': KiddieTaxCalc,
   'underpayment-penalty-calculator': UnderpaymentPenaltyCalc,
