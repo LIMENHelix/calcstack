@@ -1081,7 +1081,65 @@ export function College529Calc() {
   )
 }
 
+/* ---------------- Home Office Deduction ---------------- */
+
+// Simplified: $5/sq ft, max 300 sq ft ($1,500). Actual: business share of housing costs.
+// Self-employed only — the W-2 employee deduction was suspended by TCJA and made permanent
+// by OBBBA (2025). Savings = deduction × (marginal rate + SE tax 15.3% × 92.35% = 14.13%).
+// Verified: 150/2,000 sq ft, $28.8k costs → actual $2,160 vs simplified $750 (actual +$1,410).
+export function HomeOfficeCalc() {
+  const [office, setOffice] = useNumber(150)
+  const [home, setHome] = useNumber(2000)
+  const [housing, setHousing] = useNumber(28800)
+  const [mrate, setMrate] = useNumber(22)
+  const [se, setSe] = useState(true)
+
+  const r = useMemo(() => {
+    const simp = Math.min(office, 300) * 5
+    const pct = home > 0 ? Math.min(office, home) / home : 0
+    const actual = housing * pct
+    const rate = mrate / 100 + (se ? 0.1413 : 0)
+    const winner = actual >= simp ? 'actual' : 'simplified'
+    return { simp, pct: pct * 100, actual, winner, diff: Math.abs(actual - simp), saveActual: actual * rate, saveSimp: simp * rate, rate: rate * 100 }
+  }, [office, home, housing, mrate, se])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Office area" value={office} onChange={setOffice} suffix="sq ft" />
+        <Field label="Total home area" value={home} onChange={setHome} suffix="sq ft" />
+        <Field label="Annual housing costs (rent or interest+tax, utilities, insurance)" value={housing} onChange={setHousing} prefix="$" step="500" />
+        <Field label="Your marginal tax rate" value={mrate} onChange={setMrate} suffix="%" step="1" />
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={se} onChange={(e) => setSe(e.target.checked)} />
+          <span>Self-employed (adds ~14.1% SE-tax savings)</span>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label={`${r.winner === 'actual' ? 'Actual' : 'Simplified'} method wins`} value={`by ${usd(r.diff, 0)}`} />
+        <Result label="Business share of home" value={`${num(r.pct, 1)}%`} />
+        <Result label="Actual-method deduction" value={usd(r.actual, 0)} />
+        <Result label="Simplified deduction" value={usd(r.simp, 0)} />
+        <Result label="Tax saved (actual)" value={usd(r.saveActual, 0)} />
+        <Result label="Tax saved (simplified)" value={usd(r.saveSimp, 0)} />
+        <Result label="Your combined savings rate" value={`${num(r.rate, 1)}%`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Your office is {num(r.pct, 1)}% of the home, so the actual method deducts {usd(r.actual, 0)}
+        {' '}against the simplified method's flat {usd(r.simp, 0)} — the {r.winner} route is worth{' '}
+        {usd(r.diff, 0)} more deduction, about {usd(Math.abs(r.saveActual - r.saveSimp), 0)} more
+        cash back at your rates. Two hard rules: the space must be used regularly and exclusively
+        for business (the kitchen table fails), and this deduction is self-employed only — W-2
+        employees lost it under TCJA, and OBBBA made that permanent. Actual method can never
+        exceed your business income (it can't create a loss), and homeowners should know the
+        depreciation piece gets recaptured at sale — one reason some owners pick simplified anyway.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'home-office-deduction-calculator': HomeOfficeCalc,
   '529-college-savings-calculator': College529Calc,
   'pet-first-year-cost-calculator': PetCostCalc,
   'baby-first-year-cost-calculator': BabyCostCalc,

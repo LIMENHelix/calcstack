@@ -170,6 +170,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'home-office-deduction-calculator',
+    title: 'Home Office Deduction Calculator — Simplified vs Actual Method',
+    shortTitle: 'Home Office Deduction',
+    category: 'Savings & Investing',
+    description:
+      'Free home office deduction calculator. Compare the simplified $5/sq ft method against the actual-expense method with your real housing costs — see which wins, the dollar difference, and the tax saved including self-employment tax.',
+    tagline: 'The $1,500 simplified cap leaves money on the table for most renters. Prove it.',
+    intro:
+      'The simplified home office method ($5 per square foot, 300 sq ft max) exists to save recordkeeping, not to save you the most tax — for anyone paying real rent or mortgage in a high-cost area, the actual-expense method usually wins by four figures. This calculator runs both against your numbers, shows the winner and the gap, and converts the deduction into actual cash saved at your tax rates.',
+    howItWorks: [
+      'Enter the office area and your total home area — the business share drives the actual method.',
+      'Enter annual housing costs: rent, or mortgage interest + property tax, plus utilities and insurance.',
+      'Enter your marginal tax rate and check self-employed to include SE-tax savings (~14.1%).',
+      'Read which method wins, by how much, and the cash each one saves you.',
+    ],
+    faq: [
+      {
+        q: 'How much is the home office deduction worth?',
+        a: 'Simplified method: $5 per square foot up to 300 sq ft, capped at $1,500. Actual method: your business percentage of real housing costs — a 150 sq ft office in a 2,000 sq ft home (7.5%) with $28,800 of rent and utilities deducts $2,160, beating simplified by $660. At the 22% bracket plus ~14.1% self-employment tax, $2,160 of deduction returns about $780 in cash.',
+      },
+      {
+        q: 'Can W-2 employees working from home claim it?',
+        a: 'No. The miscellaneous deduction for employee business expenses was suspended by the TCJA in 2018, and the One Big Beautiful Bill Act (2025) made that suspension permanent. The home office deduction is now self-employed only — sole proprietors, freelancers, gig workers, and single-member LLCs reporting on Schedule C.',
+      },
+      {
+        q: 'What disqualifies a home office?',
+        a: 'The exclusive-use test: the space must be used regularly and only for business. A desk in the guest bedroom that hosts visitors twice a year fails; a kitchen table fails; a dedicated room or a clearly partitioned area passes. Other limits: the deduction cannot exceed business income (it cannot create a loss — actual-method excess carries forward), and homeowners using the actual method face depreciation recapture when they sell, which is the hidden cost of the bigger deduction.',
+      },
+    ],
+  },
+  {
     slug: '529-college-savings-calculator',
     title: '529 College Savings Calculator — Will Your Plan Cover the Real Bill?',
     shortTitle: '529 College Savings',

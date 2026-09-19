@@ -15,6 +15,8 @@ export const WHY_USE: Record<string, string> = {
     'A house deposit, an emergency fund, a wedding, a sabbatical — every goal is a wish until it has a monthly number. People use this to convert "I want $20,000 in two years" into "$812 a month," and to find out honestly whether the plan fits the budget before committing to it.',
   'loan-payoff-calculator':
     'People use this when they get a raise, a bonus, or a tax refund and face the classic question: throw it at the loan or not? It shows exactly what an extra $50 or $500 a month does to a car loan, student loan, or personal loan — the months erased and the interest saved, in dollars.',
+  'home-office-deduction-calculator':
+    'Freelancers and gig workers use it at tax time — or better, in January when the year can still be planned. The simplified method\'s $1,500 cap quietly loses to actual expenses for most renters, and seeing the gap in dollars is what makes the recordkeeping worth it.',
   '529-college-savings-calculator':
     'Parents and grandparents use it at the first birthday-party conversation about college: the sticker price today is not the bill at enrollment, and this shows the inflated 4-year total against the current plan\'s trajectory. The coverage percentage and the fully-funded monthly number turn an abstract worry into a savings target.',
   'pet-first-year-cost-calculator':
