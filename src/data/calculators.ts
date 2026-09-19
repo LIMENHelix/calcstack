@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: '403b-calculator',
+    title: '403(b) Calculator 2026 — The 15-Year Catch-Up, Computed With All Three Prongs',
+    shortTitle: '403(b) & 15-Yr Rule',
+    category: 'Careers & Salary',
+    description:
+      'Free 403(b) calculator for teachers, nurses, and nonprofit employees. Computes the real 15-year service catch-up with the full least-of-three IRS formula, stacks it with 2026 limits and age catch-ups, and shows which prong binds.',
+    tagline: 'The 15-year catch-up is a least-of-three formula. Most sites only tell you the $3,000 prong.',
+    intro:
+      'The special 403(b) catch-up is the most-misreported limit in retirement planning: it is not "an extra $3,000 after 15 years" — it is the LEAST of $3,000 per year, $15,000 lifetime, and $5,000 times your years of service minus every dollar you have ever deferred into that employer\'s plans. Heavy savers routinely get zero. This calculator runs the full Pub 571 worksheet, shows which prong binds for you, and stacks the result with the 2026 base limit and age catch-ups using the IRS\'s own ordering rule.',
+    howItWorks: [
+      'Enter your years of service with your current qualifying employer (school district, hospital, church…).',
+      'Enter ALL elective deferrals you have ever made into that employer\'s plans, and any 15-year catch-up already used.',
+      'Pick your age group for the 2026 age catch-up ($8,000, or $11,250 at 60–63).',
+      'Read your true 2026 maximum and which of the three prongs limits you.',
+    ],
+    faq: [
+      {
+        q: 'What is the 403(b) 15-year catch-up, really?',
+        a: 'IRC 402(g)(7): employees with 15+ years at a qualifying employer (public school system, hospital, home-health or health-and-welfare agency, church) may defer extra — the LEAST of three prongs: $3,000 per year; $15,000 lifetime minus prior catch-up use; and $5,000 × years of service minus ALL prior elective deferrals to that employer\'s plans. Example: 16 years, $40,000 prior deferrals, none used → $3,000 this year. But 15 years with $80,000 deferred → prong 3 is negative → $0. The third prong is what the "$3,000 for everyone" articles miss.',
+      },
+      {
+        q: 'Can I stack the 15-year catch-up with the age-50 catch-up?',
+        a: 'Yes, but the ordering is mandatory: deferrals above the $24,500 base limit (2026) count against the 15-year catch-up FIRST, then the age-50 catch-up — per the IRS\'s own worked example. An eligible 52-year-old educator can defer $24,500 + $3,000 + $8,000 = $35,500 in 2026; at ages 60–63 the SECURE 2.0 super catch-up makes it $38,750. The plan document must offer the 15-year provision — not all do.',
+      },
+      {
+        q: 'Do years at different schools count toward the 15 years?',
+        a: 'Generally yes within the same employer: for public school systems the district is the employer, so moving between schools in the same district preserves your years. Moving to a different district starts the clock over. Part-time and partial-year work counts as fractional years — the worksheet uses your employer\'s work period (for teachers, the academic year). The plan or its recordkeeper is responsible for the official determination; this calculator gives you the number to check theirs against.',
+      },
+    ],
+  },
+  {
     slug: 'tsp-calculator',
     title: 'TSP Calculator 2026 — Match, Limits & the Front-Loading Trap Quantified',
     shortTitle: 'TSP Contribution',

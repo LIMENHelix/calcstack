@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  '403b-calculator':
+    'Teachers and hospital staff use it to claim the catch-up most articles describe wrong: the 15-year rule is a least-of-three formula where heavy savers get zero, and the tool shows which prong binds and how it stacks with age catch-ups — $35,500 possible at 50+, $38,750 at 60–63 in 2026.',
   'tsp-calculator':
     'Federal employees and BRS service members use it to catch the per-pay-period trap: the 5% match is computed every period, so hitting the $24,500 cap early forfeits match outright. It shows the exact forfeiture and the percentage election that maxes the year with every period matched.',
   'truck-driver-per-diem-calculator':

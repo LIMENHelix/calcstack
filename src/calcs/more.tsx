@@ -1864,7 +1864,82 @@ export function TspCalc() {
   )
 }
 
+/* ---------------- 403(b) with 15-Year Service Catch-Up ---------------- */
+
+// The special 403(b) catch-up (IRC 402(g)(7), Pub 571 worksheet): LEAST of
+// (1) $3,000/yr; (2) $15,000 lifetime minus prior 15-yr catch-up deferrals;
+// (3) $5,000 × years of service minus ALL prior elective deferrals to this
+// employer's plans. Ordering (IRS example): deferrals over the base limit count
+// toward the 15-year catch-up FIRST, then age-50. Node-verified cases below.
+export function Teacher403bCalc() {
+  const [yrs, setYrs] = useNumber(16)
+  const [prior, setPrior] = useNumber(40000)
+  const [used, setUsed] = useNumber(0)
+  const [ageGrp, setAgeGrp] = useState<'under50' | 'catchup' | 'super'>('under50')
+
+  const r = useMemo(() => {
+    const base = 24500
+    const ageCatch = ageGrp === 'under50' ? 0 : ageGrp === 'catchup' ? 8000 : 11250
+    const eligible = yrs >= 15
+    const p1 = 3000
+    const p2 = Math.max(0, 15000 - used)
+    const p3 = Math.max(0, 5000 * yrs - prior)
+    const c = eligible ? Math.min(p1, p2, p3) : 0
+    let prong = 'not eligible — needs 15 years with THIS employer'
+    if (eligible) {
+      if (c === 0) prong = p3 === 0 ? 'prong 3 binds: you have averaged $5,000+/yr already' : 'prong 2 binds: $15,000 lifetime cap used up'
+      else if (c === p3 && p3 <= p1 && p3 <= p2) prong = 'prong 3 binds ($5,000 × years − prior deferrals)'
+      else if (c === p2 && p2 <= p1) prong = 'prong 2 binds ($15,000 lifetime − prior use)'
+      else prong = 'prong 1 binds ($3,000/year cap)'
+    }
+    const total = base + c + ageCatch
+    return { base, ageCatch, eligible, p1, p2, p3, c, prong, total }
+  }, [yrs, prior, used, ageGrp])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Years of service with THIS employer" value={yrs} onChange={setYrs} suffix="yrs" step="1" />
+        <Field label="All prior elective deferrals to this employer's plans" value={prior} onChange={setPrior} prefix="$" step="1000" />
+        <Field label="15-year catch-up already used (lifetime)" value={used} onChange={setUsed} prefix="$" step="500" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Age group (2026)</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={ageGrp} onChange={(e) => setAgeGrp(e.target.value as 'under50' | 'catchup' | 'super')}>
+            <option value="under50">Under 50</option>
+            <option value="catchup">50–59 or 64+ (+$8,000)</option>
+            <option value="super">60–63 (+$11,250)</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Your 2026 403(b) maximum" value={usd(r.total, 0)} />
+        <Result label="Base limit (everyone)" value={usd(r.base, 0)} />
+        <Result label="15-year catch-up available" value={usd(r.c, 0)} />
+        <Result label="Age catch-up" value={usd(r.ageCatch, 0)} />
+        <Result label="Prong 1: $3,000/yr cap" value={usd(r.p1, 0)} />
+        <Result label="Prong 2: $15k lifetime left" value={usd(r.p2, 0)} />
+        <Result label="Prong 3: $5k×yrs − deferrals" value={usd(r.p3, 0)} />
+        <Result label="Which prong binds" value={r.prong} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The 15-year rule is a least-of-three formula most sites oversimplify: $3,000/year, $15,000
+        lifetime, and — the killer — $5,000 × your years of service minus EVERYTHING you have ever
+        deferred into this employer's plans. Heavy savers often get zero: 15 years with $80,000
+        deferred fails prong 3 (75,000 − 80,000 &lt; 0). Light savers win: {num(yrs, 0)} years with{' '}
+        {usd(prior, 0)} deferred leaves {usd(r.p3, 0)} of prong-3 room. Eligible employers: public
+        school systems, hospitals, home-health and health-and-welfare agencies, churches — and the
+        plan document must allow it. For public schools the DISTRICT is generally the employer, so
+        years at different schools in the same district usually combine. Ordering trap per the IRS's
+        own example: deferrals above {usd(r.base, 0)} count against the 15-year catch-up FIRST, then
+        the age-50 catch-up — so eligible 50+ educators can stack all three ({usd(24500 + 3000 + 8000, 0)}{' '}
+        total in 2026, or {usd(24500 + 3000 + 11250, 0)} at 60–63).
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  '403b-calculator': Teacher403bCalc,
   'tsp-calculator': TspCalc,
   'truck-driver-per-diem-calculator': TruckerPerDiemCalc,
   'travel-nurse-pay-calculator': TravelNurseCalc,
