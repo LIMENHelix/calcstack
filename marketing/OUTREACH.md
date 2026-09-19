@@ -93,6 +93,7 @@ they keep the person who clearly knows the subject.
 | Small business owners | PTET Election, Nanny Tax, QBI-adjacent tools | CPA/tax blogs, /r/tax and /r/smallbusiness answer threads, S-corp community newsletters, bookkeeping firm blogs |
 | Parents & families | Trump Account, Custodial Roth, 529-vs-Trump-vs-Roth, Nanny Tax | Parenting finance blogs, college-planning sites, nanny agency resource pages, family-money newsletters |
 | Eldercare & senior finance | LTC Cost, LTC Insurance vs Self-Fund, Hybrid vs Traditional LTC, Medicaid Spend-Down, RMD, Social Security Breakeven | Elder law firm blogs, caregiver forums (AgingCare-style), senior living referral sites, fee-only advisor newsletters, /r/AgingParents answer threads |
+| Founders & startup equity | QSBS Exclusion, QSBS 1045 Rollover, PTET Election, QBI Deduction | Startup law blogs, founder communities (Indie Hackers-style), VC/advisor newsletters, /r/startups and /r/ycombinator answer threads, cap-table tool blogs |
 
 ## New-vertical pitch angles (what makes OURS different)
 
@@ -166,3 +167,24 @@ type, price the Medicaid fallback. Every eldercare site has articles; none have 
 Timing: evergreen, but peaks with family gatherings (holidays → "Mom can't live alone"
 conversations) and open enrollment. Elder law blogs update their figures every January — pitch
 them in December before they rewrite.
+
+## Wave 49 — Founder & startup equity (#252, #257, #258)
+
+Every startup-law blog has a QSBS explainer; none have the calculator. Post-OBBBA confusion is
+the opening — founders keep asking which regime their stock is in.
+
+- **QSBS Exclusion** — both regimes side by side (legacy $10M cliff vs OBBBA 50/75/100% tiers,
+  $15M/10×-basis cap), plus the rate nuance everyone gets wrong: the 28% + NIIT rate hits only
+  the non-excluded slice when a tier is active; below the tier it's ordinary 23.8%. Pitch:
+  "your QSBS article is pre-OBBBA — embed the calculator that knows both regimes."
+- **QSBS 1045 Rollover** — the escape-hatch tool: recognized gain = unreinvested proceeds,
+  basis reduction, holding-period tacking (including the acquisition DATE — no regime upgrade).
+  Angel-investor newsletters and secondary-market blogs (tender-offer season is the trigger).
+- **PTET Election** — from wave 47, cross-pitch here: founders with S-corp/LLC income are the
+  exact audience, and Q4 is election season.
+- **QBI Deduction** — backlist ride-along for the same readers; 2026 thresholds and the widened
+  $75k/$150k phase-in ranges are already live in the tool.
+
+Timing: exits and tender offers cluster Q4 and post-funding-announcement; secondary marketplaces
+publish liquidity guides continuously. /r/ycombinator and founder Discords: answer-first, link
+only when the math is the answer (Template C).
