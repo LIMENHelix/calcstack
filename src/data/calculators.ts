@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'travel-nurse-pay-calculator',
+    title: 'Travel Nurse Pay Calculator — Staff vs Contract, Honest Take-Home',
+    shortTitle: 'Travel Nurse Pay',
+    category: 'Careers & Salary',
+    description:
+      'Free travel nurse pay calculator. Compare a travel contract against your staff position the honest way: taxable wage after tax, tax-free stipends, and the duplicated housing you actually pay — plus the breakeven stipend and the tax-home rules that decide everything.',
+    tagline: 'A $1,300/week tax-free stipend is worth $1,667 of taxable pay — if your tax home is real.',
+    intro:
+      'Agencies quote a "blended rate" precisely so you cannot compare it to a staff offer. This calculator unblends it: the taxable hourly is taxed, the stipends are tax-free (while your tax home is legitimate), and the duplicated housing you actually pay at the assignment comes off the top. What remains is an honest annual take-home number you can put next to your staff paycheck — plus the breakeven stipend where the contract stops winning.',
+    howItWorks: [
+      'Enter your staff offer: hourly rate, weekly hours, and your tax rate.',
+      'Enter the contract: taxable hourly, weekly stipends (housing + M&IE), length, and contracts per year.',
+      'Enter the housing you will actually pay at the assignment while keeping your tax home.',
+      'Compare annual take-home both ways, the stipend\'s taxable-pay equivalent, and the breakeven stipend.',
+    ],
+    faq: [
+      {
+        q: 'Is travel nursing actually worth it financially?',
+        a: 'Run the honest net, not the blended rate. Example: a $42/hr staff job at 36 hrs/wk grosses $78,624 and nets about $61,327 at a 22% tax rate. A contract at $28/hr taxable plus $1,300/wk stipends, three 13-week contracts, paying $1,500/month duplicated housing, nets $67,863 — travel wins by $6,537/year. Change the stipend to $1,100/wk and staff wins. The breakeven stipend in this scenario is $1,132/wk — that number, not the headline package, is the negotiation.',
+      },
+      {
+        q: 'Are travel nurse stipends really tax-free?',
+        a: 'Only while you maintain a legitimate tax home and genuinely duplicate living expenses — paying for housing at the assignment while keeping your permanent home. Stipends are meant to track federal GSA per-diem rates for the assignment area. The trap: expect to work at one location for more than 12 months and the IRS treats the assignment as indefinite, not temporary — every stipend dollar becomes taxable income. Nurses who "travel" at one hospital for years are audit bait.',
+      },
+      {
+        q: 'What does a low taxable hourly wage cost me?',
+        a: 'More than most travelers realize. Social Security credits, unemployment benefits, disability coverage, 401(k) match percentages, and mortgage income verification all key off TAXABLE wages — a $28/hr taxable rate with big stipends looks like a $58k earner to a lender, not a $115k one. The stipend\'s tax advantage is real (a $1,300/wk tax-free stipend equals $1,667/wk of taxable pay at 22%), but the low base wage quietly discounts every benefit computed on income.',
+      },
+    ],
+  },
+  {
     slug: 'rent-affordability-calculator',
     title: 'Rent Affordability Calculator — 30% Rule, 3× Rule & the 40× Rule (Same Math)',
     shortTitle: 'Rent Affordability',

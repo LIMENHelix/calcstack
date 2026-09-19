@@ -1604,7 +1604,82 @@ export function RentAffordCalc() {
   )
 }
 
+/* ---------------- Travel Nurse Pay (staff vs contract, honest net) ---------------- */
+
+// Stipends (housing + M&IE per diem) are tax-free ONLY with a real tax home and
+// duplicated expenses (IRS temporary-assignment rules; >12 months expected at one
+// site = indefinite = stipends taxable). Node-verified: staff $42/hr×36×52 =
+// $78,624 gross → $61,326.72 net @22%. Travel $28/hr + $1,300/wk stipend, 3×13wk
+// contracts, $1,500/mo duplicated housing → $67,863.36 net, wins by $6,536.64.
+// Breakeven stipend $1,132.39/wk; stipend taxable-equivalent $1,666.67/wk.
+export function TravelNurseCalc() {
+  const [staffRate, setStaffRate] = useNumber(42)
+  const [hours, setHours] = useNumber(36)
+  const [taxRate, setTaxRate] = useNumber(22)
+  const [travRate, setTravRate] = useNumber(28)
+  const [stipend, setStipend] = useNumber(1300)
+  const [contractWks, setContractWks] = useNumber(13)
+  const [contracts, setContracts] = useNumber(3)
+  const [dupHousing, setDupHousing] = useNumber(1500)
+
+  const r = useMemo(() => {
+    const t = taxRate / 100
+    const staffGross = staffRate * hours * 52
+    const staffNet = staffGross * (1 - t)
+    const perContractTaxable = travRate * hours * contractWks
+    const perContractStipend = stipend * contractWks
+    const perContractTotal = perContractTaxable + perContractStipend
+    const weeks = contractWks * contracts
+    const travTaxableNet = perContractTaxable * contracts * (1 - t)
+    const travStipends = perContractStipend * contracts
+    const dupTotal = (dupHousing * weeks * 12) / 52
+    const travNet = travTaxableNet + travStipends - dupTotal
+    const edge = travNet - staffNet
+    const stipendEquiv = t < 1 ? stipend / (1 - t) : Infinity
+    const breakeven = weeks > 0 ? Math.max(0, (staffNet + dupTotal - travTaxableNet) / weeks) : 0
+    const taxFreeShare = perContractTotal > 0 ? (perContractStipend / perContractTotal) * 100 : 0
+    return { staffGross, staffNet, travNet, edge, perContractTotal, weeks, dupTotal, stipendEquiv, breakeven, taxFreeShare }
+  }, [staffRate, hours, taxRate, travRate, stipend, contractWks, contracts, dupHousing])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Staff offer — hourly rate" value={staffRate} onChange={setStaffRate} prefix="$" suffix="/hr" step="1" />
+        <Field label="Hours per week (both jobs)" value={hours} onChange={setHours} suffix="hrs" step="1" />
+        <Field label="Your tax rate on taxable pay" value={taxRate} onChange={setTaxRate} suffix="%" step="1" />
+        <Field label="Travel contract — taxable hourly" value={travRate} onChange={setTravRate} prefix="$" suffix="/hr" step="1" />
+        <Field label="Weekly tax-free stipends (housing + M&IE)" value={stipend} onChange={setStipend} prefix="$" suffix="/wk" step="25" />
+        <Field label="Contract length" value={contractWks} onChange={setContractWks} suffix="weeks" step="1" />
+        <Field label="Contracts per year" value={contracts} onChange={setContracts} step="1" />
+        <Field label="Duplicated housing at assignment" value={dupHousing} onChange={setDupHousing} prefix="$" suffix="/mo" step="50" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label={r.edge >= 0 ? 'Travel contract wins by' : 'Staff position wins by'} value={`${usd(Math.abs(r.edge), 0)}/yr`} />
+        <Result label="Staff take-home per year" value={usd(r.staffNet, 0)} />
+        <Result label="Travel take-home per year" value={usd(r.travNet, 0)} />
+        <Result label="One contract pays (gross)" value={usd(r.perContractTotal, 0)} />
+        <Result label="Tax-free share of contract pay" value={`${num(r.taxFreeShare, 0)}%`} />
+        <Result label="Stipend worth as taxable pay" value={`${usd(r.stipendEquiv, 0)}/wk`} />
+        <Result label="Breakeven stipend" value={`${usd(r.breakeven, 0)}/wk`} />
+        <Result label="Duplicated housing cost" value={`${usd(r.dupTotal, 0)}/yr`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The honest comparison: staff pays {usd(r.staffNet, 0)} take-home; the contract pays{' '}
+        {usd(r.travNet, 0)} after tax on the taxable wage and your real duplicated housing. The
+        stipend's magic is tax — {usd(stipend, 0)}/wk tax-free equals {usd(r.stipendEquiv, 0)}/wk
+        of taxable pay at {num(taxRate, 0)}% — but it is only tax-free while you keep a legitimate
+        TAX HOME and actually duplicate expenses. Expect to stay at one site over 12 months and
+        the IRS calls it indefinite: every stipend dollar becomes taxable income. Below{' '}
+        {usd(r.breakeven, 0)}/wk of stipend, this contract loses to staff. And the low taxable
+        wage has hidden costs: it shrinks your Social Security earnings record, your mortgage
+        income verification, and any 401(k) match computed on base pay.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'travel-nurse-pay-calculator': TravelNurseCalc,
   'rent-affordability-calculator': RentAffordCalc,
   'annuity-payout-calculator': AnnuityPayoutCalc,
   'rule-of-72-doubling-calculator': RuleOf72Calc,
