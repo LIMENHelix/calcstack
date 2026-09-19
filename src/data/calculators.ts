@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'charitable-bunching-calculator',
+    title: 'Charitable Bunching Calculator 2026 — Donor-Advised Fund vs Spreading Gifts',
+    shortTitle: 'Charitable Bunching Calculator',
+    category: 'Everyday Money',
+    description:
+      'Free charitable bunching calculator for 2026. Compare spreading gifts vs bunching two years into a donor-advised fund — with the new 0.5% AGI floor and above-the-line deduction.',
+    tagline: 'Same gifts, same charities — two different tax bills.',
+    intro:
+      'Bunching — stacking two years of charitable gifts into one tax year through a donor-advised fund — has been standard advice since 2018. But 2026 changed the math twice: a new 0.5%-of-AGI floor trims itemized gifts, and a new above-the-line charitable deduction ($1,000 single / $2,000 joint) now rewards NON-itemizers every single year — which bunching surrenders in the off year. For some households bunching still saves thousands; for others spreading now wins. This calculator runs both strategies across two years with your real numbers and picks the winner in dollars.',
+    howItWorks: [
+      'Enter filing status and AGI — the 2026 standard deduction and brackets are applied automatically.',
+      'Enter other itemized deductions (SALT after the cap, mortgage interest, medical) — the itemize-vs-standard calculator can compute this for you.',
+      'Enter annual charitable giving.',
+      'The calculator runs two years both ways: spread (each year picks the better of itemized vs standard + above-the-line) versus bunched (double gift year one, standard year two), with the 0.5% AGI floor applied.',
+      'The winner is shown as two-year federal tax saved — same generosity, lower bill.',
+    ],
+    faq: [
+      {
+        q: 'How does charitable bunching work with a donor-advised fund?',
+        a: 'You contribute two (or more) years of gifts to a DAF in one tax year and take the full deduction immediately — then grant the money to charities on your normal schedule from the fund. The charities see no difference; your tax return does. Contributing appreciated stock instead of cash adds a second win: no capital gains tax on the appreciation.',
+      },
+      {
+        q: 'Why might bunching NOT be worth it in 2026?',
+        a: 'Two new OBBBA provisions cut against it. Itemized charitable gifts now face a 0.5%-of-AGI floor, and non-itemizers get an above-the-line deduction up to $1,000/$2,000 per year — every year you take the standard deduction. Bunching only wins if the bunched year clears the standard deduction by enough to offset both the floor and the lost above-the-line amounts. For households with modest other deductions, spreading now wins.',
+      },
+      {
+        q: 'When is bunching clearly right?',
+        a: 'When your other itemized deductions (SALT + mortgage interest) already sit near the standard deduction — common in 2026 with the $40,400 SALT cap — so a doubled gift year clears it by a wide margin. It\'s also ideal in a one-time high-income year (bonus, Roth conversion, business sale), because deductions are worth most at your highest bracket. Run the numbers; the two-year savings answer is what matters.',
+      },
+    ],
+  },
+  {
     slug: 'itemized-vs-standard-deduction-calculator',
     title: 'Itemized vs Standard Deduction Calculator 2026 — New SALT Cap & Charitable Rules',
     shortTitle: 'Itemize vs Standard 2026',

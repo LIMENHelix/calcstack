@@ -914,6 +914,7 @@ export const PERSONAS: Persona[] = [
       'medicare-irmaa-calculator',
       'estate-tax-calculator',
       'gift-tax-calculator',
+      'charitable-bunching-calculator',
       'traditional-ira-deduction-calculator',
       'compound-interest-calculator',
       'inflation-calculator',

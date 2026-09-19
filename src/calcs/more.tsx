@@ -2322,6 +2322,90 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Charitable bunching / DAF 2026 — two-year comparison: spread giving vs bunching 2 years into one via donor-advised fund. Itemized charitable subject to 0.5%-of-AGI floor (OBBBA); non-itemizer above-line charitable $1,000/$2,000 (NEW 2026 — makes bunching LOSE when other deductions are low: spread gets 2×$2,000 above-line, bunch gets none in the off year). Std $16,100/$32,200/$24,150. Verified: MFJ AGI $150k, other $25k, $10k/yr → bunch wins $7,950 of deductions ≈ $1,749 tax; AGI $120k, other $20k, $8k/yr → spread wins $800.
+export function CharitableBunchingCalc() {
+  const [status, setStatus] = useState('m')
+  const [agi, setAgi] = useNumber(150000)
+  const [other, setOther] = useNumber(25000)
+  const [annual, setAnnual] = useNumber(10000)
+
+  const r = useMemo(() => {
+    const STD: Record<string, number> = { s: 16100, m: 32200, h: 24150 }
+    const BK: Record<string, readonly (readonly [number, number])[]> = {
+      s: [[0, 0.10], [12400, 0.12], [50400, 0.22], [105700, 0.24], [201775, 0.32], [256225, 0.35], [640600, 0.37]],
+      m: [[0, 0.10], [24800, 0.12], [100800, 0.22], [211400, 0.24], [403550, 0.32], [512450, 0.35], [768700, 0.37]],
+      h: [[0, 0.10], [17700, 0.12], [67450, 0.22], [105700, 0.24], [201750, 0.32], [256200, 0.35], [640600, 0.37]],
+    }
+    const tax = (ti: number) => {
+      const t = Math.max(0, ti)
+      const B = BK[status]
+      let out = 0
+      for (let i = 0; i < B.length; i++) {
+        const lo = B[i][0]
+        const hi = i + 1 < B.length ? B[i + 1][0] : Infinity
+        if (t > lo) out += (Math.min(t, hi) - lo) * B[i][1]
+      }
+      return out
+    }
+    const std = STD[status]
+    const abl = status === 'm' ? 2000 : 1000
+    const twoYear = (bunch: boolean) => {
+      let totalDed = 0
+      let totalTax = 0
+      for (let yr = 0; yr < 2; yr++) {
+        const gift = bunch ? (yr === 0 ? annual * 2 : 0) : annual
+        const itemized = other + Math.max(0, gift - 0.005 * agi)
+        const ded = itemized > std ? itemized : std + Math.min(gift, abl)
+        totalDed += ded
+        totalTax += tax(agi - ded)
+      }
+      return { totalDed, totalTax }
+    }
+    const spread = twoYear(false)
+    const bunch = twoYear(true)
+    const bunchWins = bunch.totalTax < spread.totalTax
+    const saved = Math.abs(spread.totalTax - bunch.totalTax)
+    return { std, spread, bunch, bunchWins, saved, abl }
+  }, [status, agi, other, annual])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="s">Single</option>
+              <option value="m">Married filing jointly</option>
+              <option value="h">Head of household</option>
+            </select>
+          </label>
+          <Field label="AGI (each year)" value={agi} onChange={setAgi} prefix="$" />
+          <Field label="Other itemized deductions (SALT after cap + mortgage + medical)" value={other} onChange={setOther} prefix="$" />
+          <Field label="Annual charitable giving" value={annual} onChange={setAnnual} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="2-yr deductions: spread" value={usd(r.spread.totalDed)} />
+          <Result label="2-yr deductions: bunched" value={usd(r.bunch.totalDed)} />
+          <Result label="Winner" value={r.bunchWins ? 'Bunch it' : 'Spread it'} />
+          <Result label="2-yr federal savings" value={usd(r.saved)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.bunchWins ? (
+            <>Bunch two years of giving into one (a donor-advised fund makes it one tax event — you grant to charities on your own schedule). Itemizing the bunch year beats the {usd(r.std)} standard deduction; the off year takes the standard. Net: <span className="font-medium">{usd(r.saved)} less federal tax over two years</span>, same money to the same charities. </>
+          ) : (
+            <>Spread your giving. Bunching only wins when the bunched year's itemized total clears the standard deduction by enough to offset what you lose in the off year — and new for 2026, spreading also keeps the <span className="font-medium">above-the-line charitable deduction ({usd(r.abl)}/year)</span> in BOTH years, which bunching surrenders. </>
+          )}
+          {Math.abs(r.spread.totalDed - r.bunch.totalDed) < 2000 && <>It's close — the 0.5%-of-AGI floor on itemized gifts and your bracket boundaries are doing the deciding. </>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 rules: standard deduction $16,100 single / $32,200 MFJ / $24,150 HoH; itemized charitable gifts reduced by 0.5% of AGI (new OBBBA floor); non-itemizers deduct up to $1,000 (single) / $2,000 (MFJ) above the line (new for 2026, permanent). "Other itemized" should be your SALT after the $40,400 cap, mortgage interest, and deductible medical — the itemize-vs-standard calculator computes that number. Donor-advised funds: the deduction lands in the contribution year even though grants happen later; contributing appreciated stock avoids capital gains entirely. Cash gifts to public charities capped at 60% of AGI (excess carries forward 5 years). This compares two years at constant income — run it again if a high-income year is coming, since deductions are worth most at your highest bracket.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Itemize vs standard deduction 2026 — OBBBA §164(b): SALT cap $40,400 (S/MFJ/HoH), −30% of MAGI over $505,000, floor $10,000 (~$606,333). Std deductions Rev. Proc. 2025-32: $16,100/$32,200/$24,150 + $2,050 (S/HoH) or $1,650/pp (MFJ) age 65+/blind. OBBBA: 0.5%-of-AGI floor on itemized charitable (§170(f)); non-itemizer above-line charitable $1,000/$2,000 (§70111/§224); §68 2/37 haircut at 37% bracket. Verified vs published 2026 cap table ($530k→$32,900, $555k→$25,400).
 export function ItemizeVsStandardCalc() {
   const [status, setStatus] = useState('m')
@@ -4739,6 +4823,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'gift-tax-calculator': GiftTaxCalc,
   'second-income-calculator': SecondIncomeCalc,
   'itemized-vs-standard-deduction-calculator': ItemizeVsStandardCalc,
+  'charitable-bunching-calculator': CharitableBunchingCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,
