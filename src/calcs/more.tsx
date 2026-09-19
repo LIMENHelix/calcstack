@@ -1138,7 +1138,71 @@ export function HomeOfficeCalc() {
   )
 }
 
+/* ---------------- Solar Panel Payback (2026 — post-credit) ---------------- */
+
+// IMPORTANT: the 30% federal residential credit (IRC §25D) ENDED Dec 31, 2025 under
+// OBBBA (P.L. 119-21). No federal credit for homeowner systems placed in service in
+// 2026. Lease/PPA "credit" is the owner's commercial §48E, not the homeowner's.
+// Verified: $24k system − $2k state rebate, 9,000 kWh @ 18.8¢, 90% offset → yr1
+// $1,522.80, simple payback 14.4y, escalated (3% util, 0.5% degradation) yr 13,
+// 25-yr net +$29,915. Avg US residential rate ≈18.8¢/kWh (EIA, Mar 2026).
+export function SolarPaybackCalc() {
+  const [cost, setCost] = useNumber(24000)
+  const [rebate, setRebate] = useNumber(2000)
+  const [kwh, setKwh] = useNumber(9000)
+  const [rate, setRate] = useNumber(18.8)
+  const [offset, setOffset] = useNumber(90)
+  const [esc, setEsc] = useNumber(3)
+  const [deg, setDeg] = useNumber(0.5)
+
+  const r = useMemo(() => {
+    const net = Math.max(0, cost - rebate)
+    const yr1 = kwh * (rate / 100) * (offset / 100)
+    let cum = 0
+    let payback: number | null = null
+    for (let y = 1; y <= 25; y++) {
+      cum += yr1 * Math.pow(1 + esc / 100, y - 1) * Math.pow(1 - deg / 100, y - 1)
+      if (payback === null && cum >= net) payback = y
+    }
+    const simple = yr1 > 0 ? net / yr1 : Infinity
+    return { net, yr1, simple, payback, total25: cum, net25: cum - net }
+  }, [cost, rebate, kwh, rate, offset, esc, deg])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="System cost (cash price)" value={cost} onChange={setCost} prefix="$" step="500" />
+        <Field label="State/utility rebates" value={rebate} onChange={setRebate} prefix="$" step="100" />
+        <Field label="Annual production" value={kwh} onChange={setKwh} suffix="kWh" step="100" />
+        <Field label="Your electricity rate" value={rate} onChange={setRate} suffix="¢/kWh" step="0.1" />
+        <Field label="Bill offset (net metering)" value={offset} onChange={setOffset} suffix="%" step="1" />
+        <Field label="Utility rate escalation" value={esc} onChange={setEsc} suffix="%/yr" step="0.5" />
+        <Field label="Panel degradation" value={deg} onChange={setDeg} suffix="%/yr" step="0.1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Payback (with escalation)" value={r.payback === null ? '> 25 yrs' : `${r.payback} yrs`} />
+        <Result label="Net cost after rebates" value={usd(r.net, 0)} />
+        <Result label="Year-1 bill savings" value={usd(r.yr1, 0)} />
+        <Result label="Simple payback (flat rates)" value={isFinite(r.simple) ? `${num(r.simple, 1)} yrs` : '—'} />
+        <Result label="25-year total savings" value={usd(r.total25, 0)} />
+        <Result label="25-year net gain" value={r.net25 >= 0 ? `+${usd(r.net25, 0)}` : `−${usd(Math.abs(r.net25), 0)}`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        2026 reality check: the 30% federal residential solar credit (§25D) ended December 31,
+        2025 under OBBBA — there is no federal credit for a homeowner system installed in 2026.
+        If an installer's quote still shows a "30% federal credit" line, that's the lease/PPA
+        company's commercial §48E credit, which belongs to them, not you. What still drives the
+        math: your electricity rate (US average ≈18.8¢/kWh; 30¢+ states pay back years earlier),
+        your net-metering terms, and state rebates. Here the system pays back in{' '}
+        {r.payback === null ? 'over 25 years' : `${r.payback} years`} and nets{' '}
+        {usd(r.net25, 0)} over its 25-year life.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'solar-payback-calculator': SolarPaybackCalc,
   'home-office-deduction-calculator': HomeOfficeCalc,
   '529-college-savings-calculator': College529Calc,
   'pet-first-year-cost-calculator': PetCostCalc,

@@ -170,6 +170,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'solar-payback-calculator',
+    title: 'Solar Panel Payback Calculator — 2026 Math Without the Expired Federal Credit',
+    shortTitle: 'Solar Payback',
+    category: 'Housing & Mortgage',
+    description:
+      'Free solar payback calculator updated for 2026: the 30% federal credit ended Dec 31, 2025. Enter system cost, production, your electric rate, and net-metering terms — see the real payback year and 25-year net, with escalation and degradation.',
+    tagline: 'The federal credit is gone. Your electric rate does the heavy lifting now.',
+    intro:
+      'Most solar calculators still bake in the 30% federal tax credit — it ended December 31, 2025 under OBBBA, and a homeowner system installed in 2026 gets nothing from Washington. This calculator runs the honest 2026 math: net cost after state and utility rebates, year-1 savings from your actual electric rate and net-metering terms, then payback with utility escalation and panel degradation over the system\'s 25-year life.',
+    howItWorks: [
+      'Enter the cash price of the system and any state or utility rebates.',
+      'Enter annual production in kWh (from the installer\'s proposal).',
+      'Enter your electricity rate and net-metering offset percentage.',
+      'Set utility escalation and panel degradation — 3% and 0.5% are the standard planning values.',
+      'Read the payback year, 25-year savings, and net gain.',
+    ],
+    faq: [
+      {
+        q: 'Is there still a federal solar tax credit in 2026?',
+        a: 'No. The 30% Residential Clean Energy Credit (IRC §25D) ended for expenditures after December 31, 2025, under the One Big Beautiful Bill Act. A homeowner who buys with cash or a loan in 2026 gets no federal credit. If an installer\'s quote shows a "30% federal credit," that is the lease/PPA provider\'s commercial §48E credit — they claim it, not you — so ask them to put the basis in writing.',
+      },
+      {
+        q: 'Does solar still pay off without the credit?',
+        a: 'It depends almost entirely on your electricity rate. Example: a $24,000 system with a $2,000 state rebate producing 9,000 kWh/yr. At the US average 18.8¢/kWh with 90% offset, year-1 savings are $1,523 and payback lands around year 13 with escalation — about $30,000 net over 25 years. At 30¢/kWh (California, Northeast), the same system pays back in about 9 years. At 12¢, payback stretches past year 20 and the case is thin.',
+      },
+      {
+        q: 'What changed the math the most besides the credit?',
+        a: 'Net metering. Full retail-rate netting (offset near 100%) makes solar a bill-eraser; reduced-rate or avoided-cost netting (offset 50–75%, common after California\'s NEM 3.0 and similar moves) can add 5+ years to payback and shifts the value toward self-consumption and batteries. Check your utility\'s current tariff before trusting any payback number, and look up remaining state incentives on DSIRE.',
+      },
+    ],
+  },
+  {
     slug: 'home-office-deduction-calculator',
     title: 'Home Office Deduction Calculator — Simplified vs Actual Method',
     shortTitle: 'Home Office Deduction',
