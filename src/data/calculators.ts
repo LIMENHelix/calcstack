@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ptet-election-calculator',
+    title: 'PTET Election Calculator 2026 — Pass-Through Entity Tax vs the SALT Cap',
+    shortTitle: 'PTET Election Calculator',
+    category: 'Everyday Money',
+    description:
+      'Should your S-corp or partnership elect PTET? Compare the Notice 2020-75 entity-level deduction against your remaining 2026 SALT cap room, with the QBI haircut and phase-down included.',
+    tagline: 'The SALT-cap workaround the IRS blessed — but only when the cap is actually binding.',
+    intro:
+      'The pass-through entity tax lets your partnership or S-corp pay state income tax at the entity level and deduct it as a business expense under IRS Notice 2020-75 — completely outside the $40,400 SALT cap that limits your personal Schedule A. Most PTET content stops at "do it, save money." The honest math has three moving parts: how much of your 2026 SALT cap is still open (the cap phases down 30¢ per $1 of MAGI over $505,000, to a $10,000 floor), your federal bracket, and the QBI haircut — because PTET shrinks the K-1 income your 20% §199A deduction is calculated on. When the cap is already maxed, electing saves your bracket rate on every PTET dollar. When it is not, the election can quietly cost you money. This calculator runs both directions.',
+    howItWorks: [
+      'Pick your state preset (or type your rate) and enter your share of pass-through income.',
+      'Enter federal taxable income and filing status so we can find your marginal bracket.',
+      'Enter MAGI and your other state and local taxes so we can compute your remaining SALT cap room.',
+      'Read the PTET amount, effective cap, and the net federal saving — including the 20% QBI offset.',
+    ],
+    faq: [
+      {
+        q: 'Did the One Big Beautiful Bill kill the PTET workaround?',
+        a: 'No. The House draft would have restricted it for service businesses, but the enacted law (P.L. 119-21) contains no PTET restriction. IRS Notice 2020-75 still governs: entity-level payments are deductible in computing the entity\'s non-separately-stated income. The workaround remains intact at least through the SALT cap\'s 2029 sunset — though Illinois\' PTET lapsed after 2025 and Virginia\'s ends after 2026.',
+      },
+      {
+        q: 'How can electing PTET ever LOSE money?',
+        a: 'Through the QBI interaction. PTET is deducted at the entity level, which reduces the ordinary income on your K-1 — and the §199A deduction is 20% of that income. If your personal SALT bill fit under the $40,400 cap anyway, you traded a full Schedule A deduction for a deduction worth only 80% as much after the lost QBI. Example: $200,000 of Ohio income, 3% PTET = $6,000, married with $5,000 of other SALT — the election loses about $264. Always net the two directions.',
+      },
+      {
+        q: 'What are the deadlines and traps?',
+        a: 'Elections are annual and generally irrevocable, with hard deadlines: New York requires election by March 15 of the tax year, California requires a June 15 prepayment, and New Jersey\'s BAIT must be elected electronically by the original return due date. State quirks matter: Rhode Island credits owners only 90% of PTET paid, some bases exclude guaranteed payments, and a nonresident owner can be double-taxed if their home state refuses to credit another state\'s PTET. Confirm the current-year rules with your CPA before electing.',
+      },
+    ],
+  },
+  {
     slug: 'nanny-tax-calculator',
     title: 'Nanny Tax Calculator 2026 — Household Employer Taxes (Schedule H)',
     shortTitle: 'Nanny Tax Calculator',

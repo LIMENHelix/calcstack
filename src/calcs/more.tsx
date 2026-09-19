@@ -2322,6 +2322,96 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// PTET election — IRS Notice 2020-75: entity-level state tax paid by a partnership/S-corp is deductible in computing non-separately-stated income, outside the §164(b)(6) SALT cap. 2026 cap $40,400 (OBBBA §70120), 30% phase-down over $505,000 MAGI, floor $10,000; reverts to $10,000 after 2029. Incremental federal saving = marginal × qbiFactor × PTET − itemizedRate × min(PTET, unused cap room). QBI haircut: PTET reduces K-1 ordinary income, costing 20% §199A on that amount (q = 0.8 when fully QBI-eligible). §68 as amended by OBBBA (2026+): itemized deductions capped at ~35¢/$ in the 37% bracket, so the Schedule A alternative is valued at min(marginal, 35%). Node-verified: CA 9.3% on $400k, single, $350k taxable, $15k other SALT, QBI → $1,526; UT 4.5% on $1M, MFJ, MAGI $1.06M → cap floor $10k, save $13,320; OH 3% on $200k, MFJ, $5k other SALT → −$264 (PTET loses money when the cap wasn't binding).
+export function PTETCalc() {
+  const [income, setIncome] = useNumber(400000)
+  const [rate, setRate] = useNumber(9.3)
+  const [status, setStatus] = useState<'single' | 'mfj'>('single')
+  const [taxable, setTaxable] = useNumber(350000)
+  const [magi, setMagi] = useNumber(400000)
+  const [other, setOther] = useNumber(15000)
+  const [qbi, setQbi] = useState(true)
+
+  const r = useMemo(() => {
+    const SINGLE: readonly (readonly [number, number])[] = [[12400, 0.10], [50400, 0.12], [105700, 0.22], [201775, 0.24], [256225, 0.32], [640600, 0.35], [Infinity, 0.37]]
+    const MFJ: readonly (readonly [number, number])[] = [[24800, 0.10], [100800, 0.12], [211400, 0.22], [403550, 0.24], [512450, 0.32], [768700, 0.35], [Infinity, 0.37]]
+    const table = status === 'single' ? SINGLE : MFJ
+    let marginal = 0.10
+    for (const [capTop, rate] of table) { if (taxable <= capTop) { marginal = rate; break } }
+    const saltCap = Math.max(10000, 40400 - 0.30 * Math.max(0, magi - 505000))
+    const ptet = income * (rate / 100)
+    const room = Math.max(0, saltCap - other)
+    const q = qbi ? 0.8 : 1
+    const itemizedRate = Math.min(marginal, 0.35)
+    const saving = marginal * q * ptet - itemizedRate * Math.min(ptet, room)
+    const effPct = ptet > 0 ? (saving / ptet) * 100 : 0
+    return { marginal, saltCap, ptet, room, saving, effPct, phasedDown: magi > 505000 }
+  }, [income, rate, status, taxable, magi, other, qbi])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <label className="mb-1 block text-sm font-medium">State PTET preset</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={String(rate)}
+              onChange={(e) => setRate(e.target.value)}
+            >
+              <option value={9.3}>California — 9.3% flat (through 2030)</option>
+              <option value={6.99}>Connecticut — 6.99% flat</option>
+              <option value={4.55}>Nebraska — 4.55% (2026)</option>
+              <option value={10.9}>New York — graduated 6.85–10.9% (top shown)</option>
+              <option value={10.9}>New Jersey BAIT — graduated 5.675–10.9% (top shown)</option>
+              <option value={3}>Ohio — 3% flat</option>
+              <option value={5.99}>Rhode Island — 5.99% (90% owner credit)</option>
+              <option value={4.5}>Utah — 4.5% flat</option>
+            </select>
+          </div>
+          <Field label="Your share of pass-through income" value={income} onChange={setIncome} prefix="$" />
+          <Field label="PTET rate" value={rate} onChange={setRate} suffix="%" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">Filing status</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={status}
+              onChange={(e) => setStatus(e.target.value as 'single' | 'mfj')}
+            >
+              <option value="single">Single</option>
+              <option value="mfj">Married filing jointly</option>
+            </select>
+          </div>
+          <Field label="Federal taxable income (finds your bracket)" value={taxable} onChange={setTaxable} prefix="$" />
+          <Field label="MAGI (for the SALT cap phase-down)" value={magi} onChange={setMagi} prefix="$" />
+          <Field label="Other SALT (property tax, personal state tax)" value={other} onChange={setOther} prefix="$" />
+        </div>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={qbi} onChange={(e) => setQbi(e.target.checked)} className="h-4 w-4" />
+          Income qualifies for the 20% QBI deduction (§199A) — most non-SSTB businesses under the threshold
+        </label>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="PTET the entity pays" value={usd(r.ptet)} />
+          <Result label="Your effective SALT cap" value={usd(r.saltCap)} />
+          <Result label="Federal saving from electing" value={usd(r.saving)} />
+          <Result label="Saving per PTET dollar" value={`${num(r.effPct, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.saving > 0 ? (
+            <>Electing moves {usd(r.ptet)} of state tax off Schedule A and onto the entity's federal return. Only {usd(r.room)} of your {usd(r.saltCap)} SALT cap was still open{r.phasedDown ? ' (phase-down active — MAGI over $505,000)' : ''}, so the election is worth about <span className="font-medium">{usd(r.saving)}</span> at your {num(r.marginal * 100, 0)}% bracket{qbi ? ' after the 20% QBI haircut — PTET shrinks K-1 income, which shrinks the §199A deduction' : ''}. </>
+          ) : (
+            <><span className="font-medium">Electing would lose ≈{usd(-r.saving)}.</span> Your {usd(r.room)} of open SALT cap room already covers the state tax, and the PTET deduction costs you 20 cents of QBI deduction per dollar — a net loss when the cap wasn't binding. This is the case PTET pitches leave out. </>
+          )}
+          Election mechanics: annual, usually irrevocable, and deadline-driven (New York: March 15; California: June 15 prepayment). Miss it and the year is gone.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 rules: SALT cap $40,400, reduced 30¢ per $1 of MAGI over $505,000, never below $10,000; reverts to $10,000 after 2029 (IRC §164(b)(6) as amended by OBBBA). The entity-level deduction rests on IRS Notice 2020-75, which OBBBA left untouched. About 36 states plus NYC offer PTET; Illinois lapsed after 2025 and Virginia after 2026. Graduated states (NY 6.85–10.9%, NJ BAIT 5.675–10.9%): enter YOUR bracket rate, not the top. Watch state quirks — Rhode Island credits only 90% of PTET, some states exclude guaranteed payments, and nonresident owners can be double-taxed if their home state won't credit the election. For the 37% bracket, the new §68 limit values itemized deductions at ~35¢/$ — PTET sidesteps that too. Run both directions with your CPA before electing.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Nanny tax / household employer — IRS Pub 926 (2026): FICA when any one household employee gets $3,000+ cash wages in 2026 (15.3% split 7.65/7.65; SS capped at $184,500 wage base); FUTA when total household wages hit $1,000 in any quarter (6% on first $7,000, 0.6% net with full state credit = $42). Exempt: spouse, child under 21, parent (narrow exception), under-18 student. Schedule H filed with the 1040; W-2 + EIN required; fund via W-4 bump or estimates to avoid underpayment penalty. Reproduces Pub 926-style Garcia example: $42,000 → FICA $6,426 + FUTA $42 = $6,468.
 export function NannyTaxCalc() {
   const [hourly, setHourly] = useNumber(21)
@@ -5283,6 +5373,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'ptet-election-calculator': PTETCalc,
   'nanny-tax-calculator': NannyTaxCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
