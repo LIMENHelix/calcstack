@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'social-security-fairness-act-calculator',
+    title: 'Social Security Fairness Act Calculator 2026 — WEP & GPO Are Gone. What\'s Restored?',
+    shortTitle: 'WEP/GPO Repeal Calculator',
+    category: 'Retirement',
+    description:
+      'The Fairness Act repealed WEP and GPO retroactive to January 2024. Teachers, firefighters, police, and CSRS feds: compute exactly what the old offsets were taking and what you get back — per month and per year.',
+    tagline: 'GPO zeroed out your spousal benefit for decades. That ended — retroactive to January 2024.',
+    intro:
+      'For forty years, public employees paid a penalty for a second career: the Windfall Elimination Provision cut their own Social Security by up to $643 a month, and the Government Pension Offset erased spousal and survivor benefits entirely for millions — a teacher\'s widow with a $3,000 pension got $0 of her husband\'s $2,800 benefit. The Social Security Fairness Act (signed January 5, 2025) repealed both, retroactive to January 2024, and SSA paid out retroactive lump sums in 2025. This calculator shows exactly what each offset was taking from you — the WEP bend-point math on your own benefit, the two-thirds GPO offset on spousal/survivor benefits — and the monthly and annual amounts restored. If your benefit still shows an offset, the number here is what to bring to SSA.',
+    howItWorks: [
+      'Enter your monthly non-covered pension (teacher, fire, police, CSRS).',
+      'For the old WEP cut: enter your AIME from your SSA statement and years of Social-Security-covered work.',
+      'For the old GPO offset: enter your spouse\'s benefit and pick spousal or survivor.',
+      'Read the restored amounts — per month and per year, retroactive to January 2024.',
+    ],
+    faq: [
+      {
+        q: 'I already got my adjustment — is this still useful?',
+        a: 'Yes, for two reasons. First, verify SSA\'s math: the retroactive lump sums went out fast in 2025 and errors happen — if the restored amount here doesn\'t match your adjustment, appeal with the computation in hand. Second, survivor planning: spouses who never claimed because GPO would have zeroed the benefit can now file — a survivor benefit that was $0 is now up to 100% of the deceased spouse\'s amount, and delayed filing rules still apply. Widows and widowers in non-covered pensions are the single biggest group with money still on the table.',
+      },
+      {
+        q: 'Which teachers does this affect?',
+        a: 'Teachers whose districts don\'t pay into Social Security — that\'s most of 15 states including Texas, California, Illinois, Ohio, Massachusetts, and Alaska (it varies by district in some states). If your TRS/CalSTRS pension replaced Social Security contributions, you were WEP/GPO territory. The repeal also covers firefighters, police, other state and local workers in non-covered systems, and federal employees under the old CSRS. If your whole career was covered (FICA withheld every check), the offsets never applied and nothing changes.',
+      },
+      {
+        q: 'Does the repeal threaten Social Security\'s finances?',
+        a: 'It accelerates the trust fund depletion date by roughly six months (the offsets were saving the system money by cutting benefits). That\'s a real policy debate — but it\'s Congress\'s problem, not a reason to leave your restored benefits unclaimed. The offsets were always criticized as crude: WEP hit low-income career-changers hardest, and GPO\'s two-thirds rule bore no relationship to anyone\'s actual need. File, collect, and let the solvency debate happen separately.',
+      },
+    ],
+  },
+  {
     slug: 'pslf-calculator',
     title: 'PSLF Calculator 2026 — What Public Service Loan Forgiveness Is Actually Worth',
     shortTitle: 'PSLF Calculator',

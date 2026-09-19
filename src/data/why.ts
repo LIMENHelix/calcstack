@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'social-security-fairness-act-calculator':
+    'Retired teachers, firefighters, and CSRS feds use it to check SSA\'s adjustment: WEP\'s bend-point cut (up to $643/mo) and GPO\'s two-thirds offset are both gone retroactive to Jan 2024 — and widows who never claimed because GPO zeroed them can finally file.',
   'pslf-calculator':
     'Public-service workers use it before year 10 locks in: the forgiven balance (tax-free, even when negative amortization grew it past the original loan) versus the aggressive-payoff total — the answer is arithmetic, and high-payment cases genuinely flip.',
   'adoption-credit-calculator':

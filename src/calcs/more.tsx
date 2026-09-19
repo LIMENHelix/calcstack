@@ -2323,6 +2323,60 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Social Security Fairness Act (H.R. 82, signed Jan 5, 2025): repealed WEP and GPO for benefits payable after December 2023 — ~2.8M public employees (teachers in 15 non-covered states, firefighters, police, CSRS feds) got full benefits restored, retroactive lump sums paid in 2025. OLD WEP: first bend-point factor dropped from 90% to 40% (≤20 yrs substantial SS-covered earnings, +5pp/yr to 90% at 30 yrs), reduction capped at 50% of the non-covered pension; 2026 first bend $1,286 → max reduction $643/mo. OLD GPO: spousal/survivor benefit cut by 2/3 of the non-covered pension, floor $0. NEW LAW: full benefits, both. Node-verified: AIME $2,000/18 yrs/$2,000 pension → old WEP cut $643/mo ($7,716/yr restored); 25 yrs → $321.50; pension $800 → capped at $400. GPO: spouse SS $2,400/$3,000 pension → old spousal $0, restored $1,200/mo; survivor $2,800/$3,000 → old $800, restored $2,800.
+export function FairnessActCalc() {
+  const [aime, setAime] = useNumber(2000)
+  const [yrs, setYrs] = useNumber(18)
+  const [pension, setPension] = useNumber(3000)
+  const [spouseSS, setSpouseSS] = useNumber(2400)
+  const [kind, setKind] = useState('spousal')
+
+  const r = useMemo(() => {
+    const factor = yrs >= 30 ? 0.9 : yrs <= 20 ? 0.4 : 0.4 + (yrs - 20) * 0.05
+    const wepCut = Math.min((0.9 - factor) * Math.min(aime, 1286), 0.5 * pension)
+    const share = kind === 'survivor' ? 1 : 0.5
+    const fullAux = spouseSS * share
+    const gpoOld = Math.max(0, fullAux - (2 / 3) * pension)
+    const gpoRestored = fullAux - gpoOld
+    const monthly = wepCut + gpoRestored
+    return { wepCut, gpoOld, gpoRestored, fullAux, monthly, annual: monthly * 12 }
+  }, [aime, yrs, pension, spouseSS, kind])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Monthly non-covered pension" value={pension} onChange={setPension} prefix="$" />
+          <Field label="Your AIME (SSA statement)" value={aime} onChange={setAime} prefix="$" />
+          <Field label="Years of SS-covered earnings" value={yrs} onChange={setYrs} />
+          <Field label="Spouse's monthly SS benefit" value={spouseSS} onChange={setSpouseSS} prefix="$" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">Auxiliary benefit</label>
+            <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={kind} onChange={(e) => setKind(e.target.value)}>
+              <option value="spousal">Spousal — 50% of spouse's benefit</option>
+              <option value="survivor">Survivor — up to 100%</option>
+            </select>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Restored per month" value={usd(r.monthly, 2)} />
+          <Result label="Old WEP cut (your own benefit)" value={usd(r.wepCut, 2)} />
+          <Result label="Old GPO took" value={`${usd(r.gpoRestored, 2)} of ${usd(r.fullAux, 2)}`} />
+          <Result label="Restored per year" value={usd(r.annual)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.wepCut > 0 && <>WEP was cutting your own benefit by <span className="font-medium">{usd(r.wepCut, 2)}/mo</span> (the 90% bend-point factor dropped to {yrs >= 30 ? '90' : yrs <= 20 ? '40' : num((0.4 + (yrs - 20) * 0.05) * 100, 0)}% at {yrs} years of covered work). </>}
+          {r.gpoRestored > 0 && <>GPO was taking <span className="font-medium">{usd(r.gpoRestored, 2)}/mo</span> of your {kind} benefit{r.gpoOld === 0 && <> — it had zeroed it out entirely</>}. </>}
+          {r.monthly > 0 ? <>Under the Fairness Act both offsets are gone: <span className="font-medium">{usd(r.annual)} per year restored</span>, retroactive to January 2024. If SSA hasn't adjusted yours yet, file — the retroactive lump sum is real money.</> : <>Neither offset was touching you (30+ covered years and no GPO exposure) — the repeal changes nothing, which is itself worth confirming.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The Social Security Fairness Act (H.R. 82, signed January 5, 2025) repealed the Windfall Elimination Provision and Government Pension Offset for benefits payable after December 2023. WEP had cut the first bend-point factor from 90% down to 40% for workers with under 30 years of Social-Security-covered earnings (capped at half the pension); GPO had reduced spousal and survivor benefits by two-thirds of any non-covered government pension — often to zero. Both are simply gone now. Affected: teachers in the 15 states where school districts don't pay into Social Security, firefighters, police, and federal CSRS employees. SSA adjusted ongoing payments starting February 2025 and issued retroactive lump sums back to January 2024; if your benefit still shows an offset, contact SSA with your pension details. Simplified: WEP reduction uses the 2026 first bend point ($1,286) and the standard factor schedule; your exact figure comes from SSA.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // PSLF — Public Service Loan Forgiveness: 120 qualifying monthly payments (income-driven plan, full-time at government/501(c)(3)) → remaining balance forgiven FEDERALLY TAX-FREE (PSLF discharges are excluded income, permanently — unlike IDR forgiveness, which became taxable again after the ARP exemption expired end-2025). Negative amortization is the honest story: IDR payments below monthly interest make the forgiven balance GROW past the original loan — and that's fine, because it's forgiven. Node-verified: $80k/6%/$400 IDR/60 made → 60 payments left, $24k paid, $80k forgiven; $120k/7%/$500/0 → $60k paid, $154,617 forgiven (grows past principal); $60k/5%/$600/36 → $24,885 forgiven; aggressive alternative $80k/6%/$900 → 118 mo, $26,066 interest.
 export function PslfCalc() {
   const [bal, setBal] = useNumber(80000)
@@ -6727,6 +6781,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'social-security-fairness-act-calculator': FairnessActCalc,
   'pslf-calculator': PslfCalc,
   'adoption-credit-calculator': AdoptionCreditCalc,
   'layoff-runway-calculator': LayoffRunwayCalc,
