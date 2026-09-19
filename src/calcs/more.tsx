@@ -2322,6 +2322,58 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Custodial Roth IRA for kids — 2026 limit $7,500 or 100% of the child's EARNED income, whichever is less (Rev. Proc. 2025-32). Allowance/gifts don't count as earned income; W-2 or legit self-employment (lawn care, babysitting, modeling) does. Contributions (not earnings) withdrawable anytime tax- and penalty-free; FAFSA ignores retirement accounts as assets (though withdrawals count as student income). Verified: $3,000/yr ages 14–17 @8% → $13,518 at 18, $342,548 at 60 untouched.
+export function CustodialRothCalc() {
+  const [age, setAge] = useNumber(14)
+  const [earned, setEarned] = useNumber(3000)
+  const [contrib, setContrib] = useNumber(3000)
+  const [ret, setRet] = useNumber(8)
+
+  const r = useMemo(() => {
+    const n = Math.max(0, 18 - age)
+    const maxContrib = Math.min(earned, 7500)
+    const ann = Math.min(contrib, maxContrib)
+    const g = ret / 100
+    const fv = (yrs: number) => (g > 0 ? ann * ((Math.pow(1 + g, yrs) - 1) / g) : ann * yrs)
+    const at18 = fv(n)
+    const at25 = at18 * Math.pow(1 + g, 7)
+    const at60 = at18 * Math.pow(1 + g, 42)
+    const contributed = ann * n
+    return { n, maxContrib, ann, at18, at25, at60, contributed, overEarned: contrib > maxContrib }
+  }, [age, earned, contrib, ret])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Child's current age" value={age} onChange={setAge} />
+          <Field label="Child's earned income per year" value={earned} onChange={setEarned} prefix="$" />
+          <Field label="Annual Roth contribution" value={contrib} onChange={setContrib} prefix="$" />
+          <Field label="Annual return" value={ret} onChange={setRet} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Balance at 18" value={usd(r.at18)} />
+          <Result label="At 25 (untouched)" value={usd(r.at25)} />
+          <Result label="At 60 (untouched)" value={usd(r.at60)} />
+          <Result label="Total contributed" value={usd(r.contributed)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.overEarned && <><span className="font-medium">Contribution capped:</span> a child can contribute the lesser of earned income or $7,500 (2026) — your inputs were limited to {usd(r.maxContrib)}. </>}
+          {r.n > 0 ? (
+            <>{r.n} years of {usd(r.ann)}/year grows tax-free to <span className="font-medium">{usd(r.at18)}</span> by 18 — and if never touched again, <span className="font-medium">{usd(r.at60)}</span> at 60, all of it tax-free. </>
+          ) : (
+            <>They're already 18 — the custodial window has closed, but a regular Roth IRA with any earned income works the same way. </>
+          )}
+          {r.n > 0 && <>Unlike a 529 or Trump Account, a Roth IRA is invisible to the FAFSA as an asset — and contributions (not earnings) can come back out anytime with no tax or penalty, so it's not truly locked. </>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026: contribution limit is the lesser of the child's earned income or $7,500 — and "earned" means real work: W-2 wages from a job (including the family business, at market rates with real payroll) or self-employment like mowing, babysitting, or tutoring. Allowance and gift money don't qualify as income, though a parent can fund the contribution as long as the child earned at least that much. Growth and qualified withdrawals are tax-free forever; contributions are withdrawable anytime. The FAFSA doesn't count retirement accounts as assets, but withdrawals count as student income two years later — spend from a Roth carefully during college years. Custodian manages the account until the age of majority (18–25 by state), then it's entirely the child's.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Trump Accounts (OBBBA, IRS Notice 2025-68; launched July 4, 2026) — $1,000 pilot seed for US-citizen children born 2025–2028 (Form 4547/trumpaccounts.gov election; doesn't count toward limit); $5,000/yr aggregate contributions (after-tax, anyone can give; employer §128 up to $2,500 counts toward the $5k, pre-tax via cafeteria plan); indexed after 2027; S&P 500-type index funds only, 0.10% expense cap; locked until Jan 1 of the year the child turns 18, then traditional IRA rules (after-tax basis withdrawn tax-free, earnings ordinary income, 10% penalty pre-59½ with exceptions; Roth conversion allowed at 18). Verified: seed+max @8% → $191,247 at 18; seed-only → $3,996 at 18.
 export function TrumpAccountCalc() {
   const [years, setYears] = useNumber(18)
@@ -5103,6 +5155,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'tips-overtime-deduction-calculator': TipsOvertimeDeductionCalc,
   'car-loan-interest-deduction-calculator': CarLoanInterestCalc,
   'trump-account-calculator': TrumpAccountCalc,
+  'custodial-roth-ira-calculator': CustodialRothCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

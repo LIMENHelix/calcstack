@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'custodial-roth-ira-calculator',
+    title: 'Custodial Roth IRA Calculator 2026 — Turn a Teen\'s Summer Job Into Retirement Millions',
+    shortTitle: 'Custodial Roth IRA',
+    category: 'Savings & Investing',
+    description:
+      'Free custodial Roth IRA calculator for kids. Earned income up to $7,500 (2026) grows tax-free for decades — project the balance at 18, 25, and 60 with real limits.',
+    tagline: 'Four summer jobs. $342,000 at 60. Tax-free.',
+    intro:
+      'The most powerful retirement account in America is the one opened at 14. A kid who earns $3,000 a summer and Roths it for four years has $13,518 by 18 — and if that money is never touched again, it\'s $342,548 of tax-free money at 60. No one else gets 46 years of untaxed compounding. The catch is the earned-income rule: the child must genuinely work (allowance doesn\'t count), and contributions are capped at the lesser of earnings or $7,500. This calculator projects the account with the real 2026 limits — and unlike a 529 or Trump Account, a Roth never touches financial aid as an asset.',
+    howItWorks: [
+      'Enter the child\'s age — contributions run until 18 in this projection.',
+      'Enter annual earned income: W-2 wages or real self-employment (mowing, babysitting, tutoring, the family business at market rates). Gifts and allowance don\'t qualify.',
+      'Enter the annual contribution — capped at the lesser of earned income or $7,500 (2026). A parent can supply the cash; the child just has to have earned that much.',
+      'Set an expected return and read the balances at 18, 25, and 60 — contributions in, decades of tax-free compounding out.',
+    ],
+    faq: [
+      {
+        q: 'Can I just fund my kid\'s Roth myself?',
+        a: 'Effectively, yes — the rule is that contributions can\'t exceed the child\'s earned income, not that the same dollars must be deposited. If your teen earns $3,000 lifeguarding and spends it, you can gift the $3,000 contribution. What you can\'t do is invent income: the work must be real, at a market wage, with records (pay stubs or a log for self-employment).',
+      },
+      {
+        q: 'Custodial Roth vs Trump Account vs 529?',
+        a: 'Roth IRA: needs earned income, tax-free forever, FAFSA-invisible, contributions accessible — the best long-term vehicle if the child works. Trump Account: no income requirement, $1,000 seed for 2025–2028 births, but earnings are taxed as ordinary income and it counts against aid. 529: best for college specifically — tax-free for education and minimal aid impact. Working kid? Roth first. Newborn? Grab the $1,000 seed. College savings? 529.',
+      },
+      {
+        q: 'What if my child needs the money back?',
+        a: 'Contributions (not earnings) can be withdrawn from a Roth IRA at any time, at any age, with no tax or penalty — the Roth is far less "locked" than people think. Earnings withdrawn before 59½ face tax plus a 10% penalty unless an exception applies (education, first home up to $10,000, disability). One caution for college years: Roth withdrawals count as student income on a future FAFSA even though the account itself is invisible as an asset.',
+      },
+    ],
+  },
+  {
     slug: 'trump-account-calculator',
     title: 'Trump Account Calculator 2026 — $1,000 Newborn Seed, Growth to 18 & Beyond',
     shortTitle: 'Trump Account Calculator',
