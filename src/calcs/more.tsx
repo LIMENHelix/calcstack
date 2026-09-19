@@ -2322,6 +2322,66 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Cost segregation + bonus depreciation — OBBBA §70301: 100% bonus depreciation PERMANENT for qualified property (≤20-yr recovery) acquired after Jan 19, 2025 (binding-contract grandfathering keeps old 40%/20% phase-down for pre-1/20/2025 acquisitions). Studies reclassify 20–45% of building basis into 5/7/15-yr property (carpet, cabinetry, appliances → 5yr; parking, landscaping, signage → 15yr), fully expensed year 1. Structure stays 27.5yr residential / 39yr commercial straight-line; land never depreciates. The trade: §1245 recapture at ORDINARY rates on reclassified components at sale (vs 25% §1250) — net benefit = year-1 savings − study cost − recapture delta (before time value, which adds more). Node-verified: $1M rental (25% land, 25% reclass, 32% bracket, $5k study) → year-1 savings $57,818, net $39,693; $4M commercial (30% reclass, 37%) → $346,092 year-1, net $218,892.
+export function CostSegCalc() {
+  const [price, setPrice] = useNumber(1000000)
+  const [landPct, setLandPct] = useNumber(25)
+  const [res, setRes] = useState(true)
+  const [realloc, setRealloc] = useNumber(25)
+  const [marg, setMarg] = useNumber(32)
+  const [study, setStudy] = useNumber(5000)
+
+  const r = useMemo(() => {
+    const bldg = price * (1 - landPct / 100)
+    const life = res ? 27.5 : 39
+    const reclass = bldg * (realloc / 100)
+    const struct = bldg - reclass
+    const withCS = reclass + struct / life
+    const without = bldg / life
+    const y1save = (withCS - without) * (marg / 100)
+    const recapDelta = reclass * ((marg - 25) / 100)
+    const net = y1save - study - recapDelta
+    return { bldg, reclass, withCS, without, y1save, recapDelta, net }
+  }, [price, landPct, res, realloc, marg, study])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Purchase price" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Land share (never depreciates)" value={landPct} onChange={setLandPct} suffix="%" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">Property type</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={res ? 'res' : 'com'}
+              onChange={(e) => setRes(e.target.value === 'res')}
+            >
+              <option value="res">Residential rental — 27.5 yr</option>
+              <option value="com">Commercial — 39 yr</option>
+            </select>
+          </div>
+          <Field label="Study reallocates to 5/7/15-yr" value={realloc} onChange={setRealloc} suffix="%" />
+          <Field label="Your ordinary tax bracket" value={marg} onChange={setMarg} suffix="%" />
+          <Field label="Study cost" value={study} onChange={setStudy} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Year-1 deduction WITH study" value={usd(r.withCS)} />
+          <Result label="Year-1 without" value={usd(r.without)} />
+          <Result label="Year-1 tax savings" value={usd(r.y1save)} />
+          <Result label="Net benefit after study + recapture" value={usd(r.net)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Building basis {usd(r.bldg)} → the study carves out <span className="font-medium">{usd(r.reclass)}</span> into 5/7/15-year property, which 100% bonus depreciation (permanent, OBBBA) expenses in year one. Year-1 deduction jumps from {usd(r.without)} to <span className="font-medium">{usd(r.withCS)}</span> — worth {usd(r.y1save)} at your {num(marg, 0)}% bracket. The bill at sale: that {usd(r.reclass)} comes back as §1245 ordinary-rate recapture instead of 25% §1250 — an extra {usd(r.recapDelta)} — minus the {usd(study)} study. Net: <span className="font-medium">{usd(r.net)}</span> plus a decade of time value on the accelerated cash. Defer the recapture entirely by pairing with a 1031 exchange at sale.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 rules: 100% bonus depreciation is permanent for property acquired after January 19, 2025 (OBBBA §70301, IRC §168(k)) — acquisitions under binding contracts signed before January 20, 2025 stay on the old 40%/20% phase-down. Studies typically reclassify 20–45% of building basis (5-yr: carpet, cabinetry, appliances, decorative lighting; 15-yr: parking, landscaping, fencing, signage). Look-back studies on properties bought years ago work via Form 3115 §481(a) catch-up — but bonus treatment on look-backs depends on the original acquisition date. Watch the traps: passive-loss rules can defer the deduction for non-REPs (real estate professional status or the STR loophole matters), state conformity varies (some states decouple from bonus), and DIY percentage estimates don't survive an IRS Cost Segregation ATG review over ~$300k. Engineering-based studies run $2,000–$15,000 depending on size.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Depreciation recapture — §1250 unrecaptured gain (rental real estate, straight-line): depreciation taken is recaptured at 25% up to the gain; excess gain is LTCG (20% + 3.8% NIIT). §1245 (equipment, vehicles, machinery): recapture at ORDINARY rates up to gain. Loss → no recapture. Land never depreciates. §121 primary-residence exclusion doesn't shield depreciation taken after 5/6/1997. Node-verified: rental $600k sale, $36k costs, $450k basis, $120k dep → gain $234k = $120k @25% + $114k @23.8% → $57,132 federal + state. Cross-ref: defer instead via the 1031 exchange calculator.
 export function DepRecaptureCalc() {
   const [kind, setKind] = useState<'real' | 'personal'>('real')
@@ -5841,6 +5901,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'cost-segregation-calculator': CostSegCalc,
   'depreciation-recapture-calculator': DepRecaptureCalc,
   '1031-exchange-calculator': Exchange1031Calc,
   'qsbs-1045-rollover-calculator': QSBSRolloverCalc,

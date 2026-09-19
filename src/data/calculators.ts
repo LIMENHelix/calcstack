@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'cost-segregation-calculator',
+    title: 'Cost Segregation Calculator 2026 — 100% Bonus Depreciation Benefit & Recapture Trade',
+    shortTitle: 'Cost Segregation Calculator',
+    category: 'Housing & Mortgage',
+    description:
+      'Is a cost segregation study worth it? Year-1 deduction with 100% bonus depreciation vs straight-line, minus study cost and the §1245 ordinary-rate recapture waiting at sale.',
+    tagline: '100% bonus is back permanently — the study is what makes your building eligible for it.',
+    intro:
+      'Bonus depreciation only applies to property with a 20-year-or-shorter recovery period — and your building is 27.5 or 39 years. The cost segregation study is the mechanism that fixes that: it reclassifies 20–45% of the building\'s basis into 5-, 7-, and 15-year components (carpet, cabinetry, parking lots, landscaping), which 100% bonus depreciation — now permanent under OBBBA — expenses entirely in year one. A $1M rental jumps from a $27,273 first-year deduction to about $207,955. But the honest math includes the other side: reclassified components come back at ordinary rates (§1245) at sale, not the 25% §1250 cap, plus the study fee. This calculator nets all three.',
+    howItWorks: [
+      'Enter the purchase price and the land share — land is never depreciable.',
+      'Pick residential (27.5 yr) or commercial (39 yr) and the study\'s reallocation percentage.',
+      'Set your ordinary bracket and the study quote.',
+      'Read year-1 deductions both ways, the tax savings, and the net after study cost and future recapture.',
+    ],
+    faq: [
+      {
+        q: 'Is 100% bonus depreciation really permanent now?',
+        a: 'Yes — OBBBA §70301 restored 100% bonus depreciation with no sunset for qualified property (20-year-or-less recovery period) acquired after January 19, 2025. The trigger is the acquisition date: property bought under a binding contract signed before January 20, 2025 stays on the old TCJA phase-down (40% for 2025, 20% for 2026). Anything you buy now gets the full first-year write-off, and the 5/7/15-year components a study identifies are exactly what qualifies.',
+      },
+      {
+        q: 'What\'s the catch at sale?',
+        a: 'Recapture at higher rates. Straight-line building depreciation comes back at the 25% §1250 cap — but reclassified personal property (5/7-year components) is §1245, recaptured at your full ordinary rate up to 37%. On a $187,500 reclassification in the 32% bracket, that\'s $13,125 of extra tax at sale versus no study — still far less than the $57,818 year-one saving, especially after a decade of compounding, and a 1031 exchange defers the recapture too. The real catch is for FLIPPERS: hold under ~2 years and the rate arbitrage evaporates.',
+      },
+      {
+        q: 'Can I do a study on a property I bought years ago?',
+        a: 'Yes — a look-back study filed via Form 3115 generates a §481(a) catch-up adjustment: all the missed accelerated depreciation lands in the current year without amending old returns. One limit: bonus eligibility follows the original acquisition date, so a 2019 building gets accelerated MACRS on the reclassified components, not the 100% first-year write-off. Also verify your deductions aren\'t trapped by passive-loss rules — real estate professional status or the short-term-rental exception decides whether the loss offsets your other income.',
+      },
+    ],
+  },
+  {
     slug: 'depreciation-recapture-calculator',
     title: 'Depreciation Recapture Calculator 2026 — §1250 at 25% vs §1245 Ordinary Rates',
     shortTitle: 'Depreciation Recapture Calculator',
