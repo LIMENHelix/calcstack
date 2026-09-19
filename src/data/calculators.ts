@@ -5326,6 +5326,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'capital-gains-tax-calculator',
+    title: 'Capital Gains Tax Calculator — 2026 Brackets, Stacking & the 3.8% NIIT',
+    shortTitle: 'Capital Gains Tax 2026',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 capital gains tax calculator. Enter ordinary income, long-term and short-term gains — see the gain split across the 0/15/20% bands with correct stacking, plus the 3.8% NIIT, and the true effective rate on your sale.',
+    tagline: 'The same gain can be partly tax-free. Stacking decides how much.',
+    intro:
+      'Most capital gains calculators tax the whole gain at one rate — wrong. Long-term gains stack on top of your ordinary income, so the same sale can be partly 0%, partly 15%, and partly 20%. This calculator applies the real 2026 breakpoints from IRS Rev. Proc. 2025-32, handles short-term gains at ordinary rates, and adds the 3.8% Net Investment Income Tax with its frozen-2013 thresholds that catch more households every year.',
+    howItWorks: [
+      'Pick your filing status — the 0/15/20% breakpoints depend on it.',
+      'Enter ordinary taxable income (after deductions) — it fills the brackets first.',
+      'Enter long-term and short-term gains separately; short-term is taxed as ordinary income.',
+      'Enter MAGI for the NIIT check (wages plus gains, before deductions).',
+      'Read the split across the 0/15/20% bands, the NIIT, and the effective rate on the sale.',
+    ],
+    faq: [
+      {
+        q: 'What are the 2026 capital gains tax brackets?',
+        a: 'Long-term gains (assets held over a year): 0% up to $49,450 taxable income single / $98,900 joint, 15% up to $545,500 / $613,700, and 20% above that. Short-term gains get no special rate — they are taxed as ordinary income at your bracket, up to 37%. Qualified dividends use the same 0/15/20 long-term schedule.',
+      },
+      {
+        q: 'How does capital gains stacking work?',
+        a: 'Ordinary income fills the brackets first, then the gain stacks on top. Example: married couple with $70,000 of taxable ordinary income and a $40,000 long-term gain — the 0% band runs to $98,900, so the first $28,900 of the gain is tax-free and only the remaining $11,100 is taxed at 15%: $1,665 total. There is no cliff where the whole gain jumps to a higher rate.',
+      },
+      {
+        q: 'What is the 3.8% Net Investment Income Tax?',
+        a: 'A surtax on investment income — including capital gains — once MAGI passes $200,000 single or $250,000 joint. It applies to the lesser of your net investment income or the MAGI excess, and those thresholds have never been inflation-adjusted since 2013, so wage growth alone drags more households in each year. The true top federal rate on long-term gains is 23.8%, not 20%.',
+      },
+    ],
+  },
+  {
     slug: 'net-worth-calculator',
     title: 'Net Worth Calculator — Assets Minus Debts, Benchmarked Against the Fed Data',
     shortTitle: 'Net Worth',

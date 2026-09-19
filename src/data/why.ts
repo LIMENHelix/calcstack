@@ -353,6 +353,8 @@ export const WHY_USE: Record<string, string> = {
     'Rate shoppers use it when two banks quote different conventions — one advertises APY, another APR — and the comparison is meaningless until both are in the same unit. The $10,000 one-year line turns the abstract rate into dollars.',
   'cd-interest-calculator':
     'Savers use it before locking anything up: the maturity number is the easy half — the early-withdrawal scenario against a plain HYSA is what decides whether the CD\'s rate premium is real for their timeline. It is the check that turns "great rate" into an actual decision.',
+  'capital-gains-tax-calculator':
+    'Anyone about to sell stock, crypto, or a property uses it before the sale, not after: the stacking math means timing the sale across December and January — or holding one more month past the one-year line — can move thousands of dollars between brackets. It turns "what will I owe" into an exact number.',
   'net-worth-calculator':
     'Anyone doing an annual money checkup uses it to turn scattered accounts into one number with context — the Fed SCF median comparison and the illiquidity share are the parts generic net-worth tools skip.',
   'cost-of-living-comparison-calculator':

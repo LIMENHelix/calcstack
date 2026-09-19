@@ -397,7 +397,95 @@ export function ApyAprCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Capital Gains Tax (2026) ---------------- */
+
+// 2026 LTCG breakpoints per IRS Rev. Proc. 2025-32; gain stacks on top of ordinary
+// taxable income. NIIT 3.8% on lesser of net investment income or MAGI excess over
+// statutory thresholds (never indexed). Verified: MFJ $70k ord + $40k LT → $28.9k@0%,
+// $11.1k@15% = $1,665; MFJ $167.8k + $150k LT, MAGI $350k → $22,500 + $3,800 NIIT;
+// single $600k + $100k LT → $20,000 + $3,800 NIIT.
+const CG_2026: Record<string, { bands: [number, number]; niit: number }> = {
+  single: { bands: [49450, 545500], niit: 200000 },
+  mfj: { bands: [98900, 613700], niit: 250000 },
+  hoh: { bands: [66200, 579600], niit: 200000 },
+  mfs: { bands: [49450, 306850], niit: 125000 },
+}
+
+export function CapGainsCalc(_props: CalcProps) {
+  const [status, setStatus] = useState<keyof typeof CG_2026>('single')
+  const [ordinary, setOrdinary] = useNumber(80000)
+  const [ltGain, setLtGain] = useNumber(30000)
+  const [stGain, setStGain] = useNumber(0)
+  const [stRate, setStRate] = useNumber(22)
+  const [magi, setMagi] = useNumber(120000)
+
+  const r = useMemo(() => {
+    const { bands, niit: niitThresh } = CG_2026[status]
+    const [z, m] = bands
+    const start = ordinary
+    const end = ordinary + ltGain
+    const at0 = Math.max(0, Math.min(end, z) - Math.min(start, z))
+    const at15 = Math.max(0, Math.min(end, m) - Math.max(start, Math.min(end, z), Math.min(start, m)))
+    const at20 = Math.max(0, end - Math.max(start, m))
+    const ltTax = at15 * 0.15 + at20 * 0.2
+    const stTax = stGain * (stRate / 100)
+    const nii = ltGain + stGain
+    const excess = Math.max(0, magi - niitThresh)
+    const niit = 0.038 * Math.min(nii, excess)
+    const total = ltTax + stTax + niit
+    const totalGains = ltGain + stGain
+    const effRate = totalGains > 0 ? (total / totalGains) * 100 : 0
+    return { at0, at15, at20, ltTax, stTax, niit, total, effRate, niitThresh }
+  }, [status, ordinary, ltGain, stGain, stRate, magi])
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <label className="space-y-1 text-sm">
+            <span className="text-muted-foreground">Filing status</span>
+            <select className={inputCls} value={status} onChange={(e) => setStatus(e.target.value as keyof typeof CG_2026)}>
+              <option value="single">Single</option>
+              <option value="mfj">Married filing jointly</option>
+              <option value="hoh">Head of household</option>
+              <option value="mfs">Married filing separately</option>
+            </select>
+          </label>
+          <Field label="Ordinary taxable income (after deductions)" value={ordinary} onChange={setOrdinary} prefix="$" step="1000" />
+          <Field label="Long-term gain (held > 1 year)" value={ltGain} onChange={setLtGain} prefix="$" step="1000" />
+          <Field label="Short-term gain (≤ 1 year)" value={stGain} onChange={setStGain} prefix="$" step="1000" />
+          <Field label="Your marginal ordinary rate (for short-term)" value={stRate} onChange={setStRate} suffix="%" step="1" />
+          <Field label="MAGI (wages + gains, before deductions)" value={magi} onChange={setMagi} prefix="$" step="5000" />
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label="Federal tax on gains" value={usd(r.total, 0)} />
+          <Result label="Effective rate on gains" value={`${num(r.effRate, 1)}%`} />
+          <Result label="Gain taxed at 0%" value={usd(r.at0, 0)} />
+          <Result label="Gain taxed at 15%" value={usd(r.at15, 0)} />
+          <Result label="Gain taxed at 20%" value={usd(r.at20, 0)} />
+          <Result label="Long-term tax" value={usd(r.ltTax, 0)} />
+          <Result label="Short-term tax (ordinary rates)" value={usd(r.stTax, 0)} />
+          <Result label="NIIT (3.8% surtax)" value={r.niit > 0 ? usd(r.niit, 0) : '—'} />
+        </div>
+
+        <p className="text-xs text-muted-foreground">
+          2026 breakpoints per IRS Rev. Proc. 2025-32. Your long-term gain stacks on top of
+          ordinary taxable income — {usd(r.at0, 0)} of this gain falls in the 0% band. Short-term
+          gains get no break: they are taxed as ordinary income at {num(stRate, 0)}%, which is why
+          crossing the one-year holding line before selling is often worth real money. The 3.8%
+          NIIT kicks in above {usd(r.niitThresh, 0)} MAGI (a threshold frozen since 2013, so
+          inflation pulls more households in every year) and applies to the lesser of investment
+          income or the MAGI excess. State tax not included — most states tax gains as ordinary
+          income.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const WEALTH_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'capital-gains-tax-calculator': CapGainsCalc,
   'apy-apr-converter': ApyAprCalc,
   'cd-interest-calculator': CdCalc,
   'net-worth-calculator': NetWorthCalc,
