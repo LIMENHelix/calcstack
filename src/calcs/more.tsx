@@ -2322,6 +2322,50 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Augusta Rule — IRC §280A(g): rent your home fewer than 15 days/year and the rental income is 100% excluded (not even reported); day 15 flips the ENTIRE year's rental income to taxable — the cliff is total. Rate must be fair market (comparable event/meeting-space quotes, documented); your S-corp/partnership deducts the rent as a business expense (board meetings, offsites) while you receive it tax-free — a deduction turning into excluded income. Sole props/Schedule C can't rent to themselves (no separate entity). Documentation: minutes, agenda, FMV comps, invoice, actual payment. Node-verified: 14 days × $1,500 = $21,000 excluded → $6,720 saved at 32%.
+export function AugustaRuleCalc() {
+  const [days, setDays] = useNumber(12)
+  const [rate, setRate] = useNumber(1500)
+  const [marg, setMarg] = useNumber(32)
+  const [stateRate, setStateRate] = useNumber(0)
+
+  const r = useMemo(() => {
+    const ok = days <= 14
+    const rent = ok ? days * rate : days * rate
+    const saved = ok ? rent * ((marg + stateRate) / 100) : 0
+    const taxIfBlown = !ok ? rent * ((marg + stateRate) / 100) : 0
+    return { ok, rent, saved, taxIfBlown }
+  }, [days, rate, marg, stateRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Days rented to your business" value={days} onChange={setDays} />
+          <Field label="Fair-market daily rate" value={rate} onChange={setRate} prefix="$" />
+          <Field label="Federal bracket" value={marg} onChange={setMarg} suffix="%" />
+          <Field label="State rate" value={stateRate} onChange={setStateRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label="Tax-free income to you" value={usd(r.ok ? r.rent : 0)} />
+          <Result label="Tax saved this year" value={usd(r.saved)} />
+          <Result label="If you hit day 15" value={r.ok ? `all ${usd(days * rate)} taxable` : `${usd(r.taxIfBlown)} tax — the cliff took it all`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.ok ? (
+            <>{num(days, 0)} days × {usd(rate)} = <span className="font-medium">{usd(r.rent)} excluded from income entirely</span> — not reported anywhere on your 1040 — while your S-corp deducts the same {usd(r.rent)} as rent expense, cutting pass-through income. Double benefit, one rule: §280A(g). You have {14 - days} day{14 - days === 1 ? '' : 's'} of headroom left. </>
+          ) : (
+            <><span className="font-medium">Day 15 detonates it.</span> §280A(g) is all-or-nothing: at {num(days, 0)} days the ENTIRE {usd(r.rent)} becomes taxable rental income ({usd(r.taxIfBlown)} of tax), not just the days over 14. Drop to 14 days.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The rules that survive audit: (1) the rate must be fair market — get written quotes for comparable meeting/event space in your area and keep them; $5,000/day for a living room is how people lose; (2) the business need must be real — board meetings, annual planning, client events, with minutes and an agenda; (3) paper it like a third-party rental: invoice, and actually move the money from the business account; (4) you need a separate entity — an S-corp or partnership can rent from you, a Schedule C sole prop cannot pay rent to itself; (5) the home can be your primary, a second home, or a vacation home — each unit gets its own 14 days. Named for the 1976 Masters-tournament provision; unchanged since. Pairs with the accountable-plan playbook: this is the one deduction that creates tax-free income rather than just reducing taxed income.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // STR loophole & REPS — §469: rental losses are passive by default. Two escapes: (1) STR loophole — average guest stay ≤7 days makes it NOT a "rental activity" (Treas. Reg. §1.469-1T(e)(3)(ii)), so only material participation is needed (main tests: >500 hrs, or >100 hrs and more than any other person); (2) REPS §469(c)(7) — >750 hrs in real property trades AND more than half of ALL working hours, plus material participation per property (or grouping election). Otherwise: $25,000 active-participation allowance phasing out $100k–$150k MAGI ($0 above $150k), suspended losses carry forward and release at sale. Node-verified: STR 5-day avg/120 hrs (cleaner 80) → fully non-passive; W-2 landlord 40 hrs, MAGI $120k → $15k of $30k deductible; REPS spouse 900 RE hrs of 1,500 total → full $80k; MAGI $160k → allowance $0.
 export function STRRepsCalc() {
   const [stay, setStay] = useNumber(5)
@@ -5956,6 +6000,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'augusta-rule-calculator': AugustaRuleCalc,
   'str-reps-loophole-calculator': STRRepsCalc,
   'cost-segregation-calculator': CostSegCalc,
   'depreciation-recapture-calculator': DepRecaptureCalc,

@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'augusta-rule-calculator',
+    title: 'Augusta Rule Calculator 2026 — 14 Days of Tax-Free Rent (§280A(g))',
+    shortTitle: 'Augusta Rule Calculator',
+    category: 'Everyday Money',
+    description:
+      'Rent your home to your S-corp for up to 14 days and the income is 100% tax-free while the business deducts it. Price the benefit — and the cliff: day 15 makes the whole year taxable.',
+    tagline: 'The one deduction that creates tax-free income instead of just reducing taxed income.',
+    intro:
+      'Section 280A(g) — the Augusta Rule, named for the Masters tournament rentals it was written for — excludes ALL rental income when you rent your home fewer than 15 days a year. Business owners use it by renting their home to their own S-corp for legitimate meetings: the corporation deducts the rent, and you receive it tax-free. Fourteen days at a fair-market $1,500/day is $21,000 moved from taxed business income to untaxed personal income — about $6,720 saved at the 32% bracket. The cliff is absolute: hit day 15 and the ENTIRE year\'s rental income becomes taxable. This calculator prices the benefit and guards the line.',
+    howItWorks: [
+      'Enter the days you rent to your business — the 14-day cap is the whole game.',
+      'Enter a fair-market daily rate (get comparable meeting-space quotes in writing).',
+      'Set your federal bracket and state rate.',
+      'Read the excluded income, the tax saved, and what day 15 would cost.',
+    ],
+    faq: [
+      {
+        q: 'Is renting my home to my own company really legal?',
+        a: 'Yes — §280A(g) has been law since 1976 and applies to any dwelling rented fewer than 15 days. The business version works because your S-corp or partnership is a separate taxpayer: it gets a rent deduction for a real business use (board meetings, planning sessions, client events), and you exclude the income personally. What makes it audit-proof: fair-market rate documented with comparable quotes, minutes and agendas for every meeting, an invoice, and money actually moved between accounts. A Schedule C sole proprietorship can\'t do this — no separate entity exists to pay you.',
+      },
+      {
+        q: 'What happens on day 15?',
+        a: 'The exclusion is all-or-nothing. Days 1–14: not a dollar is reported. Day 15: the ENTIRE year\'s rental income from that home becomes taxable — not just the excess days. If you genuinely need more rental days, the income converts to normal Schedule E rental income with expenses deducted against it — fine, but plan it as rental income, not as a failed Augusta play.',
+      },
+      {
+        q: 'How do I set the daily rate?',
+        a: 'Fair market value for comparable space: what a hotel meeting room, event venue, or co-working event space charges in your area, adjusted for what your home actually offers. Get 2–3 written quotes and keep them with the invoice. $500–$2,000/day is defensible for most homes; the people who lose in Tax Court charged convention-center rates for a dining room. Each dwelling unit gets its own 14 days — a vacation home is a separate allowance.',
+      },
+    ],
+  },
+  {
     slug: 'str-reps-loophole-calculator',
     title: 'STR Loophole & REPS Calculator 2026 — Can Rental Losses Offset W-2 Income?',
     shortTitle: 'STR Loophole / REPS Calculator',

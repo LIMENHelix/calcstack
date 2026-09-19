@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'augusta-rule-calculator':
+    'S-corp owners use it when their CPA mentions "rent your house to your business": 14 days at a fair-market rate moves ~$21k from taxed business income to untaxed personal income — and the calculator guards the cliff, because day 15 taxes the whole year.',
   'str-reps-loophole-calculator':
     'W-2 earners with an Airbnb use it before counting on the paper loss: a ≤7-day average stay plus 100 honest hours moves the whole cost-seg deduction onto their salary — but the cleaner\'s hours count, and one day of average stay is the line between deductible and suspended.',
   'cost-segregation-calculator':
