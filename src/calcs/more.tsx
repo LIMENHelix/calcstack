@@ -2322,6 +2322,60 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Inherited IRA 10-year rule — SECURE Act §401 (deaths after 12/31/2019): non-spouse beneficiaries must EMPTY the account by end of year 10. Final regs (T.D. 10001, July 2024): if the owner died ON/AFTER their required beginning date, annual RMDs (Single Life Table) are ALSO required years 1–9 — the empty-by-year-10-only reading died with the regs. Eligible designated beneficiaries (spouse, minor children until majority, disabled/chronically ill, beneficiaries ≤10 years younger) can still stretch. Missed RMD penalty: 25%, cut to 10% if corrected within 2 years (SECURE 2.0 §302). Inherited Roth: same 10-year clock but withdrawals are tax-free — waiting to year 10 is nearly always optimal. Strategy math node-verified: $500k/10yr/6% → even withdrawals $67,934/yr, total $679,340, net $516,298 at 24%; lump year 10 = $895,424, net $564,117 at 37% — lump wins unless lump bracket > 42.3% (crossover = 1 − evenNet/lumpFV). $200k/7yr/5%: even $34,564/yr net $188,719 at 22%; lump $281,420 net $191,366 at 32%.
+export function InheritedIraCalc() {
+  const [bal, setBal] = useNumber(500000)
+  const [yrs, setYrs] = useNumber(10)
+  const [g, setG] = useNumber(6)
+  const [brEven, setBrEven] = useNumber(24)
+  const [brLump, setBrLump] = useNumber(37)
+  const [postRbd, setPostRbd] = useState(true)
+
+  const r = useMemo(() => {
+    const n = Math.max(1, yrs)
+    const gr = g / 100
+    const pmt = gr > 0 ? (bal * gr) / (1 - Math.pow(1 + gr, -n)) : bal / n
+    const evenTot = pmt * n
+    const evenNet = evenTot * (1 - brEven / 100)
+    const lumpFV = bal * Math.pow(1 + gr, n)
+    const lumpNet = lumpFV * (1 - brLump / 100)
+    const crossover = lumpFV > 0 ? 1 - evenNet / lumpFV : 0
+    const lumpWins = lumpNet > evenNet
+    return { pmt, evenTot, evenNet, lumpFV, lumpNet, crossover, lumpWins }
+  }, [bal, yrs, g, brEven, brLump])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Inherited balance" value={bal} onChange={setBal} prefix="$" />
+          <Field label="Years left in the 10-year window" value={yrs} onChange={setYrs} />
+          <Field label="Growth rate" value={g} onChange={setG} suffix="%" />
+          <Field label="Bracket on steady withdrawals" value={brEven} onChange={setBrEven} suffix="%" />
+          <Field label="Bracket if you take a lump" value={brLump} onChange={setBrLump} suffix="%" />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={postRbd} onChange={(e) => setPostRbd(e.target.checked)} className="h-4 w-4" />
+            Owner died on/after their RMD start date
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label={r.lumpWins ? 'Lump at year 10 nets more' : 'Steady withdrawals net more'} value={usd(Math.max(r.lumpNet, r.evenNet))} />
+          <Result label="Steady: withdrawal / year" value={usd(r.pmt)} />
+          <Result label="Steady: net after tax" value={usd(r.evenNet)} />
+          <Result label="Lump: net after tax" value={usd(r.lumpNet)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Even withdrawals of <span className="font-medium">{usd(r.pmt)}/yr</span> empty the account on schedule: {usd(r.evenTot)} gross, {usd(r.evenNet)} net at {brEven}%. Waiting compounds to <span className="font-medium">{usd(r.lumpFV)}</span> by year {yrs}, netting {usd(r.lumpNet)} at {brLump}%. Crossover: the lump wins unless the lump bracket exceeds <span className="font-medium">{num(r.crossover * 100, 1)}%</span> — deferral is worth a lot; a bracket jump is too.
+          {postRbd ? <> <span className="font-medium">Because the owner died on/after their RMD start date, you also owe ANNUAL minimum withdrawals (Single Life Table) in years 1–9</span> — the steady strategy covers them; the pure-wait strategy does not. Missed RMDs cost 25% (10% if fixed within 2 years).</> : <> Owner died before their RMD start date, so no annual minimums — the whole window is yours to time.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          SECURE Act (deaths after 2019): non-spouse heirs must empty inherited IRAs by December 31 of year 10 — no more lifetime stretch. The 2024 final regulations added the trap: if the original owner had already started RMDs, beneficiaries must take annual minimums in years 1–9 AND empty by year 10. Exempt "eligible designated beneficiaries" — surviving spouses, minor children (until majority), disabled or chronically ill individuals, and anyone not more than 10 years younger than the owner — can still stretch over their life expectancy. Inherited ROTH IRAs follow the same 10-year clock, but withdrawals are tax-free: letting it compound to year 10 is nearly always right. Bracket management matters more than the average suggests — withdrawals stack on your salary; taking extra in low-income years (sabbatical, early retirement before Social Security) beats both flat strategies. Simplified model: flat brackets, no state tax, no annual-RMD table detail — a flat bracket understates the lump's true cost since big withdrawals climb brackets on the way up.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Kiddie tax — IRC §1(g), 2026 (Rev. Proc. 2025-32): child's unearned income (interest, dividends, capital gains — never wages) is taxed in three layers: first $1,350 tax-free, next $1,350 at the child's rate, everything over $2,700 at the PARENTS' marginal rate. Applies to children under 18 (always), age 18, or full-time students 19–23 whose earned income ≤ half their support. Ordinary income (interest, nonqualified divs, short-term gains) takes parents' ordinary bracket; LTCG/qualified dividends take parents' 0/15/20% rate. Parent election (Form 8814) available when gross income > $1,350 and < $13,500 — simplifies filing but stacks the income on the parents' return (can push NIIT/phaseouts). Node-verified: $5,000 ordinary dividends, parents 32% → $0 + $135 + $736 = $871 (matches SmartAsset 2026 example); 50% LTCG mix at parents' 15% → $675.50.
 export function KiddieTaxCalc() {
   const [unearned, setUnearned] = useNumber(5000)
@@ -6281,6 +6335,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'inherited-ira-calculator': InheritedIraCalc,
   'kiddie-tax-calculator': KiddieTaxCalc,
   'underpayment-penalty-calculator': UnderpaymentPenaltyCalc,
   'net-investment-income-tax-calculator': NiitCalc,

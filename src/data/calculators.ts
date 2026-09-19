@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'inherited-ira-calculator',
+    title: 'Inherited IRA Calculator 2026 — The 10-Year Rule, Steady vs Lump-Sum Withdrawals',
+    shortTitle: 'Inherited IRA Calculator',
+    category: 'Retirement',
+    description:
+      'Non-spouse heirs must empty an inherited IRA within 10 years — and if the owner died after starting RMDs, annual minimums apply in years 1–9 too. Compare steady withdrawals vs waiting, with the exact crossover bracket.',
+    tagline: 'Empty by year 10 — but WHEN you take it is a six-figure decision.',
+    intro:
+      'The SECURE Act killed the stretch IRA: for deaths after 2019, most non-spouse beneficiaries must empty the account by the end of year 10. The 2024 final regulations added the trap most people miss — if the original owner had already begun RMDs, you must take annual minimum withdrawals in years 1–9 on top of emptying the account, with a 25% penalty for misses (10% if corrected within two years). The real question is timing: withdraw evenly and pay your normal bracket each year, or let it compound tax-deferred and take the lump in year 10 at a higher bracket? The crossover is math, not vibes — on $500,000 at 6%, waiting wins unless the lump pushes you past about 42%. This calculator prices both strategies and shows exactly where your crossover sits.',
+    howItWorks: [
+      'Enter the inherited balance and how many years remain in your 10-year window.',
+      'Enter an expected growth rate — the account compounds tax-deferred until withdrawn.',
+      'Enter your bracket if you spread withdrawals versus the bracket a giant year-10 lump would land in.',
+      'Check the box if the owner died on or after their RMD start date — annual minimums then apply in years 1–9.',
+    ],
+    faq: [
+      {
+        q: 'Do I really have to take money every year, or just by year 10?',
+        a: 'Depends on when the owner died relative to their required beginning date (RBD). Died BEFORE starting RMDs: no annual requirement — empty by year 10, timing is yours. Died ON OR AFTER starting RMDs: the 2024 final regulations require annual RMDs in years 1–9 (based on your Single Life Table factor) AND full depletion by year 10. The IRS waived penalties for missed 2021–2024 annual RMDs while the rules were final, but the waiver era is over — 2025 and later are fully enforced.',
+      },
+      {
+        q: 'Is an inherited Roth IRA really different?',
+        a: 'Same 10-year clock, completely different answer. Roth withdrawals are tax-free, so there\'s no bracket problem at all — the dominant strategy is to leave every dollar compounding until December of year 10, then withdraw it all. The only exceptions: needing the money earlier, or expecting the account to be needed for estate liquidity. This is the one inherited-account question with a near-universal answer.',
+      },
+      {
+        q: 'Who still gets the old stretch treatment?',
+        a: '"Eligible designated beneficiaries": surviving spouses (who can also roll it into their own IRA), minor children of the owner (only until the age of majority — then the 10-year clock starts), disabled or chronically ill individuals, and beneficiaries not more than 10 years younger than the deceased. Everyone else — adult children, siblings more than 10 years younger, friends, most trusts — is on the 10-year rule. If you\'re planning YOUR OWN estate, leaving Roth dollars to adult kids beats leaving traditional dollars, precisely because of this calculator\'s math.',
+      },
+    ],
+  },
+  {
     slug: 'kiddie-tax-calculator',
     title: 'Kiddie Tax Calculator 2026 — When Your Child\'s Investment Income Takes YOUR Rate',
     shortTitle: 'Kiddie Tax Calculator',
