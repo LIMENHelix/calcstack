@@ -2323,6 +2323,57 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Layoff runway — the survival number: (liquid savings + NET severance) vs monthly drain. Two phases: while unemployment lasts (typical max 26 weeks; average weekly benefit ~$450 but state caps range ~$235 MS to $900+ MA — user enters their state's), drain = burn + COBRA − UI; after UI exhausts, drain = burn + COBRA. UI is taxable federally (Form 1099-G) — honest model notes it. Severance timing: many states delay UI until severance-covered weeks pass. Node-verified: $20k savings + $32,311 net severance (from the severance calculator), $4,500 burn + $800 COBRA, $450/wk UI × 26 wks → UI ≈ $1,950/mo → 12.1 months runway; without UI → 9.9; $5k/$0 sev/$3,000 burn/$700 COBRA/$500 wk → 3.3 months.
+export function LayoffRunwayCalc() {
+  const [sav, setSav] = useNumber(20000)
+  const [sev, setSev] = useNumber(32311)
+  const [burn, setBurn] = useNumber(4500)
+  const [cobra, setCobra] = useNumber(800)
+  const [uiWk, setUiWk] = useNumber(450)
+  const [uiWks, setUiWks] = useNumber(26)
+
+  const r = useMemo(() => {
+    const res = sav + sev
+    const uiMo = (uiWk * 52) / 12
+    const uiMonths = (uiWks / 52) * 12
+    const drain1 = Math.max(0, burn + cobra - uiMo)
+    const used1 = Math.min(res, drain1 * uiMonths)
+    const m1 = drain1 > 0 ? used1 / drain1 : uiMonths
+    const left = res - used1
+    const drain2 = burn + cobra
+    const m2 = drain2 > 0 ? left / drain2 : 99
+    const uiTotal = uiWk * uiWks * Math.min(1, m1 / uiMonths)
+    return { res, uiMo, drain1, drain2, total: m1 + m2, uiTotal }
+  }, [sav, sev, burn, cobra, uiWk, uiWks])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Liquid savings" value={sav} onChange={setSav} prefix="$" />
+          <Field label="Net severance (after tax)" value={sev} onChange={setSev} prefix="$" />
+          <Field label="Monthly essential spending" value={burn} onChange={setBurn} prefix="$" />
+          <Field label="COBRA / health insurance" value={cobra} onChange={setCobra} prefix="$" />
+          <Field label="Weekly unemployment benefit" value={uiWk} onChange={setUiWk} prefix="$" />
+          <Field label="Weeks of UI available" value={uiWks} onChange={setUiWks} />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Runway" value={`${num(r.total, 1)} months`} />
+          <Result label="Total resources" value={usd(r.res)} />
+          <Result label="Monthly drain on UI" value={usd(r.drain1)} />
+          <Result label="Drain after UI ends" value={usd(r.drain2)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {usd(r.res)} of resources against a {usd(r.drain2)}/month full burn. Unemployment ({usd(r.uiMo)}/month for up to {num((uiWks / 52) * 12, 0)} months) slows the drain to {usd(r.drain1)}/month — <span className="font-medium">{num(r.total, 1)} months total</span>. Every $500/month cut from spending adds roughly {r.drain2 > 0 ? num(((r.res / (r.drain2 - 500)) - (r.res / r.drain2)), 1) : '—'} months of runway on the back end. Cutting COBRA via an ACA marketplace plan (a layoff is a special enrollment event, and low income = subsidies) is usually the single biggest lever after housing.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Honest wrinkles: unemployment benefits are taxable income federally (you'll get a 1099-G — elect withholding or set aside ~10%), though most states with an income tax exempt them partially or fully. Many states delay UI until the weeks your severance "covers" have passed — file immediately regardless; the state decides, and the waiting week clock starts when you file. Use NET severance here — run the severance calculator first, because the gross number overstates your runway by the tax bill. COBRA lasts 18 months but costs 102% of the full premium; an ACA plan after a job-loss special enrollment is often half that with subsidies at layoff-level income — price both before electing. The math gets better the moment you cut burn: runway is division, and shrinking the denominator beats growing the numerator.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Severance — taxed as ordinary wages: FICA applies (severance IS Social Security/Medicare wages), federal withholding is supplemental (flat 22% separate check or aggregate if combined), and it stacks on top of YTD income at marginal brackets — a December lump sum lands in your highest bracket while a January payment starts a fresh tax year with near-empty brackets. The deferral play: negotiate payment timing across the year boundary. UI interaction: many states delay unemployment until severance coverage runs out (state-specific — check yours). Severance can't go into a 401(k) (not eligible compensation post-termination), but a final-paycheck 401(k) deferral can. Node-verified (2026 single, ded $16,100): YTD $90k + $50k lump → $11,364 fed on the severance; split $25k/$25k across Dec/Jan (no other income yr 2) → $6,390 — saves $4,974; FICA $3,825 (under the $184,500 cap); lump net after fed+FICA+5% state = $32,311.
 export function SeveranceCalc() {
   const [sev, setSev] = useNumber(50000)
@@ -6569,6 +6620,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'layoff-runway-calculator': LayoffRunwayCalc,
   'severance-pay-calculator': SeveranceCalc,
   'stock-donation-calculator': StockDonationCalc,
   'qcd-calculator': QcdCalc,

@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'layoff-runway-calculator',
+    title: 'Layoff Runway Calculator 2026 — How Many Months Can You Actually Last?',
+    shortTitle: 'Layoff Runway',
+    category: 'Careers & Salary',
+    description:
+      'Savings + net severance + unemployment versus monthly burn and COBRA. Two-phase runway math: the drain while UI lasts and the drain after it ends. The survival number, honestly computed.',
+    tagline: 'Panic is a math problem: resources ÷ monthly drain = months. Fix either side.',
+    intro:
+      'The first question after a layoff isn\'t "what\'s next" — it\'s "how long do I have." The answer is division, but honest division: liquid savings plus NET severance (run the severance calculator first — the gross overstates it by the tax bill), against a monthly drain that includes the COBRA premium you weren\'t paying as an employee. Unemployment changes the shape: while benefits last (typically 26 weeks), the drain shrinks; when they end, you\'re at full burn. A typical profile — $20k savings, $32k net severance, $4,500 burn, $800 COBRA, $450/week UI — runs 12.1 months, not the "six months of savings" the raw savings number suggests. This calculator gives you the real number and shows which lever moves it most.',
+    howItWorks: [
+      'Enter liquid savings and your NET severance — after tax, not the letter\'s number.',
+      'Enter monthly essential spending and your health coverage cost (COBRA or ACA).',
+      'Enter your state\'s weekly unemployment benefit and weeks available.',
+      'Read the runway in months, the drain during and after UI, and what cutting $500/month buys.',
+    ],
+    faq: [
+      {
+        q: 'Is unemployment taxable?',
+        a: 'Federally, yes — every dollar of UI is taxable income (you\'ll get a Form 1099-G), and nothing is withheld unless you elect it (Form W-4V, 10% flat). Most states with an income tax exempt UI partially or fully. Set aside ~10% of each payment or elect withholding — an April bill on top of a layoff is the double-hit nobody plans for. The silver lining: a low-income year is also the best Roth-conversion window you\'ll ever get.',
+      },
+      {
+        q: 'Should I take COBRA or an ACA marketplace plan?',
+        a: 'Price both before electing — you have 60 days. COBRA keeps your exact coverage but costs 102% of the full premium (often $700–$2,000+/month family). A layoff is a special enrollment event for the ACA marketplace, and at layoff-level income, premium subsidies can cut a Silver plan to a fraction of COBRA. The catch: if you\'ve already met your deductible for the year, COBRA preserves that progress; an ACA plan resets it. Mid-year with a big deductible met, COBRA often wins despite the premium.',
+      },
+      {
+        q: 'My state delays UI because of severance — should I still file?',
+        a: 'Yes, immediately. States handle severance differently — some ignore it, many delay benefits until the severance-covered weeks pass, a few offset dollar-for-dollar — but the determination is the state\'s job, not yours. Filing starts your waiting-week clock, locks in your benefit year, and costs nothing. The worst outcome is deferred benefits; not filing converts "deferred" into "never."',
+      },
+    ],
+  },
+  {
     slug: 'severance-pay-calculator',
     title: 'Severance Pay Calculator 2026 — Lump Sum vs January Timing, True Net After Tax',
     shortTitle: 'Severance Calculator',
