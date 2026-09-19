@@ -2322,6 +2322,57 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// S-corp reasonable salary — the core S-corp trade: salary pays FICA (12.4% SS up to the $184,500 wage base + 2.9% Medicare, both halves) while distributions pay neither. Sole-prop baseline: SE tax on 92.35% of profit, same 12.4%/2.9%. But every salary dollar also cuts QBI — S-corp QBI = 20% × (profit − salary), so salary costs 0.20 × salary × marginal bracket in lost deduction. And salary set unreasonably low invites IRS reclassification of distributions as wages (Rev. Rul. 59-221; no bright line — common heuristics 40–60% of profit or market wage for the role). Node-verified: profit $200k, salary $80k → FICA $12,240 vs SE $28,234 → payroll saved $15,994; QBI lost 0.20×80,000×0.32 = $5,120 → net $10,874; salary $200k (over SS base) → FICA $28,678.
+export function SCorpSalaryCalc() {
+  const [profit, setProfit] = useNumber(200000)
+  const [salary, setSalary] = useNumber(80000)
+  const [marg, setMarg] = useNumber(32)
+  const [qbiOk, setQbiOk] = useState(true)
+
+  const r = useMemo(() => {
+    const sal = Math.min(salary, profit)
+    const fica = Math.min(sal, 184500) * 0.124 + sal * 0.029
+    const seBase = profit * 0.9235
+    const seTax = Math.min(seBase, 184500) * 0.124 + seBase * 0.029
+    const payrollSaved = seTax - fica
+    const dist = profit - sal
+    const qbiDed = qbiOk ? dist * 0.2 : 0
+    const qbiLost = qbiOk ? sal * 0.2 * (marg / 100) : 0
+    const net = payrollSaved - qbiLost
+    const pct = profit > 0 ? (sal / profit) * 100 : 0
+    const risky = profit > 0 && sal < profit * 0.4
+    return { sal, fica, seTax, payrollSaved, dist, qbiDed, qbiLost, net, pct, risky }
+  }, [profit, salary, marg, qbiOk])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="S-corp profit before your pay" value={profit} onChange={setProfit} prefix="$" />
+          <Field label="Salary you pay yourself" value={salary} onChange={setSalary} prefix="$" />
+          <Field label="Federal bracket" value={marg} onChange={setMarg} suffix="%" />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={qbiOk} onChange={(e) => setQbiOk(e.target.checked)} className="h-4 w-4" />
+            QBI-eligible business
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Net S-corp advantage / year" value={usd(r.net)} />
+          <Result label="Payroll tax: salary vs sole prop" value={`${usd(r.fica)} vs ${usd(r.seTax)}`} />
+          <Result label="Distributions (no payroll tax)" value={usd(r.dist)} />
+          <Result label="QBI deduction on distributions" value={usd(r.qbiDed)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Salary <span className="font-medium">{usd(r.sal)}</span> ({num(r.pct, 0)}% of profit) costs {usd(r.fica)} in FICA — but as a sole prop the whole {usd(profit)} would owe {usd(r.seTax)} of self-employment tax. Payroll tax saved: <span className="font-medium">{usd(r.payrollSaved)}</span>.{r.qbiLost > 0 && <> The catch: salary isn't QBI, so {usd(r.sal)} of wages forfeits {usd(r.qbiLost)} of 20%-deduction value at your bracket.</>} Net advantage: <span className="font-medium">{usd(r.net)}</span> per year.{r.risky && <> <span className="font-medium">⚠ Salary is under 40% of profit</span> — the classic reclassification trigger zone. The IRS can recharacterize distributions as wages plus back FICA and penalties.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          FICA = 12.4% Social Security (both halves) up to the $184,500 wage base (2026) + 2.9% Medicare on all wages. Sole-prop baseline applies the same rates to 92.35% of profit (the SE-tax adjustment). "Reasonable compensation" has no statutory formula — courts look at what you'd pay someone else to do your job (Rev. Rul. 59-221 and a long line of Tax Court cases). Common heuristics: 40–60% of profit, or the market wage for your role, whichever is defensible — document it with salary surveys or job postings. Below ~40% of profit, audit risk climbs fast; the penalty is back FICA on reclassified distributions plus up to 100% of the tax in penalties. Above the SS base the game shrinks to the 2.9% Medicare spread — still real, but smaller. QBI figures assume you're under the §199A thresholds; SSTBs above the phase-in lose the deduction anyway (uncheck the box). Simplified: ignores the deductible half of SE tax / employer FICA (similar on both sides) and the 0.9% Additional Medicare Tax.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Accountable plan — IRC §62(c): an S-corp/partnership reimburses the owner-employee for business expenses (home office, mileage, phone, internet) — entity deducts, employee receives TAX-FREE, no payroll tax on the reimbursement. Without the plan, owner-paid expenses deduct NOWHERE: OBBBA made the TCJA's suspension of 2% miscellaneous itemized deductions permanent. Requirements: business connection, substantiation within reasonable time, return of excess. Home office simplified: $5/sqft ≤300 sqft ($1,500 cap). Mileage 2026: 72.5¢ H1 / 76¢ H2 (Notice 2026-10, Announcement 2026-11 — mirrors mileage-deduction-calculator). Node-verified: 200 sqft $1,000 + 6,000/4,000 mi $7,390 + phone $600 + internet $540 = $9,530 → $3,050 saved at 32%.
 export function AccountablePlanCalc() {
   const [sqft, setSqft] = useNumber(200)
@@ -6049,6 +6100,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  's-corp-reasonable-salary-calculator': SCorpSalaryCalc,
   'accountable-plan-calculator': AccountablePlanCalc,
   'augusta-rule-calculator': AugustaRuleCalc,
   'str-reps-loophole-calculator': STRRepsCalc,

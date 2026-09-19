@@ -54,16 +54,16 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          260 calculators and counting. Newest: the investor exit set — the 1031
-          exchange calculator with mortgage boot and recapture-first ordering,
-          depreciation recapture priced honestly (25% for rentals, ordinary
-          rates for equipment), and the QSBS pair covering both OBBBA regimes
-          plus the §1045 rollover bridge — alongside the eldercare funding
-          trilogy and the PTET election tool with the QBI haircut.
+          265 calculators and counting. Newest: the small-business owner set —
+          the S-corp reasonable salary calculator pricing payroll tax saved
+          against QBI lost, the accountable plan tool that turns $9k of personal
+          spending into tax-free reimbursements, the Augusta Rule 14-day rental,
+          the STR/REPS passive-loss escape, the PTET election with the QBI
+          haircut, and cost segregation with permanent 100% bonus.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['1031-exchange-calculator', 'depreciation-recapture-calculator', 'qsbs-exclusion-calculator', 'qsbs-1045-rollover-calculator', 'medicaid-spend-down-calculator', 'long-term-care-cost-calculator'].includes(c.slug),
+            ['s-corp-reasonable-salary-calculator', 'accountable-plan-calculator', 'augusta-rule-calculator', 'str-reps-loophole-calculator', 'ptet-election-calculator', 'cost-segregation-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

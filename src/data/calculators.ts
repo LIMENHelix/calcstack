@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 's-corp-reasonable-salary-calculator',
+    title: 'S-Corp Reasonable Salary Calculator 2026 — Payroll Tax Saved vs QBI Lost',
+    shortTitle: 'S-Corp Salary Calculator',
+    category: 'Everyday Money',
+    description:
+      'How much salary should your S-corp pay you? Every dollar of salary pays 15.3% FICA but every distribution dollar loses the 20% QBI deduction — and too-low salary invites IRS reclassification. Price the exact trade.',
+    tagline: 'Salary pays FICA. Distributions lose QBI. The right number is in the middle — and defensible.',
+    intro:
+      'The S-corp election exists for one reason: profit taken as distributions skips the 15.3% payroll tax that salary pays. On $200,000 of profit, paying yourself $80,000 of salary saves about $15,994 versus sole-prop self-employment tax. But two forces push back: salary reduces your QBI (the 20% pass-through deduction applies only to profit AFTER wages), and the IRS requires "reasonable compensation" — set salary too low and they reclassify distributions as wages with back taxes and penalties. There\'s no bright-line formula; courts ask what you\'d pay a stranger to do your job. This calculator prices both sides — payroll saved, QBI lost, net advantage — and flags the reclassification risk zone.',
+    howItWorks: [
+      'Enter your S-corp profit before your own pay and the salary you\'re considering.',
+      'Enter your federal marginal bracket — it prices the QBI deduction you give up on salary.',
+      'Uncheck QBI-eligible if you\'re a specified service business above the phase-in range.',
+      'Read the net annual advantage and check the salary-to-profit ratio against the risk flag.',
+    ],
+    faq: [
+      {
+        q: 'What does the IRS consider "reasonable" salary?',
+        a: 'No statute defines it — courts use the market test: what would you pay an unrelated person to do the same work (Rev. Rul. 59-221 and decades of Tax Court cases). Factors: your duties, hours, experience, what comparable employees earn, and how much profit comes from your labor versus capital. Practitioner heuristics run 40–60% of profit or market wage, whichever you can document. A $30,000 salary on $300,000 of professional-service profit is the fact pattern that loses in court.',
+      },
+      {
+        q: 'Why not take the minimum possible salary?',
+        a: 'Two reasons. First, audit: reclassification converts distributions to wages retroactively — back FICA, penalties up to 100% of the tax, and interest. Second, QBI: wages aren\'t qualified business income, so each salary dollar forfeits 20% × your bracket of deduction value. At the 32% bracket that\'s 6.4¢ per salary dollar — the savings from dropping salary further is only ~8.9¢ on the margin, not the headline 15.3%. And above the $184,500 Social Security base, the spread shrinks to Medicare\'s 2.9%.',
+      },
+      {
+        q: 'Where does the S-corp actually beat a sole prop or LLC?',
+        a: 'On profit above a reasonable salary. The sole prop pays 15.3% (on 92.35% of profit) on everything; the S-corp pays FICA only on salary. On $200,000 of profit with an $80,000 salary, that\'s roughly $16,000 of payroll tax saved, minus about $5,000 of QBI deduction lost at the 32% bracket — net ~$10,900 a year, before the extra costs: payroll service, a second tax return (1120-S), and state franchise taxes in places like California. Below roughly $50,000–$80,000 of profit, those fixed costs usually eat the savings.',
+      },
+    ],
+  },
+  {
     slug: 'accountable-plan-calculator',
     title: 'Accountable Plan Calculator 2026 — Tax-Free Reimbursements From Your Own S-Corp',
     shortTitle: 'Accountable Plan Calculator',
