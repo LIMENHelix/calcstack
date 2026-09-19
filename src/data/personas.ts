@@ -883,6 +883,7 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'rmd-calculator',
       'cd-interest-calculator',
+      'i-bond-calculator',
       'apy-apr-converter',
       'capital-gains-tax-calculator',
       'dividend-drip-calculator',

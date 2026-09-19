@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'i-bond-calculator',
+    title: 'I-Bond Calculator 2026 — Composite Rate, Penalty & After-Tax Value',
+    shortTitle: 'I-Bond',
+    category: 'Savings & Investing',
+    description:
+      'Series I savings bond calculator with the real TreasuryDirect formula: composite = fixed + 2×semiannual inflation + (fixed×inflation), monthly accrual with semiannual compounding, the 3-month early-redemption penalty, the zero floor in deflation, and an after-tax comparison against a taxable savings account. Current rate 4.26% (0.90% fixed) for bonds issued May–October 2026.',
+    tagline:
+      'The composite rate is not fixed + inflation. Run the actual formula — and see the after-tax edge.',
+    intro:
+      'I bonds earn a composite rate that resets every six months: your locked fixed rate plus twice the semiannual CPI-U inflation rate, plus their product — a formula almost every blog simplifies incorrectly. Interest accrues monthly and compounds semiannually, federal tax is deferred until redemption, state and local tax never applies, and the rate can never go below zero. The trade-offs: a $10,000 annual purchase limit per person, a 12-month lockup, and a 3-month interest penalty if you cash out before five years.',
+    howItWorks: [
+      'Composite rate = fixed rate + (2 × semiannual inflation) + (fixed × semiannual inflation). At the current 0.90% fixed and 1.67% inflation: 4.26%. If the formula goes negative, the floor is 0% — your value never drops.',
+      'Interest accrues monthly at 1/6 of the semiannual rate and compounds into principal every 6 months — the calculator replicates this month-by-month.',
+      'Your rate resets 6 months from YOUR issue month, not on the May/November announcement dates — a new inflation number reaches your bond on a lag.',
+      'After-tax comparison: I-bond interest is federal-deferred and state-exempt; the taxable column applies your federal + state rate to the same yield annually.',
+    ],
+    faq: [
+      {
+        q: 'What is the current I-bond rate, and how is it really computed?',
+        a: '4.26% for bonds issued May through October 2026: a 0.90% fixed rate plus the 1.67% semiannual CPI-U change, combined as 0.0090 + 2×0.0167 + (0.0090×0.0167) = 0.0426. On $10,000 held at that rate, monthly accrual with semiannual compounding gives $10,430 after 1 year, $12,343 after 5, and $15,235 after 10.',
+      },
+      {
+        q: 'What does cashing an I bond early actually cost?',
+        a: 'Nothing in the first year is possible — there is a hard 12-month lockup. Between years 1 and 5 you forfeit the last 3 months of interest: on $10,000 at 4.26%, cashing at 3 years returns $11,228 instead of $11,346, a $118 penalty. After 5 years there is no penalty at all.',
+      },
+      {
+        q: 'How do I bonds compare to a high-yield savings account after tax?',
+        a: 'Two advantages stack: federal tax is deferred until redemption (so the full balance compounds untaxed for up to 30 years) and state/local tax never applies. $10,000 at 4.26% for 10 years in a 22% federal, 5% state household: the I bond nets $14,084 after federal tax versus $13,583 in a same-rate taxable account — a ~$500 edge, larger in high-tax states. Used for qualified education, the federal tax can disappear too.',
+      },
+    ],
+  },
+  {
     slug: 'sep-ira-calculator',
     title: 'SEP-IRA Calculator 2026 — vs Solo 401(k), With the Real Employer Math',
     shortTitle: 'SEP-IRA',

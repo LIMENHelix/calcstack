@@ -2308,6 +2308,91 @@ export function Solo401kCalc() {
 // the SAME employer math as the solo 401(k). Node-verified: $100k profit → SEP
 // $18,587 vs solo $43,087; the solo advantage is exactly the $24,500 deferral
 // until the cap binds ($300k profit: $56,839 vs $72,000).
+export function IBondCalc() {
+  const [amount, setAmount] = useNumber(10000)
+  const [fixed, setFixed] = useNumber(0.9)
+  const [infl, setInfl] = useNumber(1.67)
+  const [years, setYears] = useNumber(10)
+  const [fed, setFed] = useNumber(22)
+  const [state, setState] = useNumber(5)
+
+  const r = useMemo(() => {
+    const fixedD = fixed / 100
+    const semiD = infl / 100
+    const rawComp = fixedD + 2 * semiD + fixedD * semiD
+    const comp = Math.max(0, rawComp) // composite rate never goes below zero
+    const floored = rawComp < 0
+    const r6 = comp / 2
+    const growMonths = (p: number, months: number) => {
+      let v = p
+      let acc = 0
+      for (let m = 1; m <= months; m++) {
+        acc += v * (r6 / 6)
+        if (m % 6 === 0) { v += acc; acc = 0 }
+      }
+      return v + acc
+    }
+    const months = Math.round(years * 12)
+    const heldMonths = years >= 5 ? months : Math.max(0, months - 3) // 3-month interest penalty under 5 years
+    const value = growMonths(amount, heldMonths)
+    const fullValue = growMonths(amount, months)
+    const penalty = fullValue - value
+    const interest = Math.max(0, value - amount)
+    const afterTax = amount + interest * (1 - fed / 100) // federal deferred to redemption, state-exempt
+    const taxableRate = comp * (1 - (fed + state) / 100)
+    const taxableAlt = amount * Math.pow(1 + taxableRate, years)
+    const edge = afterTax - taxableAlt
+    const overLimit = amount > 10000
+    return { comp, floored, value, interest, penalty, afterTax, taxableAlt, edge, overLimit, years }
+  }, [amount, fixed, infl, years, fed, state])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Purchase amount" value={amount} onChange={setAmount} prefix="$" step="1000" />
+        <Field label="Fixed rate (locked at purchase)" value={fixed} onChange={setFixed} suffix="%" step="0.1" />
+        <Field label="Assumed semiannual inflation" value={infl} onChange={setInfl} suffix="%" step="0.1" />
+        <Field label="Years held" value={years} onChange={setYears} step="1" />
+        <Field label="Your federal bracket" value={fed} onChange={setFed} suffix="%" step="1" />
+        <Field label="Your state income tax" value={state} onChange={setState} suffix="%" step="0.5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Composite rate (this 6 months)" value={`${num(r.comp * 100, 2)}%`} />
+        <Result label={`Value after ${num(years, 0)} yrs`} value={usd(r.value, 0)} />
+        <Result label="Interest earned" value={usd(r.interest, 0)} />
+        <Result label="After federal tax (state-free)" value={usd(r.afterTax, 0)} />
+        <Result label="Same-rate taxable account" value={usd(r.taxableAlt, 0)} />
+        <Result label="I-bond edge" value={`${r.edge >= 0 ? '+' : ''}${usd(r.edge, 0)}`} />
+        {r.years < 5 && <Result label="3-month penalty (under 5 yrs)" value={`−${usd(r.penalty, 0)}`} />}
+        <Result label="Annual purchase limit" value="$10,000/person" />
+      </div>
+      {r.floored && (
+        <p className="text-sm text-muted-foreground">
+          Deflation floor: the raw formula came out negative, so Treasury sets your composite rate
+          to 0.00% — your bond's value never falls from deflation. The fixed rate keeps accruing
+          against future inflation periods.
+        </p>
+      )}
+      {r.overLimit && (
+        <p className="text-sm text-muted-foreground">
+          Note: TreasuryDirect caps electronic I-bond purchases at $10,000 per person per calendar
+          year (plus up to $5,000 more in paper bonds via a federal tax refund). Amounts above that
+          need multiple years — or a spouse, who gets a separate $10,000 limit.
+        </p>
+      )}
+      <p className="text-sm text-muted-foreground">
+        The math most articles skip: the composite rate is fixed + 2×inflation + (fixed×inflation) —
+        at the current 0.90% fixed and 1.67% semiannual inflation that's 4.26%, not 4.24%. Interest
+        accrues monthly but compounds semiannually, federal tax is deferred until you redeem (and
+        state tax never applies), and cashing before 5 years costs the last 3 months of interest —
+        shown above. Your bond's rate resets every 6 months from your issue month, not on May 1 or
+        November 1, so a newly announced rate reaches your bond on a lag. One year minimum holding,
+        30-year interest life.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function SepIraCalc() {
   const [entity, setEntity] = useState<'sole' | 'scorp'>('sole')
   const [income, setIncome] = useNumber(100000)
@@ -2381,6 +2466,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'i-bond-calculator': IBondCalc,
   'sep-ira-calculator': SepIraCalc,
   'solo-401k-calculator': Solo401kCalc,
   'roth-conversion-ladder-calculator': RothLadderCalc,
