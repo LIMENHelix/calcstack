@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  '457b-calculator':
+    'Public-sector employees use it when HR mentions "deferred comp": the 457 limit is separate from the 403(b) — $49,000 sheltered in 2026, $81,500+ in the final-3 window — and penalty-free withdrawals after separation make it the early-retirement account.',
   'drop-retirement-calculator':
     'Police and firefighters use it at DROP eligibility: the lump sum (pension payments banked at plan interest) against the frozen accrual — 14 years of gap coverage on the typical case, plus the direct-rollover move that dodges the 20% withholding trap.',
   'pension-vs-social-security-calculator':

@@ -54,15 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          275 calculators and counting. Newest: the career-shock toolkit — the
-          layoff runway calculator with two-phase unemployment burn math, the
-          severance calculator proving why January beats December, the bonus
-          tax tool with BOTH IRS withholding methods, plus the 2026 adoption
-          credit with its new $5,120 refundable piece.
+          280 calculators and counting. Newest: the public-employee retirement
+          set — the 457(b) double-limit stacker, the DROP lump-sum trade,
+          the Social Security Fairness Act restoral math (WEP/GPO gone),
+          the pension-vs-covered-job career fork, and PSLF priced against
+          aggressive payoff.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['layoff-runway-calculator', 'severance-pay-calculator', 'bonus-tax-calculator', 'adoption-credit-calculator', 'cobra-cost-calculator', 'w4-withholding-calculator'].includes(c.slug),
+            ['457b-calculator', 'drop-retirement-calculator', 'social-security-fairness-act-calculator', 'pension-vs-social-security-calculator', 'pslf-calculator', 'tsp-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

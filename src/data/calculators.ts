@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: '457b-calculator',
+    title: '457(b) Calculator 2026 — The Double-Limit Account Public Employees Miss',
+    shortTitle: '457(b) Calculator',
+    category: 'Retirement',
+    description:
+      'The 457(b) limit is SEPARATE from your 403(b)/401(k): $24,500 + $24,500 = $49,000 sheltered in 2026. Plus the 3-year double catch-up ($49,000) and penalty-free withdrawals at any age after separation.',
+    tagline: 'Teachers and hospital workers get TWO $24,500 buckets. Most only use one.',
+    intro:
+      'The 457(b) is the best retirement account most public employees have never maxed. Because it lives under a different tax-code section, its $24,500 limit (2026) is completely separate from the 403(b) or 401(k) limit — a school-district or hospital employee can shelter $49,000 pre-tax in 2026, $65,000 at 50+, and up to $81,500+ in the three-year pre-retirement window when the 457\'s special double catch-up kicks in. And the account has a superpower no 401(k) matches: governmental 457(b) withdrawals after separation carry no 10% early-withdrawal penalty at ANY age — it\'s the account that makes retiring at 52 work. This calculator computes your exact maximum across both plans, your catch-up tier, and the tax saved.',
+    howItWorks: [
+      'Enter your age — catch-up tiers apply at 50+ ($8,000) and 60–63 ($11,250).',
+      'Check whether your employer also offers a 403(b) or 401(k) — separate limit, stack both.',
+      'Check the final-3-years box if you\'re within three years of the plan\'s normal retirement age with unused prior room.',
+      'Read the maximum pre-tax total and the tax saved at your bracket.',
+    ],
+    faq: [
+      {
+        q: 'Can I really max both a 403(b) and a 457(b)?',
+        a: 'Yes — this is the headline. 401(k) and 403(b) deferrals share one §402(g) limit ($24,500 in 2026), but a governmental 457(b) has its OWN limit under a different section. A 52-year-old university employee can defer $32,500 into each — $65,000 pre-tax in one year. The stacking is legal, common at public universities and hospitals, and widely unknown: HR materials rarely present the two plans side by side. Note the reverse trap: if you have TWO 403(b) accounts (like a basic plus an SRA), those share one limit — only the 457 is truly separate.',
+      },
+      {
+        q: 'What\'s the catch with the penalty-free withdrawals?',
+        a: 'The no-10%-penalty rule applies to GOVERNMENTAL 457(b) plans after separation from service — any age, any reason. That makes it the perfect early-retirement bridge: retire at 52, live on 457(b) withdrawals until 59½, leave the 401(k)/IRA untouched. Two cautions: distributions are still ordinary income (penalty-free ≠ tax-free), and rolling the 457(b) INTO an IRA destroys the feature — the IRA\'s 59½ rule takes over. Early retirees should keep the 457(b) where it is. Non-governmental 457(b)s (some nonprofits) are a different animal entirely: no rollovers, distribution restrictions, and the money is exposed to the employer\'s creditors.',
+      },
+      {
+        q: 'How does the 3-year catch-up actually work?',
+        a: 'In the three calendar years before your plan\'s normal retirement age, a governmental 457(b) lets you defer up to DOUBLE the base limit — $49,000 in 2026 — but only to the extent you have unused room from prior years (years you were eligible but didn\'t max). It\'s a make-up provision, not a bonus. You cannot use it the same year as the age-50 catch-up — you take whichever is larger, which is nearly always the double. Perfect fit for the classic scenario: someone who under-saved for 20 years and wants to sprint the final three before their pension starts.',
+      },
+    ],
+  },
+  {
     slug: 'drop-retirement-calculator',
     title: 'DROP Retirement Calculator 2026 — Deferred Retirement Option Plan Lump Sum vs Higher Pension',
     shortTitle: 'DROP Calculator',

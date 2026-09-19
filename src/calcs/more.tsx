@@ -2323,6 +2323,60 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// 457(b) — the public-sector superpower, 2026 (IRS Notice 2025-67/Newsroom IR-2025-111): elective deferral $24,500 — SEPARATE limit from 403(b)/401(k) (different code section), so a teacher/hospital worker maxes BOTH: $49,000 pre-tax. Catch-ups: 50+ $8,000, 60–63 super catch-up $11,250 (SECURE 2.0); governmental 457's special 3-year pre-retirement catch-up = 2× base = $49,000 (needs unused prior room; CANNOT stack with age catch-up — take the larger). Governmental 457(b): NO 10% penalty after separation at ANY age — the early-retirement account. SECURE 2.0 2026 wrinkle: prior-year wages >$145k → age-50 catch-ups must be ROTH. 403(b) extra: 15-year service catch-up $3,000/yr ($15k lifetime). Node-verified: 45yo both plans → $49,000 ($15,680 saved at 32%); 52yo → $65,000; 61yo → $71,500; 55yo final-3 window → $49,000+$32,500 = $81,500; 61yo in window → $84,750.
+export function Plan457Calc() {
+  const [age, setAge] = useNumber(52)
+  const [has403, setHas403] = useState(true)
+  const [final3, setFinal3] = useState(false)
+  const [bracket, setBracket] = useNumber(32)
+
+  const r = useMemo(() => {
+    const base = 24500
+    const ageCU = age >= 60 && age <= 63 ? 11250 : age >= 50 ? 8000 : 0
+    const max457 = final3 ? Math.max(49000, base + ageCU) : base + ageCU
+    const max403 = has403 ? base + ageCU : 0
+    const total = max457 + max403
+    const saved = total * (bracket / 100)
+    return { max457, max403, total, saved, ageCU }
+  }, [age, has403, final3, bracket])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Your age" value={age} onChange={setAge} />
+          <Field label="Federal bracket" value={bracket} onChange={setBracket} suffix="%" />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={has403} onChange={(e) => setHas403(e.target.checked)} className="h-4 w-4" />
+            Employer also offers 403(b)/401(k)
+          </label>
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={final3} onChange={(e) => setFinal3(e.target.checked)} className="h-4 w-4" />
+            Within 3 years of plan's normal retirement age
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Max pre-tax this year" value={usd(r.total)} />
+          <Result label="457(b) room" value={usd(r.max457)} />
+          <Result label="403(b)/401(k) room" value={usd(r.max403)} />
+          <Result label="Tax saved this year" value={usd(r.saved)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.max403 > 0 ? (
+            <>The 457(b) limit lives in a different code section — it does NOT share with your 403(b)/401(k). You can defer {usd(r.max457)} into the 457 <span className="font-medium">AND</span> {usd(r.max403)} into the 403(b): <span className="font-medium">{usd(r.total)} sheltered</span>, saving {usd(r.saved)} at your {bracket}% bracket.{r.ageCU > 0 && <> (Includes your {usd(r.ageCU)} {age >= 60 && age <= 63 ? 'age 60–63 super' : 'age 50+'} catch-up.)</>}</>
+          ) : (
+            <>Your 457(b) room is <span className="font-medium">{usd(r.max457)}</span> — saving {usd(r.saved)} at {bracket}%. If your employer also offers a 403(b) or 401(k), that limit is SEPARATE — toggle it on above.</>
+          )}
+          {final3 && <> The 3-year pre-retirement window doubles the 457 to {usd(49000)} (requires unused room from prior years — and it replaces, not stacks with, the age catch-up).</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 limits (IRS): $24,500 base elective deferral for 401(k)/403(b)/governmental 457(b)/TSP; catch-ups $8,000 (50+) or $11,250 (ages 60–63, SECURE 2.0, plan must adopt). The 457(b) special catch-up — double the base limit in the three years before your plan's normal retirement age, using prior unused room — is unique to 457s and usually beats the age catch-up; you can't use both in one year. The unsung feature: governmental 457(b) distributions after separation carry NO 10% early-withdrawal penalty at any age — it's the account that makes retiring at 52 work. Two cautions: NON-governmental 457(b)s (some nonprofits) lack rollovers, have distribution restrictions, and sit exposed to the employer's creditors — a genuinely different animal. And new for 2026 (SECURE 2.0): if your prior-year wages topped $145,000, age-based catch-ups must go in as Roth — plans without a Roth option can't take your catch-up at all.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // DROP (Deferred Retirement Option Plan) — police/fire/public pension play: you "retire on paper" while still working; the monthly pension deposits into a DROP account earning plan interest (typically 3–5%, some market-linked) for a max 3–5 years, then you exit with the lump sum + the FROZEN pension. The trade: pension accrual stops at DROP entry — no more years, no more salary growth in the benefit. Lump = monthly pension × annuity FV over DROP years. No-Drop path: more years × higher final salary = bigger pension forever. Node-verified: $80k/25yr/2.5%/4yr@4% → pension $50k, lump $216,498, no-DROP pension $65,280 — the lump covers the $15,280/yr gap for 14.2 years; police $90k/20yr/3%/5yr@4.5% → lump $302,155, gap $20,525/yr → 14.7 years. Lump is taxable — roll to IRA to defer (direct rollover avoids the 20% withholding trap).
 export function DropCalc() {
   const [salary, setSalary] = useNumber(80000)
@@ -6887,6 +6941,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  '457b-calculator': Plan457Calc,
   'drop-retirement-calculator': DropCalc,
   'pension-vs-social-security-calculator': PensionVsSsCalc,
   'social-security-fairness-act-calculator': FairnessActCalc,
