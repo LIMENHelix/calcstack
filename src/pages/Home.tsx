@@ -120,9 +120,15 @@ export default function Home() {
 
       <AdSlot />
 
-      {CATEGORIES.map((cat) => (
-        <section key={cat} className="mb-10">
-          <h2 className="mb-4 text-xl font-semibold">{cat}</h2>
+      {CATEGORIES.map((cat, i) => (
+        <details key={cat} className="group mb-6" open={i === 0}>
+          <summary className="mb-4 flex cursor-pointer list-none items-center gap-2 text-xl font-semibold [&::-webkit-details-marker]:hidden">
+            <span className="inline-block text-muted-foreground transition-transform group-open:rotate-90">▸</span>
+            {cat}
+            <span className="text-sm font-normal text-muted-foreground">
+              ({CALCULATORS.filter((c) => c.category === cat).length})
+            </span>
+          </summary>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CALCULATORS.filter((c) => c.category === cat).map((c) => (
               <Link key={c.slug} to={`/calculators/${c.slug}`}>
@@ -135,7 +141,7 @@ export default function Home() {
               </Link>
             ))}
           </div>
-        </section>
+        </details>
       ))}
 
       <section className="mb-10">

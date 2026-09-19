@@ -42,8 +42,12 @@ export default function Directory() {
         const core = CALCULATORS.filter((c) => c.category === cat)
         if (core.length === 0) return null
         return (
-          <section key={cat} className="mt-10">
-            <h2 className="mb-3 text-xl font-semibold">{cat}</h2>
+          <details key={cat} className="group mt-8" open>
+            <summary className="mb-3 flex cursor-pointer list-none items-center gap-2 text-xl font-semibold [&::-webkit-details-marker]:hidden">
+              <span className="inline-block text-muted-foreground transition-transform group-open:rotate-90">▸</span>
+              {cat}
+              <span className="text-sm font-normal text-muted-foreground">({core.length})</span>
+            </summary>
             <ul className="space-y-4">
               {core.map((c) => {
                 const vars = variantGroups.get(c.slug) ?? []
@@ -68,7 +72,7 @@ export default function Directory() {
                 )
               })}
             </ul>
-          </section>
+          </details>
         )
       })}
 
