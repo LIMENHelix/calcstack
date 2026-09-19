@@ -2216,7 +2216,93 @@ export function RothLadderCalc() {
   )
 }
 
+/* ---------------- Solo 401(k) ---------------- */
+
+// Sole prop/LLC: NESE = Schedule C profit − ½ SE tax; employer side is 25% of
+// (NESE − contribution) which algebraically = 20% of NESE — the step every
+// "25% of profit" article misses. S-corp: flat 25% of W-2 wages, no adjustment.
+// SE tax: 92.35% × profit; 12.4% SS to $184,500 (2026) + 2.9% Medicare + 0.9%
+// over $200k/$250k. Node-verified: $100k profit → $43,087 total; $300k → $72,000 cap.
+export function Solo401kCalc() {
+  const [entity, setEntity] = useState<'sole' | 'scorp'>('sole')
+  const [income, setIncome] = useNumber(100000)
+  const [status, setStatus] = useState<'single' | 'mfj'>('single')
+  const [ageGrp, setAgeGrp] = useState<'under50' | 'catchup' | 'super'>('under50')
+
+  const r = useMemo(() => {
+    const deferralLimit = 24500
+    const catchup = ageGrp === 'under50' ? 0 : ageGrp === 'catchup' ? 8000 : 11250
+    const cap = 72000 + catchup
+    let halfSE = 0
+    let nese = income
+    let employer: number
+    if (entity === 'sole') {
+      const base = income * 0.9235
+      const se = Math.min(base, 184500) * 0.124 + base * 0.029 + Math.max(0, base - (status === 'mfj' ? 250000 : 200000)) * 0.009
+      halfSE = se / 2
+      nese = income - halfSE
+      employer = 0.2 * nese
+    } else {
+      employer = 0.25 * income
+    }
+    let employee = Math.min(deferralLimit + catchup, Math.max(0, nese - employer))
+    if (employee + employer > cap) employer = Math.max(0, cap - employee)
+    const total = employee + employer
+    return { halfSE, nese, employer, employee, total, cap, capped: deferralLimit + catchup + 0.2 * nese > cap }
+  }, [entity, income, status, ageGrp])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Business structure</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={entity} onChange={(e) => setEntity(e.target.value as 'sole' | 'scorp')}>
+            <option value="sole">Sole proprietor / single-member LLC</option>
+            <option value="scorp">S-corp (you pay yourself W-2 wages)</option>
+          </select>
+        </label>
+        <Field label={entity === 'sole' ? 'Schedule C net profit' : 'Your W-2 wages from the S-corp'} value={income} onChange={setIncome} prefix="$" step="1000" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Age group (2026)</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={ageGrp} onChange={(e) => setAgeGrp(e.target.value as 'under50' | 'catchup' | 'super')}>
+            <option value="under50">Under 50</option>
+            <option value="catchup">50–59 or 64+ (+$8,000)</option>
+            <option value="super">60–63 (+$11,250)</option>
+          </select>
+        </label>
+        {entity === 'sole' && (
+          <label className="space-y-1 text-sm">
+            <span className="text-muted-foreground">Filing status (0.9% Medicare threshold)</span>
+            <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={status} onChange={(e) => setStatus(e.target.value as 'single' | 'mfj')}>
+              <option value="single">Single ($200k)</option>
+              <option value="mfj">Married filing jointly ($250k)</option>
+            </select>
+          </label>
+        )}
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Max solo 401(k) contribution" value={`${usd(r.total, 0)}/yr`} />
+        <Result label="Employee deferral side" value={usd(r.employee, 0)} />
+        <Result label="Employer profit-sharing side" value={usd(r.employer, 0)} />
+        {entity === 'sole' && <Result label="½ SE-tax adjustment" value={`−${usd(r.halfSE, 0)}`} />}
+        {entity === 'sole' && <Result label="Net earnings (compensation base)" value={usd(r.nese, 0)} />}
+        <Result label="2026 total cap" value={usd(r.cap, 0)} />
+        <Result label="Cap status" value={r.capped ? 'capped at §415(c)' : 'under the cap'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {entity === 'sole'
+          ? `The employer side is NOT 25% of your profit — it's 25% of compensation, and for a sole proprietor "compensation" is profit minus half the self-employment tax minus the contribution itself. Solved algebraically that's 20% of net earnings: ${usd(income, 0)} profit − ${usd(r.halfSE, 0)} (½ SE tax) = ${usd(r.nese, 0)}, and 20% of that is ${usd(r.employer, 0)}. Add the $24,500 employee deferral${ageGrp === 'under50' ? '' : ' plus catch-up'} and you shelter ${usd(r.total, 0)}.`
+          : `As an S-corp owner the employer side is simply 25% of your W-2 wages — ${usd(r.employer, 0)} on ${usd(income, 0)} — with no SE-tax adjustment, because the adjustment lives in your salary decision instead. Total with the deferral: ${usd(r.total, 0)}.`}{' '}
+        The 2026 §415(c) cap is $72,000 (catch-up excluded, so $80,000 at 50+). Two compliance notes
+        that bite: the plan must be ESTABLISHED by December 31 of the tax year (contributions can
+        follow), and once plan assets top $250,000 you file Form 5500-EZ annually.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'solo-401k-calculator': Solo401kCalc,
   'roth-conversion-ladder-calculator': RothLadderCalc,
   'mega-backdoor-roth-calculator': MegaBackdoorCalc,
   'social-security-pia-calculator': SocialSecurityPiaCalc,

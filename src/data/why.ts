@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'solo-401k-calculator':
+    'Freelancers use it at year-end to find the real number: the employer side is 20% of net earnings after the half-SE-tax adjustment — not the "25% of profit" every article quotes — plus the deferral and catch-up, capped at $72,000 for 2026.',
   'roth-conversion-ladder-calculator':
     'Early retirees use it to see the ladder as a schedule, not a slogan: the 5-year bridge fund, the exact tax on each annual conversion at 2026 brackets, the Jan-1 clock that makes December conversions season in four years, and the 12%-bracket ceiling for sizing rungs.',
   'mega-backdoor-roth-calculator':

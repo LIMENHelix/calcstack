@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'solo-401k-calculator',
+    title: 'Solo 401(k) Calculator 2026 — The 20%-of-NESE Math Everyone Gets Wrong',
+    shortTitle: 'Solo 401(k)',
+    category: 'Freelance & Career',
+    description:
+      'Free solo 401(k) calculator for sole proprietors and S-corps. Computes the real employer contribution — 20% of net earnings after the half-SE-tax adjustment, not 25% of profit — plus the $24,500 deferral, catch-ups, and the $72,000 cap for 2026.',
+    tagline: '$100k of Schedule C profit shelters $43,087 — but only if you apply the SE-tax adjustment first.',
+    intro:
+      'Every "contribute 25% of your income" solo 401(k) article is wrong for sole proprietors: the employer side is 25% of compensation, and compensation is profit minus half the self-employment tax minus the contribution itself — which solves to 20% of net earnings, not 25% of anything. This calculator runs the circular formula correctly, handles S-corp wages separately, applies the 2026 limits and the $184,500 Social Security wage base, and shows both sides of the contribution.',
+    howItWorks: [
+      'Pick your structure: sole proprietor/single-member LLC or S-corp.',
+      'Enter Schedule C profit (sole prop) or your W-2 wages (S-corp).',
+      'Pick your age group — 2026 deferral is $24,500, $32,500 at 50+, $35,750 at 60–63.',
+      'Read the deferral side, the employer side, and the total against the $72,000 cap.',
+    ],
+    faq: [
+      {
+        q: 'How much can I contribute to a solo 401(k) with $100,000 of profit?',
+        a: '$43,087 for 2026, computed honestly: your SE tax on $100,000 is $14,129.55 (92.35% of profit × 15.3%), half of it ($7,065) comes off, leaving net earnings of $92,935. The employer side is 20% of that — $18,587 — and the employee deferral adds $24,500. Age 50+ adds the $8,000 catch-up for $51,087. The widely-quoted "25% of profit = $25,000 employer contribution" overstates it by $6,413 because it skips both adjustments.',
+      },
+      {
+        q: 'Why is it 20% and not 25% for sole proprietors?',
+        a: 'The circular definition: employer contributions are 25% of compensation, but for the self-employed, compensation is net earnings AFTER subtracting the contribution itself. Solving C = 25% × (net − C) gives C = 20% × net. "Net" itself is Schedule C profit minus half the self-employment tax. S-corp owners skip the algebra entirely — the employer side is a flat 25% of W-2 wages, which is why the salary-setting decision matters so much for them.',
+      },
+      {
+        q: 'What deadlines and filings apply to a solo 401(k)?',
+        a: 'The plan must be established by December 31 of the tax year (SECURE Act pushed funding deadlines, not establishment). Employee deferrals are generally due by year-end through payroll; employer profit-sharing can be contributed until the tax-filing deadline including extensions. Once plan assets exceed $250,000, Form 5500-EZ is due annually. And a solo 401(k) covers only you and a spouse — hire one full-time non-spouse employee and the plan must convert to a regular 401(k) with testing.',
+      },
+    ],
+  },
+  {
     slug: 'roth-conversion-ladder-calculator',
     title: 'Roth Conversion Ladder Calculator — 5-Year Clocks, Laid Out Year by Year',
     shortTitle: 'Roth Ladder',
