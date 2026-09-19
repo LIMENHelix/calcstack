@@ -2322,6 +2322,56 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// QCD — qualified charitable distribution, IRC §408(d)(8): age 70½+ (exact half-birthday — NOT the RMD age of 73/75), up to $111,000/person in 2026 (indexed; $222k couple but only from each spouse's OWN IRA), transferred DIRECTLY from a traditional/inherited IRA to a public charity — excluded from AGI entirely while counting toward the year's RMD (first-dollars-out: early-year distributions count against the RMD first). Beats the itemized deduction because ~90% of filers don't itemize, and even itemizers win on AGI: lower AGI → less Social Security taxed, lower IRMAA tiers, less NIIT exposure, no 60%-of-AGI cap. Ineligible recipients: DAFs, private foundations, supporting orgs. SECURE 2.0 §307: one-time $55,000 QCD into a CRT/CGA. Active SEP/SIMPLE and employer plans ineligible. Node-verified: giving $25k at 22%+5% → $6,750 saved vs cash-without-itemizing; giving $150k → capped $111k, excess $39k taxable-or-itemized; $10k at 12%+4% → $1,600.
+export function QcdCalc() {
+  const [giving, setGiving] = useNumber(25000)
+  const [rmd, setRmd] = useNumber(40000)
+  const [fed, setFed] = useNumber(22)
+  const [st, setSt] = useNumber(5)
+  const [itemize, setItemize] = useState(false)
+
+  const r = useMemo(() => {
+    const q = Math.min(giving, 111000)
+    const rate = (fed + st) / 100
+    const saved = q * rate
+    const rmdCovered = Math.min(q, rmd)
+    const excess = Math.max(0, giving - 111000)
+    const itemDedValue = itemize ? giving * rate : 0
+    const agiEdge = itemize ? saved : 0
+    return { q, saved, rmdCovered, excess, itemDedValue, agiEdge }
+  }, [giving, rmd, fed, st, itemize])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Charitable giving this year" value={giving} onChange={setGiving} prefix="$" />
+          <Field label="Your RMD this year (0 if not started)" value={rmd} onChange={setRmd} prefix="$" />
+          <Field label="Federal bracket" value={fed} onChange={setFed} suffix="%" />
+          <Field label="State rate" value={st} onChange={setSt} suffix="%" />
+        </div>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={itemize} onChange={(e) => setItemize(e.target.checked)} className="h-4 w-4" />
+          You itemize deductions even without this gift
+        </label>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Tax saved by QCD route" value={usd(r.saved)} />
+          <Result label="QCD amount (cap $111,000)" value={usd(r.q)} />
+          <Result label="RMD satisfied tax-free" value={usd(r.rmdCovered)} />
+          <Result label="Over the cap" value={usd(r.excess)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Sending <span className="font-medium">{usd(r.q)}</span> straight from your IRA to the charity keeps it off your 1040 entirely{r.rmdCovered > 0 && <> while satisfying {usd(r.rmdCovered)} of your RMD</>}. Versus withdrawing and writing a check{itemize ? <>: the itemized deduction gives you the same headline number ({usd(r.itemDedValue)}), but the QCD also <span className="font-medium">lowers AGI</span> — less Social Security taxed, lower IRMAA tier, less NIIT exposure, no 60%-of-AGI cap. That edge is real money: one IRMAA tier is worth $800+/yr per person.</> : <> with the standard deduction (which {itemize ? 'you itemize past' : '~90% of filers take'}), the check saves you <span className="font-medium">$0</span> — the QCD saves <span className="font-medium">{usd(r.saved)}</span> at your {fed + st}% combined rate.</>}
+          {r.excess > 0 && <> Note: {usd(r.excess)} of your giving is over the $111,000 cap — that portion needs the normal route (itemized deduction or appreciated stock).</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Rules that matter: age 70½ exactly — your half-birthday, not the year you turn 70, and NOT the RMD age (73/75) — the gap between 70½ and RMD age is a free window where QCDs shrink the IRA balance your future RMDs are computed on. The check must go directly from the custodian to the charity (payable to the charity; you can mail it, but never deposit it yourself). First dollars out of the IRA each year count as your RMD — do the QCD early in the year. Ineligible recipients: donor-advised funds, private foundations, supporting organizations. Eligible accounts: traditional and inherited traditional IRAs (inactive SEP/SIMPLE too); NOT 401(k)s — roll to an IRA first. One-time bonus: SECURE 2.0 §307 allows a single $55,000 QCD into a charitable remainder trust or gift annuity. Married couples get $111,000 EACH, but only from each spouse's own IRA. The 1099-R won't mark the QCD — tell your preparer or the whole thing lands as taxable income.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Step-up in basis — IRC §1014: assets passing at death get basis reset to fair market value, erasing ALL unrealized capital gain (and all depreciation recapture — rentals' §1250 gain dies with the owner). Gifts during life carry over the donor's basis (§1015) — the classic mistake: gifting appreciated stock to mom vs inheriting it. Community property states (AZ, CA, ID, LA, NV, NM, TX, WA, WI): BOTH halves of community property step up at first death; common-law joint property: only the decedent's half. NO step-up for income in respect of a decedent (IRD): traditional IRA/401(k) balances, deferred comp — heirs pay ordinary rates (see inherited-ira-calculator). Estate exemption 2026: $15M/person (OBBBA §70106, indexed) — so for nearly everyone the BASIS story matters more than the estate tax. Node-verified: basis $100k→FMV $600k single at 23.8% → $119,000 erased; joint common-law → $59,500 erased, $59,500 still taxable; basis $150k→$1M at 20% → $170,000 erased.
 export function StepUpBasisCalc() {
   const [basis, setBasis] = useNumber(100000)
@@ -6392,6 +6442,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'qcd-calculator': QcdCalc,
   'step-up-basis-calculator': StepUpBasisCalc,
   'inherited-ira-calculator': InheritedIraCalc,
   'kiddie-tax-calculator': KiddieTaxCalc,

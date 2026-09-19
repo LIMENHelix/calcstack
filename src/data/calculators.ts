@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'qcd-calculator',
+    title: 'QCD Calculator 2026 — Qualified Charitable Distributions Beat Writing Checks',
+    shortTitle: 'QCD Calculator',
+    category: 'Retirement',
+    description:
+      'Age 70½+? Send IRA money straight to charity: up to $111,000 excluded from income in 2026 while counting toward your RMD. Price the savings vs donating cash — even if you itemize.',
+    tagline: 'The only way to satisfy an RMD without a tax bill — and it works even before RMDs start.',
+    intro:
+      'If you\'re 70½ or older and give to charity, the qualified charitable distribution is almost certainly the wrong thing to skip. Money sent directly from your IRA to a public charity is excluded from income entirely — up to $111,000 per person in 2026 — while counting toward your required minimum distribution. For the ~90% of filers who take the standard deduction, a cash donation saves nothing; the same dollars as a QCD save the full marginal rate. Even itemizers win, because the QCD lowers AGI itself: less Social Security taxed, lower Medicare IRMAA tiers, less NIIT exposure. And the eligibility age is 70½ — not the RMD age of 73 or 75 — so pre-RMD years are a free window to shrink the IRA balance your future RMDs are calculated on. This calculator prices your exact savings and checks the cap.',
+    howItWorks: [
+      'Enter your planned charitable giving for the year.',
+      'Enter your RMD for the year (zero if RMDs haven\'t started — QCDs still work).',
+      'Enter your federal bracket and state rate.',
+      'Check the box if you itemize even without the gift — the QCD still wins on AGI.',
+    ],
+    faq: [
+      {
+        q: 'I\'m 71 — no RMDs yet. Is a QCD still worth it?',
+        a: 'It\'s arguably the BEST time. The QCD age is 70½ (your exact half-birthday), but RMDs don\'t start until 73 or 75 — the years in between let you move up to $111,000 a year out of the IRA tax-free, shrinking the balance every future RMD is computed from. $100,000 of pre-RMD QCDs is roughly $3,600 less forced income every year for the rest of your life, plus the immediate AGI exclusion on money you were giving anyway. The mistake to avoid: QCDs can\'t go to donor-advised funds or private foundations — public charities only.',
+      },
+      {
+        q: 'Why does the QCD beat the itemized deduction even for itemizers?',
+        a: 'Same deduction, better side effects. An itemized charitable deduction reduces taxable income but leaves AGI untouched; a QCD removes the income from AGI itself. Lower AGI means less of your Social Security is taxable, a lower Medicare IRMAA tier (one tier is $800+/year per person), less exposure to the 3.8% NIIT, and no 60%-of-AGI ceiling on the gift. Add that the standard deduction is now $32,200 for a married couple in 2026 — most retirees don\'t itemize at all, and for them the QCD is the only way a donation produces any tax benefit.',
+      },
+      {
+        q: 'What are the execution traps?',
+        a: 'Four, and they\'re all fatal to the benefit. (1) The money must go directly from the custodian to the charity — withdraw it yourself and it\'s just a taxable distribution. (2) You must be 70½ on the day of the distribution, not merely in the year you turn 70½. (3) First dollars out of the IRA each year count as your RMD — do QCDs early in the year so they offset the RMD before you take personal distributions. (4) The 1099-R won\'t identify the QCD — it just shows a gross distribution. If you don\'t tell your tax preparer (or check the right box in software), the IRS treats the whole thing as taxable income. Keep the charity\'s written acknowledgment.',
+      },
+    ],
+  },
+  {
     slug: 'step-up-basis-calculator',
     title: 'Step-Up in Basis Calculator 2026 — The Capital Gain That Dies With You',
     shortTitle: 'Step-Up Basis Calculator',
