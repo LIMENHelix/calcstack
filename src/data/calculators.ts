@@ -7890,31 +7890,32 @@ export const CALCULATORS: CalculatorMeta[] = [
   },
   {
     slug: 'bonus-tax-calculator',
-    title: 'Bonus Tax Calculator — Why Your Bonus Check Looks Overtaxed (22% Flat Rate)',
+    title: 'Bonus Tax Calculator 2026 — Flat 22% vs Aggregate Withholding, True Tax on a Bonus',
     shortTitle: 'Bonus Tax',
     category: 'Everyday Money',
     description:
-      'Free bonus tax calculator. See the 22% flat supplemental withholding versus your true marginal liability on a bonus — and whether the gap comes back as a refund.',
-    tagline: 'Your bonus isn\'t taxed higher. It\'s withheld higher.',
+      'Free bonus tax calculator. Compare the 22% flat supplemental rate against the aggregate annualization method — and both against your true marginal liability. Explains why a big commission check loses a third.',
+    tagline: 'Your bonus isn\'t taxed higher. It\'s withheld higher — and the method matters.',
     intro:
-      'The shock of a bonus check missing a third of its value is withholding, not tax. Payroll applies a flat 22% federal rate to supplemental wages, but your actual liability is the bonus stacked on your salary at marginal 2026 brackets. This calculator shows both numbers and what the difference means at filing time.',
+      'The shock of a bonus check missing a third of its value is withholding, not tax — and there are two completely different ways payroll computes it. A separate bonus check gets the flat 22% federal supplemental rate. A bonus folded into your regular check gets the aggregate method: the whole check is treated as if you earn it every pay period, annualized through the 2026 brackets, and divided back — so one big commission check annualizes into the 32–35% brackets and gets withheld like you make half a million. This calculator runs both methods side by side and compares them to your TRUE liability: the bonus stacked at your actual marginal brackets.',
     howItWorks: [
       'Enter your base salary, bonus amount, filing status, and a flat state estimate.',
-      'See what payroll withholds (22% flat federal + FICA + state) versus your true tax on the bonus.',
+      'For the aggregate method, enter any regular pay on the same check and your pay frequency.',
+      'Compare both withholding methods against your true tax on the bonus.',
       'Read the refund gap — for most filers, part of the withholding comes back in April.',
     ],
     faq: [
       {
         q: 'Are bonuses taxed at a higher rate than salary?',
-        a: 'No. Bonuses are ordinary income taxed at your regular marginal brackets. They only LOOK overtaxed because employers withhold a flat 22% federal on supplemental wages (IRS rule for bonuses under $1M). At filing, the withholding is credited against your real liability and any excess refunds.',
+        a: 'No. Bonuses are ordinary income taxed at your regular marginal brackets. They only LOOK overtaxed because of withholding method. Two possibilities (IRS Pub. 15-T): a separate supplemental check gets flat 22% federal (37% above $1M); a bonus combined with regular pay gets the aggregate method — the combined check is annualized (multiplied by your pay periods), taxed at those brackets, and divided back. A $13,000 commission check withheld by aggregate looks like a $338,000 salary to the withholding tables — that\'s how a modest earner sees 24%+ withheld on one check.',
       },
       {
-        q: 'When would I actually owe more than the 22% withheld?',
-        a: 'When your salary plus bonus puts your top dollars in the 24%, 32%, or higher brackets — roughly above $105,700 taxable for single filers in 2026. In that case the flat withholding falls short and setting aside the difference avoids an April surprise.',
+        q: 'When would I actually owe more than was withheld?',
+        a: 'Flat 22% method: when your salary plus bonus puts top dollars in the 24%+ brackets — roughly above $105,700 taxable for single filers in 2026. Aggregate method: almost never — it over-withholds for everyone whose real annual income is below what the big check annualizes to, and the excess comes back as a refund. If your income is lumpy (commissions, overtime spikes), expect each big check to be over-withheld and plan cash flow around the refund, or adjust your W-4 to compensate.',
       },
       {
         q: 'Can I reduce the tax on a bonus?',
-        a: 'The cleanest lever: increase your pre-tax 401(k) contribution for the bonus paycheck — every dollar deferred dodges your marginal rate (22% or 24% for most bonus recipients) plus state tax. An HSA contribution works the same way if you are eligible.',
+        a: 'The cleanest lever: increase your pre-tax 401(k) contribution for the bonus paycheck — every dollar deferred dodges your marginal rate (22% or 24% for most bonus recipients) plus state tax, and pre-tax deferrals also shrink the wage base the aggregate method annualizes. An HSA contribution works the same way if you are eligible. What does NOT work: asking payroll to withhold less on the check itself — withholding method is their choice, not yours. You fix the total at filing or through your regular W-4.',
       },
     ],
   },

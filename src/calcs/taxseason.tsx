@@ -81,12 +81,18 @@ export function BonusTaxCalc(_props: CalcProps) {
   const [bonus, setBonus] = useNumber(10000)
   const [filing, setFiling] = useState<'single' | 'mfj'>('single')
   const [stateRate, setStateRate] = useNumber(5)
+  const [regular, setRegular] = useNumber(0)
+  const [periods, setPeriods] = useState('26')
 
   const r = useMemo(() => {
     const fed = FEDERAL[filing]
     const fedTax = (g: number) => bracketTax(fed.brackets, Math.max(0, g - fed.ded))
     // Flat method: employer withholds 22% federal on the bonus (supplemental wages under $1M)
     const flatWithheld = bonus * (SUPPLEMENTAL_RATE / 100)
+    // Aggregate method (Pub. 15-T): treat the whole check as a normal paycheck —
+    // annualize it, tax it, divide back. Bonus WH = WH(regular+bonus) − WH(regular).
+    const n = parseInt(periods, 10)
+    const aggWithheld = (fedTax((regular + bonus) * n) - fedTax(regular * n)) / n
     // Actual liability: bonus stacks on top of salary at marginal rates
     const actualFed = fedTax(salary + bonus) - fedTax(salary)
     const fica = Math.min(bonus, Math.max(0, SS_WAGE_CAP - salary)) * (SS_RATE / 100) + bonus * (MEDICARE_RATE / 100)
@@ -96,8 +102,8 @@ export function BonusTaxCalc(_props: CalcProps) {
     const refundGap = withheldTotal - actualTotal // positive = refund coming
     const effOnBonus = bonus > 0 ? actualTotal / bonus : 0
     const netBonus = bonus - actualTotal
-    return { flatWithheld, actualFed, fica, state, actualTotal, refundGap, effOnBonus, netBonus }
-  }, [salary, bonus, filing, stateRate])
+    return { flatWithheld, aggWithheld, actualFed, fica, state, actualTotal, refundGap, effOnBonus, netBonus }
+  }, [salary, bonus, filing, stateRate, regular, periods])
 
   return (
     <Card>
@@ -115,29 +121,47 @@ export function BonusTaxCalc(_props: CalcProps) {
           </div>
         </div>
 
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Field label="Regular pay on the same check" value={regular} onChange={setRegular} prefix="$" />
+          <div className="space-y-1.5">
+            <p className="text-sm font-medium">Pay periods / year</p>
+            <select className={inputCls} value={periods} onChange={(e) => setPeriods(e.target.value)}>
+              <option value="52">52 — weekly</option>
+              <option value="26">26 — biweekly</option>
+              <option value="24">24 — semi-monthly</option>
+              <option value="12">12 — monthly</option>
+            </select>
+          </div>
+        </div>
+
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Result big label="Bonus you actually keep" value={usd(r.netBonus)} />
-          <Result label="Withheld from the bonus check" value={usd(r.flatWithheld + r.fica + r.state)} />
+          <Result label="Withheld: flat 22% method" value={usd(r.flatWithheld + r.fica + r.state)} />
+          <Result label="Withheld: aggregate method" value={usd(r.aggWithheld + r.fica + r.state)} />
           <Result label="True tax on the bonus" value={usd(r.actualTotal)} />
-          <Result label="Effective rate on bonus" value={`${num(r.effOnBonus * 100, 1)}%`} />
         </div>
 
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-sm">
             <tbody>
-              <tr className="border-t"><td className="p-2">Federal withholding (flat {SUPPLEMENTAL_RATE}% supplemental rate)</td><td className="p-2 text-right">{usd(r.flatWithheld)}</td></tr>
+              <tr className="border-t"><td className="p-2">Flat method — {SUPPLEMENTAL_RATE}% supplemental rate (separate bonus check)</td><td className="p-2 text-right">{usd(r.flatWithheld)}</td></tr>
+              <tr className="border-t"><td className="p-2">Aggregate method — check annualized ×{periods}, taxed, divided back (combined check)</td><td className="p-2 text-right">{usd(r.aggWithheld)}</td></tr>
               <tr className="border-t"><td className="p-2">Actual federal liability (bonus at your marginal brackets)</td><td className="p-2 text-right">{usd(r.actualFed)}</td></tr>
               <tr className="border-t"><td className="p-2">FICA + state on the bonus</td><td className="p-2 text-right">{usd(r.fica + r.state)}</td></tr>
-              <tr className="border-t"><td className="p-2">At filing time</td><td className="p-2 text-right">{r.refundGap >= 0 ? `~${usd(r.refundGap)} of the withholding comes back as refund` : `You'll owe ~${usd(-r.refundGap)} more than was withheld`}</td></tr>
+              <tr className="border-t"><td className="p-2">At filing time (flat method)</td><td className="p-2 text-right">{r.refundGap >= 0 ? `~${usd(r.refundGap)} of the withholding comes back as refund` : `You'll owe ~${usd(-r.refundGap)} more than was withheld`}</td></tr>
             </tbody>
           </table>
         </div>
 
         <p className="text-sm text-muted-foreground">
-          Bonuses feel overtaxed because payroll withholds a flat {SUPPLEMENTAL_RATE}% federal on
-          supplemental wages — but that's just withholding, not the tax. Your real liability is the
-          bonus stacked at your marginal 2026 brackets. High earners in the 24%+ brackets are
-          under-withheld on bonuses; everyone else gets the gap back at filing.
+          Bonuses feel overtaxed because withholding isn't tax. Employers choose one of two methods
+          (Pub. 15-T): a separate bonus check gets the flat {SUPPLEMENTAL_RATE}% supplemental rate; a
+          bonus folded into your regular check gets the AGGREGATE method — the whole check is treated
+          as if you earn it every period, annualized through the 2026 brackets, then divided back. A
+          single big commission check annualizes into the 32–35% brackets, which is why a $21k check
+          can show ~$5,900 of federal withholding even at a modest salary. It's still just withholding:
+          your real liability is the bonus stacked at your actual marginal brackets, and the gap
+          settles at filing. Effective rate on this bonus: {num(r.effOnBonus * 100, 1)}%.
         </p>
       </CardContent>
     </Card>
