@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'weight-cut-calculator':
+    'Fighters and their corners use it because every dangerous cut is the same arithmetic mistake — treating water and fat as interchangeable. It splits the cut into the two real phases, flags cuts past the ~5% acute ceiling, and shows the calendar the physics actually requires.',
   'training-load-acwr-calculator':
     'Athletes and coaches use it to audit training spikes before they become injuries — uncoupled ratio the way Gabbett validated it, because the coupled formula puts this week in both sides of the division and flatters exactly the spikes that break people.',
   'critical-power-calculator':

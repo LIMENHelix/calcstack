@@ -2322,6 +2322,71 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+export function WeightCutCalc() {
+  const [walkLb, setWalkLb] = useNumber(198)
+  const [targetLb, setTargetLb] = useNumber(170)
+  const [weeks, setWeeks] = useNumber(8)
+  const [hours, setHours] = useNumber(24)
+
+  const r = useMemo(() => {
+    const KG = 0.45359237
+    const walkKg = walkLb * KG
+    const totalKg = Math.max(0, (walkLb - targetLb) * KG)
+    const totalPct = walkLb > 0 ? ((walkLb - targetLb) / walkLb) * 100 : 0
+    const waterCapKg = walkKg * 0.05 // 5% acute-dehydration ceiling used in consensus guidance with 24h recovery
+    const fatRateKg = walkKg * 0.0075 // 0.75% BW/wk sustainable fat-loss pace
+    const fatNeededKg = Math.max(0, totalKg - waterCapKg)
+    const weeksNeeded = Math.ceil(fatNeededKg / fatRateKg) + 1 // +1 water-cut week
+    const fatLossPossibleKg = Math.max(0, (weeks - 1)) * fatRateKg
+    const waterKg = Math.max(0, totalKg - Math.min(fatNeededKg, fatLossPossibleKg))
+    const waterPct = walkKg > 0 ? (waterKg / walkKg) * 100 : 0
+    const verdict = totalKg <= 0 ? 'none' : waterPct <= 2 ? 'mild' : waterPct <= 5 ? 'standard' : 'danger'
+    const rehydrateL = waterKg * 1.5 // ACSM: ~1.5 L per kg of fluid lost
+    const carbLo = walkKg * 5
+    const carbHi = walkKg * 10
+    const fatPerWkLb = fatRateKg / KG
+    return { totalPct, weeksNeeded, waterKg, waterLb: waterKg / KG, waterPct, verdict, rehydrateL, carbLo, carbHi, fatPerWkLb, totalLb: walkLb - targetLb }
+  }, [walkLb, targetLb, weeks, hours])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-4">
+        <Field label="Walking-around weight" value={walkLb} onChange={setWalkLb} suffix="lb" step="2" />
+        <Field label="Weigh-in target" value={targetLb} onChange={setTargetLb} suffix="lb" step="1" />
+        <Field label="Weeks until weigh-in" value={weeks} onChange={setWeeks} step="1" />
+        <Field label="Hours weigh-in → fight" value={hours} onChange={setHours} step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Total cut" value={`${num(r.totalLb, 0)} lb (${num(r.totalPct, 1)}%)`} />
+        <Result label="Fat-phase pace available" value={`${num(r.fatPerWkLb, 2)} lb/wk`} />
+        <Result label="Final-week water cut" value={`${num(r.waterLb, 1)} lb (${num(r.waterPct, 1)}%)`} />
+        <Result label="Verdict" value={r.verdict === 'none' ? 'No cut needed' : r.verdict === 'mild' ? 'Mild' : r.verdict === 'standard' ? 'Standard' : 'TOO MUCH'} />
+        <Result label="Minimum weeks needed" value={String(r.weeksNeeded)} />
+        <Result label="Rehydration target" value={`${num(r.rehydrateL, 1)} L`} />
+        <Result label="24h carb refuel" value={`${num(r.carbLo, 0)}–${num(r.carbHi, 0)} g`} />
+      </div>
+      {r.verdict === 'danger' && (
+        <p className="text-sm font-medium text-red-600 dark:text-red-400">
+          This plan requires a {num(r.waterPct, 1)}% acute water cut — beyond the ~5% ceiling sports-medicine
+          consensus considers manageable even with a full 24-hour recovery. That is kidney-stress,
+          cardiac-strain, and performance-loss territory. You need {r.weeksNeeded} weeks minimum, a higher
+          weight class, or both. No fight is worth the hospital version of this math.
+        </p>
+      )}
+      <p className="text-sm text-muted-foreground">
+        A real cut is two different processes with two different clocks. The fat phase runs weeks out at a
+        sustainable ~0.75% of body weight per week — faster and you are burning the muscle you fight with. The
+        water phase is the final week only: glycogen depletion (each gram of stored carb releases ~3 g of
+        water), gut content, sodium taper, and fluid manipulation — reversible weight, not fat. Research
+        consensus (Reale, ACSM) puts ~2% as performance-safe and ~5% as the ceiling WITH {hours >= 24 ? 'your full 24-hour' : 'a long'} recovery
+        window{hours < 24 ? ' — and your window is shorter than 24 hours, which shrinks what is safe' : ''}. Rehydration
+        is 1.5 L per kg lost plus 5–10 g/kg of carbohydrate to restore glycogen; IV rehydration is banned by
+        USADA/WADA above 100 mL per 12 hours regardless of how common it looks on fight week.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function AcwrCalc() {
   const [w3, setW3] = useNumber(30)
   const [w2, setW2] = useNumber(35)
@@ -3088,6 +3153,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'weight-cut-calculator': WeightCutCalc,
   'training-load-acwr-calculator': AcwrCalc,
   'critical-power-calculator': CriticalPowerCalc,
   'wilks-score-calculator': WilksCalc,

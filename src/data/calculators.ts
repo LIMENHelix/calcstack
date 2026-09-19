@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'weight-cut-calculator',
+    title: 'Weight Cut Calculator for Combat Sports — Fat Phase vs Water Phase, With the Safety Ceiling',
+    shortTitle: 'Weight Cut',
+    category: 'Fitness & Sports',
+    description:
+      'Combat-sports weight-cut planner that separates the two clocks: sustainable fat loss (~0.75% of body weight per week) versus the final-week water cut (glycogen, gut content, fluids — ~5% ceiling per sports-medicine consensus). Flags dangerous cuts, computes minimum weeks needed, and prices the rehydration and carb refuel for fight night.',
+    tagline:
+      'A cut is two processes on two clocks — fat takes weeks, water takes days. The tool that tells you when the math says move up a class.',
+    intro:
+      'Every dangerous weight cut is the same arithmetic mistake: treating reversible water weight and real fat loss as interchangeable. Fat comes off at about 0.75% of body weight per week without burning fight muscle; water manipulation can only safely cover roughly 2–5% in the final week even with a 24-hour recovery. This planner splits your cut into both phases, tells you the minimum calendar the physics allows, and prices the rehydration window — 1.5 liters per kilogram lost, plus the glycogen refuel.',
+    howItWorks: [
+      'Total cut = walking weight − target. The fat phase covers everything above the water ceiling at ~0.75% of body weight per week.',
+      'The water phase is final-week only: glycogen depletion (1 g glycogen releases ~3 g water), gut-content reduction, sodium taper, fluid restriction — all reversible within hours.',
+      'Verdict thresholds from sports-medicine consensus: ≤2% acute cut is performance-safe, ~5% is the ceiling with 24h recovery, beyond that the tool says TOO MUCH and shows the weeks you actually need.',
+      'Recovery math: 1.5 L of fluid per kg lost (ACSM) and 5–10 g/kg of carbohydrate in the 24-hour window to restore glycogen.',
+    ],
+    faq: [
+      {
+        q: 'I walk at 198 lb and fight at 170 lb with 8 weeks. Is that doable?',
+        a: 'The math says no, not safely. That is a 14.4% cut; after the maximum ~5% water portion (about 10 lb), you still need 18 lb of fat loss at ~1.5 lb/week — 14 weeks minimum, not 8. At 8 weeks the water cut would have to reach 9.2%, deep into kidney-stress and cardiac-strain territory. The tool will tell you the same thing and show the 14-week plan or the case for fighting at 185.',
+      },
+      {
+        q: 'Why does the water cut have a hard ceiling?',
+        a: 'Because dehydration past ~2% of body weight measurably degrades power and cognition, and past ~5% it strains the cardiovascular and renal systems even before you fight. With a 24-hour weigh-in you can restore most of 5%; with a same-day weigh-in you cannot — which is why ONE Championship and some commissions now test hydration at weigh-ins. The recovery window is part of the math, not a detail.',
+      },
+      {
+        q: 'What should I actually do in the final week?',
+        a: 'The evidence-based sequence: a low-residue (low-fiber) diet 2–3 days out to empty gut content, a sodium taper after several days of high sodium and high water intake (~100 mL/kg) to trigger a diuresis rebound, then fluid restriction in the last 24 hours — no saunas needed until the final pounds. After weigh-in: 1.5 L per kg lost with electrolytes, 5–10 g/kg of carbs, and no IV fluids (banned above 100 mL/12h by USADA/WADA).',
+      },
+    ],
+  },
+  {
     slug: 'training-load-acwr-calculator',
     title: 'Acute:Chronic Workload Ratio Calculator — Coupled vs Uncoupled, Injury Zones',
     shortTitle: 'ACWR',
