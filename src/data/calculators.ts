@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'traditional-ira-deduction-calculator',
+    title: 'Traditional IRA Deduction Calculator 2026 — Deductibility Phase-Outs by Plan Coverage',
+    shortTitle: 'IRA Deduction 2026',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 traditional IRA deduction calculator. Enter filing status, workplace plan coverage, and MAGI — get your exact deductible amount using the IRS phase-out formula, and the nondeductible remainder you must track on Form 8606.',
+    tagline: 'Anyone can contribute to a traditional IRA. Deducting it is the part with rules.',
+    intro:
+      'There is no income limit on contributing to a traditional IRA — the limit is on deducting it, and it depends on whether a workplace plan covers you (or your spouse). For 2026, the deduction phases out from $81,000–$91,000 MAGI for covered single filers, $129,000–$149,000 for covered joint contributors, and $242,000–$252,000 when only your spouse is covered. No coverage at all? Fully deductible at any income. This calculator applies the exact IRS formula — proportional reduction, round-up to the next $10, $200 floor — and shows what to do with the nondeductible part.',
+    howItWorks: [
+      'Pick your filing status — married filing separately while living together gets the never-indexed $0–$10,000 band.',
+      'Say whether a workplace retirement plan covers you, and (if married) your spouse — coverage, not income, decides which phase-out band applies.',
+      'Enter your MAGI for the year and check 50+ for the $8,600 catch-up limit.',
+      'Read the exact deductible amount, the nondeductible remainder, and how far you are through the phase-out band.',
+    ],
+    faq: [
+      {
+        q: 'What are the 2026 traditional IRA deduction limits?',
+        a: 'The contribution limit is $7,500 ($8,600 at 50+). Deductibility phases out by MAGI only if a workplace plan is involved: $81,000–$91,000 single/head-of-household when you are covered; $129,000–$149,000 joint when the contributor is covered; $242,000–$252,000 joint when only the spouse is covered; $0–$10,000 married filing separately (fixed by statute, never indexed). Neither spouse covered: the deduction is unlimited at any income. Per IRS Notice 2025-67.',
+      },
+      {
+        q: 'How does the phase-out math work?',
+        a: 'Inside the band, the deduction shrinks proportionally: limit × (top of range − MAGI) ÷ width of range, rounded UP to the nearest $10, with a $200 floor near the top. Example: single, covered, $86,000 MAGI, under 50 → halfway through the $81k–$91k band → $7,500 × 0.5 = $3,750 deductible, $3,750 nondeductible. At $90,990 the formula yields under $200, so the floor gives you $200. At $91,000 it is zero.',
+      },
+      {
+        q: 'What if my contribution is partly or fully nondeductible?',
+        a: 'You can still contribute — you just file Form 8606 to track the after-tax basis so it is not taxed again at withdrawal. But run the comparison first: if you are under the Roth phase-out ($153k single / $242k joint in 2026), a Roth contribution is almost always better than a nondeductible traditional one — same no-deduction today, but tax-free instead of tax-deferred growth. Over the Roth limit, the nondeductible-plus-convert move is the backdoor Roth — watch the pro-rata rule if you hold other pre-tax IRA balances.',
+      },
+    ],
+  },
+  {
     slug: 'social-security-tax-calculator',
     title: 'Social Security Tax Calculator — How Much of Your Benefit Is Taxable (2026)',
     shortTitle: 'Social Security Tax',

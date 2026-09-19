@@ -2322,6 +2322,125 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Traditional IRA deductibility — 2026 phase-outs, IRS Notice 2025-67 & Pub 590-A.
+const IRA_DEDUCT_2026: Record<string, readonly [number, number]> = {
+  singleCovered: [81000, 91000],
+  mfjContributorCovered: [129000, 149000],
+  mfjSpouseCovered: [242000, 252000],
+  mfsCovered: [0, 10000], // not inflation-indexed
+}
+
+export function TraditionalIraDeductionCalc() {
+  const [status, setStatus] = useState('single')
+  const [covered, setCovered] = useState(true)
+  const [spouseCovered, setSpouseCovered] = useState(false)
+  const [magi, setMagi] = useNumber(120000)
+  const [age50, setAge50] = useState(false)
+
+  const r = useMemo(() => {
+    const limit = age50 ? 8600 : 7500
+    let band: readonly [number, number] | null = null
+    if (status === 'mfs') {
+      // lived with spouse: covered contributor OR spouse covered -> 0–10k band
+      band = covered || spouseCovered ? IRA_DEDUCT_2026.mfsCovered : null
+    } else if (status === 'mfj') {
+      band = covered
+        ? IRA_DEDUCT_2026.mfjContributorCovered
+        : spouseCovered
+          ? IRA_DEDUCT_2026.mfjSpouseCovered
+          : null
+    } else {
+      band = covered ? IRA_DEDUCT_2026.singleCovered : null
+    }
+    let ded: number
+    let phase = 0 // 0..1 through the band
+    if (band === null) {
+      ded = limit
+    } else if (magi < band[0]) {
+      ded = limit
+    } else if (magi >= band[1]) {
+      ded = 0
+      phase = 1
+    } else {
+      phase = (magi - band[0]) / (band[1] - band[0])
+      let reduced = limit * (1 - phase)
+      reduced = Math.ceil(reduced / 10) * 10
+      if (reduced > 0 && reduced < 200) reduced = 200
+      ded = reduced
+    }
+    const nondeductible = limit - ded
+    const headroom = band !== null && magi < band[1] ? band[1] - magi : null
+    return { limit, band, ded, nondeductible, phase, headroom }
+  }, [status, covered, spouseCovered, magi, age50])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="single">Single / Head of household</option>
+              <option value="mfj">Married filing jointly</option>
+              <option value="mfs">Married filing separately (lived together)</option>
+            </select>
+          </label>
+          <label className="flex items-end gap-2 pb-2 text-sm">
+            <input type="checkbox" checked={covered} onChange={(e) => setCovered(e.target.checked)} className="h-4 w-4" />
+            I am covered by a workplace plan (401(k), etc.)
+          </label>
+          {status !== 'single' ? (
+            <label className="flex items-end gap-2 pb-2 text-sm">
+              <input type="checkbox" checked={spouseCovered} onChange={(e) => setSpouseCovered(e.target.checked)} className="h-4 w-4" />
+              My spouse is covered by a workplace plan
+            </label>
+          ) : (
+            <label className="flex items-end gap-2 pb-2 text-sm">
+              <input type="checkbox" checked={age50} onChange={(e) => setAge50(e.target.checked)} className="h-4 w-4" />
+              Age 50 or older
+            </label>
+          )}
+          <Field label="Modified AGI (MAGI)" value={magi} onChange={setMagi} prefix="$" />
+          {status !== 'single' && (
+            <label className="flex items-end gap-2 pb-2 text-sm">
+              <input type="checkbox" checked={age50} onChange={(e) => setAge50(e.target.checked)} className="h-4 w-4" />
+              Age 50 or older
+            </label>
+          )}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="2026 contribution limit" value={usd(r.limit)} />
+          <Result label="Deductible amount" value={usd(r.ded)} />
+          <Result label="Nondeductible portion" value={usd(r.nondeductible)} />
+          <Result label="Monthly deductible" value={usd(r.ded / 12)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.band === null ? (
+            <>
+              <span className="font-medium">Fully deductible at any income.</span> With no workplace plan covering you{status !== 'single' ? ' (or your spouse)' : ''}, there is no income limit on the traditional IRA deduction — the full {usd(r.limit)} comes off your taxable income.
+            </>
+          ) : r.ded === r.limit ? (
+            <>
+              <span className="font-medium">Fully deductible.</span> Your MAGI is below the {usd(r.band[0])} threshold for your situation. {r.headroom !== null && <>Headroom before the phase-out starts: <span className="font-medium">{usd(r.band[0] - magi)}</span>.</>}
+            </>
+          ) : r.ded === 0 ? (
+            <>
+              <span className="font-medium">No deduction at this income.</span> You can still contribute {usd(r.limit)} as a <span className="font-medium">nondeductible</span> traditional IRA (file Form 8606 to track basis) — or go straight to Roth if you are under the Roth phase-out, or use the backdoor route if you are over it.
+            </>
+          ) : (
+            <>
+              <span className="font-medium">Partial deduction — {(r.phase * 100).toFixed(0)}% through the phase-out.</span> You can deduct {usd(r.ded)}; the remaining {usd(r.nondeductible)} is a nondeductible contribution (Form 8606). {r.headroom !== null && r.headroom > 0 && <>You are {usd(r.headroom)} of MAGI from losing the deduction entirely.</>}
+            </>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 phase-outs per IRS Notice 2025-67: $81k–$91k single (covered), $129k–$149k joint (contributor covered), $242k–$252k joint (only spouse covered), $0–$10k MFS (never indexed). Reduction = limit × (top − MAGI) ÷ band width, rounded up to the next $10, with a $200 floor — Pub 590-A. Deduction value = amount × your marginal rate; state savings extra.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Social Security benefits taxation — IRC §86 / IRS Pub 915 Worksheet 1. Thresholds statutory, frozen since 1984/1993 (not indexed).
 export function SocialSecurityTaxCalc() {
   const [status, setStatus] = useState('mfj')
@@ -3613,6 +3732,7 @@ export function SepIraCalc() {
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'medicare-irmaa-calculator': IrmaaCalc,
   'social-security-tax-calculator': SocialSecurityTaxCalc,
+  'traditional-ira-deduction-calculator': TraditionalIraDeductionCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

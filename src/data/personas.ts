@@ -903,6 +903,7 @@ export const PERSONAS: Persona[] = [
       'safe-withdrawal-calculator',
       'roth-conversion-ladder-calculator',
       'medicare-irmaa-calculator',
+      'traditional-ira-deduction-calculator',
       'compound-interest-calculator',
       'inflation-calculator',
       'loan-payoff-calculator',

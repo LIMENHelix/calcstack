@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'traditional-ira-deduction-calculator':
+    'Anyone with a 401(k) at work and a decent raise uses it to learn the contribution-versus-deduction trap: there is no income limit on putting money in a traditional IRA, only on deducting it — and which of the four phase-out bands applies depends on plan coverage, not just income.',
   'social-security-tax-calculator':
     'Retirees and near-retirees use it to see how much of their benefit the IRS actually taxes — and to spot the tax torpedo, the hidden 40%+ effective rate on withdrawals inside the 85% zone, before they size a Roth conversion or IRA withdrawal through it.',
   'medicare-irmaa-calculator':
