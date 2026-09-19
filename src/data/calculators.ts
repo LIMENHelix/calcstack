@@ -170,6 +170,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ev-vs-gas-cost-calculator',
+    title: 'EV vs Gas Cost Calculator — 2026 Breakeven Without the Expired Credit',
+    shortTitle: 'EV vs Gas Cost',
+    category: 'Auto & Transport',
+    description:
+      'Free EV vs gas cost calculator updated for 2026: the $7,500 federal credit ended Sept 30, 2025. Compare purchase price, home-charging cost vs gasoline, and maintenance — see the breakeven year and 10-year total cost honestly.',
+    tagline: 'The $7,500 credit is gone. Home charging is the subsidy now.',
+    intro:
+      'EV math changed in 2026: the federal $7,500 new-EV and $4,000 used-EV credits ended September 30, 2025, and most comparison tools still quote them. This calculator runs the real post-credit math — the price premium against what home charging actually saves per mile versus gasoline, plus the maintenance gap — and tells you the breakeven year and the 10-year total for both.',
+    howItWorks: [
+      'Enter both purchase prices — comparable trims, not base-vs-loaded.',
+      'Enter your annual miles, the EV\'s efficiency, and your home electricity rate.',
+      'Enter the gas car\'s MPG and your local gas price.',
+      'Set maintenance estimates (EVs run 40–60% cheaper: no oil, fewer brakes).',
+      'Read the breakeven year, annual savings, and 10-year totals.',
+    ],
+    faq: [
+      {
+        q: 'Is there still a federal EV tax credit in 2026?',
+        a: 'No. The $7,500 new-EV credit (§30D) and $4,000 used-EV credit (§25E) ended for vehicles acquired after September 30, 2025, under OBBBA, and the home-charger credit (§30C) ended June 30, 2026. What remains: state rebates (roughly $1,500–$6,000 depending on state and income), utility charger rebates, and time-of-use electricity rates. OBBBA\'s new auto-loan interest deduction applies to EVs and gas cars equally, so it doesn\'t change the comparison.',
+      },
+      {
+        q: 'How long until an EV pays for itself?',
+        a: 'Example: a $45,000 EV against a $38,000 gas car, 12,000 miles/yr, 30 kWh/100mi at 17¢ home rate vs 30 MPG at $3.40/gal, $400 vs $1,000 maintenance. Fuel: $612 vs $1,360/yr; total savings $1,348/yr; the $7,000 premium breaks even in 5.2 years and the EV is $6,480 ahead at year 10. Charge on a 12¢ off-peak rate and breakeven drops to 4 years; charge mostly at public fast chargers and it can vanish entirely.',
+      },
+      {
+        q: 'What is the hidden variable in EV vs gas math?',
+        a: 'Where you charge. Home Level 2 at the average residential rate costs 4–6¢/mile; public DC fast charging runs 10–15¢/mile — gasoline territory. The EV case is strong for homeowners with a driveway and weak for apartment dwellers dependent on public charging. Also watch state EV registration surcharges ($50–$225/yr in most states to replace gas tax) and insurance, which runs 10–20% higher on EVs — neither is in this tool\'s defaults, so add them to the maintenance fields if they apply.',
+      },
+    ],
+  },
+  {
     slug: 'solar-payback-calculator',
     title: 'Solar Panel Payback Calculator — 2026 Math Without the Expired Federal Credit',
     shortTitle: 'Solar Payback',

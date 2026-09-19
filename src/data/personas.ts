@@ -946,6 +946,7 @@ export const PERSONAS: Persona[] = [
       'closing-cost-calculator',
       'mortgage-points-calculator',
       'solar-payback-calculator',
+      'ev-vs-gas-cost-calculator',
       'fha-loan-calculator',
       '15-year-mortgage-calculator',
       'savings-goal-calculator',

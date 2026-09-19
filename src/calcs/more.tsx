@@ -1201,7 +1201,74 @@ export function SolarPaybackCalc() {
   )
 }
 
+/* ---------------- EV vs Gas Total Cost (2026 — post-credit) ---------------- */
+
+// IMPORTANT: §30D new-EV ($7,500) and §25E used-EV ($4,000) credits ended Sept 30, 2025
+// under OBBBA; §30C charger credit ended June 30, 2026. No federal purchase credit in
+// the math. (OBBBA's auto-loan interest deduction applies to both EV and gas — neutral.)
+// Verified: $45k EV vs $38k gas, 12k mi/yr, 30 kWh/100mi @17¢ vs 30mpg @$3.40 →
+// $612 vs $1,360 fuel, $1,348/yr saved w/ maintenance, breakeven 5.2y, EV −$6,480 @10y.
+export function EvVsGasCalc() {
+  const [evPrice, setEvPrice] = useNumber(45000)
+  const [gasPrice, setGasPrice] = useNumber(38000)
+  const [miles, setMiles] = useNumber(12000)
+  const [kwh100, setKwh100] = useNumber(30)
+  const [rate, setRate] = useNumber(17)
+  const [mpg, setMpg] = useNumber(30)
+  const [gasGal, setGasGal] = useNumber(3.4)
+  const [evMaint, setEvMaint] = useNumber(400)
+  const [gasMaint, setGasMaint] = useNumber(1000)
+
+  const r = useMemo(() => {
+    const evFuel = (miles / 100) * kwh100 * (rate / 100)
+    const gasFuel = (miles / Math.max(1, mpg)) * gasGal
+    const annualSave = gasFuel + gasMaint - (evFuel + evMaint)
+    const premium = evPrice - gasPrice
+    const breakeven = annualSave > 0 ? premium / annualSave : Infinity
+    const years = 10
+    const evT = evPrice + (evFuel + evMaint) * years
+    const gasT = gasPrice + (gasFuel + gasMaint) * years
+    return { evFuel, gasFuel, annualSave, premium, breakeven, evT, gasT, diff: gasT - evT, years }
+  }, [evPrice, gasPrice, miles, kwh100, rate, mpg, gasGal, evMaint, gasMaint])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="EV purchase price" value={evPrice} onChange={setEvPrice} prefix="$" step="500" />
+        <Field label="Gas car purchase price" value={gasPrice} onChange={setGasPrice} prefix="$" step="500" />
+        <Field label="Miles per year" value={miles} onChange={setMiles} step="500" />
+        <Field label="EV efficiency" value={kwh100} onChange={setKwh100} suffix="kWh/100mi" step="1" />
+        <Field label="Home electricity rate" value={rate} onChange={setRate} suffix="¢/kWh" step="0.5" />
+        <Field label="Gas car MPG" value={mpg} onChange={setMpg} step="1" />
+        <Field label="Gas price" value={gasGal} onChange={setGasGal} prefix="$" suffix="/gal" step="0.05" />
+        <Field label="EV maintenance per year" value={evMaint} onChange={setEvMaint} prefix="$" step="50" />
+        <Field label="Gas maintenance per year" value={gasMaint} onChange={setGasMaint} prefix="$" step="50" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Breakeven" value={isFinite(r.breakeven) ? `${num(r.breakeven, 1)} yrs` : 'never (EV costs more to run)'} />
+        <Result label="EV premium to recover" value={usd(r.premium, 0)} />
+        <Result label="Annual savings (fuel + maint)" value={usd(r.annualSave, 0)} />
+        <Result label="EV fuel per year" value={usd(r.evFuel, 0)} />
+        <Result label="Gas fuel per year" value={usd(r.gasFuel, 0)} />
+        <Result label={`EV ${r.years}-year total`} value={usd(r.evT, 0)} />
+        <Result label={`Gas ${r.years}-year total`} value={usd(r.gasT, 0)} />
+        <Result label={`EV advantage @ ${r.years} yrs`} value={r.diff >= 0 ? `+${usd(r.diff, 0)}` : `−${usd(Math.abs(r.diff), 0)}`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        2026 reality check: the $7,500 federal EV credit (§30D) and the $4,000 used-EV credit
+        ended September 30, 2025, and the charger credit followed on June 30, 2026 — dealer
+        ads that still quote them are stale. What remains: state rebates (several run $1,500–$6,000),
+        utility off-peak rates, and the operating math itself. Here the EV costs {usd(r.premium, 0)}
+        more up front but saves {usd(r.annualSave, 0)} a year — home charging at {num(rate, 1)}¢
+        is the whole game, since public fast-charging can cost gas-car money per mile.
+        Breakeven: {isFinite(r.breakeven) ? `${num(r.breakeven, 1)} years` : 'never on these inputs'}.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'ev-vs-gas-cost-calculator': EvVsGasCalc,
   'solar-payback-calculator': SolarPaybackCalc,
   'home-office-deduction-calculator': HomeOfficeCalc,
   '529-college-savings-calculator': College529Calc,
