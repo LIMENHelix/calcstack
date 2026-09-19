@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'estate-tax-calculator':
+    'Families with estates anywhere near $15M use it to see where they stand under the OBBBA\'s permanent 2026 rules — the $7M sunset is dead, but 40% above the line, a $30M couples\' shelter that vanishes without a Form 706 election, and states taxing estates as small as $1M are all still very much alive.',
   'child-tax-credit-calculator':
     'Parents use it to see the real number behind the $2,200 headline — how the $50-per-$1,000 phase-out trims higher earners, and how the 15%-of-earnings-over-$2,500 formula, not the $1,700 cap, decides what lower-income families actually get refunded.',
   'amt-calculator':

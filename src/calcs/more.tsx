@@ -2322,6 +2322,77 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Federal estate tax — IRC §2010(c)(3) as amended by OBBBA §70106 (P.L. 119-21): $15,000,000 basic exclusion per person for 2026, permanent, indexed from 2027. Portability ($30M/couple) requires a Form 706 election on the first death — NOT automatic. Rate effectively 40% above the exclusion (Table A 18–40%; for taxable estates ≥ $1M, tax = 0.40 × TE − $6,000,000 exactly, since unified credit = $345,800 + 0.4 × $14M). Annual gift exclusion $19,000/recipient (Rev. Proc. 2025-32 §4.42(1)); §2503(e) direct tuition/medical unlimited. Lifetime taxable gifts reduce the death-time exclusion dollar-for-dollar.
+export function EstateTaxCalc() {
+  const [married, setMarried] = useState(true)
+  const [elected, setElected] = useState(true)
+  const [gross, setGross] = useNumber(20000000)
+  const [debts, setDebts] = useNumber(500000)
+  const [charity, setCharity] = useNumber(0)
+  const [gifts, setGifts] = useNumber(0)
+
+  const r = useMemo(() => {
+    const base = (married && elected ? 30000000 : 15000000)
+    const available = Math.max(0, base - gifts)
+    const taxable = Math.max(0, gross - debts - charity)
+    const excess = Math.max(0, taxable - available)
+    const tax = 0.40 * excess
+    const effRate = gross > 0 ? (tax / gross) * 100 : 0
+    const headroom = Math.max(0, available - taxable)
+    return { base, available, taxable, excess, tax, effRate, headroom }
+  }, [married, elected, gross, debts, charity, gifts])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Marital status at death</span>
+            <select value={married ? 'm' : 's'} onChange={(e) => setMarried(e.target.value === 'm')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="s">Single / widowed (no election)</option>
+              <option value="m">Married couple</option>
+            </select>
+          </label>
+          {married && (
+            <label className="space-y-1">
+              <span className="text-sm font-medium">Portability elected (Form 706 at first death)?</span>
+              <select value={elected ? 'y' : 'n'} onChange={(e) => setElected(e.target.value === 'y')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+                <option value="y">Yes — $30M combined exclusion</option>
+                <option value="n">No — $15M only</option>
+              </select>
+            </label>
+          )}
+          <Field label="Gross estate (all assets at FMV)" value={gross} onChange={setGross} prefix="$" />
+          <Field label="Debts, mortgages, funeral & admin costs" value={debts} onChange={setDebts} prefix="$" />
+          <Field label="Charitable bequests" value={charity} onChange={setCharity} prefix="$" />
+          <Field label="Lifetime taxable gifts (above annual exclusions)" value={gifts} onChange={setGifts} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Exclusion available" value={usd(r.available)} />
+          <Result label="Taxable estate" value={usd(r.taxable)} />
+          <Result label="Federal estate tax" value={usd(r.tax)} />
+          <Result label="Effective rate on gross" value={`${num(r.effRate, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.tax === 0 ? (
+            <>
+              <span className="font-medium">No federal estate tax.</span> You're {usd(r.headroom)} under the exclusion. Every $19,000 per recipient per year of annual-exclusion gifting still removes future growth from the estate — e.g. $19,000 × 4 recipients × 10 years = {usd(760000)} plus appreciation, gift-tax-free. Direct tuition and medical payments (paid to the provider) are unlimited. </>
+          ) : (
+            <>
+              <span className="font-medium">Estimated federal estate tax: {usd(r.tax)}</span> — 40% of the {usd(r.excess)} above the exclusion, due 9 months after death. </>
+          )}
+          {married && !elected && <><span className="font-medium">Portability was not elected:</span> the deceased spouse's unused exclusion is lost — a Form 706 must be filed at the first death even when no tax is due. </>}
+          {married && elected && gifts > 0 && <>Lifetime taxable gifts already used {usd(gifts)} of the $30M combined exclusion. </>}
+          {!married && gifts > 0 && <>Lifetime taxable gifts already used {usd(gifts)} of your $15M exclusion. </>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026: $15,000,000 basic exclusion per person (OBBBA §70106 — permanent, inflation-indexed from 2027; the old "sunset to ~$7M" no longer applies). Married couples reach $30M only if portability is elected on a timely Form 706 at the first death. Rate is graduated 18–40%, effectively 40% above the exclusion (this shortcut is exact for taxable estates ≥ $1M). Annual gift exclusion $19,000 per recipient ($38,000 with gift-splitting; $194,000 to a non-citizen spouse). The generation-skipping transfer tax has its own $15M exemption. State taxes are separate: five states levy inheritance taxes (KY, MD, NE, NJ, PA) and states like Oregon ($1M) and Massachusetts ($2M) tax far smaller estates. Assets generally get a stepped-up basis at death — heirs pay no income tax on pre-death appreciation.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Child Tax Credit — IRC §24 as amended by OBBBA (P.L. 119-21): $2,200/child permanent, indexed after 2026. ACTC $1,700/child, 15% of earned income over $2,500. Phase-out $50 per $1,000 over $200k/$400k. Rev. Proc. 2025-32 §4.05; Schedule 8812.
 export function ChildTaxCreditCalc() {
   const [mfj, setMfj] = useState(true)
@@ -4433,6 +4504,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'qbi-deduction-calculator': QbiDeductionCalc,
   'amt-calculator': AmtCalc,
   'child-tax-credit-calculator': ChildTaxCreditCalc,
+  'estate-tax-calculator': EstateTaxCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

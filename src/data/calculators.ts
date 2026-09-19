@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'estate-tax-calculator',
+    title: 'Federal Estate Tax Calculator 2026 — $15M Exclusion, Portability & the 40% Rate',
+    shortTitle: 'Estate Tax Calculator',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 federal estate tax calculator. $15,000,000 OBBBA exclusion per person, $30M married with portability, 40% rate above the line — plus what annual gifting removes.',
+    tagline: 'The sunset everyone feared is gone. The 40% rate is not.',
+    intro:
+      'For years the planning world braced for the estate tax exclusion to collapse back to roughly $7 million in 2026. It did not happen: the OBBBA made a $15,000,000 per-person exclusion permanent starting in 2026, indexed for inflation from 2027. But estates above the line still pay 40 cents on every excess dollar, married couples lose half their shelter if nobody files the portability paperwork, and five states plus a dozen more with their own estate taxes play by much smaller numbers. This calculator shows exactly where your estate stands against the 2026 rules.',
+    howItWorks: [
+      'Enter your gross estate — everything you own at fair market value: home, investments, business interests, life insurance you own, retirement accounts.',
+      'Subtract debts, funeral and administration costs, and charitable bequests to reach the taxable estate.',
+      'Set marital status and whether portability was (or will be) elected. A married couple shelters $30M only if the executor files Form 706 at the first death — it is not automatic.',
+      'Enter lifetime taxable gifts (amounts above the $19,000/recipient annual exclusion). These reduce your death-time exclusion dollar-for-dollar.',
+      'The calculator shows your available exclusion, the excess taxed at 40%, the effective rate on the gross estate, and how much headroom remains.',
+    ],
+    faq: [
+      {
+        q: 'What is the federal estate tax exemption in 2026?',
+        a: '$15,000,000 per person, made permanent by the OBBBA (signed July 2025) and inflation-indexed from 2027. A married couple can shelter $30,000,000 — but only if the executor elects portability on a timely Form 706 when the first spouse dies. The widely-cited "sunset back to ~$7 million" was repealed before it ever took effect.',
+      },
+      {
+        q: 'How is the estate tax actually calculated?',
+        a: 'The rate schedule runs from 18% to 40%, but the unified credit wipes out the tax on the first $15M. The practical result: estates above the exclusion pay almost exactly 40% of the excess. A $20M taxable estate for a single person owes $2,000,000 — 40% of the $5M above the line, a 10% effective rate on the gross estate.',
+      },
+      {
+        q: 'What can I do if my estate is over the limit?',
+        a: 'Annual-exclusion gifting ($19,000 per recipient in 2026, $38,000 per couple) removes assets and all their future growth with zero paperwork; direct payments of tuition and medical bills are unlimited; and irrevocable trusts, charitable bequests, and valuation-discount strategies can move far more. Because assets get a stepped-up basis at death, holding appreciated assets until death and gifting cash is often better than gifting the appreciated assets themselves.',
+      },
+    ],
+  },
+  {
     slug: 'child-tax-credit-calculator',
     title: 'Child Tax Credit Calculator 2026 — CTC, Refundable ACTC & Phase-Out',
     shortTitle: 'Child Tax Credit 2026',
