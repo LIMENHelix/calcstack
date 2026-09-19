@@ -2322,6 +2322,69 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// §1031 like-kind exchange — post-TCJA real property only (investment/business). Clocks: 45-day identification, 180-day closing, both calendar days from the sale; qualified intermediary holds proceeds (touch the money = boot). Full deferral requires: replacement price ≥ sale price, ALL equity reinvested, and equal-or-greater debt. Boot = cash not reinvested + net mortgage relief; recognized gain = min(realized gain, boot); unrecaptured §1250 depreciation recapture (25%) applies to recognized boot FIRST, remainder at LTCG 20% + 3.8% NIIT. Deferred gain reduces replacement basis. Chaining unlimited; death steps up basis ("swap till you drop"). Node-verified: sell $900k ($54k costs), bought $500k with $150k depreciation, $300k old loan, buy $1.0M with $500k loan → equity $546k, reinvested $500k → cash boot $46k, all recapture @25% = $11,500 tax; deferred $450k → new basis $550k.
+export function Exchange1031Calc() {
+  const [sale, setSale] = useNumber(900000)
+  const [costs, setCosts] = useNumber(54000)
+  const [purch, setPurch] = useNumber(500000)
+  const [dep, setDep] = useNumber(150000)
+  const [oldM, setOldM] = useNumber(300000)
+  const [newP, setNewP] = useNumber(1000000)
+  const [newM, setNewM] = useNumber(500000)
+  const [stateRate, setStateRate] = useNumber(0)
+
+  const r = useMemo(() => {
+    const adj = purch - dep
+    const gain = sale - costs - adj
+    const equity = sale - costs - oldM
+    const reinvested = newP - newM
+    const cashBoot = Math.max(0, equity - reinvested)
+    const mortBoot = Math.max(0, oldM - newM)
+    const boot = cashBoot + mortBoot
+    const recog = Math.min(Math.max(0, gain), boot)
+    const recap = Math.min(recog, dep)
+    const fedTax = recap * 0.25 + (recog - recap) * 0.238
+    const stTax = recog * (stateRate / 100)
+    const deferred = Math.max(0, gain) - recog
+    const newBasis = newP - deferred
+    return { adj, gain, equity, reinvested, cashBoot, mortBoot, recog, recap, fedTax, stTax, deferred, newBasis }
+  }, [sale, costs, purch, dep, oldM, newP, newM, stateRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Sale price" value={sale} onChange={setSale} prefix="$" />
+          <Field label="Selling costs" value={costs} onChange={setCosts} prefix="$" />
+          <Field label="Original purchase price" value={purch} onChange={setPurch} prefix="$" />
+          <Field label="Accumulated depreciation" value={dep} onChange={setDep} prefix="$" />
+          <Field label="Old mortgage payoff" value={oldM} onChange={setOldM} prefix="$" />
+          <Field label="Replacement property price" value={newP} onChange={setNewP} prefix="$" />
+          <Field label="New mortgage" value={newM} onChange={setNewM} prefix="$" />
+          <Field label="State tax rate" value={stateRate} onChange={setStateRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Realized gain" value={usd(r.gain)} />
+          <Result label="Boot (taxable now)" value={usd(r.recog)} />
+          <Result label="Tax on the boot" value={usd(r.fedTax + r.stTax)} />
+          <Result label="New basis in replacement" value={usd(r.newBasis)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.recog > 0 ? (
+            <>Boot breakdown: {usd(r.cashBoot)} cash not reinvested + {usd(r.mortBoot)} net mortgage relief = <span className="font-medium">{usd(r.recog)} recognized</span>. Depreciation recapture hits the boot first: {usd(r.recap)} at 25%{(r.recog - r.recap) > 0 && `, the rest at 23.8%`}. </>
+          ) : (
+            <><span className="font-medium">Full deferral.</span> Replacement price ≥ sale price, all {usd(r.equity)} of equity reinvested, and no net debt relief — zero recognized gain. </>
+          )}
+          The deferred {usd(r.deferred)} rides into the replacement as a reduced basis of {usd(r.newBasis)} — postponed, not forgiven, until a later taxable sale (or a step-up at death). Full deferral needs three things: buy equal-or-up ({usd(newP)} vs {usd(sale)}), reinvest every dollar of equity ({usd(r.reinvested)} vs {usd(r.equity)}), and replace the debt ({usd(newM)} vs {usd(oldM)}).
+        </div>
+        <p className="text-xs text-muted-foreground">
+          IRC §1031 (post-TCJA: real property held for investment or business only — no crypto, art, or personal property; your residence doesn't qualify). Deadlines are calendar days from the sale: identify replacements in writing by day 45, close by day 180 — no extensions, and both run while your qualified intermediary holds the proceeds (touching the money disqualifies the exchange). Identification rules: up to 3 properties at any value, or more under the 200%/95% rules. Reverse and improvement exchanges exist but cost more. Deferred ≠ forgiven: the gain (and all that depreciation recapture) follows you into every future exchange — the permanent escape is the basis step-up at death, the "swap till you drop" strategy. Vacation homes and flips fail the investment-holding test; consult your QI and CPA before listing.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // §1045 QSBS rollover — sell QSBS held MORE than 6 months, buy replacement QSBS within 60 days of the sale date (absolute, no extensions). Gain recognized = min(gain, proceeds − reinvested); deferred gain reduces replacement basis (in acquisition order for multiple lots); holding period TACKS (§1223) — including the acquisition date, so rolling pre-OBBBA stock does NOT upgrade you to the new tiers/$15M cap. Election on a timely return incl. extensions (Rev. Proc. 98-48, Form 8949 code R), revocable only with IRS consent. Replacement must independently qualify (original issuance, C-corp, ≤$75M gross assets); same-issuer replacement is unsettled; SAFEs may not count as stock. No limit on chained rollovers. CA doesn't conform to §1045 or §1202 — state tax due now regardless. Node-verified: $8M proceeds/$500k basis full roll → $0 recognized, new basis $500k; partial $7.5M reinvested → $500k recognized now ($119k tax at 23.8%), $7M deferred.
 export function QSBSRolloverCalc() {
   const [proceeds, setProceeds] = useNumber(8000000)
@@ -5712,6 +5775,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  '1031-exchange-calculator': Exchange1031Calc,
   'qsbs-1045-rollover-calculator': QSBSRolloverCalc,
   'qsbs-exclusion-calculator': QSBSCalc,
   'medicaid-spend-down-calculator': MedicaidSpendDownCalc,

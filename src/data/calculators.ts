@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: '1031-exchange-calculator',
+    title: '1031 Exchange Calculator — Boot, Deferred Gain & New Basis (2026)',
+    shortTitle: '1031 Exchange Calculator',
+    category: 'Housing & Mortgage',
+    description:
+      'Will your like-kind exchange fully defer? Compute realized gain, cash boot, mortgage boot, depreciation recapture on the taxable piece, and your new basis in the replacement property.',
+    tagline: 'Full deferral needs three things: buy up, reinvest every dollar, replace the debt.',
+    intro:
+      'A 1031 exchange defers 100% of your gain only if three conditions hold: the replacement costs at least as much as what you sold, every dollar of equity goes back in, and the new debt is at least the old debt. Miss any one and the difference is "boot" — taxable now, with depreciation recapture at 25% hitting the boot before anything else. Most online calculators show only the cash side and miss mortgage boot entirely; this one shows both, plus the number investors actually need next: your new basis in the replacement property, which is where the deferred gain quietly lives until a taxable sale or the step-up at death.',
+    howItWorks: [
+      'Enter the sale: price, selling costs, original purchase price, accumulated depreciation, and the mortgage payoff.',
+      'Enter the replacement: purchase price and new mortgage.',
+      'We compute equity, reinvestment, cash boot, and mortgage boot.',
+      'Read recognized gain, the tax on it (25% recapture first), deferred gain, and new basis.',
+    ],
+    faq: [
+      {
+        q: 'What exactly counts as boot?',
+        a: 'Anything of value you receive that isn\'t like-kind real property: cash left over after reinvestment, AND net mortgage relief — if your old loan was $300,000 and the new one is $250,000, that $50,000 of debt reduction is taxable boot even if you reinvested every cash dollar. Recognized gain is the lesser of your total realized gain or total boot. You can offset mortgage boot by adding cash, and offset cash boot by taking on more debt.',
+      },
+      {
+        q: 'What are the deadlines?',
+        a: '45 calendar days from the sale to identify replacement properties in writing (up to 3 at any value, or more under the 200% rule), and 180 calendar days to close — both absolute, running simultaneously, no extensions. A qualified intermediary must hold the proceeds the whole time; if the money touches your account, the exchange is dead and the full gain is taxable. Note: if the 180th day falls after your tax return due date for the sale year, you must file an extension to preserve it.',
+      },
+      {
+        q: 'Is the deferred tax ever actually forgiven?',
+        a: 'Once, at death: heirs take the property at stepped-up basis and the deferred gain — including decades of depreciation recapture — disappears. That\'s the "swap \'til you drop" strategy: chain exchanges indefinitely (there\'s no limit), never sell, and let the step-up erase the bill. Every other exit — a taxable sale, a failed exchange, moving into the property too soon — eventually collects the deferred gain plus recapture through the reduced basis this calculator shows.',
+      },
+    ],
+  },
+  {
     slug: 'qsbs-1045-rollover-calculator',
     title: 'QSBS 1045 Rollover Calculator — Defer Gain & Carry Your Holding Period',
     shortTitle: 'QSBS 1045 Rollover',

@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  '1031-exchange-calculator':
+    'Investors use it before listing the rental: the three-condition test for full deferral (buy up, reinvest all equity, replace the debt), the mortgage boot nobody warns about, and the new basis that carries the deferred gain — because day 46 without an identification kills the whole exchange.',
   'qsbs-1045-rollover-calculator':
     'Founders and angels use it when the exit arrives a year early: reinvest the proceeds in new QSBS within 60 days, the gain defers, and the three years already banked tack onto the replacement — turning a forced sale into a bridge to the full exclusion instead of a tax bill.',
   'qsbs-exclusion-calculator':
