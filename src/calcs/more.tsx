@@ -2322,6 +2322,69 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+export function RaiseVsBonusCalc() {
+  const [base, setBase] = useNumber(80000)
+  const [pct, setPct] = useNumber(5)
+  const [growth, setGrowth] = useNumber(3)
+  const [years, setYears] = useNumber(10)
+  const [ret, setRet] = useNumber(7)
+  const [recurring, setRecurring] = useState(false)
+
+  const r = useMemo(() => {
+    const bump = (base * pct) / 100
+    let raiseCum = 0
+    const bonusCum = recurring ? 0 : bump
+    let bonusRun = 0
+    let fvDelta = 0
+    for (let k = 0; k < years; k++) {
+      const raiseAdd = bump * Math.pow(1 + growth / 100, k)
+      raiseCum += raiseAdd
+      if (recurring) bonusRun += bump
+      fvDelta = (fvDelta + (raiseAdd - (recurring ? bump : k === 0 ? bump : 0))) * (1 + ret / 100)
+    }
+    if (recurring) void bonusCum
+    const bonusTotal = recurring ? bonusRun : bump
+    const finalSalaryDelta = bump * Math.pow(1 + growth / 100, years - 1)
+    return { bump, raiseCum, bonusTotal, delta: raiseCum - bonusTotal, fvDelta, finalSalaryDelta }
+  }, [base, pct, growth, years, ret, recurring])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Current base salary" value={base} onChange={setBase} prefix="$" step="5000" />
+        <Field label="The offer: % as raise or bonus" value={pct} onChange={setPct} suffix="%" step="0.5" />
+        <Field label="Annual raise growth" value={growth} onChange={setGrowth} suffix="%" step="0.5" />
+        <Field label="Years you'll stay" value={years} onChange={setYears} step="1" />
+        <Field label="Return if invested" value={ret} onChange={setRet} suffix="%" step="0.5" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Bonus structure</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={recurring ? 'rec' : 'once'} onChange={(e) => setRecurring(e.target.value === 'rec')}>
+            <option value="once">One-time bonus</option>
+            <option value="rec">Recurring annual bonus (same %)</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Raise earns over horizon" value={usd(r.raiseCum, 0)} />
+        <Result label={recurring ? 'Recurring bonuses total' : 'One-time bonus'} value={usd(r.bonusTotal, 0)} />
+        <Result label="Raise advantage" value={`+${usd(r.delta, 0)}`} />
+        <Result label="Advantage if invested" value={usd(r.fvDelta, 0)} />
+        <Result label="Final-year salary edge" value={`+${usd(r.finalSalaryDelta, 0)}/yr`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        A raise compounds; a bonus evaporates. The {num(pct, 1)}% raise adds {usd(r.bump, 0)} this year AND
+        inflates every future raise, since the {num(growth, 1)}% annual increase applies to the bigger base —
+        {recurring ? ' even against the same percentage paid as a bonus EVERY year, the raise wins because bonuses never compound' : ' over your horizon that single decision is worth ' + usd(r.raiseCum, 0) + ' against the bonus\'s one-shot ' + usd(r.bump, 0)}.
+        Two honest exceptions: take the bonus if you&apos;re leaving within a year (a raise you won&apos;t collect
+        compounds for your employer, not you — though a higher base still anchors your NEXT salary negotiation),
+        and at companies where bonuses are large and raises capped, the recurring-bonus line above shows the
+        real gap. The counterintuitive takeaway: a smaller raise beats a bigger one-time bonus surprisingly
+        fast — usually by year two.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function BenefitsValueCalc() {
   const [baseA, setBaseA] = useNumber(70000)
   const [matchA, setMatchA] = useNumber(6)
@@ -3291,6 +3354,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,
   'weight-cut-calculator': WeightCutCalc,

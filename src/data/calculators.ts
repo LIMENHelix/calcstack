@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'raise-vs-bonus-calculator',
+    title: 'Raise vs Bonus Calculator — Why the Raise Compounds and the Bonus Evaporates',
+    shortTitle: 'Raise vs Bonus',
+    category: 'Freelance & Career',
+    description:
+      'Raise vs bonus calculator showing the compounding truth: a percentage raise inflates every future raise, while a bonus pays once. Compare cumulative earnings over your horizon, the invested value of the difference, and the recurring-bonus variant — with the two honest cases where the bonus wins.',
+    tagline:
+      'A 5% raise on $80k is worth $45,856 over ten years. A 5% bonus is worth $4,000. Same percentage, different species.',
+    intro:
+      'When an employer offers a choice — a raise or a bonus — the amounts look identical and aren\'t. A raise compounds: it inflates every future raise, every 401(k) match percentage, and often your next job\'s starting point. A bonus is a one-time payment that changes nothing downstream. This calculator shows the cumulative gap over the years you\'ll actually stay, the invested future value of the difference, and the recurring-bonus variant where the raise still wins.',
+    howItWorks: [
+      'Raise path: the bump grows with each annual raise — bump × (1 + g)^k per year, summed over your horizon.',
+      'Bonus path: one-time payment, or the recurring variant paying the same percentage each year (it never compounds).',
+      'Invested delta: the annual raise-minus-bonus difference compounded at your investment return.',
+      'The honest exceptions: leaving within a year flips it, and a higher base anchors your next job\'s offer even if you leave.',
+    ],
+    faq: [
+      {
+        q: 'My employer offered 5% as a raise or a bonus on my $80,000 salary. Which do I take?',
+        a: 'The raise, almost always. Over ten years with typical 3% annual increases, the 5% raise pays $45,856 cumulatively versus the bonus\'s $4,000 — and the gap widens every year because each future raise applies to a bigger base. Even if the SAME 5% were paid as a recurring bonus every year, the raise wins by $5,856 over the decade because bonuses never compound. Invested at 7%, the raise\'s advantage grows to about $7,552.',
+      },
+      {
+        q: 'Is there any case where the bonus is right?',
+        a: 'Two. First, if you\'re leaving within a year — a raise you won\'t collect compounds for your employer, so take the cash (though the higher base still anchors your next offer, which argues the other way). Second, if the bonus is dramatically larger — a 20% bonus versus a 3% raise is a different comparison; the calculator lets you sanity-check the crossover. Rule of thumb: an equal-percentage raise beats a one-time bonus by year two.',
+      },
+      {
+        q: 'Does the raise affect anything beyond my paycheck?',
+        a: 'Everything percentage-based: 401(k) match dollars, bonus targets set as % of base, overtime rates if non-exempt, life insurance multiples, disability coverage, and severance formulas all scale with base salary. A bonus touches none of them. That invisible layer typically adds another 10–20% to the raise\'s real advantage beyond the raw compounding this calculator shows.',
+      },
+    ],
+  },
+  {
     slug: 'benefits-value-calculator',
     title: 'Benefits Value Calculator — Total Comp & Effective Hourly for Two Offers',
     shortTitle: 'Benefits Value',
