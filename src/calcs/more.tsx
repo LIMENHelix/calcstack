@@ -2322,6 +2322,67 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Trump Accounts (OBBBA, IRS Notice 2025-68; launched July 4, 2026) — $1,000 pilot seed for US-citizen children born 2025–2028 (Form 4547/trumpaccounts.gov election; doesn't count toward limit); $5,000/yr aggregate contributions (after-tax, anyone can give; employer §128 up to $2,500 counts toward the $5k, pre-tax via cafeteria plan); indexed after 2027; S&P 500-type index funds only, 0.10% expense cap; locked until Jan 1 of the year the child turns 18, then traditional IRA rules (after-tax basis withdrawn tax-free, earnings ordinary income, 10% penalty pre-59½ with exceptions; Roth conversion allowed at 18). Verified: seed+max @8% → $191,247 at 18; seed-only → $3,996 at 18.
+export function TrumpAccountCalc() {
+  const [years, setYears] = useNumber(18)
+  const [seed, setSeed] = useState(true)
+  const [annual, setAnnual] = useNumber(2500)
+  const [employer, setEmployer] = useNumber(0)
+  const [ret, setRet] = useNumber(8)
+
+  const r = useMemo(() => {
+    const n = Math.max(0, Math.min(18, years))
+    const total = annual + employer
+    const overCap = total > 5000
+    const ann = Math.min(total, 5000)
+    const g = ret / 100
+    const fv = (yrs: number) => {
+      const s = seed ? 1000 : 0
+      return s * Math.pow(1 + g, yrs) + (g > 0 ? ann * ((Math.pow(1 + g, yrs) - 1) / g) : ann * yrs)
+    }
+    const at18 = fv(n)
+    const at30 = at18 * Math.pow(1 + g, 12)
+    const at60 = at18 * Math.pow(1 + g, 42)
+    const contributed = (seed ? 1000 : 0) + ann * n
+    return { n, overCap, ann, at18, at30, at60, contributed, growth18: at18 - contributed }
+  }, [years, seed, annual, employer, ret])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Years until the child turns 18" value={years} onChange={setYears} />
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Born 2025–2028 ($1,000 seed)?</span>
+            <select value={seed ? 'y' : 'n'} onChange={(e) => setSeed(e.target.value === 'y')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="y">Yes — gets the $1,000 pilot deposit</option>
+              <option value="n">No / older child</option>
+            </select>
+          </label>
+          <Field label="Family contributions per year" value={annual} onChange={setAnnual} prefix="$" />
+          <Field label="Employer contribution per year (max $2,500)" value={employer} onChange={setEmployer} prefix="$" />
+          <Field label="Annual return (index funds)" value={ret} onChange={setRet} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Balance at 18" value={usd(r.at18)} />
+          <Result label="Growth at 18" value={usd(r.growth18)} />
+          <Result label="At 30 (untouched)" value={usd(r.at30)} />
+          <Result label="At 60 (untouched)" value={usd(r.at60)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.overCap && <><span className="font-medium">Over the cap:</span> family + employer combined can't exceed $5,000/year — the excess was excluded above. </>}
+          You put in {usd(r.contributed)} (including the {seed ? '$1,000 seed' : 'no seed'}); compounding adds <span className="font-medium">{usd(r.growth18)}</span> by 18.{' '}
+          {r.at18 > 50000 && <>Strategy note: at 18 the account becomes a traditional IRA in the child's hands — converting to Roth while their bracket is near zero is the move most planners will recommend. </>}
+          <>For college-bound kids, compare against a 529: education withdrawals from this account dodge the 10% penalty but are still taxed as ordinary income; 529 qualified withdrawals are entirely tax-free.</>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Rules (IRS Notice 2025-68): any US-citizen child under 18 with an SSN can have an account; the $1,000 pilot deposit is only for births 1/1/2025–12/31/2028 (elect on Form 4547 or trumpaccounts.gov). Contributions: $5,000/year aggregate from all family + employer sources (indexed after 2027), after-tax; employer §128 contributions up to $2,500/employee are pre-tax through a cafeteria plan and count toward the $5,000. Investments: US equity index mutual funds/ETFs only, expense ratio ≤ 0.10%, no leverage. Locked until January 1 of the year the child turns 18, then treated as a traditional IRA — basis comes out tax-free, earnings are ordinary income, 10% penalty before 59½ except education, first home ($10k), and the usual IRA exceptions. Financial aid: likely treated as a student asset (assessed up to 20% on the FAFSA vs 5.64% for parent-owned 529s) — one more reason the 529 usually wins for college money.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Car loan interest deduction — IRC §163(h)(4) (OBBBA §70203), 2025–2028, Schedule 1-A Part IV with VIN. Up to $10,000/yr interest on loans originated after 12/31/2024 for NEW, personal-use, US-final-assembly vehicles <14,000 lbs GVWR. Phase-out: −$200 per $1,000 (or fraction) MAGI over $100k single / $200k MFJ; gone at $150k/$250k. Verified: $40k @7.5% 60mo → yr-1 interest $2,768, saves $616 at 22%; phase-out exact at $110k single ($8,000→$6,000).
 export function CarLoanInterestCalc() {
   const [mfj, setMfj] = useState(false)
@@ -5041,6 +5102,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'senior-deduction-calculator': SeniorDeductionCalc,
   'tips-overtime-deduction-calculator': TipsOvertimeDeductionCalc,
   'car-loan-interest-deduction-calculator': CarLoanInterestCalc,
+  'trump-account-calculator': TrumpAccountCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

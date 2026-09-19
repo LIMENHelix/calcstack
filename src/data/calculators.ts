@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'trump-account-calculator',
+    title: 'Trump Account Calculator 2026 — $1,000 Newborn Seed, Growth to 18 & Beyond',
+    shortTitle: 'Trump Account Calculator',
+    category: 'Savings & Investing',
+    description:
+      'Free Trump Account calculator. Project the $1,000 government seed plus $5,000/year contributions at index-fund returns — balance at 18, 30, and 60, with the real rules.',
+    tagline: 'One $1,000 seed. Eighteen years. See what it becomes.',
+    intro:
+      'Trump Accounts launched July 4, 2026: a custodial IRA-style account for any US-citizen child under 18, with a one-time $1,000 government deposit for kids born 2025–2028 and up to $5,000 a year in contributions invested in low-cost US index funds. The numbers compound in ways that surprise people — maxed out at 8%, a newborn\'s account reaches roughly $191,000 by 18 and, untouched, nearly $4.8 million by 60. But the rules have teeth: locked until 18, ordinary-income tax on earnings, and a 529 usually beats it for college. This calculator projects your child\'s account with the real constraints.',
+    howItWorks: [
+      'Enter years until the child turns 18 — the account locks until January 1 of that year.',
+      'Toggle the $1,000 pilot seed (children born January 1, 2025 through December 31, 2028 only).',
+      'Enter annual family contributions and any employer contribution (up to $2,500, pre-tax through a cafeteria plan) — combined cap $5,000, indexed after 2027.',
+      'Set an expected return — investments are limited to US equity index funds with a 0.10% expense cap.',
+      'Results: balance at 18, the growth component, and what the account becomes at 30 and 60 if left untouched under IRA rules.',
+    ],
+    faq: [
+      {
+        q: 'Who gets the $1,000 government deposit?',
+        a: 'US-citizen children born between January 1, 2025 and December 31, 2028, for whom a parent or guardian files the election (Form 4547 or trumpaccounts.gov). Older children can still have accounts and receive contributions — they just don\'t get the seed. The $1,000 doesn\'t count toward the $5,000 annual limit.',
+      },
+      {
+        q: 'Trump Account vs 529 — which is better?',
+        a: 'For college: the 529 wins — qualified withdrawals are completely tax-free and parent-owned 529s barely affect financial aid (5.64% assessment vs ~20% for a student-owned Trump Account). For everything else — a first home, a head start on retirement — the Trump Account\'s flexibility is the point. Many families will use both: 529 for education, Trump Account as the child\'s retirement launchpad, with a Roth conversion at 18 when the child\'s bracket is near zero.',
+      },
+      {
+        q: 'What happens when my child turns 18?',
+        a: 'The account becomes a traditional IRA in the child\'s name. Contributions made with after-tax dollars come back tax-free, but investment earnings are taxed as ordinary income on withdrawal, with a 10% penalty before 59½ except for education, a first home ($10,000), and the standard IRA exceptions. A Roth conversion at 18 — paying tax at the child\'s low rate, then never again — is the strategy most advisors expect to recommend.',
+      },
+    ],
+  },
+  {
     slug: 'car-loan-interest-deduction-calculator',
     title: 'Car Loan Interest Deduction Calculator 2026 — The OBBBA $10,000 Write-Off',
     shortTitle: 'Car Loan Interest Deduction',
