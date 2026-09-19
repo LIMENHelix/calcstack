@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'long-term-care-cost-calculator',
+    title: 'Long-Term Care Cost Calculator 2026 — Home Care vs Assisted Living vs Nursing Home',
+    shortTitle: 'Long-Term Care Cost Calculator',
+    category: 'Retirement',
+    description:
+      'Compare eldercare settings at 2025 national median rates — home caregiver $35/hr, assisted living $6,200/mo, nursing home up to $10,798/mo — and project the total with care-cost inflation.',
+    tagline: 'Full-time home care now costs more than assisted living. Run the number before you promise Mom she stays home.',
+    intro:
+      'Long-term care is the largest expense most families never budget for — and Medicare does not cover custodial care at all. The 2025 CareScout (Genworth) survey puts the national medians at $35 an hour for a non-medical home caregiver, $6,200 a month for assisted living, and $10,798 a month for a private nursing home room. The counterintuitive result: at 44 hours a week, staying home with paid help ($80,080/yr) already costs more than assisted living ($74,400/yr). This calculator prices any setting over any horizon with care-cost inflation (~3% a year historically), so the family conversation happens around a number instead of a guess.',
+    howItWorks: [
+      'Pick a care setting — the national median rate fills in; override it with your local quote.',
+      'For home care set hours per week; for adult day care set days per week.',
+      'Set the years of care (women average 3.7, men 2.2) and when care starts.',
+      'Read the annual cost, monthly cost at start, and the inflation-adjusted total — plus the other settings on the same horizon.',
+    ],
+    faq: [
+      {
+        q: 'Does Medicare cover any of this?',
+        a: 'Almost none of it. Medicare covers short skilled-nursing stays after a hospitalization (up to 100 days, with copays from day 21) but explicitly excludes custodial care — help with bathing, dressing, and eating — which is most of what people need. Long-term custodial care is paid from savings, long-term care insurance, VA benefits for qualifying veterans, or Medicaid after spending down assets. Per HHS, 56% of people turning 65 will need paid long-term care at some point.',
+      },
+      {
+        q: 'Is home care really more expensive than assisted living?',
+        a: 'At full-time hours, yes. The 2025 national median for a non-medical caregiver is $35/hour — 44 hours a week is $80,080 a year versus $74,400 for assisted living. Home care wins at part-time hours (20 hrs/wk ≈ $36,400), but agency minimums, weekend rates, and the need for two-person assists push real schedules up. Adult day health care at $95/day is the budget option for families providing nights and weekends themselves.',
+      },
+      {
+        q: 'What if I hire a caregiver privately instead of through an agency?',
+        a: 'The hourly rate drops, but you become a household employer: pay any one caregiver $3,000 or more in 2026 and you owe Social Security and Medicare taxes plus FUTA, filed on Schedule H with your own 1040 — and "1099 contractor" is misclassification when you control the schedule. Our nanny tax calculator prices the employer side. Agencies charge more per hour precisely because they carry that payroll, insurance, and replacement coverage.',
+      },
+    ],
+  },
+  {
     slug: 'ptet-election-calculator',
     title: 'PTET Election Calculator 2026 — Pass-Through Entity Tax vs the SALT Cap',
     shortTitle: 'PTET Election Calculator',

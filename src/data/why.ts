@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'long-term-care-cost-calculator':
+    'Families use it in the week after a diagnosis or a fall, when the promise "we\'ll keep Mom at home" meets the math: at 44 hours a week home care already beats assisted living on price, Medicare pays for none of it, and the total over three years is the number that decides whether the house gets sold.',
   'ptet-election-calculator':
     'S-corp and partnership owners use it before signing the annual PTET election: with the 2026 SALT cap at $40,400 and the QBI haircut on entity-level deductions, the answer is your bracket rate on every PTET dollar when the cap is binding — and a small net loss when it is not.',
   'nanny-tax-calculator':

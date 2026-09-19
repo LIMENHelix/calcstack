@@ -2322,6 +2322,75 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Long-term care cost planner — 2025 CareScout (Genworth) Cost of Care Survey national medians: non-medical home caregiver $35/hr ($80,080/yr @44hr/wk), skilled nursing at home $90/hr, adult day health $95/day, assisted living $6,200/mo ($74,400/yr), nursing home semi-private $9,581/mo, private room $10,798/mo. Care inflation ~3%/yr historical. Totals grow an annuity: annual × ((1+i)^years − 1)/i after inflating to the start year. Node-verified: home 44hr 3yr@3% = $247,519; AL 3yr = $229,963; NH private 3yr = $400,506; adult day 5d/wk 3yr = $76,345; home care starting in 10 yrs = $332,645. Medicare does NOT cover custodial care (ASPE/ACL: 56% of 65-year-olds will need paid LTC).
+export function LTCareCostCalc() {
+  const [setting, setSetting] = useState('home')
+  const [rate, setRate] = useNumber(35)
+  const [hours, setHours] = useNumber(44)
+  const [days, setDays] = useNumber(5)
+  const [years, setYears] = useNumber(3)
+  const [infl, setInfl] = useNumber(3)
+  const [startIn, setStartIn] = useNumber(0)
+
+  const MODES: Record<string, { label: string; mode: 'hourly' | 'daily' | 'monthly'; def: number; unit: string }> = {
+    home: { label: 'Non-medical caregiver at home', mode: 'hourly', def: 35, unit: '/hr' },
+    skilled: { label: 'Skilled nursing at home', mode: 'hourly', def: 90, unit: '/hr' },
+    adultday: { label: 'Adult day health care', mode: 'daily', def: 95, unit: '/day' },
+    al: { label: 'Assisted living community', mode: 'monthly', def: 6200, unit: '/mo' },
+    nhsemi: { label: 'Nursing home — semi-private room', mode: 'monthly', def: 9581, unit: '/mo' },
+    nhpriv: { label: 'Nursing home — private room', mode: 'monthly', def: 10798, unit: '/mo' },
+  }
+  const m = MODES[setting]
+
+  const r = useMemo(() => {
+    const i = infl / 100
+    const annual = m.mode === 'hourly' ? rate * hours * 52 : m.mode === 'daily' ? rate * days * 52 : rate * 12
+    const annualAtStart = annual * Math.pow(1 + i, startIn)
+    const total = i > 0 ? annualAtStart * (Math.pow(1 + i, years) - 1) / i : annualAtStart * years
+    const monthlyAtStart = annualAtStart / 12
+    return { annual, annualAtStart, total, monthlyAtStart }
+  }, [rate, hours, days, years, infl, startIn, m.mode])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <label className="mb-1 block text-sm font-medium">Care setting (2025 national median)</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={setting}
+              onChange={(e) => { setSetting(e.target.value); setRate(String(MODES[e.target.value].def)) }}
+            >
+              {Object.entries(MODES).map(([k, v]) => (
+                <option key={k} value={k}>{v.label} — ${v.def.toLocaleString()}{v.unit}</option>
+              ))}
+            </select>
+          </div>
+          <Field label={`Rate (${m.unit})`} value={rate} onChange={setRate} prefix="$" />
+          {m.mode === 'hourly' && <Field label="Hours per week" value={hours} onChange={setHours} />}
+          {m.mode === 'daily' && <Field label="Days per week" value={days} onChange={setDays} />}
+          <Field label="Years of care" value={years} onChange={setYears} />
+          <Field label="Care cost inflation" value={infl} onChange={setInfl} suffix="%" />
+          <Field label="Care starts in (years)" value={startIn} onChange={setStartIn} />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Annual cost (today's dollars)" value={usd(r.annual)} />
+          <Result label="Monthly cost when care starts" value={usd(r.monthlyAtStart)} />
+          <Result label={`Total over ${num(years, 0)} year${years === 1 ? '' : 's'}`} value={usd(r.total)} />
+          <Result label="Setting" value={m.label.split('—')[0].trim()} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          At national medians over the same horizon: adult day care (5 days/wk) runs {usd(infl > 0 ? (24700 * Math.pow(1 + infl / 100, startIn)) * (Math.pow(1 + infl / 100, years) - 1) / (infl / 100) : 24700 * years)}, assisted living {usd(infl > 0 ? (74400 * Math.pow(1 + infl / 100, startIn)) * (Math.pow(1 + infl / 100, years) - 1) / (infl / 100) : 74400 * years)}, a private nursing room {usd(infl > 0 ? (129576 * Math.pow(1 + infl / 100, startIn)) * (Math.pow(1 + infl / 100, years) - 1) / (infl / 100) : 129576 * years)}. The surprise most families miss: <span className="font-medium">full-time home care ($80,080/yr at 44 hrs/wk) now costs MORE than assisted living ($74,400/yr)</span> — staying home is not automatically the cheaper path. And Medicare does not pay for custodial care (help with bathing, dressing, eating) at all — that gap is the whole planning problem.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Sources: CareScout (formerly Genworth) 2025 Cost of Care Survey national medians — $35/hr non-medical home caregiver, $90/hr skilled nursing at home, $95/day adult day health, $6,200/mo assisted living, $9,581/mo nursing home semi-private, $10,798/mo private room. Medians mask big state variation — get local quotes. Durations: women average 3.7 years of care needs, men 2.2 (HHS/ASPE); 56% of people turning 65 will need paid long-term care. Funding usually stacks private savings, long-term care insurance (or hybrid life/LTC policies), VA benefits for veterans, and Medicaid after spend-down. Paying a privately-hired caregiver more than $3,000/yr makes you a household employer — see the nanny tax calculator. This is planning math, not a quote.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // PTET election — IRS Notice 2020-75: entity-level state tax paid by a partnership/S-corp is deductible in computing non-separately-stated income, outside the §164(b)(6) SALT cap. 2026 cap $40,400 (OBBBA §70120), 30% phase-down over $505,000 MAGI, floor $10,000; reverts to $10,000 after 2029. Incremental federal saving = marginal × qbiFactor × PTET − itemizedRate × min(PTET, unused cap room). QBI haircut: PTET reduces K-1 ordinary income, costing 20% §199A on that amount (q = 0.8 when fully QBI-eligible). §68 as amended by OBBBA (2026+): itemized deductions capped at ~35¢/$ in the 37% bracket, so the Schedule A alternative is valued at min(marginal, 35%). Node-verified: CA 9.3% on $400k, single, $350k taxable, $15k other SALT, QBI → $1,526; UT 4.5% on $1M, MFJ, MAGI $1.06M → cap floor $10k, save $13,320; OH 3% on $200k, MFJ, $5k other SALT → −$264 (PTET loses money when the cap wasn't binding).
 export function PTETCalc() {
   const [income, setIncome] = useNumber(400000)
@@ -5373,6 +5442,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'long-term-care-cost-calculator': LTCareCostCalc,
   'ptet-election-calculator': PTETCalc,
   'nanny-tax-calculator': NannyTaxCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
