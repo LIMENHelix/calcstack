@@ -54,14 +54,14 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — the 2026 limits trio (HSA, Roth IRA, and 401(k)
-          contribution limits with the actual IRS phase-out formulas, not just the headline
-          numbers), the APY↔APR converter (banks quote whichever looks bigger), plus the
-          pet first-year budget.
+          200 calculators and counting. Newest: the 2026 post-credit energy trilogy — solar
+          payback, EV vs gas, and heat pump vs furnace, all computed WITHOUT the federal
+          credits that expired in 2025 (the math competitors still get wrong) — plus the 2026
+          limits trio (HSA, Roth IRA, 401(k)) and the capital gains stacker.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['hsa-contribution-limit-calculator', 'roth-ira-contribution-limit-calculator', '401k-contribution-calculator', 'apy-apr-converter', 'pet-first-year-cost-calculator', 'baby-first-year-cost-calculator'].includes(c.slug),
+            ['heat-pump-vs-furnace-calculator', 'ev-vs-gas-cost-calculator', 'solar-payback-calculator', 'hsa-contribution-limit-calculator', 'roth-ira-contribution-limit-calculator', 'capital-gains-tax-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

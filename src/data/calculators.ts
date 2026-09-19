@@ -170,6 +170,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'heat-pump-vs-furnace-calculator',
+    title: 'Heat Pump vs Gas Furnace Calculator — 2026 Costs Without the Expired Credit',
+    shortTitle: 'Heat Pump vs Furnace',
+    category: 'Housing & Mortgage',
+    description:
+      'Free heat pump vs gas furnace calculator updated for 2026: the $2,000 federal credit ended Dec 31, 2025. Compare your real gas bill against heat pump electricity at your rates — honest breakeven, including the AC-replacement offset that usually decides it.',
+    tagline: 'The honest version: at average rates, the heat pump can lose. Here is when it wins.',
+    intro:
+      'Heat pump content splits into marketing ("always saves!") and backlash ("never works!") — the truth is rate-dependent and this calculator shows it. Enter your actual gas usage and both energy prices, and it computes delivered-heat cost for each system, the annual difference, and the breakeven on the installation premium — including the factor that usually decides real projects: whether the heat pump also replaces a dying air conditioner.',
+    howItWorks: [
+      'Enter your annual therms from the gas bill and your gas price per therm.',
+      'Enter your furnace AFUE and electricity rate.',
+      'Set the heat pump COP — 2.5–3.5 seasonal for modern cold-climate units.',
+      'Enter both installed costs, plus any avoided AC replacement.',
+      'Read the annual heating difference, breakeven on the premium, and 15-year net.',
+    ],
+    faq: [
+      {
+        q: 'Is the heat pump tax credit still available in 2026?',
+        a: 'No. The §25C Energy Efficient Home Improvement Credit — up to $2,000 for heat pumps — ended December 31, 2025, under OBBBA. Any contractor quote still showing a federal credit line is working from 2025 numbers. State and utility heat pump rebates (often $500–$8,000, especially in the Northeast and Northwest) are still active — check DSIRE and your utility before pricing the project.',
+      },
+      {
+        q: 'Does a heat pump actually save money on heating?',
+        a: 'It depends on the price ratio, not the technology. Example: 700 therms/yr through a 92% furnace at $1.50/therm costs $1,050; a COP-2.8 heat pump at 17¢/kWh delivers the same heat for $1,146 — $96/yr more. Drop electricity to 12¢ and the heat pump saves $241/yr. Raise gas to $2.20/therm with 15¢ power and it saves $529/yr, paying back a $5,500 premium in about 10 years. Run your rates, not national talking points.',
+      },
+      {
+        q: 'When does a heat pump clearly win?',
+        a: 'Three cases. One: cheap electricity (hydro and nuclear regions under ~12¢/kWh). Two: expensive gas ($2+/therm — most of the Northeast and California) or propane/oil heat, where the savings are larger. Three, the most common winner: your AC is also dying. A heat pump IS an air conditioner that runs backwards — subtracting a $5,000 avoided AC replacement from the premium turns a marginal project into a 1–2 year payback. Below about 5°F, COP falls toward 1, so cold climates often choose dual-fuel: heat pump above the balance point, furnace below.',
+      },
+    ],
+  },
+  {
     slug: 'ev-vs-gas-cost-calculator',
     title: 'EV vs Gas Cost Calculator — 2026 Breakeven Without the Expired Credit',
     shortTitle: 'EV vs Gas Cost',

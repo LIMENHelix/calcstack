@@ -1267,7 +1267,74 @@ export function EvVsGasCalc() {
   )
 }
 
+/* ---------------- Heat Pump vs Gas Furnace (2026 — post-credit) ---------------- */
+
+// IMPORTANT: the §25C efficiency credit (up to $2,000 for heat pumps) ended Dec 31, 2025
+// under OBBBA. No federal credit in the math. Honest finding: at average US rates
+// (17¢/kWh, $1.50/therm) a heat pump can LOSE on heating alone — it wins with cheap
+// power, expensive gas, or when it also replaces a dying AC. Delivered-heat method:
+// gas cost = therms × price; HP kWh = (therms × AFUE × 100k BTU) / (3412 × COP).
+// Verified: 700 therms, 92% AFUE, 17¢, COP 2.8 → gas $1,050 vs HP $1,146 (HP −$96/yr);
+// at 12¢ → HP $809 (+$241/yr); $2.20 gas + 15¢ → +$529/yr, breakeven 10.4y on $5.5k premium.
+export function HeatPumpCalc() {
+  const [therms, setTherms] = useNumber(700)
+  const [gasTherm, setGasTherm] = useNumber(1.5)
+  const [afue, setAfue] = useNumber(92)
+  const [rate, setRate] = useNumber(17)
+  const [cop, setCop] = useNumber(2.8)
+  const [hpCost, setHpCost] = useNumber(12000)
+  const [gasCost, setGasCost] = useNumber(6500)
+  const [acOffset, setAcOffset] = useNumber(0)
+
+  const r = useMemo(() => {
+    const gasAnnual = therms * gasTherm
+    const kwh = (therms * (afue / 100) * 100000) / 3412 / Math.max(1, cop)
+    const hpAnnual = kwh * (rate / 100)
+    const save = gasAnnual - hpAnnual
+    const premium = Math.max(0, hpCost - gasCost - acOffset)
+    const breakeven = save > 0 ? premium / save : Infinity
+    const net15 = save * 15 - premium
+    return { gasAnnual, kwh, hpAnnual, save, premium, breakeven, net15 }
+  }, [therms, gasTherm, afue, rate, cop, hpCost, gasCost, acOffset])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Annual heating (from gas bill)" value={therms} onChange={setTherms} suffix="therms" step="25" />
+        <Field label="Gas price" value={gasTherm} onChange={setGasTherm} prefix="$" suffix="/therm" step="0.05" />
+        <Field label="Furnace efficiency (AFUE)" value={afue} onChange={setAfue} suffix="%" step="1" />
+        <Field label="Electricity rate" value={rate} onChange={setRate} suffix="¢/kWh" step="0.5" />
+        <Field label="Heat pump COP (2.5–3.5 typical)" value={cop} onChange={setCop} step="0.1" />
+        <Field label="Heat pump installed cost" value={hpCost} onChange={setHpCost} prefix="$" step="250" />
+        <Field label="New furnace installed cost" value={gasCost} onChange={setGasCost} prefix="$" step="250" />
+        <Field label="Avoided AC replacement (if AC is dying too)" value={acOffset} onChange={setAcOffset} prefix="$" step="250" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label={r.save >= 0 ? 'Heat pump saves' : 'Heat pump costs more'} value={`${usd(Math.abs(r.save), 0)}/yr`} />
+        <Result label="Breakeven on premium" value={isFinite(r.breakeven) ? `${num(r.breakeven, 1)} yrs` : 'never (heating costs more)'} />
+        <Result label="Premium to recover" value={usd(r.premium, 0)} />
+        <Result label="Gas heating per year" value={usd(r.gasAnnual, 0)} />
+        <Result label="Heat pump heating per year" value={usd(r.hpAnnual, 0)} />
+        <Result label="HP electricity needed" value={`${num(r.kwh, 0)} kWh/yr`} />
+        <Result label="15-year net (heat only)" value={r.net15 >= 0 ? `+${usd(r.net15, 0)}` : `−${usd(Math.abs(r.net15), 0)}`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        2026 reality check: the federal §25C credit (up to $2,000 for heat pumps) ended
+        December 31, 2025 — contractor quotes showing it are stale. The honest math: at the US
+        average 17¢/kWh and $1.50/therm, a heat pump roughly breaks even or loses slightly on
+        heating alone ({r.save >= 0 ? 'yours saves' : 'this scenario loses'} {usd(Math.abs(r.save), 0)}/yr).
+        It wins clearly in three cases: cheap electricity (under ~12¢), expensive gas ($2+/therm
+        — Northeast, California), and the two-birds case — if your AC is also near death, the
+        heat pump IS the new air conditioner, so subtract that replacement from the premium.
+        Cold-climate units hold COP ~2+ at 5°F; below that, dual-fuel (keep the furnace as
+        backup) is the standard answer.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'heat-pump-vs-furnace-calculator': HeatPumpCalc,
   'ev-vs-gas-cost-calculator': EvVsGasCalc,
   'solar-payback-calculator': SolarPaybackCalc,
   'home-office-deduction-calculator': HomeOfficeCalc,
