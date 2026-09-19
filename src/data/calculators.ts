@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'car-loan-interest-deduction-calculator',
+    title: 'Car Loan Interest Deduction Calculator 2026 — The OBBBA $10,000 Write-Off',
+    shortTitle: 'Car Loan Interest Deduction',
+    category: 'Everyday Money',
+    description:
+      'Free 2026 car loan interest deduction calculator. New $10,000 OBBBA deduction for US-assembled vehicles — amortized first-year interest, MAGI phase-out, real tax savings.',
+    tagline: 'Worth $616 on a typical new car — not $10,000. Here\'s your real number.',
+    intro:
+      'For the first time since the 1980s, personal car loan interest is deductible — up to $10,000 a year through 2028, no itemizing required. But the headline lies by omission: a typical $40,000 loan at 7.5% only accrues about $2,800 of interest in year one, the deduction is worth your marginal rate (not the interest itself), the vehicle must be new AND finally assembled in the US, and the whole thing phases out between $100,000 and $150,000 of income. This calculator amortizes your actual loan, applies the cap and phase-out, and shows the real dollars.',
+    howItWorks: [
+      'Enter the loan amount, APR, and term — the calculator amortizes the loan and computes first-year interest (most loans never approach the $10,000 cap).',
+      'Enter filing status and MAGI — above $100,000 single / $200,000 joint, the deduction loses $200 per $1,000, gone entirely at $150,000/$250,000.',
+      'Results: first-year interest, the deductible amount after cap and phase-out, tax saved at your marginal bracket, and total interest over the loan.',
+      'Remember the gates: new vehicle, personal use, final assembly in the US (check the VIN), loan originated after December 31, 2024.',
+    ],
+    faq: [
+      {
+        q: 'How much is the car loan interest deduction actually worth?',
+        a: 'Deductible interest × your marginal tax rate. A $40,000 loan at 7.5% over 60 months accrues ~$2,768 of first-year interest — worth about $616 at the 22% bracket, $332 at 12%. Over a full 5-year loan within the 2025–2028 window, the lifetime benefit is roughly $1,700 at 22%. Real money, but never a reason to finance a car you\'d otherwise pay cash for.',
+      },
+      {
+        q: 'Which vehicles qualify?',
+        a: 'New (original use starts with you), personal-use cars, SUVs, minivans, pickups, and motorcycles under 14,000 lbs GVWR, with FINAL ASSEMBLY in the United States — brand doesn\'t matter; some Toyotas qualify and some Fords don\'t. Check the window sticker\'s assembly point or decode the VIN with NHTSA\'s free tool. Used vehicles and leases are excluded, and the loan must have originated after December 31, 2024.',
+      },
+      {
+        q: 'What are the income limits?',
+        a: 'The deduction shrinks $200 for every $1,000 of MAGI over $100,000 (single/head of household) or $200,000 (joint) — fully gone at $150,000/$250,000. It\'s claimed on Schedule 1-A with the vehicle\'s VIN, works with the standard deduction, and expires after 2028 even if your loan runs longer.',
+      },
+    ],
+  },
+  {
     slug: 'tips-overtime-deduction-calculator',
     title: 'No Tax on Tips & Overtime Calculator 2026 — The Real Deduction, Caps & Phase-Outs',
     shortTitle: 'Tips & Overtime Deduction',

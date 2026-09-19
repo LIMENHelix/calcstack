@@ -2322,6 +2322,76 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Car loan interest deduction — IRC §163(h)(4) (OBBBA §70203), 2025–2028, Schedule 1-A Part IV with VIN. Up to $10,000/yr interest on loans originated after 12/31/2024 for NEW, personal-use, US-final-assembly vehicles <14,000 lbs GVWR. Phase-out: −$200 per $1,000 (or fraction) MAGI over $100k single / $200k MFJ; gone at $150k/$250k. Verified: $40k @7.5% 60mo → yr-1 interest $2,768, saves $616 at 22%; phase-out exact at $110k single ($8,000→$6,000).
+export function CarLoanInterestCalc() {
+  const [mfj, setMfj] = useState(false)
+  const [magi, setMagi] = useNumber(85000)
+  const [principal, setPrincipal] = useNumber(40000)
+  const [apr, setApr] = useNumber(7.5)
+  const [months, setMonths] = useNumber(60)
+
+  const r = useMemo(() => {
+    const rm = apr / 100 / 12
+    const n = Math.max(1, months)
+    const pmt = rm > 0 ? (principal * rm) / (1 - Math.pow(1 + rm, -n)) : principal / n
+    let bal = principal
+    let yr1 = 0
+    let total = 0
+    for (let mth = 1; mth <= n; mth++) {
+      const i = bal * rm
+      if (mth <= 12) yr1 += i
+      total += i
+      bal -= pmt - i
+    }
+    const th = mfj ? 200000 : 100000
+    const red = 200 * Math.ceil(Math.max(0, magi - th) / 1000)
+    const ded = Math.max(0, Math.min(yr1, 10000) - red)
+    const STD = mfj ? 32200 : 16100
+    const BK: readonly (readonly [number, number])[] = mfj
+      ? [[0, 0.10], [24800, 0.12], [100800, 0.22], [211400, 0.24], [403550, 0.32], [512450, 0.35], [768700, 0.37]]
+      : [[0, 0.10], [12400, 0.12], [50400, 0.22], [105700, 0.24], [201775, 0.32], [256225, 0.35], [640600, 0.37]]
+    const taxable = Math.max(0, magi - STD)
+    let m = 0.10
+    for (const b of BK) if (taxable > b[0]) m = b[1]
+    return { pmt, yr1, total, ded, saved: ded * m, m, red, th, headroom: Math.max(0, th - magi) }
+  }, [mfj, magi, principal, apr, months])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={mfj ? 'm' : 's'} onChange={(e) => setMfj(e.target.value === 'm')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="s">Single / head of household</option>
+              <option value="m">Married filing jointly</option>
+            </select>
+          </label>
+          <Field label="Modified AGI" value={magi} onChange={setMagi} prefix="$" />
+          <Field label="Loan amount" value={principal} onChange={setPrincipal} prefix="$" />
+          <Field label="APR" value={apr} onChange={setApr} suffix="%" />
+          <Field label="Term (months)" value={months} onChange={setMonths} />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="First-year interest" value={usd(r.yr1)} />
+          <Result label="Deductible this year" value={usd(r.ded)} />
+          <Result label="Tax saved at your bracket" value={usd(r.saved)} />
+          <Result label="Total interest over loan" value={usd(r.total)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Payment {usd(r.pmt)}/mo; year-one interest <span className="font-medium">{usd(r.yr1)}</span>{r.ded < r.yr1 ? `, but the phase-out/cap leaves ${usd(r.ded)} deductible` : ''} — worth <span className="font-medium">{usd(r.saved)}</span> at your {num(r.m * 100, 0)}% bracket.{' '}
+          {r.red > 0 && <>The phase-out removed {usd(r.red)} ($200 per $1,000 of MAGI over {usd(r.th)}). </>}
+          {r.headroom > 0 && r.headroom < 25000 && <>You have {usd(r.headroom)} of MAGI headroom before the phase-out starts. </>}
+          {r.ded > 0 && r.m <= 0.12 && <>Honest framing: at your bracket the deduction returns 10–12¢ per interest dollar — it's a nice offset, not a reason to finance. Paying cash still beats it. </>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2025–2028 (IRC §163(h)(4), Schedule 1-A): up to $10,000/year of interest on a loan originated after 12/31/2024 for a NEW personal-use car, SUV, minivan, pickup, or motorcycle under 14,000 lbs GVWR with final assembly in the US — verify via the Monroney sticker or NHTSA VIN decoder, not the brand name. Leases, used cars, and business vehicles are excluded. Phase-out: −$200 per $1,000 of MAGI over $100,000 single / $200,000 joint, gone at $150,000/$250,000. Above-the-line — no itemizing needed. You must list the VIN on the return; lenders report interest of $600+ to the IRS (Form 1098-VLI; 2025 transition relief via Notice 2025-57). The deduction sunsets after 2028 even for loans still in repayment.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // No Tax on Tips & Overtime — OBBBA §§70201–70202, 2025–2028, Schedule 1-A. Tips: up to $25,000 per taxpayer, qualifying occupations only, voluntary tips (not auto-gratuity), still payroll-taxed. OT: only the FLSA premium (the ½ in time-and-a-half), cap $12,500/return ($25,000 joint). Both: −$100 per $1,000 (or fraction) MAGI over $150k/$300k; tips gone at $400k/$550k, OT at $275k/$550k. SSN required; married must file jointly. Verified vs IRS/UIUC examples: Emily $22/hr × 120 OT hrs → $1,320; Daniel $15k OT at $160k MAGI → $11,500; Sarah $18k tips at $60k → $18,000.
 export function TipsOvertimeDeductionCalc() {
   const [mfj, setMfj] = useState(false)
@@ -4970,6 +5040,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'charitable-bunching-calculator': CharitableBunchingCalc,
   'senior-deduction-calculator': SeniorDeductionCalc,
   'tips-overtime-deduction-calculator': TipsOvertimeDeductionCalc,
+  'car-loan-interest-deduction-calculator': CarLoanInterestCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

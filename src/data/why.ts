@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'car-loan-interest-deduction-calculator':
+    'New-car buyers use it to shrink the "$10,000 deduction" headline to their real number — first-year interest on a typical loan is ~$2,800, worth a few hundred dollars at their bracket — and to check the three gates (new, US-assembled, under the MAGI phase-out) before counting it.',
   'tips-overtime-deduction-calculator':
     'Servers, bartenders, and overtime-heavy hourly workers use it to convert the campaign slogan into the real deduction — only the premium half of OT counts, auto-gratuities don\'t, caps and MAGI phase-outs apply — and to see the actual dollar savings at their bracket instead of the headline promise.',
   'senior-deduction-calculator':
