@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'kiddie-tax-calculator':
+    'Parents with custodial accounts use it at dividend season: over $2,700 of unearned income, the child borrows the parents\' bracket — up to 37% — and the tool prices each layer plus the Form 8814 election trade-off.',
   'underpayment-penalty-calculator':
     'Freelancers and side-income earners use it after a missed quarter: the lesser-of 90%/100%/110% safe harbor sets the real requirement, withholding backfills earlier quarters while a late payment can\'t, and owing under $1,000 kills the penalty outright.',
   'net-investment-income-tax-calculator':

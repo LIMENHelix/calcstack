@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'kiddie-tax-calculator',
+    title: 'Kiddie Tax Calculator 2026 — When Your Child\'s Investment Income Takes YOUR Rate',
+    shortTitle: 'Kiddie Tax Calculator',
+    category: 'Everyday Money',
+    description:
+      'A child\'s unearned income over $2,700 in 2026 is taxed at the parents\' marginal rate — up to 37%, not the child\'s 10%. Price the three layers and the Form 8814 parent election.',
+    tagline: 'First $1,350 free, next $1,350 at 10% — then the IRS borrows your bracket.',
+    intro:
+      'The kiddie tax exists to stop income-shifting: without it, high-bracket parents would park dividend stocks in their kids\' names and pay 10% instead of 37%. The 2026 rules give each child $1,350 of unearned income tax-free and another $1,350 at the child\'s own rate — then everything above $2,700 is taxed at the PARENTS\' marginal rate, ordinary or capital-gains depending on the income type. It applies to all children under 18 and to full-time students up to age 23 whose job income doesn\'t cover half their support — your college junior\'s custodial account is not exempt. This calculator prices the three layers exactly, including the ordinary-vs-capital-gains split, and flags when the Form 8814 parent election (gross income under $13,500) can save a separate filing.',
+    howItWorks: [
+      'Enter the child\'s total unearned income — interest, dividends, capital gains, distributions from custodial accounts.',
+      'Enter what share is long-term capital gains or qualified dividends (they take the parents\' 0/15/20% rate, not the ordinary bracket).',
+      'Enter the parents\' ordinary bracket and capital-gains rate, plus the child\'s own rate (10% for most).',
+      'Read the tax on each layer and the extra tax the kiddie rule adds versus the child\'s own rate.',
+    ],
+    faq: [
+      {
+        q: 'Does the kiddie tax apply to my college student\'s account?',
+        a: 'Yes, potentially until age 24. The rule covers children under 18 unconditionally, plus 18-year-olds and full-time students aged 19–23 whose earned income doesn\'t exceed half their own support. A 22-year-old senior with a custodial account spinning off $5,000 of dividends and only a small campus job is squarely inside it. The year they turn 24, it ends for good — regardless of student status or support.',
+      },
+      {
+        q: 'Should I elect to report it on my own return (Form 8814)?',
+        a: 'It\'s available when the child\'s gross income is between $1,350 and $13,500 and entirely interest, dividends, and capital-gain distributions. It saves preparing a separate return for the child. The cost: the income lands on YOUR return, raising your AGI — which can nudge you over the $200k/$250k NIIT threshold, shrink income-sensitive credits, or cost more than the kiddie tax itself would have. Run it both ways if you\'re anywhere near a phaseout.',
+      },
+      {
+        q: 'How do families legally avoid it?',
+        a: 'Three clean ways. (1) Keep custodial-account income under $2,700 — tilt the account toward growth stocks that don\'t pay dividends, or muni bonds whose interest is tax-exempt anyway. (2) Favor 529 plans: gains compound and come out tax-free for education, and UTMA-to-529 transfers move existing custodial money into the shelter (the 529 stays the child\'s property, just spent on education). (3) Earned income is never kiddie-taxed — a teen with a real job can fund a Roth IRA up to their earnings, and decades of tax-free compounding beat anything a custodial brokerage can do.',
+      },
+    ],
+  },
+  {
     slug: 'underpayment-penalty-calculator',
     title: 'Estimated Tax Underpayment Penalty Calculator 2026 — §6654 Safe Harbors',
     shortTitle: 'Underpayment Penalty Calculator',

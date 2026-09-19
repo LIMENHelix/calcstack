@@ -2322,6 +2322,58 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Kiddie tax — IRC §1(g), 2026 (Rev. Proc. 2025-32): child's unearned income (interest, dividends, capital gains — never wages) is taxed in three layers: first $1,350 tax-free, next $1,350 at the child's rate, everything over $2,700 at the PARENTS' marginal rate. Applies to children under 18 (always), age 18, or full-time students 19–23 whose earned income ≤ half their support. Ordinary income (interest, nonqualified divs, short-term gains) takes parents' ordinary bracket; LTCG/qualified dividends take parents' 0/15/20% rate. Parent election (Form 8814) available when gross income > $1,350 and < $13,500 — simplifies filing but stacks the income on the parents' return (can push NIIT/phaseouts). Node-verified: $5,000 ordinary dividends, parents 32% → $0 + $135 + $736 = $871 (matches SmartAsset 2026 example); 50% LTCG mix at parents' 15% → $675.50.
+export function KiddieTaxCalc() {
+  const [unearned, setUnearned] = useNumber(5000)
+  const [ltcgPct, setLtcgPct] = useNumber(0)
+  const [pOrd, setPOrd] = useNumber(32)
+  const [pCap, setPCap] = useNumber(15)
+  const [cRate, setCRate] = useNumber(10)
+
+  const r = useMemo(() => {
+    const free = Math.min(unearned, 1350)
+    const childLayer = Math.min(Math.max(0, unearned - 1350), 1350)
+    const excess = Math.max(0, unearned - 2700)
+    const capShare = ltcgPct / 100
+    const excessTax = excess * (capShare * (pCap / 100) + (1 - capShare) * (pOrd / 100))
+    const childTax = childLayer * (cRate / 100)
+    const total = childTax + excessTax
+    const childOnly = unearned * (cRate / 100)
+    return { free, childLayer, excess, excessTax, childTax, total, childOnly, elect: unearned > 1350 && unearned < 13500 }
+  }, [unearned, ltcgPct, pOrd, pCap, cRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Child's unearned income" value={unearned} onChange={setUnearned} prefix="$" />
+          <Field label="Share that's LTCG / qualified divs" value={ltcgPct} onChange={setLtcgPct} suffix="%" />
+          <Field label="Parents' ordinary bracket" value={pOrd} onChange={setPOrd} suffix="%" />
+          <Field label="Parents' capital gains rate" value={pCap} onChange={setPCap} suffix="%" />
+          <Field label="Child's own rate" value={cRate} onChange={setCRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Tax on the income" value={usd(r.total, 2)} />
+          <Result label="Tax-free layer" value={usd(r.free)} />
+          <Result label={`Child-rate layer (${cRate}%)`} value={`${usd(r.childLayer)} → ${usd(r.childTax, 2)}`} />
+          <Result label="Parents'-rate layer" value={`${usd(r.excess)} → ${usd(r.excessTax, 2)}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.excess > 0 ? (
+            <>The first {usd(r.free)} is free and {usd(r.childLayer)} costs the child's {cRate}% — but <span className="font-medium">{usd(r.excess)} spills over the $2,700 line and takes YOUR rates</span>: {usd(r.excessTax, 2)} instead of the {usd(r.excess * (cRate / 100), 2)} it would cost at the child's rate. Kiddie tax added: <span className="font-medium">{usd(r.excessTax - r.excess * (cRate / 100), 2)}</span>.</>
+          ) : (
+            <>Under the $2,700 threshold — no kiddie tax. {usd(r.free)} is tax-free and the rest costs the child's {cRate}%: <span className="font-medium">{usd(r.total, 2)} total</span>.</>
+          )}
+          {r.elect && <> Gross income is under $13,500, so you <span className="font-medium">can elect Form 8814</span> and put it on your own return — one less filing, but it inflates your AGI (watch NIIT and phaseouts).</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 rules (Rev. Proc. 2025-32): first $1,350 of unearned income tax-free, next $1,350 at the child's rate, excess over $2,700 at the parents' marginal rate — ordinary rates for interest/nonqualified dividends/short-term gains, 0/15/20% for LTCG and qualified dividends. Applies to kids under 18, 18-year-olds, and full-time students 19–23 whose earned income doesn't cover half their support. Wages are never kiddie-taxed — a Roth IRA funded from a teen's job income dodges this entirely, which is why "custodial Roth" beats "custodial brokerage" for shifting dollars. Planning levers: keep custodial-account yield under $2,700, tilt toward growth stocks (no dividends until sale), or use 529s/UTMA-to-529 transfers where gains compound tax-free. The Form 8814 parent election (gross income $1,350–$13,500) saves a return but adds the income to your AGI.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Estimated-tax underpayment penalty — IRC §6654: required annual payment = LESSER of 90% of current-year tax or 100% of prior-year tax (110% if prior-year AGI > $150,000 / $75k MFS). Each quarter requires 25%; withholding counts as paid EVENLY across quarters (§6654(g)) — that's why raising December W-4 withholding retroactively fixes earlier quarters while a late estimated payment can't. Penalty = per-quarter cumulative shortfall × that quarter's §6621 rate (2026: Q1 7%, Q2 6%, Q3/Q4 7% — IRS IR-2025-112, IRB 2026-08, IR-2026-98), compounded daily; approximated here as shortfall × rate/4 per quarter. De minimis: no penalty if tax due at filing < $1,000. Node-verified: cur $20k/prior $15k/WH $10k/no estimates → required $15k, penalty $212.50; cur $50k/prior $40k/AGI $200k/$5k per quarter → required $44k (110% rule), penalty $1,020; due-at-filing $500 → de minimis, no penalty.
 export function UnderpaymentPenaltyCalc() {
   const [cur, setCur] = useNumber(20000)
@@ -6229,6 +6281,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'kiddie-tax-calculator': KiddieTaxCalc,
   'underpayment-penalty-calculator': UnderpaymentPenaltyCalc,
   'net-investment-income-tax-calculator': NiitCalc,
   's-corp-reasonable-salary-calculator': SCorpSalaryCalc,
