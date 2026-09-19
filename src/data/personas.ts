@@ -253,6 +253,7 @@ export const PERSONAS: Persona[] = [
       'quarterly-estimated-tax-calculator',
       'self-employment-tax-calculator',
       'employee-true-cost-calculator',
+      'overtime-exempt-threshold-calculator',
       'pto-accrual-calculator',
       'cash-runway-calculator',
       'commercial-lease-calculator',

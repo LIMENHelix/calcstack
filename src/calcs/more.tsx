@@ -2322,6 +2322,76 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+export function OvertimeExemptCalc() {
+  const [weekly, setWeekly] = useNumber(700)
+  const [hours, setHours] = useNumber(50)
+  const [juris, setJuris] = useState<'fed' | 'ca' | 'wa'>('fed')
+  const [duties, setDuties] = useState(true)
+
+  const r = useMemo(() => {
+    const thresholds = { fed: 684, ca: 1352, wa: 1541.7 }
+    const threshold = thresholds[juris]
+    const levelPass = weekly >= threshold
+    const exempt = levelPass && duties
+    const rate = hours > 0 ? weekly / hours : 0
+    const otHrs = Math.max(0, hours - 40)
+    // salaried non-exempt: salary covers straight time for all hours; owed the half-time premium over 40
+    const extraOwed = otHrs * rate * 0.5
+    const annualOwed = extraOwed * 52
+    const minBaseWithBonus = threshold * 0.9 // up to 10% of threshold may come from nondiscretionary bonuses
+    const hce = 107432 / 52
+    return { threshold, levelPass, exempt, rate, otHrs, extraOwed, annualOwed, minBaseWithBonus, hce, shortfall: Math.max(0, threshold - weekly) }
+  }, [weekly, hours, juris, duties])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-4">
+        <Field label="Weekly salary" value={weekly} onChange={setWeekly} prefix="$" step="10" />
+        <Field label="Actual hours/week" value={hours} onChange={setHours} step="1" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Jurisdiction</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={juris} onChange={(e) => setJuris(e.target.value as 'fed' | 'ca' | 'wa')}>
+            <option value="fed">Federal ($684/wk)</option>
+            <option value="ca">California (~$1,352/wk)</option>
+            <option value="wa">Washington (~$1,541.70/wk)</option>
+          </select>
+        </label>
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Duties fit an exemption?</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={duties ? 'yes' : 'no'} onChange={(e) => setDuties(e.target.value === 'yes')}>
+            <option value="yes">Yes — executive/admin/professional</option>
+            <option value="no">No / not sure</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Status (salary test)" value={r.exempt ? 'Exempt' : 'NON-EXEMPT'} />
+        <Result label="Your regular rate" value={`${usd(r.rate, 2)}/hr`} />
+        <Result label="OT premium owed weekly" value={usd(r.extraOwed, 2)} />
+        <Result label="Annualized" value={usd(r.annualOwed, 0)} />
+        {!r.levelPass && <Result label="Below threshold by" value={`${usd(r.shortfall, 2)}/wk`} />}
+        <Result label="Min base w/ 10% bonus rule" value={usd(r.minBaseWithBonus, 2)} />
+      </div>
+      {!r.exempt && (
+        <p className="text-sm font-medium text-amber-600 dark:text-amber-400">
+          {r.levelPass
+            ? 'Salary clears the threshold, but the duties test fails — and ONE failed test makes the role non-exempt. At your hours, that is real money: the half-time premium on every hour past 40 adds up to the annualized figure above, plus liquidated damages equal to the unpaid amount if it goes to a claim.'
+            : `Below ${usd(r.threshold, 2)}/week, the exemption fails before duties are even discussed — overtime is owed at your regular rate for every hour past 40, whatever your title or contract says.`}
+        </p>
+      )}
+      <p className="text-sm text-muted-foreground">
+        The 2026 truth many sites still get wrong: the federal threshold is $684/week ($35,568/yr) — the 2024
+        jump to $844 then $1,128 was vacated by a federal court in November 2024 and formally rescinded from
+        the CFR on May 15, 2026, so any page quoting $43,888 or $58,656 is stale. Exemption needs ALL THREE:
+        salary basis (a fixed check that doesn&apos;t dock for slow weeks — the Supreme Court&apos;s Helix case sunk a
+        $200k day-rate worker on this), salary level (up to 10% can come from nondiscretionary bonuses), and
+        actual duties — titles prove nothing. Above {usd(r.hce, 2)}/week ($107,432/yr) the relaxed highly-compensated
+        test applies. CA, WA, NY and others set higher state floors; the higher one wins.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function WeightCutCalc() {
   const [walkLb, setWalkLb] = useNumber(198)
   const [targetLb, setTargetLb] = useNumber(170)
@@ -3153,6 +3223,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'overtime-exempt-threshold-calculator': OvertimeExemptCalc,
   'weight-cut-calculator': WeightCutCalc,
   'training-load-acwr-calculator': AcwrCalc,
   'critical-power-calculator': CriticalPowerCalc,

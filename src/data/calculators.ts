@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'overtime-exempt-threshold-calculator',
+    title: 'Overtime Exemption Calculator 2026 — The Real $684 Threshold, Three Tests, OT Owed',
+    shortTitle: 'OT Exemption',
+    category: 'Freelance & Career',
+    description:
+      'FLSA exempt vs non-exempt calculator with the ACTUAL 2026 threshold ($684/week — the 2024 increase was vacated and rescinded, despite what stale pages say), all three exemption tests, state floors for CA and WA, and the exact overtime premium owed weekly and annually if the role is misclassified.',
+    tagline:
+      'Half the internet still quotes the vacated $58,656. The real 2026 threshold is $35,568 — and salary alone never makes you exempt.',
+    intro:
+      'The federal overtime-exemption threshold is $684 per week ($35,568/year) — not the $43,888 or $58,656 still printed across the web. The 2024 DOL rule that produced those numbers was vacated nationwide in November 2024 and formally removed from the Code of Federal Regulations on May 15, 2026. But the threshold is only one of three tests: a fixed salary basis, the salary level, and duties that genuinely fit an executive, administrative, or professional exemption. Fail any one and overtime is owed — at your regular rate, for every hour past 40, plus liquidated damages.',
+    howItWorks: [
+      'Salary level: weekly salary vs the threshold ($684 federal; ~$1,352 CA; ~$1,541.70 WA — state floors beat federal when higher). Up to 10% of the threshold can come from nondiscretionary bonuses paid at least annually.',
+      'Regular rate for a salaried non-exempt employee = weekly salary ÷ actual hours; the salary covers straight time, so the unpaid piece is the half-time premium on hours over 40.',
+      'Example: $700/week at 50 hours = $14/hour regular rate, $70/week of owed OT premium, $3,640/year — before liquidated damages double it.',
+      'The highly compensated employee shortcut applies at $107,432/year (with at least $684/week on a salary basis) — also restored to the 2019 figure.',
+    ],
+    faq: [
+      {
+        q: 'I earn $40,000 on salary. Am I exempt from overtime?',
+        a: 'On salary level alone, yes — $769/week clears the $684 federal floor. But that settles nothing by itself. If your pay gets docked for partial days (salary basis test) or your actual daily work is not executive, administrative, or professional (duties test), you are non-exempt and owed the half-time premium past 40 hours. The Supreme Court\'s Helix decision made the point brutally: even a $200,000 day-rate worker was non-exempt because the pay structure was not a true salary.',
+      },
+      {
+        q: 'Why do so many sites say the threshold is $58,656?',
+        a: 'That was step two of the 2024 DOL rule, scheduled for January 1, 2025 — and it never arrived. A Texas federal court vacated the entire rule in November 2024, the DOL dropped its appeals in May 2026, and a technical amendment on May 15, 2026 removed the text from the CFR. The operative figures are the 2019 ones: $684/week standard, $107,432 HCE. Pages written in 2024 never revisited themselves.',
+      },
+      {
+        q: 'I work 50 hours a week on a $700 salary. What am I owed if misclassified?',
+        a: 'Your regular rate is $700 ÷ 50 = $14/hour. Since the salary already covered straight time for all 50 hours, the owed piece is the half-time premium: 10 × $7 = $70 per week, roughly $3,640 per year — and successful claims typically add liquidated damages equal to the unpaid amount, doubling it. California daily-overtime rules (over 8 hours/day) would stack on top if you work there.',
+      },
+    ],
+  },
+  {
     slug: 'weight-cut-calculator',
     title: 'Weight Cut Calculator for Combat Sports — Fat Phase vs Water Phase, With the Safety Ceiling',
     shortTitle: 'Weight Cut',
