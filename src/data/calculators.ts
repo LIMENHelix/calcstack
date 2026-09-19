@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'student-loan-interest-deduction-calculator',
+    title: 'Student Loan Interest Deduction Calculator 2026 — Phase-Out & Tax Savings',
+    shortTitle: 'Student Loan Interest 2026',
+    category: 'Loans & Debt',
+    description:
+      'Free 2026 student loan interest deduction calculator. Enter interest paid, filing status, and MAGI — get your exact deductible amount through the phase-out, the tax saved at your bracket, and the MAGI moves that restore it.',
+    tagline: 'Up to $2,500 off the top — no itemizing, but the phase-out is quietly shrinking it.',
+    intro:
+      'The student loan interest deduction is above-the-line — you get it even taking the standard deduction — worth up to $2,500 off your income. But it phases out: for 2026, from $85,000–$100,000 MAGI (single) and $175,000–$205,000 (married filing jointly), and married filing separately cannot claim it at all. This calculator applies the exact proportional reduction, shows the dollars lost to the phase-out, the tax saved at your bracket, and the pre-tax 401(k)/HSA moves that reduce MAGI and restore the deduction.',
+    howItWorks: [
+      'Pick your filing status — married filing separately is ineligible at any income (IRC §221(e)(2)).',
+      'Enter total student loan interest paid in 2026 — your servicer reports it on Form 1098-E; the cap is $2,500.',
+      'Enter your MAGI (AGI before this deduction, with certain exclusions added back).',
+      'Read the deductible amount, the tax saved at your marginal bracket, and how much the phase-out is costing you.',
+    ],
+    faq: [
+      {
+        q: 'What is the student loan interest deduction for 2026?',
+        a: 'Up to $2,500 of interest paid, deducted above-the-line — you do not need to itemize. Phase-outs (Rev. Proc. 2025-32): single/head-of-household MAGI $85,000–$100,000; married filing jointly $175,000–$205,000; married filing separately ineligible. You also cannot claim it while being claimed as a dependent, even if you are the one making the payments.',
+      },
+      {
+        q: 'How does the phase-out reduce the deduction?',
+        a: 'Proportionally across the band: deduction = min(interest paid, $2,500) × (top of range − MAGI) ÷ width. Example: single filer who paid $2,800 with $92,500 MAGI is 50% through the band → $2,500 × 0.5 = $1,250 deductible, worth $275 at the 22% bracket. At $100,000 it is zero — a hard cutoff on a deduction worth up to $800/yr at higher brackets.',
+      },
+      {
+        q: 'Can I restore the deduction if I am in or past the phase-out?',
+        a: 'Yes — the deduction is keyed to MAGI, so anything that reduces MAGI pulls you back in: pre-tax 401(k) and traditional HSA/payroll contributions do double duty here, saving their own tax AND restoring student-loan deductibility. One nuance: if a parent claims you as a dependent, nobody gets the deduction — a parent who is not legally obligated on the loan cannot claim it either, so for non-cosigned loans the dependent question decides whether the deduction is used at all.',
+      },
+    ],
+  },
+  {
     slug: 'traditional-ira-deduction-calculator',
     title: 'Traditional IRA Deduction Calculator 2026 — Deductibility Phase-Outs by Plan Coverage',
     shortTitle: 'IRA Deduction 2026',

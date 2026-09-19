@@ -2322,6 +2322,94 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Student loan interest deduction — IRC §221, 2026 phase-outs per Rev. Proc. 2025-32 §4.29.
+export function StudentLoanInterestCalc() {
+  const [status, setStatus] = useState('single')
+  const [interest, setInterest] = useNumber(2500)
+  const [magi, setMagi] = useNumber(80000)
+  const [bracket, setBracket] = useState('22')
+
+  const r = useMemo(() => {
+    const cap = Math.min(interest, 2500)
+    let ded = 0
+    let phase = 0
+    let band: readonly [number, number] | null = status === 'mfj' ? [175000, 205000] : status === 'mfs' ? null : [85000, 100000]
+    if (status === 'mfs') {
+      ded = 0
+    } else if (band && magi < band[0]) {
+      ded = cap
+    } else if (band && magi >= band[1]) {
+      ded = 0
+      phase = 1
+    } else if (band) {
+      phase = (magi - band[0]) / (band[1] - band[0])
+      ded = cap * (1 - phase)
+    }
+    const br = parseInt(bracket, 10) / 100
+    const saved = ded * br
+    const lostToPhase = cap - ded
+    const headroom = status !== 'mfs' && band && magi < band[1] ? band[1] - magi : null
+    return { cap, ded, phase, saved, lostToPhase, headroom, band }
+  }, [status, interest, magi, bracket])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="single">Single / Head of household</option>
+              <option value="mfj">Married filing jointly</option>
+              <option value="mfs">Married filing separately</option>
+            </select>
+          </label>
+          <Field label="Student loan interest paid (2026)" value={interest} onChange={setInterest} prefix="$" />
+          <Field label="Modified AGI (MAGI)" value={magi} onChange={setMagi} prefix="$" />
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Your marginal bracket</span>
+            <select value={bracket} onChange={(e) => setBracket(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="10">10%</option>
+              <option value="12">12%</option>
+              <option value="22">22%</option>
+              <option value="24">24%</option>
+              <option value="32">32%</option>
+            </select>
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Deductible interest" value={usd(r.ded)} />
+          <Result label="Lost to phase-out" value={usd(r.lostToPhase)} />
+          <Result label={`Tax saved at ${bracket}%`} value={usd(r.saved)} />
+          <Result label="Above-the-line" value="No itemizing" />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {status === 'mfs' ? (
+            <>
+              <span className="font-medium">Not eligible.</span> Married filing separately cannot claim the student loan interest deduction at any income (IRC §221(e)(2)) — one of the real costs of that filing status.
+            </>
+          ) : r.ded === r.cap && r.cap > 0 ? (
+            <>
+              <span className="font-medium">Full deduction.</span> {r.cap < interest && <>The cap is $2,500 — you paid {usd(interest)}, so {usd(interest - 2500)} is over the cap. </>}Your MAGI is below the phase-out{r.headroom !== null && r.band && <>; headroom before it starts: <span className="font-medium">{usd(r.band[0] - magi)}</span></>}.
+            </>
+          ) : r.ded === 0 ? (
+            <>
+              <span className="font-medium">Phased out completely.</span> At this MAGI the deduction is gone — and it was worth {usd(r.cap * parseInt(bracket, 10) / 100)}/yr at your bracket. Pre-tax 401(k) or HSA contributions reduce MAGI and can pull you back under {r.band ? usd(r.band[1]) : ''}.
+            </>
+          ) : (
+            <>
+              <span className="font-medium">Partial deduction — {(r.phase * 100).toFixed(0)}% through the phase-out.</span> You keep {usd(r.ded)} of {usd(r.cap)}. {r.headroom !== null && r.headroom > 0 && <>You are {usd(r.headroom)} of MAGI from losing it entirely; every pre-tax 401(k)/HSA dollar both saves tax and restores this deduction.</>}
+            </>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026: max $2,500, above-the-line (no itemizing needed). Phase-out MAGI $85,000–$100,000 single/head-of-household, $175,000–$205,000 married filing jointly — Rev. Proc. 2025-32. You must not be claimed as a dependent, and the loan must be for qualified higher-education expenses. MAGI here is AGI before this deduction, with certain exclusions added back.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Traditional IRA deductibility — 2026 phase-outs, IRS Notice 2025-67 & Pub 590-A.
 const IRA_DEDUCT_2026: Record<string, readonly [number, number]> = {
   singleCovered: [81000, 91000],
@@ -3733,6 +3821,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'medicare-irmaa-calculator': IrmaaCalc,
   'social-security-tax-calculator': SocialSecurityTaxCalc,
   'traditional-ira-deduction-calculator': TraditionalIraDeductionCalc,
+  'student-loan-interest-deduction-calculator': StudentLoanInterestCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,
