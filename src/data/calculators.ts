@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'underpayment-penalty-calculator',
+    title: 'Estimated Tax Underpayment Penalty Calculator 2026 — §6654 Safe Harbors',
+    shortTitle: 'Underpayment Penalty Calculator',
+    category: 'Everyday Money',
+    description:
+      'The IRS charges 6–7% on estimated-tax shortfalls, quarter by quarter. Check the 90%/100%/110% safe harbors, the under-$1,000 escape, and why raising W-4 withholding beats a catch-up payment.',
+    tagline: 'The penalty is just interest — and W-4 withholding backfills earlier quarters while a late payment can\'t.',
+    intro:
+      'Miss your estimated-tax payments and the IRS charges you interest — 7% in Q1 2026, 6% in Q2, 7% again in Q3/Q4 — on each quarter\'s shortfall, compounded daily from the due date. But you only owe the LESSER of 90% of this year\'s tax or 100% of last year\'s (110% if last year\'s AGI topped $150,000), and if you owe under $1,000 at filing after withholding, the penalty disappears entirely. The most useful trick in the whole section: withholding counts as paid evenly across all four quarters no matter when it happens — so raising your W-4 in November retroactively fixes a Q1 shortfall, while a catch-up estimated payment only stops the clock from the day you pay. This calculator prices your exact exposure and shows the cheapest way out.',
+    howItWorks: [
+      'Enter this year\'s expected total tax and last year\'s total tax and AGI.',
+      'Enter your withholding for the year — it counts 25% per quarter automatically.',
+      'Enter the estimated payments you actually made each quarter.',
+      'Read the safe-harbor requirement, the per-quarter amount needed, and the estimated penalty.',
+    ],
+    faq: [
+      {
+        q: 'Which safe harbor should I aim for?',
+        a: 'The lesser one wins. If your income is growing, last year\'s tax (100%, or 110% over $150k AGI) is usually the cheaper target — it\'s a known number, no forecasting required. If income crashed this year, 90% of the current year\'s smaller tax is the better anchor. High earners with volatile income often pay the 110% prior-year harbor automatically and settle up in April — it\'s cheap insurance at 7% to be wrong on the safe side.',
+      },
+      {
+        q: 'I\'m behind right now — what\'s the cheapest fix?',
+        a: 'Withholding. A late estimated payment stops the penalty clock only from the day you pay; the earlier quarters keep accruing. But W-4 withholding is treated as paid evenly across ALL four quarters, so a big December withholding increase retroactively covers Q1–Q3 shortfalls. If you have any W-2 job at all — including a side job or a spouse\'s — redirecting December paychecks to withholding is the single cheapest penalty repair. On $1,000/quarter of shortfall, it saves roughly $50+ versus a year-end estimated payment.',
+      },
+      {
+        q: 'Does this include state penalties?',
+        a: 'No — this is the federal §6654 calculation only. Most income-tax states run a parallel underpayment penalty with their own rates and safe harbors (some mirror the federal 90%/100%, some don\'t — New York\'s 2026 rate runs 9.5%, well above the IRS\'s). Check your state\'s equivalent of Form 2210. And if your income arrives unevenly — a December bonus, a Q4 asset sale — look at the annualized-income method on Form 2210 Schedule AI before paying anything: it recalculates each quarter based on when income actually arrived.',
+      },
+    ],
+  },
+  {
     slug: 'net-investment-income-tax-calculator',
     title: 'Net Investment Income Tax Calculator 2026 — The 3.8% + 0.9% Medicare Surtaxes',
     shortTitle: 'NIIT Calculator',

@@ -2322,6 +2322,74 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Estimated-tax underpayment penalty — IRC §6654: required annual payment = LESSER of 90% of current-year tax or 100% of prior-year tax (110% if prior-year AGI > $150,000 / $75k MFS). Each quarter requires 25%; withholding counts as paid EVENLY across quarters (§6654(g)) — that's why raising December W-4 withholding retroactively fixes earlier quarters while a late estimated payment can't. Penalty = per-quarter cumulative shortfall × that quarter's §6621 rate (2026: Q1 7%, Q2 6%, Q3/Q4 7% — IRS IR-2025-112, IRB 2026-08, IR-2026-98), compounded daily; approximated here as shortfall × rate/4 per quarter. De minimis: no penalty if tax due at filing < $1,000. Node-verified: cur $20k/prior $15k/WH $10k/no estimates → required $15k, penalty $212.50; cur $50k/prior $40k/AGI $200k/$5k per quarter → required $44k (110% rule), penalty $1,020; due-at-filing $500 → de minimis, no penalty.
+export function UnderpaymentPenaltyCalc() {
+  const [cur, setCur] = useNumber(20000)
+  const [prior, setPrior] = useNumber(15000)
+  const [agi, setAgi] = useNumber(120000)
+  const [wh, setWh] = useNumber(10000)
+  const [q1, setQ1] = useNumber(0)
+  const [q2, setQ2] = useNumber(0)
+  const [q3, setQ3] = useNumber(0)
+  const [q4, setQ4] = useNumber(0)
+
+  const r = useMemo(() => {
+    const rates = [0.07, 0.06, 0.07, 0.07]
+    const req = Math.min(0.9 * cur, (agi > 150000 ? 1.1 : 1) * prior)
+    const rq = req / 4
+    const wq = wh / 4
+    const pays = [q1, q2, q3, q4]
+    let cum = 0
+    let pen = 0
+    for (let i = 0; i < 4; i++) {
+      cum += rq - wq - pays[i]
+      pen += Math.max(0, cum) * (rates[i] / 4)
+    }
+    const paid = wh + q1 + q2 + q3 + q4
+    const due = Math.max(0, cur - paid)
+    const deMinimis = due < 1000
+    if (deMinimis) pen = 0
+    const perQ = Math.max(0, rq - wq)
+    return { req, pen, due, deMinimis, perQ, met: paid >= req }
+  }, [cur, prior, agi, wh, q1, q2, q3, q4])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="This year's total tax" value={cur} onChange={setCur} prefix="$" />
+          <Field label="Last year's total tax" value={prior} onChange={setPrior} prefix="$" />
+          <Field label="Last year's AGI" value={agi} onChange={setAgi} prefix="$" />
+          <Field label="Withholding this year" value={wh} onChange={setWh} prefix="$" />
+          <Field label="Est. paid Q1 (Apr 15)" value={q1} onChange={setQ1} prefix="$" />
+          <Field label="Est. paid Q2 (Jun 15)" value={q2} onChange={setQ2} prefix="$" />
+          <Field label="Est. paid Q3 (Sep 15)" value={q3} onChange={setQ3} prefix="$" />
+          <Field label="Est. paid Q4 (Jan 15)" value={q4} onChange={setQ4} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Estimated penalty" value={r.deMinimis ? '$0 — under $1,000 rule' : usd(r.pen, 2)} />
+          <Result label="Required annual payment" value={usd(r.req)} />
+          <Result label="Needed per quarter" value={usd(r.perQ)} />
+          <Result label="Balance due at filing" value={usd(r.due)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Your safe harbor is the <span className="font-medium">lesser of 90% of this year ({usd(0.9 * cur)}) or {agi > 150000 ? '110%' : '100%'} of last year ({usd((agi > 150000 ? 1.1 : 1) * prior)})</span> = {usd(r.req)}, due in four {usd(r.req / 4)} installments. Withholding covers {usd(wh / 4)} per quarter automatically — the IRS treats it as paid evenly all year no matter when it comes out.
+          {r.pen > 0 ? (
+            <> Your payments leave a growing shortfall, and at 2026's rates (7%/6%/7%/7%) the penalty works out to about <span className="font-medium">{usd(r.pen, 2)}</span> — the IRS's own short method would land close to this. Cheapest fix: bump W-4 withholding now; it backfills earlier quarters. A lump-sum estimated payment only stops the bleeding from today forward.</>
+          ) : r.deMinimis ? (
+            <> You owe {usd(r.due)} at filing, but that's under the $1,000 threshold — <span className="font-medium">no penalty applies</span>.</>
+          ) : (
+            <> {r.due > 0 ? <>You still owe {usd(r.due)} at filing, but the safe harbor is met — <span className="font-medium">no penalty</span>. Pay the balance by April and you're clean.</> : <><span className="font-medium">Safe harbor met</span> — payments cover the requirement.</>}</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The penalty isn't really a penalty — it's interest: the cumulative shortfall each quarter × that quarter's §6621 rate (federal short-term + 3 points; 2026: 7% Q1, 6% Q2, 7% Q3/Q4), compounded daily. This tool uses the standard quarter-by-quarter approximation; Form 2210's exact daily compounding will differ slightly. Two escape hatches beyond the safe harbors: the $1,000 de minimis (owe under $1,000 after withholding and the penalty vanishes entirely), and the annualized-income installment method (Form 2210 Schedule AI) for income that arrives late in the year — freelancers with a huge Q4 owe less per early quarter. Farmers/fishers get one January payment instead. Some states run their own version on top. Rates reset quarterly, so a 2027 balance re-prices in January.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Net Investment Income Tax + Additional Medicare Tax — IRC §1411/§3101(b)(2): 3.8% NIIT on the LESSER of net investment income or MAGI over the threshold; 0.9% Additional Medicare on wages/SE over the threshold. Thresholds are statutory since 2013 and NOT inflation-indexed: $200k single/HoH, $250k MFJ, $125k MFS — bracket creep by design. NII includes interest, nonqualified dividends, capital gains, rental/royalty and passive business income; EXCLUDES wages, active/pass-through business income, Social Security, pensions, and IRA/401(k) distributions (but Roth conversions raise MAGI and can drag OTHER income into NIIT). Employer withholding for the 0.9% kicks in at $200k regardless of status — reconcile on the 1040. Node-verified: single MAGI $250k/NII $40k → $1,520; MFJ $300k/$80k → $1,900; MAGI under threshold → $0; MFJ $500k/$100k → $3,800; wages $300k single → 0.9% × $100k = $900.
 export function NiitCalc() {
   const [status, setStatus] = useState('single')
@@ -6161,6 +6229,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'underpayment-penalty-calculator': UnderpaymentPenaltyCalc,
   'net-investment-income-tax-calculator': NiitCalc,
   's-corp-reasonable-salary-calculator': SCorpSalaryCalc,
   'accountable-plan-calculator': AccountablePlanCalc,
