@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'espp-calculator',
+    title: 'ESPP Calculator 2026 — Lookback Value, Qualifying vs Disqualifying Tax Split',
+    shortTitle: 'ESPP',
+    category: 'Savings & Investing',
+    description:
+      'Employee stock purchase plan calculator with the real IRC §423 math: 85% of the lower price with a lookback, the $25,000 grant-date-value annual limit, and the qualifying-vs-disqualifying tax split — including the down-market case where qualifying costs MORE. Per-share ordinary income and capital gain, priced with your brackets.',
+    tagline:
+      'The lookback is free money. The tax split decides how much of it you keep — and qualifying is not always the winner.',
+    intro:
+      'A §423 ESPP lets you buy company stock at up to 15% off — and with a lookback provision, off the LOWER of the offering-start or purchase-date price. If the stock rises during the offering, your discount compounds with the gain. The tax rules split your profit into ordinary income and capital gain depending on when you sell: hold 2 years from the offering start and 1 year from purchase (qualifying) and only the grant-date discount is ordinary income; sell sooner (disqualifying) and the whole purchase-date bargain element is. The surprise almost no calculator shows: when the stock fell during the offering, qualifying can cost more.',
+    howItWorks: [
+      'Purchase price = (100% − discount) × the lower of offering-start or purchase-date price when the plan has a lookback; otherwise the purchase-date price.',
+      'Qualifying disposition (≥2 yrs from offering start, ≥1 yr from purchase): ordinary income = the LESSER of the grant-date discount or your actual gain; everything above is long-term capital gain (IRC §423(c)).',
+      'Disqualifying disposition: ordinary income = purchase-date price − your purchase price; gain above the purchase-date price is capital gain.',
+      'The §423(b)(8) limit: no more than $25,000 of stock per calendar year, valued at the OFFERING-START price — so a rising stock lets you buy shares worth far more than $25,000 at purchase.',
+    ],
+    faq: [
+      {
+        q: 'Stock went from $20 at offering start to $30 at purchase. What do I pay and what is the tax?',
+        a: 'With a 15% lookback discount you buy at $17 (85% of the lower $20). Sell at $40 after meeting both holding periods: ordinary income is the lesser of the $3 grant-date discount or the $23 actual gain — so $3/share — and $20/share is long-term capital gain. Sell early and $13/share ($30 − $17) is ordinary income. On 1,000 shares at 24%/15% brackets that is $3,720 vs $4,620 of tax — waiting saves $900.',
+      },
+      {
+        q: 'When is qualifying NOT the better move?',
+        a: 'When the stock fell during the offering period. Grant at $30, purchase at $20 (lookback buys at $17), sell at $25: qualifying ordinary income is the grant-date discount, $4.50/share, versus $3/share disqualifying. At 24%/15% brackets on 500 shares, qualifying costs $802 vs $735 — disqualifying wins by $67. Any calculator that always says "just wait" is wrong; run both.',
+      },
+      {
+        q: 'How does the $25,000 limit actually work?',
+        a: 'The limit is measured at the offering-START price, not the purchase price. At a $20 grant price you can accrue 1,250 shares per year — and if the stock doubles by purchase, those shares cost you $21,250 and are worth $50,000. Contributions above the limit are refunded or carried forward depending on plan terms. ESPP income is never hit with Social Security or Medicare tax, regardless of disposition type.',
+      },
+    ],
+  },
+  {
     slug: 'i-bond-calculator',
     title: 'I-Bond Calculator 2026 — Composite Rate, Penalty & After-Tax Value',
     shortTitle: 'I-Bond',

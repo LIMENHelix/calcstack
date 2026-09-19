@@ -2308,6 +2308,93 @@ export function Solo401kCalc() {
 // the SAME employer math as the solo 401(k). Node-verified: $100k profit → SEP
 // $18,587 vs solo $43,087; the solo advantage is exactly the $24,500 deferral
 // until the cap binds ($300k profit: $56,839 vs $72,000).
+export function EsppCalc() {
+  const [grant, setGrant] = useNumber(20)
+  const [purchase, setPurchase] = useNumber(30)
+  const [sale, setSale] = useNumber(40)
+  const [shares, setShares] = useNumber(500)
+  const [disc, setDisc] = useNumber(15)
+  const [lookback, setLookback] = useState(true)
+  const [ord, setOrd] = useNumber(24)
+  const [ltcg, setLtcg] = useNumber(15)
+
+  const r = useMemo(() => {
+    const d = Math.min(disc, 15) / 100
+    const base = lookback ? Math.min(grant, purchase) : purchase
+    const price = base * (1 - d)
+    const cost = price * shares
+    const instGain = (purchase - price) * shares
+    const proceeds = sale * shares
+    // Qualifying (§423(c)): ordinary = lesser of grant-date discount or actual gain; rest is capital gain
+    const qOrd = Math.max(0, Math.min(grant * d, sale - price)) * shares
+    const qCap = (sale - price) * shares - qOrd
+    const qTax = qOrd * (ord / 100) + Math.max(0, qCap) * (ltcg / 100)
+    // Disqualifying: ordinary = purchase-date FMV − price; basis steps to purchase FMV
+    const dOrd = Math.max(0, purchase - price) * shares
+    const dCap = (sale - purchase) * shares
+    const dTax = dOrd * (ord / 100) + Math.max(0, dCap) * (ltcg / 100)
+    const qualifyingBetter = qTax <= dTax
+    const bestTax = Math.min(qTax, dTax)
+    const maxShares25k = grant > 0 ? Math.floor(25000 / grant) : 0
+    const overLimit = shares > maxShares25k
+    return { price, cost, instGain, proceeds, qOrd, qCap, qTax, dOrd, dCap, dTax, qualifyingBetter, bestTax, maxShares25k, overLimit }
+  }, [grant, purchase, sale, shares, disc, lookback, ord, ltcg])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Stock price at offering start" value={grant} onChange={setGrant} prefix="$" step="1" />
+        <Field label="Stock price at purchase date" value={purchase} onChange={setPurchase} prefix="$" step="1" />
+        <Field label="Expected sale price" value={sale} onChange={setSale} prefix="$" step="1" />
+        <Field label="Shares purchased" value={shares} onChange={setShares} step="50" />
+        <Field label="Plan discount" value={disc} onChange={setDisc} suffix="%" step="1" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Lookback provision</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={lookback ? 'yes' : 'no'} onChange={(e) => setLookback(e.target.value === 'yes')}>
+            <option value="yes">Yes — 85% of the LOWER price</option>
+            <option value="no">No — 85% of purchase-date price</option>
+          </select>
+        </label>
+        <Field label="Your ordinary income bracket" value={ord} onChange={setOrd} suffix="%" step="1" />
+        <Field label="Your long-term cap-gains rate" value={ltcg} onChange={setLtcg} suffix="%" step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Your purchase price/share" value={usd(r.price, 2)} />
+        <Result label="Total cost" value={usd(r.cost, 0)} />
+        <Result label="Instant gain at purchase" value={`+${usd(r.instGain, 0)}`} />
+        <Result label="Sale proceeds" value={usd(r.proceeds, 0)} />
+        <Result label="Tax if qualifying (2yr+1yr hold)" value={usd(r.qTax, 0)} />
+        <Result label="Tax if disqualifying" value={usd(r.dTax, 0)} />
+        <Result label={r.qualifyingBetter ? 'Qualifying saves' : 'Disqualifying saves'} value={usd(Math.abs(r.qTax - r.dTax), 0)} />
+        <Result label="§25k limit at this grant price" value={`${num(r.maxShares25k, 0)} sh/yr`} />
+      </div>
+      {r.overLimit && (
+        <p className="text-sm text-muted-foreground">
+          §423(b)(8) warning: at a {usd(grant, 2)} grant-date price you can accrue at most {num(r.maxShares25k, 0)} shares
+          per calendar year ($25,000 of grant-date value) — contributions above that are refunded or carried, per plan rules.
+        </p>
+      )}
+      {!r.qualifyingBetter && (
+        <p className="text-sm text-muted-foreground">
+          The exception nobody mentions: qualifying is NOT always better. When the stock fell during the
+          offering (your lookback keyed off the higher start price), the qualifying ordinary-income piece is
+          the grant-date discount — here {usd(Math.min(grant * disc / 100, sale - r.price), 2)}/share — which can exceed the
+          disqualifying ordinary income of {usd(Math.max(0, purchase - r.price), 2)}/share. Run both before waiting.
+        </p>
+      )}
+      <p className="text-sm text-muted-foreground">
+        The lookback is the most valuable sentence in your plan document: with it, a stock that rises from{' '}
+        {usd(grant, 2)} to {usd(purchase, 2)} during the offering still sells to you at {usd(r.price, 2)} — an instant{' '}
+        {usd(r.instGain, 0)} on paper. Taxes split two ways. Sell after 2 years from offering start AND 1 year
+        from purchase (qualifying): ordinary income is the LESSER of the grant-date discount or your actual
+        gain ({usd(r.qOrd, 0)} here), the rest is long-term capital gain. Sell earlier (disqualifying): the
+        purchase-date bargain element ({usd(r.dOrd, 0)}) is all ordinary income. Neither is subject to Social
+        Security or Medicare tax.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function IBondCalc() {
   const [amount, setAmount] = useNumber(10000)
   const [fixed, setFixed] = useNumber(0.9)
@@ -2466,6 +2553,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'espp-calculator': EsppCalc,
   'i-bond-calculator': IBondCalc,
   'sep-ira-calculator': SepIraCalc,
   'solo-401k-calculator': Solo401kCalc,
