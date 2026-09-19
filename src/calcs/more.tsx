@@ -2322,6 +2322,85 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Child Tax Credit — IRC §24 as amended by OBBBA (P.L. 119-21): $2,200/child permanent, indexed after 2026. ACTC $1,700/child, 15% of earned income over $2,500. Phase-out $50 per $1,000 over $200k/$400k. Rev. Proc. 2025-32 §4.05; Schedule 8812.
+export function ChildTaxCreditCalc() {
+  const [mfj, setMfj] = useState(true)
+  const [magi, setMagi] = useNumber(120000)
+  const [kids, setKids] = useState('2')
+  const [otherDeps, setOtherDeps] = useNumber(0)
+  const [earned, setEarned] = useNumber(120000)
+  const [taxBill, setTaxBill] = useNumber(8000)
+
+  const r = useMemo(() => {
+    const k = Math.max(0, parseInt(kids, 10) || 0)
+    const gross = 2200 * k + 500 * otherDeps
+    const th = mfj ? 400000 : 200000
+    const red = 50 * Math.ceil(Math.max(0, magi - th) / 1000)
+    const after = Math.max(0, gross - red)
+    const nonref = Math.min(after, taxBill)
+    const unused = after - nonref
+    const childUnused = Math.min(unused, 2200 * k)
+    const actc = Math.min(1700 * k, 0.15 * Math.max(0, earned - 2500), childUnused)
+    const total = nonref + actc
+    const headroom = magi <= th ? th - magi : null
+    const lostToPhase = gross - after
+    return { k, gross, red, after, nonref, actc, total, headroom, lostToPhase, th }
+  }, [mfj, magi, kids, otherDeps, earned, taxBill])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={mfj ? 'mfj' : 'other'} onChange={(e) => setMfj(e.target.value === 'mfj')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="mfj">Married filing jointly</option>
+              <option value="other">Single / HoH / MFS</option>
+            </select>
+          </label>
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Qualifying children (under 17, SSN)</span>
+            <select value={kids} onChange={(e) => setKids(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {['0', '1', '2', '3', '4', '5'].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+          </label>
+          <Field label="Other dependents ($500 ODC each)" value={otherDeps} onChange={setOtherDeps} />
+          <Field label="Modified AGI" value={magi} onChange={setMagi} prefix="$" />
+          <Field label="Earned income" value={earned} onChange={setEarned} prefix="$" />
+          <Field label="Federal tax before credits" value={taxBill} onChange={setTaxBill} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Credit after phase-out" value={usd(r.after)} />
+          <Result label="Nonrefundable (vs tax)" value={usd(r.nonref)} />
+          <Result label="Refundable (ACTC)" value={usd(r.actc)} />
+          <Result label="Total benefit" value={usd(r.total)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.k === 0 && otherDeps === 0 ? (
+            <>Enter at least one qualifying child or dependent.</>
+          ) : (
+            <>
+              {r.lostToPhase > 0 ? (
+                <><span className="font-medium">Phase-out cost you {usd(r.lostToPhase)}.</span> $50 per $1,000 (or fraction) of MAGI over {usd(r.th)}. </>
+              ) : r.headroom !== null && r.headroom > 0 && r.headroom < 50000 ? (
+                <>Phase-out headroom: <span className="font-medium">{usd(r.headroom)}</span> of MAGI before the $50-per-$1,000 reduction starts. </>
+              ) : null}
+              {r.actc > 0 && <>The refundable ACTC adds {usd(r.actc)} on top — paid even with zero tax owed. </>}
+              {r.after > r.nonref && r.actc === 0 && earned <= 2500 && <><span className="font-medium">Earned income under $2,500: no refundable portion</span> — the ACTC needs 15% of earnings above $2,500. </>}
+              {r.nonref < r.after && r.actc < Math.min(r.after - r.nonref, 1700 * r.k) && earned > 2500 && <>The 15%-of-earnings formula is what limits your refund — more earned income (or a spouse's) raises it.</>}
+            </>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026: $2,200 per qualifying child (under 17 at year-end, SSN required — one spouse's SSN suffices on a joint return), $500 per other dependent, both permanent under OBBBA and indexed after 2026. Refundable ACTC up to $1,700/child = 15% of earned income over $2,500. Phase-out: $50 per $1,000 (or fraction) of MAGI over $200,000 (single/HoH/MFS) or $400,000 (MFJ) — not indexed. Figured on Schedule 8812. EITC/ACTC refunds held until late February (PATH Act). The 2021 monthly advance payments are gone.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // AMT — IRC §55, 2026 per Rev. Proc. 2025-32 §4.10/§4.11 as amended by OBBBA §70107 (phase-out thresholds reset to $500k/$1M; phase-out rate doubled to 50%).
 const AMT_2026 = {
   single: { ex: 90100, th: 500000, bp: 244500 },
@@ -4353,6 +4432,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'eitc-calculator': EitcCalc,
   'qbi-deduction-calculator': QbiDeductionCalc,
   'amt-calculator': AmtCalc,
+  'child-tax-credit-calculator': ChildTaxCreditCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

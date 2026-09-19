@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'child-tax-credit-calculator',
+    title: 'Child Tax Credit Calculator 2026 — CTC, Refundable ACTC & Phase-Out',
+    shortTitle: 'Child Tax Credit 2026',
+    category: 'Everyday Money',
+    description:
+      'Free 2026 child tax credit calculator. Enter children, income, and tax bill — get the credit after phase-out, the refundable ACTC portion from the 15%-of-earnings formula, and your exact total benefit.',
+    tagline: '$2,200 per child is the headline. The 15%-of-earnings formula decides what lower-income families actually see.',
+    intro:
+      'OBBBA ended a decade of sunset anxiety: the child tax credit is now permanent at $2,200 per qualifying child, indexed after 2026, with up to $1,700 refundable. But two mechanisms decide your real number — the phase-out ($50 per $1,000 of MAGI over $200,000 single / $400,000 joint, not indexed) and the ACTC formula (15% of earned income over $2,500, capped $1,700/child) that limits what lower-income families receive. This calculator runs the Schedule 8812 logic end to end: phase-out, nonrefundable use against your tax bill, and the refundable remainder.',
+    howItWorks: [
+      'Pick filing status — the phase-out threshold doubles for joint filers.',
+      'Enter qualifying children (under 17 at year-end, SSN required) and other dependents ($500 each, nonrefundable only).',
+      'Enter MAGI, earned income, and your federal tax before credits — the split between nonrefundable and refundable depends on all three.',
+      'Read the credit after phase-out, the ACTC refund, and what the phase-out cost you (or your headroom before it starts).',
+    ],
+    faq: [
+      {
+        q: 'How much is the child tax credit for 2026?',
+        a: '$2,200 per qualifying child (under 17, with an SSN), permanent under OBBBA and inflation-indexed starting 2027. Up to $1,700 per child is refundable as the ACTC. The $500 credit for other dependents covers older kids, college students, and elderly parents. Phase-out starts at $200,000 MAGI (single/HoH/MFS) or $400,000 (joint): $50 per $1,000 or fraction over — a $450,000 couple with two kids loses $2,500 of the $4,400.',
+      },
+      {
+        q: 'Why do lower-income families not get the full $2,200?',
+        a: 'Two gates. The nonrefundable part can only erase tax you actually owe. The refundable ACTC is 15% of earned income above $2,500, capped at $1,700/child: a single parent earning $8,000 gets $825, not $1,700; at $25,000 the formula yields $3,375 so the cap binds and they get the full $1,700. Earn $2,500 or less and the refundable portion is zero. The 2021 fully-refundable monthly payments were a one-year program and are not part of current law.',
+      },
+      {
+        q: 'What changed under OBBBA?',
+        a: 'Three things, all permanent: the credit rose from $2,000 to $2,200 with indexing after 2026; the TCJA-era $200k/$400k phase-out thresholds stayed (they would have collapsed to $75k/$110k under the sunset); and SSN requirements tightened — the filer (or one spouse on a joint return) needs an SSN valid for employment, not just the child. EITC/ACTC refunds are held until late February by law (PATH Act), so plan cash flow around it.',
+      },
+    ],
+  },
+  {
     slug: 'amt-calculator',
     title: 'AMT Calculator 2026 — Alternative Minimum Tax with the New OBBBA Phase-Out',
     shortTitle: 'AMT 2026',
