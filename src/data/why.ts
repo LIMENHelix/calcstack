@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'social-security-pia-calculator':
+    'Anyone within a decade of claiming uses it to see the statute itself: AIME through the 2026 bend points ($1,286/$7,749), rounded down to the dime, then the exact −30% to +24% swing between claiming at 62 and 70 — the number the SSA estimator shows without the formula.',
   'backdoor-roth-pro-rata-calculator':
     'High earners attempting a backdoor Roth with an old rollover IRA use it before December 31: the pro-rata rule taxes the conversion by the pre-tax share of ALL their IRAs, and the tool shows the bill — plus the 401(k) roll-in rescue that makes it clean.',
   '403b-calculator':

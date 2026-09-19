@@ -1997,7 +1997,74 @@ export function BackdoorRothCalc() {
   )
 }
 
+/* ---------------- Social Security PIA (2026 bend points) ---------------- */
+
+// 2026 bend points $1,286/$7,749 (SSA, for those turning 62 in 2026 — they lock
+// for life that year). PIA = 90%/32%/15% of AIME bands, rounded DOWN to the dime.
+// Node-verified against SSA anchors: AIME 6,000 → $2,665.80; 10,000 → $3,563.20;
+// 14,358 (max) → $4,216.90. Claiming adjustments (FRA 67): 62 = −30%, 70 = +24%.
+const SSA_B1 = 1286
+const SSA_B2 = 7749
+const SS_ADJ: [string, number][] = [['62 (−30%)', 0.7], ['63 (−25%)', 0.75], ['64 (−20%)', 0.8], ['65 (−13.3%)', 0.8667], ['66 (−6.7%)', 0.9333], ['67 — full retirement', 1], ['68 (+8%)', 1.08], ['69 (+16%)', 1.16], ['70 (+24%)', 1.24]]
+
+function pia2026(aime: number) {
+  const raw = 0.9 * Math.min(aime, SSA_B1) + 0.32 * Math.max(0, Math.min(aime, SSA_B2) - SSA_B1) + 0.15 * Math.max(0, aime - SSA_B2)
+  return Math.floor(raw * 10) / 10
+}
+
+export function SocialSecurityPiaCalc() {
+  const [aime, setAime] = useNumber(6000)
+  const [ageIdx, setAgeIdx] = useState(5)
+
+  const r = useMemo(() => {
+    const pia = pia2026(aime)
+    const adj = SS_ADJ[ageIdx][1]
+    const benefit = Math.floor(pia * adj * 10) / 10
+    const b90 = 0.9 * Math.min(aime, SSA_B1)
+    const b32 = 0.32 * Math.max(0, Math.min(aime, SSA_B2) - SSA_B1)
+    const b15 = 0.15 * Math.max(0, aime - SSA_B2)
+    const replacement = aime > 0 ? (pia / aime) * 100 : 0
+    return { pia, benefit, at62: Math.floor(pia * 0.7 * 10) / 10, at70: Math.floor(pia * 1.24 * 10) / 10, b90, b32, b15, replacement }
+  }, [aime, ageIdx])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Your AIME (from your SSA statement)" value={aime} onChange={setAime} prefix="$" suffix="/mo" step="100" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Claiming age (born 1960+)</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={ageIdx} onChange={(e) => setAgeIdx(Number(e.target.value))}>
+            {SS_ADJ.map(([label], i) => <option key={label} value={i}>{label}</option>)}
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label={`Monthly benefit at ${SS_ADJ[ageIdx][0].split(' ')[0]}`} value={usd(r.benefit, 0)} />
+        <Result label="PIA at full retirement (67)" value={usd(r.pia, 2)} />
+        <Result label="If you claim at 62" value={usd(r.at62, 0)} />
+        <Result label="If you wait to 70" value={usd(r.at70, 0)} />
+        <Result label="90% band adds" value={usd(r.b90, 2)} />
+        <Result label="32% band adds" value={usd(r.b32, 2)} />
+        <Result label="15% band adds" value={usd(r.b15, 2)} />
+        <Result label="Income replacement rate" value={`${num(r.replacement, 1)}%`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The exact SSA formula, 2026 bend points ($1,286 / $7,749 — they lock in the year you turn
+        62): 90% of AIME up to {usd(SSA_B1, 0)}, 32% to {usd(SSA_B2, 0)}, 15% above, rounded DOWN
+        to the dime. Your AIME of {usd(aime, 0)} → PIA {usd(r.pia, 2)}. The formula is deliberately
+        progressive: someone at AIME $2,000 replaces 69.3% of income; at $8,000 only 40.8%. Don't
+        know your AIME? ssa.gov's my account shows it — a rough proxy is your average career salary
+        ÷ 12 (assumes 35 years; missing years count as ZERO and drag it down). Waiting from 62 to
+        70 moves your check from {usd(r.at62, 0)} to {usd(r.at70, 0)} — a 77% raise for the same
+        earnings record. 2026 context: 2.8% COLA, $184,500 taxable max, maximum possible PIA
+        $4,216.90.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'social-security-pia-calculator': SocialSecurityPiaCalc,
   'backdoor-roth-pro-rata-calculator': BackdoorRothCalc,
   '403b-calculator': Teacher403bCalc,
   'tsp-calculator': TspCalc,

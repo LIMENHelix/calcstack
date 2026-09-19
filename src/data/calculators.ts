@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'social-security-pia-calculator',
+    title: 'Social Security Calculator 2026 — The Real Bend-Point Formula (AIME → PIA)',
+    shortTitle: 'SS Bend Points',
+    category: 'Savings & Investing',
+    description:
+      'Free Social Security benefit calculator using the exact 2026 SSA bend points ($1,286 / $7,749). Enter your AIME, see your precise PIA at full retirement age, and your benefit at every claiming age from 62 to 70.',
+    tagline: 'AIME $6,000 → PIA $2,665.80. The exact SSA math, not a black box.',
+    intro:
+      'Most Social Security calculators are black boxes — this one runs the statute. Enter your AIME (your SSA statement shows it) and watch the 2026 bend-point formula produce your exact Primary Insurance Amount: 90% of the first $1,286, 32% up to $7,749, 15% above, rounded down to the dime. Then see what claiming at 62 versus 70 does to the same earnings record — a 77% difference.',
+    howItWorks: [
+      'Enter your AIME — Average Indexed Monthly Earnings — from your my Social Security statement (rough proxy: average career salary ÷ 12).',
+      'See the three bands of the 2026 formula applied separately.',
+      'Pick a claiming age to apply the exact early-reduction or delayed-credit factor.',
+      'Compare 62, full retirement age, and 70 side by side.',
+    ],
+    faq: [
+      {
+        q: 'How is my Social Security benefit actually calculated?',
+        a: 'Three steps. SSA indexes your 35 highest-earning years and averages them into AIME (missing years count as zero). Then the bend-point formula: for those turning 62 in 2026, PIA = 90% of the first $1,286 of AIME + 32% of AIME between $1,286 and $7,749 + 15% above $7,749, rounded down to the nearest dime. Example: AIME $6,000 → $1,157.40 + $1,508.40 = PIA $2,665.80. Finally your claiming age adjusts it: at 62 you get $1,866 (−30%), at 70 you get $3,305.59 (+24%).',
+      },
+      {
+        q: 'What are the 2026 bend points, and when do they lock?',
+        a: '$1,286 and $7,749 for workers first eligible in 2026 (the year you turn 62) — up from $1,226 and $7,391 for 2025 eligibility. They are set by your year of first eligibility and locked for life; later COLAs adjust the benefit itself instead. The 2026 maximum possible PIA is $4,216.90 (AIME $14,358 — a full career at the taxable maximum, which is $184,500 of earnings in 2026).',
+      },
+      {
+        q: 'Why do lower earners get a better deal from Social Security?',
+        a: 'The formula is progressive by design: the 90% first band means an AIME of $2,000 gets 69.3% of income replaced, while AIME $8,000 replaces only 40.8%. High earners still get larger checks in dollars, but a smaller share of what they paid in. This is also why the 15% top band exists — and why proposals to fix the trust fund often target that band\'s bend point rather than the 90% band that shields low earners.',
+      },
+    ],
+  },
+  {
     slug: 'backdoor-roth-pro-rata-calculator',
     title: 'Backdoor Roth Calculator — The Pro-Rata Rule, Computed Honestly (Form 8606)',
     shortTitle: 'Backdoor Roth Pro-Rata',
