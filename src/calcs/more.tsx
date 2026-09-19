@@ -2322,6 +2322,72 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Gift tax & annual-exclusion gifting planner — IRC §2503(b) annual exclusion $19,000/recipient for 2026 (Rev. Proc. 2025-32 §4.42(1)); $38,000 with gift-splitting (§2513); §2503(e) direct tuition/medical unlimited. 529 superfunding §529(c)(2)(B): 5-year election = $95,000/donor/beneficiary ($190,000 couple). Excess gifts consume the $15M lifetime exclusion (§2505) dollar-for-dollar; tax only beyond that at 18–40%.
+export function GiftTaxCalc() {
+  const [couple, setCouple] = useState(false)
+  const [recipients, setRecipients] = useNumber(4)
+  const [perYear, setPerYear] = useNumber(19000)
+  const [years, setYears] = useNumber(10)
+  const [growth, setGrowth] = useNumber(7)
+  const [superfund, setSuperfund] = useNumber(0)
+
+  const r = useMemo(() => {
+    const excl = couple ? 38000 : 19000
+    const cap529 = couple ? 190000 : 95000
+    const sf = Math.min(Math.max(0, superfund), cap529)
+    const excessPer = Math.max(0, perYear - excl)
+    const annualTotal = perYear * recipients
+    const annualTaxable = excessPer * recipients
+    const taxableTotal = annualTaxable * years
+    const g = Math.max(0, growth) / 100
+    const fv = g > 0 ? annualTotal * ((Math.pow(1 + g, years) - 1) / g) : annualTotal * years
+    const fvSf = sf > 0 ? sf * Math.pow(1 + g, years) : 0
+    const removed = fv + fvSf
+    const lifetimeLeft = 15000000 - taxableTotal - sf
+    return { excl, cap529, sf, excessPer, annualTotal, annualTaxable, taxableTotal, removed, lifetimeLeft, overCap: superfund > cap529 }
+  }, [couple, recipients, perYear, years, growth, superfund])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Gifting as</span>
+            <select value={couple ? 'c' : 's'} onChange={(e) => setCouple(e.target.value === 'c')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="s">Individual — $19,000/recipient</option>
+              <option value="c">Married couple, gift-splitting — $38,000</option>
+            </select>
+          </label>
+          <Field label="Recipients (kids, grandkids…)" value={recipients} onChange={setRecipients} />
+          <Field label="Gift per recipient per year" value={perYear} onChange={setPerYear} prefix="$" />
+          <Field label="Years of gifting" value={years} onChange={setYears} />
+          <Field label="Assumed growth on gifted assets" value={growth} onChange={setGrowth} suffix="%" />
+          <Field label="One-time 529 superfund (per beneficiary)" value={superfund} onChange={setSuperfund} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Moved per year, tax-free" value={usd(r.annualTotal)} />
+          <Result label="Taxable gifts over horizon" value={usd(r.taxableTotal)} />
+          <Result label="Estate reduction (incl. growth)" value={usd(r.removed)} />
+          <Result label="Lifetime exclusion left" value={usd(r.lifetimeLeft)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.annualTaxable === 0 ? (
+            <><span className="font-medium">Fully under the annual exclusion.</span> {usd(r.annualTotal)}/year moves out of your estate with no gift tax, no Form 709, and no lifetime-exclusion cost. Over {years} years that's {usd(r.removed)} including growth that now compounds in your heirs' hands, not your estate. </>
+          ) : (
+            <><span className="font-medium">{usd(r.annualTaxable)}/year exceeds the {usd(r.excl)} annual exclusion.</span> The excess is a taxable gift reportable on Form 709 — it consumes your $15M lifetime exclusion (no out-of-pocket tax until that's used up). Over {years} years: {usd(r.taxableTotal)} of exclusion consumed. </>
+          )}
+          {r.sf > 0 && <>The {usd(r.sf)} 529 superfund uses the 5-year election ({usd(r.cap529)} max {couple ? 'per couple' : 'per donor'} per beneficiary) — front-loading five years of exclusions so the growth starts compounding immediately. </>}
+          {r.overCap && <><span className="font-medium">Superfund amount exceeds the {usd(r.cap529)} cap</span> — the overflow is treated as a taxable gift in year one. </>}
+          {r.lifetimeLeft < 15000000 && <>Lifetime exclusion remaining after this plan: <span className="font-medium">{usd(r.lifetimeLeft)}</span>.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026: annual exclusion $19,000 per recipient ($38,000 with gift-splitting; $194,000 to a non-citizen spouse). Direct tuition and medical payments made to the provider are unlimited and don't touch the exclusion (§2503(e)). 529 superfunding front-loads 5 years of exclusions — $95,000 per donor ($190,000 per couple) per beneficiary — but no further annual-exclusion gifts to that beneficiary for 5 years. Gifts above the annual exclusion consume the $15M lifetime gift/estate exclusion before any tax is due. Recipients inherit your cost basis on lifetime gifts (carryover basis) versus a stepped-up basis at death — for highly appreciated assets, dying with them is often the better transfer.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Federal estate tax — IRC §2010(c)(3) as amended by OBBBA §70106 (P.L. 119-21): $15,000,000 basic exclusion per person for 2026, permanent, indexed from 2027. Portability ($30M/couple) requires a Form 706 election on the first death — NOT automatic. Rate effectively 40% above the exclusion (Table A 18–40%; for taxable estates ≥ $1M, tax = 0.40 × TE − $6,000,000 exactly, since unified credit = $345,800 + 0.4 × $14M). Annual gift exclusion $19,000/recipient (Rev. Proc. 2025-32 §4.42(1)); §2503(e) direct tuition/medical unlimited. Lifetime taxable gifts reduce the death-time exclusion dollar-for-dollar.
 export function EstateTaxCalc() {
   const [married, setMarried] = useState(true)
@@ -4505,6 +4571,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'amt-calculator': AmtCalc,
   'child-tax-credit-calculator': ChildTaxCreditCalc,
   'estate-tax-calculator': EstateTaxCalc,
+  'gift-tax-calculator': GiftTaxCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'gift-tax-calculator',
+    title: 'Gift Tax Calculator 2026 — $19,000 Annual Exclusion, 529 Superfunding & Lifetime Limit',
+    shortTitle: 'Gift Tax Calculator',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 gift tax calculator. $19,000 annual exclusion per recipient, $38,000 gift-splitting, 529 superfunding up to $95,000 — see how much leaves your estate tax-free.',
+    tagline: 'The most legal money move in the tax code is $19,000 at a time.',
+    intro:
+      'Almost nobody pays gift tax — but almost everybody misunderstands it. Gifts under the annual exclusion ($19,000 per recipient in 2026) require no form, no tax, and no lifetime-exclusion cost, and every dollar gifted takes all its future growth out of your estate with it. This planner shows what a sustained gifting habit actually moves: give $19,000 a year to four people for ten years and you have shifted over $1 million including growth — completely tax-free. It also handles the two big accelerants: gift-splitting for couples and 529 superfunding.',
+    howItWorks: [
+      'Choose individual or married-with-gift-splitting — splitting doubles the annual exclusion to $38,000 per recipient.',
+      'Set the number of recipients and the gift per recipient per year. Anything above the exclusion is a taxable gift reported on Form 709.',
+      'Set the years and an assumed growth rate — the growth is the hidden prize, since it compounds outside your estate.',
+      'Optionally add a one-time 529 superfund: up to $95,000 per donor ($190,000 per couple) per beneficiary using the 5-year election.',
+      'Results show annual tax-free movement, taxable gifts consuming your $15M lifetime exclusion, total estate reduction including growth, and remaining lifetime exclusion.',
+    ],
+    faq: [
+      {
+        q: 'Do I owe tax if I give someone more than $19,000?',
+        a: 'Almost certainly not — you file Form 709 and the excess counts against your $15,000,000 lifetime exclusion. Actual out-of-pocket gift tax only begins after that entire exclusion is consumed. The form is paperwork, not a bill.',
+      },
+      {
+        q: 'What is 529 superfunding?',
+        a: 'A special election lets you front-load five years of annual exclusions into a 529 plan at once: $95,000 per donor or $190,000 per couple per beneficiary in 2026. The catch: no additional annual-exclusion gifts to that same beneficiary for the next four years. Grandparents love it because it yanks a large sum — and all its growth — out of the estate in a single stroke.',
+      },
+      {
+        q: 'What gifts are completely unlimited?',
+        a: 'Direct payments of tuition to a school and medical bills to a provider are unlimited under §2503(e) — they don\'t touch the annual exclusion or the lifetime limit. Gifts to a U.S.-citizen spouse are unlimited too. One caution: lifetime gifts carry over your cost basis, while inherited assets get a stepped-up basis — so for highly appreciated stock or property, holding until death can beat gifting.',
+      },
+    ],
+  },
+  {
     slug: 'estate-tax-calculator',
     title: 'Federal Estate Tax Calculator 2026 — $15M Exclusion, Portability & the 40% Rate',
     shortTitle: 'Estate Tax Calculator',
