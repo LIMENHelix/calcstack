@@ -2322,6 +2322,63 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Nanny tax / household employer — IRS Pub 926 (2026): FICA when any one household employee gets $3,000+ cash wages in 2026 (15.3% split 7.65/7.65; SS capped at $184,500 wage base); FUTA when total household wages hit $1,000 in any quarter (6% on first $7,000, 0.6% net with full state credit = $42). Exempt: spouse, child under 21, parent (narrow exception), under-18 student. Schedule H filed with the 1040; W-2 + EIN required; fund via W-4 bump or estimates to avoid underpayment penalty. Reproduces Pub 926-style Garcia example: $42,000 → FICA $6,426 + FUTA $42 = $6,468.
+export function NannyTaxCalc() {
+  const [hourly, setHourly] = useNumber(21)
+  const [hours, setHours] = useNumber(40)
+  const [weeks, setWeeks] = useNumber(50)
+  const [suta, setSuta] = useNumber(3)
+  const [sutaBase, setSutaBase] = useNumber(7000)
+
+  const r = useMemo(() => {
+    const wages = hourly * hours * weeks
+    const ficaApplies = wages >= 3000
+    const ss = ficaApplies ? Math.min(wages, 184500) * 0.062 : 0
+    const med = ficaApplies ? wages * 0.0145 : 0
+    const empShare = ss + med
+    const futa = Math.min(wages, 7000) * 0.006
+    const su = (suta / 100) * Math.min(wages, sutaBase)
+    const schedH = empShare * 2 + futa
+    const employerAddOn = empShare + futa + su
+    const totalCost = wages + employerAddOn
+    const pct = wages > 0 ? (employerAddOn / wages) * 100 : 0
+    const crossesAt = hourly * hours > 0 ? 3000 / (hourly * hours) : 0
+    return { wages, ficaApplies, empShare, futa, su, schedH, employerAddOn, totalCost, pct, crossesAt }
+  }, [hourly, hours, weeks, suta, sutaBase])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Hourly wage" value={hourly} onChange={setHourly} prefix="$" />
+          <Field label="Hours per week" value={hours} onChange={setHours} />
+          <Field label="Weeks per year" value={weeks} onChange={setWeeks} />
+          <Field label="State unemployment rate" value={suta} onChange={setSuta} suffix="%" />
+          <Field label="State UI wage base" value={sutaBase} onChange={setSutaBase} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Annual wages" value={usd(r.wages)} />
+          <Result label="Your employer taxes" value={usd(r.employerAddOn)} />
+          <Result label="Schedule H total (both FICA halves + FUTA)" value={usd(r.schedH)} />
+          <Result label="True cost per year" value={usd(r.totalCost)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.ficaApplies ? (
+            <>At {usd(r.wages)} you're over the <span className="font-medium">$3,000 threshold</span> — you're an employer. Your share: {usd(r.empShare)} FICA + {usd(r.futa)} FUTA + {usd(r.su)} state UI ≈ <span className="font-medium">{num(r.pct, 1)}% on top of wages</span>. The other 7.65% ({usd(r.empShare)}) comes out of the employee's pay — or your pocket if you gross up. </>
+          ) : (
+            <>At {usd(r.wages)} you're under the $3,000 FICA threshold — no Social Security/Medicare owed{r.wages >= 1000 ? ', but FUTA still applies if any single quarter hits $1,000' : ''}. {r.crossesAt > 0 && r.wages > 0 && <>At this schedule you'd cross the threshold in week {Math.ceil(r.crossesAt)} — the line exists for occasional babysitters, not regular care.</>} </>
+          )}
+          {r.ficaApplies && <>Fund it during the year (bump your own W-4 withholding or quarterly estimates) — a {usd(r.schedH)} surprise in April can trigger an underpayment penalty on YOUR return. </>}
+          {r.ficaApplies && <>Offset: wages paid for care count toward the dependent-care FSA ($7,500 pre-tax) or the child care credit — run the FSA-vs-credit calculator with this number.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 (IRS Pub 926): Social Security + Medicare (15.3% combined, split 7.65%/7.65%) owed when any one household employee — nanny, housekeeper, senior caregiver, regular gardener — gets $3,000+ in cash wages. FUTA (0.6% net on the first $7,000) when total household wages hit $1,000 in any quarter. Exempt regardless of wages: your spouse, your child under 21, employees under 18 who are students, and usually your parent. "1099 contractor" doesn't work — if you control the schedule and how the work is done, they're an employee. Mechanics: free EIN from IRS.gov, W-2 by January 31, Schedule H attached to your 1040 (annual, not quarterly). State UI, workers' comp, and paid-leave programs vary — check your state. Paying legally also builds the worker's Social Security record and unemployment protection, which is why the good nannies increasingly demand it.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // 529 vs Trump Account vs Custodial Roth — same dollars through all three vehicles. Caps: Trump $5,000/yr aggregate + $1,000 seed (born 2025–28); Roth min(earned income, $7,500); 529 effectively uncapped. College at 18: 529 qualified = tax-free; Trump = after-tax basis back, seed + earnings taxed at child's ordinary rate (education waives the 10% penalty, not the tax); Roth = contributions tax-free, earnings taxed at kid's rate if under 59½/under 5 years (penalty waived for education). FAFSA: parent 529 ≤5.64%, Trump/student asset ~20%, Roth invisible (withdrawals hit later-year income). Verified: $3k/yr × 18 @8% → 529 $112,351, Trump $116,347 gross; keep at 10% kid bracket: $112,351 / $110,112 / $106,516.
 export function KidSavingsCompareCalc() {
   const [years, setYears] = useNumber(18)
@@ -5226,6 +5283,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'nanny-tax-calculator': NannyTaxCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'nanny-tax-calculator',
+    title: 'Nanny Tax Calculator 2026 — Household Employer Taxes (Schedule H)',
+    shortTitle: 'Nanny Tax Calculator',
+    category: 'Everyday Money',
+    description:
+      'Cross $58/week ($3,000/year in 2026) paid to one nanny, housekeeper, or caregiver and you become a household employer. Compute both FICA shares, the $42 FUTA, the Schedule H total, and the true hourly cost.',
+    tagline: 'Hire a nanny for $58+ a week and the IRS says you are an employer.',
+    intro:
+      'The nanny tax catches people off guard because there is no form to sign and no one explains the rule: pay any one household employee $3,000 or more in cash wages in 2026 (about $57.69 a week) and you owe Social Security and Medicare on those wages — 7.65% withheld from the employee plus 7.65% out of your own pocket. Pay $1,000 or more in any quarter and FUTA adds a flat $42 (0.6% of the first $7,000). You file once a year on Schedule H attached to your 1040, after getting an EIN and issuing a W-2. Skip it and you are exposed for back taxes plus penalties — and you likely misclassified an employee as a contractor. Done right, the wages also qualify for the $7,500 dependent-care FSA or the child care credit, which offsets a real chunk of the cost.',
+    howItWorks: [
+      'Enter the pay rate, hours per week, and weeks per year for one household employee.',
+      'We compare annual wages against the 2026 thresholds: $3,000 for FICA and $1,000/quarter for FUTA.',
+      'Social Security is 6.2% each side up to the $184,500 wage base; Medicare is 1.45% each side with no cap.',
+      'Read the Schedule H total, the employer share on top of wages, and the all-in hourly cost.',
+    ],
+    faq: [
+      {
+        q: 'Can I just pay my nanny as a 1099 contractor?',
+        a: 'Almost never legally. A nanny whose schedule, methods, and tools you control is a W-2 employee under IRS common-law rules; household work is the textbook example. Misclassification means back FICA (both shares), penalties, and interest — and states add their own unemployment and workers-comp exposure. If an agency or payroll service suggests 1099 for in-home care, that is a red flag.',
+      },
+      {
+        q: 'Who is exempt from the nanny tax?',
+        a: 'Wages paid to your spouse, your child under 21, or your parent (with a narrow exception) are exempt from FICA, and wages paid to an employee under 18 whose principal occupation is being a student (a neighborhood babysitter in school) are exempt too. Everyone else — nanny, housekeeper, caregiver, gardener on your payroll — counts once they hit $3,000 in 2026.',
+      },
+      {
+        q: 'How do I actually pay it, and can the dependent-care FSA help?',
+        a: 'You do not file quarterly: estimate the annual total and cover it during the year with extra withholding on your own W-4 or quarterly estimated payments, then settle on Schedule H with your 1040. Underpayment without that funding can trigger a penalty. The upside: nanny wages qualify for the dependent-care FSA (up to $7,500 per household in 2026, pre-tax) or the child and dependent care credit — worth $1,500 to $2,400+ for most families, which often covers the entire employer FICA share.',
+      },
+    ],
+  },
+  {
     slug: '529-vs-trump-vs-roth-calculator',
     title: '529 vs Trump Account vs Custodial Roth Calculator — Same Dollars, Three Futures (2026)',
     shortTitle: '529 vs Trump vs Roth',
