@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'hybrid-ltc-vs-traditional-calculator',
+    title: 'Hybrid LTC vs Traditional Long-Term Care Insurance Calculator 2026',
+    shortTitle: 'Hybrid vs Traditional LTC',
+    category: 'Retirement',
+    description:
+      'Single-premium hybrid life/LTC ($52,753 lump, $180k pool, $120k death benefit) vs traditional annual premiums ($950/yr, $165k pool). True cost if you never claim, months of care covered if you do.',
+    tagline: 'Traditional is cheaper insurance. The hybrid\'s premium buys "you can\'t lose."',
+    intro:
+      'The hybrid pitch — "if you don\'t use it, your family gets the money back" — is true, but it isn\'t free. At AALTCI benchmarks (age 55): a hybrid costs a $52,753 lump sum for a $180,000 LTC pool with a $120,000 death benefit; a traditional policy costs $950 a year for a $165,000 pool. Invested at 6% for 30 years, the hybrid\'s opportunity cost net of the death benefit is about $183,000, versus about $75,000 of foregone premiums on the traditional. The traditional is the cheaper coverage on pure math — but it can lapse to zero, and its premiums can be raised (in-force hikes averaged ~28% approved in 2024). The hybrid\'s extra cost buys lapse-proofing and rate-hike immunity. This calculator prices both sides with your actual quotes.',
+    howItWorks: [
+      'Enter the hybrid lump sum, its LTC pool, and its death benefit from your quote.',
+      'Enter the traditional annual premium and pool from the competing quote.',
+      'Set an opportunity return, years until claim age, and monthly care cost.',
+      'Read the true cost of each path if you never claim — and months of care covered if you do.',
+    ],
+    faq: [
+      {
+        q: 'Why is the hybrid\'s "money back" not actually free?',
+        a: 'Opportunity cost. The $52,753 lump sum would grow to about $303,000 over 30 years at 6%. Your heirs get $120,000 if you never claim — so the insurance still cost you about $183,000 of foregone growth. It feels free because the money comes back; it isn\'t, because the growth doesn\'t. That said, the traditional path\'s $75,000 of premiums is simply gone if you never claim — the hybrid guarantees somebody gets paid.',
+      },
+      {
+        q: 'What is the real risk of the traditional policy?',
+        a: 'Two: lapse and rate hikes. Lapse rates on traditional LTC are high — decades of premiums can be forfeited entirely if you stop paying at 75. And insurers can raise in-force premiums with state approval; the average approved increase was about 28% in 2024. A hike at age 70 on a fixed income is exactly when people drop coverage — the worst possible timing. Hybrids have no ongoing premium, so neither risk exists.',
+      },
+      {
+        q: 'Can I pay the hybrid annually instead of a lump sum?',
+        a: 'Yes — the same AALTCI benchmark offers annual-pay at $3,540/yr (male 55) or $3,265 (female 55). That\'s roughly $280,000 of foregone growth over 30 years at 6% — MORE total cost than the lump sum, but it preserves liquidity along the way. Enter the annual amount in the traditional premium field with the hybrid pool values to approximate the comparison, or ask the agent for the 10-pay option, which usually lands between the two.',
+      },
+    ],
+  },
+  {
     slug: 'ltc-insurance-vs-self-fund-calculator',
     title: 'Long-Term Care Insurance vs Self-Funding Calculator 2026 — Breakeven Months',
     shortTitle: 'LTC Insurance vs Self-Fund',

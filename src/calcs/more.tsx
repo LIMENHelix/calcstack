@@ -2322,6 +2322,57 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Hybrid (linked-benefit) LTC vs traditional — AALTCI 2025: male 55 hybrid single-premium $52,753 ($180k LTC pool or $120k death benefit), female 55 $54,022; annual-pay hybrid $3,540/$3,265; traditional level $950/$1,500 per year for $165k pool (no inflation growth). Honest result: traditional foregoes less (premiums invested → ~$75k @6%/30yr) than hybrid's opportunity cost net of the guaranteed death benefit (~$183k) — hybrid's premium buys lapse-proofing, rate-hike immunity, and money-back-if-never-claim, NOT more care per dollar. Node-verified: hybrid net cost if no claim $182,986 vs traditional $75,105; months of $12,500/mo care: hybrid 14.4, traditional 13.2.
+export function HybridLTCCalc() {
+  const [lump, setLump] = useNumber(52753)
+  const [hybPool, setHybPool] = useNumber(180000)
+  const [deathBenefit, setDeathBenefit] = useNumber(120000)
+  const [tradPremium, setTradPremium] = useNumber(950)
+  const [tradPool, setTradPool] = useNumber(165000)
+  const [ret, setRet] = useNumber(6)
+  const [years, setYears] = useNumber(30)
+  const [monthlyCare, setMonthlyCare] = useNumber(12500)
+
+  const r = useMemo(() => {
+    const i = ret / 100
+    const hybFV = lump * Math.pow(1 + i, years)
+    const hybNetCost = hybFV - deathBenefit
+    const tradFV = i > 0 ? tradPremium * (Math.pow(1 + i, years) - 1) / i : tradPremium * years
+    const hybMonths = monthlyCare > 0 ? hybPool / monthlyCare : 0
+    const tradMonths = monthlyCare > 0 ? tradPool / monthlyCare : 0
+    return { hybFV, hybNetCost, tradFV, hybMonths, tradMonths }
+  }, [lump, hybPool, deathBenefit, tradPremium, tradPool, ret, years, monthlyCare])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Hybrid single premium (lump)" value={lump} onChange={setLump} prefix="$" />
+          <Field label="Hybrid LTC pool" value={hybPool} onChange={setHybPool} prefix="$" />
+          <Field label="Hybrid death benefit (if no claim)" value={deathBenefit} onChange={setDeathBenefit} prefix="$" />
+          <Field label="Traditional annual premium" value={tradPremium} onChange={setTradPremium} prefix="$" />
+          <Field label="Traditional pool (level)" value={tradPool} onChange={setTradPool} prefix="$" />
+          <Field label="Opportunity return" value={ret} onChange={setRet} suffix="%" />
+          <Field label="Years until claim age" value={years} onChange={setYears} />
+          <Field label="Monthly care cost at claim" value={monthlyCare} onChange={setMonthlyCare} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Hybrid: true cost if you never claim" value={usd(r.hybNetCost)} />
+          <Result label="Traditional: cost if you never claim" value={usd(r.tradFV)} />
+          <Result label="Hybrid months of care" value={`${num(r.hybMonths, 1)} mo`} />
+          <Result label="Traditional months of care" value={`${num(r.tradMonths, 1)} mo`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          If you never claim: the hybrid's {usd(lump)} would have grown to {usd(r.hybFV)} — minus the {usd(deathBenefit)} death benefit your heirs still get, the insurance truly cost you <span className="font-medium">{usd(r.hybNetCost)}</span>. The traditional premiums invested would be {usd(r.tradFV)} — all of it gone, so that's its true cost. <span className="font-medium">Traditional is the cheaper insurance on pure math</span> — the hybrid's extra {usd(r.hybNetCost - r.tradFV)} buys three things: you can't lose the money to a lapse, the premium can never be raised (traditional in-force hikes averaged ~28% approved in 2024), and someone always gets paid. If you claim: hybrid covers {num(r.hybMonths, 1)} months vs traditional {num(r.tradMonths, 1)} at these terms.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Benchmarks (AALTCI 2025, age 55): hybrid single-premium male $52,753 / female $54,022 for a $180,000 LTC pool with $120,000 minimum death benefit; annual-pay hybrid $3,540/$3,265; traditional level-benefit policy $950/$1,500 per year for a $165,000 pool (inflation riders cost extra on traditional — the 3% compound rider takes male-55 to ~$2,200/yr). Both trigger at 2 of 6 ADLs with a typical 90-day elimination period; qualified benefits are tax-free. The deciding question isn't which is "better" — it's whether you'd actually keep paying a traditional premium for 30 years (lapse rates are high, and a lapsed policy is a total loss) and whether a 28% premium hike at age 70 would make you drop it. If yes to either doubt, the hybrid's guarantee is what you're buying.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // LTC insurance vs self-funding — AALTCI 2025/2026 Price Index: $165k initial pool w/ 3% compound rider: male 55 $2,200/yr, female 55 $3,750, couple 55 $5,050 (2026: $5,010), male 65 $3,280, female 65 $5,290, couple 65 $7,030. Pool growth: $165k@3% → $400,500 at 85 (buy at 55). Triggers: 2 of 6 ADLs or cognitive impairment, 90-day elimination typical; benefits tax-free under §7702B. In-force rate hikes averaged ~28% approved in 2024. Decline rates: 38% of applicants 65–69, 47% of 70–75 declined/deferred. Breakeven = self-fund FV ÷ monthly care cost. Node-verified: male 55 $2,200×30yr@6% → FV $173,928 vs pool $400,498 → breakeven 13.9 months of $150k/yr care; female 55 → 23.7 months; male 65 N=20 → 9.7 months.
 export function LTCInsuranceCalc() {
   const [premium, setPremium] = useNumber(2200)
@@ -5490,6 +5541,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'hybrid-ltc-vs-traditional-calculator': HybridLTCCalc,
   'ltc-insurance-vs-self-fund-calculator': LTCInsuranceCalc,
   'long-term-care-cost-calculator': LTCareCostCalc,
   'ptet-election-calculator': PTETCalc,

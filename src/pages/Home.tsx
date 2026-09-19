@@ -54,17 +54,16 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          250 calculators and counting. Newest: the 529 vs Trump Account vs
-          custodial Roth three-way comparison (same dollars, three endings),
-          the custodial Roth projector (four summer jobs → $342k tax-free),
-          the Trump Account projector with the real Notice 2025-68 rules, and
-          the OBBBA Schedule 1-A deduction set — car loan interest, tips &
-          overtime, and the $6,000 senior deduction — all verified against IRS
-          notices, Rev. Proc. 2025-32, and the OBBBA statute.
+          255 calculators and counting. Newest: the eldercare decision set —
+          long-term care costs at real 2025 CareScout medians (home care now
+          beats assisted living on price), LTC insurance vs self-funding with
+          the exact breakeven months, and hybrid vs traditional policies priced
+          honestly — plus the PTET election calculator with the QBI haircut
+          nobody else shows, and the 2026 nanny tax with the Schedule H math.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['529-vs-trump-vs-roth-calculator', 'custodial-roth-ira-calculator', 'trump-account-calculator', 'car-loan-interest-deduction-calculator', 'tips-overtime-deduction-calculator', 'senior-deduction-calculator'].includes(c.slug),
+            ['long-term-care-cost-calculator', 'ltc-insurance-vs-self-fund-calculator', 'hybrid-ltc-vs-traditional-calculator', 'ptet-election-calculator', 'nanny-tax-calculator', '529-vs-trump-vs-roth-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

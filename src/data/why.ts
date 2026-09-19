@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'hybrid-ltc-vs-traditional-calculator':
+    'Buyers comparing LTC quotes use it when the agent leads with "if you don\'t use it, you don\'t lose it": the hybrid\'s money-back is real but costs ~$183k of foregone growth versus ~$75k of traditional premiums — and what the difference actually buys is lapse-proofing and immunity from the 28% rate hikes.',
   'ltc-insurance-vs-self-fund-calculator':
     'Pre-retirees holding an LTC quote use it to turn the agent\'s pitch into a bet with a number: invested at 6%, the premiums cover about 14 months of care — so the policy only pays if the care event outlasts the breakeven, and the 5-year dementia tail is exactly what is being insured.',
   'long-term-care-cost-calculator':
