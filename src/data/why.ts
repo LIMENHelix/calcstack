@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'truck-driver-per-diem-calculator':
+    'Drivers use it twice: owner-operators price the 80% DOT deduction on their real days out — 260 days is a $16,640 write-off — and company drivers see what a carrier per-diem program adds to take-home versus what it quietly cuts from Social Security, unemployment, and mortgage-verifiable income.',
   'travel-nurse-pay-calculator':
     'Any nurse weighing a contract against a staff job uses it to unblend the agency\'s headline rate: taxable wage after tax, stipends tax-free while the tax home holds, real duplicated housing off the top — and the breakeven stipend where the contract stops winning. The 12-month tax-home trap is built into the math.',
   'rent-affordability-calculator':

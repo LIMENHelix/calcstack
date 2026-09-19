@@ -534,6 +534,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'truck-driver-pay-calculator',
+      'truck-driver-per-diem-calculator',
       'mileage-deduction-calculator',
       'mileage-vs-actual-expense-calculator',
       'quarterly-estimated-tax-calculator',

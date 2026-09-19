@@ -1678,7 +1678,100 @@ export function TravelNurseCalc() {
   )
 }
 
+/* ---------------- Truck Driver Per Diem ---------------- */
+
+// IRS Notice 2025-54 (Oct 2025–Sep 2026): transportation-industry M&IE $80/day
+// CONUS, $86 OCONUS; partial (departure/return) days 75% = $60; DOT hours-of-service
+// drivers deduct 80%. W-2 company drivers CANNOT deduct it themselves (misc.
+// itemized deductions permanently eliminated by OBBBA) — only via employer per-diem
+// pay programs. Node-verified: 260 full days → $20,800 total, $16,640 deduction.
+export function TruckerPerDiemCalc() {
+  const [mode, setMode] = useState<'owner' | 'company'>('owner')
+  const [fullDays, setFullDays] = useNumber(250)
+  const [partDays, setPartDays] = useNumber(10)
+  const [rate, setRate] = useNumber(80)
+  const [taxRate, setTaxRate] = useNumber(37.3)
+  const [carrierDays, setCarrierDays] = useNumber(250)
+  const [carrierPd, setCarrierPd] = useNumber(66)
+  const [cTaxRate, setCTaxRate] = useNumber(29.65)
+
+  const r = useMemo(() => {
+    if (mode === 'owner') {
+      const total = fullDays * rate + partDays * rate * 0.75
+      const deduction = total * 0.8
+      const savings = (deduction * taxRate) / 100
+      const perDay = fullDays + partDays > 0 ? savings / (fullDays + partDays) : 0
+      return { total, deduction, savings, perDay }
+    }
+    const untaxed = carrierDays * carrierPd
+    const extra = (untaxed * cTaxRate) / 100
+    return { untaxed, extra, extraPerWeek: extra / 52 }
+  }, [mode, fullDays, partDays, rate, taxRate, carrierDays, carrierPd, cTaxRate])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="flex gap-2">
+        {(['owner', 'company'] as const).map((m) => (
+          <button key={m} onClick={() => setMode(m)} className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors ${mode === m ? 'border-primary bg-primary/10 text-primary' : 'text-muted-foreground hover:border-primary/50'}`}>
+            {m === 'owner' ? 'Owner-operator (Schedule C)' : 'Company driver (W-2 per-diem pay)'}
+          </button>
+        ))}
+      </div>
+      {mode === 'owner' ? (
+        <>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Field label="Full days away from home" value={fullDays} onChange={setFullDays} suffix="days" step="5" />
+            <Field label="Partial days (depart/return = 75%)" value={partDays} onChange={setPartDays} suffix="days" step="1" />
+            <Field label="Daily rate (2026 IRS: $80 CONUS / $86 OCONUS)" value={rate} onChange={setRate} prefix="$" step="1" />
+            <Field label="Your combined tax rate (income + 15.3% SE)" value={taxRate} onChange={setTaxRate} suffix="%" step="1" />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-4">
+            <Result big label="Tax savings this year" value={usd(r.savings!, 0)} />
+            <Result label="Per-diem total claimed" value={usd(r.total!, 0)} />
+            <Result label="Deductible (80% DOT rule)" value={usd(r.deduction!, 0)} />
+            <Result label="Savings per day on the road" value={usd(r.perDay!, 2)} />
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Owner-operators deduct meals without receipts using the IRS transportation-industry
+            rate — ${num(rate, 0)}/day (Notice 2025-54), 75% on departure and return days, and 80%
+            of the total is deductible because DOT hours-of-service rules apply. Your {num(fullDays, 0)}{' '}
+            full + {num(partDays, 0)} partial days = {usd(r.total!, 0)} claimed, {usd(r.deduction!, 0)}{' '}
+            deducted on Schedule C, worth {usd(r.savings!, 0)} at your {num(taxRate, 1)}% combined
+            rate. Per diem covers meals and incidentals only — lodging, fuel, tolls, and maintenance
+            are separate deductions. ELD logs ARE your substantiation: keep them.
+          </p>
+        </>
+      ) : (
+        <>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Field label="Days carrier pays per diem" value={carrierDays} onChange={setCarrierDays} suffix="days" step="5" />
+            <Field label="Carrier per-diem pay" value={carrierPd} onChange={setCarrierPd} prefix="$" suffix="/day" step="1" />
+            <Field label="Your tax rate incl. FICA (income + 7.65%)" value={cTaxRate} onChange={setCTaxRate} suffix="%" step="1" />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-4">
+            <Result big label="Extra take-home vs all-taxable pay" value={`${usd(r.extra!, 0)}/yr`} />
+            <Result label="Untaxed per-diem pay" value={`${usd(r.untaxed!, 0)}/yr`} />
+            <Result label="Extra per week" value={usd(r.extraPerWeek!, 2)} />
+            <Result label="Taxable wages reduced by" value={usd(r.untaxed!, 0)} />
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Since the miscellaneous-deduction elimination (made permanent in 2025), W-2 company
+            drivers CANNOT deduct per diem on their own return — the only benefit is a carrier
+            per-diem program like this one: {usd(r.untaxed!, 0)}/yr of your pay arrives untaxed,
+            adding {usd(r.extra!, 0)} to your annual take-home at {num(cTaxRate, 2)}%. The trade
+            is real though: your taxable W-2 wages drop by the same {usd(r.untaxed!, 0)}, which
+            shrinks your Social Security earnings record, unemployment and workers-comp benefits,
+            and the income a mortgage lender can count. Per-diem pay wins for cash flow; full
+            taxable pay wins for benefits and borrowing power.
+          </p>
+        </>
+      )}
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'truck-driver-per-diem-calculator': TruckerPerDiemCalc,
   'travel-nurse-pay-calculator': TravelNurseCalc,
   'rent-affordability-calculator': RentAffordCalc,
   'annuity-payout-calculator': AnnuityPayoutCalc,

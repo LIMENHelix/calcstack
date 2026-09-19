@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'truck-driver-per-diem-calculator',
+    title: 'Truck Driver Per Diem Calculator — 2026 IRS Rate, 80% DOT Rule, Owner-Op vs Company',
+    shortTitle: 'Trucker Per Diem',
+    category: 'Careers & Salary',
+    description:
+      'Free truck driver per diem calculator with the 2026 IRS transportation rate ($80/day CONUS). Owner-operators: see your 80% deduction and real tax savings. Company drivers: see what carrier per-diem pay is worth — and what it costs your Social Security record.',
+    tagline: '260 days on the road = a $16,640 deduction. Company drivers: read the catch.',
+    intro:
+      'Per diem is the most-mangled topic in trucking pay. Owner-operators can deduct 80% of the IRS transportation rate ($80/day CONUS, Notice 2025-54) for every day away from home — no meal receipts needed. Company (W-2) drivers can no longer deduct it themselves at all; their only benefit is a carrier per-diem program, which pays part of wages untaxed but quietly shrinks the taxable wages that Social Security, unemployment, and mortgage lenders count. This calculator runs both sides honestly.',
+    howItWorks: [
+      'Pick your side: owner-operator (Schedule C) or company driver (W-2 per-diem pay).',
+      'Owner-ops: enter full days, partial days (75% rate), the daily rate, and your combined tax rate.',
+      'Company drivers: enter the carrier\'s per-diem days and daily amount, and your tax rate including FICA.',
+      'Read the real tax savings or extra take-home — and the taxable-wage trade-off.',
+    ],
+    faq: [
+      {
+        q: 'What is the truck driver per diem rate for 2026?',
+        a: '$80 per day for travel in the continental US and $86 outside it (IRS Notice 2025-54, effective October 1, 2025 through September 30, 2026). Departure and return days count at 75% — $60 CONUS. Drivers subject to DOT hours-of-service rules deduct 80% of the total: 260 full days away = $20,800 claimed and a $16,640 deduction. ELD logs substantiate the days; keep them.',
+      },
+      {
+        q: 'Can company (W-2) truck drivers deduct per diem?',
+        a: 'No. The unreimbursed-employee-expense deduction that company drivers once used was suspended in 2018 and then permanently eliminated in 2025 — a W-2 driver cannot claim per diem on their own return. The only tax benefit available is a carrier per-diem program, where part of your pay is classified as untaxed reimbursement. Example: $66/day for 250 days = $16,500 untaxed, adding about $4,892/year to take-home at a 29.65% combined rate — but your taxable wages drop by the same $16,500.',
+      },
+      {
+        q: 'Does carrier per-diem pay hurt me?',
+        a: 'It depends on what you need. The cash-flow win is real — untaxed per diem beats taxable pay dollar-for-dollar at your tax rate. The cost: lower reported W-2 wages shrink your Social Security earnings record, unemployment and workers-comp benefits, disability coverage, and the income a mortgage or truck lender can verify. Drivers planning to buy a house or truck within a year or two often decline per-diem pay deliberately; drivers maximizing weekly cash flow take it.',
+      },
+    ],
+  },
+  {
     slug: 'travel-nurse-pay-calculator',
     title: 'Travel Nurse Pay Calculator — Staff vs Contract, Honest Take-Home',
     shortTitle: 'Travel Nurse Pay',
