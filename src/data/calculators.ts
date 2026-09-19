@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'stock-donation-calculator',
+    title: 'Donate Stock vs Cash Calculator 2026 — Appreciated Shares Beat Checks',
+    shortTitle: 'Stock Donation Calculator',
+    category: 'Investing & Crypto',
+    description:
+      'Donating appreciated stock held over a year deducts the full value AND erases the capital gain. With 2026\'s new 0.5% AGI floor for itemizers and the $1,000/$2,000 non-itemizer rule, price stock vs cash exactly.',
+    tagline: 'Same gift to the charity. The stock route can be worth 50% more to you.',
+    intro:
+      'Writing a check to charity when you own appreciated stock is paying a tax you don\'t owe. Donate the shares instead (held more than one year) and two good things happen: you deduct the full fair market value, and the embedded capital gain is never taxed — to anyone. On $20,000 of stock with a $4,000 basis, that\'s the $6,160 deduction PLUS $3,808 of avoided capital-gains tax, versus $6,160 for cash. The 2026 OBBBA rules reshuffled the deck: itemizers now lose the first 0.5% of AGI to a new charitable floor, while non-itemizers got a brand-new above-the-line deduction for cash gifts — $1,000 single, $2,000 joint, cash only. This calculator runs both routes under the 2026 rules and shows the exact dollar gap for your situation.',
+    howItWorks: [
+      'Enter the stock\'s current value and your cost basis — the embedded gain is what the stock route erases.',
+      'Enter your AGI (for the new 0.5% floor), your ordinary bracket, and your capital-gains rate including NIIT.',
+      'Say whether you itemize — the answer flips which route wins for small gifts.',
+      'Read the total tax value of each route and the exact advantage of donating shares.',
+    ],
+    faq: [
+      {
+        q: 'What changed for charitable giving in 2026?',
+        a: 'Two opposite moves from OBBBA. Itemizers now face a 0.5%-of-AGI floor: at $150,000 AGI the first $750 of giving is non-deductible, every year, and floor-disallowed amounts never carry forward. Non-itemizers gained an above-the-line deduction for cash gifts to public charities — $1,000 single, $2,000 married — with no floor, but cash only (stock, goods, and DAF contributions don\'t count). Net effect: small cash donors win, big itemizing donors lose a slice, and the appreciated-stock play matters more than ever because the avoided capital gain bypasses the floor entirely.',
+      },
+      {
+        q: 'Can I donate the stock and buy it right back?',
+        a: 'Yes — and you should. The wash-sale rule only applies to losses, never gains. Donate the appreciated shares in-kind (your broker can transfer directly to the charity or its DAF), then repurchase the same position with the cash you would have donated. Your charitable deduction is the same, the gain is erased, and your new basis resets to today\'s price — you\'ve effectively harvested a gain at 0%. Investors who do this annually with their most appreciated lot never pay capital gains on their giving dollars. One caution: the stock must be held over a year, or the deduction drops to basis.',
+      },
+      {
+        q: 'How does this interact with QCDs and DAFs?',
+        a: 'Different tools for different ages and sizes. Over 70½ with an IRA: the QCD is king — $111,000 excluded from AGI directly, no floor, no itemizing needed. Itemizers wanting to time a big deduction: fund a DAF with appreciated stock in a high-income year (full FMV deduction now, grant it out over years). The 2026 floor makes bunching into DAFs slightly less attractive but still powerful for crossing the itemizing threshold. And the $1,000/$2,000 non-itemizer rule is specifically for cash — it stacks ON TOP of the standard deduction in years you don\'t fund the DAF.',
+      },
+    ],
+  },
+  {
     slug: 'qcd-calculator',
     title: 'QCD Calculator 2026 — Qualified Charitable Distributions Beat Writing Checks',
     shortTitle: 'QCD Calculator',

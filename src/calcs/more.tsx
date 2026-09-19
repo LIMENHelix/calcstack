@@ -2322,6 +2322,71 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Donate appreciated stock vs cash — 2026 OBBBA rules: stock held >1 year deducts at full FMV (30% AGI cap for public charities, 5-yr carryover) and the embedded capital gain is NEVER taxed; held ≤1 year the deduction drops to basis. NEW for 2026: itemizers lose the first 0.5% of AGI to the charitable floor (OBBBA §70425, floor-first then ceilings, floor-disallowed amounts never carry forward); non-itemizers get a NEW above-the-line CASH-only deduction $1,000 single / $2,000 MFJ (§170(p), no floor, no carryover, cash to public charities only — not stock, not DAFs). Framing: the stock alternative is "sell the stock, donate the cash" — so the avoided gain is real money. Node-verified: FMV $20k/basis $4k/AGI $150k/32%/23.8% itemizing → floor $750, deduction $19,250 → $6,160 + avoided gain $3,808 = $9,968 stock vs $6,160 cash; non-itemizing single → cash $320 (cap $1k) vs stock $3,808.
+export function StockDonationCalc() {
+  const [fmv, setFmv] = useNumber(20000)
+  const [basis, setBasis] = useNumber(4000)
+  const [agi, setAgi] = useNumber(150000)
+  const [ord, setOrd] = useNumber(32)
+  const [capR, setCapR] = useNumber(23.8)
+  const [itemize, setItemize] = useState(true)
+  const [mfj, setMfj] = useState(false)
+
+  const r = useMemo(() => {
+    const gain = Math.max(0, fmv - basis)
+    const floor = 0.005 * agi
+    const dedAmount = itemize ? Math.max(0, fmv - floor) : 0
+    const dedValStock = dedAmount * (ord / 100)
+    const avoided = gain * (capR / 100)
+    const stockVal = dedValStock + avoided
+    const cashDedAmount = itemize ? dedAmount : Math.min(fmv, mfj ? 2000 : 1000)
+    const cashVal = cashDedAmount * (ord / 100)
+    return { gain, floor, dedValStock, avoided, stockVal, cashDedAmount, cashVal, edge: stockVal - cashVal }
+  }, [fmv, basis, agi, ord, capR, itemize, mfj])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Stock value today" value={fmv} onChange={setFmv} prefix="$" />
+          <Field label="Your cost basis" value={basis} onChange={setBasis} prefix="$" />
+          <Field label="Your AGI" value={agi} onChange={setAgi} prefix="$" />
+          <Field label="Ordinary bracket" value={ord} onChange={setOrd} suffix="%" />
+          <Field label="Cap-gains rate (incl. NIIT)" value={capR} onChange={setCapR} suffix="%" />
+        </div>
+        <div className="flex flex-wrap gap-4 text-sm">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={itemize} onChange={(e) => setItemize(e.target.checked)} className="h-4 w-4" />
+            You itemize deductions
+          </label>
+          {!itemize && (
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={mfj} onChange={(e) => setMfj(e.target.checked)} className="h-4 w-4" />
+              Married filing jointly
+            </label>
+          )}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Donate-stock advantage" value={usd(r.edge)} />
+          <Result label="Total tax value: stock" value={usd(r.stockVal)} />
+          <Result label="Total tax value: cash" value={usd(r.cashVal)} />
+          <Result label="Capital gain avoided" value={`${usd(r.gain)} → ${usd(r.avoided)}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {itemize ? (
+            <>Both routes deduct, but 2026's new <span className="font-medium">0.5%-of-AGI floor</span> ({usd(r.floor)}) comes off the top — your deduction is {usd(Math.max(0, fmv - r.floor))}, worth {usd(r.dedValStock)}. Donating the stock ALSO erases the {usd(r.gain)} embedded gain: <span className="font-medium">{usd(r.avoided)} you'd owe if you sold first</span>. Stock wins by {usd(r.edge)} — and the bigger the gain percentage, the wider the gap.</>
+          ) : (
+            <>You take the standard deduction, so a cash gift only deducts via 2026's new above-the-line rule — capped at <span className="font-medium">{usd(mfj ? 2000 : 1000)}</span>, cash only, worth {usd(r.cashVal)} here. The stock gift gets no deduction at all for you — but it still erases the {usd(r.gain)} gain (<span className="font-medium">{usd(r.avoided)}</span>) versus selling to fund the gift. If the gift is small, cash wins; if the stock is deeply appreciated, stock wins — the crossover is when {ord}% of the gift exceeds the avoided gain.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Mechanics that matter: the stock must be held MORE than one year — hold ≤1 year and the deduction collapses to your basis, not the value. Appreciated-property gifts to public charities are capped at 30% of AGI (cash at 60%), with 5-year carryforward for ceiling-overflow — but amounts lost to the new 0.5% floor are gone permanently, no carryover. Non-itemizers: the new $1,000/$2,000 above-the-line deduction is cash-only and excludes DAF contributions. Best execution: donate the shares in-kind (your broker or the charity's DTC instructions — never sell first), and if you still want the position, rebuy it the same day — no wash-sale rule on gains, so you reset your basis to today's price for free. That "donate high, rebuy, repeat" loop is the cleanest giving strategy in the code.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QCD — qualified charitable distribution, IRC §408(d)(8): age 70½+ (exact half-birthday — NOT the RMD age of 73/75), up to $111,000/person in 2026 (indexed; $222k couple but only from each spouse's OWN IRA), transferred DIRECTLY from a traditional/inherited IRA to a public charity — excluded from AGI entirely while counting toward the year's RMD (first-dollars-out: early-year distributions count against the RMD first). Beats the itemized deduction because ~90% of filers don't itemize, and even itemizers win on AGI: lower AGI → less Social Security taxed, lower IRMAA tiers, less NIIT exposure, no 60%-of-AGI cap. Ineligible recipients: DAFs, private foundations, supporting orgs. SECURE 2.0 §307: one-time $55,000 QCD into a CRT/CGA. Active SEP/SIMPLE and employer plans ineligible. Node-verified: giving $25k at 22%+5% → $6,750 saved vs cash-without-itemizing; giving $150k → capped $111k, excess $39k taxable-or-itemized; $10k at 12%+4% → $1,600.
 export function QcdCalc() {
   const [giving, setGiving] = useNumber(25000)
@@ -6442,6 +6507,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'stock-donation-calculator': StockDonationCalc,
   'qcd-calculator': QcdCalc,
   'step-up-basis-calculator': StepUpBasisCalc,
   'inherited-ira-calculator': InheritedIraCalc,
