@@ -1,5 +1,16 @@
-import { Routes, Route } from 'react-router'
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router'
 import { Layout } from './components/Layout'
+
+// SPA routes keep the previous page's scroll position by default — without this,
+// clicking a calculator from a scrolled-down page lands you at the bottom of the new one.
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
 import Home from './pages/Home'
 import CalculatorPage from './pages/CalculatorPage'
 import BillAnalyzer from './pages/BillAnalyzer'
@@ -19,7 +30,9 @@ import AuditAll from './pages/AuditAll'
 
 export default function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       {/* Bare widget route for iframes — no site chrome */}
       <Route path="/embed/:slug" element={<EmbedPage />} />
       <Route path="/embed/table/:name" element={<EmbedTablePage />} />
@@ -49,5 +62,6 @@ export default function App() {
         }
       />
     </Routes>
+    </>
   )
 }
