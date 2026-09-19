@@ -1333,7 +1333,99 @@ export function HeatPumpCalc() {
   )
 }
 
+/* ---------------- Paycheck Withholding (IRS Annualization) ---------------- */
+
+// The IRS aggregate method: each check is treated as if you earn it EVERY check —
+// wages × periods − standard deduction → annual brackets → ÷ periods. This is why one
+// big check gets crushed. 2026 brackets (Rev. Proc. 2025-32), std $16.1k/$32.2k.
+// VERIFIED against a real 2026 paystub: $13,411 − $135.51 pre-tax, biweekly, single
+// → $3,228.51 federal, exact to the penny. $21k single check → $5,932 fed (35.9% w/ FICA).
+const WH_2026 = {
+  single: { std: 16100, br: [[12400, 0.1], [50400, 0.12], [105700, 0.22], [201775, 0.24], [256225, 0.32], [640600, 0.35], [Infinity, 0.37]] as [number, number][] },
+  mfj: { std: 32200, br: [[24800, 0.1], [100800, 0.12], [211400, 0.22], [403550, 0.24], [512450, 0.32], [768700, 0.35], [Infinity, 0.37]] as [number, number][] },
+}
+const PERIODS: [string, number][] = [['Weekly (52)', 52], ['Biweekly (26)', 26], ['Semimonthly (24)', 24], ['Monthly (12)', 12]]
+
+function bracketTax2026(t: number, br: [number, number][]) {
+  let x = 0
+  let p = 0
+  let rem = t
+  for (const [cap, rate] of br) {
+    if (rem <= 0) break
+    const w = Math.min(rem, cap - p)
+    x += w * rate
+    p = cap
+    rem -= w
+  }
+  return x
+}
+
+export function WithholdingCalc() {
+  const [check, setCheck] = useNumber(21000)
+  const [preTax, setPreTax] = useNumber(0)
+  const [pIdx, setPIdx] = useState(1)
+  const [status, setStatus] = useState<'single' | 'mfj'>('single')
+  const periods = PERIODS[pIdx][1]
+
+  const r = useMemo(() => {
+    const w = Math.max(0, check - preTax)
+    const annual = w * periods
+    const { std, br } = WH_2026[status]
+    const taxable = Math.max(0, annual - std)
+    const fed = bracketTax2026(taxable, br) / periods
+    const ss = w * 0.062
+    const med = w * 0.0145
+    const total = fed + ss + med
+    const eff = check > 0 ? (total / check) * 100 : 0
+    const effMarginal = annual > std ? bracketTax2026(taxable, br) - bracketTax2026(Math.max(0, taxable - 100), br) : 0
+    return { w, annual, taxable, fed, ss, med, total, eff, marginal: effMarginal }
+  }, [check, preTax, periods, status])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="This check's gross pay" value={check} onChange={setCheck} prefix="$" step="100" />
+        <Field label="Pre-tax deductions on it (401(k), HSA, premiums)" value={preTax} onChange={setPreTax} prefix="$" step="10" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Pay frequency</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={pIdx} onChange={(e) => setPIdx(Number(e.target.value))}>
+            {PERIODS.map(([label], i) => <option key={label} value={i}>{label}</option>)}
+          </select>
+        </label>
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Filing status</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={status} onChange={(e) => setStatus(e.target.value as 'single' | 'mfj')}>
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Federal withholding on this check" value={usd(r.fed, 2)} />
+        <Result label="Social Security (6.2%)" value={usd(r.ss, 2)} />
+        <Result label="Medicare (1.45%)" value={usd(r.med, 2)} />
+        <Result label="Total withheld" value={usd(r.total, 2)} />
+        <Result label="Effective rate on this check" value={`${num(r.eff, 1)}%`} />
+        <Result label="IRS sees annualized pay of" value={usd(r.annual, 0)} />
+        <Result label="Annualized taxable income" value={usd(r.taxable, 0)} />
+        <Result label="True extra tax per $100" value={usd(r.marginal, 2)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Why a big check gets crushed: your employer uses the IRS aggregate method — this one
+        check is treated as if you earn it every check, so {usd(r.w, 0)} × {periods} ={' '}
+        {usd(r.annual, 0)} of "annual pay" gets pushed through the 2026 brackets. A single
+        {' '}{usd(21000, 0)} biweekly check withholds {usd(5932, 0)} federal — nearly 36% with
+        FICA — not because your tax bill is that high, but because annualization pretends you
+        make {usd(546000, 0)}/year. If your other checks are smaller, you over-withhold and get
+        it back as a refund. Variable income (commission, bonus, overtime spikes)? Set the W-4
+        from your AVERAGE check, not your biggest one.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'paycheck-withholding-calculator': WithholdingCalc,
   'heat-pump-vs-furnace-calculator': HeatPumpCalc,
   'ev-vs-gas-cost-calculator': EvVsGasCalc,
   'solar-payback-calculator': SolarPaybackCalc,

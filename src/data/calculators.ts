@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'paycheck-withholding-calculator',
+    title: 'Paycheck Withholding Calculator — Why One Big Check Gets Crushed (2026)',
+    shortTitle: 'Check Withholding',
+    category: 'Careers & Salary',
+    description:
+      'Free paycheck withholding calculator using the real IRS annualization method. Enter one check\'s gross and pay frequency — see exactly what federal tax, Social Security, and Medicare come out, and why a single big check gets taxed like you are rich.',
+    tagline: 'A $21k check loses $5,932 to federal withholding. Here is the math your payroll uses.',
+    intro:
+      'The most-misunderstood line on any paystub: federal withholding is not your tax rate — it is the IRS aggregate method pretending this one check is what you earn every check, annualizing it through the full bracket stack, then dividing back down. That is why a commission or bonus check gets crushed while your refund later is huge. This calculator runs the exact payroll math with 2026 brackets and shows both the per-check withholding and your true marginal rate.',
+    howItWorks: [
+      'Enter the gross on ONE check and its pre-tax deductions (401(k), HSA, premiums).',
+      'Pick your pay frequency — annualization multiplies by it.',
+      'Pick your filing status.',
+      'Read the federal withholding, FICA, total, and the annualized income the IRS pretends you earn.',
+    ],
+    faq: [
+      {
+        q: 'Why is so much federal tax taken from one big paycheck?',
+        a: 'Annualization. Your employer multiplies the check by your pay periods and taxes it as if that is your salary. A single $21,000 biweekly check is treated as $546,000/year of income: after the $16,100 standard deduction, the 2026 brackets produce $5,932 of federal withholding on that one check — 35.9% with Social Security and Medicare. If your real income is lower, the excess comes back as a refund. Verified against a real 2026 paystub: $13,411 gross minus $135.51 pre-tax, biweekly, single → $3,228.51 federal, to the penny.',
+      },
+      {
+        q: 'Is a bonus taxed higher than regular pay?',
+        a: 'No — it is withheld higher, not taxed higher. Supplemental wages are withheld at a flat 22% federal rate (37% above $1M), or aggregated with regular pay and annualized like any other check. Either way it is an estimate: your actual tax is settled on your return at your real brackets, and over-withholding becomes refund.',
+      },
+      {
+        q: 'How do I stop over-withholding on variable income?',
+        a: 'Set your W-4 from your average check, not your biggest one. If commissions or overtime spike some checks, annualization over-withholds on the spikes; you can add a flat dollar adjustment on W-4 line 4(c) tuned to your average, or simply accept the forced savings and take the refund. Pre-tax 401(k) and HSA contributions reduce the annualized wage base directly — they shrink withholding on every check, including the big ones.',
+      },
+    ],
+  },
+  {
     slug: 'home-office-deduction-calculator',
     title: 'Home Office Deduction Calculator — Simplified vs Actual Method',
     shortTitle: 'Home Office Deduction',

@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'paycheck-withholding-calculator':
+    'Anyone staring at a gutted commission or overtime check uses it to learn the annualization rule: payroll pretends this check is every check, pushes the phantom annual salary through the full brackets, and the over-withholding comes back only as a refund. It turns paystub shock into a W-4 decision.',
   'home-office-deduction-calculator':
     'Freelancers and gig workers use it at tax time — or better, in January when the year can still be planned. The simplified method\'s $1,500 cap quietly loses to actual expenses for most renters, and seeing the gap in dollars is what makes the recordkeeping worth it.',
   '529-college-savings-calculator':
