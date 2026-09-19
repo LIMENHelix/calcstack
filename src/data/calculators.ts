@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pension-vs-social-security-calculator',
+    title: 'Pension vs Social Security Calculator 2026 — The Teacher Career Fork, Priced',
+    shortTitle: 'Pension vs Social Security',
+    category: 'Careers & Salary',
+    description:
+      'Pension job (multiplier × years × salary, ~8% contribution) vs Social-Security-covered job (6.2% FICA, bend-point benefit). Compare retirement income and career cash cost — with COLA, vesting, and survivorship honesty.',
+    tagline: 'The pension pays more per year. Social Security has the COLA. The answer is in the details.',
+    intro:
+      'Teachers, firefighters, and state workers face a genuine fork: a pension-system job that skips Social Security, or a covered job that pays into it. The pension math looks strong — 30 years at a 2% multiplier on a $70,000 salary is $42,000 a year, versus about $31,350 from Social Security at full retirement age on the same salary. But the details flip it around: most pensions have weak or no cost-of-living adjustment while Social Security\'s CPI COLA compounds; joint survivorship costs 10–20% off the pension; and leaving before vesting can mean your contributions back with no benefit at all. Since the Fairness Act repealed WEP/GPO, mixing careers carries no penalty — the strongest play is often a pension career plus enough covered work to lock your 40 Social Security credits. This calculator prices both paths at your numbers.',
+    howItWorks: [
+      'Enter the salary, years in the pension system, and the multiplier (2–2.5% is typical; Texas TRS is 2.3%).',
+      'Enter the employee pension contribution — usually 7–9% of pay, versus 6.2% FICA on the covered path.',
+      'Pick the claiming age for the Social Security comparison (62/67/70).',
+      'Read annual income under each path and the per-year cash cost during the career.',
+    ],
+    faq: [
+      {
+        q: 'Is a pension worth more than Social Security for the same salary?',
+        a: 'Usually on the income line — a 30-year career at a 2% multiplier replaces 60% of final salary, while Social Security replaces roughly 40% for a mid-earner. But the pension number is nominal: with a 0–2% COLA (many systems) versus Social Security\'s full CPI adjustment, a pension that starts 35% higher can cross below the SS path by year 15–20 of retirement in an inflationary stretch. Survivorship is the other gap: SS pays a surviving spouse up to 100% automatically; pension survivor coverage means electing a joint annuity that cuts your benefit 10–20% while you\'re both alive.',
+      },
+      {
+        q: 'What happens to my pension if I leave teaching after 4 years?',
+        a: 'Probably nothing good. Vesting is typically 5 years (10 in some older systems) — leave before that and most systems return your contributions, sometimes with minimal interest, and the employer\'s share evaporates. Even vested, a pension you leave at 35 doesn\'t grow with salary inflation; the "final average salary" is frozen at your departure pay, so a benefit computed on a 2026 salary pays out at 2040 retirement with 14 years of zero wage growth. Pensions reward staying; Social Security credits follow you to every covered job in the country.',
+      },
+      {
+        q: 'Can I have both — pension AND Social Security?',
+        a: 'Yes, and post-Fairness-Act it\'s clean. WEP and GPO are repealed (retroactive to January 2024), so covered work no longer gets discounted because of a pension. The strategy: pension career plus covered side work (summer jobs, adjunct covered gigs, a second career) until you have 40 credits — about 10 years — which also unlocks premium-free Medicare Part A. Every covered dollar now counts at full value on top of the pension. The old advice ("don\'t bother, WEP will eat it") is dead — update anyone still repeating it.',
+      },
+    ],
+  },
+  {
     slug: 'social-security-fairness-act-calculator',
     title: 'Social Security Fairness Act Calculator 2026 — WEP & GPO Are Gone. What\'s Restored?',
     shortTitle: 'WEP/GPO Repeal Calculator',

@@ -2323,6 +2323,63 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Pension job vs Social-Security-covered job — the teacher/firefighter career fork. Pension side: annual benefit = years × multiplier × final salary (typical 2–2.5%; TX TRS 2.3%); employee contributes ~8% of pay. Covered side: 6.2% FICA buys SS credits — estimate PIA from AIME ≈ salary/12 through the 2026 bend points (90% × $1,286 / 32% to $7,749 / 15% above), then claiming age: 62 = 70%, 67 = 100%, 70 = 124%. Post-Fairness-Act there's no WEP/GPO penalty for mixing careers — but a pure pension career earns ZERO SS credits on those years (40 credits ≈ 10 covered years needed for any SS at all). Honest wrinkles: pensions usually lack full COLA (SS has CPI COLA), pension survivorship requires electing a reduced joint annuity, and pensions are NOT portable — leaving at year 4 of a 5-year vest can mean contributions back, no benefit. Node-verified: $70k/30yr/2% → $42,000 pension vs covered-path SS $31,350 at FRA ($21,945 at 62); career cash cost $5,600/yr (8%) vs $4,340 (6.2% FICA); TRS 2.3% × 25yr → $40,250.
+export function PensionVsSsCalc() {
+  const [salary, setSalary] = useNumber(70000)
+  const [yrs, setYrs] = useNumber(30)
+  const [mult, setMult] = useNumber(2)
+  const [contrib, setContrib] = useNumber(8)
+  const [age, setAge] = useState('67')
+
+  const r = useMemo(() => {
+    const pension = yrs * (mult / 100) * salary
+    const aime = salary / 12
+    let p = 0.9 * Math.min(aime, 1286)
+    if (aime > 1286) p += 0.32 * Math.min(aime - 1286, 7749 - 1286)
+    if (aime > 7749) p += 0.15 * (aime - 7749)
+    p = Math.floor(p * 10) / 10
+    const ageF = age === '62' ? 0.7 : age === '70' ? 1.24 : 1
+    const ss = p * 12 * ageF
+    const pensionCost = salary * (contrib / 100)
+    const ficaCost = salary * 0.062
+    return { pension, ss, pensionCost, ficaCost, diff: pension - ss, costDiff: pensionCost - ficaCost }
+  }, [salary, yrs, mult, contrib, age])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Salary (either path)" value={salary} onChange={setSalary} prefix="$" />
+          <Field label="Years in the pension system" value={yrs} onChange={setYrs} />
+          <Field label="Pension multiplier" value={mult} onChange={setMult} suffix="%" />
+          <Field label="Employee pension contribution" value={contrib} onChange={setContrib} suffix="%" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">SS claiming age (covered path)</label>
+            <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={age} onChange={(e) => setAge(e.target.value)}>
+              <option value="62">62 — 70% of PIA</option>
+              <option value="67">67 — full benefit</option>
+              <option value="70">70 — 124% of PIA</option>
+            </select>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label={r.diff >= 0 ? 'Pension path pays more' : 'Covered path pays more'} value={usd(Math.abs(r.diff)) + '/yr'} />
+          <Result label="Pension at retirement" value={usd(r.pension)} />
+          <Result label="SS at claiming age (covered path)" value={usd(r.ss)} />
+          <Result label="Career cash cost / yr" value={`${usd(r.pensionCost)} vs ${usd(r.ficaCost)}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Pension path: {yrs} yrs × {mult}% × {usd(salary)} = <span className="font-medium">{usd(r.pension)}/yr</span>, costing {usd(r.pensionCost)}/yr in contributions. Covered path: SS estimates {usd(r.ss)}/yr at {age}, costing {usd(r.ficaCost)}/yr in FICA — and you can ALSO save in a 401(k)/403(b) on top, which most pension systems don't offer.
+          {r.diff >= 0 ? <> The pension wins the income line by {usd(r.diff)}/yr — but check COLA (most pensions have weak or no inflation adjustment; SS's CPI COLA compounds), survivorship (a joint annuity cuts the pension 10–20%), and vesting ({yrs < 5 ? 'you\'re below typical 5-year vesting — leaving early can mean contributions back, no benefit' : 'leaving before vesting forfeits the benefit'}).</> : <> Social Security wins by {usd(Math.abs(r.diff))}/yr — with full CPI COLA, automatic 50% spousal benefits, and portability across every covered job in the country.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The Fairness Act killed WEP/GPO, so mixing careers no longer carries a penalty — but a pure pension career earns ZERO Social Security credits on those years: without ~10 covered years (40 credits) somewhere in your life, you get no SS at all, and Medicare Part A comes free only with those credits too. The strongest play for many: pension career + a covered side job or second career to lock credits — post-repeal, every covered dollar counts at full value. Pension math varies by system: multiplier, final-average-salary window (3 vs 5 years), vesting schedule, COLA formula, and DROP programs all move the number — get your system's benefit estimate before deciding. SS estimate here is simplified (AIME ≈ current salary/12, no indexing of historical wages); your SSA statement is the source of truth. Pensions also usually offer no employer 403(b) match while covered private jobs often match 3–6% — that stack belongs in the comparison too.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Social Security Fairness Act (H.R. 82, signed Jan 5, 2025): repealed WEP and GPO for benefits payable after December 2023 — ~2.8M public employees (teachers in 15 non-covered states, firefighters, police, CSRS feds) got full benefits restored, retroactive lump sums paid in 2025. OLD WEP: first bend-point factor dropped from 90% to 40% (≤20 yrs substantial SS-covered earnings, +5pp/yr to 90% at 30 yrs), reduction capped at 50% of the non-covered pension; 2026 first bend $1,286 → max reduction $643/mo. OLD GPO: spousal/survivor benefit cut by 2/3 of the non-covered pension, floor $0. NEW LAW: full benefits, both. Node-verified: AIME $2,000/18 yrs/$2,000 pension → old WEP cut $643/mo ($7,716/yr restored); 25 yrs → $321.50; pension $800 → capped at $400. GPO: spouse SS $2,400/$3,000 pension → old spousal $0, restored $1,200/mo; survivor $2,800/$3,000 → old $800, restored $2,800.
 export function FairnessActCalc() {
   const [aime, setAime] = useNumber(2000)
@@ -6781,6 +6838,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'pension-vs-social-security-calculator': PensionVsSsCalc,
   'social-security-fairness-act-calculator': FairnessActCalc,
   'pslf-calculator': PslfCalc,
   'adoption-credit-calculator': AdoptionCreditCalc,
