@@ -864,6 +864,7 @@ export const PERSONAS: Persona[] = [
       'apy-apr-converter',
       'capital-gains-tax-calculator',
       'dividend-drip-calculator',
+      'rule-of-72-doubling-calculator',
       'social-security-breakeven-calculator',
       'pension-lump-sum-vs-annuity-calculator',
       'safe-withdrawal-calculator',

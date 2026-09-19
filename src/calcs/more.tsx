@@ -1424,7 +1424,62 @@ export function WithholdingCalc() {
   )
 }
 
+/* ---------------- Rule of 72 / Doubling Time ---------------- */
+
+// Exact doubling: t = ln(2)/ln(1+r). Rule of 72 (72/r%) is the mental-math
+// approximation — nearly perfect near 8% (9.006 vs 9.0 exact), drifting ~1 yr
+// high at 2% and ~2.4 months low at 20%. Node-verified table in git history.
+export function RuleOf72Calc() {
+  const [rate, setRate] = useNumber(8)
+  const [targetYears, setTargetYears] = useNumber(10)
+
+  const r = useMemo(() => {
+    const g = rate / 100
+    const doubling = g > 0 ? Math.LN2 / Math.log(1 + g) : Infinity
+    const rule72 = rate > 0 ? 72 / rate : Infinity
+    const errMonths = isFinite(doubling) && isFinite(rule72) ? (rule72 - doubling) * 12 : 0
+    const at = (mult: number) => (g > 0 ? Math.log(mult) / Math.log(1 + g) : Infinity)
+    const needed = targetYears > 0 ? (Math.pow(2, 1 / targetYears) - 1) * 100 : Infinity
+    const neededRule = targetYears > 0 ? 72 / targetYears : Infinity
+    const halfLife = exact2(0.03)
+    function exact2(x: number) { return Math.LN2 / Math.log(1 + x) }
+    return { doubling, rule72, errMonths, quad: at(4), eight: at(8), ten: at(10), needed, neededRule, halfLife }
+  }, [rate, targetYears])
+
+  const yrs = (v: number) => (isFinite(v) ? `${num(v, 1)} yrs` : 'never at 0%')
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Annual return / growth rate" value={rate} onChange={setRate} suffix="%" step="0.5" />
+        <Field label="Goal: double my money in…" value={targetYears} onChange={setTargetYears} suffix="years" step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Exact time to double" value={yrs(r.doubling)} />
+        <Result label="Rule of 72 says" value={yrs(r.rule72)} />
+        <Result label="Rule of 72 is off by" value={isFinite(r.doubling) ? `${num(Math.abs(r.errMonths), 1)} months ${r.errMonths >= 0 ? 'high' : 'low'}` : '—'} />
+        <Result label="Time to 4x" value={yrs(r.quad)} />
+        <Result label="Time to 8x" value={yrs(r.eight)} />
+        <Result label="Time to 10x" value={yrs(r.ten)} />
+        <Result label={`To double in ${num(targetYears, 0)} yrs you need`} value={isFinite(r.needed) ? `${num(r.needed, 2)}%/yr` : '—'} />
+        <Result label="Rule of 72 reverse guess" value={isFinite(r.neededRule) ? `${num(r.neededRule, 1)}%/yr` : '—'} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The Rule of 72 (72 ÷ rate) is mental math, not math — the exact answer is ln(2) ÷ ln(1+rate).
+        It's freakishly accurate near 8% (9.00 vs 9.01 exact) but drifts: at 2% it overestimates by a
+        full year (36 vs 35.0), at 20% it underestimates by 2.4 months. At your {num(rate, 1)}%, money
+        doubles every {yrs(r.doubling)} — so {num(rate, 1)}% turns one dollar into ten in {yrs(r.ten)}.
+        The flip side nobody posts: inflation is the same equation running against you — at 3%
+        inflation, cash under the mattress loses half its purchasing power every {num(r.halfLife, 1)} years.
+        And the gut-check: doubling in {num(targetYears, 0)} years demands {num(r.needed, 1)}%/yr —
+        anything promising far more than that is selling risk, not returns.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'rule-of-72-doubling-calculator': RuleOf72Calc,
   'paycheck-withholding-calculator': WithholdingCalc,
   'heat-pump-vs-furnace-calculator': HeatPumpCalc,
   'ev-vs-gas-cost-calculator': EvVsGasCalc,

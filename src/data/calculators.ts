@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'rule-of-72-doubling-calculator',
+    title: 'Rule of 72 Calculator — Exact Doubling Time vs the Mental-Math Rule',
+    shortTitle: 'Rule of 72 & Doubling',
+    category: 'Savings & Investing',
+    description:
+      'Free Rule of 72 calculator with the exact answer alongside: see how long money really takes to double at any return (ln2 ÷ ln(1+rate)), how far off the 72 shortcut is, and what return you need to double in your target years.',
+    tagline: 'The Rule of 72 is off by a full year at 2%. Here is the exact doubling time.',
+    intro:
+      'Everyone quotes the Rule of 72 — almost nobody checks it. The shortcut (72 ÷ rate) is nearly perfect near 8% but drifts a full year high at savings-account rates and months low at high returns. This calculator shows the exact doubling time (ln(2) ÷ ln(1+r)) next to the rule, runs it in reverse (what return doubles your money in your target years), and flips it around to show inflation quietly halving your purchasing power on the same math.',
+    howItWorks: [
+      'Enter an annual return or growth rate.',
+      'Read the exact doubling time beside the Rule of 72 estimate and its error in months.',
+      'See the same rate compounded further — time to 4x, 8x, and 10x.',
+      'Set a target number of years to get the exact annual return required to double in that time.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is the Rule of 72?',
+        a: 'Best near 8%: it says 9.00 years, the exact answer is 9.01. It drifts from there — at 2% it overestimates by a full year (36 vs 35.0 exact), at 6% by 1.3 months, and at 20% it underestimates by 2.4 months (3.6 vs 3.8 exact). For anything beyond cocktail-party math, use the exact formula: years = ln(2) ÷ ln(1 + rate).',
+      },
+      {
+        q: 'Why 72 and not 69.3?',
+        a: '69.3 is the "true" constant (100 × ln 2) and is exactly right only for continuous compounding. Annual compounding needs a slightly bigger number, and 72 wins on convenience: it divides cleanly by 2, 3, 4, 6, 8, 9, 12, 18, 24, and 36. The happy accident is that 72 lands almost exactly on the right answer for annual compounding near 8%.',
+      },
+      {
+        q: 'What return do I need to double my money in 10 years?',
+        a: 'Exactly 7.18% per year (2^(1/10) − 1) — the Rule of 72 reverse guess (72 ÷ 10 = 7.2%) is close. To double in 5 years you need 14.87% per year, a return no honest investment promises consistently, which is why "double your money in 5 years" pitches are a red flag. The same math runs against you with inflation: at 3% inflation, cash loses half its purchasing power every 23.4 years whether you invest it or not.',
+      },
+    ],
+  },
+  {
     slug: 'paycheck-withholding-calculator',
     title: 'Paycheck Withholding Calculator — Why One Big Check Gets Crushed (2026)',
     shortTitle: 'Check Withholding',
