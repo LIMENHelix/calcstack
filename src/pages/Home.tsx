@@ -54,14 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          200 calculators and counting. Newest: the 2026 post-credit energy trilogy — solar
-          payback, EV vs gas, and heat pump vs furnace, all computed WITHOUT the federal
-          credits that expired in 2025 (the math competitors still get wrong) — plus the 2026
-          limits trio (HSA, Roth IRA, 401(k)) and the capital gains stacker.
+          204 calculators and counting. Newest: the paycheck-withholding calculator — the exact
+          IRS annualization math behind why one big check gets crushed, verified to the penny
+          against a real 2026 paystub — the Rule of 72 tool that shows the exact doubling time
+          beside the shortcut (it's off a full year at 2%), and the pension lump-sum-vs-annuity
+          decision, alongside the 2026 limits and capital gains stacker.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['heat-pump-vs-furnace-calculator', 'ev-vs-gas-cost-calculator', 'solar-payback-calculator', 'hsa-contribution-limit-calculator', 'roth-ira-contribution-limit-calculator', 'capital-gains-tax-calculator'].includes(c.slug),
+            ['paycheck-withholding-calculator', 'rule-of-72-doubling-calculator', 'pension-lump-sum-vs-annuity-calculator', 'hsa-contribution-limit-calculator', 'capital-gains-tax-calculator', 'heat-pump-vs-furnace-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
