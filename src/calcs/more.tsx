@@ -2322,6 +2322,121 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Saver's Credit (Retirement Savings Contributions Credit) — IRC §25B, 2026 thresholds per IRS Notice 2025-67. Final year before the Saver's Match replaces it in 2027.
+const SAVERS_2026: Record<string, readonly (readonly [number, number])[]> = {
+  single: [[24250, 0.5], [26250, 0.2], [40250, 0.1]],
+  hoh: [[36375, 0.5], [39375, 0.2], [60375, 0.1]],
+  mfj: [[48500, 0.5], [52500, 0.2], [80500, 0.1]],
+}
+
+export function SaversCreditCalc() {
+  const [status, setStatus] = useState('single')
+  const [agi, setAgi] = useNumber(24000)
+  const [contrib, setContrib] = useNumber(2000)
+  const [spouseContrib, setSpouseContrib] = useNumber(2000)
+  const [taxBill, setTaxBill] = useNumber(1200)
+  const [eligible, setEligible] = useState(true)
+
+  const r = useMemo(() => {
+    const bands = SAVERS_2026[status]
+    let rate = 0
+    let tierIdx = -1
+    for (let i = 0; i < bands.length; i++) {
+      if (agi <= bands[i][0]) { rate = bands[i][1]; tierIdx = i; break }
+    }
+    const eligBase = Math.min(contrib, 2000) + (status === 'mfj' ? Math.min(spouseContrib, 2000) : 0)
+    const tentative = eligible ? rate * eligBase : 0
+    const actual = Math.min(tentative, taxBill) // nonrefundable
+    // cliff: cost of $1 more AGI
+    const nextTierRate = tierIdx >= 0 && tierIdx < bands.length - 1 ? bands[tierIdx + 1][1] : 0
+    const cliffCost = tierIdx >= 0 ? (rate - nextTierRate) * eligBase : 0
+    const headroom = tierIdx >= 0 ? bands[tierIdx][0] - agi : null
+    const matchPct = contrib + (status === 'mfj' ? spouseContrib : 0) > 0
+      ? (tentative / (contrib + (status === 'mfj' ? spouseContrib : 0))) * 100
+      : 0
+    return { rate, tierIdx, eligBase, tentative, actual, cliffCost, headroom, bands, matchPct }
+  }, [status, agi, contrib, spouseContrib, taxBill, eligible])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="single">Single / MFS / qualifying surviving spouse</option>
+              <option value="hoh">Head of household</option>
+              <option value="mfj">Married filing jointly</option>
+            </select>
+          </label>
+          <Field label="AGI (2026)" value={agi} onChange={setAgi} prefix="$" />
+          <Field label={status === 'mfj' ? 'Your retirement contributions' : 'Retirement contributions'} value={contrib} onChange={setContrib} prefix="$" />
+          {status === 'mfj' && <Field label="Spouse's contributions" value={spouseContrib} onChange={setSpouseContrib} prefix="$" />}
+          <Field label="Federal tax before credits" value={taxBill} onChange={setTaxBill} prefix="$" />
+          <label className="flex items-end gap-2 pb-2 text-sm">
+            <input type="checkbox" checked={eligible} onChange={(e) => setEligible(e.target.checked)} className="h-4 w-4" />
+            18+, not a full-time student, not a dependent
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Credit rate" value={`${(r.rate * 100).toFixed(0)}%`} />
+          <Result label="Saver's credit" value={usd(r.tentative)} />
+          <Result label="Usable this year" value={usd(r.actual)} />
+          <Result label="Effective match" value={`${r.matchPct.toFixed(0)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {!eligible ? (
+            <>
+              <span className="font-medium">Not eligible.</span> The credit requires age 18+, not a full-time student (any part of 5 calendar months), and not claimed as a dependent.
+            </>
+          ) : r.rate === 0 ? (
+            <>
+              <span className="font-medium">Over the limit — no credit at this AGI.</span> Pre-tax 401(k)/traditional IRA contributions reduce AGI and can pull you back under {usd(r.bands[2][0])} — a contribution that restores the credit effectively pays you twice.
+            </>
+          ) : (
+            <>
+              <span className="font-medium">{(r.rate * 100).toFixed(0)}% tier.</span> {r.tentative > r.actual && <>Nonrefundable: your tax bill caps the usable credit at {usd(r.actual)} of {usd(r.tentative)}. </>}
+              {r.headroom !== null && r.cliffCost > 0 && (
+                <>This is a cliff, not a phase-out: <span className="font-medium">{usd(r.headroom)}</span> of AGI headroom remains, and $1 over drops the rate and costs <span className="font-medium">{usd(r.cliffCost)}</span> instantly.</>
+              )}
+            </>
+          )}
+        </div>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b text-left text-muted-foreground">
+              <th className="py-1 pr-2 font-medium">2026 AGI ({status === 'mfj' ? 'joint' : status === 'hoh' ? 'head of household' : 'single/other'})</th>
+              <th className="py-1 pr-2 font-medium">Rate</th>
+              <th className="py-1 font-medium">Max credit{status === 'mfj' ? ' (couple)' : ''}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {r.bands.map(([top, rt], i) => {
+              const lo = i === 0 ? 0 : r.bands[i - 1][0] + 1
+              const active = r.tierIdx === i
+              return (
+                <tr key={i} className={`border-b ${active ? 'bg-muted/60 font-medium' : ''}`}>
+                  <td className="py-1 pr-2">{lo === 0 ? `Up to ${usd(top)}` : `${usd(lo)} – ${usd(top)}`}{active ? ' ← you' : ''}</td>
+                  <td className="py-1 pr-2">{(rt * 100).toFixed(0)}%</td>
+                  <td className="py-1">{usd(rt * (status === 'mfj' ? 4000 : 2000))}</td>
+                </tr>
+              )
+            })}
+            <tr className={r.tierIdx === -1 ? 'bg-muted/60 font-medium' : ''}>
+              <td className="py-1 pr-2">Over {usd(r.bands[2][0])}{r.tierIdx === -1 ? ' ← you' : ''}</td>
+              <td className="py-1 pr-2">0%</td>
+              <td className="py-1">$0</td>
+            </tr>
+          </tbody>
+        </table>
+        <p className="text-xs text-muted-foreground">
+          2026 thresholds per IRS Notice 2025-67; claim on Form 8880. Qualifies: 401(k)/403(b)/457, traditional AND Roth IRA, SEP/SIMPLE, TSP, ABLE. Rollovers don't count, and distributions taken in the testing period (this year + 2 prior + up to the filing deadline) reduce qualifying contributions. 2026 is the last year in this form — SECURE 2.0 replaces it with the refundable Saver's Match paid into your account starting 2027.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Student loan interest deduction — IRC §221, 2026 phase-outs per Rev. Proc. 2025-32 §4.29.
 export function StudentLoanInterestCalc() {
   const [status, setStatus] = useState('single')
@@ -3822,6 +3937,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'social-security-tax-calculator': SocialSecurityTaxCalc,
   'traditional-ira-deduction-calculator': TraditionalIraDeductionCalc,
   'student-loan-interest-deduction-calculator': StudentLoanInterestCalc,
+  'savers-credit-calculator': SaversCreditCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

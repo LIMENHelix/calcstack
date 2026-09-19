@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'savers-credit-calculator',
+    title: "Saver's Credit Calculator 2026 — 50/20/10% Retirement Savings Credit & the Cliffs",
+    shortTitle: "Saver's Credit 2026",
+    category: 'Savings & Investing',
+    description:
+      "Free 2026 saver's credit calculator. Enter AGI, filing status, and retirement contributions — get your exact credit rate (50/20/10%), the dollar credit, the nonrefundable cap, and what crossing the next cliff by $1 would cost.",
+    tagline: 'The government matches your retirement savings — but $1 over the line cuts the match by more than half.',
+    intro:
+      "The saver's credit is a direct tax credit of 50%, 20%, or 10% on your first $2,000 of retirement contributions ($4,000 for couples) — a government match worth up to $1,000 per person. But the rates are cliffs, not phase-outs: a joint couple at $48,500 AGI gets the 50% rate; at $48,501 the credit drops from $2,000 to $800 on the same contributions. And 2026 is the last year in this form — SECURE 2.0 replaces it with the refundable Saver's Match in 2027. This calculator gives your exact tier, the credit after the nonrefundable cap, and your cliff exposure.",
+    howItWorks: [
+      'Pick your filing status — head of household has its own, wider bands.',
+      'Enter your 2026 AGI and retirement contributions (401(k), IRA — Roth counts too — 403(b), TSP, ABLE).',
+      'Enter your federal tax before credits — the credit is nonrefundable, so a small tax bill caps what you can use.',
+      'Read your rate tier, the credit, the effective match percentage, and exactly how much AGI headroom you have before the next cliff.',
+    ],
+    faq: [
+      {
+        q: "What are the 2026 saver's credit income limits?",
+        a: '50% rate up to $24,250 single / $36,375 head of household / $48,500 joint; 20% to $26,250 / $39,375 / $52,500; 10% to $40,250 / $60,375 / $80,500; zero above. Per IRS Notice 2025-67. The credit is 50/20/10% of up to $2,000 per person of contributions — max $1,000 per person, $2,000 per couple — claimed on Form 8880.',
+      },
+      {
+        q: 'How does the cliff work?',
+        a: 'The rate applies to your whole eligible contribution, not just the part over a threshold — so crossing a boundary by $1 re-rates everything. Single filer at $24,250 with $2,000 contributed: $1,000 credit. At $24,251: $400. That is $600 gone for one dollar of income — and it works in reverse: a $1,000 pre-tax contribution that pulls AGI back under a cliff both deducts itself AND restores the higher credit rate.',
+      },
+      {
+        q: "What changes in 2027 with the Saver's Match?",
+        a: "SECURE 2.0 replaces the credit starting in 2027: instead of a nonrefundable credit on your return, the Treasury pays a 50% match (up to $2,000 of contributions) directly INTO your retirement account — and it is refundable, so low earners with no tax bill finally receive it. One caveat: the match phases out gradually rather than cliffing, but 2026 is the last chance at the 50% credit up to $1,000/person as a lump-sum tax reduction. ABLE contributions keep a saver's credit permanently.",
+      },
+    ],
+  },
+  {
     slug: 'student-loan-interest-deduction-calculator',
     title: 'Student Loan Interest Deduction Calculator 2026 — Phase-Out & Tax Savings',
     shortTitle: 'Student Loan Interest 2026',
