@@ -2322,6 +2322,118 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// QBI deduction — IRC §199A as amended by OBBBA §70105 (permanent; phase-in ranges $75k/$150k; new §199A(i) $400 minimum). 2026 thresholds per Rev. Proc. 2025-32 §4.26.
+const QBI_2026 = {
+  single: { th: 201750, range: 75000 },
+  mfs: { th: 201775, range: 75000 },
+  mfj: { th: 403500, range: 150000 },
+} as const
+
+export function QbiDeductionCalc() {
+  const [status, setStatus] = useState('single')
+  const [qbi, setQbi] = useNumber(120000)
+  const [ti, setTi] = useNumber(120000)
+  const [ncg, setNcg] = useNumber(0)
+  const [sstb, setSstb] = useState(false)
+  const [wages, setWages] = useNumber(0)
+  const [ubia, setUbia] = useNumber(0)
+  const [active, setActive] = useState(true)
+
+  const r = useMemo(() => {
+    const { th, range } = QBI_2026[status as keyof typeof QBI_2026]
+    const cap = Math.max(0, 0.2 * (ti - ncg))
+    let regular = 0
+    let regime: 'below' | 'within' | 'above' = 'below'
+    let ratio = 0
+    if (qbi > 0) {
+      if (ti <= th) {
+        regular = 0.2 * qbi
+      } else if (ti >= th + range) {
+        regime = 'above'
+        if (sstb) regular = 0
+        else regular = Math.min(0.2 * qbi, Math.max(0.5 * wages, 0.25 * wages + 0.025 * ubia))
+      } else {
+        regime = 'within'
+        ratio = (ti - th) / range
+        const k = sstb ? 1 - ratio : 1
+        const aQ = qbi * k
+        const aW = wages * k
+        const aU = ubia * k
+        const wl = Math.max(0.5 * aW, 0.25 * aW + 0.025 * aU)
+        regular = 0.2 * aQ - ratio * Math.max(0, 0.2 * aQ - wl)
+      }
+    }
+    let ded = Math.min(regular, cap)
+    const minApplies = active && qbi >= 1000 && !(sstb && ti >= th + range) && ded < Math.min(400, cap)
+    if (minApplies) ded = Math.min(400, cap)
+    const taxSaved22 = ded * 0.22
+    const headroom = ti <= th ? th - ti : regime === 'within' ? th + range - ti : null
+    return { ded, regular, cap, regime, ratio, minApplies, th, range, taxSaved22, headroom }
+  }, [status, qbi, ti, ncg, sstb, wages, ubia, active])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="single">Single / Head of household</option>
+              <option value="mfj">Married filing jointly</option>
+              <option value="mfs">Married filing separately</option>
+            </select>
+          </label>
+          <Field label="Qualified business income (QBI)" value={qbi} onChange={setQbi} prefix="$" />
+          <Field label="Taxable income (before QBI deduction)" value={ti} onChange={setTi} prefix="$" />
+          <Field label="Net capital gains + qualified dividends" value={ncg} onChange={setNcg} prefix="$" />
+          <Field label="W-2 wages paid by the business" value={wages} onChange={setWages} prefix="$" />
+          <Field label="UBIA of qualified property" value={ubia} onChange={setUbia} prefix="$" />
+          <label className="flex items-end gap-2 pb-2 text-sm">
+            <input type="checkbox" checked={sstb} onChange={(e) => setSstb(e.target.checked)} className="h-4 w-4" />
+            Specified service business (health, law, consulting, finance, athletics…)
+          </label>
+          <label className="flex items-end gap-2 pb-2 text-sm">
+            <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} className="h-4 w-4" />
+            I materially participate in the business
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="QBI deduction (2026)" value={usd(r.ded)} />
+          <Result label="Tax saved at 22%" value={usd(r.taxSaved22)} />
+          <Result label="Regime" value={r.regime === 'below' ? 'Full 20%' : r.regime === 'within' ? `Phase-in (${(r.ratio * 100).toFixed(0)}%)` : 'Limits apply'} />
+          <Result label="Form" value={r.regime === 'below' ? '8995' : '8995-A'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.regime === 'below' && (
+            <>
+              <span className="font-medium">Below the {usd(r.th)} threshold — the simple form.</span> 20% of QBI, no wage or SSTB tests. {r.headroom !== null && r.headroom > 0 && <>Headroom before the phase-in: <span className="font-medium">{usd(r.headroom)}</span> of taxable income.</>} {r.cap < r.regular && <>Your deduction is capped by taxable income: 20% × (TI − gains) = {usd(r.cap)}.</>}
+            </>
+          )}
+          {r.regime === 'within' && (
+            <>
+              <span className="font-medium">Inside the phase-in range ({usd(r.th)}–{usd(r.th + r.range)}), {(r.ratio * 100).toFixed(0)}% through.</span> {sstb ? <>Only {((1 - r.ratio) * 100).toFixed(0)}% of your QBI counts, then the wage limit phases in.</> : <>The W-2/UBIA limit is phasing in.</>} {r.headroom !== null && r.headroom > 0 && <>{usd(r.headroom)} of taxable income from the top of the range{sstb ? ', where the deduction hits zero' : ''}. Every pre-tax dollar (SEP-IRA, HSA) pulls you back toward the full 20%.</>}
+            </>
+          )}
+          {r.regime === 'above' && (
+            <>
+              {sstb ? (
+                <><span className="font-medium">SSTB above {usd(r.th + r.range)}: the deduction is zero.</span> Service income is excluded from QBI at this income. The lever is taxable income, not the business: retirement/HSA contributions that pull TI back into the range restore a partial deduction.</>
+              ) : (
+                <><span className="font-medium">Full W-2/UBIA limit applies:</span> lesser of 20% of QBI or the greater of 50% of W-2 wages / 25% of wages + 2.5% of UBIA. {wages === 0 && ubia === 0 && <>With no wages and no qualified property, the regular deduction is $0{active && qbi >= 1000 ? ' — the new $400 minimum is what you see' : ''}.</>}
+              </>
+            )}
+          </>
+          )}
+          {r.minApplies && <> <span className="font-medium">§199A(i) minimum applied:</span> $400 for active owners with $1,000+ of QBI (new for 2026).</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026: thresholds $201,750 single/HoH, $201,775 MFS, $403,500 MFJ (Rev. Proc. 2025-32); phase-in ranges $75,000/$150,000 (OBBBA §70105 — made permanent, wider than the old $50k/$100k). Deduction capped at 20% × (taxable income − net capital gains). QBI excludes reasonable S-corp comp, guaranteed payments, and investment income; sole props subtract the SE-tax half, SE health insurance, and SEP/SIMPLE contributions first. REIT dividends/PTP income (separate 20% component) not included here. Reduces income tax only — not SE tax or NIIT.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // EITC — IRC §32, 2026 parameters per Rev. Proc. 2025-32 §4.06. Formula method; IRS lookup table may differ by a few dollars.
 const EITC_2026 = {
   0: { phaseIn: 0.0765, eiAmt: 8680, max: 664, phaseOut: 0.0765, thS: 10860, thJ: 18140, endS: 19540, endJ: 26820 },
@@ -4167,6 +4279,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'savers-credit-calculator': SaversCreditCalc,
   'aca-subsidy-calculator': AcaSubsidyCalc,
   'eitc-calculator': EitcCalc,
+  'qbi-deduction-calculator': QbiDeductionCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

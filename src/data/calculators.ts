@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'qbi-deduction-calculator',
+    title: 'QBI Deduction Calculator 2026 — Section 199A with the New OBBBA Rules',
+    shortTitle: 'QBI Deduction 2026',
+    category: 'Freelance & Career',
+    description:
+      'Free 2026 QBI deduction calculator. Enter QBI, taxable income, W-2 wages, and UBIA — get your exact §199A deduction across all three regimes: full 20%, the widened phase-in range, and the wage/property limits, plus the new $400 minimum.',
+    tagline: 'Made permanent, widened, and given a floor — 2026 changed the 20% pass-through deduction three ways.',
+    intro:
+      'The §199A deduction lets pass-through owners deduct 20% of qualified business income — and 2026 changed it more than any year since 2018: OBBBA made it permanent, widened the phase-in ranges from $50k/$100k to $75k/$150k, and added a $400 minimum deduction for active owners. But the traps remain: SSTB income phases to zero, the wage/UBIA limit can gut the deduction for a solo owner with no employees, and most sites still show pre-OBBBA ranges or confuse the threshold with the 24% bracket boundary. This calculator runs all three regimes with the correct 2026 numbers.',
+    howItWorks: [
+      'Pick filing status — note MFS has its own threshold ($201,775), not half of joint.',
+      'Enter QBI and taxable income BEFORE the QBI deduction — which regime you are in depends on it.',
+      'Say whether the business is a specified service trade (health, law, accounting, consulting, financial services, athletics, performing arts).',
+      'Enter W-2 wages paid and UBIA of qualified property — they only matter above the threshold, where they decide whether you keep the deduction.',
+    ],
+    faq: [
+      {
+        q: 'What are the 2026 QBI deduction income limits?',
+        a: 'Full 20% deduction below taxable income of $201,750 (single/head of household), $201,775 (MFS — its own figure, not half of joint), or $403,500 (joint), per Rev. Proc. 2025-32. Above that, limitations phase in across the new wider ranges: $75,000 single-type, $150,000 joint (OBBBA §70105 — up from $50k/$100k). SSTB owners lose the deduction entirely past $276,750 / $553,500.',
+      },
+      {
+        q: 'I have no employees — can I still get the deduction above the threshold?',
+        a: 'Only via property or the new floor. Above the phase-in, the deduction is the lesser of 20% of QBI or the greater of 50% of W-2 wages or 25% of wages + 2.5% of UBIA — so a solo owner with no wages and no qualified property gets $0 from the regular formula. New for 2026: §199A(i) guarantees $400 if you have $1,000+ of QBI from a business you materially participate in. The real lever is taxable income: SEP-IRA/HSA contributions that pull you back under the threshold restore the full 20%.',
+      },
+      {
+        q: 'What counts as QBI — and what quietly reduces it?',
+        a: 'For a sole proprietor, QBI is NOT the Schedule C line-31 number: subtract the deductible half of self-employment tax, self-employed health insurance premiums, and SEP/SIMPLE/401(k) contributions first — QBI typically lands at 85–93% of Schedule C profit. For S-corp owners, reasonable compensation is W-2 wages, never QBI. The deduction itself reduces income tax only — not SE tax, NIIT, or Additional Medicare — and is capped at 20% of taxable income minus net capital gains.',
+      },
+    ],
+  },
+  {
     slug: 'eitc-calculator',
     title: 'EITC Calculator 2026 — Earned Income Tax Credit Estimate by Family Size',
     shortTitle: 'EITC 2026',

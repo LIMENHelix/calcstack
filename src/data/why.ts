@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'qbi-deduction-calculator':
+    'Pass-through owners use it to find their real 20% deduction across the three 2026 regimes — and to catch the two traps that gut it: no W-2 wages above the threshold can zero the regular formula (the new $400 minimum is the floor), and SSTB income still cliffs to zero at the top of the widened phase-in range.',
   'eitc-calculator':
     'Low- and moderate-income workers use it to claim the refundable credit a fifth of eligible filers leave unclaimed — and to see the hidden 16–21% phase-out rate stacked on their bracket, plus the $12,200 investment-income cliff that zeroes the credit outright.',
   'aca-subsidy-calculator':
