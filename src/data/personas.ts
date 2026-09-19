@@ -214,6 +214,7 @@ export const PERSONAS: Persona[] = [
       'bonus-tax-calculator',
       'pto-accrual-calculator',
       '401k-contribution-calculator',
+      'hsa-vs-fsa-calculator',
       'roth-vs-traditional-calculator',
       'loan-payoff-calculator',
       'debt-avalanche-snowball-calculator',

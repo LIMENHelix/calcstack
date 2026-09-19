@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'hsa-vs-fsa-calculator',
+    title: 'HSA vs FSA Calculator 2026 — Real Limits, Forfeiture Risk & the 20-Year Difference',
+    shortTitle: 'HSA vs FSA',
+    category: 'Freelance & Career',
+    description:
+      'HSA vs FSA comparison calculator with the 2026 IRS limits (HSA $4,400/$8,750, FSA $3,400 with $680 carryover), your real tax rate including FICA, the FSA use-it-or-lose-it forfeiture priced against the carryover, and the HSA leftover projected as an investment. Plus the traps: spouse FSA blocking, CA/NJ state tax.',
+    tagline:
+      'One account is yours forever. The other evaporates. See the dollar difference on YOUR numbers.',
+    intro:
+      'Both accounts pay medical bills with pre-tax money — but an HSA is a permanent, investable, triple-tax-free asset while a health FSA is a year-long coupon with a $680 carryover at most. The right comparison is not "which saves more this year" (both save your marginal rate, plus 7.65% FICA when payroll-deducted) but what happens to the money you don\'t spend: HSA leftovers roll over and compound for decades, FSA leftovers above the carryover are forfeited. This calculator prices both sides with 2026 limits and your actual tax rates.',
+    howItWorks: [
+      'Tax savings = contribution × (federal + state + 7.65% FICA if payroll-deducted). Direct HSA contributions skip the FICA piece.',
+      'HSA: contribute the max ($4,400 self / $8,750 family for 2026, +$1,000 at 55+), spend what you need, and the leftover compounds at your growth rate — tax-free going in, growing, and coming out for medical.',
+      'FSA: contribution capped at $3,400, forfeiture = contribution − spending − $680 carryover (if the plan allows carryover at all — some offer only a 2½-month grace period, some neither).',
+      'Eligibility: the HSA requires an HDHP (2026 minimum deductible $1,700 self / $3,400 family). A general-purpose FSA — even your spouse\'s — disqualifies HSA contributions; a limited-purpose dental/vision FSA does not.',
+    ],
+    faq: [
+      {
+        q: 'Family coverage, $3,000 of medical spending, 24% federal + 5% state. What is each account worth?',
+        a: 'Maxing the HSA at $8,750 saves $3,207 in year one (including 7.65% FICA via payroll), and the $5,750 you didn\'t spend keeps compounding — $22,251 in 20 years at 7%, all tax-free for medical use. The FSA at $3,400 saves $1,246 with zero forfeiture. Same spending; the HSA is worth roughly $19,700 more over two decades.',
+      },
+      {
+        q: 'How much FSA money do people actually forfeit?',
+        a: 'Whatever exceeds spending plus the carryover. Elect $3,400, spend $2,000, and even with the 2026 maximum $680 carryover you forfeit $720 — more than half the tax you saved ($1,246 at the example rates), cutting the net benefit to $526. Plans without carryover forfeit the full $1,400. Elect only what you are certain to spend.',
+      },
+      {
+        q: 'Can I have both an HSA and an FSA?',
+        a: 'Only a limited-purpose FSA (dental and vision) — a general-purpose health FSA makes you HSA-ineligible, and your SPOUSE\'s general FSA counts too, the most common accidental disqualification. Two more traps: California and New Jersey tax HSA contributions at the state level, and the FSA\'s uniform-coverage rule lets you spend the full election on day 1 even before payroll has funded it — free float if you leave the job mid-year.',
+      },
+    ],
+  },
+  {
     slug: 'commission-draw-calculator',
     title: 'Commission Draw Calculator — Breakeven, Deficit Snowball & What You Owe If You Quit',
     shortTitle: 'Commission Draw',

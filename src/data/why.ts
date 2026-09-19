@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'hsa-vs-fsa-calculator':
+    'Employees at open enrollment use it to end the debate with their own numbers: both accounts save the same marginal rate, but the HSA leftover compounds for decades while the FSA forfeits everything above the $680 carryover — plus the spouse-FSA trap that silently kills HSA eligibility.',
   'commission-draw-calculator':
     'Sales reps weighing a draw-against-commission offer use it to find the breakeven — draw ÷ rate — and to watch the recoverable deficit snowball month by month, including the balance they would owe back if they walked.',
   'espp-calculator':

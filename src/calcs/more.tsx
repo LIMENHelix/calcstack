@@ -2308,6 +2308,78 @@ export function Solo401kCalc() {
 // the SAME employer math as the solo 401(k). Node-verified: $100k profit → SEP
 // $18,587 vs solo $43,087; the solo advantage is exactly the $24,500 deferral
 // until the cap binds ($300k profit: $56,839 vs $72,000).
+export function HsaFsaCalc() {
+  const [coverage, setCoverage] = useState<'self' | 'family'>('family')
+  const [spend, setSpend] = useNumber(3000)
+  const [fed, setFed] = useNumber(24)
+  const [state, setState] = useNumber(5)
+  const [payroll, setPayroll] = useState(true)
+  const [growth, setGrowth] = useNumber(7)
+  const [years, setYears] = useNumber(20)
+
+  const r = useMemo(() => {
+    const hsaMax = coverage === 'self' ? 4400 : 8750
+    const fsaMax = 3400
+    const carry = 680
+    const rate = (fed + state) / 100 + (payroll ? 0.0765 : 0)
+    const hsaContrib = hsaMax // the HSA play is to max it; spend vs invest decides what happens next
+    const hsaSaved = hsaContrib * rate
+    const hsaLeft = Math.max(0, hsaContrib - spend)
+    const hsaFuture = hsaLeft * Math.pow(1 + growth / 100, years)
+    const fsaContrib = Math.min(fsaMax, Math.max(spend, 0))
+    const fsaSaved = fsaContrib * rate
+    const forfeit = Math.max(0, fsaContrib - spend - carry)
+    const fsaNet = fsaSaved - forfeit
+    return { hsaMax, fsaMax, rate, hsaContrib, hsaSaved, hsaLeft, hsaFuture, fsaContrib, fsaSaved, forfeit, fsaNet }
+  }, [coverage, spend, fed, state, payroll, growth, years])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">HDHP coverage (HSA limit)</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={coverage} onChange={(e) => setCoverage(e.target.value as 'self' | 'family')}>
+            <option value="self">Self-only ($4,400)</option>
+            <option value="family">Family ($8,750)</option>
+          </select>
+        </label>
+        <Field label="Expected medical spend/yr" value={spend} onChange={setSpend} prefix="$" step="500" />
+        <Field label="Federal bracket" value={fed} onChange={setFed} suffix="%" step="1" />
+        <Field label="State income tax" value={state} onChange={setState} suffix="%" step="0.5" />
+        <Field label="HSA growth if invested" value={growth} onChange={setGrowth} suffix="%" step="0.5" />
+        <Field label="Years to grow the leftover" value={years} onChange={setYears} step="1" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Contributed via payroll?</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={payroll ? 'yes' : 'no'} onChange={(e) => setPayroll(e.target.value === 'yes')}>
+            <option value="yes">Yes — saves 7.65% FICA too</option>
+            <option value="no">No — direct (income tax only)</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="HSA year-1 tax savings" value={usd(r.hsaSaved, 0)} />
+        <Result label="HSA leftover rolls over" value={usd(r.hsaLeft, 0)} />
+        <Result label={`Leftover worth in ${num(years, 0)} yrs`} value={usd(r.hsaFuture, 0)} />
+        <Result label="HSA total advantage" value={usd(r.hsaSaved + r.hsaFuture - r.hsaLeft, 0)} />
+        <Result label={`FSA contribution (max ${usd(r.fsaMax, 0)})`} value={usd(r.fsaContrib, 0)} />
+        <Result label="FSA tax savings" value={usd(r.fsaSaved, 0)} />
+        <Result label="FSA forfeited (use-or-lose)" value={`−${usd(r.forfeit, 0)}`} />
+        <Result label="FSA net benefit" value={usd(r.fsaNet, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        2026 limits (Rev. Proc. 2025-19 / 2025-32): HSA {coverage === 'self' ? '$4,400 self-only' : '$8,750 family'} (+$1,000
+        at 55+), health FSA $3,400 with at most a $680 carryover — plans offer carryover OR a 2½-month grace
+        period, never both. The structural difference: HSA money is YOURS forever and invests like a retirement
+        account (triple tax-free, and after 65 non-medical withdrawals are merely taxed like an IRA), while FSA
+        money above the carryover evaporates at year-end — though the FSA's uniform-coverage rule means your
+        full election is spendable on day 1, even before you've funded it. Two traps: a general-purpose FSA
+        (even your spouse's) blocks HSA eligibility — limited-purpose dental/vision FSAs don't — and California
+        and New Jersey tax HSA contributions at the state level.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function CommissionDrawCalc() {
   const [draw, setDraw] = useNumber(4000)
   const [rate, setRate] = useNumber(10)
@@ -2649,6 +2721,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'hsa-vs-fsa-calculator': HsaFsaCalc,
   'commission-draw-calculator': CommissionDrawCalc,
   'espp-calculator': EsppCalc,
   'i-bond-calculator': IBondCalc,
