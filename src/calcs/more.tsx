@@ -2322,6 +2322,63 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Medicaid spend-down & lookback — 2026 federal figures: single applicant countable-asset limit $2,000 (couple both applying $3,000); CSRA max $162,660 / min $32,532 (community spouse keeps half of combined countable assets, floored at min, capped at max; WI floor $50k); home equity limit $752,000 (home exempt while spouse/dependent lives there or intent to return); income cap $2,982/mo (300% SSI FBR — excess → Miller/QIT trust); MMMNA $2,705–$4,066.50. 60-month lookback; penalty months = uncompensated transfers ÷ state divisor (2026 examples: FL $10,645/mo, AR $6,083, AK ~$25,000, NJ $420.67/day, WI $352.06/day) — penalty runs AFTER you're otherwise eligible, i.e. private-pay months. Estate recovery after death (42 U.S.C. §1396p). Node-verified: married $300k → CSRA $150,000, spend-down $148,000; $60k → floor $32,532; $500k → capped $162,660; $100k gift ÷ $10,645 = 9.4 penalty months ≈ $95,810 private pay.
+export function MedicaidSpendDownCalc() {
+  const [married, setMarried] = useState(false)
+  const [assets, setAssets] = useNumber(300000)
+  const [income, setIncome] = useNumber(2982)
+  const [gifts, setGifts] = useNumber(0)
+  const [divisor, setDivisor] = useNumber(10000)
+  const [careCost, setCareCost] = useNumber(9581)
+
+  const r = useMemo(() => {
+    const allowance = married ? Math.min(162660, Math.max(32532, assets / 2)) + 2000 : 2000
+    const spendDown = Math.max(0, assets - allowance)
+    const penaltyMonths = divisor > 0 ? gifts / divisor : 0
+    const penaltyCost = penaltyMonths * careCost
+    const incomeExcess = Math.max(0, income - 2982)
+    const monthsOfCare = careCost > 0 ? spendDown / careCost : 0
+    return { allowance, spendDown, penaltyMonths, penaltyCost, incomeExcess, monthsOfCare }
+  }, [married, assets, income, gifts, divisor, careCost])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={married} onChange={(e) => setMarried(e.target.checked)} className="h-4 w-4" />
+            Married — only one spouse applying
+          </label>
+          <Field label="Countable assets (cash, brokerage, 2nd property)" value={assets} onChange={setAssets} prefix="$" />
+          <Field label="Applicant monthly income" value={income} onChange={setIncome} prefix="$" />
+          <Field label="Gifts/transfers in the last 60 months" value={gifts} onChange={setGifts} prefix="$" />
+          <Field label="State penalty divisor" value={divisor} onChange={setDivisor} prefix="$" suffix="/mo" />
+          <Field label="Monthly nursing home cost" value={careCost} onChange={setCareCost} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Assets you're allowed to keep" value={usd(r.allowance)} />
+          <Result label="Spend-down needed" value={usd(r.spendDown)} />
+          <Result label="Gift penalty period" value={`${num(r.penaltyMonths, 1)} months`} />
+          <Result label="Private-pay cost of the penalty" value={usd(r.penaltyCost)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.spendDown > 0 ? (
+            <>You're {usd(r.spendDown)} over the line — about {num(r.monthsOfCare, 1)} months of nursing costs at {usd(careCost)}/mo. {married ? 'The community spouse keeps ' + usd(r.allowance - 2000) + ' under the CSRA (half of combined assets, between $32,532 and $162,660 in 2026); the applicant keeps $2,000. ' : 'A single applicant keeps just $2,000 in countable assets. '}</>
+          ) : (
+            <>Countable assets are under the {usd(r.allowance)} allowance — the asset test passes. </>
+          )}
+          {r.penaltyMonths > 0 && <>The {usd(gifts)} of transfers inside the 60-month lookback trigger <span className="font-medium">{num(r.penaltyMonths, 1)} months of ineligibility</span> — and the penalty clock doesn't start until you're otherwise eligible and in care, meaning {usd(r.penaltyCost)} of private pay with zero assets left. This is why last-minute gifting backfires. </>}
+          {r.incomeExcess > 0 && <>Income is {usd(r.incomeExcess)}/mo over the $2,982 cap — in most states a Miller Trust (QIT) fixes that; the income test is separate from the asset test.</>}
+          {r.spendDown === 0 && r.penaltyMonths === 0 && r.incomeExcess === 0 && <>All three tests pass — assets, lookback, and income.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 federal figures: single asset limit $2,000; CSRA $32,532–$162,660; home equity limit $752,000 (home exempt while a spouse or dependent lives there or you intend to return); income cap $2,982/mo (300% of SSI). Exempt assets: primary home within the equity limit, one vehicle, household goods, prepaid irrevocable burial, term life with no cash value. Retirement accounts count in most states unless in payout status. Penalty divisors vary wildly by state (2026: FL $10,645/mo, AR $6,083, AK ~$25,000, NJ/WI daily divisors) — check yours. Lawful spend-down exists: paying off the mortgage, home repairs, a Medicaid-compliant annuity for the community spouse, burial trusts. After death, estate recovery can claim the home unless it was protected — planning 5+ years ahead is the whole game. Elder-law attorney territory; this is orientation math, not legal advice.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Hybrid (linked-benefit) LTC vs traditional — AALTCI 2025: male 55 hybrid single-premium $52,753 ($180k LTC pool or $120k death benefit), female 55 $54,022; annual-pay hybrid $3,540/$3,265; traditional level $950/$1,500 per year for $165k pool (no inflation growth). Honest result: traditional foregoes less (premiums invested → ~$75k @6%/30yr) than hybrid's opportunity cost net of the guaranteed death benefit (~$183k) — hybrid's premium buys lapse-proofing, rate-hike immunity, and money-back-if-never-claim, NOT more care per dollar. Node-verified: hybrid net cost if no claim $182,986 vs traditional $75,105; months of $12,500/mo care: hybrid 14.4, traditional 13.2.
 export function HybridLTCCalc() {
   const [lump, setLump] = useNumber(52753)
@@ -5541,6 +5598,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'medicaid-spend-down-calculator': MedicaidSpendDownCalc,
   'hybrid-ltc-vs-traditional-calculator': HybridLTCCalc,
   'ltc-insurance-vs-self-fund-calculator': LTCInsuranceCalc,
   'long-term-care-cost-calculator': LTCareCostCalc,

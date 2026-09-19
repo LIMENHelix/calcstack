@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'medicaid-spend-down-calculator',
+    title: 'Medicaid Spend-Down Calculator 2026 — Asset Limit, CSRA & 5-Year Lookback Penalty',
+    shortTitle: 'Medicaid Spend-Down Calculator',
+    category: 'Retirement',
+    description:
+      'How far over the Medicaid line are you? 2026 limits ($2,000 single, CSRA up to $162,660), the 60-month lookback penalty in months of private pay, and the income cap with the Miller Trust fix.',
+    tagline: 'The gift you made three years ago can cost ten months of nursing-home private pay.',
+    intro:
+      'Medicaid long-term care eligibility is three separate tests, and families routinely fail the one they didn\'t know existed. Assets: a single applicant keeps just $2,000 of countable assets; a married couple protects $32,532–$162,660 for the spouse at home (2026 CSRA). Lookback: every gift or below-market transfer in the last 60 months is divided by your state\'s penalty divisor to produce months of ineligibility — and the penalty clock starts only after you\'re broke and in care, so a $100,000 gift can mean $95,000+ of private pay with nothing left. Income: over $2,982/month needs a Miller Trust in most states. This calculator runs all three tests at once.',
+    howItWorks: [
+      'Enter countable assets (cash, brokerage, second property — NOT the home within the $752,000 equity limit, one car, or burial trusts).',
+      'Check married if one spouse stays home — the CSRA protects half of combined assets within the 2026 floor/cap.',
+      'Enter gifts from the last 60 months and your state\'s penalty divisor.',
+      'Read the spend-down needed, penalty months, and what the penalty costs in private pay.',
+    ],
+    faq: [
+      {
+        q: 'What counts as a countable asset?',
+        a: 'Cash, checking/savings, brokerage accounts, stocks and bonds, second properties, and in most states retirement accounts NOT in payout status. Exempt: the primary home up to $752,000 of equity (2026) while a spouse or dependent lives there or you intend to return, one vehicle, household goods, prepaid irrevocable burial arrangements, and term life insurance with no cash value. The classification decides everything — the same dollar is protected in an exempt form and counted in a countable one.',
+      },
+      {
+        q: 'How does the gift penalty actually work?',
+        a: 'Uncompensated transfers inside the 60-month lookback are summed and divided by your state\'s penalty divisor (2026 examples: Florida $10,645/mo, Arkansas $6,083, Alaska ~$25,000; some states use daily divisors like NJ $420.67/day). The result is months of ineligibility that begin only when you are otherwise eligible and receiving care — so you must private-pay with the assets you no longer have. A $100,000 gift at Florida\'s divisor = 9.4 penalty months ≈ $95,810 of nursing costs out of pocket.',
+      },
+      {
+        q: 'Is there a legal way to spend down?',
+        a: 'Yes — spend-down is only penalized when assets are given away below fair value. Lawful moves: pay off the mortgage or make home repairs (builds exempt home equity), buy a Medicaid-compliant annuity that converts countable assets to an income stream for the community spouse, prepay an irrevocable burial trust, replace the old car. Done 5+ years ahead, irrevocable trusts can protect more. After death, Medicaid estate recovery can claim the home — planning around that is elder-law attorney territory and worth the fee.',
+      },
+    ],
+  },
+  {
     slug: 'hybrid-ltc-vs-traditional-calculator',
     title: 'Hybrid LTC vs Traditional Long-Term Care Insurance Calculator 2026',
     shortTitle: 'Hybrid vs Traditional LTC',
