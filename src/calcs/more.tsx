@@ -2322,6 +2322,72 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Depreciation recapture — §1250 unrecaptured gain (rental real estate, straight-line): depreciation taken is recaptured at 25% up to the gain; excess gain is LTCG (20% + 3.8% NIIT). §1245 (equipment, vehicles, machinery): recapture at ORDINARY rates up to gain. Loss → no recapture. Land never depreciates. §121 primary-residence exclusion doesn't shield depreciation taken after 5/6/1997. Node-verified: rental $600k sale, $36k costs, $450k basis, $120k dep → gain $234k = $120k @25% + $114k @23.8% → $57,132 federal + state. Cross-ref: defer instead via the 1031 exchange calculator.
+export function DepRecaptureCalc() {
+  const [kind, setKind] = useState<'real' | 'personal'>('real')
+  const [sale, setSale] = useNumber(600000)
+  const [costs, setCosts] = useNumber(36000)
+  const [purch, setPurch] = useNumber(450000)
+  const [dep, setDep] = useNumber(120000)
+  const [ordRate, setOrdRate] = useNumber(24)
+  const [stateRate, setStateRate] = useNumber(0)
+
+  const r = useMemo(() => {
+    const adj = purch - dep
+    const gain = sale - costs - adj
+    const g = Math.max(0, gain)
+    const recap = Math.min(g, dep)
+    const rest = g - recap
+    const recapRate = kind === 'real' ? 0.25 : ordRate / 100
+    const fed = recap * recapRate + rest * 0.238
+    const st = g * (stateRate / 100)
+    return { adj, gain, recap, rest, recapRate, fed, st, loss: gain < 0 }
+  }, [kind, sale, costs, purch, dep, ordRate, stateRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <label className="mb-1 block text-sm font-medium">Property type</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={kind}
+              onChange={(e) => setKind(e.target.value as 'real' | 'personal')}
+            >
+              <option value="real">Rental real estate (§1250 — 25% recapture)</option>
+              <option value="personal">Equipment / vehicle / machinery (§1245 — ordinary rates)</option>
+            </select>
+          </div>
+          <Field label="Sale price" value={sale} onChange={setSale} prefix="$" />
+          <Field label="Selling costs" value={costs} onChange={setCosts} prefix="$" />
+          <Field label="Original purchase price" value={purch} onChange={setPurch} prefix="$" />
+          <Field label="Total depreciation taken" value={dep} onChange={setDep} prefix="$" />
+          {kind === 'personal' && <Field label="Your ordinary tax bracket" value={ordRate} onChange={setOrdRate} suffix="%" />}
+          <Field label="State tax rate" value={stateRate} onChange={setStateRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Adjusted basis" value={usd(r.adj)} />
+          <Result label="Recaptured depreciation" value={usd(r.recap)} />
+          <Result label="Federal tax on the sale" value={usd(r.fed)} />
+          <Result label="Total incl. state" value={usd(r.fed + r.st)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.loss ? (
+            <>Sale below your adjusted basis of {usd(r.adj)} — a deductible loss, and <span className="font-medium">no recapture</span>. (Recapture only applies to gain.)</>
+          ) : (
+            <>Gain of {usd(Math.max(0, r.gain))} splits in two: <span className="font-medium">{usd(r.recap)} of depreciation recapture at {num(r.recapRate * 100, 0)}%</span>{r.rest > 0 && <> plus {usd(r.rest)} of true appreciation at 23.8% (20% LTCG + 3.8% NIIT)</>}. The depreciation that saved you {kind === 'real' ? 'your ordinary rate' : 'ordinary rates'} every year comes back at {num(r.recapRate * 100, 0)}% on sale — the deduction was a loan, not a gift.</>
+          )}
+          {kind === 'real' && !r.loss && <> Defer the whole thing instead: a 1031 exchange rolls both the appreciation AND the recapture into the next property — run the 1031 calculator before you list.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          §1250 real property (rentals, commercial buildings): only depreciation in excess of straight-line is ordinary income — and straight-line has been mandatory since 1986, so in practice ALL recapture is "unrecaptured §1250 gain" capped at 25%. §1245 personal property (equipment, vehicles, machinery, bonus-depreciated assets): recapture at your full ordinary rate — no 25% cap. NIIT (3.8%) applies over $200k/$250k MAGI. Land is never depreciable — allocate the purchase price honestly. Primary residences: the §121 $250k/$500k exclusion does NOT cover depreciation taken after May 6, 1997 — that portion is recaptured at 25% even when the rest of the gain is excluded. Cost segregation accelerates deductions but converts future 25% gain into ordinary-rate §1245 recapture. Inherited property: basis steps up and accumulated recapture dies with the owner.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // §1031 like-kind exchange — post-TCJA real property only (investment/business). Clocks: 45-day identification, 180-day closing, both calendar days from the sale; qualified intermediary holds proceeds (touch the money = boot). Full deferral requires: replacement price ≥ sale price, ALL equity reinvested, and equal-or-greater debt. Boot = cash not reinvested + net mortgage relief; recognized gain = min(realized gain, boot); unrecaptured §1250 depreciation recapture (25%) applies to recognized boot FIRST, remainder at LTCG 20% + 3.8% NIIT. Deferred gain reduces replacement basis. Chaining unlimited; death steps up basis ("swap till you drop"). Node-verified: sell $900k ($54k costs), bought $500k with $150k depreciation, $300k old loan, buy $1.0M with $500k loan → equity $546k, reinvested $500k → cash boot $46k, all recapture @25% = $11,500 tax; deferred $450k → new basis $550k.
 export function Exchange1031Calc() {
   const [sale, setSale] = useNumber(900000)
@@ -5775,6 +5841,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'depreciation-recapture-calculator': DepRecaptureCalc,
   '1031-exchange-calculator': Exchange1031Calc,
   'qsbs-1045-rollover-calculator': QSBSRolloverCalc,
   'qsbs-exclusion-calculator': QSBSCalc,

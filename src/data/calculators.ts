@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'depreciation-recapture-calculator',
+    title: 'Depreciation Recapture Calculator 2026 — §1250 at 25% vs §1245 Ordinary Rates',
+    shortTitle: 'Depreciation Recapture Calculator',
+    category: 'Housing & Mortgage',
+    description:
+      'Selling a rental or business equipment? Split the gain: depreciation recapture (25% for real estate, ordinary rates for equipment) vs true appreciation at capital gains rates — plus the new basis math if you exchange instead.',
+    tagline: 'Every year of depreciation was a loan from the IRS. The sale is when it comes due.',
+    intro:
+      'The depreciation that sheltered your rental income for years doesn\'t disappear at sale — it comes back as recapture. For real estate, depreciation taken is taxed at a flat 25% (unrecaptured §1250 gain) before any appreciation gets capital-gains rates. For equipment and vehicles it\'s worse: §1245 recaptures at your full ordinary rate. Most sellers find out at the closing table. This calculator splits your gain into the recapture slice and the appreciation slice, prices both, and reminds you of the alternative: a 1031 exchange defers both — and inherited property wipes recapture out entirely via the basis step-up.',
+    howItWorks: [
+      'Pick real estate (§1250, 25% recapture) or equipment/vehicles (§1245, ordinary rates).',
+      'Enter sale price, selling costs, original purchase price, and total depreciation taken.',
+      'For equipment, set your ordinary bracket; everyone sets their state rate.',
+      'Read adjusted basis, the recapture slice, federal tax, and total with state.',
+    ],
+    faq: [
+      {
+        q: 'Is rental property recapture really capped at 25%?',
+        a: 'Yes for anything placed in service after 1986. Straight-line depreciation has been mandatory since then, so none of your depreciation is "excess" (which would be ordinary income) — all of it is unrecaptured §1250 gain capped at 25%. The gain ABOVE your total depreciation is regular long-term capital gain at 0/15/20% plus the 3.8% NIIT over the MAGI thresholds. Example: $450,000 purchase, $120,000 depreciated, sold for $600,000 net → $120,000 at 25% ($30,000) plus $114,000 at 23.8% ($27,132).',
+      },
+      {
+        q: 'How is equipment different?',
+        a: 'Section 1245 has no 25% cap — depreciation recapture on machinery, vehicles, and equipment is taxed at your ordinary income rate, up to 37%. This is the hidden cost of bonus depreciation and Section 179: 100% write-offs today mean 100% ordinary-rate recapture at sale. A truck you wrote off entirely that sells for $20,000 produces $20,000 of ordinary income.',
+      },
+      {
+        q: 'Any way to avoid it?',
+        a: 'Three legitimate paths: (1) a 1031 exchange defers recapture AND appreciation into the replacement property — chain them indefinitely; (2) hold until death — the basis step-up erases all accumulated recapture for your heirs; (3) sell at a loss — recapture only applies to gain over adjusted basis. What does NOT work: converting the rental to a primary residence (the §121 exclusion explicitly doesn\'t cover post-May-1997 depreciation) and "forgetting" to claim depreciation — the IRS recaptures depreciation you were ALLOWED to take, whether or not you claimed it.',
+      },
+    ],
+  },
+  {
     slug: '1031-exchange-calculator',
     title: '1031 Exchange Calculator — Boot, Deferred Gain & New Basis (2026)',
     shortTitle: '1031 Exchange Calculator',

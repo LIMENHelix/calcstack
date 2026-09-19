@@ -54,16 +54,16 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          255 calculators and counting. Newest: the eldercare decision set —
-          long-term care costs at real 2025 CareScout medians (home care now
-          beats assisted living on price), LTC insurance vs self-funding with
-          the exact breakeven months, and hybrid vs traditional policies priced
-          honestly — plus the PTET election calculator with the QBI haircut
-          nobody else shows, and the 2026 nanny tax with the Schedule H math.
+          260 calculators and counting. Newest: the investor exit set — the 1031
+          exchange calculator with mortgage boot and recapture-first ordering,
+          depreciation recapture priced honestly (25% for rentals, ordinary
+          rates for equipment), and the QSBS pair covering both OBBBA regimes
+          plus the §1045 rollover bridge — alongside the eldercare funding
+          trilogy and the PTET election tool with the QBI haircut.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['long-term-care-cost-calculator', 'ltc-insurance-vs-self-fund-calculator', 'hybrid-ltc-vs-traditional-calculator', 'ptet-election-calculator', 'nanny-tax-calculator', '529-vs-trump-vs-roth-calculator'].includes(c.slug),
+            ['1031-exchange-calculator', 'depreciation-recapture-calculator', 'qsbs-exclusion-calculator', 'qsbs-1045-rollover-calculator', 'medicaid-spend-down-calculator', 'long-term-care-cost-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
