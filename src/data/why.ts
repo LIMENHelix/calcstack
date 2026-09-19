@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'second-income-calculator':
+    'Parents weighing a second job against daycare use it to see the number nobody quotes: the second salary stacked on the first at marginal rates, minus childcare, commuting, and work costs — a $40,000 job can net $5/hour, which reframes the whole stay-or-work debate.',
   'gift-tax-calculator':
     'Parents and grandparents use it to turn the $19,000 annual exclusion into a strategy — how much a decade of gifting actually moves (over $1M with growth for a family of four recipients), when a gift forces Form 709 onto the $15M lifetime exclusion, and when a $95,000 529 superfund beats five years of checks.',
   'estate-tax-calculator':

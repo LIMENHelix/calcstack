@@ -54,16 +54,19 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          230 calculators and counting. Newest: the Medicare IRMAA cliff finder
-          (2026 tiers — $1 over the line costs $1,148/yr, per person), raise vs
-          bonus compounding, the real dollar value of a benefits package, the
-          2026 overtime-exempt threshold after the 2024 rule was vacated, and
-          weight-cut / acute:chronic workload tools for lifters and fighters —
-          all verified against IRS, CMS/SSA, and DOL sources.
+          242 calculators and counting. Newest: the second income calculator
+          (the two-income trap, quantified — a $40k job can net $5/hr after
+          stacked taxes and childcare), the gift tax gifting planner ($19k
+          exclusion × recipients × years, 529 superfunding caps enforced), the
+          federal estate tax calculator with the OBBBA's permanent $15M
+          exclusion (the ~$7M sunset is dead), the 2026 child tax credit with
+          Schedule 8812 logic, and the AMT + QBI tools for the OBBBA's quiet
+          threshold resets — all verified against IRS Rev. Procs, the OBBBA
+          statute, and CMS/SSA sources.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['medicare-irmaa-calculator', 'raise-vs-bonus-calculator', 'benefits-value-calculator', 'overtime-exempt-threshold-calculator', 'weight-cut-calculator', 'training-load-acwr-calculator'].includes(c.slug),
+            ['second-income-calculator', 'gift-tax-calculator', 'estate-tax-calculator', 'child-tax-credit-calculator', 'amt-calculator', 'qbi-deduction-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

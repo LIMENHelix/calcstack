@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'second-income-calculator',
+    title: 'Second Income Calculator 2026 — Is the Second Job Worth It After Childcare & Taxes?',
+    shortTitle: 'Second Income Calculator',
+    category: 'Everyday Money',
+    description:
+      'Free second income calculator. Stack the second salary on the first at 2026 marginal rates, subtract childcare, commuting and work costs — see the true hourly value.',
+    tagline: 'A $40,000 second job can be a $5/hour job in disguise.',
+    intro:
+      'The second earner\'s salary never gets its own tax brackets — it stacks on top of the first earner\'s income and every dollar is taxed at the margin. Add childcare, commuting, and work lunches, and the two-income trap appears: a $40,000 salary can net under $10,000, or $5 an hour. This calculator does the honest stacking math so the stay-or-work decision is made with real numbers instead of a gross salary that will never arrive.',
+    howItWorks: [
+      'Enter the first earner\'s gross salary — the second income is taxed on top of it at 2026 MFJ marginal rates.',
+      'Enter the second job\'s gross salary and your state tax rate.',
+      'Add monthly childcare, weekly commute miles (valued at $0.70/mile), and monthly work extras like lunches and wardrobe.',
+      'The calculator shows the marginal federal tax on the second income, FICA, state tax, and every work cost — then the net per year, per month, and per actual hour worked.',
+    ],
+    faq: [
+      {
+        q: 'Why is the second income taxed so much higher than the first?',
+        a: 'Because brackets stack. The first earner\'s income fills the 10% and 12% brackets and absorbs the standard deduction; the second earner\'s first dollar lands wherever the first earner\'s last dollar left off. A $40,000 second salary on top of a $60,000 first salary pays $4,800 of federal tax (12% marginal) — but that\'s before 7.65% FICA and state tax, which have no standard deduction at all.',
+      },
+      {
+        q: 'What does this calculator leave out?',
+        a: 'Deliberately, the things that cut both ways: the dependent-care FSA ($7,500 pre-tax in 2026) and the child care credit (20–35% of up to $3,000/$6,000 of costs) improve the answer; career progression, retirement matches, and keeping a foot in the workforce have real value too. Run this for the cash math, then layer the rest on top.',
+      },
+      {
+        q: 'When does staying home actually win?',
+        a: 'When the net goes negative — common with two kids in full-time daycare and a long commute. But the break-even isn\'t just this year\'s cash: five years out of the workforce typically cuts lifetime earnings far more than five years of thin net income. Use the number here as one input, not the verdict.',
+      },
+    ],
+  },
+  {
     slug: 'gift-tax-calculator',
     title: 'Gift Tax Calculator 2026 — $19,000 Annual Exclusion, 529 Superfunding & Lifetime Limit',
     shortTitle: 'Gift Tax Calculator',

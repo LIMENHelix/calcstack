@@ -2322,6 +2322,77 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Second income vs childcare — 2026 MFJ brackets (std $32,200), second earner's income stacked on top of the first for true marginal federal cost, plus FICA 7.65%, state rate input, childcare, commuting, and work extras. Verified: $60k + $40k second income → marginal fed $4,800; with $1,200/mo childcare, 100 mi/wk commute at $0.70/mi, $200/mo extras → net $9,980/yr = $5.20/hr.
+export function SecondIncomeCalc() {
+  const [first, setFirst] = useNumber(60000)
+  const [second, setSecond] = useNumber(40000)
+  const [stateRate, setStateRate] = useNumber(5)
+  const [childcare, setChildcare] = useNumber(1200)
+  const [miles, setMiles] = useNumber(100)
+  const [extras, setExtras] = useNumber(200)
+  const [hours, setHours] = useNumber(40)
+
+  const r = useMemo(() => {
+    const BK: readonly (readonly [number, number])[] = [[0, 0.10], [24800, 0.12], [100800, 0.22], [211400, 0.24], [403550, 0.32], [512450, 0.35], [768700, 0.37]]
+    const fed = (ti: number) => {
+      const t = Math.max(0, ti)
+      let tax = 0
+      for (let i = 0; i < BK.length; i++) {
+        const lo = BK[i][0]
+        const hi = i + 1 < BK.length ? BK[i + 1][0] : Infinity
+        if (t > lo) tax += (Math.min(t, hi) - lo) * BK[i][1]
+      }
+      return tax
+    }
+    const marginalFed = fed(first + second - 32200) - fed(first - 32200)
+    const fica = 0.0765 * second
+    const state = (stateRate / 100) * second
+    const care = childcare * 12
+    const commute = miles * 48 * 0.70
+    const extra = extras * 12
+    const costs = marginalFed + fica + state + care + commute + extra
+    const net = second - costs
+    const perHour = hours > 0 ? net / (hours * 48) : 0
+    const kept = second > 0 ? (net / second) * 100 : 0
+    return { marginalFed, fica, state, care, commute, extra, net, perHour, kept }
+  }, [first, second, stateRate, childcare, miles, extras, hours])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="First earner's gross salary" value={first} onChange={setFirst} prefix="$" />
+          <Field label="Second job's gross salary" value={second} onChange={setSecond} prefix="$" />
+          <Field label="State income tax rate" value={stateRate} onChange={setStateRate} suffix="%" />
+          <Field label="Childcare per month" value={childcare} onChange={setChildcare} prefix="$" />
+          <Field label="Commute miles per week" value={miles} onChange={setMiles} />
+          <Field label="Work extras per month (lunches, wardrobe)" value={extras} onChange={setExtras} prefix="$" />
+          <Field label="Hours per week at second job" value={hours} onChange={setHours} />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Net from the second job" value={usd(r.net)} />
+          <Result label="Net per month" value={usd(r.net / 12)} />
+          <Result label="True hourly value" value={`${usd(r.perHour)}/hr`} />
+          <Result label="Share of gross kept" value={`${num(r.kept, 0)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          The second salary doesn't get its own brackets — it stacks on top of the first. Federal tax on it: <span className="font-medium">{usd(r.marginalFed)}</span>, FICA {usd(r.fica)}, state {usd(r.state)}, childcare {usd(r.care)}, commuting {usd(r.commute)}, extras {usd(r.extra)}.{' '}
+          {r.net <= 0 ? (
+            <><span className="font-medium">The second job costs more than it pays.</span> Before quitting, check the dependent-care FSA ($7,500 pre-tax in 2026) and the child care credit — they can flip the answer. </>
+          ) : r.kept < 40 ? (
+            <>You keep {num(r.kept, 0)} cents of each dollar. Softening the blow: a dependent-care FSA ($7,500 pre-tax in 2026) and up to $2,200/child in tax credits don't show in this math — and neither do career benefits like staying in the workforce. Run the whole picture before deciding. </>
+          ) : (
+            <>Even after stacking taxes and every work cost, the second income adds {usd(r.net / 12)}/month. Compare that against what the household gives up — the honest hourly number is the right yardstick. </>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 MFJ brackets with the $32,200 standard deduction; the second income is taxed at the margin on top of the first earner's — the way payroll withholding tables actually treat it. FICA 7.65% (under the $184,500 Social Security wage base). Commuting valued at $0.70/mile and 48 work weeks. Not included: the dependent-care FSA ($7,500 pre-tax in 2026), the child and dependent care credit (20–35% of up to $3,000/$6,000 of care costs), retirement matches, health insurance value, and the career-progression value of staying employed — all real, all worth adding to your own math.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Gift tax & annual-exclusion gifting planner — IRC §2503(b) annual exclusion $19,000/recipient for 2026 (Rev. Proc. 2025-32 §4.42(1)); $38,000 with gift-splitting (§2513); §2503(e) direct tuition/medical unlimited. 529 superfunding §529(c)(2)(B): 5-year election = $95,000/donor/beneficiary ($190,000 couple). Excess gifts consume the $15M lifetime exclusion (§2505) dollar-for-dollar; tax only beyond that at 18–40%.
 export function GiftTaxCalc() {
   const [couple, setCouple] = useState(false)
@@ -4572,6 +4643,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'child-tax-credit-calculator': ChildTaxCreditCalc,
   'estate-tax-calculator': EstateTaxCalc,
   'gift-tax-calculator': GiftTaxCalc,
+  'second-income-calculator': SecondIncomeCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

@@ -789,6 +789,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'gpa-calculator',
+      '529-college-savings-calculator',
       'final-grade-calculator',
       'student-loan-idr-calculator',
       'loan-payoff-calculator',
