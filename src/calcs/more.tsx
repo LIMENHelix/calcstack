@@ -1549,7 +1549,63 @@ export function AnnuityPayoutCalc() {
   )
 }
 
+/* ---------------- Rent Affordability ---------------- */
+
+// The 30% rule and NYC's 40× rule are the SAME formula: 0.30×annual/12 = annual/40.
+// Landlord 3×-rent rule = 33.3% of gross. HUD: 30–50% of income on housing =
+// cost-burdened, 50%+ = severely cost-burdened. Node-verified: 60k → $1,500
+// (30% rule = 40× rule), $1,666.67 (3× rule), $1,250 (25%).
+export function RentAffordCalc() {
+  const [income, setIncome] = useNumber(60000)
+  const [debts, setDebts] = useNumber(300)
+  const [targetRent, setTargetRent] = useNumber(1500)
+
+  const r = useMemo(() => {
+    const m = income / 12
+    const rule30 = m * 0.3
+    const rule3x = m / 3
+    const rule25 = m * 0.25
+    const withDebts = Math.max(0, rule30 - debts)
+    const pct = m > 0 ? (targetRent / m) * 100 : 0
+    const leftover = m - targetRent - debts
+    const landlordIncome = targetRent * 3 * 12
+    const status = pct > 50 ? 'severely cost-burdened (HUD)' : pct > 30 ? 'cost-burdened (HUD)' : 'within the 30% rule'
+    return { m, rule30, rule3x, rule25, withDebts, pct, leftover, landlordIncome, status }
+  }, [income, debts, targetRent])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Annual gross income" value={income} onChange={setIncome} prefix="$" step="1000" />
+        <Field label="Monthly debt payments (car, cards, loans)" value={debts} onChange={setDebts} prefix="$" step="25" />
+        <Field label="Rent you're considering" value={targetRent} onChange={setTargetRent} prefix="$" suffix="/mo" step="50" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Max rent — 30% rule" value={`${usd(r.rule30, 0)}/mo`} />
+        <Result label="Landlord 3× rule allows" value={`${usd(r.rule3x, 0)}/mo`} />
+        <Result label="Conservative 25% rule" value={`${usd(r.rule25, 0)}/mo`} />
+        <Result label="30% rule minus your debts" value={`${usd(r.withDebts, 0)}/mo`} />
+        <Result label="Your target rent is" value={`${num(r.pct, 1)}% of gross`} />
+        <Result label="HUD status at that rent" value={r.status} />
+        <Result label="Left for everything else" value={`${usd(r.leftover, 0)}/mo`} />
+        <Result label="Income a landlord wants for it" value={`${usd(r.landlordIncome, 0)}/yr`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The rules, demystified: the 30% rule and New York's "40× rent" income requirement are the
+        SAME formula — 30% of monthly gross equals annual income ÷ 40 ({usd(income, 0)} ÷ 40 ={' '}
+        {usd(r.rule30, 0)}). The landlord 3×-rent rule is slightly looser at 33.3%. All of them use
+        GROSS income — on a typical ~78% take-home, {usd(r.rule30, 0)} of rent is really ~38% of
+        your actual paycheck. HUD calls 30–50% of income on housing "cost-burdened" and 50%+
+        "severely cost-burdened" — at {usd(targetRent, 0)}, you are {r.status}. And debts come out
+        of the same envelope: with {usd(debts, 0)}/mo of payments, the 30% rule really allows{' '}
+        {usd(r.withDebts, 0)} of rent.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'rent-affordability-calculator': RentAffordCalc,
   'annuity-payout-calculator': AnnuityPayoutCalc,
   'rule-of-72-doubling-calculator': RuleOf72Calc,
   'paycheck-withholding-calculator': WithholdingCalc,

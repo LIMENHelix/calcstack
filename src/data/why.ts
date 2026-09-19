@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'rent-affordability-calculator':
+    'Apartment hunters use it before the showing, not after the rejection: the 30% rule and the landlord\'s 40× requirement are the same formula (income ÷ 40), the 3× rule is looser, and all of them run on gross pay — so the tool shows what the rules allow, what your debts leave, and the exact HUD burden status of the place you want.',
   'annuity-payout-calculator':
     'Anyone holding an insurer\'s monthly-income quote uses it to compute what the agent never volunteers: the implied interest rate. A $650/month promise on $100k is a 4.82% rate — and whether that beats Treasuries is the entire decision, hidden in plain sight.',
   'rule-of-72-doubling-calculator':

@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'rent-affordability-calculator',
+    title: 'Rent Affordability Calculator — 30% Rule, 3× Rule & the 40× Rule (Same Math)',
+    shortTitle: 'Rent Affordability',
+    category: 'Everyday Money',
+    description:
+      'Free rent affordability calculator. See your max rent under the 30% rule, the landlord 3×-rent rule, and the conservative 25% rule — then grade any apartment against your real income, debts, and HUD cost-burden thresholds.',
+    tagline: 'The 30% rule and the 40× rule are the same formula: your income ÷ 40.',
+    intro:
+      'Every rent-affordability article quotes the 30% rule — almost none mention that New York\'s famous "40× the rent" requirement is the identical formula (30% of monthly gross = annual income ÷ 40), that landlord 3×-income rules are looser at 33%, or that all of them run on gross income, not the paycheck you actually see. This calculator shows every rule side by side, subtracts your real debts from the envelope, and grades the apartment you are eyeing against HUD\'s cost-burden thresholds.',
+    howItWorks: [
+      'Enter your annual gross income and monthly debt payments.',
+      'Compare your max rent under the 30%, 3×-rent, and 25% rules — plus the 30% rule with debts subtracted.',
+      'Enter the rent you are considering.',
+      'Read its true share of your income, your HUD burden status, and what is left for everything else.',
+    ],
+    faq: [
+      {
+        q: 'How much rent can I afford on a $60,000 salary?',
+        a: '$1,500/month under the 30% rule ($60,000 ÷ 40). The landlord 3×-income rule allows $1,667; a conservative 25%-of-gross target is $1,250. But remember the rule uses gross income: at a typical ~78% take-home, that $1,500 is about 38% of your real paycheck. With $300/month of car or card payments, the honest 30%-rule ceiling drops to $1,200.',
+      },
+      {
+        q: 'Are the 30% rule and the 40× rent rule the same thing?',
+        a: 'Yes — identical math. 30% of monthly gross income is annual income × 0.30 ÷ 12, which equals annual income ÷ 40 exactly. So "your income must be 40× the rent" and "spend no more than 30% on rent" are one rule wearing two costumes. The 3×-monthly-rent rule some landlords use is the looser cousin: it allows 33.3% of gross.',
+      },
+      {
+        q: 'What does "cost-burdened" actually mean?',
+        a: 'HUD\'s official definitions: spending 30–50% of gross income on housing makes a household cost-burdened; over 50% is severely cost-burdened. These thresholds matter beyond vocabulary — they drive housing-assistance eligibility and are the benchmark researchers use when they say most low-income renters are burdened. If your target rent pushes you past 30%, the calculator shows exactly which rule you are breaking and by how much.',
+      },
+    ],
+  },
+  {
     slug: 'annuity-payout-calculator',
     title: 'Annuity Payout Calculator — Monthly Income & the Implied-Rate Test for Any Quote',
     shortTitle: 'Annuity Payout',
