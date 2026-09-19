@@ -2322,6 +2322,86 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// OBBBA senior deduction (IRC §224, P.L. 119-21 §70103) — $6,000 per 65+ individual ($12,000 MFJ both), 2025–2028, claimed on Schedule 1-A line 13b, stacks with standard OR itemized (unlike the old 65+ addition). Phase-out: each person's $6,000 reduced by 6% of MAGI over $75,000 (single/HoH) / $150,000 (MFJ) — fully gone at $175k/$250k (per-person application verified against IRS/Fidelity/BPC examples: single $105k → $4,200; single $85k → $5,400; MFJ one 65+ spouse at $200k → $3,000). MFS ineligible; SSN required.
+export function SeniorDeductionCalc() {
+  const [status, setStatus] = useState('m')
+  const [seniors, setSeniors] = useState('2')
+  const [magi, setMagi] = useNumber(140000)
+
+  const r = useMemo(() => {
+    const n = status === 'm' ? Math.min(2, parseInt(seniors, 10) || 0) : Math.min(1, parseInt(seniors, 10) || 0)
+    const th = status === 'm' ? 150000 : 75000
+    const per = Math.max(0, 6000 - 0.06 * Math.max(0, magi - th))
+    const ded = per * n
+    const STD: Record<string, number> = { s: 16100, m: 32200, h: 24150 }
+    const BK: Record<string, readonly (readonly [number, number])[]> = {
+      s: [[0, 0.10], [12400, 0.12], [50400, 0.22], [105700, 0.24], [201775, 0.32], [256225, 0.35], [640600, 0.37]],
+      m: [[0, 0.10], [24800, 0.12], [100800, 0.22], [211400, 0.24], [403550, 0.32], [512450, 0.35], [768700, 0.37]],
+      h: [[0, 0.10], [17700, 0.12], [67450, 0.22], [105700, 0.24], [201750, 0.32], [256200, 0.35], [640600, 0.37]],
+    }
+    const marg = (ti: number) => {
+      const t = Math.max(0, ti)
+      const B = BK[status]
+      let rate = 0.10
+      for (const b of B) if (t > b[0]) rate = b[1]
+      return rate
+    }
+    const oldAdd = n * (status === 'm' ? 1650 : 2050)
+    const taxableBase = Math.max(0, magi - STD[status] - oldAdd)
+    const m = marg(taxableBase)
+    const saved = ded * m
+    const headroom = Math.max(0, th - magi)
+    const goneAt = th + 100000
+    return { n, ded, m, saved, headroom, goneAt, oldAdd, std: STD[status], th }
+  }, [status, seniors, magi])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="s">Single</option>
+              <option value="m">Married filing jointly</option>
+              <option value="h">Head of household</option>
+            </select>
+          </label>
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filers age 65+ (Dec 31)</span>
+            <select value={seniors} onChange={(e) => setSeniors(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              {status === 'm' && <option value="2">2</option>}
+            </select>
+          </label>
+          <Field label="Modified AGI (≈ AGI)" value={magi} onChange={setMagi} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Senior deduction (§224)" value={usd(r.ded)} />
+          <Result label="Total 65+ stack" value={usd(r.std + r.oldAdd + r.ded)} />
+          <Result label="Federal tax saved" value={usd(r.saved)} />
+          <Result label="Phase-out headroom" value={r.headroom > 0 ? usd(r.headroom) : 'Phasing out'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.n === 0 ? (
+            <>Turn 65 by December 31 and the deduction appears — age is the only gate besides income (no need to be retired or collecting Social Security). </>
+          ) : r.ded === 0 ? (
+            <>MAGI past {usd(r.goneAt)} phases the deduction to zero at this filing status. </>
+          ) : (
+            <>{r.n === 2 ? 'Both spouses qualify' : 'One filer qualifies'}: <span className="font-medium">{usd(r.ded)}</span> off taxable income — worth {usd(r.saved)} at your {num(r.m * 100, 0)}% marginal rate, stacking with the standard deduction AND the existing 65+ addition ({usd(r.oldAdd)}), whether you itemize or not. </>
+          )}
+          {r.headroom > 0 && r.headroom < 40000 && r.n > 0 && <>You're {usd(r.headroom)} under the phase-out — every MAGI dollar over {usd(r.th)} costs 6¢ of deduction per qualified person, so a December Roth conversion or capital gain eats it at your bracket + 6%. </>}
+          {r.n > 0 && <>Temporary: 2025–2028 only — four tax years, worth up to {usd(r.ded * Math.min(4, 4))} total at this income.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2025–2028 (OBBBA §70103, IRC §224): $6,000 per person age 65+ at year-end — $12,000 for a joint couple if both qualify — claimed on the new Schedule 1-A and stacked on the standard deduction or itemized deductions alike. Each person's amount phases down 6% of MAGI over $75,000 (single/HoH) or $150,000 (MFJ): fully gone at $175,000 / $250,000. Married filing separately is ineligible; a work-authorized SSN is required. This is the provision behind the "no tax on Social Security" headlines — benefits are still taxed under the old provisional-income formula; this deduction is what zeroes the bill for many seniors. The separate 65+/blind standard-deduction addition ($2,050 single/HoH, $1,650 per spouse MFJ for 2026) is permanent and stacks on top.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Charitable bunching / DAF 2026 — two-year comparison: spread giving vs bunching 2 years into one via donor-advised fund. Itemized charitable subject to 0.5%-of-AGI floor (OBBBA); non-itemizer above-line charitable $1,000/$2,000 (NEW 2026 — makes bunching LOSE when other deductions are low: spread gets 2×$2,000 above-line, bunch gets none in the off year). Std $16,100/$32,200/$24,150. Verified: MFJ AGI $150k, other $25k, $10k/yr → bunch wins $7,950 of deductions ≈ $1,749 tax; AGI $120k, other $20k, $8k/yr → spread wins $800.
 export function CharitableBunchingCalc() {
   const [status, setStatus] = useState('m')
@@ -4824,6 +4904,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'second-income-calculator': SecondIncomeCalc,
   'itemized-vs-standard-deduction-calculator': ItemizeVsStandardCalc,
   'charitable-bunching-calculator': CharitableBunchingCalc,
+  'senior-deduction-calculator': SeniorDeductionCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

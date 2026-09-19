@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'senior-deduction-calculator':
+    'Retirees use it to translate the "no tax on Social Security" headlines into the real provision — a temporary $6,000-per-person deduction with a 6% MAGI clawback — and to see exactly what a December Roth conversion or capital gain costs them in lost deduction during the 2025–2028 window.',
   'charitable-bunching-calculator':
     'Consistent givers use it to learn whether bunching still beats spreading under the 2026 rules — the new 0.5% AGI floor and the $1,000/$2,000 above-the-line deduction flipped the answer for a lot of households, and the two-year dollar comparison settles it in one pass.',
   'itemized-vs-standard-deduction-calculator':

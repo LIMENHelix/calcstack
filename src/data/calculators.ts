@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'senior-deduction-calculator',
+    title: 'Senior Deduction Calculator 2026 — The New $6,000 OBBBA Deduction (Age 65+)',
+    shortTitle: 'Senior Deduction 2026',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 senior deduction calculator. New $6,000 OBBBA deduction per person 65+ ($12,000 couples), 6% MAGI phase-out, stacks with standard or itemized — see your exact amount.',
+    tagline: 'The "no tax on Social Security" provision, as it actually exists.',
+    intro:
+      'The headlines said Social Security became tax-free. What the law actually did is more useful to plan around: a new $6,000-per-person deduction for anyone 65 or older, stacking on top of the standard deduction AND the existing 65+ addition, available even if you itemize — but temporary (2025–2028) and phased out 6 cents per dollar of MAGI over $75,000 single / $150,000 joint. This calculator shows your exact amount, the full deduction stack, what it saves at your bracket, and how much room you have before the phase-out starts eating it.',
+    howItWorks: [
+      'Pick filing status and how many filers are 65+ on December 31 (married filing separately is ineligible).',
+      'Enter modified AGI — for most retirees that\'s just AGI.',
+      'Each qualifying person gets $6,000, reduced 6% of MAGI over the threshold: gone at $175,000 single / $250,000 joint.',
+      'The calculator shows the deduction, the full stack (standard + 65+ addition + §224), tax saved at your marginal bracket, and headroom to the phase-out.',
+    ],
+    faq: [
+      {
+        q: 'Is Social Security tax-free now?',
+        a: 'No — benefits are still taxed under the same provisional-income formula as before. What\'s new is this $6,000-per-person deduction, which lowers taxable income enough that many seniors pay no federal tax at all. The distinction matters for planning: the deduction phases out at higher incomes, so Roth conversions and big capital gains in 2025–2028 can cost 6% extra per qualified person on top of your bracket.',
+      },
+      {
+        q: 'Can I claim it if I itemize?',
+        a: 'Yes — unlike the older 65+ standard-deduction addition, the new §224 deduction is available whether you itemize or take the standard deduction. It\'s claimed on the new Schedule 1-A. A single filer 65+ under the income threshold deducts $24,150 total ($16,100 standard + $2,050 age addition + $6,000); a joint couple both 65+ deducts $47,500.',
+      },
+      {
+        q: 'How does the phase-out work for couples?',
+        a: 'Each qualifying spouse\'s $6,000 is reduced separately by 6% of joint MAGI over $150,000. At $200,000 joint MAGI with both spouses 65+, each keeps $3,000 — $6,000 total. With one spouse 65+, that spouse keeps $3,000. The deduction hits zero at $250,000 joint MAGI regardless.',
+      },
+    ],
+  },
+  {
     slug: 'charitable-bunching-calculator',
     title: 'Charitable Bunching Calculator 2026 — Donor-Advised Fund vs Spreading Gifts',
     shortTitle: 'Charitable Bunching Calculator',
