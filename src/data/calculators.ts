@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'race-time-predictor-calculator',
+    title: 'Race Time Predictor — Riegel Formula With the Honest Caveats',
+    shortTitle: 'Race Predictor',
+    category: 'Fitness & Sports',
+    description:
+      'Race equivalency calculator using the Riegel formula (T₂ = T₁ × (D₂/D₁)^1.06): enter any race result and get predicted times and per-mile paces for mile through marathon — plus the linear-scaling error shown explicitly, because that is the math that ruins race plans.',
+    tagline:
+      'Fatigue is superlinear. The 1.06 exponent is why your 5K time does not double into your 10K — and why linear math ruins marathons.',
+    intro:
+      'Peter Riegel\'s formula — T₂ = T₁ × (D₂/D₁)^1.06 — has been the standard race-prediction model since 1977 because fatigue rises faster than distance. Doubling the race more than doubles the time. Most quick estimates (and most AI answers) scale pace linearly, which underestimates a marathon predicted from a 5K by twenty-plus minutes. This tool predicts every standard distance from any one result, shows pace per mile, and displays the linear error side-by-side so you can see exactly how the naive math lies.',
+    howItWorks: [
+      'Riegel: T₂ = T₁ × (D₂/D₁)^1.06. The 1.06 fatigue exponent was fitted from competitive race results across distances.',
+      'A 20:00 5K predicts 41:42 for 10K, 1:32:00 for the half, and 3:11:49 for the marathon — linear scaling would promise 2:48:47, a 23-minute lie.',
+      'Predictions assume comparable training for both distances: a 5K predicts your marathon only if you actually did the long runs.',
+      'The model degrades beyond the marathon — in ultras, endurance economy and fueling dominate and no exponent rescues the prediction.',
+    ],
+    faq: [
+      {
+        q: 'I ran a 20:00 5K. What marathon time should I target?',
+        a: 'The Riegel prediction is 3:11:49 (7:19/mile) — NOT the 2:48:47 that linear pace math gives. That 23-minute gap is exactly how runners end up walking the last 10K: they trained and raced to a pace a linear formula promised. Plan for 3:10–3:15 if your long-run volume supports it, and treat 3:11 as the ceiling, not the floor.',
+      },
+      {
+        q: 'How accurate is the Riegel formula really?',
+        a: 'Within a few percent for trained runners between 5K and marathon — a 4:00 marathon predicts a 1:55:07 half, matching published equivalency tables. Accuracy drops at the extremes: sprinters overperform at short distances (their 5K underpredicts their mile), endurance specialists do the opposite, and ultra distances break the model entirely. Use it as a training-supported estimate, not a guarantee.',
+      },
+      {
+        q: 'Why does the pace slow down as distance grows?',
+        a: 'Because the limiting system changes. Under ~3 minutes you are anaerobic; mile to 10K is VO₂max territory; the half and marathon are limited by lactate threshold, glycogen, and heat. Each limit tolerates a lower fraction of your top speed, which the 1.06 exponent compresses into one number. If your predicted long-distance times are consistently slower than your actuals, you are endurance-gifted — train your speed, and the short-distance predictions will catch up.',
+      },
+    ],
+  },
+  {
     slug: 'dependent-care-fsa-vs-credit-calculator',
     title: 'Dependent Care FSA vs Child & Dependent Care Credit 2026 — The New 50% Schedule',
     shortTitle: 'DC FSA vs Credit',

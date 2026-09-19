@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'race-time-predictor-calculator':
+    'Runners use it to convert any race result into realistic targets at every other distance — the 1.06 fatigue exponent instead of the linear pace math that overpromises a marathon by 20+ minutes and wrecks race plans at mile 18.',
   'dependent-care-fsa-vs-credit-calculator':
     'Working parents use it at open enrollment to settle the FSA-vs-credit question on the 2026 rules — the new 50%-to-20% schedule and the $7,500 limit — because the dollar-for-dollar expense-cap offset means you can never have both on the same money, and the crossover is different at every income.',
   'hsa-vs-fsa-calculator':

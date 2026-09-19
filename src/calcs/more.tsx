@@ -2308,6 +2308,85 @@ export function Solo401kCalc() {
 // the SAME employer math as the solo 401(k). Node-verified: $100k profit → SEP
 // $18,587 vs solo $43,087; the solo advantage is exactly the $24,500 deferral
 // until the cap binds ($300k profit: $56,839 vs $72,000).
+const RACE_DISTS: [string, number][] = [
+  ['1 mile', 1.609344], ['5K', 5], ['10K', 10], ['10 miles', 16.09344], ['Half marathon', 21.0975], ['Marathon', 42.195],
+]
+
+export function RacePredictorCalc() {
+  const [distIdx, setDistIdx] = useState(1) // default 5K
+  const [hh, setHh] = useNumber(0)
+  const [mm, setMm] = useNumber(20)
+  const [ss, setSs] = useNumber(0)
+
+  const r = useMemo(() => {
+    const t1 = hh * 3600 + mm * 60 + ss
+    const d1 = RACE_DISTS[Math.min(distIdx, RACE_DISTS.length - 1)][1]
+    if (t1 <= 0) return { rows: [], t1: 0, d1, name: '' }
+    const fmtT = (s: number) => {
+      const h = Math.floor(s / 3600)
+      const m = Math.floor((s % 3600) / 60)
+      const sec = Math.round(s % 60)
+      return (h ? `${h}:` : '') + String(m).padStart(h ? 2 : 1, '0') + ':' + String(sec).padStart(2, '0')
+    }
+    const rows = RACE_DISTS.map(([name, d2]) => {
+      const t = t1 * Math.pow(d2 / d1, 1.06)
+      const linear = t1 * (d2 / d1)
+      const paceMi = t / (d2 / 1.609344)
+      return { name, d2, t: fmtT(t), pace: fmtT(paceMi), linear: fmtT(linear), gap: t - linear, isInput: d2 === d1 }
+    })
+    return { rows, t1, d1, name: RACE_DISTS[distIdx][0] }
+  }, [distIdx, hh, mm, ss])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-4">
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Known race distance</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={distIdx} onChange={(e) => setDistIdx(Number(e.target.value))}>
+            {RACE_DISTS.map(([name], i) => <option key={name} value={i}>{name}</option>)}
+          </select>
+        </label>
+        <Field label="Hours" value={hh} onChange={setHh} step="1" />
+        <Field label="Minutes" value={mm} onChange={setMm} step="1" />
+        <Field label="Seconds" value={ss} onChange={setSs} step="1" />
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b text-left text-muted-foreground">
+              <th className="py-1 pr-3 font-medium">Distance</th>
+              <th className="py-1 pr-3 font-medium">Riegel prediction</th>
+              <th className="py-1 pr-3 font-medium">Pace / mile</th>
+              <th className="py-1 pr-3 font-medium">Linear (wrong)</th>
+              <th className="py-1 font-medium">Linear error</th>
+            </tr>
+          </thead>
+          <tbody>
+            {r.rows.map((row) => (
+              <tr key={row.name} className={`border-b last:border-0 ${row.isInput ? 'bg-primary/5 font-medium' : ''}`}>
+                <td className="py-1 pr-3">{row.name}{row.isInput ? ' (you)' : ''}</td>
+                <td className="py-1 pr-3 font-medium">{row.t}</td>
+                <td className="py-1 pr-3">{row.pace}/mi</td>
+                <td className="py-1 pr-3 text-muted-foreground">{row.linear}</td>
+                <td className="py-1 text-muted-foreground">{row.gap > 30 ? `+${Math.round(row.gap / 60)} min too slow` : row.gap < -30 ? `${Math.round(row.gap / 60)} min too fast` : '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The Riegel formula — T₂ = T₁ × (D₂/D₁)^1.06 — is the standard race-equivalency model (Riegel, 1977/81).
+        The exponent is the whole point: fatigue rises superlinearly with distance, so doubling distance more
+        than doubles your time. Linear pace scaling — what most quick math and chatbots do — gets the marathon
+        wrong by 20+ minutes from a 5K, which is how runners blow up at mile 18 chasing a pace a formula
+        promised. Honest caveats: Riegel assumes comparable training for both distances (a 5K time predicts a
+        marathon only if you did the long runs), and it overestimates ultra distances — beyond the marathon,
+        endurance economy dominates and no 1.06 exponent can save you.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function DepCareCalc() {
   const [mfj, setMfj] = useState(true)
   const [agi, setAgi] = useNumber(120000)
@@ -2804,6 +2883,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'race-time-predictor-calculator': RacePredictorCalc,
   'dependent-care-fsa-vs-credit-calculator': DepCareCalc,
   'hsa-vs-fsa-calculator': HsaFsaCalc,
   'commission-draw-calculator': CommissionDrawCalc,
