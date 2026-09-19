@@ -2312,6 +2312,77 @@ const RACE_DISTS: [string, number][] = [
   ['1 mile', 1.609344], ['5K', 5], ['10K', 10], ['10 miles', 16.09344], ['Half marathon', 21.0975], ['Marathon', 42.195],
 ]
 
+const WILKS_COEFF = {
+  m: [-216.0475144, 16.2606339, -0.002388645, -0.00113732, 7.01863e-06, -1.291e-08],
+  f: [594.31747775582, -27.23842536447, 0.82112226871, -0.00930733913, 4.731582e-05, -9.054e-08],
+} as const
+
+const DOTS_COEFF = {
+  m: [-0.000001093, 0.0007391293, -0.1918759221, 24.0900756, -307.75076],
+  f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
+} as const
+
+export function WilksCalc() {
+  const [sex, setSex] = useState<'m' | 'f'>('m')
+  const [bwLb, setBwLb] = useNumber(220)
+  const [squatLb, setSquatLb] = useNumber(455)
+  const [benchLb, setBenchLb] = useNumber(315)
+  const [deadLb, setDeadLb] = useNumber(545)
+
+  const r = useMemo(() => {
+    const bwKg = bwLb * 0.45359237
+    const totalLb = squatLb + benchLb + deadLb
+    const totalKg = totalLb * 0.45359237
+    const [a, b, c, d, e, f] = WILKS_COEFF[sex]
+    const wDenom = a + b * bwKg + c * bwKg ** 2 + d * bwKg ** 3 + e * bwKg ** 4 + f * bwKg ** 5
+    const wilks = wDenom > 0 ? (totalKg * 500) / wDenom : 0
+    const [A, B, C, D, E] = DOTS_COEFF[sex]
+    const dDenom = A * bwKg ** 4 + B * bwKg ** 3 + C * bwKg ** 2 + D * bwKg + E
+    const dots = dDenom > 0 ? (totalKg * 500) / dDenom : 0
+    const band = dots < 200 ? 'Beginner' : dots < 300 ? 'Novice' : dots < 400 ? 'Intermediate' : dots < 500 ? 'Advanced' : 'Elite'
+    // total needed for a round DOTS milestone at this bodyweight
+    const nextMilestone = Math.ceil((dots + 1) / 50) * 50
+    const kgForNext = (nextMilestone * dDenom) / 500
+    const lbForNext = kgForNext / 0.45359237
+    return { totalLb, wilks, dots, band, nextMilestone, addLb: Math.max(0, lbForNext - totalLb) }
+  }, [sex, bwLb, squatLb, benchLb, deadLb])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Division</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={sex} onChange={(e) => setSex(e.target.value as 'm' | 'f')}>
+            <option value="m">Men's</option>
+            <option value="f">Women's</option>
+          </select>
+        </label>
+        <Field label="Body weight" value={bwLb} onChange={setBwLb} suffix="lb" step="5" />
+        <Field label="Squat" value={squatLb} onChange={setSquatLb} suffix="lb" step="5" />
+        <Field label="Bench" value={benchLb} onChange={setBenchLb} suffix="lb" step="5" />
+        <Field label="Deadlift" value={deadLb} onChange={setDeadLb} suffix="lb" step="5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Wilks score (legacy)" value={num(r.wilks, 1)} />
+        <Result label="DOTS score (current)" value={num(r.dots, 1)} />
+        <Result label="Class band (DOTS)" value={r.band} />
+        <Result label="Total" value={`${num(r.totalLb, 0)} lb`} />
+        <Result label={`To reach ${r.nextMilestone} DOTS`} value={`+${num(r.addLb, 0)} lb total`} />
+        <Result label="Wilks vs DOTS gap" value={`${r.wilks >= r.dots ? '+' : ''}${num(r.wilks - r.dots, 1)}`} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Why two numbers: the IPF retired Wilks in 2019 after analyses showed it systematically favored
+        heavier lifters — the same total scored higher at higher body weights than it should. DOTS (and the
+        IPF&apos;s own GL points) refit the polynomial on modern results. If your Wilks reads higher than your
+        DOTS, you are exactly the lifter the old system flattered. Both scores are comparable only within the
+        same sex division, and both use kilogram math internally — this tool converts your pounds. Bands
+        (Beginner &lt;200 → Elite 500+) follow the DOTS scale; a 400 DOTS puts you around national-meet
+        qualification territory, 500+ is international class.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function RacePredictorCalc() {
   const [distIdx, setDistIdx] = useState(1) // default 5K
   const [hh, setHh] = useNumber(0)
@@ -2883,6 +2954,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'wilks-score-calculator': WilksCalc,
   'race-time-predictor-calculator': RacePredictorCalc,
   'dependent-care-fsa-vs-credit-calculator': DepCareCalc,
   'hsa-vs-fsa-calculator': HsaFsaCalc,

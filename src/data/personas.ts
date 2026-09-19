@@ -1073,6 +1073,7 @@ export const PERSONAS: Persona[] = [
       'sweat-rate-calculator',
       'glycogen-calculator',
       'dots-score-calculator',
+      'wilks-score-calculator',
       'macro-calculator',
       'ckd-carb-up-calculator',
       'body-fat-calculator',

@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'wilks-score-calculator',
+    title: 'Wilks Score Calculator — Legacy Wilks vs Current DOTS, Side by Side',
+    shortTitle: 'Wilks Score',
+    category: 'Fitness & Sports',
+    description:
+      'Wilks score calculator with the original 1990s polynomial (verified coefficients for men and women) shown next to the current DOTS score — including the gap that reveals whether the retired system was flattering your bodyweight class, and the exact pounds needed to reach the next DOTS milestone.',
+    tagline:
+      'Wilks was retired for a reason: it favored heavier lifters. See both scores and exactly where you stand today.',
+    intro:
+      'For two decades the Wilks coefficient decided "best lifter" awards — until the IPF retired it in 2019 after analyses showed it systematically favored heavier body weights. DOTS (and IPF GL points) replaced it. Lifters with old meet results still need Wilks to compare eras, and anyone arguing about all-time totals needs both. This calculator runs the original Wilks polynomial and the current DOTS polynomial on the same lifts, shows the gap, and computes the total you need for the next DOTS milestone.',
+    howItWorks: [
+      'Wilks: score = total(kg) × 500 ÷ a fifth-degree bodyweight polynomial, with separate published coefficient sets for men and women.',
+      'DOTS (2019): same structure, fourth-degree polynomial refit on modern competition data — the standard USAPL/USPA use for best-lifter awards.',
+      'The gap between the two scores IS the story: Wilks > DOTS at heavier body weights, the bias that got it retired.',
+      'Milestone math inverts the polynomial: the exact additional pounds needed to reach the next 50-point DOTS level at your current body weight.',
+    ],
+    faq: [
+      {
+        q: 'What is a good Wilks or DOTS score?',
+        a: 'On the DOTS scale: under 200 beginner, 300 intermediate-adjacent, 400 advanced (roughly national-meet qualification territory), 500+ international class. A 220 lb male totaling 1,315 lb scores about 365 Wilks and 369 DOTS — solidly intermediate. The scales track closely at middle body weights and diverge at the extremes.',
+      },
+      {
+        q: 'Why did the IPF drop Wilks?',
+        a: 'Statistical bias. Validation studies on modern meet data showed Wilks gave heavier lifters an edge — two lifters with proportionally equal performances got different Wilks scores depending on body weight. DOTS (2019) and IPF GL points were refit on hundreds of thousands of current results to fix the weight-class skew. If your Wilks is higher than your DOTS, the old system was flattering your class.',
+      },
+      {
+        q: 'How much more do I need to total for the next level?',
+        a: 'It depends on body weight, which is the point of the coefficient. The calculator inverts the polynomial: at 220 lb body weight, going from 369 to 400 DOTS takes roughly +110 lb of total — but at 165 lb the same jump takes far less. Lightweight lifters gain points faster per pound added; heavyweight lifters need bigger totals for the same score.',
+      },
+    ],
+  },
+  {
     slug: 'race-time-predictor-calculator',
     title: 'Race Time Predictor — Riegel Formula With the Honest Caveats',
     shortTitle: 'Race Predictor',
