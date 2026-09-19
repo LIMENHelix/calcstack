@@ -92,6 +92,7 @@ they keep the person who clearly knows the subject.
 | Teachers & public sector | Teacher Pay, Pension math | Teacher blogs, education degree program pages, union local sites |
 | Small business owners | PTET Election, Nanny Tax, QBI-adjacent tools | CPA/tax blogs, /r/tax and /r/smallbusiness answer threads, S-corp community newsletters, bookkeeping firm blogs |
 | Parents & families | Trump Account, Custodial Roth, 529-vs-Trump-vs-Roth, Nanny Tax | Parenting finance blogs, college-planning sites, nanny agency resource pages, family-money newsletters |
+| Eldercare & senior finance | LTC Cost, LTC Insurance vs Self-Fund, Hybrid vs Traditional LTC, Medicaid Spend-Down, RMD, Social Security Breakeven | Elder law firm blogs, caregiver forums (AgingCare-style), senior living referral sites, fee-only advisor newsletters, /r/AgingParents answer threads |
 
 ## New-vertical pitch angles (what makes OURS different)
 
@@ -140,3 +141,28 @@ every big site is still showing 2025 rules.
 
 Timing: all six peak December–April (year-end planning → filing season). PTET leads the wave —
 Q4 is when entities elect.
+
+## Wave 48 — Eldercare funding (#253–#256 + retirement backlist)
+
+The four-tool journey no competitor has: price the care, price the insurance, price the policy
+type, price the Medicaid fallback. Every eldercare site has articles; none have the math inline.
+
+- **LTC Cost** — 2025 CareScout medians with the counterintuitive headline: full-time home care
+  ($80,080/yr) now costs MORE than assisted living ($74,400/yr). Pitch caregiver forums and
+  senior living blogs: "your readers are making the home-vs-facility call on vibes."
+- **LTC Insurance vs Self-Fund** — the breakeven-months framing (invested premiums cover ~14
+  months; the pool covers 32). Fee-only advisor newsletters love a tool that isn't sold by an
+  insurance agent.
+- **Hybrid vs Traditional LTC** — the honest "$183k vs $75k true cost" comparison. Nobody else
+  quantifies what "money back if you don't use it" actually costs. Pitch insurance-adjacent
+  finance blogs tired of carrier-written content.
+- **Medicaid Spend-Down** — three tests at once: $2,000 asset limit, CSRA $32,532–$162,660,
+  and the lookback penalty in private-pay dollars ("your $100k gift = 9.4 months × $10,645").
+  Elder law firm blogs are the prime target: every firm publishes the same lookback explainer,
+  and an embeddable calculator makes theirs the one that ranks.
+- **Backlist cross-pitch** — RMD and Social Security Breakeven ride along in the same emails
+  to retirement-focused sites.
+
+Timing: evergreen, but peaks with family gatherings (holidays → "Mom can't live alone"
+conversations) and open enrollment. Elder law blogs update their figures every January — pitch
+them in December before they rewrite.
