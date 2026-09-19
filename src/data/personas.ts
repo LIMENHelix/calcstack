@@ -697,6 +697,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'tip-income-calculator',
+      'tips-overtime-deduction-calculator',
       'tip-credit-calculator',
       'tip-pool-calculator',
       'eitc-calculator',

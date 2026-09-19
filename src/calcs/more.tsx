@@ -2322,6 +2322,70 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// No Tax on Tips & Overtime — OBBBA §§70201–70202, 2025–2028, Schedule 1-A. Tips: up to $25,000 per taxpayer, qualifying occupations only, voluntary tips (not auto-gratuity), still payroll-taxed. OT: only the FLSA premium (the ½ in time-and-a-half), cap $12,500/return ($25,000 joint). Both: −$100 per $1,000 (or fraction) MAGI over $150k/$300k; tips gone at $400k/$550k, OT at $275k/$550k. SSN required; married must file jointly. Verified vs IRS/UIUC examples: Emily $22/hr × 120 OT hrs → $1,320; Daniel $15k OT at $160k MAGI → $11,500; Sarah $18k tips at $60k → $18,000.
+export function TipsOvertimeDeductionCalc() {
+  const [mfj, setMfj] = useState(false)
+  const [magi, setMagi] = useNumber(60000)
+  const [rate, setRate] = useNumber(22)
+  const [otHours, setOtHours] = useNumber(120)
+  const [tips, setTips] = useNumber(0)
+
+  const r = useMemo(() => {
+    const th = mfj ? 300000 : 150000
+    const red = 100 * Math.ceil(Math.max(0, magi - th) / 1000)
+    const premium = 0.5 * rate * Math.max(0, otHours)
+    const otDed = Math.max(0, Math.min(premium, mfj ? 25000 : 12500) - red)
+    const tipsDed = Math.max(0, Math.min(Math.max(0, tips), 25000) - red)
+    const total = otDed + tipsDed
+    const STD = mfj ? 32200 : 16100
+    const BK: readonly (readonly [number, number])[] = mfj
+      ? [[0, 0.10], [24800, 0.12], [100800, 0.22], [211400, 0.24], [403550, 0.32], [512450, 0.35], [768700, 0.37]]
+      : [[0, 0.10], [12400, 0.12], [50400, 0.22], [105700, 0.24], [201775, 0.32], [256225, 0.35], [640600, 0.37]]
+    const taxable = Math.max(0, magi - STD)
+    let m = 0.10
+    for (const b of BK) if (taxable > b[0]) m = b[1]
+    const saved = total * m
+    const headroom = Math.max(0, th - magi)
+    return { premium, otDed, tipsDed, total, m, saved, red, headroom, th }
+  }, [mfj, magi, rate, otHours, tips])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={mfj ? 'm' : 's'} onChange={(e) => setMfj(e.target.value === 'm')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="s">Single / head of household</option>
+              <option value="m">Married filing jointly</option>
+            </select>
+          </label>
+          <Field label="Modified AGI" value={magi} onChange={setMagi} prefix="$" />
+          <Field label="Reported tips for the year" value={tips} onChange={setTips} prefix="$" />
+          <Field label="Regular hourly rate" value={rate} onChange={setRate} prefix="$" />
+          <Field label="Overtime hours worked (at 1.5×)" value={otHours} onChange={setOtHours} />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Overtime deduction" value={usd(r.otDed)} />
+          <Result label="Tips deduction" value={usd(r.tipsDed)} />
+          <Result label="Total deduction" value={usd(r.total)} />
+          <Result label="Federal tax saved" value={usd(r.saved)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.premium > 0 && <>Your overtime premium — the deductible part — is the "half" of time-and-a-half: {usd(0.5 * rate)}/hr × {otHours} hrs = <span className="font-medium">{usd(r.premium)}</span>{r.premium > r.otDed ? `, capped/phased down to ${usd(r.otDed)}` : ''}. </>}
+          {r.red > 0 && <>MAGI phase-out removed <span className="font-medium">{usd(r.red)}</span> ($100 per $1,000 over {usd(r.th)}). </>}
+          {r.headroom > 0 && r.headroom < 30000 && <>Phase-out starts {usd(r.headroom)} above your MAGI — a year-end bonus could shave $100 per $1,000 off both deductions. </>}
+          {r.total > 0 && <>Worth <span className="font-medium">{usd(r.saved)}</span> at your {num(r.m * 100, 0)}% bracket — claimed on Schedule 1-A whether or not you itemize. Tips and OT are still fully hit by Social Security, Medicare, and usually state tax. </>}
+          {tips > 0 && <>Tip rule: voluntary tips in IRS-listed occupations only — auto-gratuities and mandatory service charges don't count. </>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2025–2028 (OBBBA §§70201–70202; IRS Schedule 1-A): tips deduction up to $25,000 per person in occupations that customarily received tips before 2025 (roughly 70 on the IRS list — servers, bartenders, drivers, stylists, not SSTB professionals); overtime deduction covers only the FLSA-required premium portion, capped at $12,500 per return ($25,000 joint). Both phase out $100 per $1,000 of MAGI over $150,000 single / $300,000 joint — tips fully gone at $400k/$550k, overtime at $275k/$550k. Both require an SSN and, if married, a joint return; both work with the standard deduction. Self-employed: tips yes (capped at net business income), overtime no (FLSA doesn't cover you). W-2 boxes for these start in 2026 — for 2025, W-2 Box 7, tip logs, and Form 4137 are the substantiation.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // OBBBA senior deduction (IRC §224, P.L. 119-21 §70103) — $6,000 per 65+ individual ($12,000 MFJ both), 2025–2028, claimed on Schedule 1-A line 13b, stacks with standard OR itemized (unlike the old 65+ addition). Phase-out: each person's $6,000 reduced by 6% of MAGI over $75,000 (single/HoH) / $150,000 (MFJ) — fully gone at $175k/$250k (per-person application verified against IRS/Fidelity/BPC examples: single $105k → $4,200; single $85k → $5,400; MFJ one 65+ spouse at $200k → $3,000). MFS ineligible; SSN required.
 export function SeniorDeductionCalc() {
   const [status, setStatus] = useState('m')
@@ -4905,6 +4969,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'itemized-vs-standard-deduction-calculator': ItemizeVsStandardCalc,
   'charitable-bunching-calculator': CharitableBunchingCalc,
   'senior-deduction-calculator': SeniorDeductionCalc,
+  'tips-overtime-deduction-calculator': TipsOvertimeDeductionCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

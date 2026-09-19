@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'tips-overtime-deduction-calculator',
+    title: 'No Tax on Tips & Overtime Calculator 2026 — The Real Deduction, Caps & Phase-Outs',
+    shortTitle: 'Tips & Overtime Deduction',
+    category: 'Everyday Money',
+    description:
+      'Free 2026 calculator for the new tips and overtime deductions. $25,000 tips cap, $12,500 overtime premium cap, MAGI phase-outs — see your exact deduction and tax savings.',
+    tagline: 'Not tax-free — deductible. The difference is the whole game.',
+    intro:
+      '"No tax on tips, no tax on overtime" is really two above-the-line deductions with caps, phase-outs, and fine print that decides real money: only voluntary tips in IRS-listed occupations count (auto-gratuities don\'t), only the premium half of time-and-a-half counts for overtime, everything is still hit by payroll tax, and both deductions shrink $100 per $1,000 of MAGI over $150,000. This calculator turns your actual hours, rate, and tips into the deduction and the dollars it saves you — 2025 through 2028 only.',
+    howItWorks: [
+      'Enter your reported tips for the year — capped at $25,000, occupations that customarily received tips only, voluntary tips (not mandatory service charges).',
+      'Enter your regular hourly rate and overtime hours — only the 0.5× premium portion is deductible, capped at $12,500 per return ($25,000 joint).',
+      'Enter modified AGI and filing status — above $150,000 single / $300,000 joint, each deduction loses $100 per $1,000.',
+      'Results: each deduction after caps and phase-out, the total, and federal tax saved at your marginal bracket.',
+    ],
+    faq: [
+      {
+        q: 'Is overtime really "tax-free" now?',
+        a: 'No — it\'s a deduction, and only for the premium portion. If you earn $22/hour and work 120 overtime hours at $33, the deductible amount is the $11 premium × 120 = $1,320, not the $3,960 total. The deduction saves you your marginal rate on that amount (about $158–$290 for most brackets), and Social Security, Medicare, and state taxes still apply to every dollar.',
+      },
+      {
+        q: 'Which tips qualify?',
+        a: 'Voluntary cash or card tips — including through tip pools — in occupations the IRS lists as customarily tipped before 2025 (roughly 70: servers, bartenders, hairdressers, delivery drivers, bellhops…). Mandatory service charges and auto-gratuities don\'t count. Tips must be reported — W-2 Box 7, tip logs, or Form 4137 for unreported tips. Self-employed workers in listed occupations qualify too, capped at net business income.',
+      },
+      {
+        q: 'What are the income limits?',
+        a: 'Both deductions phase out $100 for every $1,000 of MAGI above $150,000 single / $300,000 joint. Tips (cap $25,000) are fully gone at $400,000/$550,000; overtime (cap $12,500/$25,000) at $275,000/$550,000. Married couples must file jointly to claim either one. Both expire after 2028.',
+      },
+    ],
+  },
+  {
     slug: 'senior-deduction-calculator',
     title: 'Senior Deduction Calculator 2026 — The New $6,000 OBBBA Deduction (Age 65+)',
     shortTitle: 'Senior Deduction 2026',
