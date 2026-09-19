@@ -90,6 +90,8 @@ they keep the person who clearly knows the subject.
 | Sports science | DOTS Score, CKD Carb-Up, Glycogen, Carb Loading, Sweat Rate | Powerlifting federation blogs, keto/CKD communities, marathon training blogs, strength coaching newsletters |
 | Engineers & STEM | Beam Load, Load Combinations, HP↔Torque, RC Circuit, Ohm's Law | Engineering school resource pages, hobbyist electronics blogs, /r/AskEngineers wiki, maker sites |
 | Teachers & public sector | Teacher Pay, Pension math | Teacher blogs, education degree program pages, union local sites |
+| Small business owners | PTET Election, Nanny Tax, QBI-adjacent tools | CPA/tax blogs, /r/tax and /r/smallbusiness answer threads, S-corp community newsletters, bookkeeping firm blogs |
+| Parents & families | Trump Account, Custodial Roth, 529-vs-Trump-vs-Roth, Nanny Tax | Parenting finance blogs, college-planning sites, nanny agency resource pages, family-money newsletters |
 
 ## New-vertical pitch angles (what makes OURS different)
 
@@ -113,3 +115,28 @@ they keep the person who clearly knows the subject.
 - UTM tags on outreach links where possible: `?utm_source=outreach&utm_medium=embed`
 - Watch Search Console for new referring domains once the custom domain is live.
 - An embed that renders counts double: it's a backlink AND a traffic channel.
+
+## Wave 47 — New money rules 2026 (#247–#252)
+
+Fresh angles nobody else has calculators for yet. All six are 2026-specific, which is the pitch:
+every big site is still showing 2025 rules.
+
+- **Car Loan Interest Deduction** — new §163(h)(4) deduction ($10k cap, phases out over
+  $100k/$200k, US-assembled vehicles only, VIN required on the return). Pitch car-buying blogs
+  and auto YouTube descriptions: "your 2025 car-loan articles are missing the new deduction."
+- **Trump Account** — the $1,000 federal seed for 2025–28 births plus $5k/yr contributions.
+  Parenting blogs are drowning in explainers with zero math; the embed IS the math.
+- **Custodial Roth IRA** — teen summer-job money at 0% tax into a Roth. Pitch to parenting and
+  first-job content: the "your kid's $3,000 lifeguard wage becomes $100k+" angle.
+- **529 vs Trump vs Roth 3-way** — the only tool that runs the same dollars through all three
+  vehicles including FAFSA treatment. College-planning blogs and fee-only advisor newsletters.
+- **Nanny Tax** — $58/week makes you an employer; shows both FICA shares, FUTA, and the
+  dependent-care FSA offset. Pitch nanny agencies' resource pages and parenting finance blogs —
+  the "1099 your nanny is misclassification" angle is worker-protection content.
+- **PTET Election** — the SALT-cap workaround with the QBI haircut included. The honest
+  "electing can LOSE $264 when the cap wasn't binding" framing is the pitch to CPA bloggers
+  tired of one-sided PTET hype. Target /r/tax answer threads and small-business tax
+  newsletters during Q4 entity-planning season.
+
+Timing: all six peak December–April (year-end planning → filing season). PTET leads the wave —
+Q4 is when entities elect.
