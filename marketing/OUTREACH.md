@@ -209,3 +209,29 @@ The hold-sell-exchange trilogy every landlord hits, with the math competitors le
 Timing: Q4 acquisition season (bonus depreciation makes year-end closings tax-urgent) and
 listing season (spring). /r/realestateinvesting: answer-first on boot and recapture threads —
 the mortgage-boot correction alone earns the link.
+
+## Wave 51 — Small-business owner tax (#252, #262–#265)
+
+The entity-owner playbook: six tools that collectively price the entire S-corp/LLC
+tax strategy stack competitors cover one article at a time.
+
+- **S-corp Reasonable Salary** — the headline. Payroll tax saved (15.3% on distributions)
+  minus QBI lost (6.4¢/salary-dollar at 32%) = real net, plus the <40%-of-profit
+  reclassification risk flag. Nobody else prices BOTH sides of the trade. Pitch
+  small-business CPA blogs and /r/smallbusiness salary threads — answer-first on
+  "how much salary should I pay myself" questions, which recur weekly.
+- **Accountable Plan** — the boring $3k/year everyone misses. S-corp owners who pay
+  expenses personally deduct NOTHING post-OBBBA. Pitch bookkeeper blogs: it's a
+  one-page document they can sell as a service, and our calculator sizes it.
+- **Augusta Rule** — the viral one. 14 days × FMV rent = tax-free income. High share
+  potential on X/LinkedIn finance accounts; the day-15 cliff framing is the hook.
+- **PTET Election** — 36 states, the SALT workaround with the QBI haircut honestly
+  netted. State-society-of-CPAs newsletters in PTET states (CA, NY, NJ, IL lapsed —
+  that's a story too).
+- **STR/REPS** — W-2 earners with an Airbnb; ≤7-day stay + material participation.
+  Cross-pitch to the RE investor blogs from wave 50.
+- **QBI Deduction** (backlist) — the anchor tool for every pitch in this wave.
+
+Timing: entity-election season (S-elections for 2026 must be filed by March 16) and
+year-end planning. r/smallbusiness, r/taxpros (carefully — they're skeptical; lead
+with the QBI-lost math), CPA firm newsletters, SCORE/SBA-adjacent blogs.
