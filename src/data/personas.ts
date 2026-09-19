@@ -336,6 +336,8 @@ export const PERSONAS: Persona[] = [
       'freelance-rate-calculator-web-developer',
       '401k-contribution-calculator',
       'roth-vs-traditional-calculator',
+      'mega-backdoor-roth-calculator',
+      'backdoor-roth-pro-rata-calculator',
       'savings-rate-calculator',
       'compound-interest-calculator',
       'roi-calculator',

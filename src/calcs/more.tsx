@@ -2063,7 +2063,72 @@ export function SocialSecurityPiaCalc() {
   )
 }
 
+/* ---------------- Mega Backdoor Roth ---------------- */
+
+// 2026 §415(c) annual additions limit $72,000 (Notice 2025-73) = employee elective
+// deferrals + employer contributions + AFTER-TAX contributions. Room = cap −
+// deferral − match. Catch-up ($8,000/$11,250) is excluded from the cap but goes to
+// regular deferrals, not after-tax. Node-verified: $200k salary, $24.5k deferral,
+// $10k match → $37,500 room; 20 yrs @7% → $1,537,331 Roth vs $1,348,372 after-tax.
+export function MegaBackdoorCalc() {
+  const [salary, setSalary] = useNumber(200000)
+  const [deferral, setDeferral] = useNumber(24500)
+  const [match, setMatch] = useNumber(10000)
+  const [years, setYears] = useNumber(20)
+  const [ret, setRet] = useNumber(7)
+  const [rate, setRate] = useNumber(24)
+
+  const r = useMemo(() => {
+    const cap = 72000
+    const room = Math.max(0, cap - deferral - match)
+    const inflow = deferral + match + room
+    const pctUsed = (inflow / cap) * 100
+    const g = ret / 100
+    const fv = g > 0 ? room * ((Math.pow(1 + g, years) - 1) / g) : room * years
+    const contrib = room * years
+    const earnings = fv - contrib
+    const afterTaxNet = fv - (earnings * rate) / 100
+    const advantage = fv - afterTaxNet
+    return { cap, room, inflow, pctUsed, fv, contrib, earnings, afterTaxNet, advantage }
+  }, [salary, deferral, match, years, ret, rate])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Salary (context only)" value={salary} onChange={setSalary} prefix="$" step="5000" />
+        <Field label="Your 401(k) deferral (trad + Roth)" value={deferral} onChange={setDeferral} prefix="$" step="500" />
+        <Field label="Employer match / profit sharing" value={match} onChange={setMatch} prefix="$" step="500" />
+        <Field label="Years of mega contributions" value={years} onChange={setYears} suffix="yrs" step="1" />
+        <Field label="Expected annual return" value={ret} onChange={setRet} suffix="%" step="0.5" />
+        <Field label="Tax rate on earnings (after-tax path)" value={rate} onChange={setRate} suffix="%" step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Mega backdoor room (after-tax)" value={`${usd(r.room, 0)}/yr`} />
+        <Result label="Total 401(k) inflow" value={`${usd(r.inflow, 0)}/yr`} />
+        <Result label="Of the $72,000 cap" value={`${num(r.pctUsed, 0)}%`} />
+        <Result label={`Roth value in ${num(years, 0)} yrs`} value={usd(r.fv, 0)} />
+        <Result label="Same money left after-tax" value={usd(r.afterTaxNet, 0)} />
+        <Result label="Roth conversion advantage" value={usd(r.advantage, 0)} />
+        <Result label="Your contributions" value={usd(r.contrib, 0)} />
+        <Result label="Earnings taxed in after-tax path" value={usd(r.earnings, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The mega backdoor Roth lives in the gap between the $24,500 elective deferral limit and the
+        $72,000 §415(c) annual-additions cap (2026, Notice 2025-73): {usd(deferral, 0)} of your
+        deferrals + {usd(match, 0)} of employer money leaves {usd(r.room, 0)} of after-tax room.
+        Two plan features make or break it — the plan must accept AFTER-TAX contributions AND allow
+        in-plan Roth conversions (or in-service distributions to a Roth IRA). Convert immediately:
+        left in after-tax, {usd(r.earnings, 0)} of earnings gets taxed at withdrawal; converted each
+        year, the entire {usd(r.fv, 0)} grows tax-free — a {usd(r.advantage, 0)} difference.
+        Catch-up contributions ($8,000 / $11,250 at 60–63) sit outside the cap but can't be
+        after-tax. If HR can't confirm both features in writing, the mega door is closed.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'mega-backdoor-roth-calculator': MegaBackdoorCalc,
   'social-security-pia-calculator': SocialSecurityPiaCalc,
   'backdoor-roth-pro-rata-calculator': BackdoorRothCalc,
   '403b-calculator': Teacher403bCalc,

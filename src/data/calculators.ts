@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'mega-backdoor-roth-calculator',
+    title: 'Mega Backdoor Roth Calculator 2026 — The $72,000 Gap, Quantified',
+    shortTitle: 'Mega Backdoor Roth',
+    category: 'Savings & Investing',
+    description:
+      'Free mega backdoor Roth calculator. Compute your exact after-tax 401(k) room under the 2026 $72,000 annual-additions limit, and see what converting to Roth each year is worth versus leaving earnings taxable.',
+    tagline: 'Max deferral + match at a $200k salary leaves $37,500 of Roth room most people never use.',
+    intro:
+      'The mega backdoor Roth hides in plain sight: the gap between the $24,500 elective deferral limit and the $72,000 annual-additions cap (2026, Notice 2025-73) can be filled with after-tax contributions and converted to Roth — but only if your plan allows both moves, and only the math tells you what it is worth. This calculator computes your exact room, fills the cap to the dollar, and shows the six-figure difference between converting and leaving earnings taxable.',
+    howItWorks: [
+      'Enter your salary, your 401(k) deferral (traditional + Roth combined), and total employer contributions.',
+      'Read your after-tax room: $72,000 minus deferral minus match.',
+      'Set years, expected return, and your tax rate.',
+      'Compare the Roth-converted value against the same money left in the after-tax account.',
+    ],
+    faq: [
+      {
+        q: 'How much can I put in a mega backdoor Roth in 2026?',
+        a: 'The §415(c) annual-additions limit is $72,000, covering your elective deferrals, employer match and profit sharing, and after-tax contributions combined. Room for after-tax = $72,000 − your deferral − employer money. Example: $200,000 salary, max $24,500 deferral, $10,000 match → $37,500 of room, on top of a possible $8,000 catch-up at 50+ (catch-up is excluded from the cap but cannot be after-tax). Note the pro-rata trap does not apply here — after-tax 401(k) money converts cleanly, unlike IRA basis.',
+      },
+      {
+        q: 'What plan features do I need for the mega backdoor Roth?',
+        a: 'Two, and both must exist in YOUR plan document: after-tax (non-Roth) employee contributions, and either in-plan Roth conversion or in-service distributions of after-tax money to a Roth IRA. Big-tech plans commonly have both; many smaller plans have neither. Ask HR specifically — a plan that merely offers Roth 401(k) deferrals is not enough. And convert promptly: earnings in the after-tax account are taxable at withdrawal, so every month unconverted leaks value.',
+      },
+      {
+        q: 'Is the mega backdoor Roth worth it?',
+        a: 'The conversion-versus-waiting math is dramatic. $37,500 per year for 20 years at 7%: converted to Roth annually it grows to $1,537,331 completely tax-free. Left in the after-tax account, the same contributions grow to the same gross figure but the $787,331 of earnings is taxed — at 24% you keep $1,348,372. That is a $188,959 difference from one checkbox habit. Against a taxable brokerage the Roth path also wins on every year of tax-free compounding; the only real cost is the paperwork.',
+      },
+    ],
+  },
+  {
     slug: 'social-security-pia-calculator',
     title: 'Social Security Calculator 2026 — The Real Bend-Point Formula (AIME → PIA)',
     shortTitle: 'SS Bend Points',
