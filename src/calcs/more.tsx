@@ -2322,6 +2322,55 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Accountable plan — IRC §62(c): an S-corp/partnership reimburses the owner-employee for business expenses (home office, mileage, phone, internet) — entity deducts, employee receives TAX-FREE, no payroll tax on the reimbursement. Without the plan, owner-paid expenses deduct NOWHERE: OBBBA made the TCJA's suspension of 2% miscellaneous itemized deductions permanent. Requirements: business connection, substantiation within reasonable time, return of excess. Home office simplified: $5/sqft ≤300 sqft ($1,500 cap). Mileage 2026: 72.5¢ H1 / 76¢ H2 (Notice 2026-10, Announcement 2026-11 — mirrors mileage-deduction-calculator). Node-verified: 200 sqft $1,000 + 6,000/4,000 mi $7,390 + phone $600 + internet $540 = $9,530 → $3,050 saved at 32%.
+export function AccountablePlanCalc() {
+  const [sqft, setSqft] = useNumber(200)
+  const [milesH1, setMilesH1] = useNumber(6000)
+  const [milesH2, setMilesH2] = useNumber(4000)
+  const [phone, setPhone] = useNumber(600)
+  const [internet, setInternet] = useNumber(540)
+  const [other, setOther] = useNumber(500)
+  const [marg, setMarg] = useNumber(32)
+  const [stateRate, setStateRate] = useNumber(0)
+
+  const r = useMemo(() => {
+    const homeOffice = Math.min(sqft, 300) * 5
+    const mileage = milesH1 * 0.725 + milesH2 * 0.76
+    const total = homeOffice + mileage + phone + internet + other
+    const saved = total * ((marg + stateRate) / 100)
+    return { homeOffice, mileage, total, saved }
+  }, [sqft, milesH1, milesH2, phone, internet, other, marg, stateRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Home office (sq ft, exclusive use)" value={sqft} onChange={setSqft} />
+          <Field label="Business miles Jan–Jun (72.5¢)" value={milesH1} onChange={setMilesH1} />
+          <Field label="Business miles Jul–Dec (76¢)" value={milesH2} onChange={setMilesH2} />
+          <Field label="Business share of phone" value={phone} onChange={setPhone} prefix="$" />
+          <Field label="Business share of internet" value={internet} onChange={setInternet} prefix="$" />
+          <Field label="Other (supplies, dues, software)" value={other} onChange={setOther} prefix="$" />
+          <Field label="Federal bracket" value={marg} onChange={setMarg} suffix="%" />
+          <Field label="State rate" value={stateRate} onChange={setStateRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Home office (simplified)" value={usd(r.homeOffice)} />
+          <Result label="Mileage" value={usd(r.mileage)} />
+          <Result label="Total reimbursable, tax-free" value={usd(r.total)} />
+          <Result label="Tax saved per year" value={usd(r.saved)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Your S-corp reimburses <span className="font-medium">{usd(r.total)}</span> — deductible to the entity, <span className="font-medium">tax-free to you, no payroll tax</span> on the reimbursement. Worth {usd(r.saved)} at your rates. Without the plan the same spending deducts nowhere: miscellaneous itemized deductions are permanently gone (OBBBA made the TCJA suspension permanent), so owner-paid expenses are just... personal spending. The plan is a one-page document plus three habits: submit expenses within 60 days, return any excess, and keep the receipts with the expense reports.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          IRC §62(c) accountable plan rules: business connection, substantiation within a reasonable time, return of excess — meet all three and reimbursements are excluded from wages entirely (no income tax, no FICA). Home office simplified method: $5/sq ft up to 300 sq ft = $1,500 max (the actual-expense method can beat it if your housing costs are high — and for an S-corp the office must be reimbursed by the entity, not claimed personally). Mileage at the 2026 split-year rates (72.5¢/76¢). Phone and internet at documented business-use percentage. This stacks with the Augusta Rule (separate 14-day rental) and is the unglamorous one that pays every single year. Sole props skip this — Schedule C deducts directly; this tool is for entity owners.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Augusta Rule — IRC §280A(g): rent your home fewer than 15 days/year and the rental income is 100% excluded (not even reported); day 15 flips the ENTIRE year's rental income to taxable — the cliff is total. Rate must be fair market (comparable event/meeting-space quotes, documented); your S-corp/partnership deducts the rent as a business expense (board meetings, offsites) while you receive it tax-free — a deduction turning into excluded income. Sole props/Schedule C can't rent to themselves (no separate entity). Documentation: minutes, agenda, FMV comps, invoice, actual payment. Node-verified: 14 days × $1,500 = $21,000 excluded → $6,720 saved at 32%.
 export function AugustaRuleCalc() {
   const [days, setDays] = useNumber(12)
@@ -6000,6 +6049,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'accountable-plan-calculator': AccountablePlanCalc,
   'augusta-rule-calculator': AugustaRuleCalc,
   'str-reps-loophole-calculator': STRRepsCalc,
   'cost-segregation-calculator': CostSegCalc,

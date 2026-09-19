@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'accountable-plan-calculator',
+    title: 'Accountable Plan Calculator 2026 — Tax-Free Reimbursements From Your Own S-Corp',
+    shortTitle: 'Accountable Plan Calculator',
+    category: 'Everyday Money',
+    description:
+      'Home office, mileage, phone, internet: without an accountable plan, S-corp owners deduct none of it. With one, the entity deducts and you receive it tax-free. Price your annual number.',
+    tagline: 'Without the plan, your home office deducts nowhere. With it, $9,530 comes back tax-free.',
+    intro:
+      'The most valuable boring document in small-business tax: a one-page accountable plan. S-corp and partnership owners who pay business expenses personally get NOTHING — unreimbursed employee expenses are permanently nondeductible (OBBBA made the TCJA suspension permanent), and the entity can\'t deduct what it didn\'t pay. With a §62(c) accountable plan, the entity reimburses you: deductible to the business, excluded from your income, no payroll tax. Home office ($5/sq ft), mileage at the 2026 split-year rates, phone, internet, supplies — a typical owner reimburses $9,000+ a year, worth about $3,000 at the 32% bracket, every year, forever.',
+    howItWorks: [
+      'Enter your home office square footage (exclusive business use) — simplified method at $5/sq ft, capped at 300.',
+      'Enter business miles for each half of 2026 — the IRS rates split mid-year (72.5¢ / 76¢).',
+      'Enter the business share of phone, internet, and other expenses.',
+      'Read the total tax-free reimbursement and the annual tax saving.',
+    ],
+    faq: [
+      {
+        q: 'Why can\'t I just deduct these myself?',
+        a: 'Because you\'re an employee of your S-corp, and employees lost the unreimbursed-expense deduction in 2018 — permanently, now that OBBBA removed the 2025 sunset. The entity must pay. The fix is procedural, not structural: adopt the plan (one page), submit expense reports within 60 days with receipts, return any excess reimbursement. Meet those three §62(c) requirements and the reimbursement vanishes from your W-2 entirely — it\'s not wages, not distributions, not income.',
+      },
+      {
+        q: 'Does the reimbursement really skip payroll tax?',
+        a: 'Yes — accountable plan reimbursements are excluded from wages for both income tax AND FICA/FUTA. That makes them better than salary (which pays 15.3% payroll tax) and cleaner than distributions for compensating actual business spending. It\'s the one tax-free channel between your entity and your pocket that the IRS explicitly blesses.',
+      },
+      {
+        q: 'Actual home office or simplified — and can I stack the Augusta Rule?',
+        a: 'Simplified ($5/sq ft, $1,500 max) wins for small offices and zero record-keeping; the actual-expense method wins when housing costs are high — but for an S-corp the office must run through the entity\'s reimbursement either way; you can\'t claim it personally. And yes, the Augusta Rule stacks: the accountable plan reimburses ongoing expenses while §280A(g) rents the home for up to 14 days of meetings — different code sections, same house, both tax-free.',
+      },
+    ],
+  },
+  {
     slug: 'augusta-rule-calculator',
     title: 'Augusta Rule Calculator 2026 — 14 Days of Tax-Free Rent (§280A(g))',
     shortTitle: 'Augusta Rule Calculator',
