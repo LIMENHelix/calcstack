@@ -4327,6 +4327,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pension-lump-sum-vs-annuity-calculator',
+    title: 'Pension Lump Sum vs Annuity Calculator — The Breakeven Age, Computed',
+    shortTitle: 'Lump Sum vs Pension',
+    category: 'Savings & Investing',
+    description:
+      'Free pension lump sum vs monthly annuity calculator. Enter the lump offer and monthly pension — see the implied payout rate, how long the lump lasts drawing the same income, and the exact breakeven age that decides the choice.',
+    tagline: 'The pension pays 6.6% guaranteed. The lump is a bet. Know your breakeven age.',
+    intro:
+      'The lump-sum-versus-pension decision looks like a math problem and is really a longevity bet: take the lump and you must beat the pension\'s implied payout rate every year for the rest of your life, without panicking, without overspending, without a bad sequence of returns. This calculator computes the implied payout, how long the lump actually lasts when drawn at the pension rate, and the breakeven age — the number the whole decision hangs on.',
+    howItWorks: [
+      'Enter the lump-sum offer and the monthly pension (single-life terms).',
+      'Add the pension COLA if it has one — most private plans don\'t.',
+      'Set a realistic return for investing the lump yourself.',
+      'Read the implied payout rate, how long the lump lasts, and the breakeven age.',
+    ],
+    faq: [
+      {
+        q: 'How do I compare a pension lump sum to monthly payments?',
+        a: 'Start with the implied payout rate: annual pension ÷ lump sum. Example: $2,200/month ($26,400/yr) against a $400,000 lump is 6.6% — well above the 4% safe-withdrawal rule, which would pay only $16,000. Then ask how long the lump survives drawing the pension amount: at 5% returns it lasts 29 years, to age 94 for a 65-year-old. Live past the breakeven age and the pension wins; die before it and the lump leaves money to heirs.',
+      },
+      {
+        q: 'When should I take the lump sum?',
+        a: 'The lump makes sense when: the implied payout rate is low (below ~5%), you have serious health concerns shortening life expectancy, the plan sponsor\'s solvency is shaky (check PBGC coverage and the plan\'s funded status), you have other guaranteed income covering essentials and want flexibility, or leaving money to heirs is a priority. Roll it directly to an IRA — taking it as cash triggers immediate income tax plus a 10% penalty if you are under 59½.',
+      },
+      {
+        q: 'When should I take the monthly pension?',
+        a: 'The annuity wins when the payout rate is high (6%+), you expect longevity (family history, good health), markets make you nervous, or you doubt your own spending discipline — the lump\'s biggest risk is behavioral, not mathematical. Check the survivor options before choosing: a 50% joint-and-survivor benefit typically cuts the monthly payment 10–15% but protects a spouse, and a COLA (rare in private plans, common in government ones) is worth roughly 20–25% more over a long retirement.',
+      },
+    ],
+  },
+  {
     slug: 'social-security-breakeven-calculator',
     title: 'Social Security Breakeven Calculator — Claim at 62, 67, or 70?',
     shortTitle: 'SS Breakeven Age',

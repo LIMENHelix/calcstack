@@ -289,6 +289,8 @@ export const WHY_USE: Record<string, string> = {
     'Anyone whose income crossed into six figures uses it in January or at bonus time: the phase-out trims the limit gradually, and guessing wrong either wastes Roth space or triggers the 6% excess-contribution penalty. It turns "am I still eligible" into an exact dollar amount.',
   'roth-vs-traditional-calculator':
     'Savers use it every time income changes: the first job (low bracket — Roth), the peak-earning years (high bracket — Traditional), and the in-between years where splitting is the honest answer. It converts a tax-law guessing game into one rate comparison.',
+  'pension-lump-sum-vs-annuity-calculator':
+    'Anyone handed a pension buyout packet uses it in the 60–90 day election window: the implied payout rate and breakeven age convert a stack of actuarial tables into one question — how long do you expect to live, and do you trust yourself with the lump.',
   'social-security-breakeven-calculator':
     'People approaching 62 use it to see the real trade: a 30% haircut for eight extra years of checks, with the crossover age made explicit. Couples use it for the higher earner — delaying to 70 is really buying the survivor a bigger check.',
   'safe-withdrawal-calculator':

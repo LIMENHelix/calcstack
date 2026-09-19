@@ -864,6 +864,7 @@ export const PERSONAS: Persona[] = [
       'capital-gains-tax-calculator',
       'dividend-drip-calculator',
       'social-security-breakeven-calculator',
+      'pension-lump-sum-vs-annuity-calculator',
       'safe-withdrawal-calculator',
       'compound-interest-calculator',
       'inflation-calculator',

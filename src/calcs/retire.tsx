@@ -616,7 +616,80 @@ export function HsaLimitCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Pension: Lump Sum vs Monthly Annuity ---------------- */
+
+// Core metric: how long the lump lasts if invested at r and drawn at the pension
+// payment (with COLA). Binary search on B(t) = lump(1+r)^t − D0[((1+r)^t−(1+g)^t)/(r−g)].
+// Verified: $400k vs $2,200/mo → payout 6.6% (4% rule pays $16k, pension pays 65% more);
+// lump lasts 29.0y at 5% flat, 20.9y with 2% COLA; at 7% flat it never depletes.
+export function PensionChoiceCalc(_props: CalcProps) {
+  const [lump, setLump] = useNumber(400000)
+  const [monthly, setMonthly] = useNumber(2200)
+  const [cola, setCola] = useNumber(0)
+  const [ret, setRet] = useNumber(5)
+  const [age, setAge] = useNumber(65)
+
+  const r = useMemo(() => {
+    const annual = monthly * 12
+    const payout = lump > 0 ? (annual / lump) * 100 : 0
+    const fourPct = lump * 0.04
+    const rr = ret / 100
+    const g = cola / 100
+    const bal = (t: number) =>
+      lump * Math.pow(1 + rr, t) - (rr === g ? annual * t * Math.pow(1 + rr, t - 1) : (annual * (Math.pow(1 + rr, t) - Math.pow(1 + g, t))) / (rr - g))
+    let years: number | null = null
+    if (bal(80) < 0) {
+      let lo = 0
+      let hi = 80
+      for (let i = 0; i < 60; i++) {
+        const m = (lo + hi) / 2
+        if (bal(m) > 0) lo = m
+        else hi = m
+      }
+      years = (lo + hi) / 2
+    }
+    const breakevenAge = years === null ? null : age + years
+    return { annual, payout, fourPct, years, breakevenAge }
+  }, [lump, monthly, cola, ret, age])
+
+  return (
+    <Card>
+      <CardContent className="grid gap-6 p-6 md:grid-cols-2">
+        <div className="space-y-4">
+          <Field label="Lump-sum offer" value={lump} onChange={setLump} prefix="$" step="5000" />
+          <Field label="Monthly pension (single life)" value={monthly} onChange={setMonthly} prefix="$" step="50" />
+          <Field label="Pension COLA" value={cola} onChange={setCola} suffix="%/yr" step="0.5" />
+          <Field label="Expected return if you invest the lump" value={ret} onChange={setRet} suffix="%" step="0.5" />
+          <Field label="Your age now" value={age} onChange={setAge} step="1" />
+          <p className="text-xs text-muted-foreground">
+            Single-life terms — survivor options typically reduce the monthly 10–15%. The lump
+            side assumes you actually invest it and draw exactly the pension payment; real-world
+            behavior is the biggest risk of the lump.
+          </p>
+        </div>
+        <div className="space-y-3">
+          <Result big label="Implied payout rate" value={`${num(r.payout, 2)}%/yr`} />
+          <Result label="Pension pays per year" value={usd(r.annual, 0)} />
+          <Result label="4% rule on the lump" value={`${usd(r.fourPct, 0)}/yr`} />
+          <Result label="Pension vs 4% rule" value={r.annual > r.fourPct ? `pension +${num((r.annual / r.fourPct - 1) * 100, 0)}%` : `4% rule pays more`} />
+          <Result label="Lump lasts (drawing pension amount)" value={r.years === null ? `80+ yrs` : `${num(r.years, 1)} yrs`} />
+          <Result label="Lump runs out at age" value={r.breakevenAge === null ? 'never (on these returns)' : num(r.breakevenAge, 0)} />
+          <p className="text-sm text-muted-foreground">
+            {r.years === null
+              ? `At ${num(ret, 1)}% returns the lump sustains the ${usd(r.annual, 0)}/yr payment indefinitely — the lump wins on flexibility and inheritance, if the returns show up.`
+              : `Invested at ${num(ret, 1)}%, the lump buys the pension payment for ${num(r.years, 1)} years — until age ${num(r.breakevenAge ?? 0, 0)}. Live longer and the pension wins; die sooner and the lump leaves money to heirs.`}{' '}
+            The pension is guaranteed longevity insurance (check the plan's PBGC-covered health);
+            the lump is control plus market and behavior risk. Split decisions exist: some plans
+            allow partial lump sums, and rolling the lump to an IRA avoids the immediate tax hit.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const RETIRE_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'pension-lump-sum-vs-annuity-calculator': PensionChoiceCalc,
   'hsa-contribution-limit-calculator': HsaLimitCalc,
   'roth-ira-contribution-limit-calculator': RothIraLimitCalc,
   'savings-rate-calculator': SavingsRateCalc,
