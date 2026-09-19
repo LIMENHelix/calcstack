@@ -54,14 +54,14 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          The newest tools on the site — the new-member-of-the-household pair (baby and pet
-          first-year costs, with the run rate separated from the one-time spend), the mortgage
-          points breakeven (is the rate buydown worth it), plus the car lease decoder
-          (money factor → APR).
+          The newest tools on the site — the 2026 limits trio (HSA, Roth IRA, and 401(k)
+          contribution limits with the actual IRS phase-out formulas, not just the headline
+          numbers), the APY↔APR converter (banks quote whichever looks bigger), plus the
+          pet first-year budget.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['pet-first-year-cost-calculator', 'baby-first-year-cost-calculator', 'mortgage-points-calculator', 'car-lease-payment-calculator', 'wedding-budget-calculator', 'savings-rate-calculator'].includes(c.slug),
+            ['hsa-contribution-limit-calculator', 'roth-ira-contribution-limit-calculator', '401k-contribution-calculator', 'apy-apr-converter', 'pet-first-year-cost-calculator', 'baby-first-year-cost-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
