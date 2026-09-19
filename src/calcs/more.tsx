@@ -2322,6 +2322,129 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Social Security benefits taxation — IRC §86 / IRS Pub 915 Worksheet 1. Thresholds statutory, frozen since 1984/1993 (not indexed).
+export function SocialSecurityTaxCalc() {
+  const [status, setStatus] = useState('mfj')
+  const [benefits, setBenefits] = useNumber(36000)
+  const [agi, setAgi] = useNumber(30000)
+  const [tei, setTei] = useNumber(0)
+  const [bracket, setBracket] = useState('22')
+
+  const r = useMemo(() => {
+    const pi = agi + tei + 0.5 * benefits
+    let taxable
+    let zone
+    if (status === 'mfs') {
+      taxable = Math.min(0.85 * pi, 0.85 * benefits)
+      zone = 'mfs'
+    } else {
+      const base = status === 'mfj' ? 32000 : 25000
+      const delta = status === 'mfj' ? 12000 : 9000
+      const excess = pi - base
+      if (excess <= 0) {
+        taxable = 0
+        zone = 'free'
+      } else {
+        const over2 = Math.max(0, pi - (base + delta))
+        const l13 = Math.min(excess, delta)
+        const l15 = Math.min(0.5 * benefits, 0.5 * l13)
+        taxable = Math.min(l15 + 0.85 * over2, 0.85 * benefits)
+        zone = over2 > 0 ? (taxable >= 0.85 * benefits - 0.005 ? 'maxed' : 'zone85') : 'zone50'
+      }
+    }
+    const pct = benefits > 0 ? taxable / benefits : 0
+    // marginal: extra $1,000 of other income
+    const probe = (extraAgi: number) => {
+      const pi2 = agi + extraAgi + tei + 0.5 * benefits
+      if (status === 'mfs') return Math.min(0.85 * pi2, 0.85 * benefits)
+      const base = status === 'mfj' ? 32000 : 25000
+      const delta = status === 'mfj' ? 12000 : 9000
+      const excess = pi2 - base
+      if (excess <= 0) return 0
+      const over2 = Math.max(0, pi2 - (base + delta))
+      const l15 = Math.min(0.5 * benefits, 0.5 * Math.min(excess, delta))
+      return Math.min(l15 + 0.85 * over2, 0.85 * benefits)
+    }
+    const extraTaxable = probe(1000) - taxable
+    const br = parseInt(bracket, 10) / 100
+    const effRate = ((1000 + extraTaxable) * br) / 1000
+    // headroom to next zone
+    const base = status === 'mfj' ? 32000 : status === 'mfs' ? 0 : 25000
+    const delta = status === 'mfj' ? 12000 : 9000
+    let headroom: number | null = null
+    let headroomLabel = ''
+    if (zone === 'free') { headroom = base - pi; headroomLabel = 'before any benefits become taxable' }
+    else if (zone === 'zone50') { headroom = base + delta - pi; headroomLabel = 'before the 85% zone' }
+    return { pi, taxable, pct, zone, extraTaxable, effRate, headroom, headroomLabel }
+  }, [status, benefits, agi, tei, bracket])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="single">Single / Head of household</option>
+              <option value="mfj">Married filing jointly</option>
+              <option value="mfs">Married filing separately (lived together)</option>
+            </select>
+          </label>
+          <Field label="Annual Social Security benefits (both spouses)" value={benefits} onChange={setBenefits} prefix="$" />
+          <Field label="Other income (AGI before SS)" value={agi} onChange={setAgi} prefix="$" />
+          <Field label="Tax-exempt interest (muni bonds)" value={tei} onChange={setTei} prefix="$" />
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Your marginal bracket</span>
+            <select value={bracket} onChange={(e) => setBracket(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="10">10%</option>
+              <option value="12">12%</option>
+              <option value="22">22%</option>
+              <option value="24">24%</option>
+              <option value="32">32%</option>
+            </select>
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Provisional income" value={usd(r.pi)} />
+          <Result label="Taxable benefits" value={usd(r.taxable)} />
+          <Result label="Share of benefits taxable" value={`${(r.pct * 100).toFixed(1)}%`} />
+          <Result label="Tax-free portion" value={usd(benefits - r.taxable)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.zone === 'free' && (
+            <>
+              <span className="font-medium">0% of your benefits are taxable.</span> You have <span className="font-medium">{usd(r.headroom ?? 0)}</span> of provisional-income headroom before taxation starts.
+            </>
+          )}
+          {r.zone === 'zone50' && (
+            <>
+              <span className="font-medium">You are in the 50% zone.</span> Each extra $1 of income pulls $0.50 of benefits into taxable income — at your {bracket}% bracket, that is a <span className="font-medium">{(r.effRate * 100).toFixed(1)}% effective rate</span> on the next $1,000 withdrawn. {usd(r.headroom ?? 0)} of headroom {r.headroomLabel}.
+            </>
+          )}
+          {r.zone === 'zone85' && (
+            <>
+              <span className="font-medium">You are in the 85% zone — the tax torpedo.</span> Each extra $1 of income pulls $0.85 of benefits into taxable income: at your {bracket}% bracket the next $1,000 of withdrawals is effectively taxed at <span className="font-medium">{(r.effRate * 100).toFixed(1)}%</span> ({usd((1000 + r.extraTaxable) * parseInt(bracket, 10) / 100)} tax on $1,000).
+            </>
+          )}
+          {r.zone === 'maxed' && (
+            <>
+              <span className="font-medium">You are at the 85% cap.</span> The maximum taxable share is already reached — additional income no longer pulls in more benefits. Extra withdrawals are taxed at just your {bracket}% bracket again.
+            </>
+          )}
+          {r.zone === 'mfs' && (
+            <>
+              <span className="font-medium">Married filing separately while living together: base amount is $0.</span> Up to 85% of benefits are taxable immediately — this filing status has the harshest Social Security treatment in the code.
+            </>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          IRS Pub 915 Worksheet 1, IRC §86. Provisional income = AGI (before SS) + tax-exempt interest + 50% of benefits. Thresholds — $25,000/$32,000 base, $34,000/$44,000 second tier — are written into statute and have not been adjusted since 1984/1993, which is why more retirees cross them every year.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // 2026 Medicare IRMAA — CMS/SSA, Nov 2025 announcement. Premiums use MAGI from 2 years prior (2024).
 const IRMAA_2026 = {
   baseB: 202.9,
@@ -3489,6 +3612,7 @@ export function SepIraCalc() {
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
   'medicare-irmaa-calculator': IrmaaCalc,
+  'social-security-tax-calculator': SocialSecurityTaxCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'social-security-tax-calculator',
+    title: 'Social Security Tax Calculator — How Much of Your Benefit Is Taxable (2026)',
+    shortTitle: 'Social Security Tax',
+    category: 'Savings & Investing',
+    description:
+      'Free Social Security benefits tax calculator. Enter your benefits and other income — get the exact taxable amount using IRS Pub 915 Worksheet 1, your zone (0%, 50%, or 85%), and the real effective rate on your next withdrawal.',
+    tagline: 'The thresholds have been frozen since 1984. That is the trap.',
+    intro:
+      'Up to 85% of your Social Security can be taxable — and the thresholds that decide it ($25,000 single / $32,000 joint, then $34,000 / $44,000) are written into the statute and have never been adjusted for inflation. Every year, more retirees cross them without any change in lifestyle. This calculator runs the actual IRS Publication 915 worksheet: your provisional income, the exact taxable amount, which zone you are in, and the tax torpedo — the hidden 40%+ effective rate on withdrawals while you are inside the 85% zone.',
+    howItWorks: [
+      'Pick your filing status — married filing separately while living together gets a $0 base amount, the harshest rule in the code.',
+      'Enter total annual Social Security benefits (SSA-1099 box 5, both spouses combined on a joint return).',
+      'Enter other income (AGI before Social Security) and any tax-exempt muni-bond interest — yes, it counts.',
+      'Read the exact taxable amount, your zone, and the effective marginal rate on your next $1,000 of withdrawals.',
+    ],
+    faq: [
+      {
+        q: 'How much of my Social Security is taxable?',
+        a: 'Between 0% and 85%, decided by provisional income: AGI (before SS) + tax-exempt interest + half your benefits. Under $25,000 (single) or $32,000 (joint): none taxable. Between there and $34,000 / $44,000: up to 50% taxable. Above: up to 85%. Example from IRS Pub 915: a joint couple with $10,000 of benefits and $40,500 of pension income has $6,275 taxable — this calculator reproduces the IRS worksheet exactly.',
+      },
+      {
+        q: 'What is the Social Security tax torpedo?',
+        a: 'Inside the phase-in zones, each extra dollar of other income does double duty: it is taxed itself AND it drags $0.50–$0.85 of your benefits into taxable income. At a 22% bracket in the 85% zone, the next $1,000 IRA withdrawal costs $407 of tax — a 40.7% effective rate — until the 85% cap is reached, when the rate drops back to plain 22%. Planning withdrawals and Roth conversions around the zone edges is real money.',
+      },
+      {
+        q: 'Do tax-exempt muni bond interest and Roth withdrawals count?',
+        a: 'Muni interest: yes — tax-exempt interest is added back into provisional income even though it is never taxed itself. Roth withdrawals: no — qualified Roth distributions are not in AGI, which is exactly why retirees with Roth income often keep benefits completely tax-free. The thresholds ($25k/$32k/$34k/$44k) have been frozen in statute since 1984 and 1993 — no inflation adjustment, by design.',
+      },
+    ],
+  },
+  {
     slug: 'medicare-irmaa-calculator',
     title: 'Medicare IRMAA Calculator 2026 — Part B & Part D Surcharge by Income',
     shortTitle: 'Medicare IRMAA 2026',
