@@ -94,6 +94,7 @@ they keep the person who clearly knows the subject.
 | Parents & families | Trump Account, Custodial Roth, 529-vs-Trump-vs-Roth, Nanny Tax | Parenting finance blogs, college-planning sites, nanny agency resource pages, family-money newsletters |
 | Eldercare & senior finance | LTC Cost, LTC Insurance vs Self-Fund, Hybrid vs Traditional LTC, Medicaid Spend-Down, RMD, Social Security Breakeven | Elder law firm blogs, caregiver forums (AgingCare-style), senior living referral sites, fee-only advisor newsletters, /r/AgingParents answer threads |
 | Founders & startup equity | QSBS Exclusion, QSBS 1045 Rollover, PTET Election, QBI Deduction | Startup law blogs, founder communities (Indie Hackers-style), VC/advisor newsletters, /r/startups and /r/ycombinator answer threads, cap-table tool blogs |
+| Real estate investors | 1031 Exchange, Depreciation Recapture, Cost Segregation, Rental Depreciation, Cap Rate | BiggerPockets-style blogs and forums, landlord associations, RE tax CPA blogs, property-management company blogs, /r/realestateinvesting answer threads |
 
 ## New-vertical pitch angles (what makes OURS different)
 
@@ -188,3 +189,23 @@ the opening — founders keep asking which regime their stock is in.
 Timing: exits and tender offers cluster Q4 and post-funding-announcement; secondary marketplaces
 publish liquidity guides continuously. /r/ycombinator and founder Discords: answer-first, link
 only when the math is the answer (Template C).
+
+## Wave 50 — Real estate investor tax (#259–#261)
+
+The hold-sell-exchange trilogy every landlord hits, with the math competitors leave out.
+
+- **1031 Exchange** — the only free calculator showing BOTH cash boot and mortgage boot, with
+  25% recapture-first ordering on the taxable piece. Pitch QI (qualified intermediary) company
+  blogs: their entire business is people Googling "1031 exchange calculator" — embed ours and
+  their content converts better.
+- **Depreciation Recapture** — the "depreciation was a loan" framing, §1250's 25% cap vs
+  §1245's ordinary rates, and the allowed-vs-claimed trap (IRS recaptures depreciation you
+  never took). Landlord forums and property-management blogs: the pre-listing reality check.
+- **Cost Segregation** — 100% bonus is permanent (OBBBA §70301) and the study is what makes a
+  building eligible; honest netting of study fee + §1245 recapture delta. Pitch cost-seg firm
+  blogs directly — a calculator that proves the ROI of their $5k study sells the study for them.
+- **Backlist ride-alongs** — Rental Depreciation, Cap Rate, Rent vs Buy for the same sites.
+
+Timing: Q4 acquisition season (bonus depreciation makes year-end closings tax-urgent) and
+listing season (spring). /r/realestateinvesting: answer-first on boot and recapture threads —
+the mortgage-boot correction alone earns the link.
