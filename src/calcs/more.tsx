@@ -2301,7 +2301,87 @@ export function Solo401kCalc() {
   )
 }
 
+/* ---------------- SEP-IRA (vs solo 401(k)) ---------------- */
+
+// SEP = employer-only: min(25% of compensation, $72,000 for 2026). Sole prop
+// compensation = profit − ½ SE tax, and the circular 25% solves to 20% of NESE —
+// the SAME employer math as the solo 401(k). Node-verified: $100k profit → SEP
+// $18,587 vs solo $43,087; the solo advantage is exactly the $24,500 deferral
+// until the cap binds ($300k profit: $56,839 vs $72,000).
+export function SepIraCalc() {
+  const [entity, setEntity] = useState<'sole' | 'scorp'>('sole')
+  const [income, setIncome] = useNumber(100000)
+  const [status, setStatus] = useState<'single' | 'mfj'>('single')
+
+  const r = useMemo(() => {
+    let halfSE = 0
+    let nese = income
+    if (entity === 'sole') {
+      const base = income * 0.9235
+      const se = Math.min(base, 184500) * 0.124 + base * 0.029 + Math.max(0, base - (status === 'mfj' ? 250000 : 200000)) * 0.009
+      halfSE = se / 2
+      nese = income - halfSE
+    }
+    const rate = entity === 'sole' ? 0.2 : 0.25
+    const sep = Math.min(rate * nese, 72000)
+    let employer = rate * nese
+    const defer = Math.min(24500, Math.max(0, nese - employer))
+    if (defer + employer > 72000) employer = Math.max(0, 72000 - defer)
+    const solo = defer + employer
+    const advantage = solo - sep
+    const sepPct = income > 0 ? (sep / income) * 100 : 0
+    const soloPct = income > 0 ? (solo / income) * 100 : 0
+    return { halfSE, nese, sep, solo, advantage, sepPct, soloPct }
+  }, [entity, income, status])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Business structure</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={entity} onChange={(e) => setEntity(e.target.value as 'sole' | 'scorp')}>
+            <option value="sole">Sole proprietor / single-member LLC</option>
+            <option value="scorp">S-corp (you pay yourself W-2 wages)</option>
+          </select>
+        </label>
+        <Field label={entity === 'sole' ? 'Schedule C net profit' : 'Your W-2 wages from the S-corp'} value={income} onChange={setIncome} prefix="$" step="1000" />
+        {entity === 'sole' && (
+          <label className="space-y-1 text-sm">
+            <span className="text-muted-foreground">Filing status (0.9% Medicare threshold)</span>
+            <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={status} onChange={(e) => setStatus(e.target.value as 'single' | 'mfj')}>
+              <option value="single">Single ($200k)</option>
+              <option value="mfj">Married filing jointly ($250k)</option>
+            </select>
+          </label>
+        )}
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="SEP-IRA max contribution" value={`${usd(r.sep, 0)}/yr`} />
+        <Result label="Solo 401(k) max at same income" value={usd(r.solo, 0)} />
+        <Result label="Solo 401(k) advantage" value={`+${usd(r.advantage, 0)}`} />
+        <Result label="SEP shelters" value={`${num(r.sepPct, 1)}% of ${entity === 'sole' ? 'profit' : 'wages'}`} />
+        <Result label="Solo shelters" value={`${num(r.soloPct, 1)}%`} />
+        {entity === 'sole' && <Result label="½ SE-tax adjustment" value={`−${usd(r.halfSE, 0)}`} />}
+        <Result label="2026 cap (both plans)" value={usd(72000, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The surprise: a SEP-IRA and a solo 401(k) share IDENTICAL employer math (
+        {entity === 'sole' ? '20% of net earnings after the ½-SE-tax adjustment' : '25% of W-2 wages'}),
+        so the solo 401(k)'s advantage at your income is exactly the employee deferral —{' '}
+        {usd(r.advantage, 0)}. The SEP wins on two things: establishment (open AND fund it by your
+        filing deadline including extensions — the rescue for anyone who missed the solo 401(k)'s
+        December 31 setup) and simplicity (no 5500-EZ until... never — SEPs don't file one). The
+        solo 401(k) wins everything else: Roth option, catch-up contributions at 50+, loans, and
+        the deferral that front-loads savings at lower incomes. Employed staff change everything:
+        a SEP requires the same percentage for every eligible employee — the trap that empties
+        growing businesses' pockets.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'sep-ira-calculator': SepIraCalc,
   'solo-401k-calculator': Solo401kCalc,
   'roth-conversion-ladder-calculator': RothLadderCalc,
   'mega-backdoor-roth-calculator': MegaBackdoorCalc,

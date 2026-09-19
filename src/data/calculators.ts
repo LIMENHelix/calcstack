@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'sep-ira-calculator',
+    title: 'SEP-IRA Calculator 2026 — vs Solo 401(k), With the Real Employer Math',
+    shortTitle: 'SEP-IRA',
+    category: 'Freelance & Career',
+    description:
+      'SEP-IRA contribution calculator for 2026: sole proprietors get 20% of net earnings after the half self-employment tax adjustment (not 25% of profit), S-corp owners get a flat 25% of W-2 wages, capped at $72,000. Compares side-by-side with a solo 401(k) so you can see exactly what the $24,500 employee deferral is worth.',
+    tagline:
+      'Same employer math as a solo 401(k) — the difference is the $24,500 deferral. See both.',
+    intro:
+      'A SEP-IRA is employer contributions only, so its ceiling is the same "employer side" a solo 401(k) uses: 25% of W-2 wages for S-corp owners, or 20% of net earnings from self-employment (profit minus half the SE tax) for sole proprietors. The 2026 §415(c) cap is $72,000. Because there is no employee deferral, a SEP almost always loses to a solo 401(k) at the same income — unless you missed the December 31 solo 401(k) setup deadline, since a SEP can be established and funded as late as your filing deadline, extensions included.',
+    howItWorks: [
+      'Sole proprietor: net self-employment earnings = Schedule C profit − half of the 15.3% SE tax. SEP max = 20% of that figure (the circular rate that equals 25% of compensation after the contribution itself).',
+      'S-corp owner: SEP max = 25% of your W-2 salary, and distributions do not count. This is why low-salary S-corp strategies shrink retirement room.',
+      'The same 2026 §415(c) limit of $72,000 caps total contributions, identical to a solo 401(k).',
+      'Head-to-head: the solo 401(k) adds the $24,500 employee deferral (plus catch-ups and a Roth option), so at any income below the cap it shelters exactly that much more.',
+    ],
+    faq: [
+      {
+        q: 'I made $100,000 in Schedule C profit. What is my SEP-IRA max vs a solo 401(k)?',
+        a: 'Your half-SE-tax adjustment is $7,065, so net earnings are $92,935 and the SEP max is $18,587 (20%). A solo 401(k) allows the same $18,587 employer contribution plus the full $24,500 employee deferral — $43,087 total. The entire gap is exactly the deferral, which is why the solo 401(k) wins at nearly every income.',
+      },
+      {
+        q: 'Why would anyone choose a SEP-IRA over a solo 401(k)?',
+        a: 'Deadlines and paperwork. A solo 401(k) must be established by December 31 of the tax year; a SEP can be opened and funded up to your filing deadline including extensions — the classic rescue for freelancers who missed year-end. SEPs also skip the Form 5500-EZ filing that solo 401(k)s require once assets pass $250,000. In exchange you give up the Roth option, catch-up contributions, and loans.',
+      },
+      {
+        q: 'I have employees. What is the SEP trap?',
+        a: 'Uniformity. If you contribute for yourself, you must contribute the same percentage of compensation for every eligible employee (generally those 21+, who worked for you in 3 of the last 5 years, and earned at least $750). A 25% owner contribution means 25% for each of them too. Solo 401(k)s avoid this only because they require having no employees other than a spouse.',
+      },
+    ],
+  },
+  {
     slug: 'solo-401k-calculator',
     title: 'Solo 401(k) Calculator 2026 — The 20%-of-NESE Math Everyone Gets Wrong',
     shortTitle: 'Solo 401(k)',
