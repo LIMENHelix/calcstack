@@ -5485,6 +5485,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'dividend-drip-calculator',
+    title: 'Dividend DRIP Calculator — Yield on Cost & Reinvestment Growth',
+    shortTitle: 'Dividend DRIP',
+    category: 'Savings & Investing',
+    description:
+      'Free dividend reinvestment (DRIP) calculator. Enter investment, dividend, and growth rates — see income at any future year, yield on cost, portfolio value, and the exact dollar advantage of reinvesting vs taking the cash.',
+    tagline: 'A 4% yield becomes 30% yield on cost. That is the whole argument.',
+    intro:
+      'Dividend investing sounds boring until yield-on-cost math enters: a stock paying 4% with a growing dividend, reinvested, can be paying 30% of your original stake per year two decades later. This calculator projects dividend per share and price separately, buys shares with every payment, and shows the income trajectory, final portfolio value, and exactly what the DRIP checkbox is worth in dollars.',
+    howItWorks: [
+      'Enter the investment amount, share price, and current annual dividend per share.',
+      'Set dividend growth and price growth — dividend growers run 5–8% historically.',
+      'Choose the horizon and toggle reinvestment on or off.',
+      'Read income at the final year, yield on cost, portfolio value, and the DRIP advantage.',
+    ],
+    faq: [
+      {
+        q: 'How much can dividend reinvestment grow income?',
+        a: 'Example: $10,000 at $100/share paying $4/year (4% yield), with 6% dividend growth and 5% price growth. With DRIP, year-20 income is $3,050 — a 30.5% yield on the original cost — and the position is worth $63,077. Without reinvestment, income reaches only $1,283 and total value lands at $42,130. The DRIP checkbox is worth about $21,000 over 20 years in this scenario.',
+      },
+      {
+        q: 'What is yield on cost?',
+        a: 'Your annual dividend income divided by what you originally paid — not the current price. It rises every time the company raises the dividend, which is why dividend-growth investors ignore the current yield on screen: a stock bought at 3% yielding 3% today can pay 10%+ on your cost after a decade of raises. It is the patient investor\'s scoreboard.',
+      },
+      {
+        q: 'Are reinvested dividends taxed?',
+        a: 'Yes — in a taxable account, dividends are taxed in the year received whether you take cash or reinvest them. Qualified dividends get the 0/15/20% long-term capital-gains rates; ordinary dividends (REITs, money markets) are taxed as income. In an IRA or 401(k) there is no annual tax, which is why high-yield holdings belong in tax-advantaged accounts when possible. Also watch yield traps: a 9% yield with a payout ratio over 100% is usually a dividend cut waiting to happen.',
+      },
+    ],
+  },
+  {
     slug: 'capital-gains-tax-calculator',
     title: 'Capital Gains Tax Calculator — 2026 Brackets, Stacking & the 3.8% NIIT',
     shortTitle: 'Capital Gains Tax 2026',

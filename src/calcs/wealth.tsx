@@ -484,7 +484,91 @@ export function CapGainsCalc(_props: CalcProps) {
   )
 }
 
+/* ---------------- Dividend Yield & DRIP Projector ---------------- */
+
+// Year loop: DPS and price compound separately; DRIP buys shares at each year's price.
+// Verified: $10k, $100 price, $4 DPS, 6% div growth, 5% price growth, 20y DRIP →
+// income $3,049.72 (30.5% yield on cost), value $63,077; no-DRIP → $1,282.85 (12.8%), $42,130.
+export function DividendDripCalc(_props: CalcProps) {
+  const [invest, setInvest] = useNumber(10000)
+  const [price0, setPrice0] = useNumber(100)
+  const [dps0, setDps0] = useNumber(4)
+  const [divG, setDivG] = useNumber(6)
+  const [priceG, setPriceG] = useNumber(5)
+  const [years, setYears] = useNumber(20)
+  const [reinvest, setReinvest] = useState(true)
+
+  const r = useMemo(() => {
+    const run = (dripOn: boolean) => {
+      let shares = price0 > 0 ? invest / price0 : 0
+      let price = price0
+      let dps = dps0
+      let cash = 0
+      let income = shares * dps
+      for (let y = 1; y <= years; y++) {
+        dps *= 1 + divG / 100
+        price *= 1 + priceG / 100
+        income = shares * dps
+        if (dripOn) shares += price > 0 ? income / price : 0
+        else cash += income
+      }
+      const finalIncome = shares * dps
+      return { shares, price, finalIncome, yoc: invest > 0 ? (finalIncome / invest) * 100 : 0, value: shares * price + cash }
+    }
+    const drip = run(true)
+    const noDrip = run(false)
+    const startYield = price0 > 0 ? (dps0 / price0) * 100 : 0
+    return { drip, noDrip, startYield }
+  }, [invest, price0, dps0, divG, priceG, years])
+
+  const shown = reinvest ? r.drip : r.noDrip
+
+  return (
+    <Card>
+      <CardContent className="space-y-6 p-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Field label="Initial investment" value={invest} onChange={setInvest} prefix="$" step="500" />
+          <Field label="Share price" value={price0} onChange={setPrice0} prefix="$" step="1" />
+          <Field label="Annual dividend per share" value={dps0} onChange={setDps0} prefix="$" step="0.05" />
+          <Field label="Dividend growth" value={divG} onChange={setDivG} suffix="%/yr" step="0.5" />
+          <Field label="Share price growth" value={priceG} onChange={setPriceG} suffix="%/yr" step="0.5" />
+          <Field label="Years" value={years} onChange={setYears} step="1" />
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={reinvest} onChange={(e) => setReinvest(e.target.checked)} />
+            <span>Reinvest dividends (DRIP)</span>
+          </label>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Result big label={`Income at year ${num(years, 0)}`} value={`${usd(shown.finalIncome, 0)}/yr`} />
+          <Result label="Yield on cost" value={`${num(shown.yoc, 1)}%`} />
+          <Result label="Portfolio value" value={usd(shown.value, 0)} />
+          <Result label="Starting yield" value={`${num(r.startYield, 2)}%`} />
+          <Result label="Shares owned (end)" value={num(shown.shares, 1)} />
+          <Result label="DRIP value" value={usd(r.drip.value, 0)} />
+          <Result label="No-DRIP value + dividends" value={usd(r.noDrip.value, 0)} />
+          <Result label="DRIP advantage" value={`+${usd(Math.max(0, r.drip.value - r.noDrip.value), 0)}`} />
+        </div>
+
+        <p className="text-xs text-muted-foreground">
+          Yield on cost is the number that makes dividend investors patient: the starting{' '}
+          {num(r.startYield, 2)}% becomes {num(r.drip.yoc, 1)}% of your original {usd(invest, 0)}{' '}
+          by year {num(years, 0)} with reinvestment — {usd(r.drip.finalIncome, 0)} a year of
+          income on a {usd(invest, 0)} stake. The DRIP advantage here is{' '}
+          {usd(Math.max(0, r.drip.value - r.noDrip.value), 0)}: every dividend buys shares that
+          pay their own growing dividends. Two caveats the chart-watchers skip: dividends in a
+          taxable account are taxed every year even when reinvested (qualified dividends get the
+          0/15/20% capital-gains rates), and a high starting yield with no growth often loses to
+          a lower yield that grows — the dividend-cut risk is why payout ratio matters more than
+          the headline yield.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export const WEALTH_CALC_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
+  'dividend-drip-calculator': DividendDripCalc,
   'capital-gains-tax-calculator': CapGainsCalc,
   'apy-apr-converter': ApyAprCalc,
   'cd-interest-calculator': CdCalc,
