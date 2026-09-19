@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'itemized-vs-standard-deduction-calculator',
+    title: 'Itemized vs Standard Deduction Calculator 2026 — New SALT Cap & Charitable Rules',
+    shortTitle: 'Itemize vs Standard 2026',
+    category: 'Everyday Money',
+    description:
+      'Free 2026 calculator: should you itemize? New $40,400 SALT cap with the $505k MAGI phase-down, 0.5% charitable floor, senior additions — the full OBBBA math.',
+    tagline: 'The 2026 rules quietly moved millions back into itemizing range.',
+    intro:
+      'For 2018–2024 the answer was boring: the $10,000 SALT cap made the standard deduction right for almost everyone. For 2026 it is not boring anymore. The SALT cap is $40,400, the standard deduction is $16,100–$32,200, a new 0.5%-of-AGI floor shaves charitable deductions, and non-itemizers get a brand-new above-the-line charitable write-off. Millions of homeowners in high-tax states crossed back into itemizing territory and don\'t know it. This calculator runs the full 2026 comparison in one pass.',
+    howItWorks: [
+      'Pick your filing status and enter AGI — the 2026 standard deduction ($16,100 / $32,200 / $24,150) plus 65+/blind additions are applied automatically.',
+      'Enter state and local taxes paid — the $40,400 cap applies, phased down 30¢ per dollar of MAGI over $505,000 to a $10,000 floor.',
+      'Enter mortgage interest, charitable gifts (new 0.5%-of-AGI floor when itemizing), and medical expenses (only the excess over 7.5% of AGI counts).',
+      'The calculator totals Schedule A, picks the winner, and shows the actual federal tax saved at your bracket — not just the deduction difference.',
+      'If the standard deduction wins, it tells you how much of your charitable giving is still deductible above the line ($1,000 / $2,000 — new for 2026).',
+    ],
+    faq: [
+      {
+        q: 'What changed for 2026 that makes itemizing worth checking again?',
+        a: 'Three things: the SALT cap quadrupled from $10,000 to $40,400 (through 2029), so high-tax-state homeowners can deduct real property + state income tax again; a new 0.5%-of-AGI floor slightly reduces itemized charitable deductions; and a new above-the-line charitable deduction ($1,000 single / $2,000 joint) appeared for non-itemizers. The crossover math is genuinely different from 2024.',
+      },
+      {
+        q: 'My MAGI is over $505,000 — what happens to my SALT deduction?',
+        a: 'The $40,400 cap shrinks by 30 cents for every dollar of MAGI above $505,000, bottoming out at the old $10,000 floor around $606,300. Inside that band each extra dollar of income also destroys 30¢ of deduction — an effective marginal rate about 11 points higher than your bracket. Timing bonuses, Roth conversions, or capital gains around that window is worth real money.',
+      },
+      {
+        q: 'Is there any strategy if I\'m just under the standard deduction?',
+        a: 'Charitable bunching: stack two years of donations into one year to clear the standard deduction that year, then take the standard the next. With the new above-the-line $1,000/$2,000 charitable deduction in the "off" year, bunching is more powerful in 2026 than it has ever been. A donor-advised fund is the usual vehicle.',
+      },
+    ],
+  },
+  {
     slug: 'second-income-calculator',
     title: 'Second Income Calculator 2026 — Is the Second Job Worth It After Childcare & Taxes?',
     shortTitle: 'Second Income Calculator',

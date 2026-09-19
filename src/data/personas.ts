@@ -992,6 +992,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'home-affordability-calculator',
+      'itemized-vs-standard-deduction-calculator',
       'dti-calculator',
       'mortgage-payment-calculator',
       'rent-vs-buy-calculator',

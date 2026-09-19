@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'itemized-vs-standard-deduction-calculator':
+    'Homeowners in high-tax states use it to catch the 2026 regime change: the SALT cap quadrupled to $40,400 while the standard deduction barely moved — millions who haven\'t itemized since 2017 cross back over, and the answer is now worth $2,000–$4,000 a year.',
   'second-income-calculator':
     'Parents weighing a second job against daycare use it to see the number nobody quotes: the second salary stacked on the first at marginal rates, minus childcare, commuting, and work costs — a $40,000 job can net $5/hour, which reframes the whole stay-or-work debate.',
   'gift-tax-calculator':

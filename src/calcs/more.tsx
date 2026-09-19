@@ -2322,6 +2322,100 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Itemize vs standard deduction 2026 — OBBBA §164(b): SALT cap $40,400 (S/MFJ/HoH), −30% of MAGI over $505,000, floor $10,000 (~$606,333). Std deductions Rev. Proc. 2025-32: $16,100/$32,200/$24,150 + $2,050 (S/HoH) or $1,650/pp (MFJ) age 65+/blind. OBBBA: 0.5%-of-AGI floor on itemized charitable (§170(f)); non-itemizer above-line charitable $1,000/$2,000 (§70111/§224); §68 2/37 haircut at 37% bracket. Verified vs published 2026 cap table ($530k→$32,900, $555k→$25,400).
+export function ItemizeVsStandardCalc() {
+  const [status, setStatus] = useState('m')
+  const [agi, setAgi] = useNumber(150000)
+  const [salt, setSalt] = useNumber(28000)
+  const [mortgage, setMortgage] = useNumber(14000)
+  const [charity, setCharity] = useNumber(5000)
+  const [medical, setMedical] = useNumber(0)
+  const [seniors, setSeniors] = useState('0')
+
+  const r = useMemo(() => {
+    const STD: Record<string, number> = { s: 16100, m: 32200, h: 24150 }
+    const BK: Record<string, readonly (readonly [number, number])[]> = {
+      s: [[0, 0.10], [12400, 0.12], [50400, 0.22], [105700, 0.24], [201775, 0.32], [256225, 0.35], [640600, 0.37]],
+      m: [[0, 0.10], [24800, 0.12], [100800, 0.22], [211400, 0.24], [403550, 0.32], [512450, 0.35], [768700, 0.37]],
+      h: [[0, 0.10], [17700, 0.12], [67450, 0.22], [105700, 0.24], [201750, 0.32], [256200, 0.35], [640600, 0.37]],
+    }
+    const tax = (ti: number) => {
+      const t = Math.max(0, ti)
+      const B = BK[status]
+      let out = 0
+      for (let i = 0; i < B.length; i++) {
+        const lo = B[i][0]
+        const hi = i + 1 < B.length ? B[i + 1][0] : Infinity
+        if (t > lo) out += (Math.min(t, hi) - lo) * B[i][1]
+      }
+      return out
+    }
+    const seniorN = status === 'm' ? Math.min(2, parseInt(seniors, 10) || 0) : Math.min(1, parseInt(seniors, 10) || 0)
+    const seniorAdd = seniorN * (status === 'm' ? 1650 : 2050)
+    const std = STD[status] + seniorAdd
+    const cap = agi <= 505000 ? 40400 : Math.max(10000, 40400 - 0.30 * (agi - 505000))
+    const saltD = Math.min(salt, cap)
+    const charD = Math.max(0, charity - 0.005 * agi)
+    const medD = Math.max(0, medical - 0.075 * agi)
+    const itemized = saltD + mortgage + charD + medD
+    const itemizeWins = itemized > std
+    const diff = Math.abs(itemized - std)
+    const saved = tax(agi - Math.min(itemized, std)) - tax(agi - Math.max(itemized, std))
+    const aboveLineCharity = itemizeWins ? 0 : Math.min(charity, status === 'm' ? 2000 : 1000)
+    return { std, cap, saltD, charD, medD, itemized, itemizeWins, diff, saved, aboveLineCharity, seniorAdd }
+  }, [status, agi, salt, mortgage, charity, medical, seniors])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="s">Single</option>
+              <option value="m">Married filing jointly</option>
+              <option value="h">Head of household</option>
+            </select>
+          </label>
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filers age 65+ (or blind)</span>
+            <select value={seniors} onChange={(e) => setSeniors(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              {status === 'm' && <option value="2">2</option>}
+            </select>
+          </label>
+          <Field label="AGI (≈ MAGI)" value={agi} onChange={setAgi} prefix="$" />
+          <Field label="State & local taxes paid (income + property)" value={salt} onChange={setSalt} prefix="$" />
+          <Field label="Mortgage interest paid" value={mortgage} onChange={setMortgage} prefix="$" />
+          <Field label="Charitable contributions" value={charity} onChange={setCharity} prefix="$" />
+          <Field label="Unreimbursed medical expenses" value={medical} onChange={setMedical} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Your standard deduction" value={usd(r.std)} />
+          <Result label="Itemized total (Schedule A)" value={usd(r.itemized)} />
+          <Result label="Winner" value={r.itemizeWins ? 'Itemize' : 'Standard'} />
+          <Result label="Federal tax saved" value={usd(r.saved)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.saltD < salt && <>SALT capped: you paid {usd(salt)} but deduct <span className="font-medium">{usd(r.saltD)}</span> (2026 cap {usd(r.cap)}{agi > 505000 ? ' after the 30% phase-down over $505,000 MAGI' : ''}). </>}
+          {r.charD < charity && charity > 0 && r.itemizeWins && <>The new 0.5%-of-AGI floor trims {usd(charity - r.charD)} off your charitable deduction. </>}
+          {r.medD === 0 && medical > 0 && <>Medical expenses under 7.5% of AGI ({usd(0.075 * agi)}) deduct nothing. </>}
+          {r.itemizeWins ? (
+            <>Itemizing beats the standard by <span className="font-medium">{usd(r.diff)}</span> of deductions — worth {usd(r.saved)} at your marginal bracket. </>
+          ) : (
+            <>The standard deduction wins by {usd(r.diff)}.{r.aboveLineCharity > 0 && <> You can still deduct <span className="font-medium">{usd(r.aboveLineCharity)}</span> of charitable gifts above the line — new for 2026, no itemizing required.</>} </>
+          )}
+          {r.seniorAdd > 0 && <>Age 65+/blind additions included: {usd(r.seniorAdd)} — and the separate OBBBA $6,000 senior deduction applies whether or not you itemize.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 (Rev. Proc. 2025-32 + OBBBA): standard deduction $16,100 single / $32,200 MFJ / $24,150 HoH, plus $2,050 (single/HoH) or $1,650 per spouse (MFJ) if 65+ or blind. SALT cap $40,400, reduced 30¢ per $1 of MAGI over $505,000 to a $10,000 floor (MFS halves everything); reverts to $10,000 in 2030. Itemized charitable has a new 0.5%-of-AGI floor; non-itemizers get an above-the-line charitable deduction up to $1,000/$2,000. Mortgage interest limited to acquisition debt up to $750,000. Top-bracket filers: the new §68 limit caps itemized value at roughly 35¢/dollar. Pass-through owners: a state PTET election can route state tax around the SALT cap entirely.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Second income vs childcare — 2026 MFJ brackets (std $32,200), second earner's income stacked on top of the first for true marginal federal cost, plus FICA 7.65%, state rate input, childcare, commuting, and work extras. Verified: $60k + $40k second income → marginal fed $4,800; with $1,200/mo childcare, 100 mi/wk commute at $0.70/mi, $200/mo extras → net $9,980/yr = $5.20/hr.
 export function SecondIncomeCalc() {
   const [first, setFirst] = useNumber(60000)
@@ -4644,6 +4738,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'estate-tax-calculator': EstateTaxCalc,
   'gift-tax-calculator': GiftTaxCalc,
   'second-income-calculator': SecondIncomeCalc,
+  'itemized-vs-standard-deduction-calculator': ItemizeVsStandardCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,
