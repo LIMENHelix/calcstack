@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'backdoor-roth-pro-rata-calculator',
+    title: 'Backdoor Roth Calculator — The Pro-Rata Rule, Computed Honestly (Form 8606)',
+    shortTitle: 'Backdoor Roth Pro-Rata',
+    category: 'Savings & Investing',
+    description:
+      'Free backdoor Roth calculator with the real Form 8606 pro-rata math. See how much of your conversion is actually taxable when pre-tax IRA money exists, and what the 401(k) roll-in rescue saves you.',
+    tagline: 'Convert $7,000 with $94k of pre-tax IRA money and $6,580 is taxable. Run your numbers.',
+    intro:
+      'The backdoor Roth fails silently for anyone with an old rollover IRA: the pro-rata rule aggregates ALL your traditional, SEP, and SIMPLE IRAs and taxes any conversion by the pre-tax share of the whole pot. Most explainers bury this in the third paragraph. This calculator puts it first — your exact taxable amount, the tax bill at your bracket, your remaining basis, and the 401(k) roll-in rescue that makes the conversion clean.',
+    howItWorks: [
+      'Enter the pre-tax balance across ALL your traditional/SEP/SIMPLE IRAs (they aggregate).',
+      'Enter your after-tax basis — total non-deductible contributions, from your Form 8606 history.',
+      'Enter the amount you plan to convert and your marginal tax rate.',
+      'Read the taxable split, the bill, and what changes if you roll the pre-tax money into a 401(k) first.',
+    ],
+    faq: [
+      {
+        q: 'How does the pro-rata rule tax my backdoor Roth conversion?',
+        a: 'Form 8606 math: your conversion is tax-free only in proportion to your after-tax basis over the TOTAL value of all your traditional, SEP, and SIMPLE IRAs. With $94,000 pre-tax and $6,000 of basis, converting $7,000 is 6% tax-free — $420 — and $6,580 is taxable ordinary income. Converting less does not dodge it; the percentage follows every dollar. The only clean conversions are ones where pre-tax IRA money is zero on December 31.',
+      },
+      {
+        q: 'Does my 401(k) count in the pro-rata calculation?',
+        a: 'No — 401(k), 403(b), and TSP balances are excluded; only IRAs aggregate. That exclusion is the rescue: if your current employer\'s 401(k) accepts roll-ins, move your pre-tax IRA money there before December 31, leaving only after-tax basis in the IRA. The conversion then goes through nearly 100% tax-free. Check the plan\'s roll-in policy and fund menu first — not every plan accepts them.',
+      },
+      {
+        q: 'What paperwork does a backdoor Roth require?',
+        a: 'Form 8606, twice over: once to report the non-deductible traditional IRA contribution (which establishes your basis) and again to report the conversion and its pro-rata split. Each spouse files their own 8606. The penalty for failing to file is $50 per occurrence, but the real cost is worse: without the 8606 paper trail, the IRS treats your basis as zero and your "tax-free" conversion becomes fully taxable years later. Custodians do not track basis for you — the 8606 history is your only proof.',
+      },
+    ],
+  },
+  {
     slug: '403b-calculator',
     title: '403(b) Calculator 2026 — The 15-Year Catch-Up, Computed With All Three Prongs',
     shortTitle: '403(b) & 15-Yr Rule',

@@ -1938,7 +1938,67 @@ export function Teacher403bCalc() {
   )
 }
 
+/* ---------------- Backdoor Roth / Pro-Rata Rule (Form 8606) ---------------- */
+
+// Form 8606 Part I: ALL traditional/SEP/SIMPLE IRAs aggregate as one pot.
+// Nontaxable % = basis ÷ (year-end value + conversions + distributions); since
+// year-end = (preTax + basis) − conversion, the divisor is simply preTax + basis.
+// Node-verified classic: $94k pre-tax + $6k basis, convert $7k → $420 nontaxable,
+// $6,580 taxable. 401(k)/403(b) balances do NOT count — the roll-in rescue.
+export function BackdoorRothCalc() {
+  const [preTax, setPreTax] = useNumber(94000)
+  const [basis, setBasis] = useNumber(6000)
+  const [conv, setConv] = useNumber(7000)
+  const [rate, setRate] = useNumber(24)
+
+  const r = useMemo(() => {
+    const total = preTax + basis
+    const ntPct = total > 0 ? basis / total : 0
+    const c = Math.min(conv, total)
+    const nt = c * ntPct
+    const taxable = c - nt
+    const taxBill = (taxable * rate) / 100
+    const remainingBasis = basis - nt
+    // Rescue: pre-tax rolled into a 401(k) before Dec 31 → only basis remains
+    const rescueTaxable = Math.max(0, c - basis)
+    const rescueBill = (rescueTaxable * rate) / 100
+    return { total, ntPct: ntPct * 100, nt, taxable, taxBill, remainingBasis, rescueTaxable, rescueBill }
+  }, [preTax, basis, conv, rate])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Pre-tax money in ALL traditional/SEP/SIMPLE IRAs" value={preTax} onChange={setPreTax} prefix="$" step="1000" />
+        <Field label="After-tax basis (non-deductible contributions)" value={basis} onChange={setBasis} prefix="$" step="500" />
+        <Field label="Amount converting to Roth this year" value={conv} onChange={setConv} prefix="$" step="500" />
+        <Field label="Your marginal federal tax rate" value={rate} onChange={setRate} suffix="%" step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Taxable part of this conversion" value={usd(r.taxable, 0)} />
+        <Result label="Nontaxable (basis) part" value={usd(r.nt, 0)} />
+        <Result label="Tax bill on the conversion" value={usd(r.taxBill, 0)} />
+        <Result label="Pro-rata basis share" value={`${num(r.ntPct, 1)}%`} />
+        <Result label="Basis remaining after" value={usd(Math.max(0, r.remainingBasis), 0)} />
+        <Result label="With 401(k) roll-in rescue" value={`${usd(r.rescueTaxable, 0)} taxable`} />
+        <Result label="Rescue saves you" value={usd(r.taxBill - r.rescueBill, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The pro-rata rule is why "just convert the non-deductible contribution" fails: the IRS
+        treats ALL your traditional, SEP, and SIMPLE IRAs as one pot (spouse's IRAs are separate;
+        401(k)/403(b) balances don't count). Your {usd(conv, 0)} conversion is {num(r.ntPct, 1)}%
+        tax-free basis and the rest is ordinary income — {usd(r.taxable, 0)} taxable,{' '}
+        {usd(r.taxBill, 0)} at {num(rate, 0)}%. The rescue: roll the {usd(preTax, 0)} pre-tax into
+        a current employer's 401(k) BEFORE December 31 (the rule values IRAs at year-end), leaving
+        only basis — then the conversion is {usd(r.rescueTaxable, 0)} taxable. File Form 8606 for
+        BOTH the non-deductible contribution and the conversion, each spouse separately — the $50
+        failure-to-file penalty is real, and no custodian tracks your basis for you.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'backdoor-roth-pro-rata-calculator': BackdoorRothCalc,
   '403b-calculator': Teacher403bCalc,
   'tsp-calculator': TspCalc,
   'truck-driver-per-diem-calculator': TruckerPerDiemCalc,
