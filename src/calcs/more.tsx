@@ -2322,6 +2322,140 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// 2026 Medicare IRMAA — CMS/SSA, Nov 2025 announcement. Premiums use MAGI from 2 years prior (2024).
+const IRMAA_2026 = {
+  baseB: 202.9,
+  single: [109000, 137000, 171000, 205000, 500000],
+  mfj: [218000, 274000, 342000, 410000, 750000],
+  mfs: [109000, 391000], // lived with spouse: compressed table
+  partB: [0, 81.2, 202.9, 324.6, 446.3, 487.0], // surcharge over standard premium
+  partD: [0, 14.5, 37.5, 60.4, 83.3, 91.0],
+}
+
+export function IrmaaCalc() {
+  const [status, setStatus] = useState('single')
+  const [magi, setMagi] = useNumber(120000)
+  const [both, setBoth] = useState(false)
+
+  const r = useMemo(() => {
+    const isMfs = status === 'mfs'
+    const thresholds = status === 'mfj' ? IRMAA_2026.mfj : isMfs ? IRMAA_2026.mfs : IRMAA_2026.single
+    let tier = 0
+    if (isMfs) {
+      // MFS (lived with spouse): <=109k standard; >109k–<391k jumps to tier 5 pricing; >=391k top
+      tier = magi <= thresholds[0] ? 0 : magi < thresholds[1] ? 4 : 5
+    } else {
+      for (let i = 0; i < thresholds.length; i++) if (magi > thresholds[i]) tier = i + 1
+    }
+    const bSurcharge = IRMAA_2026.partB[tier]
+    const dSurcharge = IRMAA_2026.partD[tier]
+    const people = status === 'mfj' && both ? 2 : 1
+    const monthlyExtra = (bSurcharge + dSurcharge) * people
+    const annualExtra = monthlyExtra * 12
+    const partBTotal = IRMAA_2026.baseB + bSurcharge
+    // headroom to next cliff
+    const nextIdx = isMfs
+      ? tier === 0 ? 0 : tier === 4 ? 1 : -1
+      : tier < 5 ? tier : -1
+    const nextThreshold = nextIdx >= 0 ? thresholds[nextIdx] : null
+    const headroom = nextThreshold !== null ? nextThreshold - magi : null
+    const overBy = tier > 0 ? magi - thresholds[tier - 1] : 0
+    return { tier, bSurcharge, dSurcharge, monthlyExtra, annualExtra, partBTotal, headroom, overBy, people }
+  }, [status, magi, both])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status (2024 return)</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="single">Single / Head of household</option>
+              <option value="mfj">Married filing jointly</option>
+              <option value="mfs">Married filing separately (lived together)</option>
+            </select>
+          </label>
+          <Field label="MAGI from 2 years ago (2024)" value={magi} onChange={setMagi} prefix="$" />
+          {status === 'mfj' ? (
+            <label className="flex items-end gap-2 pb-2 text-sm">
+              <input type="checkbox" checked={both} onChange={(e) => setBoth(e.target.checked)} className="h-4 w-4" />
+              Both spouses on Medicare
+            </label>
+          ) : (
+            <div />
+          )}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Part B premium (per person)" value={`${usd(r.partBTotal)}/mo`} />
+          <Result label="Part D surcharge (per person)" value={`${usd(r.dSurcharge)}/mo`} />
+          <Result label={`IRMAA surcharge${r.people === 2 ? ' (both spouses)' : ''}`} value={`${usd(r.monthlyExtra)}/mo`} />
+          <Result label="Annual surcharge" value={usd(r.annualExtra)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.tier === 0 ? (
+            <>
+              <span className="font-medium">No IRMAA.</span> You pay the standard ${IRMAA_2026.baseB}/mo Part B premium and no Part D surcharge.
+              {r.headroom !== null && r.headroom > 0 && (
+                <> You have <span className="font-medium">{usd(r.headroom)}</span> of MAGI headroom before the first surcharge tier — worth {usd(1148.4 * r.people)}/yr{r.people === 2 ? ' combined' : ''} if crossed.</>
+              )}
+            </>
+          ) : (
+            <>
+              <span className="font-medium">Tier {r.tier === 4 && status === 'mfs' ? 5 : r.tier + 1} of 6.</span> IRMAA is a cliff, not a phase-in: you crossed the threshold by {usd(r.overBy)}, and the full tier surcharge applies to every dollar of the year.
+              {r.headroom !== null && r.headroom > 0 && (
+                <> Next cliff is <span className="font-medium">{usd(r.headroom)}</span> of MAGI away.</>
+              )}
+            </>
+          )}
+        </div>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b text-left text-muted-foreground">
+              <th className="py-1 pr-2 font-medium">2024 MAGI ({status === 'mfj' ? 'joint' : status === 'mfs' ? 'MFS' : 'single'})</th>
+              <th className="py-1 pr-2 font-medium">Part B total/mo</th>
+              <th className="py-1 font-medium">Part D add/mo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(status === 'mfs'
+              ? [
+                  { label: '$109,000 or less', t: 0 },
+                  { label: 'Above $109,000, below $391,000', t: 4 },
+                  { label: '$391,000 or more', t: 5 },
+                ]
+              : (() => {
+                  const th = status === 'mfj' ? IRMAA_2026.mfj : IRMAA_2026.single
+                  return Array.from({ length: th.length + 1 }, (_, i) => ({
+                    label:
+                      i === 0
+                        ? `${usd(th[0])} or less`
+                        : i === th.length
+                          ? `${usd(th[th.length - 1])} or more`
+                          : `Above ${usd(th[i - 1])} to ${usd(th[i])}`,
+                    t: i,
+                  }))
+                })()
+            ).map((row, i) => {
+              const tierIdx = status === 'mfs' ? row.t : i
+              const active = r.tier === tierIdx
+              return (
+                <tr key={i} className={`border-b ${active ? 'bg-muted/60 font-medium' : ''}`}>
+                  <td className="py-1 pr-2">{row.label}{active ? ' ← you' : ''}</td>
+                  <td className="py-1 pr-2">{usd(IRMAA_2026.baseB + IRMAA_2026.partB[tierIdx])}</td>
+                  <td className="py-1">{usd(IRMAA_2026.partD[tierIdx])}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+        <p className="text-xs text-muted-foreground">
+          2026 premiums, set from your 2024 MAGI (AGI + tax-exempt interest), per CMS/SSA. Part D surcharge is added to your plan's own premium (avg ≈ $34.50/mo). If a life-changing event (retirement, divorce, death of a spouse) cut your income since 2024, file Form SSA-44 to use newer numbers.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 export function RaiseVsBonusCalc() {
   const [base, setBase] = useNumber(80000)
   const [pct, setPct] = useNumber(5)
@@ -3354,6 +3488,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'medicare-irmaa-calculator': IrmaaCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

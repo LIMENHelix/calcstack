@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'medicare-irmaa-calculator',
+    title: 'Medicare IRMAA Calculator 2026 — Part B & Part D Surcharge by Income',
+    shortTitle: 'Medicare IRMAA 2026',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 Medicare IRMAA calculator. Enter your filing status and MAGI from two years ago — get your exact Part B premium, Part D surcharge, annual cost, and how much headroom you have before the next cliff.',
+    tagline: 'One dollar over the line costs $1,148 a year. Know where the line is.',
+    intro:
+      'Medicare charges higher-income beneficiaries an Income-Related Monthly Adjustment Amount on top of Part B and Part D premiums — and it is a cliff, not a phase-in: $1 over a threshold triggers the full tier surcharge for the entire year. For 2026, the standard Part B premium is $202.90/month and surcharges start above $109,000 MAGI (single) or $218,000 (married filing jointly), based on your 2024 tax return. This calculator shows your exact tier, the per-person and household cost, and your headroom before the next cliff.',
+    howItWorks: [
+      'Pick the filing status from the tax return Medicare will use — for 2026 premiums, that is your 2024 return.',
+      'Enter that year\'s MAGI: adjusted gross income plus tax-exempt interest.',
+      'If you file jointly, check whether both spouses are enrolled — IRMAA is assessed per person, so a surcharge doubles.',
+      'Read your tier, monthly and annual surcharge, and exactly how much income headroom you have before the next cliff.',
+    ],
+    faq: [
+      {
+        q: 'What are the 2026 IRMAA brackets?',
+        a: 'For single filers: standard premium up to $109,000 MAGI, then tiers at $137,000, $171,000, $205,000, and $500,000. Joint filers: $218,000, $274,000, $342,000, $410,000, and $750,000. Total Part B premiums run $202.90 to $689.90 per month; Part D surcharges add $0 to $91.00. Crossing the first threshold by $1 costs $95.70/month — $1,148.40/year — per person.',
+      },
+      {
+        q: 'Why is my 2026 premium based on my 2024 income?',
+        a: 'Social Security sets IRMAA from the most recent IRS data available, which runs two years behind: 2026 premiums use your 2024 MAGI. If your income has since dropped because of a qualifying life-changing event — retirement, divorce, death of a spouse, loss of pension — file Form SSA-44 to have premiums based on more recent income. A voluntary Roth conversion is not a qualifying event.',
+      },
+      {
+        q: 'How do Roth conversions affect IRMAA?',
+        a: 'A Roth conversion counts fully in MAGI, so a large conversion can push you into a higher tier two years later — for one year, then it resets. The planning move is to size conversions to fill up to, but not over, the next threshold: a single filer at $95,000 MAGI has $14,000 of room before the first cliff. Income at 63 sets your premiums at 65, so the conversion window before 63 carries no IRMAA cost at all.',
+      },
+    ],
+  },
+  {
     slug: 'raise-vs-bonus-calculator',
     title: 'Raise vs Bonus Calculator — Why the Raise Compounds and the Bonus Evaporates',
     shortTitle: 'Raise vs Bonus',

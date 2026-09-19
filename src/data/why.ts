@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'medicare-irmaa-calculator':
+    'Anyone approaching 65 — or doing Roth conversions near it — uses it to find the cliff edges: IRMAA surcharges trigger on $1 over a threshold and are assessed per person, so one oversized conversion can cost a couple $1,148–$13,872 in a single year two years later.',
   'raise-vs-bonus-calculator':
     'Anyone offered "raise or bonus" uses it to see the compounding gap — equal percentages are not equal money, because the raise inflates every future raise, match, and bonus target while the bonus pays once and evaporates.',
   'benefits-value-calculator':
