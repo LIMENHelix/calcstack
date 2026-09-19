@@ -2323,6 +2323,61 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// PSLF — Public Service Loan Forgiveness: 120 qualifying monthly payments (income-driven plan, full-time at government/501(c)(3)) → remaining balance forgiven FEDERALLY TAX-FREE (PSLF discharges are excluded income, permanently — unlike IDR forgiveness, which became taxable again after the ARP exemption expired end-2025). Negative amortization is the honest story: IDR payments below monthly interest make the forgiven balance GROW past the original loan — and that's fine, because it's forgiven. Node-verified: $80k/6%/$400 IDR/60 made → 60 payments left, $24k paid, $80k forgiven; $120k/7%/$500/0 → $60k paid, $154,617 forgiven (grows past principal); $60k/5%/$600/36 → $24,885 forgiven; aggressive alternative $80k/6%/$900 → 118 mo, $26,066 interest.
+export function PslfCalc() {
+  const [bal, setBal] = useNumber(80000)
+  const [rate, setRate] = useNumber(6)
+  const [pmt, setPmt] = useNumber(400)
+  const [made, setMade] = useNumber(60)
+  const [payoff, setPayoff] = useNumber(900)
+
+  const r = useMemo(() => {
+    const mr = rate / 1200
+    const rem = Math.max(0, 120 - made)
+    let b = bal
+    for (let i = 0; i < rem; i++) b = b * (1 + mr) - pmt
+    const forgiven = Math.max(0, b)
+    const pslfPaid = pmt * rem
+    let b2 = bal
+    let m = 0
+    let interest = 0
+    while (b2 > 0.005 && m < 600) { const i = b2 * mr; interest += i; b2 = b2 + i - payoff; m++ }
+    const payoffTotal = payoff * m
+    const pslfWins = pslfPaid < payoffTotal
+    return { rem, forgiven, pslfPaid, months: m, interest, payoffTotal, pslfWins, diff: Math.abs(payoffTotal - pslfPaid) }
+  }, [bal, rate, pmt, made, payoff])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Loan balance" value={bal} onChange={setBal} prefix="$" />
+          <Field label="Interest rate" value={rate} onChange={setRate} suffix="%" />
+          <Field label="Monthly IDR payment" value={pmt} onChange={setPmt} prefix="$" />
+          <Field label="Qualifying payments made" value={made} onChange={setMade} />
+          <Field label="Aggressive payoff instead" value={payoff} onChange={setPayoff} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Forgiven, tax-free" value={usd(r.forgiven)} />
+          <Result label="Payments left" value={`${r.rem} (${num(r.rem / 12, 1)} yrs)`} />
+          <Result label="You pay (PSLF track)" value={usd(r.pslfPaid)} />
+          <Result label="Payoff track costs" value={usd(r.payoffTotal)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.forgiven > 0 ? (
+            <>{r.rem} payments of {usd(pmt)} = {usd(r.pslfPaid)} out of pocket, then <span className="font-medium">{usd(r.forgiven)} is forgiven tax-free</span>.{r.forgiven > bal && <> Notice the balance GROWS to that from {usd(bal)} — your IDR payment is below the monthly interest, and under PSLF that's fine: negative amortization is forgiven too.</>} The aggressive payoff costs {usd(r.payoffTotal)} over {r.months} months — {r.pslfWins ? <>PSLF saves <span className="font-medium">{usd(r.diff)}</span>. Keep the qualifying job.</> : <>paying off is actually cheaper by {usd(r.diff)} — PSLF's value fades when the IDR payment is high relative to the balance.</>}</>
+          ) : (
+            <>At {usd(pmt)}/month the loan is gone before payment 120 — nothing left to forgive. PSLF adds no value here; compare straight payoff strategies instead.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The rules that make or break it: qualifying EMPLOYER (government at any level, 501(c)(3), some other nonprofits) — the job qualifies, not the loan type of work; qualifying PLAN (any income-driven plan); full-time (30+ hrs); payments don't need to be consecutive. Certify employment annually with the PSLF form — the people who get denied mostly skipped this. PSLF forgiveness is permanently federally tax-free (it's not the expiring ARP rule — that covered IDR forgiveness, which IS taxable again for discharges after 2025). Consolidation resets the payment count (the one-time IDR account adjustment grandfathered older counts; new consolidations post-2023 use weighted averages). Fed only — a few states tax forgiven amounts. Simplified model: fixed IDR payment (real ones recertify annually with income), no OBBBA RAP-plan transition detail.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Adoption tax credit — IRC §23, 2026 (Rev. Proc. 2025-32 + OBBBA §70424): max $17,670/child of qualified expenses; NEW: $5,120/child is REFUNDABLE (first time since 2011); remaining $12,550 nonrefundable with 5-yr carryforward. Phaseout: MAGI $265,080–$305,080 ratable ($40k band) — reduces BOTH pieces proportionally; refundable piece never carries forward. Special-needs (state determination): full credit regardless of expenses. Foreign adoptions: everything claims in the finalization year. Employer adoption assistance (§137) reduces qualified expenses. Node-verified: $19k exp/MAGI $180k/liab $10k → credit $17,670 = $5,120 cash + $10,000 absorbed + $2,550 carryforward; MAGI $290k → $6,662 (62.3% phased); special-needs $5k exp → full $17,670; 2 kids → $35,340 / $10,240 refundable.
 export function AdoptionCreditCalc() {
   const [exp, setExp] = useNumber(19000)
@@ -6672,6 +6727,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'pslf-calculator': PslfCalc,
   'adoption-credit-calculator': AdoptionCreditCalc,
   'layoff-runway-calculator': LayoffRunwayCalc,
   'severance-pay-calculator': SeveranceCalc,

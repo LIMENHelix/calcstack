@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pslf-calculator',
+    title: 'PSLF Calculator 2026 — What Public Service Loan Forgiveness Is Actually Worth',
+    shortTitle: 'PSLF Calculator',
+    category: 'Loans & Debt',
+    description:
+      '120 qualifying payments, then the balance is forgiven tax-free. Price your PSLF track against aggressive payoff — including the negative-amortization truth that a growing balance is fine when it\'s forgiven.',
+    tagline: 'Your balance growing while you pay is not a bug — under PSLF it\'s forgiven anyway.',
+    intro:
+      'Public Service Loan Forgiveness is simple to state and brutal to execute: 120 qualifying monthly payments on an income-driven plan while working full-time for a government or 501(c)(3) employer, and the remaining balance is forgiven — federally tax-free, permanently. The counterintuitive truth: if your IDR payment doesn\'t cover the monthly interest, your balance GROWS for ten years, and that\'s fine — the forgiven amount doesn\'t care how big it got. $120,000 at 7% with a $500 payment grows to $154,617 forgiven while you pay only $60,000. But PSLF isn\'t always the winner: high payments relative to the balance can make straight payoff cheaper. This calculator runs both tracks and shows the exact dollar difference.',
+    howItWorks: [
+      'Enter your loan balance, interest rate, and current income-driven payment.',
+      'Enter qualifying payments already made — employment at a government or 501(c)(3), on an IDR plan.',
+      'Enter an aggressive payoff payment for comparison.',
+      'Read what PSLF costs you, what\'s forgiven tax-free, and whether the payoff track beats it.',
+    ],
+    faq: [
+      {
+        q: 'Is PSLF forgiveness really tax-free? I heard forgiveness got taxed.',
+        a: 'Two different programs, two different rules. PSLF discharges have ALWAYS been federally tax-free — that\'s statutory, not temporary. What expired (end of 2025) was the ARP provision making IDR-plan forgiveness tax-free — so 20/25-year IDR forgiveness after 2025 IS taxable income again, while PSLF stays clean. A few states may still tax forgiven amounts; check yours. If you\'re choosing between finishing PSLF at year 9 versus riding IDR to year 20, the tax difference alone usually decides it.',
+      },
+      {
+        q: 'What disqualifies people in practice?',
+        a: 'Three failure modes account for most denials. (1) Wrong employer assumption — the EMPLOYER must qualify (government at any level, 501(c)(3), or certain other nonprofits); a contractor working AT a hospital doesn\'t count. Certify employment annually with the PSLF form so problems surface early. (2) Wrong plan — payments must be on an income-driven plan; standard 10-year payments technically qualify but leave nothing to forgive. (3) Consolidation timing — consolidating resets the count (post-2023 consolidations use weighted averages of prior counts; the old one-time adjustment is over). Payments don\'t need to be consecutive — leaving public service pauses the count, it doesn\'t erase it.',
+      },
+      {
+        q: 'When is aggressive payoff actually better?',
+        a: 'When the IDR payment is high relative to the balance — roughly when your income is strong and your loans are modest. If $900/month kills the loan in 7 years with $26k of interest, and PSLF needs 10 years of a qualifying job to forgive less than that, the payoff wins on cash AND on career freedom (no employer tether). PSLF shines for high-balance, moderate-income borrowers — the classic $150k-of-debt public defender or social worker. Run your numbers both ways; the answer is arithmetic, not ideology.',
+      },
+    ],
+  },
+  {
     slug: 'adoption-credit-calculator',
     title: 'Adoption Tax Credit Calculator 2026 — $17,670/Child, Now $5,120 Refundable',
     shortTitle: 'Adoption Credit Calculator',

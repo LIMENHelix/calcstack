@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'pslf-calculator':
+    'Public-service workers use it before year 10 locks in: the forgiven balance (tax-free, even when negative amortization grew it past the original loan) versus the aggressive-payoff total — the answer is arithmetic, and high-payment cases genuinely flip.',
   'adoption-credit-calculator':
     'Adopting families use it at finalization: 2026 made $5,120/child refundable cash, the $265k–$305k phaseout makes December MAGI management worth real money, and the special-needs full-credit rule is the most underclaimed benefit in the code.',
   'layoff-runway-calculator':
