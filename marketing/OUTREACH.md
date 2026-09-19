@@ -265,3 +265,33 @@ worst existing content (most competitors are estate-attorney lead-gen fluff).
 Timing: Q4 estate-planning season (year-end gifting, upstream gifting before Dec 31,
 RMD deadlines). /r/EstatePlanning and /r/personalfinance: answer-first on
 "inherited mom's house, sell or keep" threads.
+
+## Wave 53 — Career shock & family credits (#273–#275, bonus-tax upgrade)
+
+The layoff toolkit — content that spreads by word of mouth because everyone
+forwards it to the person who just got let go.
+
+- **Layoff Runway** — the "how long can I last" number. Two-phase UI burn model,
+  COBRA lever priced, NET severance honesty (links the severance calc first).
+  Pitch: /r/layoffs and /r/personalfinance job-loss threads (answer-first with the
+  12.1-month example), career coaches, outplacement firm blogs — their whole
+  product is this moment and they have no tools.
+- **Severance Pay** — the December-vs-January timing play ($4,974 on a $50k
+  package) is a unique computation nobody else shows. Pitch employment-law and
+  HR blogs: "negotiate timing, not just amount" is a fresh angle for their
+  severance-negotiation content.
+- **Bonus Tax (upgraded)** — now the only calculator with BOTH Pub. 15-T methods:
+  flat 22% vs aggregate annualization. The "why did they hold $5,900 on my $21k
+  commission check" search is massive and every existing answer is wrong or vague.
+  Pitch sales-comp blogs, /r/sales commission threads.
+- **Adoption Credit** — 2026's $5,120 refundable piece is NEWS. Pitch
+  foster-to-adopt Facebook groups' blogs, adoption agency resource pages, and
+  family-finance podcasts: "special-needs full credit regardless of expenses"
+  is the most underclaimed benefit in the code and agencies love sharing tools
+  that help families afford adoption.
+- **Backlist ride-alongs** — COBRA Cost, W-4 Optimizer, Emergency Fund for the
+  same audiences.
+
+Timing: layoff news cycles (any major layoff announcement spikes searches),
+open enrollment (Oct–Dec for the COBRA-vs-ACA angle), adoption finalization
+clusters in November (National Adoption Month) — wave 53 goes out in October.
