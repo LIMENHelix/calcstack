@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'eitc-calculator',
+    title: 'EITC Calculator 2026 — Earned Income Tax Credit Estimate by Family Size',
+    shortTitle: 'EITC 2026',
+    category: 'Everyday Money',
+    description:
+      'Free 2026 EITC calculator. Enter earned income, AGI, filing status, and qualifying children — get your exact credit from the statutory formula, your phase (in, plateau, or out), and the hidden marginal rate while phasing out.',
+    tagline: 'The biggest refundable credit in the code — and a fifth of eligible workers never claim it.',
+    intro:
+      'The earned income tax credit pays up to $8,231 (three or more children, 2026) as a refund even if you owe zero tax — yet the IRS estimates roughly one in five eligible workers never files for it. The credit phases in with earnings, plateaus at a maximum, then phases out at 15.98% or 21.06% — a hidden marginal tax stacked on your bracket. This calculator runs the statutory formula from Rev. Proc. 2025-32, handles the greater-of-AGI-or-earnings rule, the $12,200 investment-income cliff, and shows exactly where on the curve you sit.',
+    howItWorks: [
+      'Pick filing status (joint gets higher phase-out thresholds) and number of qualifying children.',
+      'Enter earned income and AGI separately — the phase-out measures whichever is GREATER.',
+      'Enter investment income — over $12,200 the credit is disallowed outright, at any earnings level.',
+      'Read your credit, which of the three phases you are in, and the hidden marginal rate if you are phasing out.',
+    ],
+    faq: [
+      {
+        q: 'How much is the EITC for 2026?',
+        a: 'Maximum credits (Rev. Proc. 2025-32): $664 with no children, $4,427 with one, $7,316 with two, $8,231 with three or more. The credit phases in with earnings (7.65%/34%/40%/45%), plateaus, then phases out — gone at $19,540 (childless single) up to $70,244 (joint, 3+ children). It is fully refundable: you receive it as a refund even with zero tax liability.',
+      },
+      {
+        q: 'Why does the EITC create a hidden tax rate?',
+        a: 'In the phase-out range the credit shrinks 15.98¢ (one child) or 21.06¢ (two or more) per additional dollar of income — on top of your regular bracket and payroll tax. A parent with two kids in the 12% bracket pays an effective 12% + 7.65% FICA + 21.06% ≈ 40.7% on the next dollar earned. It is not a reason to earn less — the credit still beats not having it — but it is real money when timing a bonus or extra shift, and pre-tax 401(k) contributions reduce AGI and slow the phase-out.',
+      },
+      {
+        q: 'What disqualifies you from the EITC?',
+        a: 'The sharp edges: investment income over $12,200 (2026) zeroes the credit completely — a cliff, at any earnings level. No qualifying children means you must be 25–64 and not claimable as a dependent. Married filing separately is generally ineligible (narrow separated-spouse exception). Everyone claimed needs a valid SSN. And refunds with EITC are held by law until late February at the earliest (PATH Act) — plan cash flow accordingly.',
+      },
+    ],
+  },
+  {
     slug: 'aca-subsidy-calculator',
     title: 'ACA Subsidy Calculator 2026 — Premium Tax Credit & the Returning 400% Cliff',
     shortTitle: 'ACA Subsidy 2026',

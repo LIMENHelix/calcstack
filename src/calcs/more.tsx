@@ -2322,6 +2322,114 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// EITC — IRC §32, 2026 parameters per Rev. Proc. 2025-32 §4.06. Formula method; IRS lookup table may differ by a few dollars.
+const EITC_2026 = {
+  0: { phaseIn: 0.0765, eiAmt: 8680, max: 664, phaseOut: 0.0765, thS: 10860, thJ: 18140, endS: 19540, endJ: 26820 },
+  1: { phaseIn: 0.34, eiAmt: 13020, max: 4427, phaseOut: 0.1598, thS: 23890, thJ: 31160, endS: 51593, endJ: 58863 },
+  2: { phaseIn: 0.4, eiAmt: 18290, max: 7316, phaseOut: 0.2106, thS: 23890, thJ: 31160, endS: 58629, endJ: 65899 },
+  3: { phaseIn: 0.45, eiAmt: 18290, max: 8231, phaseOut: 0.2106, thS: 23890, thJ: 31160, endS: 62974, endJ: 70244 },
+} as const
+const EITC_INV_LIMIT_2026 = 12200
+
+export function EitcCalc() {
+  const [mfj, setMfj] = useState(false)
+  const [kids, setKids] = useState('2')
+  const [earned, setEarned] = useNumber(30000)
+  const [agi, setAgi] = useNumber(30000)
+  const [inv, setInv] = useNumber(0)
+  const [ageOk, setAgeOk] = useState(true)
+
+  const r = useMemo(() => {
+    const k = (parseInt(kids, 10) >= 3 ? 3 : parseInt(kids, 10) || 0) as keyof typeof EITC_2026
+    const p = EITC_2026[k]
+    const th = mfj ? p.thJ : p.thS
+    const end = mfj ? p.endJ : p.endS
+    if (k === 0 && !ageOk) return { k, p, credit: 0, phase: 'ineligible' as const, th, end }
+    if (inv > EITC_INV_LIMIT_2026) return { k, p, credit: 0, phase: 'invblocked' as const, th, end }
+    const tentative = Math.min(p.phaseIn * earned, p.max)
+    const measure = Math.max(earned, agi)
+    let credit: number
+    let phase: 'in' | 'plateau' | 'out' | 'zero'
+    if (measure <= th) {
+      credit = tentative
+      phase = earned < p.eiAmt ? 'in' : 'plateau'
+    } else {
+      credit = Math.max(0, tentative - p.phaseOut * (measure - th))
+      phase = credit > 0 ? 'out' : 'zero'
+    }
+    // marginal cost of the next $1,000 while in phase-out
+    const marginalHit = phase === 'out' ? Math.min(p.phaseOut * 1000, credit) : 0
+    const toMax = phase === 'in' ? p.max - credit : 0
+    const headroom = phase === 'plateau' ? th - measure : phase === 'out' ? end - measure : null
+    return { k, p, credit, phase, th, end, marginalHit, toMax, headroom }
+  }, [mfj, kids, earned, agi, inv, ageOk])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={mfj ? 'mfj' : 'other'} onChange={(e) => setMfj(e.target.value === 'mfj')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="other">Single / Head of household</option>
+              <option value="mfj">Married filing jointly</option>
+            </select>
+          </label>
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Qualifying children</span>
+            <select value={kids} onChange={(e) => setKids(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="0">None</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3 or more</option>
+            </select>
+          </label>
+          {kids === '0' ? (
+            <label className="flex items-end gap-2 pb-2 text-sm">
+              <input type="checkbox" checked={ageOk} onChange={(e) => setAgeOk(e.target.checked)} className="h-4 w-4" />
+              Age 25–64 (childless rule)
+            </label>
+          ) : (
+            <div />
+          )}
+          <Field label="Earned income (wages + SE)" value={earned} onChange={setEarned} prefix="$" />
+          <Field label="AGI" value={agi} onChange={setAgi} prefix="$" />
+          <Field label="Investment income" value={inv} onChange={setInv} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Your EITC (2026)" value={usd(r.credit)} />
+          <Result label="Max for your family" value={usd(r.p.max)} />
+          <Result label="Phase" value={r.phase === 'in' ? 'Phasing in' : r.phase === 'plateau' ? 'At maximum' : r.phase === 'out' ? 'Phasing out' : r.phase === 'invblocked' ? 'Blocked' : r.phase === 'ineligible' ? 'Ineligible' : 'Zero'} />
+          <Result label="Refundable" value="Paid even at $0 tax" />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.phase === 'ineligible' && (
+            <><span className="font-medium">Not eligible.</span> With no qualifying children, the EITC requires you (or one spouse on a joint return) to be 25–64 at year-end.</>
+          )}
+          {r.phase === 'invblocked' && (
+            <><span className="font-medium">Disqualified by investment income.</span> Over {usd(EITC_INV_LIMIT_2026)} of investment income (interest, dividends, capital gains, rents/royalties) zeroes the credit outright — a cliff, not a phase-out — no matter how low your earnings.</>
+          )}
+          {r.phase === 'in' && (
+            <><span className="font-medium">Phasing in at {(r.p.phaseIn * 100).toFixed(2)}%.</span> Each additional dollar earned adds {(r.p.phaseIn * 100).toFixed(1)}¢ of credit — {usd(r.toMax ?? 0)} more available before the maximum at {usd(r.p.eiAmt)} of earnings.</>
+          )}
+          {r.phase === 'plateau' && (
+            <><span className="font-medium">At the maximum.</span> The credit holds flat until {usd(r.th)} (the greater of AGI or earned income). Headroom: <span className="font-medium">{usd(r.headroom ?? 0)}</span>.</>
+          )}
+          {r.phase === 'out' && (
+            <><span className="font-medium">Phasing out at {(r.p.phaseOut * 100).toFixed(2)}%.</span> Each extra $1,000 of income (whichever is higher, AGI or earnings) cuts the credit by {usd(r.marginalHit ?? 0)} — that acts like an extra {(r.p.phaseOut * 100).toFixed(1)}% marginal tax on top of your bracket. Credit reaches $0 at {usd(r.end)}.</>
+          )}
+          {r.phase === 'zero' && (
+            <><span className="font-medium">Fully phased out.</span> The credit hits $0 at {usd(r.end)} for your filing status and family size.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 parameters per IRS Rev. Proc. 2025-32: max credit $664 / $4,427 / $7,316 / $8,231 (0/1/2/3+ children); investment income limit $12,200. Phase-out measured on the greater of AGI or earned income. This runs the statutory formula — the IRS lookup table you file from can differ by a few dollars. Refundable: it pays out even with zero tax owed, but PATH Act refunds land late February at the earliest.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // ACA premium tax credit — IRC §36B. 2026 applicable percentages per Rev. Proc. 2025-25 (enhanced ARPA/IRA schedule expired 12/31/2025; 400% cliff restored). 2026 coverage uses Jan 2025 FPL guidelines (26 CFR §1.36B-1(h)).
 const FPL_2025 = { con: [15650, 5500], ak: [19550, 6880], hi: [17990, 6330] } as const
 const AP_2026: readonly (readonly [number, number, number])[] = [
@@ -4058,6 +4166,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'student-loan-interest-deduction-calculator': StudentLoanInterestCalc,
   'savers-credit-calculator': SaversCreditCalc,
   'aca-subsidy-calculator': AcaSubsidyCalc,
+  'eitc-calculator': EitcCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,
