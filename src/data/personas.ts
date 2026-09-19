@@ -826,6 +826,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'salary-to-hourly-calculator',
+      'benefits-value-calculator',
       'paycheck-calculator',
       'raise-worth-calculator',
       'cost-of-living-comparison-calculator',
