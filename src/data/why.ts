@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'amt-calculator':
+    'High earners exercising ISOs or taking big SALT deductions use it to see whether the parallel tax catches them — with 2026\'s doubled 50% phase-out and reset $500k/$1M thresholds, the zone where each extra dollar effectively costs 39–42% is back on the map.',
   'qbi-deduction-calculator':
     'Pass-through owners use it to find their real 20% deduction across the three 2026 regimes — and to catch the two traps that gut it: no W-2 wages above the threshold can zero the regular formula (the new $400 minimum is the floor), and SSTB income still cliffs to zero at the top of the widened phase-in range.',
   'eitc-calculator':

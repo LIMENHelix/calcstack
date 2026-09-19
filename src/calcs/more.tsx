@@ -2322,6 +2322,78 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// AMT — IRC §55, 2026 per Rev. Proc. 2025-32 §4.10/§4.11 as amended by OBBBA §70107 (phase-out thresholds reset to $500k/$1M; phase-out rate doubled to 50%).
+const AMT_2026 = {
+  single: { ex: 90100, th: 500000, bp: 244500 },
+  mfj: { ex: 140200, th: 1000000, bp: 244500 },
+  mfs: { ex: 70100, th: 500000, bp: 122250 },
+} as const
+
+export function AmtCalc() {
+  const [status, setStatus] = useState('single')
+  const [amti, setAmti] = useNumber(450000)
+  const [regTax, setRegTax] = useNumber(100000)
+
+  const r = useMemo(() => {
+    const p = AMT_2026[status as keyof typeof AMT_2026]
+    const exPhased = Math.max(0, p.ex - 0.5 * Math.max(0, amti - p.th))
+    const excess = Math.max(0, amti - exPhased)
+    const tmt = excess <= p.bp ? 0.26 * excess : 0.26 * p.bp + 0.28 * (excess - p.bp)
+    const amt = Math.max(0, tmt - regTax)
+    const inPhaseout = amti > p.th && exPhased > 0
+    const exemptionLost = p.ex - exPhased
+    const headroom = amti <= p.th ? p.th - amti : null
+    // effective marginal AMT rate in phase-out zone: rate × 1.5 (each $1 adds $1.50 of taxable excess)
+    const margBase = excess <= p.bp ? 0.26 : 0.28
+    const effMarg = inPhaseout ? margBase * 1.5 : margBase
+    const fullOutAt = p.th + 2 * p.ex
+    return { exPhased, excess, tmt, amt, inPhaseout, exemptionLost, headroom, effMarg, fullOutAt, p }
+  }, [status, amti, regTax])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Filing status</span>
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="single">Single / Head of household</option>
+              <option value="mfj">Married filing jointly / QSS</option>
+              <option value="mfs">Married filing separately</option>
+            </select>
+          </label>
+          <Field label="AMTI (taxable income + add-backs)" value={amti} onChange={setAmti} prefix="$" />
+          <Field label="Regular tax (before AMT)" value={regTax} onChange={setRegTax} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Exemption after phase-out" value={usd(r.exPhased)} />
+          <Result label="Tentative minimum tax" value={usd(r.tmt)} />
+          <Result label="AMT owed" value={usd(r.amt)} />
+          <Result label="Marginal AMT rate" value={`${(r.effMarg * 100).toFixed(0)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.amt > 0 ? (
+            <>
+              <span className="font-medium">You owe AMT: {usd(r.amt)}</span> on top of your regular tax (Form 6251). {r.inPhaseout && <>You are inside the exemption phase-out — each extra $1 of AMTI removes $0.50 of exemption AND gets taxed, for an effective {(r.effMarg * 100).toFixed(0)}% marginal rate.</>} ISO exercises generate a forward AMT credit (Form 8801) recoverable in years when regular tax beats TMT.
+            </>
+          ) : r.inPhaseout ? (
+            <>
+              <span className="font-medium">No AMT owed — but you are in the phase-out zone.</span> {usd(r.exemptionLost)} of exemption already lost (50¢ per $1 over {usd(r.p.th)}); your TMT is {usd(r.tmt)} vs regular tax — a gap of {usd(regTax - r.tmt)}. An ISO exercise or big SALT add-back could close it.
+            </>
+          ) : (
+            <>
+              <span className="font-medium">Clear of AMT.</span> {r.headroom !== null && r.headroom > 0 && <>{usd(r.headroom)} of AMTI headroom before the exemption starts phasing out at {usd(r.p.th)} (2026 reset — was $626,350 single / $1,252,700 joint in 2025).</>} TMT of {usd(r.tmt)} stays under your regular tax.
+            </>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 (Rev. Proc. 2025-32, OBBBA §70107): exemption $90,100 single / $140,200 joint / $70,100 MFS; phase-out starts $500,000 / $1,000,000 / $500,000 at the DOUBLED 50% rate (exemption gone by $680,200 / $1,280,400 / $640,200); 26% up to ${r.p.bp.toLocaleString()} of excess, 28% above. AMTI add-backs: SALT deduction, standard deduction, ISO bargain element held past year-end, private-activity bond interest. Long-term capital gains keep their lower rates inside AMT — this tool treats AMTI as ordinary, so ISO/gain-heavy returns should verify with Form 6251 or a pro.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QBI deduction — IRC §199A as amended by OBBBA §70105 (permanent; phase-in ranges $75k/$150k; new §199A(i) $400 minimum). 2026 thresholds per Rev. Proc. 2025-32 §4.26.
 const QBI_2026 = {
   single: { th: 201750, range: 75000 },
@@ -4280,6 +4352,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'aca-subsidy-calculator': AcaSubsidyCalc,
   'eitc-calculator': EitcCalc,
   'qbi-deduction-calculator': QbiDeductionCalc,
+  'amt-calculator': AmtCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

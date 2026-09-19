@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'amt-calculator',
+    title: 'AMT Calculator 2026 — Alternative Minimum Tax with the New OBBBA Phase-Out',
+    shortTitle: 'AMT 2026',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 AMT calculator. Enter AMTI and your regular tax — get the exemption after the new doubled 50% phase-out, tentative minimum tax at 26%/28%, and the exact AMT owed, with the effective marginal rate in the phase-out zone.',
+    tagline: 'The phase-out rate doubled for 2026 and the thresholds dropped $126k. More six-figure households are back in AMT range.',
+    intro:
+      'OBBBA made the big AMT exemptions permanent — then quietly pulled more high earners back in: starting 2026 the phase-out thresholds reset to 2018 levels ($500,000 single / $1,000,000 joint, down from $626,350 / $1,252,700) and the phase-out rate doubled from 25% to 50%. Inside that zone, each extra dollar of AMTI loses 50¢ of exemption AND gets taxed at 26–28% — an effective 39–42% marginal rate before your state takes anything. This calculator runs the Form 6251 core: exemption after phase-out, TMT at both rates, and the AMT you actually owe.',
+    howItWorks: [
+      'Pick filing status — MFS gets half the exemption ($70,100) and half the 26% breakpoint.',
+      'Enter AMTI: regular taxable income PLUS the add-backs — SALT deduction, standard deduction, ISO bargain element held past year-end, private-activity bond interest.',
+      'Enter your regular federal tax — AMT is only the excess of tentative minimum tax over it.',
+      'Read the phased-out exemption, TMT, AMT owed, and whether you are in the doubled phase-out zone.',
+    ],
+    faq: [
+      {
+        q: 'What are the 2026 AMT exemption amounts and phase-outs?',
+        a: 'Exemptions (Rev. Proc. 2025-32): $90,100 single/head of household, $140,200 married filing jointly, $70,100 MFS. OBBBA §70107 reset the phase-out starts to $500,000 / $1,000,000 / $500,000 of AMTI and doubled the rate to 50¢ per dollar — so the exemption is fully gone by $680,200 / $1,280,400 / $640,200. The 28% rate kicks in above $244,500 of post-exemption income ($122,250 MFS).',
+      },
+      {
+        q: 'Who gets hit by AMT in 2026?',
+        a: 'The classic trigger is exercising incentive stock options and holding past December 31 — the bargain element (FMV − strike) is AMTI with no regular-tax event, phantom income you owe real tax on. The 2026 additions: high earners in high-tax states (the SALT deduction is an AMT add-back, and OBBBA raised the SALT cap to $40,400 — which makes regular tax lower and AMT more likely to exceed it), and anyone with $500k+ of income who was safe under the old $626k/$1.25M thresholds. The consolation: AMT paid on timing items like ISOs becomes a credit (Form 8801) recoverable in later years.',
+      },
+      {
+        q: 'Is the AMT phase-out really an effective 42% rate?',
+        a: 'Yes, in the zone. Each additional dollar of AMTI is taxed at 26% or 28% AND removes $0.50 of exemption, which exposes another $0.50 to tax: 28% × 1.5 = 42% effective (39% below the 28% breakpoint) — before state tax. For 2025 the same math was 35% at most. This is why ISO exercise timing and December income decisions changed meaningfully for 2026: spreading exercises across years to stay under $500,000/$1,000,000 AMTI is now worth roughly double what it was.',
+      },
+    ],
+  },
+  {
     slug: 'qbi-deduction-calculator',
     title: 'QBI Deduction Calculator 2026 — Section 199A with the New OBBBA Rules',
     shortTitle: 'QBI Deduction 2026',
