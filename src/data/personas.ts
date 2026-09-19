@@ -169,6 +169,7 @@ export const PERSONAS: Persona[] = [
       'pension-lump-sum-vs-annuity-calculator',
       'w4-withholding-calculator',
       'raise-worth-calculator',
+      'dependent-care-fsa-vs-credit-calculator',
       'loan-payoff-calculator',
       'debt-avalanche-snowball-calculator',
       'vacation-budget-calculator',

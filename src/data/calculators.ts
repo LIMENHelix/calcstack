@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'dependent-care-fsa-vs-credit-calculator',
+    title: 'Dependent Care FSA vs Child & Dependent Care Credit 2026 — The New 50% Schedule',
+    shortTitle: 'DC FSA vs Credit',
+    category: 'Freelance & Career',
+    description:
+      'Dependent care FSA vs child and dependent care credit calculator with the 2026 OBBBA rules: the new 50%-to-20% two-stage AGI schedule, the $7,500 FSA limit, the dollar-for-dollar expense-cap offset, and the crossover where your marginal tax rate beats the credit percentage. Verified against the statute.',
+    tagline:
+      'The credit got bigger and the FSA got bigger. You still can\'t double-dip — here\'s which wins at YOUR income.',
+    intro:
+      'For 2026, OBBBA raised the child and dependent care credit to a 50% top rate with a 35% plateau reaching $75,000 AGI ($150,000 married filing jointly), and raised the dependent-care FSA to $7,500 — the first increase since 1986. But FSA dollars consume the credit\'s $3,000/$6,000 expense cap dollar for dollar, so the decision is either/or: at low income the credit rate beats your tax bracket; at high income the FSA\'s marginal-rate-plus-FICA savings wins. This calculator runs both, with the verified 2026 rate schedule.',
+    howItWorks: [
+      'Credit rate: 50% at AGI ≤ $15,000, minus 1 point per $2,000 of AGI down to a 35% floor (~$45,000); 35% holds to $75,000 ($150,000 MFJ), then steps down 1 point per $2,000 ($4,000 MFJ) to a 20% floor.',
+      'Credit = rate × the lesser of your expenses or the cap ($3,000 one dependent, $6,000 two or more) — after subtracting FSA dollars applied to the same expenses.',
+      'FSA value = election × (federal + state + 7.65% FICA), up to $7,500 for 2026 ($3,750 married filing separately).',
+      'The verdict: whichever is larger — credit-only or FSA-plus-leftover-credit. The crossover sits where your marginal tax rate passes your credit percentage.',
+    ],
+    faq: [
+      {
+        q: 'Married, AGI $120,000, two kids in day care costing $13,000. FSA or credit?',
+        a: 'Your 2026 credit rate is 35% (the plateau runs to $150,000 for joint filers), so the credit alone is $2,100 on the $6,000 cap. A $7,500 FSA at a 24% federal + 5% state + 7.65% FICA marginal rate saves $2,749 — but wipes out the credit entirely, since the FSA exceeds the $6,000 cap. The FSA wins by $649. Before OBBBA the same family got 20% and the answer was even clearer.',
+      },
+      {
+        q: 'Who should SKIP the FSA and take the credit instead?',
+        a: 'Lower-income households. At $30,000 AGI with two kids, the 2026 credit rate is 42% — worth $2,520 on the $6,000 cap — while a $7,500 FSA at a 12% bracket saves only $1,849. The crossover is mechanical: when your credit percentage beats your marginal tax rate (federal + state + FICA), the credit wins. One caution: the credit is nonrefundable, so with little or no tax liability the FSA wins regardless of rate.',
+      },
+      {
+        q: 'Can I use the FSA AND the credit on different dollars?',
+        a: 'Only with two or more dependents and a partial FSA. The credit\'s $6,000 expense cap shrinks by every FSA dollar: elect $5,000 and you can still claim the credit on the remaining $1,000. Elect the full $7,500 and the cap is fully consumed — no credit. With one dependent the $3,000 cap is consumed by any FSA of $3,000 or more. The calculator shows the leftover credit explicitly.',
+      },
+    ],
+  },
+  {
     slug: 'hsa-vs-fsa-calculator',
     title: 'HSA vs FSA Calculator 2026 — Real Limits, Forfeiture Risk & the 20-Year Difference',
     shortTitle: 'HSA vs FSA',

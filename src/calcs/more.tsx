@@ -2308,6 +2308,89 @@ export function Solo401kCalc() {
 // the SAME employer math as the solo 401(k). Node-verified: $100k profit → SEP
 // $18,587 vs solo $43,087; the solo advantage is exactly the $24,500 deferral
 // until the cap binds ($300k profit: $56,839 vs $72,000).
+export function DepCareCalc() {
+  const [mfj, setMfj] = useState(true)
+  const [agi, setAgi] = useNumber(120000)
+  const [kids, setKids] = useState<'1' | '2'>('2')
+  const [expenses, setExpenses] = useNumber(13000)
+  const [fsa, setFsa] = useNumber(7500)
+  const [fed, setFed] = useNumber(24)
+  const [state, setState] = useNumber(5)
+  const [payroll, setPayroll] = useState(true)
+
+  const r = useMemo(() => {
+    // 2026 CDCC rate (OBBBA §70405): 50% ≤ $15k AGI; −1pt per $2k to 35% floor (~$45k);
+    // 35% plateau to $75k ($150k MFJ); then −1pt per $2k ($4k MFJ) to 20% floor
+    let rate = 50
+    if (agi > 15000) rate = Math.max(35, 50 - Math.ceil((agi - 15000) / 2000))
+    const t2 = mfj ? 150000 : 75000
+    const step = mfj ? 4000 : 2000
+    if (agi > t2) rate = Math.max(20, 35 - Math.ceil((agi - t2) / step))
+    const cap = kids === '1' ? 3000 : 6000
+    const fsaElect = Math.min(Math.max(0, fsa), 7500, expenses)
+    const marginal = (fed + state) / 100 + (payroll ? 0.0765 : 0)
+    const fsaValue = fsaElect * marginal
+    const creditBase = Math.max(0, Math.min(expenses - fsaElect, cap - fsaElect))
+    const comboCredit = creditBase * (rate / 100)
+    const creditOnly = Math.min(expenses, cap) * (rate / 100)
+    const combo = fsaValue + comboCredit
+    const fsaWins = combo >= creditOnly
+    const crossover = rate < marginal * 100
+    return { rate, cap, fsaElect, marginal, fsaValue, comboCredit, creditOnly, combo, fsaWins, crossover }
+  }, [mfj, agi, kids, expenses, fsa, fed, state, payroll])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Filing status</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={mfj ? 'mfj' : 'other'} onChange={(e) => setMfj(e.target.value === 'mfj')}>
+            <option value="mfj">Married filing jointly</option>
+            <option value="other">Single / head of household</option>
+          </select>
+        </label>
+        <Field label="AGI" value={agi} onChange={setAgi} prefix="$" step="5000" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Qualifying children/dependents</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={kids} onChange={(e) => setKids(e.target.value as '1' | '2')}>
+            <option value="1">One ($3,000 expense cap)</option>
+            <option value="2">Two or more ($6,000 cap)</option>
+          </select>
+        </label>
+        <Field label="Annual care expenses" value={expenses} onChange={setExpenses} prefix="$" step="1000" />
+        <Field label="Dependent-care FSA election" value={fsa} onChange={setFsa} prefix="$" step="500" />
+        <Field label="Federal bracket" value={fed} onChange={setFed} suffix="%" step="1" />
+        <Field label="State income tax" value={state} onChange={setState} suffix="%" step="0.5" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">FSA via payroll (saves FICA)?</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={payroll ? 'yes' : 'no'} onChange={(e) => setPayroll(e.target.value === 'yes')}>
+            <option value="yes">Yes — add 7.65%</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Your 2026 credit rate" value={`${num(r.rate, 0)}%`} />
+        <Result label="Credit only (no FSA)" value={usd(r.creditOnly, 0)} />
+        <Result label="FSA tax savings" value={usd(r.fsaValue, 0)} />
+        <Result label="Credit on top of FSA" value={usd(r.comboCredit, 0)} />
+        <Result label="Your total (with FSA)" value={usd(r.combo, 0)} />
+        <Result label="Best move" value={r.fsaWins ? 'FSA wins' : 'Credit wins'} />
+        <Result label="2026 FSA limit" value="$7,500" />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        OBBBA rewrote this credit for 2026: 50% at AGI ≤ $15,000, stepping down to a 35% plateau that holds to{' '}
+        {mfj ? '$150,000' : '$75,000'}, then down to a 20% floor. Your rate is {num(r.rate, 0)}% and your marginal
+        rate is {num(r.marginal * 100, 1)}% — {r.crossover ? 'above it, so each FSA dollar saves more than each credit dollar' : 'below it, so the credit beats the FSA dollar-for-dollar'}.{' '}
+        The rule that surprises people: FSA dollars consume the credit&apos;s {kids === '1' ? '$3,000' : '$6,000'} expense
+        cap dollar-for-dollar — with 2+ kids and a full $7,500 FSA the credit is gone entirely, so this is
+        always an either/or (or a careful split) decision, never both on the same dollars. The credit is
+        nonrefundable: at very low income it can be worth zero, which flips the verdict back to the FSA.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function HsaFsaCalc() {
   const [coverage, setCoverage] = useState<'self' | 'family'>('family')
   const [spend, setSpend] = useNumber(3000)
@@ -2721,6 +2804,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'dependent-care-fsa-vs-credit-calculator': DepCareCalc,
   'hsa-vs-fsa-calculator': HsaFsaCalc,
   'commission-draw-calculator': CommissionDrawCalc,
   'espp-calculator': EsppCalc,
