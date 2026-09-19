@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  '529-vs-trump-vs-roth-calculator':
+    'Parents paralyzed by the three-account choice use it to run one contribution through all three vehicles at once — the 2026 caps enforced, the kid\'s tax rate applied, the aid penalty shown — and learn the ranking flips entirely depending on whether the money is for college or for life after it.',
   'custodial-roth-ira-calculator':
     'Parents of working teens use it to see why a summer job is a retirement account in disguise — $3,000 a summer for four years becomes $342,548 tax-free at 60 — with the earned-income rule and FAFSA invisibility that neither the 529 nor the Trump Account can match.',
   'trump-account-calculator':

@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: '529-vs-trump-vs-roth-calculator',
+    title: '529 vs Trump Account vs Custodial Roth Calculator — Same Dollars, Three Futures (2026)',
+    shortTitle: '529 vs Trump vs Roth',
+    category: 'Savings & Investing',
+    description:
+      'Free 2026 comparison calculator: run the same annual savings through a 529, Trump Account, and custodial Roth IRA — caps, taxes at withdrawal, and financial aid impact side by side.',
+    tagline: 'Same dollars, three accounts, three different endings.',
+    intro:
+      'Parents now have three tax-advantaged ways to save for a kid, and they are NOT interchangeable: the 529 keeps every dollar for college but is education-only, the Trump Account takes anyone but taxes the growth as ordinary income, and the custodial Roth is the best vehicle ever built — if the child has real earned income. This calculator runs the same annual contribution through all three with the actual 2026 caps, shows what you keep after the kid\'s taxes at 18, what each becomes at 60, and how each one hits financial aid.',
+    howItWorks: [
+      'Enter years until 18, the annual amount to save, and an expected return.',
+      'Enter the child\'s earned income (zero if not working — that disables the Roth column, exactly like the law does).',
+      'Toggle the $1,000 Trump Account seed (2025–2028 births) and set the child\'s expected tax rate at withdrawal.',
+      'The calculator applies each account\'s cap ($5,000 Trump aggregate; lesser-of-earnings-or-$7,500 Roth; 529 uncapped), projects gross balances, then applies the real tax treatment at withdrawal.',
+      'The college winner is named in dollars — with the retirement ranking and FAFSA impact alongside, because the right answer depends on the goal.',
+    ],
+    faq: [
+      {
+        q: 'Which account is best for college savings?',
+        a: 'The 529, and it isn\'t close: qualified withdrawals are completely tax-free, parent-owned 529s are assessed at just 5.64% on the FAFSA (vs ~20% for a student-owned Trump Account), and most states add a deduction. The Trump Account and Roth both return contributions tax-free but tax the earnings at the child\'s rate. Run your numbers — on $3,000/year for 18 years the 529 keeps roughly $2,000–$6,000 more than the alternatives.',
+      },
+      {
+        q: 'Which is best if the money isn\'t for college?',
+        a: 'The custodial Roth, if the child works — tax-free growth forever, invisible to financial aid, contributions withdrawable anytime. A teen who Roths $3,000 per summer from 14 to 17 has $342,548 of tax-free money at 60 without another dollar added. The Trump Account reaches a similar gross number but withdrawals are taxed as ordinary income; converting it to Roth at 18 (when the child\'s bracket is near zero) is the standard fix.',
+      },
+      {
+        q: 'Can we use more than one?',
+        a: 'Yes, and many families should: 529 for education, Trump Account to capture the free $1,000 seed (2025–2028 births), custodial Roth once the teen starts earning. The only true constraint is that the same dollar can only go into one of them — which is exactly the tradeoff this calculator quantifies.',
+      },
+    ],
+  },
+  {
     slug: 'custodial-roth-ira-calculator',
     title: 'Custodial Roth IRA Calculator 2026 — Turn a Teen\'s Summer Job Into Retirement Millions',
     shortTitle: 'Custodial Roth IRA',

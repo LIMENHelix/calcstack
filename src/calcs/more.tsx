@@ -2322,6 +2322,75 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// 529 vs Trump Account vs Custodial Roth — same dollars through all three vehicles. Caps: Trump $5,000/yr aggregate + $1,000 seed (born 2025–28); Roth min(earned income, $7,500); 529 effectively uncapped. College at 18: 529 qualified = tax-free; Trump = after-tax basis back, seed + earnings taxed at child's ordinary rate (education waives the 10% penalty, not the tax); Roth = contributions tax-free, earnings taxed at kid's rate if under 59½/under 5 years (penalty waived for education). FAFSA: parent 529 ≤5.64%, Trump/student asset ~20%, Roth invisible (withdrawals hit later-year income). Verified: $3k/yr × 18 @8% → 529 $112,351, Trump $116,347 gross; keep at 10% kid bracket: $112,351 / $110,112 / $106,516.
+export function KidSavingsCompareCalc() {
+  const [years, setYears] = useNumber(18)
+  const [annual, setAnnual] = useNumber(3000)
+  const [ret, setRet] = useNumber(8)
+  const [earned, setEarned] = useNumber(0)
+  const [seed, setSeed] = useState(true)
+  const [kidRate, setKidRate] = useNumber(10)
+
+  const r = useMemo(() => {
+    const n = Math.max(0, Math.min(30, years))
+    const g = ret / 100
+    const fv = (a: number, yrs: number) => (g > 0 ? a * ((Math.pow(1 + g, yrs) - 1) / g) : a * yrs)
+    const grow = (b: number, yrs: number) => b * Math.pow(1 + g, yrs)
+    const a529 = annual
+    const aTrump = Math.min(annual, 5000)
+    const aRoth = earned > 0 ? Math.min(annual, Math.min(earned, 7500)) : 0
+    const seedAmt = seed ? 1000 : 0
+    const b529 = fv(a529, n)
+    const bTrump = fv(aTrump, n) + grow(seedAmt, n)
+    const bRoth = fv(aRoth, n)
+    const kb = kidRate / 100
+    const keep = (bal: number, basis: number) => basis + Math.max(0, bal - basis) * (1 - kb)
+    const k529 = b529
+    const kTrump = keep(bTrump, aTrump * n)
+    const kRoth = keep(bRoth, aRoth * n)
+    const winner = k529 >= kTrump && k529 >= kRoth ? '529' : kTrump >= kRoth ? 'Trump Account' : 'Roth IRA'
+    return { n, a529, aTrump, aRoth, b529, bTrump, bRoth, k529, kTrump, kRoth, winner, cappedTrump: annual > 5000, cappedRoth: earned > 0 && annual > Math.min(earned, 7500), noEarned: earned <= 0, seedAmt }
+  }, [years, annual, ret, earned, seed, kidRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Years until college (age 18)" value={years} onChange={setYears} />
+          <Field label="Annual amount to save" value={annual} onChange={setAnnual} prefix="$" />
+          <Field label="Annual return" value={ret} onChange={setRet} suffix="%" />
+          <Field label="Child's earned income (0 = not working)" value={earned} onChange={setEarned} prefix="$" />
+          <label className="space-y-1">
+            <span className="text-sm font-medium">Born 2025–2028 (Trump seed)?</span>
+            <select value={seed ? 'y' : 'n'} onChange={(e) => setSeed(e.target.value === 'y')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="y">Yes — $1,000 pilot deposit</option>
+              <option value="n">No</option>
+            </select>
+          </label>
+          <Field label="Child's tax rate at withdrawal" value={kidRate} onChange={setKidRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="529 — keep for college" value={usd(r.k529)} />
+          <Result label="Trump — keep after tax" value={usd(r.kTrump)} />
+          <Result label="Roth — keep after tax" value={usd(r.kRoth)} />
+          <Result label="College winner" value={r.winner} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.cappedTrump && <>Trump Account capped at $5,000/yr — the excess only lands in the other two columns. </>}
+          {r.noEarned && <><span className="font-medium">Roth unavailable:</span> no earned income, no Roth — that's the whole gate. Once the kid works (any W-2 or legit self-employment), up to {usd(Math.min(earned, 7500))}/yr becomes Roth-eligible. </>}
+          {r.cappedRoth && !r.noEarned && <>Roth capped at earned income ({usd(Math.min(earned, 7500))}/yr here). </>}
+          For college the <span className="font-medium">529 keeps every dollar</span> (qualified = tax-free). The Trump Account returns basis tax-free but the seed and growth are taxed at the kid's rate. The Roth returns contributions tax-free; earnings before 59½ are taxed (penalty waived for education).{' '}
+          <span className="font-medium">For retirement instead of college, the ranking flips:</span> Roth at 60 = {usd(r.bRoth * Math.pow(1 + ret / 100, 42))} entirely tax-free; Trump at 60 = {usd(r.bTrump * Math.pow(1 + ret / 100, 42))} but taxed as ordinary income on withdrawal.{' '}
+          Aid impact: parent 529 ≤ 5.64% assessment, Trump Account ~20% as a student asset, Roth invisible until withdrawals.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The honest summary: 529 for college money (tax-free qualified withdrawals, minimal aid impact, state deductions in most states, no federal cap). Custodial Roth for a working teen's long-term money (tax-free forever, invisible to FAFSA, contributions accessible — but requires real earned income, max $7,500 or earnings in 2026). Trump Account for the free $1,000 (2025–2028 births) and as a flexible supplement — but growth is taxed as ordinary income and it's a student asset for aid. Many families run two: 529 for education, Roth or Trump for the launchpad. Nothing here is either/or except the same dollars once.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Custodial Roth IRA for kids — 2026 limit $7,500 or 100% of the child's EARNED income, whichever is less (Rev. Proc. 2025-32). Allowance/gifts don't count as earned income; W-2 or legit self-employment (lawn care, babysitting, modeling) does. Contributions (not earnings) withdrawable anytime tax- and penalty-free; FAFSA ignores retirement accounts as assets (though withdrawals count as student income). Verified: $3,000/yr ages 14–17 @8% → $13,518 at 18, $342,548 at 60 untouched.
 export function CustodialRothCalc() {
   const [age, setAge] = useNumber(14)
@@ -5156,6 +5225,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'car-loan-interest-deduction-calculator': CarLoanInterestCalc,
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
+  '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
   'raise-vs-bonus-calculator': RaiseVsBonusCalc,
   'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,

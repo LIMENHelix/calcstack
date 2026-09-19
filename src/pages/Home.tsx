@@ -54,19 +54,17 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          242 calculators and counting. Newest: the second income calculator
-          (the two-income trap, quantified — a $40k job can net $5/hr after
-          stacked taxes and childcare), the gift tax gifting planner ($19k
-          exclusion × recipients × years, 529 superfunding caps enforced), the
-          federal estate tax calculator with the OBBBA's permanent $15M
-          exclusion (the ~$7M sunset is dead), the 2026 child tax credit with
-          Schedule 8812 logic, and the AMT + QBI tools for the OBBBA's quiet
-          threshold resets — all verified against IRS Rev. Procs, the OBBBA
-          statute, and CMS/SSA sources.
+          250 calculators and counting. Newest: the 529 vs Trump Account vs
+          custodial Roth three-way comparison (same dollars, three endings),
+          the custodial Roth projector (four summer jobs → $342k tax-free),
+          the Trump Account projector with the real Notice 2025-68 rules, and
+          the OBBBA Schedule 1-A deduction set — car loan interest, tips &
+          overtime, and the $6,000 senior deduction — all verified against IRS
+          notices, Rev. Proc. 2025-32, and the OBBBA statute.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['second-income-calculator', 'gift-tax-calculator', 'estate-tax-calculator', 'child-tax-credit-calculator', 'amt-calculator', 'qbi-deduction-calculator'].includes(c.slug),
+            ['529-vs-trump-vs-roth-calculator', 'custodial-roth-ira-calculator', 'trump-account-calculator', 'car-loan-interest-deduction-calculator', 'tips-overtime-deduction-calculator', 'senior-deduction-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
