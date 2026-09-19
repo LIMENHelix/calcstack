@@ -54,15 +54,16 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          204 calculators and counting. Newest: the paycheck-withholding calculator — the exact
-          IRS annualization math behind why one big check gets crushed, verified to the penny
-          against a real 2026 paystub — the Rule of 72 tool that shows the exact doubling time
-          beside the shortcut (it's off a full year at 2%), and the pension lump-sum-vs-annuity
-          decision, alongside the 2026 limits and capital gains stacker.
+          210 calculators and counting. Newest: the trade-specific money tools other
+          sites get wrong — travel nurse pay with the tax-home math, trucker per diem
+          at the 2026 IRS rate with the W-2 catch, the TSP match with the
+          front-loading penalty quantified, and the 403(b) 15-year catch-up with all
+          three prongs — plus the paycheck-withholding annualization tool, verified
+          to the penny against a real paystub.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['paycheck-withholding-calculator', 'rule-of-72-doubling-calculator', 'pension-lump-sum-vs-annuity-calculator', 'hsa-contribution-limit-calculator', 'capital-gains-tax-calculator', 'heat-pump-vs-furnace-calculator'].includes(c.slug),
+            ['travel-nurse-pay-calculator', 'truck-driver-per-diem-calculator', 'tsp-calculator', '403b-calculator', 'paycheck-withholding-calculator', 'rent-affordability-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
