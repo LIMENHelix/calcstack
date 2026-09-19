@@ -235,3 +235,33 @@ tax strategy stack competitors cover one article at a time.
 Timing: entity-election season (S-elections for 2026 must be filed by March 16) and
 year-end planning. r/smallbusiness, r/taxpros (carefully — they're skeptical; lead
 with the QBI-lost math), CPA firm newsletters, SCORE/SBA-adjacent blogs.
+
+## Wave 52 — Estate & family money (#266, #268–#270)
+
+The "what happens when someone dies" cluster — the highest-stakes searches with the
+worst existing content (most competitors are estate-attorney lead-gen fluff).
+
+- **Step-Up Basis** — the anchor. §1014 erases decades of gain AND recapture; the
+  community-property double step-up (9 states) is the angle nobody else computes.
+  Pitch estate-planning attorney blogs and elder-law sites: their clients ask "should
+  mom sell the house now or later?" — our calculator IS the answer, and linking it
+  makes their "don't sell" advice concrete. Also "upstream gifting" content angle for
+  financial-planner blogs.
+- **Inherited IRA 10-Year Rule** — the post-SECURE-Act confusion is still peaking:
+  most heirs still believe "empty by year 10, whenever." The 2024 final regs (annual
+  RMDs years 1–9 if owner died post-RBD) are the correction that earns links.
+  Steady-vs-lump crossover bracket is a unique computation. Pitch /r/personalfinance
+  inheritance threads (weekly), AARP-adjacent content, beneficiary-form marketing
+  from custodians.
+- **Kiddie Tax** — three-layer math with the Form 8814 election flag. Pitch
+  529-plan blogs and college-savings content: "your UTMA has a tax leak" is a
+  natural hook for 529 marketing sites. Grandparent-gifting angle for wealth blogs.
+- **NIIT + Additional Medicare** — frozen-2013 thresholds = bracket creep story.
+  Pairs with Roth-conversion content; pitch to fee-only planner blogs doing
+  year-end conversion analyses.
+- **Backlist ride-alongs** — Estate Tax, Gift Tax, RMD, Social Security Breakeven
+  for the same elder-finance sites.
+
+Timing: Q4 estate-planning season (year-end gifting, upstream gifting before Dec 31,
+RMD deadlines). /r/EstatePlanning and /r/personalfinance: answer-first on
+"inherited mom's house, sell or keep" threads.
