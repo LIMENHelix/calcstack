@@ -1064,6 +1064,7 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'running-pace-calculator',
       'race-time-predictor-calculator',
+      'critical-power-calculator',
       'vo2max-calculator',
       'periodization-planner',
       'heart-rate-zone-calculator',

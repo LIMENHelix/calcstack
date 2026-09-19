@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'critical-power-calculator',
+    title: 'Critical Power & W′ Calculator — Two Time Trials, Every Duration Predicted',
+    shortTitle: 'Critical Power',
+    category: 'Fitness & Sports',
+    description:
+      'Critical power calculator using the two-parameter model (W = CP×t + W′): enter two all-out efforts and get your aerobic ceiling, anaerobic capacity in kJ, predicted max power for every duration from 1 to 60 minutes, and time-to-exhaustion at any pace above CP. Monod-Scherrer math, honest limitations.',
+    tagline:
+      'Two all-out efforts define your entire power-duration curve — CP is the ceiling, W′ is the battery above it.',
+    intro:
+      'Critical power is the highest power you can sustain without draining your anaerobic reserves; W′ (W-prime) is the size of those reserves in kilojoules. Together they form the two-parameter model that predicts your maximum power for ANY duration — the framework behind modern cycling pacing, verified against physiology since Monod and Scherrer in 1965. Two genuinely all-out time trials (~3 minutes and ~10–12 minutes) are all it takes. No lab, no 20-minute FTP test with its arbitrary 95% fudge.',
+    howItWorks: [
+      'Each effort is work = power × time. The model fits W = CP×t + W′: CP is the slope, W′ the intercept of the work-time line.',
+      'Predicted max power for any duration: P(t) = CP + W′/t. Time to exhaustion above CP: t = W′/(P − CP).',
+      'Example: 3 min at 450 W and 12 min at 380 W → CP 357 W, W′ 16.8 kJ; 20-minute max ≈ 371 W; 400 W lasts ~6.5 minutes.',
+      'Valid range is roughly 2–30 minutes: below that, maximal power is mechanically capped; beyond it, glycogen and heat break the model.',
+    ],
+    faq: [
+      {
+        q: 'How is critical power different from FTP?',
+        a: 'FTP is defined as ~60-minute power and estimated as 95% of a 20-minute test — an arbitrary correction. Critical power is a physiological threshold fitted from two all-out efforts, and it typically sits a few percent ABOVE FTP. The practical difference: CP comes with W′, which tells you not just your ceiling but exactly how long you can sit above it — 400 W for ~6.5 minutes when your CP is 357 W and W′ is 16.8 kJ, for example.',
+      },
+      {
+        q: 'What do my two test efforts need to be?',
+        a: 'Short enough to be VO₂max-limited and long enough to separate the parameters: the standard pair is ~3 minutes and ~10–12 minutes, on separate days or fully recovered. Both must be truly all-out — a paced tempo effort poisons the fit. If the longer effort averages MORE power than the short one, the model refuses (you will see the invalid-model note), which is itself a pacing-quality check.',
+      },
+      {
+        q: 'Can I use this for running or rowing?',
+        a: 'Yes — the same hyperbolic law holds for running (critical speed in m/s, with D′ in meters instead of W′) and rowing erg watts. Enter pace-derived power or speed consistently for both efforts. Just respect the valid window: roughly 2–30 minutes, since sprint mechanics cap short efforts and endurance economy dominates long ones.',
+      },
+    ],
+  },
+  {
     slug: 'wilks-score-calculator',
     title: 'Wilks Score Calculator — Legacy Wilks vs Current DOTS, Side by Side',
     shortTitle: 'Wilks Score',

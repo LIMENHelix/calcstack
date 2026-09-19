@@ -2322,6 +2322,84 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+export function CriticalPowerCalc() {
+  const [min1, setMin1] = useNumber(3)
+  const [pow1, setPow1] = useNumber(450)
+  const [min2, setMin2] = useNumber(12)
+  const [pow2, setPow2] = useNumber(380)
+  const [weight, setWeight] = useNumber(75)
+  const [target, setTarget] = useNumber(420)
+
+  const r = useMemo(() => {
+    const t1 = min1 * 60
+    const t2 = min2 * 60
+    if (t1 <= 0 || t2 <= 0 || t1 === t2) return null
+    const W1 = pow1 * t1
+    const W2 = pow2 * t2
+    const CP = (W2 - W1) / (t2 - t1)
+    const Wp = W1 - CP * t1
+    const valid = CP > 0 && Wp > 0
+    const pred = (t: number) => CP + Wp / t
+    const durations: [string, number][] = [['1 min', 60], ['3 min', 180], ['5 min', 300], ['10 min', 600], ['20 min', 1200], ['30 min', 1800], ['60 min', 3600]]
+    const rows = durations.map(([label, t]) => ({ label, w: valid ? pred(t) : 0 }))
+    const tte = valid && target > CP ? Wp / (target - CP) : 0
+    const fmtT = (s: number) => s >= 3600 ? `${(s / 3600).toFixed(1)} h` : s >= 90 ? `${Math.round(s / 60)} min` : `${Math.round(s)} s`
+    return { CP, Wp, valid, rows, tte, fmtT, wkg: weight > 0 ? CP / weight : 0 }
+  }, [min1, pow1, min2, pow2, weight, target])
+
+  if (!r) {
+    return (
+      <Card><CardContent className="space-y-4 p-5">
+        <p className="text-sm text-muted-foreground">Enter two different effort durations with their average powers.</p>
+      </CardContent></Card>
+    )
+  }
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Effort 1 — duration" value={min1} onChange={setMin1} suffix="min" step="1" />
+        <Field label="Effort 1 — avg power" value={pow1} onChange={setPow1} suffix="W" step="5" />
+        <Field label="Body weight (0 = skip)" value={weight} onChange={setWeight} suffix="kg" step="1" />
+        <Field label="Effort 2 — duration" value={min2} onChange={setMin2} suffix="min" step="1" />
+        <Field label="Effort 2 — avg power" value={pow2} onChange={setPow2} suffix="W" step="5" />
+        <Field label="Target power to hold" value={target} onChange={setTarget} suffix="W" step="5" />
+      </div>
+      {!r.valid ? (
+        <p className="text-sm text-muted-foreground">
+          These two efforts don't define a valid model — the longer effort must average less power than the
+          short one, and both must be genuinely all-out. Use a ~3-minute and a ~10–12-minute time trial.
+        </p>
+      ) : (
+        <>
+          <div className="grid gap-3 sm:grid-cols-4">
+            <Result big label="Critical power" value={`${num(r.CP, 0)} W`} />
+            <Result label="W′ (anaerobic capacity)" value={`${num(r.Wp / 1000, 1)} kJ`} />
+            {weight > 0 && <Result label="CP per kg" value={`${num(r.wkg, 2)} W/kg`} />}
+            <Result label={`Hold ${num(target, 0)} W for`} value={r.tte > 0 ? r.fmtT(r.tte) : '∞ (below CP)'} />
+          </div>
+          <div className="grid grid-cols-4 gap-2 sm:grid-cols-7">
+            {r.rows.map((row) => (
+              <div key={row.label} className="rounded-lg border p-2 text-center">
+                <p className="text-xs text-muted-foreground">{row.label}</p>
+                <p className="text-sm font-semibold">{num(row.w, 0)} W</p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+      <p className="text-sm text-muted-foreground">
+        The two-parameter model treats every all-out effort as W = CP × t + W′: critical power is the aerobic
+        ceiling you can sustain indefinitely-ish, W′ is the finite anaerobic battery you burn above it
+        (Monod &amp; Scherrer, 1965). Two max efforts — a ~3-minute and a ~10–12-minute TT on separate days —
+        pin both numbers. What it buys you: predicted max power for ANY duration (table above) and time-to-
+        exhaustion at any pace above CP. Honest limits: the model overestimates under ~2 minutes and past ~30
+        minutes (glycogen and heat join the party), and CP typically sits a few percent ABOVE functional
+        threshold power — don't just rename your FTP. Both efforts must be truly maximal or the line is fiction.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function WilksCalc() {
   const [sex, setSex] = useState<'m' | 'f'>('m')
   const [bwLb, setBwLb] = useNumber(220)
@@ -2954,6 +3032,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'critical-power-calculator': CriticalPowerCalc,
   'wilks-score-calculator': WilksCalc,
   'race-time-predictor-calculator': RacePredictorCalc,
   'dependent-care-fsa-vs-credit-calculator': DepCareCalc,
