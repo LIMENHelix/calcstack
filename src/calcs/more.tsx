@@ -1016,7 +1016,73 @@ export function PetCostCalc() {
   )
 }
 
+/* ---------------- 529 College Savings Projector ---------------- */
+
+// FV of balance + monthly contributions vs college cost inflated to matriculation and
+// through the college years. Verified: $10k + $300/mo, 10yr @6%, $31k cost @4% →
+// $67,072 saved vs $194,860 total (34.4%); full funding needs $1,080/mo.
+// Costs per College Board 2025-26: in-state public $30,990/yr total, private $65,470/yr.
+export function College529Calc() {
+  const [balance, setBalance] = useNumber(10000)
+  const [monthly, setMonthly] = useNumber(300)
+  const [years, setYears] = useNumber(10)
+  const [ret, setRet] = useNumber(6)
+  const [annualCost, setAnnualCost] = useNumber(31000)
+  const [cInfl, setCInfl] = useNumber(4)
+  const [collegeYears, setCollegeYears] = useNumber(4)
+
+  const r = useMemo(() => {
+    const mr = ret / 100 / 12
+    const n = years * 12
+    const fvBal = balance * Math.pow(1 + ret / 100, years)
+    const fvContrib = monthly * (mr > 0 ? (Math.pow(1 + mr, n) - 1) / mr : n)
+    const savings = fvBal + fvContrib
+    const yr1 = annualCost * Math.pow(1 + cInfl / 100, years)
+    let total = 0
+    for (let k = 0; k < collegeYears; k++) total += yr1 * Math.pow(1 + cInfl / 100, k)
+    const coverage = total > 0 ? (savings / total) * 100 : 0
+    const needed = mr > 0 ? Math.max(0, (total - fvBal) / ((Math.pow(1 + mr, n) - 1) / mr)) : Math.max(0, (total - fvBal) / n)
+    const gap = Math.max(0, total - savings)
+    return { fvBal, fvContrib, savings, yr1, total, coverage, needed, gap }
+  }, [balance, monthly, years, ret, annualCost, cInfl, collegeYears])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Current 529 balance" value={balance} onChange={setBalance} prefix="$" />
+        <Field label="Monthly contribution" value={monthly} onChange={setMonthly} prefix="$" />
+        <Field label="Years until college" value={years} onChange={setYears} step="1" />
+        <Field label="Annual return" value={ret} onChange={setRet} suffix="%" step="0.5" />
+        <Field label="Today's annual cost (all-in)" value={annualCost} onChange={setAnnualCost} prefix="$" step="500" />
+        <Field label="College cost inflation" value={cInfl} onChange={setCInfl} suffix="%" step="0.5" />
+        <Field label="Years of college" value={collegeYears} onChange={setCollegeYears} step="1" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Projected savings" value={usd(r.savings, 0)} />
+        <Result label="Projected total cost" value={usd(r.total, 0)} />
+        <Result label="Coverage" value={`${num(r.coverage, 0)}%`} />
+        <Result label={r.gap > 0 ? 'Shortfall' : 'Surplus'} value={usd(Math.abs(r.total - r.savings), 0)} />
+        <Result label="First-year cost (inflated)" value={usd(r.yr1, 0)} />
+        <Result label="From current balance" value={usd(r.fvBal, 0)} />
+        <Result label="From contributions" value={usd(r.fvContrib, 0)} />
+        <Result label="Monthly to fully fund" value={usd(r.needed, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Today's all-in averages per College Board 2025-26: {usd(30990, 0)}/yr in-state public,
+        {' '}{usd(50920, 0)} out-of-state, {usd(65470, 0)} private nonprofit — put the one you are
+        targeting in the cost field. At {num(cInfl, 0)}% inflation, the first year of college
+        costs {usd(r.yr1, 0)} by the time this student enrolls, and the full {collegeYears}-year
+        bill is {usd(r.total, 0)}. Your current plan covers {num(r.coverage, 0)}%; closing the gap
+        takes {usd(r.needed, 0)}/month from today. 529 growth and qualified withdrawals are
+        tax-free, and most states add a deduction or credit on contributions — the gap is
+        smaller than it looks if you start before the compounding years run out.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  '529-college-savings-calculator': College529Calc,
   'pet-first-year-cost-calculator': PetCostCalc,
   'baby-first-year-cost-calculator': BabyCostCalc,
   'wedding-budget-calculator': WeddingBudgetCalc,

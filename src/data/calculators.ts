@@ -170,6 +170,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: '529-college-savings-calculator',
+    title: '529 College Savings Calculator — Will Your Plan Cover the Real Bill?',
+    shortTitle: '529 College Savings',
+    category: 'Savings & Investing',
+    description:
+      'Free 529 college savings calculator. Enter your balance, monthly contribution, and years until college — see projected savings against the inflated 4-year cost, the coverage percentage, and the monthly amount needed to fully fund it.',
+    tagline: 'College inflates faster than your paycheck. Project the real bill.',
+    intro:
+      'The average all-in year of college runs $30,990 in-state public to $65,470 private (College Board 2025-26), and college costs inflate faster than CPI — so the bill due in 10 or 18 years is not the bill on the website today. This calculator projects your 529 balance and contributions forward, inflates the cost to the enrollment years, and shows the coverage percentage plus the monthly amount that would fully fund it.',
+    howItWorks: [
+      'Enter your current 529 balance and monthly contribution.',
+      'Set the years until college and an annual return assumption.',
+      'Enter today\'s all-in annual cost for the type of school you are targeting.',
+      'Set college cost inflation — 4% is the long-run planning standard.',
+      'Read projected savings vs the real bill, the coverage, and the monthly amount to fully fund.',
+    ],
+    faq: [
+      {
+        q: 'How much should I save monthly in a 529?',
+        a: 'Work backward from the inflated bill. Example: $10,000 saved, 10 years out, 6% return, targeting in-state public ($31,000/yr today at 4% inflation) → the 4-year bill projects to $194,860, your plan builds $67,072 (34%), and full funding takes about $1,080/month. From a newborn (18 years), $500/month at 6% builds $193,677 — 44% of a private bill, most of an in-state one. Starting early beats saving big late.',
+      },
+      {
+        q: 'What does college actually cost right now?',
+        a: 'College Board 2025-26 all-in budgets (tuition, fees, room, board, books): $30,990/yr in-state public four-year, $50,920 out-of-state public, $65,470 private nonprofit, $21,320 community college. Tuition alone: $11,950 in-state public, $45,000 private. Sticker price is not net price — most students receive grant aid — but plan savings against the sticker number and treat aid as upside.',
+      },
+      {
+        q: 'What if my child does not go to college?',
+        a: 'Modern 529s are flexible: change the beneficiary to another family member (siblings, cousins, yourself, a future grandchild), use up to $10,000 for K-12 tuition or student loan repayment, fund registered apprenticeships, or roll up to $35,000 lifetime into the beneficiary\'s Roth IRA (SECURE 2.0, account must be 15+ years old). Worst case, non-qualified withdrawals tax only the earnings plus a 10% penalty on them — contributions always come back tax-free.',
+      },
+    ],
+  },
+  {
     slug: 'pet-first-year-cost-calculator',
     title: 'Pet First-Year Cost Calculator — Dog & Cat Budget With Insurance Math',
     shortTitle: 'Pet First-Year Cost',
