@@ -2322,6 +2322,67 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// QSBS §1202 — OBBBA §70432: stock acquired AFTER July 4, 2025: tiered exclusion 50% @3yr / 75% @4yr / 100% @5yr, cap greater of $15M or 10× basis, $75M gross-assets ceiling; 7% AMT preference on the excluded amount for the 3/4-yr tiers (not modeled — noted). Pre-OBBBA (≤ Jul 4, 2025, post-9/27/2010): 100% only after MORE than 5 years, cap greater of $10M or 10× basis, $50M ceiling. Non-excluded §1202 gain is taxed at the special 28% rate (§1(h)(4)) + 3.8% NIIT = 31.8% — NOT the regular 15/20% LTCG brackets, which is why a failed QSBS bet costs MORE than ordinary stock (pre-OBBBA 4.5-yr sale: −$960k vs no-QSBS). States: CA, PA, AL, MS don't conform (tax the gain fully); NJ conforms from 2026; WA hits it with the 7% excise over $270k. Node-verified: $12M gain/$100k basis/5yr post → $0 tax, $2,856,000 saved; 4yr → $954,000 tax; $30M gain/$5M basis → 10× basis cap $50M wins.
+export function QSBSCalc() {
+  const [post, setPost] = useState(true)
+  const [gain, setGain] = useNumber(12000000)
+  const [basis, setBasis] = useNumber(100000)
+  const [yrs, setYrs] = useNumber(5)
+  const [stateRate, setStateRate] = useNumber(0)
+
+  const r = useMemo(() => {
+    const pct = post ? (yrs >= 5 ? 1 : yrs >= 4 ? 0.75 : yrs >= 3 ? 0.5 : 0) : (yrs > 5 ? 1 : 0)
+    const cap = Math.max(10 * basis, post ? 15000000 : 10000000)
+    const excl = Math.min(gain, cap) * pct
+    const taxable = gain - excl
+    const fed = taxable * 0.318
+    const st = taxable * (stateRate / 100)
+    const noQsbs = gain * (0.238 + stateRate / 100)
+    return { pct, cap, excl, taxable, fed, st, noQsbs, save: noQsbs - fed - st }
+  }, [post, gain, basis, yrs, stateRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <label className="mb-1 block text-sm font-medium">Stock acquired</label>
+            <select
+              className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+              value={post ? 'post' : 'pre'}
+              onChange={(e) => setPost(e.target.value === 'post')}
+            >
+              <option value="post">After July 4, 2025 (OBBBA rules)</option>
+              <option value="pre">On or before July 4, 2025 (legacy rules)</option>
+            </select>
+          </div>
+          <Field label="Capital gain on sale" value={gain} onChange={setGain} prefix="$" />
+          <Field label="Your cost basis" value={basis} onChange={setBasis} prefix="$" />
+          <Field label="Years held" value={yrs} onChange={setYrs} />
+          <Field label="State tax rate on the gain" value={stateRate} onChange={setStateRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Exclusion" value={`${num(r.pct * 100, 0)}%`} />
+          <Result label="Gain excluded" value={usd(r.excl)} />
+          <Result label="Total tax on sale" value={usd(r.fed + r.st)} />
+          <Result label="Saved vs ordinary stock" value={usd(r.save)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.pct > 0 ? (
+            <>Your cap is {usd(r.cap)} (greater of {post ? '$15M' : '$10M'} or 10× basis). {num(r.pct * 100, 0)}% of {usd(Math.min(gain, r.cap))} is excluded{r.pct < 1 ? <>; the remaining {usd(r.taxable)} is taxed at the special <span className="font-medium">28% rate + 3.8% NIIT</span> — not the usual 20% — {post ? 'and 7% of the excluded slice becomes an AMT preference item at the 3/4-year tiers' : ''}</> : ' — zero federal tax'}. </>
+          ) : (
+            <><span className="font-medium">No exclusion at {num(yrs, 1)} years.</span> {post ? 'The tiers start at 3 years (50%).' : 'Legacy stock needs MORE than 5 years — one day short means 0%.'} And here's the trap: the full {usd(r.taxable)} gain is taxed at 28% + 3.8% NIIT ({usd(r.fed)}), which is <span className="font-medium">worse than the 23.8% an ordinary stock would pay</span> — a failed QSBS bet costs you {usd(-r.save)} extra. A §1045 rollover into new QSBS within 60 days keeps the clock running instead. </>
+          )}
+          {stateRate === 0 && r.pct > 0 && <>State note: California, Pennsylvania, Alabama, and Mississippi don't conform — residents there owe full state tax on the "excluded" gain; Washington hits it with the 7% capital-gains excise.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          IRC §1202 as amended by OBBBA §70432 (P.L. 119-21). The regime locks to your ACQUISITION date, not the sale date: legacy stock (≤ Jul 4, 2025) keeps the $10M/10× basis cap and the all-or-nothing 5-year rule; post-OBBBA stock gets tiers (50/75/100% at 3/4/5 years), the $15M cap, and the $75M gross-assets ceiling — indexed from 2027. Issuer must be a domestic C-corp in a qualified business (no services, finance, hospitality, farming, mining) with ≤$75M gross assets at issuance; you must take stock at original issuance (options/RSUs count at exercise/vesting, not grant). Per-shareholder, per-issuer — gifting to trusts ("stacking") multiplies caps. The earliest any post-OBBBA stock hits the 3-year tier is July 2028. Founder/CPA territory before any exit.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Medicaid spend-down & lookback — 2026 federal figures: single applicant countable-asset limit $2,000 (couple both applying $3,000); CSRA max $162,660 / min $32,532 (community spouse keeps half of combined countable assets, floored at min, capped at max; WI floor $50k); home equity limit $752,000 (home exempt while spouse/dependent lives there or intent to return); income cap $2,982/mo (300% SSI FBR — excess → Miller/QIT trust); MMMNA $2,705–$4,066.50. 60-month lookback; penalty months = uncompensated transfers ÷ state divisor (2026 examples: FL $10,645/mo, AR $6,083, AK ~$25,000, NJ $420.67/day, WI $352.06/day) — penalty runs AFTER you're otherwise eligible, i.e. private-pay months. Estate recovery after death (42 U.S.C. §1396p). Node-verified: married $300k → CSRA $150,000, spend-down $148,000; $60k → floor $32,532; $500k → capped $162,660; $100k gift ÷ $10,645 = 9.4 penalty months ≈ $95,810 private pay.
 export function MedicaidSpendDownCalc() {
   const [married, setMarried] = useState(false)
@@ -5598,6 +5659,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'qsbs-exclusion-calculator': QSBSCalc,
   'medicaid-spend-down-calculator': MedicaidSpendDownCalc,
   'hybrid-ltc-vs-traditional-calculator': HybridLTCCalc,
   'ltc-insurance-vs-self-fund-calculator': LTCInsuranceCalc,

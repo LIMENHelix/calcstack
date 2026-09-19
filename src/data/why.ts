@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'qsbs-exclusion-calculator':
+    'Founders and early employees use it when an exit offer lands: the tiers (50/75/100% at 3/4/5 years), the $15M-or-10×-basis cap, and the trap that selling legacy stock one day short means 28% + NIIT on everything — worse than ordinary stock — until a §1045 rollover saves the clock.',
   'medicaid-spend-down-calculator':
     'Adult children use it the week a parent needs a nursing home, when the family learns the $2,000 asset limit, the spouse\'s protected share, and that the $100,000 gifted three years ago now means ten months of private pay — the three-test reality check before the elder-law attorney meeting.',
   'hybrid-ltc-vs-traditional-calculator':

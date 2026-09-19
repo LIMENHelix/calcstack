@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'qsbs-exclusion-calculator',
+    title: 'QSBS Calculator 2026 — Section 1202 Exclusion After OBBBA (50/75/100% Tiers)',
+    shortTitle: 'QSBS Exclusion Calculator',
+    category: 'Investing & Crypto',
+    description:
+      'Founder and early-employee stock: how much of your gain does Section 1202 exclude? OBBBA tiers (50% at 3yr, 75% at 4yr, 100% at 5yr), the $15M/10×-basis cap, and the 28% trap if you sell too early.',
+    tagline: 'The most valuable tax break in startups — and the trap: selling early costs MORE than ordinary stock.',
+    intro:
+      'Section 1202 lets founders, early employees, and early investors exclude up to 100% of federal capital gains on qualified small business stock — capped at the greater of $15 million or 10× your basis for stock acquired after July 4, 2025. OBBBA replaced the all-or-nothing 5-year cliff with tiers: 50% at 3 years, 75% at 4, 100% at 5. But the part nobody warns you about: the non-excluded portion of §1202 gain is taxed at a special 28% rate plus 3.8% NIIT — not the regular 20% capital gains rate. Sell legacy stock one day short of five years and you pay 31.8% on the entire gain — MORE than if it had never been QSBS. This calculator prices both regimes and shows the §1045 rollover escape hatch.',
+    howItWorks: [
+      'Pick your regime — the rules lock to the acquisition date, not the sale date.',
+      'Enter the gain, your basis (10× basis can beat the dollar cap), and years held.',
+      'Add your state rate — California, Pennsylvania, Alabama, and Mississippi don\'t conform.',
+      'Read the excluded gain, total tax, and savings versus ordinary stock treatment.',
+    ],
+    faq: [
+      {
+        q: 'Does my stock qualify?',
+        a: 'Four tests: (1) domestic C-corp — not LLC or S-corp — when the stock was ISSUED to you; (2) company gross assets ≤ $50M (legacy) or $75M (post-OBBBA) at issuance; (3) you acquired at original issuance for money, property, or services — exercising options or vesting RSUs starts the clock, the grant date does not; (4) an active qualified business — services, finance, hospitality, farming, and mining are excluded. The holding clock runs from issuance; every year as an LLC is a year the clock isn\'t running.',
+      },
+      {
+        q: 'What exactly did OBBBA change?',
+        a: 'For stock acquired after July 4, 2025 (OBBBA §70432): tiered exclusion (50% at 3 years, 75% at 4, 100% at 5), per-issuer cap up from $10M to $15M, and the gross-assets ceiling up from $50M to $75M — both indexed for inflation from 2027. Legacy stock keeps the old rules entirely: 100% only after more than 5 years, $10M cap. One catch on the new tiers: 7% of the excluded amount becomes an AMT preference item at the 3- and 4-year tiers. The earliest any post-OBBBA stock can hit the 3-year tier is July 2028.',
+      },
+      {
+        q: 'I\'m short of the holding period and have an exit offer. Options?',
+        a: 'Section 1045 rollover: sell and roll the proceeds into new QSBS within 60 days — the holding period carries over and the clock keeps running toward five years. Or negotiate the closing date past your tier boundary: the difference between 4.9 and 5.0 years on post-OBBBA stock is 25 percentage points of exclusion. On legacy stock the cliff is total — 4.99 years is 0% exclusion and the 28%+3.8% rate on everything, which is worse than never qualifying. This is the conversation to have with your CPA BEFORE signing the LOI.',
+      },
+    ],
+  },
+  {
     slug: 'medicaid-spend-down-calculator',
     title: 'Medicaid Spend-Down Calculator 2026 — Asset Limit, CSRA & 5-Year Lookback Penalty',
     shortTitle: 'Medicaid Spend-Down Calculator',
