@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'severance-pay-calculator',
+    title: 'Severance Pay Calculator 2026 — Lump Sum vs January Timing, True Net After Tax',
+    shortTitle: 'Severance Calculator',
+    category: 'Careers & Salary',
+    description:
+      'Severance is ordinary wages: FICA applies, withholding looks brutal, and a December lump stacks on your highest bracket while a January payment gets a fresh year. Price your true net and the timing play.',
+    tagline: 'The one thing negotiable about severance: which tax year it lands in.',
+    intro:
+      'A severance check always looks robbed — that\'s supplemental-wage withholding, not the real tax. The real math: severance is ordinary W-2 income, pays full FICA, and stacks on top of everything you\'ve already earned this year at your TOP marginal brackets. A $50,000 December severance after $90,000 of salary owes $11,364 of federal tax. The same package split $25,000/$25,000 across December and January owes $6,390 — a $4,974 difference for a payment-timing conversation with HR, because January income starts the year with empty brackets and a fresh standard deduction. This calculator prices your lump sum versus any split, with FICA and state included, so you negotiate with numbers instead of nerves.',
+    howItWorks: [
+      'Enter the severance amount and what you\'ve already earned this year — stacking is the whole story.',
+      'Enter expected income next year (zero if you\'ll be between jobs).',
+      'Move the "paid in January instead" slider to model the deferral you could negotiate.',
+      'Read the federal tax both ways, plus FICA, state, and your true net.',
+    ],
+    faq: [
+      {
+        q: 'Is severance taxed differently than salary?',
+        a: 'No — it\'s ordinary wages: same brackets, same FICA (7.65% employee side up to the $184,500 Social Security cap), same state tax. What differs is WITHHOLDING: severance paid separately uses the flat 22% supplemental rate; combined with your final check it uses the aggregate method that annualizes the whole check. Both are just deposits against your real liability — the refund or balance settles in April. The one genuine tax lever is which year the income lands in.',
+      },
+      {
+        q: 'Can I put severance into my 401(k) to dodge the tax?',
+        a: 'No — 401(k) deferrals require eligible compensation while employed, and post-termination severance doesn\'t qualify. What DOES work: crank the deferral percentage on your final regular paychecks before termination (the limit is per-year, not per-check), and route next year\'s living expenses through an IRA contribution if eligible. Note that Roth IRA eligibility is income-limited — a year with low income after a layoff is also a golden Roth-conversion window for old 401(k) money.',
+      },
+      {
+        q: 'Does severance kill my unemployment benefits?',
+        a: 'Depends on the state, and the variation is huge. Some states ignore severance entirely; many treat it as covering specific weeks and delay UI until those weeks pass; a few reduce benefits dollar-for-dollar. File for unemployment immediately anyway — the state agency makes the determination, filing starts your clock, and the worst case is benefits deferred, not denied. Also watch COBRA: severance sometimes includes paid COBRA months, and the 60-day election window runs from your loss of coverage regardless of when severance payments stop.',
+      },
+    ],
+  },
+  {
     slug: 'stock-donation-calculator',
     title: 'Donate Stock vs Cash Calculator 2026 — Appreciated Shares Beat Checks',
     shortTitle: 'Stock Donation Calculator',

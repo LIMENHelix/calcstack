@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { useNumber, Field, Result } from './index'
 import { usd, num } from '@/lib/calc'
+import { FEDERAL, bracketTax, SS_WAGE_CAP } from '@/data/paycheck'
 
 /* ---------- Everyday Money ---------- */
 
@@ -2321,6 +2322,67 @@ const DOTS_COEFF = {
   m: [-0.000001093, 0.0007391293, -0.1918759221, 24.0900756, -307.75076],
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
+
+// Severance — taxed as ordinary wages: FICA applies (severance IS Social Security/Medicare wages), federal withholding is supplemental (flat 22% separate check or aggregate if combined), and it stacks on top of YTD income at marginal brackets — a December lump sum lands in your highest bracket while a January payment starts a fresh tax year with near-empty brackets. The deferral play: negotiate payment timing across the year boundary. UI interaction: many states delay unemployment until severance coverage runs out (state-specific — check yours). Severance can't go into a 401(k) (not eligible compensation post-termination), but a final-paycheck 401(k) deferral can. Node-verified (2026 single, ded $16,100): YTD $90k + $50k lump → $11,364 fed on the severance; split $25k/$25k across Dec/Jan (no other income yr 2) → $6,390 — saves $4,974; FICA $3,825 (under the $184,500 cap); lump net after fed+FICA+5% state = $32,311.
+export function SeveranceCalc() {
+  const [sev, setSev] = useNumber(50000)
+  const [ytd, setYtd] = useNumber(90000)
+  const [nextYr, setNextYr] = useNumber(0)
+  const [defer, setDefer] = useNumber(25000)
+  const [filing, setFiling] = useState<'single' | 'mfj'>('single')
+  const [stateRate, setStateRate] = useNumber(5)
+
+  const r = useMemo(() => {
+    const fed = FEDERAL[filing]
+    const fedTax = (g: number) => bracketTax(fed.brackets, Math.max(0, g - fed.ded))
+    const d = Math.min(Math.max(0, defer), sev)
+    const lumpFed = fedTax(ytd + sev) - fedTax(ytd)
+    const splitFed = fedTax(ytd + (sev - d)) - fedTax(ytd) + (fedTax(nextYr + d) - fedTax(nextYr))
+    const saved = lumpFed - splitFed
+    const fica = Math.min(sev, Math.max(0, SS_WAGE_CAP - ytd)) * 0.0765
+    const state = sev * (stateRate / 100)
+    const lumpTotal = lumpFed + fica + state
+    const splitTotal = splitFed + fica + state
+    return { lumpFed, splitFed, saved, fica, state, lumpTotal, splitTotal, lumpNet: sev - lumpTotal, splitNet: sev - splitTotal, d }
+  }, [sev, ytd, nextYr, defer, filing, stateRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Severance amount" value={sev} onChange={setSev} prefix="$" />
+          <Field label="Income already earned this year" value={ytd} onChange={setYtd} prefix="$" />
+          <Field label="Expected income NEXT year" value={nextYr} onChange={setNextYr} prefix="$" />
+          <Field label="Amount paid in January instead" value={defer} onChange={setDefer} prefix="$" />
+          <Field label="State income tax" value={stateRate} onChange={setStateRate} suffix="%" />
+          <div>
+            <label className="mb-1 block text-sm font-medium">Filing status</label>
+            <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={filing} onChange={(e) => setFiling(e.target.value as 'single' | 'mfj')}>
+              <option value="single">Single</option>
+              <option value="mfj">Married filing jointly</option>
+            </select>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Saved by timing the payment" value={usd(r.saved)} />
+          <Result label="Net: all this year" value={usd(r.lumpNet)} />
+          <Result label="Net: split across years" value={usd(r.splitNet)} />
+          <Result label="Fed tax: lump vs split" value={`${usd(r.lumpFed)} vs ${usd(r.splitFed)}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.d > 0 && r.saved > 0 ? (
+            <>Taking the full {usd(sev)} this year stacks it on your {usd(ytd)} at your top brackets: <span className="font-medium">{usd(r.lumpFed)} federal</span>. Moving {usd(r.d)} into January gives it next year's empty brackets and standard deduction: {usd(r.splitFed)} — <span className="font-medium">{usd(r.saved)} saved</span> for a conversation with HR about payment timing. FICA ({usd(r.fica)}) and state ({usd(r.state)}) don't change.</>
+          ) : (
+            <>The whole {usd(sev)} lands this year: <span className="font-medium">{usd(r.lumpFed)} federal</span> + {usd(r.fica)} FICA + {usd(r.state)} state = you keep {usd(r.lumpNet)}. Try the January-deferral input above — income near the December boundary is the one thing about severance you can often negotiate.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The facts people get wrong: severance is ordinary W-2 wages — FICA applies in full (7.65% employee side under the $184,500 SS cap), and withholding is supplemental-wage style (flat 22% on a separate check, or the aggregate method if combined with final pay — see the bonus tax calculator), so the check ALWAYS looks overtaxed relative to the true liability. You cannot contribute severance to a 401(k) — compensation after termination isn't eligible — but you CAN max the deferral on your final regular paychecks. Unemployment interaction is state-specific: many states delay UI benefits until the weeks your severance "covers" have passed — file anyway and let the state sort it. Accrued PTO payout: also wages, same treatment. Non-compete / release-of-claims payments: still wages if through payroll; a settlement NOT for wages can differ — that's attorney territory. Simplified: federal + flat state + employee FICA; no local tax.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
 
 // Donate appreciated stock vs cash — 2026 OBBBA rules: stock held >1 year deducts at full FMV (30% AGI cap for public charities, 5-yr carryover) and the embedded capital gain is NEVER taxed; held ≤1 year the deduction drops to basis. NEW for 2026: itemizers lose the first 0.5% of AGI to the charitable floor (OBBBA §70425, floor-first then ceilings, floor-disallowed amounts never carry forward); non-itemizers get a NEW above-the-line CASH-only deduction $1,000 single / $2,000 MFJ (§170(p), no floor, no carryover, cash to public charities only — not stock, not DAFs). Framing: the stock alternative is "sell the stock, donate the cash" — so the avoided gain is real money. Node-verified: FMV $20k/basis $4k/AGI $150k/32%/23.8% itemizing → floor $750, deduction $19,250 → $6,160 + avoided gain $3,808 = $9,968 stock vs $6,160 cash; non-itemizing single → cash $320 (cap $1k) vs stock $3,808.
 export function StockDonationCalc() {
@@ -6507,6 +6569,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'severance-pay-calculator': SeveranceCalc,
   'stock-donation-calculator': StockDonationCalc,
   'qcd-calculator': QcdCalc,
   'step-up-basis-calculator': StepUpBasisCalc,

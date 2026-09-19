@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'severance-pay-calculator':
+    'Laid-off workers use it before signing the release: severance stacks on YTD income at top brackets, so a $25k shift from December to January saved $4,974 on a $50k package — the timing is negotiable, the brackets aren\'t.',
   'stock-donation-calculator':
     'Investors who give annually use it before the year-end gift: appreciated shares deduct at full value and erase the gain, 2026\'s 0.5% AGI floor trims itemizers, and the new $1k/$2k cash-only rule decides the small-gift route.',
   'qcd-calculator':
