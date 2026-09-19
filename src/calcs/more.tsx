@@ -2322,7 +2322,58 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
-// QSBS §1202 — OBBBA §70432: stock acquired AFTER July 4, 2025: tiered exclusion 50% @3yr / 75% @4yr / 100% @5yr, cap greater of $15M or 10× basis, $75M gross-assets ceiling; 7% AMT preference on the excluded amount for the 3/4-yr tiers (not modeled — noted). Pre-OBBBA (≤ Jul 4, 2025, post-9/27/2010): 100% only after MORE than 5 years, cap greater of $10M or 10× basis, $50M ceiling. Non-excluded §1202 gain is taxed at the special 28% rate (§1(h)(4)) + 3.8% NIIT = 31.8% — NOT the regular 15/20% LTCG brackets, which is why a failed QSBS bet costs MORE than ordinary stock (pre-OBBBA 4.5-yr sale: −$960k vs no-QSBS). States: CA, PA, AL, MS don't conform (tax the gain fully); NJ conforms from 2026; WA hits it with the 7% excise over $270k. Node-verified: $12M gain/$100k basis/5yr post → $0 tax, $2,856,000 saved; 4yr → $954,000 tax; $30M gain/$5M basis → 10× basis cap $50M wins.
+// §1045 QSBS rollover — sell QSBS held MORE than 6 months, buy replacement QSBS within 60 days of the sale date (absolute, no extensions). Gain recognized = min(gain, proceeds − reinvested); deferred gain reduces replacement basis (in acquisition order for multiple lots); holding period TACKS (§1223) — including the acquisition date, so rolling pre-OBBBA stock does NOT upgrade you to the new tiers/$15M cap. Election on a timely return incl. extensions (Rev. Proc. 98-48, Form 8949 code R), revocable only with IRS consent. Replacement must independently qualify (original issuance, C-corp, ≤$75M gross assets); same-issuer replacement is unsettled; SAFEs may not count as stock. No limit on chained rollovers. CA doesn't conform to §1045 or §1202 — state tax due now regardless. Node-verified: $8M proceeds/$500k basis full roll → $0 recognized, new basis $500k; partial $7.5M reinvested → $500k recognized now ($119k tax at 23.8%), $7M deferred.
+export function QSBSRolloverCalc() {
+  const [proceeds, setProceeds] = useNumber(8000000)
+  const [basis, setBasis] = useNumber(500000)
+  const [reinv, setReinv] = useNumber(8000000)
+  const [held, setHeld] = useNumber(3)
+  const [stateRate, setStateRate] = useNumber(0)
+
+  const r = useMemo(() => {
+    const gain = Math.max(0, proceeds - basis)
+    const recog = Math.min(gain, Math.max(0, proceeds - reinv))
+    const deferred = gain - recog
+    const newBasis = reinv - deferred
+    const taxNow = recog * (0.238 + stateRate / 100)
+    const toFull = Math.max(0, 5 - held)
+    const eligible = held > 0.5
+    return { gain, recog, deferred, newBasis, taxNow, toFull, eligible }
+  }, [proceeds, basis, reinv, held, stateRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Sale proceeds" value={proceeds} onChange={setProceeds} prefix="$" />
+          <Field label="Your cost basis" value={basis} onChange={setBasis} prefix="$" />
+          <Field label="Reinvested into new QSBS (within 60 days)" value={reinv} onChange={setReinv} prefix="$" />
+          <Field label="Years you held the sold stock" value={held} onChange={setHeld} />
+          <Field label="State rate (CA/PA/AL/MS: due NOW regardless)" value={stateRate} onChange={setStateRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Gain recognized now" value={usd(r.recog)} />
+          <Result label="Gain deferred" value={usd(r.deferred)} />
+          <Result label="Basis in replacement stock" value={usd(r.newBasis)} />
+          <Result label="Tax due this year" value={usd(r.taxNow)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {!r.eligible ? (
+            <><span className="font-medium">Not eligible.</span> Section 1045 requires the sold stock be held MORE than six months — at {num(held, 1)} years you're under the gate. Selling now means recognizing the full gain. If any delay is possible, cross six months first.</>
+          ) : (
+            <>Your {num(held, 1)} years of holding <span className="font-medium">tacks onto the replacement stock</span> — it inherits {num(held, 1)} years toward the §1202 tiers, so 100% exclusion arrives in {num(r.toFull, 1)} more year{r.toFull === 1 ? '' : 's'} instead of five. Reinvesting {usd(reinv)} of {usd(proceeds)} defers {usd(r.deferred)}{r.recog > 0 && <>; the {usd(r.recog)} you kept out is taxed now at up to 23.8% federal — reinvest the full proceeds to defer everything</>}. </>
+          )}
+          {r.eligible && <>The 60-day window runs from the SALE date with no extensions, and the election goes on a timely return (Form 8949, code R) — miss either and the deferral is gone for good.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          IRC §1045 (unchanged by OBBBA). Requirements: non-corporate seller (individuals, trusts, estates); original QSBS held &gt;6 months; replacement QSBS purchased within 60 days at original issuance from a C-corp under the gross-assets cap; replacement must independently qualify — the same issuer is unsettled and SAFEs/convertibles may not count as "stock." The deferred gain reduces your replacement basis, so the tax is postponed, not forgiven — unless the replacement reaches a §1202 tier, at which point the deferred gain can be permanently excluded. Tacking carries the acquisition DATE too: rolling pre-OBBBA stock keeps the legacy $10M cap and 5-year cliff. Rollovers can chain indefinitely. California conforms to neither §1045 nor §1202 — federal deferral, full state tax now. Founder/CPA territory: get the QSBS attestation letter before closing.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// QSBS §1202 — OBBBA §70432: stock acquired AFTER July 4, 2025: tiered exclusion 50% @3yr / 75% @4yr / 100% @5yr, cap greater of $15M or 10× basis, $75M gross-assets ceiling; 7% AMT preference on the excluded amount for the 3/4-yr tiers (not modeled — noted). Pre-OBBBA (≤ Jul 4, 2025, post-9/27/2010): 100% only after MORE than 5 years, cap greater of $10M or 10× basis, $50M ceiling. Rate nuance: the special 28% rate (§1(h)(4)) + 3.8% NIIT applies only to the NON-EXCLUDED portion when a §1202 exclusion tier is active; below the tier threshold there is no §1202 gain and the sale is ordinary LTCG (20% + 3.8% NIIT). States: CA, PA, AL, MS don't conform (tax the gain fully); NJ conforms from 2026; WA hits it with the 7% excise over $270k. Node-verified: $12M gain/$100k basis/5yr post → $0 tax, $2,856,000 saved; 4yr → $954,000 tax; 2yr → $2,856,000 (ordinary 23.8%, no exclusion); $30M gain/$5M basis → 10× basis cap $50M wins.
 export function QSBSCalc() {
   const [post, setPost] = useState(true)
   const [gain, setGain] = useNumber(12000000)
@@ -2335,7 +2386,9 @@ export function QSBSCalc() {
     const cap = Math.max(10 * basis, post ? 15000000 : 10000000)
     const excl = Math.min(gain, cap) * pct
     const taxable = gain - excl
-    const fed = taxable * 0.318
+    // 28% + 3.8% NIIT applies only to §1202 gain (a partial-exclusion tier is active);
+    // below the tier threshold there is no §1202 gain at all — regular top LTCG 20% + 3.8% NIIT.
+    const fed = taxable * (pct > 0 ? 0.318 : 0.238)
     const st = taxable * (stateRate / 100)
     const noQsbs = gain * (0.238 + stateRate / 100)
     return { pct, cap, excl, taxable, fed, st, noQsbs, save: noQsbs - fed - st }
@@ -2371,7 +2424,7 @@ export function QSBSCalc() {
           {r.pct > 0 ? (
             <>Your cap is {usd(r.cap)} (greater of {post ? '$15M' : '$10M'} or 10× basis). {num(r.pct * 100, 0)}% of {usd(Math.min(gain, r.cap))} is excluded{r.pct < 1 ? <>; the remaining {usd(r.taxable)} is taxed at the special <span className="font-medium">28% rate + 3.8% NIIT</span> — not the usual 20% — {post ? 'and 7% of the excluded slice becomes an AMT preference item at the 3/4-year tiers' : ''}</> : ' — zero federal tax'}. </>
           ) : (
-            <><span className="font-medium">No exclusion at {num(yrs, 1)} years.</span> {post ? 'The tiers start at 3 years (50%).' : 'Legacy stock needs MORE than 5 years — one day short means 0%.'} And here's the trap: the full {usd(r.taxable)} gain is taxed at 28% + 3.8% NIIT ({usd(r.fed)}), which is <span className="font-medium">worse than the 23.8% an ordinary stock would pay</span> — a failed QSBS bet costs you {usd(-r.save)} extra. A §1045 rollover into new QSBS within 60 days keeps the clock running instead. </>
+            <><span className="font-medium">No exclusion at {num(yrs, 1)} years.</span> {post ? 'The tiers start at 3 years (50%).' : 'Legacy stock needs MORE than 5 years — one day short means 0%.'} With no exclusion tier active, the full {usd(r.taxable)} is ordinary capital gain: up to 20% + 3.8% NIIT = {usd(r.fed)} federal. Two escapes: wait for the next tier ({post ? 'each year moves you 50→75→100%' : 'crossing 5 years takes you from 0% to 100% — the steepest cliff in the tax code'}), or a <span className="font-medium">§1045 rollover</span> — reinvest the proceeds into new QSBS within 60 days and the gain defers while your holding period carries over. See the QSBS rollover calculator. </>
           )}
           {stateRate === 0 && r.pct > 0 && <>State note: California, Pennsylvania, Alabama, and Mississippi don't conform — residents there owe full state tax on the "excluded" gain; Washington hits it with the 7% capital-gains excise.</>}
         </div>
@@ -5659,6 +5712,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'qsbs-1045-rollover-calculator': QSBSRolloverCalc,
   'qsbs-exclusion-calculator': QSBSCalc,
   'medicaid-spend-down-calculator': MedicaidSpendDownCalc,
   'hybrid-ltc-vs-traditional-calculator': HybridLTCCalc,

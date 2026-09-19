@@ -266,15 +266,46 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'qsbs-1045-rollover-calculator',
+    title: 'QSBS 1045 Rollover Calculator — Defer Gain & Carry Your Holding Period',
+    shortTitle: 'QSBS 1045 Rollover',
+    category: 'Investing & Crypto',
+    description:
+      'Selling founder stock before the exclusion tier? A §1045 rollover defers the gain into new QSBS within 60 days and tacks your holding period. Compute recognized gain, deferred gain, and new basis.',
+    tagline: 'The 1031 exchange of startup stock — defer now, exclude permanently later.',
+    intro:
+      'An exit offer arrived before your Section 1202 exclusion tier. Section 1045 is the bridge: sell QSBS you\'ve held more than six months, reinvest the proceeds into new qualified small business stock within 60 days, and the gain defers — while your holding period carries over to the replacement stock. Held 3 years? The replacement inherits those 3 years and reaches the 100% exclusion in 2 more, not 5. The catch: reinvest the FULL proceeds or the unreinvested slice is taxed now, and the deferred gain reduces your new basis — this is postponement that converts to permanent exclusion only when the replacement hits a §1202 tier. California residents: the deferral is federal-only.',
+    howItWorks: [
+      'Enter sale proceeds and your basis in the sold stock.',
+      'Enter how much you\'ll reinvest in replacement QSBS within 60 days of the sale.',
+      'Enter years held — they tack onto the replacement stock toward the §1202 tiers.',
+      'Read recognized gain, deferred gain, new basis, and tax due this year.',
+    ],
+    faq: [
+      {
+        q: 'What are the hard requirements?',
+        a: 'Five gates, all absolute: (1) you\'re not a corporation; (2) the sold stock was QSBS held more than 6 months; (3) replacement QSBS purchased within 60 days of the sale date — no extensions, no identification period like a 1031; (4) the replacement independently qualifies (original issuance, C-corp, under the gross-assets cap); (5) election on a timely-filed return including extensions (Rev. Proc. 98-48, Form 8949 code R), revocable only with IRS consent. Miss any gate and the gain is simply recognized.',
+      },
+      {
+        q: 'How does a partial rollover work?',
+        a: 'Not proportionally. Gain is recognized to the extent sale PROCEEDS exceed what you reinvest — sell for $8M, reinvest $7.5M, and $500,000 is taxed now (up to 23.8% federal + state) while $7M of a $7.5M gain defers. The deferred gain then reduces the replacement stock\'s basis dollar-for-dollar, in acquisition order if you buy multiple lots. To defer everything, reinvest everything.',
+      },
+      {
+        q: 'Does the rollover upgrade me to the new OBBBA rules?',
+        a: 'No — tacking carries the acquisition DATE, not just the years. Roll pre-OBBBA stock (issued on or before July 4, 2025) into brand-new QSBS and you keep the legacy regime: $10M cap and the all-or-nothing 5-year cliff. Rollovers can chain indefinitely across multiple replacements, and California conforms to neither §1045 nor §1202, so CA residents owe full state tax at sale even with a perfect federal deferral.',
+      },
+    ],
+  },
+  {
     slug: 'qsbs-exclusion-calculator',
     title: 'QSBS Calculator 2026 — Section 1202 Exclusion After OBBBA (50/75/100% Tiers)',
     shortTitle: 'QSBS Exclusion Calculator',
     category: 'Investing & Crypto',
     description:
       'Founder and early-employee stock: how much of your gain does Section 1202 exclude? OBBBA tiers (50% at 3yr, 75% at 4yr, 100% at 5yr), the $15M/10×-basis cap, and the 28% trap if you sell too early.',
-    tagline: 'The most valuable tax break in startups — and the trap: selling early costs MORE than ordinary stock.',
+    tagline: 'The most valuable tax break in startups — and the steepest cliff: one day short of the tier means zero exclusion.',
     intro:
-      'Section 1202 lets founders, early employees, and early investors exclude up to 100% of federal capital gains on qualified small business stock — capped at the greater of $15 million or 10× your basis for stock acquired after July 4, 2025. OBBBA replaced the all-or-nothing 5-year cliff with tiers: 50% at 3 years, 75% at 4, 100% at 5. But the part nobody warns you about: the non-excluded portion of §1202 gain is taxed at a special 28% rate plus 3.8% NIIT — not the regular 20% capital gains rate. Sell legacy stock one day short of five years and you pay 31.8% on the entire gain — MORE than if it had never been QSBS. This calculator prices both regimes and shows the §1045 rollover escape hatch.',
+      'Section 1202 lets founders, early employees, and early investors exclude up to 100% of federal capital gains on qualified small business stock — capped at the greater of $15 million or 10× your basis for stock acquired after July 4, 2025. OBBBA replaced the all-or-nothing 5-year cliff with tiers: 50% at 3 years, 75% at 4, 100% at 5. Two rate details decide real exits: when a partial tier is active, the non-excluded slice is taxed at a special 28% plus 3.8% NIIT (not the usual 20%); and below the tier threshold there is no exclusion at all — the whole gain is ordinary capital gain, until a §1045 rollover defers it and carries your holding period into replacement stock. This calculator prices both regimes.',
     howItWorks: [
       'Pick your regime — the rules lock to the acquisition date, not the sale date.',
       'Enter the gain, your basis (10× basis can beat the dollar cap), and years held.',
@@ -292,7 +323,7 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
       {
         q: 'I\'m short of the holding period and have an exit offer. Options?',
-        a: 'Section 1045 rollover: sell and roll the proceeds into new QSBS within 60 days — the holding period carries over and the clock keeps running toward five years. Or negotiate the closing date past your tier boundary: the difference between 4.9 and 5.0 years on post-OBBBA stock is 25 percentage points of exclusion. On legacy stock the cliff is total — 4.99 years is 0% exclusion and the 28%+3.8% rate on everything, which is worse than never qualifying. This is the conversation to have with your CPA BEFORE signing the LOI.',
+        a: 'Section 1045 rollover: sell and roll the proceeds into new QSBS within 60 days — the gain defers, and your holding period carries over to the replacement stock, keeping the march toward the tiers alive. Or negotiate the closing date past your tier boundary: on legacy stock the difference between 4.99 and 5.01 years is the ENTIRE exclusion — 0% to 100%. Note the rate nuance: once a partial tier applies, the taxable remainder pays 28% + 3.8% NIIT rather than 20% + 3.8% — still a big win (15.9% effective at the 3-year tier versus 23.8%), just not "half price." This is the conversation to have with your CPA BEFORE signing the LOI.',
       },
     ],
   },
