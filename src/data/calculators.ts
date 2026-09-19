@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'training-load-acwr-calculator',
+    title: 'Acute:Chronic Workload Ratio Calculator — Coupled vs Uncoupled, Injury Zones',
+    shortTitle: 'ACWR',
+    category: 'Fitness & Sports',
+    description:
+      'Acute:chronic workload ratio calculator with BOTH formulas: the uncoupled version Gabbett\'s research actually validates (this week ÷ prior 3-week average) and the coupled version that mathematically flatters spikes. Zones, week-over-week change, and the maximum safe load for next week.',
+    tagline:
+      'The injury-risk ratio every team tracks — computed the uncoupled way, because the coupled formula hides exactly the spikes that hurt athletes.',
+    intro:
+      'The acute:chronic workload ratio compares this week\'s training load to your recent baseline, and Tim Gabbett\'s research turned it into the standard injury-risk gauge in professional sport: lowest risk between 0.8 and 1.3, rising sharply above 1.5 — and also below 0.8, because detrained tissue is fragile too. The detail most calculators get wrong: the coupled formula includes this week in BOTH sides of the ratio, damping every spike. This tool shows uncoupled (the validated one) beside coupled (the flattering one) and prices next week\'s safe ceiling.',
+    howItWorks: [
+      'Enter 4 weeks of load in any consistent unit — km, minutes × session RPE, TSS, pitches. The metric is unit-agnostic.',
+      'Uncoupled ACWR = this week ÷ average of the prior 3 weeks. Coupled = this week ÷ average of all 4 weeks (this week included — the flaw).',
+      'Zones from Gabbett\'s BJSM work: <0.8 underprepared (elevated risk), 0.8–1.3 sweet spot, 1.3–1.5 caution, >1.5 danger.',
+      'Max safe next week = 1.3 × the new 3-week baseline, so you can plan forward instead of auditing backward.',
+    ],
+    faq: [
+      {
+        q: 'My weeks were 30, 35, 40 km and I ran 44 km this week. Am I safe?',
+        a: 'Uncoupled ACWR = 44 ÷ 35 = 1.26 — inside the sweet spot, with a +10% week-over-week jump, right at the prudent ceiling. The coupled formula reads 1.18, which looks safer than reality. Next week\'s safe ceiling is about 51.6 km. Now the cautionary version: three 30 km weeks followed by 60 km gives uncoupled 2.00 — deep in the danger zone — while coupled reads 1.60. Same spike; one formula warns you properly.',
+      },
+      {
+        q: 'Why is a LOW ratio dangerous too?',
+        a: 'Detraining. Below 0.8 your tissues lose the capacity your sport demands, so the risk shows up on the RETURN: the crash week plants the next spike. A 60→50→40→20 sequence reads 0.40 — underprepared — and if week five jumps back to 45, the ratio hits 1.5 against a degraded baseline. Consistency is the actual protective variable; the ratio is just how you measure its absence.',
+      },
+      {
+        q: 'What unit should I track?',
+        a: 'Whichever you can measure every session: runners use kilometers or minutes, team sports use session-RPE (minutes × 1–10 effort), cyclists use TSS, throwers use pitch/throw counts. The ratio is dimensionless — but mixing units between weeks makes it meaningless. One sport, one unit, every week.',
+      },
+    ],
+  },
+  {
     slug: 'critical-power-calculator',
     title: 'Critical Power & W′ Calculator — Two Time Trials, Every Duration Predicted',
     shortTitle: 'Critical Power',

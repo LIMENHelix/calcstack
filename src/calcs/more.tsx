@@ -2322,6 +2322,62 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+export function AcwrCalc() {
+  const [w3, setW3] = useNumber(30)
+  const [w2, setW2] = useNumber(35)
+  const [w1, setW1] = useNumber(40)
+  const [cur, setCur] = useNumber(44)
+
+  const r = useMemo(() => {
+    const prior = [w3, w2, w1].filter((x) => x >= 0)
+    const coupledChronic = (w3 + w2 + w1 + cur) / 4
+    const uncoupledChronic = prior.length ? prior.reduce((a, b) => a + b, 0) / prior.length : 0
+    const coupled = coupledChronic > 0 ? cur / coupledChronic : 0
+    const uncoupled = uncoupledChronic > 0 ? cur / uncoupledChronic : 0
+    const wow = w1 > 0 ? ((cur - w1) / w1) * 100 : 0
+    const zone = (v: number) =>
+      v === 0 ? '—' : v < 0.8 ? 'Underprepared (elevated risk)' : v <= 1.3 ? 'Sweet spot' : v <= 1.5 ? 'Caution' : 'Danger zone'
+    const nextChronic = (w2 + w1 + cur) / 3
+    const maxNext = nextChronic * 1.3
+    const masked = coupled < uncoupled - 0.05 && uncoupled > 1.3
+    return { coupled, uncoupled, wow, zone: zone(uncoupled), maxNext, masked }
+  }, [w3, w2, w1, cur])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-4">
+        <Field label="3 weeks ago" value={w3} onChange={setW3} step="5" />
+        <Field label="2 weeks ago" value={w2} onChange={setW2} step="5" />
+        <Field label="Last week" value={w1} onChange={setW1} step="5" />
+        <Field label="This week (acute)" value={cur} onChange={setCur} step="5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="ACWR (uncoupled)" value={num(r.uncoupled, 2)} />
+        <Result label="Zone" value={r.zone} />
+        <Result label="Week-over-week change" value={`${r.wow >= 0 ? '+' : ''}${num(r.wow, 0)}%`} />
+        <Result label="Max safe next week" value={num(r.maxNext, 1)} />
+        <Result label="Coupled ACWR (flatters spikes)" value={num(r.coupled, 2)} />
+      </div>
+      {r.masked && (
+        <p className="text-sm text-muted-foreground">
+          Spike alert: your coupled ratio ({num(r.coupled, 2)}) hides what the uncoupled ratio ({num(r.uncoupled, 2)})
+          exposes — this week's load is inside the denominator of the coupled version, damping every spike by
+          design. Gabbett's group moved to uncoupled for exactly this reason.
+        </p>
+      )}
+      <p className="text-sm text-muted-foreground">
+        Use any consistent unit — km, minutes × session RPE, TSS, throws, pitches. The acute:chronic workload
+        ratio compares this week's load to your 3-week baseline; Gabbett's injury research (BJSM 2016+) found
+        the lowest risk at 0.8–1.3, rising above 1.5 — and ALSO below 0.8, because detrained tissue breaks too.
+        The two failure modes this catches: the spike (doubling mileage in a week, ratio 2.0) and the
+        ramp-then-crash (hard month, near-zero week, ratio 0.4 — then the return week spikes). Plan next week
+        at or under {num(r.maxNext, 1)} units to stay inside the sweet spot, and keep week-over-week jumps
+        near +10%.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function CriticalPowerCalc() {
   const [min1, setMin1] = useNumber(3)
   const [pow1, setPow1] = useNumber(450)
@@ -3032,6 +3088,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'training-load-acwr-calculator': AcwrCalc,
   'critical-power-calculator': CriticalPowerCalc,
   'wilks-score-calculator': WilksCalc,
   'race-time-predictor-calculator': RacePredictorCalc,

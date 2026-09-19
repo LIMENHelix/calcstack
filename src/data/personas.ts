@@ -1157,6 +1157,7 @@ export const PERSONAS: Persona[] = [
       'one-rep-max-calculator',
       'dots-score-calculator',
       'vo2max-calculator',
+      'training-load-acwr-calculator',
       'ckd-carb-up-calculator',
       'glycogen-calculator',
       'carb-loading-calculator',
