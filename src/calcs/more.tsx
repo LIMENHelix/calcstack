@@ -2322,6 +2322,54 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// LTC insurance vs self-funding — AALTCI 2025/2026 Price Index: $165k initial pool w/ 3% compound rider: male 55 $2,200/yr, female 55 $3,750, couple 55 $5,050 (2026: $5,010), male 65 $3,280, female 65 $5,290, couple 65 $7,030. Pool growth: $165k@3% → $400,500 at 85 (buy at 55). Triggers: 2 of 6 ADLs or cognitive impairment, 90-day elimination typical; benefits tax-free under §7702B. In-force rate hikes averaged ~28% approved in 2024. Decline rates: 38% of applicants 65–69, 47% of 70–75 declined/deferred. Breakeven = self-fund FV ÷ monthly care cost. Node-verified: male 55 $2,200×30yr@6% → FV $173,928 vs pool $400,498 → breakeven 13.9 months of $150k/yr care; female 55 → 23.7 months; male 65 N=20 → 9.7 months.
+export function LTCInsuranceCalc() {
+  const [premium, setPremium] = useNumber(2200)
+  const [pool, setPool] = useNumber(165000)
+  const [growth, setGrowth] = useNumber(3)
+  const [years, setYears] = useNumber(30)
+  const [careCost, setCareCost] = useNumber(150000)
+  const [ret, setRet] = useNumber(6)
+
+  const r = useMemo(() => {
+    const i = ret / 100
+    const premiums = premium * years
+    const fv = i > 0 ? premium * (Math.pow(1 + i, years) - 1) / i : premium * years
+    const poolAtClaim = pool * Math.pow(1 + growth / 100, years)
+    const monthly = careCost / 12
+    const breakevenMonths = monthly > 0 ? fv / monthly : 0
+    const coveredByPool = Math.floor(poolAtClaim / monthly)
+    return { premiums, fv, poolAtClaim, breakevenMonths, coveredByPool }
+  }, [premium, pool, growth, years, careCost, ret])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Annual premium" value={premium} onChange={setPremium} prefix="$" />
+          <Field label="Initial benefit pool" value={pool} onChange={setPool} prefix="$" />
+          <Field label="Benefit inflation growth" value={growth} onChange={setGrowth} suffix="%" />
+          <Field label="Years until typical claim (buy 55 → claim 85)" value={years} onChange={setYears} />
+          <Field label="Annual care cost at claim" value={careCost} onChange={setCareCost} prefix="$" />
+          <Field label="Return if you invested premiums" value={ret} onChange={setRet} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result label="Total premiums paid" value={usd(r.premiums)} />
+          <Result label="Premiums invested instead" value={usd(r.fv)} />
+          <Result label="Policy pool at claim age" value={usd(r.poolAtClaim)} />
+          <Result label="Breakeven care length" value={`${num(r.breakevenMonths, 0)} months`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Invest the premiums yourself at {num(ret, 1)}% and you'd have <span className="font-medium">{usd(r.fv)}</span> at claim age — that self-funds <span className="font-medium">{num(r.breakevenMonths, 0)} months</span> of care at {usd(careCost)}/yr. The policy pool grows to <span className="font-medium">{usd(r.poolAtClaim)}</span> — about {num(r.coveredByPool, 0)} months. So the bet is precise: insurance wins if your care event runs longer than {num(r.breakevenMonths, 0)} months; self-funding wins below that — and if you never claim, self-funding keeps everything. The pool also buys roughly {num(r.poolAtClaim / r.fv, 1)}× the dollars per premium dollar, which is the leverage you're actually purchasing.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Benchmarks (AALTCI Price Index, $165k initial pool, 3% compound rider): male 55 ≈ $2,200/yr, female 55 ≈ $3,750, couple 55 ≈ $5,050; at 65: male $3,280, female $5,290, couple $7,030. Benefits trigger at 2 of 6 ADLs (or cognitive impairment) after a typical 90-day elimination period, and qualified payouts are tax-free (IRC §7702B). Honest caveats: traditional premiums CAN rise after purchase (approved in-force increases averaged ~28% in 2024 — hybrids eliminate this), underwriting declines 38% of applicants at 65–69, and about 44% never claim — which is why planners frame it as insuring the 5-year tail, not the average. Common self-fund thresholds: roughly $2M+ single / $3M+ couple; under ~$200k, Medicaid is the realistic backstop. Run the care-cost side in the long-term care cost calculator first.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Long-term care cost planner — 2025 CareScout (Genworth) Cost of Care Survey national medians: non-medical home caregiver $35/hr ($80,080/yr @44hr/wk), skilled nursing at home $90/hr, adult day health $95/day, assisted living $6,200/mo ($74,400/yr), nursing home semi-private $9,581/mo, private room $10,798/mo. Care inflation ~3%/yr historical. Totals grow an annuity: annual × ((1+i)^years − 1)/i after inflating to the start year. Node-verified: home 44hr 3yr@3% = $247,519; AL 3yr = $229,963; NH private 3yr = $400,506; adult day 5d/wk 3yr = $76,345; home care starting in 10 yrs = $332,645. Medicare does NOT cover custodial care (ASPE/ACL: 56% of 65-year-olds will need paid LTC).
 export function LTCareCostCalc() {
   const [setting, setSetting] = useState('home')
@@ -5442,6 +5490,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'ltc-insurance-vs-self-fund-calculator': LTCInsuranceCalc,
   'long-term-care-cost-calculator': LTCareCostCalc,
   'ptet-election-calculator': PTETCalc,
   'nanny-tax-calculator': NannyTaxCalc,

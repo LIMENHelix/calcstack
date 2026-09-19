@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ltc-insurance-vs-self-fund-calculator',
+    title: 'Long-Term Care Insurance vs Self-Funding Calculator 2026 — Breakeven Months',
+    shortTitle: 'LTC Insurance vs Self-Fund',
+    category: 'Retirement',
+    description:
+      'Should you buy long-term care insurance or invest the premiums? Compare total premiums, the invested-premium alternative, the benefit pool at claim age, and the exact care length where insurance wins.',
+    tagline: 'The bet is precise: insurance wins if your care event outlasts the breakeven months.',
+    intro:
+      'Long-term care insurance is a bet with knowable odds, and this calculator prices both sides. A 55-year-old man pays about $2,200 a year for a $165,000 benefit pool with 3% compound growth (AALTCI 2025–26 Price Index) — $66,000 of premiums over 30 years that would grow to about $173,928 if invested at 6% instead. That self-fund pile covers roughly 14 months of $150,000-a-year care. The policy pool, meanwhile, compounds to about $400,500. So insurance wins if your care event runs longer than ~14 months; self-funding wins below that, and keeps everything if you never claim. Enter your own quote and care costs to find YOUR breakeven.',
+    howItWorks: [
+      'Enter your annual premium quote and initial benefit pool (AALTCI benchmarks pre-fill).',
+      'Set the benefit inflation rider, years until a typical claim, and care cost at claim.',
+      'Set the return you would earn investing the premiums instead.',
+      'Read total premiums, the invested-premium pile, the pool at claim age, and the breakeven care length.',
+    ],
+    faq: [
+      {
+        q: 'What are the odds I actually use the policy?',
+        a: 'Per HHS modeling, about 56% of people turning 65 will need paid long-term care, but the average need is around 1.1 years — and only ~6.8% need five or more years (women 8.7%, men 4.9%). Insurance is priced for the tail: the 5-year, $500,000+ dementia or nursing-home event that would break a surviving spouse\'s plan. If your breakeven is 14 months and the average claim is 13, the decision hinges on how scared you are of the tail, not the average.',
+      },
+      {
+        q: 'Can the insurer raise my premium after I buy?',
+        a: 'Yes on traditional policies — insurers file with state regulators and approved in-force increases averaged about 28% in 2024 (down from the brutal legacy-era hikes). If that risk bothers you, hybrid life/LTC or single-premium policies have no ongoing premium to raise, at the cost of a much larger upfront commitment (~$50k+ lump sum or $3,000+/yr).',
+      },
+      {
+        q: 'When is self-funding clearly the right answer?',
+        a: 'Two cases. Above roughly $2M of investable assets single ($3M couple), a median care event is absorbable and you are insuring only the tail — many still buy for spousal protection. Below ~$200k, premiums strain the budget and Medicaid is the realistic backstop anyway. The middle zone — a few hundred thousand to $2M — is where the breakeven math in this calculator actually decides it. Also note: applying late is costly — 38% of applicants aged 65–69 are declined outright.',
+      },
+    ],
+  },
+  {
     slug: 'long-term-care-cost-calculator',
     title: 'Long-Term Care Cost Calculator 2026 — Home Care vs Assisted Living vs Nursing Home',
     shortTitle: 'Long-Term Care Cost Calculator',

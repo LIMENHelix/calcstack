@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'ltc-insurance-vs-self-fund-calculator':
+    'Pre-retirees holding an LTC quote use it to turn the agent\'s pitch into a bet with a number: invested at 6%, the premiums cover about 14 months of care — so the policy only pays if the care event outlasts the breakeven, and the 5-year dementia tail is exactly what is being insured.',
   'long-term-care-cost-calculator':
     'Families use it in the week after a diagnosis or a fall, when the promise "we\'ll keep Mom at home" meets the math: at 44 hours a week home care already beats assisted living on price, Medicare pays for none of it, and the total over three years is the number that decides whether the house gets sold.',
   'ptet-election-calculator':
