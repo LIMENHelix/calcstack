@@ -2308,6 +2308,102 @@ export function Solo401kCalc() {
 // the SAME employer math as the solo 401(k). Node-verified: $100k profit → SEP
 // $18,587 vs solo $43,087; the solo advantage is exactly the $24,500 deferral
 // until the cap binds ($300k profit: $56,839 vs $72,000).
+export function CommissionDrawCalc() {
+  const [draw, setDraw] = useNumber(4000)
+  const [rate, setRate] = useNumber(10)
+  const [sales, setSales] = useNumber(20000)
+  const [growth, setGrowth] = useNumber(20)
+  const [months, setMonths] = useNumber(6)
+  const [recoverable, setRecoverable] = useState(true)
+
+  const r = useMemo(() => {
+    let deficit = 0
+    let totalPaid = 0
+    let totalComm = 0
+    let firstAbove = 0
+    const rows: { m: number; s: number; comm: number; take: number; bal: number }[] = []
+    const n = Math.min(Math.max(1, Math.round(months)), 24)
+    for (let m = 1; m <= n; m++) {
+      const s = sales * Math.pow(1 + growth / 100, m - 1)
+      const comm = s * (rate / 100)
+      let take: number
+      if (comm <= draw) {
+        take = draw
+        if (recoverable) deficit += draw - comm
+      } else {
+        const excess = comm - draw
+        const repay = recoverable ? Math.min(excess, deficit) : 0
+        deficit -= repay
+        take = draw + (excess - repay)
+        if (!firstAbove) firstAbove = m
+      }
+      totalPaid += take
+      totalComm += comm
+      rows.push({ m, s, comm, take, bal: deficit })
+    }
+    const breakeven = rate > 0 ? draw / (rate / 100) : 0
+    return { rows, deficit, totalPaid, totalComm, breakeven, firstAbove }
+  }, [draw, rate, sales, growth, months, recoverable])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Monthly draw" value={draw} onChange={setDraw} prefix="$" step="500" />
+        <Field label="Commission rate" value={rate} onChange={setRate} suffix="%" step="0.5" />
+        <Field label="Month-1 sales" value={sales} onChange={setSales} prefix="$" step="5000" />
+        <Field label="Monthly sales growth" value={growth} onChange={setGrowth} suffix="%" step="5" />
+        <Field label="Months to model" value={months} onChange={setMonths} step="1" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Draw type</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={recoverable ? 'rec' : 'nonrec'} onChange={(e) => setRecoverable(e.target.value === 'rec')}>
+            <option value="rec">Recoverable (deficit owed back)</option>
+            <option value="nonrec">Non-recoverable (guaranteed floor)</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Breakeven sales/month" value={usd(r.breakeven, 0)} />
+        <Result label="Total you'll be paid" value={usd(r.totalPaid, 0)} />
+        <Result label="Total commission earned" value={usd(r.totalComm, 0)} />
+        <Result label={recoverable ? 'Deficit you still owe' : 'Forgiven draw total'} value={usd(r.deficit, 0)} />
+        {r.firstAbove > 0 && <Result label="First month above draw" value={`Month ${r.firstAbove}`} />}
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b text-left text-muted-foreground">
+              <th className="py-1 pr-3 font-medium">Month</th>
+              <th className="py-1 pr-3 font-medium">Sales</th>
+              <th className="py-1 pr-3 font-medium">Commission</th>
+              <th className="py-1 pr-3 font-medium">You take home</th>
+              <th className="py-1 font-medium">{recoverable ? 'Deficit balance' : 'Shortfall forgiven'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {r.rows.map((row) => (
+              <tr key={row.m} className="border-b last:border-0">
+                <td className="py-1 pr-3">{row.m}</td>
+                <td className="py-1 pr-3">{usd(row.s, 0)}</td>
+                <td className="py-1 pr-3">{usd(row.comm, 0)}</td>
+                <td className="py-1 pr-3 font-medium">{usd(row.take, 0)}</td>
+                <td className="py-1">{usd(row.bal, 0)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The number that matters before you sign: breakeven is draw ÷ rate — a {usd(draw, 0)} draw at{' '}
+        {num(rate, 1)}% needs {usd(r.breakeven, 0)} of sales EVERY month just to stay flat. Below that, a
+        recoverable draw is a loan: every shortfall piles into a deficit that commissions must repay before
+        you see a dollar above the draw — and most plans make the balance due if you leave. Read the
+        termination clause: some states (California, New York) limit clawbacks, but the contract usually
+        controls. A non-recoverable draw is a true floor, which is exactly why employers offer less of it.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function EsppCalc() {
   const [grant, setGrant] = useNumber(20)
   const [purchase, setPurchase] = useNumber(30)
@@ -2553,6 +2649,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'commission-draw-calculator': CommissionDrawCalc,
   'espp-calculator': EsppCalc,
   'i-bond-calculator': IBondCalc,
   'sep-ira-calculator': SepIraCalc,

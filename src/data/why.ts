@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'commission-draw-calculator':
+    'Sales reps weighing a draw-against-commission offer use it to find the breakeven — draw ÷ rate — and to watch the recoverable deficit snowball month by month, including the balance they would owe back if they walked.',
   'espp-calculator':
     'Employees with a stock purchase plan use it to price the lookback — 85% of the lower price turns a rising stock into an instant gain — and to catch the counterintuitive case: after a down offering period, qualifying disposition can cost MORE tax than selling early.',
   'i-bond-calculator':

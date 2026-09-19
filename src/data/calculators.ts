@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'commission-draw-calculator',
+    title: 'Commission Draw Calculator — Breakeven, Deficit Snowball & What You Owe If You Quit',
+    shortTitle: 'Commission Draw',
+    category: 'Freelance & Career',
+    description:
+      'Draw-against-commission calculator that models the months other calculators ignore: recoverable vs non-recoverable, the month-by-month deficit snowball, excess-commission repayment, and the exact sales pace needed to break even. See what you would owe if you leave with a deficit.',
+    tagline:
+      'A recoverable draw is a loan wearing a salary\'s clothes. See the breakeven before you sign.',
+    intro:
+      'A draw against commission guarantees a monthly check — but if it is recoverable, every month your commissions fall short of the draw, the difference piles into a deficit you must repay out of future commissions, and often owe back if you leave. The math is brutal and simple: breakeven sales = draw ÷ commission rate. A $4,000 draw at 10% requires $40,000 of sales every single month just to stay flat. This calculator models your ramp month by month so you can see when you climb above the draw — or how deep the hole gets.',
+    howItWorks: [
+      'Each month: if commission ≤ draw, you are paid the draw and (if recoverable) the shortfall is added to your deficit.',
+      'When commission exceeds the draw, the excess first repays any accumulated deficit; only the remainder reaches your paycheck above the draw.',
+      'Breakeven = draw ÷ commission rate — the sales pace where commission exactly covers the draw.',
+      'Non-recoverable draws skip the deficit entirely: shortfalls are forgiven, which is why employers size them smaller.',
+    ],
+    faq: [
+      {
+        q: 'My offer is a $4,000/month draw at 10% commission. What am I really signing?',
+        a: 'A requirement to sell $40,000 every month to break even. Ramp slower — say $20k, $30k, $45k, $55k of sales — and after four months you have been paid $16,000 but carry a $1,000 deficit that future commissions must repay. Recoverable deficits typically survive termination: leave with a $3,000 balance and most contracts make it due. California and New York limit clawbacks, but the contract usually controls.',
+      },
+      {
+        q: 'Recoverable vs non-recoverable — how much is the difference worth?',
+        a: 'The full shortfall, every slow month. On a $4,000 draw with $2,000 of commissions, a recoverable plan pays you $4,000 and books a $2,000 debt; a non-recoverable plan pays $4,000 and forgets it. Over a six-month slow ramp that gap can reach five figures — which is exactly why non-recoverable draws are smaller or expire after a few months.',
+      },
+      {
+        q: 'When do I actually earn more than the draw?',
+        a: 'Only after two hurdles: your monthly commission must exceed the draw AND any accumulated deficit must be repaid. With a $4,000 draw, a $3,000 deficit, and a $6,500 commission month, you take home $5,000 — the draw plus $1,000 after $1,500 of excess went to the deficit. The calculator\'s month table shows both hurdles explicitly so the ramp is honest.',
+      },
+    ],
+  },
+  {
     slug: 'espp-calculator',
     title: 'ESPP Calculator 2026 — Lookback Value, Qualifying vs Disqualifying Tax Split',
     shortTitle: 'ESPP',

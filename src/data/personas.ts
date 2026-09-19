@@ -502,6 +502,7 @@ export const PERSONAS: Persona[] = [
     ],
     calcSlugs: [
       'sales-commission-calculator',
+      'commission-draw-calculator',
       'quota-attainment-calculator',
       'ote-calculator',
       'markup-margin-calculator',
