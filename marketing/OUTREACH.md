@@ -295,3 +295,29 @@ forwards it to the person who just got let go.
 Timing: layoff news cycles (any major layoff announcement spikes searches),
 open enrollment (Oct–Dec for the COBRA-vs-ACA angle), adoption finalization
 clusters in November (National Adoption Month) — wave 53 goes out in October.
+
+## Wave 54 — Public-employee retirement (#276–#280)
+
+Teachers, firefighters, police, state workers — organized audiences (unions,
+associations, retiree groups) that share tools with members. The pitch is always
+"free calculator for your members," not SEO.
+
+- **457(b)** — the door-opener. "Your members have TWO $24,500 buckets" is news to
+  most. Pitch NEA/AFT state affiliate blogs, university HR resource pages, hospital
+  system intranets. The final-3-years $49,000 catch-up is the hook for 55+ members.
+- **Fairness Act (WEP/GPO)** — still the emotional one. Widows who never filed
+  because GPO zeroed them = untapped audience. Pitch retiree associations
+  (NRTA, state teacher-retiree groups), police/fire union newsletters.
+  Verify-your-SSA-adjustment angle earns trust over hype.
+- **DROP** — police/fire specific. FOP and IAFF local newsletters; DROP-entry
+  timing questions hit every eligibility class. The 20%-withholding rollover trap
+  is the shareable nugget.
+- **Pension vs Social Security** — career-fork content for recruiting pages and
+  EARLY-career teacher groups (r/Teachers career threads).
+- **PSLF** — crossover with the student-loan audience; teacher/nurse/government
+  forums. The "negative amortization is fine" correction earns the link.
+- **Backlist ride-alongs** — TSP, 403(b), Social Security PIA for the same sites.
+
+Timing: open enrollment season (Oct–Nov) when HR sends benefits emails — unions
+and HR pages update resources then. DROP/PSLF are evergreen; Fairness Act content
+peaks again at tax season when the 2026 SSA-1099s arrive.
