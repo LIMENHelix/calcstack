@@ -2323,6 +2323,55 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// DROP (Deferred Retirement Option Plan) — police/fire/public pension play: you "retire on paper" while still working; the monthly pension deposits into a DROP account earning plan interest (typically 3–5%, some market-linked) for a max 3–5 years, then you exit with the lump sum + the FROZEN pension. The trade: pension accrual stops at DROP entry — no more years, no more salary growth in the benefit. Lump = monthly pension × annuity FV over DROP years. No-Drop path: more years × higher final salary = bigger pension forever. Node-verified: $80k/25yr/2.5%/4yr@4% → pension $50k, lump $216,498, no-DROP pension $65,280 — the lump covers the $15,280/yr gap for 14.2 years; police $90k/20yr/3%/5yr@4.5% → lump $302,155, gap $20,525/yr → 14.7 years. Lump is taxable — roll to IRA to defer (direct rollover avoids the 20% withholding trap).
+export function DropCalc() {
+  const [salary, setSalary] = useNumber(80000)
+  const [yrs, setYrs] = useNumber(25)
+  const [mult, setMult] = useNumber(2.5)
+  const [dyrs, setDyrs] = useNumber(4)
+  const [drate, setDrate] = useNumber(4)
+  const [sgrow, setSgrow] = useNumber(3)
+
+  const r = useMemo(() => {
+    const pen = yrs * (mult / 100) * salary
+    const pmt = pen / 12
+    const rr = drate / 1200
+    const n = dyrs * 12
+    const lump = rr > 0 ? pmt * ((Math.pow(1 + rr, n) - 1) / rr) : pmt * n
+    const penNoDrop = (yrs + dyrs) * (mult / 100) * salary * Math.pow(1 + sgrow / 100, dyrs)
+    const diff = penNoDrop - pen
+    const yearsEq = diff > 0 ? lump / diff : Infinity
+    return { pen, lump, penNoDrop, diff, yearsEq }
+  }, [salary, yrs, mult, dyrs, drate, sgrow])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Final average salary at DROP entry" value={salary} onChange={setSalary} prefix="$" />
+          <Field label="Years of service at entry" value={yrs} onChange={setYrs} />
+          <Field label="Pension multiplier" value={mult} onChange={setMult} suffix="%" />
+          <Field label="DROP years" value={dyrs} onChange={setDyrs} />
+          <Field label="DROP account interest" value={drate} onChange={setDrate} suffix="%" />
+          <Field label="Salary growth (if not in DROP)" value={sgrow} onChange={setSgrow} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="DROP lump sum at exit" value={usd(r.lump)} />
+          <Result label="Frozen pension (with DROP)" value={`${usd(r.pen)}/yr`} />
+          <Result label="Pension without DROP" value={`${usd(r.penNoDrop)}/yr`} />
+          <Result label="Lump covers the gap for" value={isFinite(r.yearsEq) ? `${num(r.yearsEq, 1)} years` : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Enter DROP and your pension freezes at <span className="font-medium">{usd(r.pen)}/yr</span> — but {dyrs} years of those payments pile into the DROP account at {drate}%: <span className="font-medium">{usd(r.lump)} at exit</span>. Skip DROP and work the same {dyrs} years: the pension grows to {usd(r.penNoDrop)}/yr — {usd(r.diff)}/yr more, forever. The lump buys the difference for about {isFinite(r.yearsEq) ? <span className="font-medium">{num(r.yearsEq, 1)} years</span> : '—'} (simple division — a 4% drawdown assumption stretches it further). DROP wins when you want the lump (debt payoff, second-career seed, 457/IRA rollover flexibility) or doubt the plan's COLA; staying wins when longevity runs in the family and the pension's COLA is real.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Mechanics vary by plan, and the details are the whole game: maximum DROP period (usually 3–5 years — entering early forfeits accrual; entering at max eligibility is usually optimal), the credited interest rate (guaranteed vs market-linked changes everything), whether raises during DROP count (usually no — the freeze is the price), and whether you keep employee contributions going in (some plans require it). The lump sum is fully taxable as ordinary income in the year received unless you do a DIRECT rollover to an IRA/457 — have the plan cut the check to the IRA, because a check to you triggers mandatory 20% withholding and a 60-day rollover scramble. Also check: does your DROP entry date lock the beneficiary election, and does the plan offer partial lump-sum (PLOP) instead? Get your system's actual DROP estimate before signing — entry is irrevocable in most plans.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Pension job vs Social-Security-covered job — the teacher/firefighter career fork. Pension side: annual benefit = years × multiplier × final salary (typical 2–2.5%; TX TRS 2.3%); employee contributes ~8% of pay. Covered side: 6.2% FICA buys SS credits — estimate PIA from AIME ≈ salary/12 through the 2026 bend points (90% × $1,286 / 32% to $7,749 / 15% above), then claiming age: 62 = 70%, 67 = 100%, 70 = 124%. Post-Fairness-Act there's no WEP/GPO penalty for mixing careers — but a pure pension career earns ZERO SS credits on those years (40 credits ≈ 10 covered years needed for any SS at all). Honest wrinkles: pensions usually lack full COLA (SS has CPI COLA), pension survivorship requires electing a reduced joint annuity, and pensions are NOT portable — leaving at year 4 of a 5-year vest can mean contributions back, no benefit. Node-verified: $70k/30yr/2% → $42,000 pension vs covered-path SS $31,350 at FRA ($21,945 at 62); career cash cost $5,600/yr (8%) vs $4,340 (6.2% FICA); TRS 2.3% × 25yr → $40,250.
 export function PensionVsSsCalc() {
   const [salary, setSalary] = useNumber(70000)
@@ -6838,6 +6887,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'drop-retirement-calculator': DropCalc,
   'pension-vs-social-security-calculator': PensionVsSsCalc,
   'social-security-fairness-act-calculator': FairnessActCalc,
   'pslf-calculator': PslfCalc,

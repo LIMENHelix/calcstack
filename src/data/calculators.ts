@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'drop-retirement-calculator',
+    title: 'DROP Retirement Calculator 2026 — Deferred Retirement Option Plan Lump Sum vs Higher Pension',
+    shortTitle: 'DROP Calculator',
+    category: 'Retirement',
+    description:
+      'DROP lets police, firefighters, and public employees bank their pension payments as a lump sum while still working — but the pension freezes at entry. Price the lump sum against the higher pension you give up.',
+    tagline: 'Retire on paper, keep the salary, bank the pension — but the pension freezes. Run the trade.',
+    intro:
+      'A Deferred Retirement Option Plan is the public-pension system\'s most misunderstood feature: you formally "retire" while continuing to work at full salary, and your monthly pension payments accumulate in a DROP account earning plan interest — typically 3–5% — for up to three to five years. Exit, and you collect the lump sum plus the pension. The catch is the freeze: pension accrual stops the day you enter, so extra years and late-career raises don\'t count. A $80,000-salary employee with 25 years at 2.5% faces the choice exactly: $216,498 lump plus a frozen $50,000 pension, or four more working years for a $65,280 pension forever. The lump covers the gap for about 14 years. This calculator prices your trade with your system\'s real numbers.',
+    howItWorks: [
+      'Enter final average salary and years of service at DROP entry, plus your system\'s multiplier.',
+      'Enter your planned DROP years and the plan\'s credited interest rate.',
+      'Enter expected salary growth — it drives what you give up by freezing.',
+      'Read the lump sum at exit, the frozen pension, the no-DROP pension, and how long the lump covers the gap.',
+    ],
+    faq: [
+      {
+        q: 'When does DROP actually win?',
+        a: 'Three situations. (1) You have a use for the lump: wiping out a mortgage or debt at retirement changes your fixed-cost picture more than a few hundred dollars a month of pension. (2) You want rollover flexibility — a direct rollover to an IRA or 457(b) gives you investment control and Roth-conversion options a pension never will. (3) Your plan\'s COLA is weak: a frozen nominal pension loses 2–3% of purchasing power per year, while the lump invested can keep pace. DROP loses when longevity runs in your family, the pension has a real COLA, and you\'d otherwise keep working the same years anyway — the higher forever-pension compounds for decades.',
+      },
+      {
+        q: 'How is the DROP lump sum taxed?',
+        a: 'Fully, as ordinary income — unless you roll it over. The trap: if the plan cuts the check to YOU, 20% federal withholding is mandatory, and you have 60 days to complete a rollover (coming up with the withheld 20% from other money) or the unrolled portion is taxable now, plus a 10% penalty if you\'re under 59½. The clean path is a DIRECT rollover — plan-to-IRA trustee transfer — no withholding, no deadline. Note the public-safety exception: 457(b) governmental plans allow penalty-free access at separation regardless of age, which is why many firefighters roll DROP money into their 457.',
+      },
+      {
+        q: 'What details should I verify with my plan before entering?',
+        a: 'Entry is irrevocable in most systems — verify everything first. The maximum DROP window (3–5 years; entering later than your first eligibility date is usually optimal since every pre-entry year accrues normally). The credited interest rate: guaranteed 4–5% is a different product than market-linked. Whether employee contributions continue during DROP (some plans require them with no extra accrual — pure cost). Whether your beneficiary election locks at entry. And whether a partial lump-sum option (PLOP) exists as an alternative. Get the official estimate in writing; plan documents control, not the HR summary.',
+      },
+    ],
+  },
+  {
     slug: 'pension-vs-social-security-calculator',
     title: 'Pension vs Social Security Calculator 2026 — The Teacher Career Fork, Priced',
     shortTitle: 'Pension vs Social Security',
