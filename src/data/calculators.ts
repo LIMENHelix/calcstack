@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'roth-conversion-ladder-calculator',
+    title: 'Roth Conversion Ladder Calculator — 5-Year Clocks, Laid Out Year by Year',
+    shortTitle: 'Roth Ladder',
+    category: 'Savings & Investing',
+    description:
+      'Free Roth conversion ladder calculator for early retirees. See your 5-year bridge fund, the tax on each year\'s conversion at 2026 brackets, when every rung seasons, and the 12%-bracket ceiling for conversions.',
+    tagline: 'Retire at 45 on $40k/yr: bridge $200k, convert $40k/yr, pay 6.6% tax. Here is the schedule.',
+    intro:
+      'The Roth conversion ladder is the early retiree\'s bridge across the 59½ moat — but every rung has its own 5-year clock and every conversion is taxable income, so the plan lives or dies on the schedule. This calculator lays the schedule out: your bridge fund, the exact tax on each year\'s conversion with 2026 brackets, the date every rung seasons, and the conversion size that never leaves the 12% bracket.',
+    howItWorks: [
+      'Enter your planned annual spending in early retirement.',
+      'Read the 5-year bridge fund you need before the ladder flows.',
+      'See the tax on each annual conversion and your effective rate.',
+      'Follow the year-by-year table: convert, tax, seasoning date, cumulative available.',
+    ],
+    faq: [
+      {
+        q: 'How does a Roth conversion ladder work?',
+        a: 'Convert one year\'s spending from traditional to Roth each year. Five Jan-1sts after each conversion, that conversion\'s principal is withdrawable penalty-free at any age. Fund the first five years from taxable accounts and Roth contributions (always withdrawable) — $40,000/year of spending needs a $200,000 bridge. Each $40,000 conversion is ordinary income: single with no other income in 2026, that is $2,620 of tax (6.55% effective); married filing jointly, $780 (1.95%). The ladder is tax-rate arbitrage: prepay at single digits instead of your working-years bracket.',
+      },
+      {
+        q: 'When exactly does each conversion become available?',
+        a: 'The 5-year clock runs from January 1 of the conversion\'s tax year — not the conversion date. A conversion executed December 2026 seasons January 1, 2031: barely four years of real waiting. Convert in January and you wait the full five. Each conversion has its own clock, which is why the ladder converts annually rather than in one lump — and why under-59½ withdrawals of conversion EARNINGS (growth after conversion) still trigger the penalty. Only seasoned principal flows.',
+      },
+      {
+        q: 'How much should I convert each year?',
+        a: 'At minimum, next-future-year\'s spending to keep the ladder fed. At maximum, fill your bracket: in 2026 a single filer with no other income can convert $66,500 before leaving the 12% bracket ($50,400 taxable top + $16,100 standard deduction) for $5,800 of tax; married filing jointly the ceiling is $133,000 for $11,600. Larger conversions are legitimate when they beat your future RMD-era bracket — the ladder table shows the tax either way, so size the rungs deliberately instead of reflexively.',
+      },
+    ],
+  },
+  {
     slug: 'mega-backdoor-roth-calculator',
     title: 'Mega Backdoor Roth Calculator 2026 — The $72,000 Gap, Quantified',
     shortTitle: 'Mega Backdoor Roth',

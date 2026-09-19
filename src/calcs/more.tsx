@@ -2127,7 +2127,97 @@ export function MegaBackdoorCalc() {
   )
 }
 
+/* ---------------- Roth Conversion Ladder ---------------- */
+
+// Each conversion seasons 5 years from Jan 1 of its tax year (a Dec 2026
+// conversion is available Jan 1, 2031 — effectively ~4 years). Conversions are
+// ordinary income; reuses the verified WH_2026 brackets. Node-verified: single
+// $40k conversion → $2,620 tax (6.55%); MFJ → $780 (1.95%); 12%-bracket-fill
+// headroom $66,500 single / $133,000 MFJ.
+export function RothLadderCalc() {
+  const [spend, setSpend] = useNumber(40000)
+  const [status, setStatus] = useState<'single' | 'mfj'>('single')
+
+  const r = useMemo(() => {
+    const { std, br } = WH_2026[status]
+    const convTax = (c: number) => bracketTax2026(Math.max(0, c - std), br)
+    const perConvTax = convTax(spend)
+    const eff = spend > 0 ? (perConvTax / spend) * 100 : 0
+    const bridge = spend * 5
+    const top12 = (status === 'single' ? 50400 : 100800) + std
+    const top12Tax = convTax(top12)
+    const years = Array.from({ length: 10 }, (_, y) => ({
+      y,
+      convert: spend,
+      tax: perConvTax,
+      seasons: 2026 + y + 5,
+      cumulative: y >= 5 ? spend * (y - 4) : 0,
+    }))
+    const totalTax10 = perConvTax * 10
+    return { perConvTax, eff, bridge, top12, top12Tax, years, totalTax10 }
+  }, [spend, status])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Annual spending in early retirement" value={spend} onChange={setSpend} prefix="$" step="1000" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Filing status</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={status} onChange={(e) => setStatus(e.target.value as 'single' | 'mfj')}>
+            <option value="single">Single</option>
+            <option value="mfj">Married filing jointly</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Bridge fund needed (5 years)" value={usd(r.bridge, 0)} />
+        <Result label="Convert each year" value={usd(spend, 0)} />
+        <Result label="Tax per conversion" value={`${usd(r.perConvTax, 0)} (${num(r.eff, 1)}%)`} />
+        <Result label="10-year conversion tax" value={usd(r.totalTax10, 0)} />
+        <Result label="Max conversion staying ≤12%" value={usd(r.top12, 0)} />
+        <Result label="Tax on that max" value={usd(r.top12Tax, 0)} />
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
+              <th className="py-1.5 pr-3">Year</th>
+              <th className="py-1.5 pr-3">Convert</th>
+              <th className="py-1.5 pr-3">Tax</th>
+              <th className="py-1.5 pr-3">Seasons Jan 1</th>
+              <th className="py-1.5">Cumulative available</th>
+            </tr>
+          </thead>
+          <tbody>
+            {r.years.map((row) => (
+              <tr key={row.y} className="border-b border-border/50">
+                <td className="py-1.5 pr-3">{2026 + row.y}</td>
+                <td className="py-1.5 pr-3">{usd(row.convert, 0)}</td>
+                <td className="py-1.5 pr-3">{usd(row.tax, 0)}</td>
+                <td className="py-1.5 pr-3">{row.seasons}</td>
+                <td className="py-1.5">{row.cumulative > 0 ? usd(row.cumulative, 0) : '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        The ladder in one paragraph: you need {usd(r.bridge, 0)} of bridge money (taxable brokerage
+        + Roth CONTRIBUTIONS, which are withdrawable anytime) to survive the first five years. Each
+        year you convert {usd(spend, 0)} from traditional to Roth — ordinary income that year (
+        {usd(r.perConvTax, 0)} at 2026 brackets with no other income) — and five Jan-1sts later that
+        conversion's principal is penalty-free at any age. The clock runs from January 1 of the
+        conversion year, so a December 2026 conversion seasons January 1, 2031 — barely four years.
+        Stay under {usd(r.top12, 0)} per conversion and you never leave the 12% bracket. Under 59½,
+        converted EARNINGS stay locked; the ladder only seasons principal. Above all: the ladder is
+        a tax-rate arbitrage — you prepaid at {num(r.eff, 1)}% instead of your working-years bracket.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'roth-conversion-ladder-calculator': RothLadderCalc,
   'mega-backdoor-roth-calculator': MegaBackdoorCalc,
   'social-security-pia-calculator': SocialSecurityPiaCalc,
   'backdoor-roth-pro-rata-calculator': BackdoorRothCalc,
