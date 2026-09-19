@@ -922,6 +922,7 @@ export const PERSONAS: Persona[] = [
     calcSlugs: [
       'va-funding-fee-calculator',
       'military-retirement-calculator',
+      'tsp-calculator',
       'va-loan-calculator',
       'moving-cost-calculator',
       'cost-of-living-comparison-calculator',

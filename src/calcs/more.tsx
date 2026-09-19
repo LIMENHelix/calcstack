@@ -1770,7 +1770,102 @@ export function TruckerPerDiemCalc() {
   )
 }
 
+/* ---------------- TSP (Thrift Savings Plan) ---------------- */
+
+// 2026 limits (IRS Notice 2025-73 / TSP Bulletin 25-3): elective deferral $24,500
+// (traditional + Roth combined), catch-up $8,000 (50-59, 64+), $11,250 (60-63),
+// annual additions $72,000. Match (FERS/BRS): auto 1% + 100% of first 3% + 50% of
+// next 2% — PER PAY PERIOD, so hitting the cap early forfeits later-period match.
+// Node-verified: $95k @5% → $4,750+$3,800+$950 = $9,500 total (the 10%); @30% →
+// capped $24,500, loses $438.46 of match; optimal election 25.79% ($942.31/period).
+const TSP_LIMITS = { under50: 24500, catchup: 32500, super: 35750 }
+
+export function TspCalc() {
+  const [pay, setPay] = useNumber(95000)
+  const [pct, setPct] = useNumber(5)
+  const [ageGrp, setAgeGrp] = useState<'under50' | 'catchup' | 'super'>('under50')
+  const [balance, setBalance] = useNumber(25000)
+  const [years, setYears] = useNumber(25)
+  const [ret, setRet] = useNumber(7)
+
+  const r = useMemo(() => {
+    const limit = TSP_LIMITS[ageGrp]
+    const periods = 26
+    const periodPay = pay / periods
+    const want = (pct / 100) * pay
+    const perPeriod = want / periods
+    const matchPct = Math.min(pct, 3) + Math.min(Math.max(pct - 3, 0), 2) * 0.5
+    let employee: number, matchedPeriods: number, partialMatch = 0
+    if (want <= limit) {
+      employee = want
+      matchedPeriods = periods
+    } else {
+      employee = limit
+      const full = Math.floor(limit / perPeriod)
+      const rem = limit - full * perPeriod
+      matchedPeriods = full
+      if (rem > 0) {
+        matchedPeriods = full + 1
+        const eff = (rem / periodPay) * 100
+        const mp = Math.min(eff, 3) + Math.min(Math.max(eff - 3, 0), 2) * 0.5
+        partialMatch = (mp / 100) * periodPay
+      }
+    }
+    const fullMatched = partialMatch > 0 ? matchedPeriods - 1 : matchedPeriods
+    const match = fullMatched * (matchPct / 100) * periodPay + partialMatch
+    const lostPeriods = periods - matchedPeriods
+    const lost = lostPeriods * (matchPct / 100) * periodPay
+    const auto = pay * 0.01
+    const total = employee + match + auto
+    const optimalPct = (limit / pay) * 100
+    const g = ret / 100
+    const fv = g > 0 ? total * ((Math.pow(1 + g, years) - 1) / g) + balance * Math.pow(1 + g, years) : total * years + balance
+    return { limit, employee, match, lost, auto, total, optimalPct, fv, hitCap: want > limit, perPeriodWant: perPeriod }
+  }, [pay, pct, ageGrp, balance, years, ret])
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field label="Annual basic pay" value={pay} onChange={setPay} prefix="$" step="1000" />
+        <Field label="Your contribution per pay period" value={pct} onChange={setPct} suffix="%" step="1" />
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Age group (2026 limit)</span>
+          <select className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" value={ageGrp} onChange={(e) => setAgeGrp(e.target.value as 'under50' | 'catchup' | 'super')}>
+            <option value="under50">Under 50 ($24,500)</option>
+            <option value="catchup">50–59 or 64+ ($32,500)</option>
+            <option value="super">60–63 ($35,750)</option>
+          </select>
+        </label>
+        <Field label="Current TSP balance" value={balance} onChange={setBalance} prefix="$" step="1000" />
+        <Field label="Years until retirement" value={years} onChange={setYears} suffix="yrs" step="1" />
+        <Field label="Expected annual return" value={ret} onChange={setRet} suffix="%" step="0.5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label="Total into TSP per year" value={usd(r.total, 0)} />
+        <Result label="Your contribution (capped)" value={usd(r.employee, 0)} />
+        <Result label="Agency/service match" value={usd(r.match, 0)} />
+        <Result label="Automatic 1%" value={usd(r.auto, 0)} />
+        <Result label="Match LOST to front-loading" value={r.lost > 0.5 ? usd(r.lost, 0) : 'none'} />
+        <Result label="Election to max without losing match" value={`${num(r.optimalPct, 2)}%`} />
+        <Result label="That's per paycheck" value={usd(r.limit / 26, 2)} />
+        <Result label={`Projected balance in ${num(years, 0)} yrs`} value={usd(r.fv, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        At {num(pct, 0)}% of {usd(pay, 0)} basic pay, {usd(r.total, 0)}/yr lands in your TSP —
+        {r.hitCap ? ` and because the match is computed PER PAY PERIOD, hitting the ${usd(r.limit, 0)} cap early costs you ${usd(r.lost, 0)} of match in the remaining periods. Drop to ${num(r.optimalPct, 2)}% (${usd(r.limit / 26, 2)}/paycheck) to max out with every period matched.` : ' below the cap, every pay period stays matched.'}{' '}
+        The match itself: automatic 1% plus dollar-for-dollar on your first 3% and 50¢/dollar on the
+        next 2% — contribute 5% and 10% of pay goes in. Agency money never counts against your
+        $24,500 elective deferral (2026, Notice 2025-73); it counts against the separate $72,000
+        annual-additions cap. Two 2026 traps: catch-up contributions must be Roth if your prior-year
+        Social Security wages topped $150k, and the agency automatic 1% vests after 3 years (2 for
+        BRS) — your own money and the match are always yours.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'tsp-calculator': TspCalc,
   'truck-driver-per-diem-calculator': TruckerPerDiemCalc,
   'travel-nurse-pay-calculator': TravelNurseCalc,
   'rent-affordability-calculator': RentAffordCalc,

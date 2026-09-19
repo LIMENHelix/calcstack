@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'tsp-calculator',
+    title: 'TSP Calculator 2026 — Match, Limits & the Front-Loading Trap Quantified',
+    shortTitle: 'TSP Contribution',
+    category: 'Careers & Salary',
+    description:
+      'Free TSP calculator with 2026 limits ($24,500 elective deferral, super catch-up to $35,750). See your exact agency match, the match you LOSE by hitting the cap early, the election percentage that maxes safely, and your projected balance.',
+    tagline: 'Front-load your TSP and you forfeit real match money. Here is the exact cost.',
+    intro:
+      'The TSP match is computed per pay period — contribute nothing in December because you hit the limit in November and the December match is simply gone. Most TSP content never quantifies that loss. This calculator does: it applies the real FERS/BRS match formula (automatic 1%, dollar-for-dollar on 3%, half on the next 2%), caps your contributions at the 2026 limits, counts the matched periods, and shows both the forfeited match and the exact percentage election that maxes the year without losing a dime.',
+    howItWorks: [
+      'Enter your annual basic pay and your contribution percentage per pay period.',
+      'Pick your age group — the 2026 elective deferral limit is $24,500, $32,500 with catch-up, or $35,750 at ages 60–63.',
+      'Read your capped contribution, agency match, automatic 1%, and any match lost to front-loading.',
+      'Add your current balance, years, and expected return for the retirement projection.',
+    ],
+    faq: [
+      {
+        q: 'What is the TSP contribution limit for 2026?',
+        a: '$24,500 of your own money (traditional and Roth combined) per IRS Notice 2025-73 and TSP Bulletin 25-3. Ages 50–59 and 64+ add $8,000 catch-up for $32,500; ages 60–63 get the SECURE 2.0 super catch-up of $11,250 for $35,750. Agency automatic and matching contributions do NOT count against your deferral limit — they fall under the separate $72,000 annual-additions cap.',
+      },
+      {
+        q: 'How does the TSP match work — and how do people lose it?',
+        a: 'FERS and BRS participants get an automatic 1% of basic pay plus matching: dollar-for-dollar on your first 3%, 50 cents per dollar on the next 2% — 5% total when you contribute 5%. The trap: the match is computed every pay period. Contribute 30% of a $95,000 salary and you hit the $24,500 cap in period 23; the last three periods have no contribution and no match — $438 forfeited. The fix is the exact election: limit ÷ pay, spread evenly (25.79% in that example).',
+      },
+      {
+        q: 'What changed for TSP in 2026?',
+        a: 'Two things. First, catch-up contributions must now be made as Roth if your prior-year Social Security wages exceeded $150,000 — payroll handles it automatically, but your take-home drops since there is no deferral. Second, in-plan Roth conversions became available January 28, 2026. Unchanged but worth repeating: agency match always lands in the traditional balance even when you contribute Roth, and the automatic 1% vests after 3 years for FERS (2 for BRS) while your contributions and the match are always immediately yours.',
+      },
+    ],
+  },
+  {
     slug: 'truck-driver-per-diem-calculator',
     title: 'Truck Driver Per Diem Calculator — 2026 IRS Rate, 80% DOT Rule, Owner-Op vs Company',
     shortTitle: 'Trucker Per Diem',
