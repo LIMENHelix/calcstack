@@ -266,6 +266,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'benefits-value-calculator',
+    title: 'Benefits Value Calculator — Total Comp & Effective Hourly for Two Offers',
+    shortTitle: 'Benefits Value',
+    category: 'Freelance & Career',
+    description:
+      'Benefits valuation calculator that prices 401(k) match, employer health premiums, and PTO in dollars, then divides by ACTUAL hours worked — compare two offers as total comp and effective hourly, not sticker salaries. The default example shows a $70k job beating an $80k job.',
+    tagline:
+      'Base salary is the sticker price. Match, health premiums, PTO, and real hours are the car.',
+    intro:
+      'Two offers differ by more than base salary: the 401(k) match is cash, the employer\'s share of health premiums is money you never spend, and PTO is paid days off worth salary ÷ 260 each. Then the divisor nobody applies — the hours you actually work. This calculator prices the whole package for two offers side by side and divides by real hours, because a $70k job with 6% match, good coverage, and 20 PTO days genuinely beats an $80k job with none of it.',
+    howItWorks: [
+      '401(k) match valued at face: salary × match %. (Check the vesting schedule — unvested match is a promise, not money.)',
+      'Health coverage valued at the employer\'s monthly premium contribution × 12 — the difference between plans routinely runs $5–10k/year.',
+      'PTO priced at salary ÷ 260 working days per day, and also subtracted from weeks worked before the hourly division.',
+      'Effective hourly = total comp ÷ (real weekly hours × weeks worked) — the number that makes a 45-hour job and a 50-hour job comparable.',
+    ],
+    faq: [
+      {
+        q: 'How can a $70k offer beat an $80k one?',
+        a: 'Stack the benefits layer: 6% match ($4,200) + employer health premiums ($7,800/yr vs $2,400) + 10 extra PTO days ($2,692) puts the $70k job at $87,385 total vs $85,477 — before hours. At 45 vs 50 real hours a week, the effective rates are $40.44 vs $34.18 an hour. The lower-base job pays 18% more per hour of your life.',
+      },
+      {
+        q: 'What benefits belong in the valuation?',
+        a: 'Anything that displaces spending or is cash: 401(k) match (face value, adjusted for vesting), employer health/dental premiums, HSA seed money, stipends, and PTO. Skip equity unless it\'s liquid — an RSU at a public company counts at a discount; startup options count at what they\'ll pay you this year, which is usually zero. Tuition reimbursement counts only if you\'ll actually use it.',
+      },
+      {
+        q: 'Why divide by actual hours instead of 40?',
+        a: 'Because salaried hours are elastic and the employer knows it. A job nominally 40 hours that runs 50 has a hidden 25% pay cut relative to its own headline rate. Total comp ÷ actual hours is the only number that survives contact with your calendar — and it is the number to quote when negotiating: "at my real hours, this offer pays less per hour than my current role."',
+      },
+    ],
+  },
+  {
     slug: 'overtime-exempt-threshold-calculator',
     title: 'Overtime Exemption Calculator 2026 — The Real $684 Threshold, Three Tests, OT Owed',
     shortTitle: 'OT Exemption',

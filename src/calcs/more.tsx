@@ -2322,6 +2322,74 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+export function BenefitsValueCalc() {
+  const [baseA, setBaseA] = useNumber(70000)
+  const [matchA, setMatchA] = useNumber(6)
+  const [healthA, setHealthA] = useNumber(650)
+  const [ptoA, setPtoA] = useNumber(20)
+  const [hrsA, setHrsA] = useNumber(45)
+  const [baseB, setBaseB] = useNumber(80000)
+  const [matchB, setMatchB] = useNumber(0)
+  const [healthB, setHealthB] = useNumber(200)
+  const [ptoB, setPtoB] = useNumber(10)
+  const [hrsB, setHrsB] = useNumber(50)
+
+  const r = useMemo(() => {
+    const comp = (base: number, matchPct: number, healthMo: number, ptoDays: number, hoursWk: number) => {
+      const match = (base * matchPct) / 100
+      const health = healthMo * 12
+      const pto = (base / 260) * ptoDays
+      const total = base + match + health + pto
+      const weeksWorked = Math.max(1, 52 - ptoDays / 5)
+      const effHourly = total / (hoursWk * weeksWorked)
+      return { match, health, pto, total, effHourly, weeksWorked }
+    }
+    const A = comp(baseA, matchA, healthA, ptoA, hrsA)
+    const B = comp(baseB, matchB, healthB, ptoB, hrsB)
+    const winner = A.total >= B.total ? 'A' : 'B'
+    return { A, B, winner, gap: Math.abs(A.total - B.total), gapHr: Math.abs(A.effHourly - B.effHourly) }
+  }, [baseA, matchA, healthA, ptoA, hrsA, baseB, matchB, healthB, ptoB, hrsB])
+
+  const jobInputs = (prefix: string, base: number, setBase: (v: string) => void, match: number, setMatch: (v: string) => void, health: number, setHealth: (v: string) => void, pto: number, setPto: (v: string) => void, hrs: number, setHrs: (v: string) => void) => (
+    <div className="space-y-3 rounded-lg border p-3">
+      <p className="text-sm font-semibold">Job {prefix}</p>
+      <Field label="Base salary" value={base} onChange={setBase} prefix="$" step="1000" />
+      <Field label="401(k) match" value={match} onChange={setMatch} suffix="%" step="1" />
+      <Field label="Employer health premium" value={health} onChange={setHealth} prefix="$/mo" step="50" />
+      <Field label="PTO days" value={pto} onChange={setPto} step="1" />
+      <Field label="Real hours/week" value={hrs} onChange={setHrs} step="1" />
+    </div>
+  )
+
+  return (
+    <Card><CardContent className="space-y-4 p-5">
+      <div className="grid gap-4 sm:grid-cols-2">
+        {jobInputs('A', baseA, setBaseA, matchA, setMatchA, healthA, setHealthA, ptoA, setPtoA, hrsA, setHrsA)}
+        {jobInputs('B', baseB, setBaseB, matchB, setMatchB, healthB, setHealthB, ptoB, setPtoB, hrsB, setHrsB)}
+      </div>
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Result big label={`Job A total comp`} value={usd(r.A.total, 0)} />
+        <Result label="A effective hourly" value={`${usd(r.A.effHourly, 2)}/hr`} />
+        <Result big label={`Job B total comp`} value={usd(r.B.total, 0)} />
+        <Result label="B effective hourly" value={`${usd(r.B.effHourly, 2)}/hr`} />
+        <Result label="Winner" value={`Job ${r.winner} by ${usd(r.gap, 0)}/yr`} />
+        <Result label="Hourly gap" value={`${usd(r.gapHr, 2)}/hr`} />
+        <Result label="A benefits layer" value={usd(r.A.match + r.A.health + r.A.pto, 0)} />
+        <Result label="B benefits layer" value={usd(r.B.match + r.B.health + r.B.pto, 0)} />
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Base salary is the sticker price; total comp is the real number. The valuation: 401(k) match is cash
+        (and the only &quot;free money&quot; with a vesting schedule — check yours), employer health premiums are
+        dollars you don&apos;t spend (a family plan difference runs $5–10k/yr between employers), and PTO prices
+        at salary ÷ 260 per day. Then the honest divisor: effective hourly divides total comp by ACTUAL hours
+        — a 45-hour job and a 50-hour job don&apos;t work the same year. Default example is real: the $70k job
+        with 6% match, good health coverage, and 20 PTO days beats the $80k job with none of it by ~$1,900/yr
+        — and by $6.27 per hour actually worked. Run your two offers before the recruiter calls.
+      </p>
+    </CardContent></Card>
+  )
+}
+
 export function OvertimeExemptCalc() {
   const [weekly, setWeekly] = useNumber(700)
   const [hours, setHours] = useNumber(50)
@@ -3223,6 +3291,7 @@ export function SepIraCalc() {
 }
 
 export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').CalcProps) => React.ReactElement> = {
+  'benefits-value-calculator': BenefitsValueCalc,
   'overtime-exempt-threshold-calculator': OvertimeExemptCalc,
   'weight-cut-calculator': WeightCutCalc,
   'training-load-acwr-calculator': AcwrCalc,
