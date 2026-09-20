@@ -1134,6 +1134,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'phantom-load-calculator',
+    title: 'Phantom Load Calculator 2026 — What Standby Power Costs Per Year, and Which Devices Are Actually Worth Killing',
+    shortTitle: 'Phantom Load',
+    category: 'Home & Yard',
+    description:
+      'Price your home\'s always-on draw: entertainment setups, cable boxes, office gear, routers, and chargers by standby watts — plus the smart-strip savings and the charger myth (45 cents a year).',
+    tagline: 'A typical house burns 75W while "off" — $105/yr doing nothing, and the cable box alone is a third of it. Smart strips pay back in 6 months.',
+    intro:
+      'Your house has a silent meter running. The always-on base — cable boxes, game consoles in instant-on, routers, smart speakers, standby TVs — typically draws 50–100W around the clock, and 75W continuously is 657 kWh a year, $105 at $0.16/kWh, doing absolutely nothing. NRDC audits found always-on loads approaching a quarter of some homes\' consumption. But the fixes need the honest ranking: the garage spare fridge is the giant ($100+/yr), cable/satellite boxes are the worst devices (35W idle — a 3W streaming stick does the same job), smart strips on entertainment and office setups pay back in ~6 months — and unplugging phone chargers is theater (0.3W × a year = 45 cents). This calculator prices your actual device mix and the strip savings.',
+    howItWorks: [
+      'Count entertainment setups, office setups, and cable/satellite boxes — the switchable giants.',
+      'Count routers/modems, smart speakers, and chargers — the true always-on base.',
+      'Enter your electricity rate from the bill.',
+      'Set the smart-strip cut (60% of switchable load is realistic) and read the annual cost and savings.',
+    ],
+    faq: [
+      {
+        q: 'Which devices are actually worth unplugging?',
+        a: 'The hierarchy by real dollars, because the popular advice targets the wrong end. First: a spare fridge or freezer in the garage — $100+/yr on its own, especially pre-2000 units, and killing or replacing it beats every other measure combined. Second: cable and satellite boxes at 25–45W idle — providers spec them for instant-on, not efficiency, and a streaming stick at 3W delivers the same content; the strip or the swap pays for itself fast. Third: entertainment centers and office setups on smart strips ($30, ~6-month payback) — game consoles left in "instant on" idle at 10–15W for a feature you use twice a week. And the myth to retire: phone chargers draw ~0.3W — a year of guilty unplugging saves 45 cents. Spend the guilt on the cable box instead; it\'s 100× the prize.',
+      },
+      {
+        q: 'How do I find MY phantom loads instead of using averages?',
+        a: 'One evening and a $25 plug-in meter (Kill A Watt or similar) settles every argument. Method: measure each suspect device in standby for a reading in watts, multiply by 8.76 to get kWh/yr, and you have the truth per device. The smart-meter shortcut for the whole house: read your utility meter (or the app) at 3am with everything "off" — that baseline IS your phantom load; then flip breakers or unplug suspects and watch it drop. Most houses find the same suspects: the cable box, the old game console, the garage fridge, a desktop PC set to sleep instead of off (sleep still draws 3–10W), and occasionally something absurd — a heated towel bar left on, a 20-year-old doorbell transformer cooking. Measuring converts phantom hunting from folklore into a one-evening project with a receipt.',
+      },
+      {
+        q: 'Isn\'t standby power basically solved on modern devices?',
+        a: 'Half-solved — which is why the averages mislead in both directions. Regulation worked on the easy targets: Energy Star TVs idle under 1W (the 2008 plasma at 20W standby is extinct), laptops sleep at 1–3W, and modern chargers are genuinely negligible. But the always-on population GREW: smart speakers and displays (3–5W each, and homes have five), mesh router nodes, security cameras, smart doorbells, IoT bulbs whose radios never sleep — each small, collectively 30–60W in a connected home. And the worst legacy offenders persist: provider set-top boxes (spec\'d for instant-on), older AV receivers with network standby, and anything with a "quick start" mode that\'s really "never off." The honest summary: per-device standby improved an order of magnitude; device count did the same in the other direction. The meter reading — not the vintage of your gear — is the only answer.',
+      },
+    ],
+  },
+  {
     slug: 'led-conversion-calculator',
     title: 'LED Conversion Calculator 2026 — Whole-House Payback in Months: Energy + Bulb Savings per Socket',
     shortTitle: 'LED Conversion ROI',

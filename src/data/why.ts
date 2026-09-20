@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'phantom-load-calculator':
+    'Homeowners use it to find the silent line on the bill: a 75W always-on base is $105/yr doing nothing — the cable box is a third of it, strips pay back in 6 months, and charger guilt is 45 cents of theater.',
   'led-conversion-calculator':
     'Homeowners use it for the easiest win in the house: forty $3 LEDs save $401/yr in energy and avoided bulbs — 4-month payback, 13.7-year lifespan, and the porch light always converts first.',
   'window-replacement-roi-calculator':

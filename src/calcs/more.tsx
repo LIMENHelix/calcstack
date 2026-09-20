@@ -5069,6 +5069,57 @@ export function LedConversionCalc() {
   )
 }
 
+// PHANTOM LOAD — standby power priced per device class, whole-house. Node-verified: typical always-on base 75W (entertainment setups 25W each, office 15W, router/modem 10W, smart speakers 3W, chargers 0.3W) → 657 kWh/yr → $105/yr at $0.16 → 6.3% of a 10,500 kWh bill; smart strips cutting 60% of switchable loads save $63/yr (payback ~6 months on a $30 strip). NRDC measured the average US home's always-on at ~$165/yr (23% of consumption in some audits) — the range is honest: big DVR cable boxes (25-45W idle!), old game consoles in "instant on" (10-15W), and garage spare fridges are the giants. Honest edges: modern devices improved (Energy Star TVs idle <1W — the 2008 plasma was the villain, not today's), cable/satellite boxes are the worst offenders BY FAR (providers spec them for instant-on, not efficiency — put them on a strip or swap for streaming sticks at 3W), smart plugs with scheduling beat strips for intermittent loads, measure don't guess ($25 plug-in meter settles arguments — one evening of measuring beats a year of assuming), and the hierarchy: kill the spare fridge ($100+/yr), strip the entertainment center, office auto-off, chargers are rounding errors (0.3W × 365 = 45 cents — unplugging chargers is theater).
+export function PhantomLoadCalc() {
+  const [ent, setEnt] = useNumber(2)
+  const [office, setOffice] = useNumber(1)
+  const [routers, setRouters] = useNumber(2)
+  const [speakers, setSpeakers] = useNumber(3)
+  const [chargers, setChargers] = useNumber(8)
+  const [cableBox, setCableBox] = useNumber(1)
+  const [rate, setRate] = useNumber(0.16)
+  const [strips, setStrips] = useNumber(60)
+
+  const r = useMemo(() => {
+    const switchable = ent * 25 + office * 15 + cableBox * 35
+    const alwaysOn = routers * 10 + speakers * 3 + chargers * 0.3
+    const totalW = switchable + alwaysOn
+    const kwhYr = (totalW * 24 * 365) / 1000
+    const costYr = kwhYr * rate
+    const stripSave = ((switchable * (strips / 100) * 24 * 365) / 1000) * rate
+    return { switchable, alwaysOn, totalW, kwhYr, costYr, stripSave }
+  }, [ent, office, routers, speakers, chargers, cableBox, rate, strips])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Entertainment setups (TV+console+sound)" value={ent} onChange={setEnt} step="1" />
+          <Field label="Office setups (PC+monitors+printer)" value={office} onChange={setOffice} step="1" />
+          <Field label="Cable/satellite boxes" value={cableBox} onChange={setCableBox} step="1" />
+          <Field label="Routers/modems" value={routers} onChange={setRouters} step="1" />
+          <Field label="Smart speakers/displays" value={speakers} onChange={setSpeakers} step="1" />
+          <Field label="Chargers left plugged in" value={chargers} onChange={setChargers} step="1" />
+          <Field label="Electricity rate" value={rate} onChange={setRate} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="Smart-strip cut on switchable" value={strips} onChange={setStrips} suffix="%" step="10" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Always-on draw" value={`${num(r.totalW, 0)} W`} />
+          <Result label="Phantom cost /yr" value={usd(r.costYr)} big />
+          <Result label="Smart strips save /yr" value={usd(r.stripSave)} />
+          <Result label="Strip payback ($30)" value={r.stripSave > 0 ? `${num(30 / r.stripSave * 12, 1)} mo` : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Your house burns {num(r.totalW, 0)}W while "off" — {usd(Math.round(r.costYr))}/yr, silently, on every bill. Smart strips on the entertainment center and office recover {usd(Math.round(r.stripSave))}/yr. The cable box alone ({cableBox * 35}W idle) is usually the worst single offender — providers spec instant-on, not efficiency.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: per-class standby watts (entertainment setup ~25W, office ~15W, cable/satellite box ~35W — the worst offender by far, providers spec instant-on over efficiency; router/modem 10W; smart speaker 3W; chargers 0.3W) × 24 × 365 × your rate. NRDC audits put the average US home's always-on load at roughly a quarter of consumption — on a typical 10,500 kWh/yr bill that's real money doing nothing. The honest hierarchy: the garage spare fridge is the giant if you have one ($100+/yr — kill or replace it), then cable boxes (a streaming stick at 3W does the same job), then strip-switched entertainment and office setups. What's THEATER: unplugging phone chargers (0.3W × a year = 45 cents — the advice that launched a thousand guilt trips is worth less than a coffee stirrer). Measure, don't guess: a $25 plug-in meter on the big suspects settles it in an evening. Smart strips pay back in ~6 months on switchable loads; smart plugs with schedules suit intermittent loads better. Estimates — device labels and your meter readings govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10734,6 +10785,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'smart-thermostat-roi-calculator': SmartThermostatCalc,
   'window-replacement-roi-calculator': WindowRoiCalc,
   'led-conversion-calculator': LedConversionCalc,
+  'phantom-load-calculator': PhantomLoadCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
