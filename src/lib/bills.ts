@@ -58,7 +58,7 @@ function detectFrequency(line: string): { freq: BillItem['frequency']; factor: n
 export function parseBills(text: string): BillItem[] {
   const items: BillItem[] = []
   const lines = text.split(/\r?\n/)
-  const amountRe = /\$?\s*(\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?|\d+(?:\.\d{1,2})?)/g
+  const amountRe = /\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+(?:\.\d{1,2})?)/g
 
   for (const rawLine of lines) {
     const line = rawLine.trim()
@@ -79,7 +79,7 @@ export function parseBills(text: string): BillItem[] {
       .replace(/\s+/g, ' ')
       .trim()
     // strip trailing frequency words from the label
-    label = label.replace(/\b(per|a|each)\s*(month|mo|week|wk|year|yr|quarter)\b\.?/gi, '').replace(/\b(monthly|weekly|yearly|annually|quarterly)\b\.?/gi, '').trim()
+    label = label.replace(/\b(per|a|each)\s*(month|mo|week|wk|year|yr|quarter)\b\.?/gi, '').replace(/\b(monthly|weekly|yearly|annually|quarterly)\b\.?/gi, '').replace(/\s*\/(mo|month|week|wk|year|yr|quarter)\b\.?/gi, '').replace(/[\s\-–—:;,.]+$/g, '').trim()
     if (label.length < 2) label = `Item ${items.length + 1}`
     // de-dupe label capitalization
     label = label.charAt(0).toUpperCase() + label.slice(1)
