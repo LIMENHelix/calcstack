@@ -3822,3 +3822,120 @@ export function BacCalc() {
     </CardContent></Card>
   )
 }
+
+
+// TRIANGLE AREA — node-verified: base 10 × height 6 → 30; Heron 3-4-5 → 6; sides 7, 9 with 45° included → 22.27. Three input modes because homework arrives in three disguises; Heron's validates the triangle inequality.
+export function TriangleAreaCalc() {
+  const [mode, setMode] = useState('bh')
+  const [base, setBase] = useNumber(10)
+  const [height, setHeight] = useNumber(6)
+  const [s1, setS1] = useNumber(3)
+  const [s2, setS2] = useNumber(4)
+  const [s3, setS3] = useNumber(5)
+  const [ang, setAng] = useNumber(45)
+  const r = useMemo(() => {
+    if (mode === 'bh') {
+      if (base <= 0 || height <= 0) return null
+      return { area: 0.5 * base * height, note: null as string | null }
+    }
+    if (mode === 'sss') {
+      if (s1 <= 0 || s2 <= 0 || s3 <= 0) return null
+      if (s1 + s2 <= s3 || s1 + s3 <= s2 || s2 + s3 <= s1) return { area: NaN, note: 'Not a triangle — the two shorter sides must sum to more than the longest.' }
+      const s = (s1 + s2 + s3) / 2
+      const area = Math.sqrt(s * (s - s1) * (s - s2) * (s - s3))
+      const isRight = Math.abs(s1 * s1 + s2 * s2 - s3 * s3) < 1e-9 || Math.abs(s1 * s1 + s3 * s3 - s2 * s2) < 1e-9 || Math.abs(s2 * s2 + s3 * s3 - s1 * s1) < 1e-9
+      return { area, note: isRight ? 'Right triangle — the legs alone give the area.' : null }
+    }
+    if (s1 <= 0 || s2 <= 0 || ang <= 0 || ang >= 180) return null
+    return { area: 0.5 * s1 * s2 * Math.sin((ang * Math.PI) / 180), note: null }
+  }, [mode, base, height, s1, s2, s3, ang])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">What do you know?</label>
+        <select value={mode} onChange={(e) => setMode(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+          <option value="bh">Base & height</option>
+          <option value="sss">All three sides (Heron)</option>
+          <option value="sas">Two sides + included angle</option>
+        </select>
+      </div>
+      {mode === 'bh' && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Field label="Base" value={base} onChange={setBase} step="0.5" />
+          <Field label="Height" value={height} onChange={setHeight} step="0.5" />
+        </div>
+      )}
+      {mode === 'sss' && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Field label="Side a" value={s1} onChange={setS1} step="0.5" />
+          <Field label="Side b" value={s2} onChange={setS2} step="0.5" />
+          <Field label="Side c" value={s3} onChange={setS3} step="0.5" />
+        </div>
+      )}
+      {mode === 'sas' && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Field label="Side a" value={s1} onChange={setS1} step="0.5" />
+          <Field label="Side b" value={s2} onChange={setS2} step="0.5" />
+          <Field label="Included angle" value={ang} onChange={setAng} suffix="°" step="5" />
+        </div>
+      )}
+      {r && (
+        <>
+          <Result label="Area" value={Number.isNaN(r.area) ? '—' : num(r.area, 4)} big />
+          {r.note && <p className="text-sm font-medium">{r.note}</p>}
+        </>
+      )}
+      <p className="text-xs text-muted-foreground">A = ½bh · Heron: A = √(s(s−a)(s−b)(s−c)) · SAS: A = ½ab·sin(C). The height is always perpendicular to the base — the most-missed step in homework.</p>
+    </CardContent></Card>
+  )
+}
+
+// CIRCLE CALCULATOR — node-verified: r=5 → area 78.5398, circumference 31.4159; area 100 → r = 5.6419; r=10, 90° sector → 78.540, arc 15.708. Converts from radius, diameter, circumference, or area — plus sector math for the geometry course.
+export function CircleCalc() {
+  const [mode, setMode] = useState('r')
+  const [val, setVal] = useNumber(5)
+  const [secAng, setSecAng] = useNumber(90)
+  const r = useMemo(() => {
+    if (val <= 0) return null
+    let rad = val
+    if (mode === 'd') rad = val / 2
+    else if (mode === 'c') rad = val / (2 * Math.PI)
+    else if (mode === 'a') rad = Math.sqrt(val / Math.PI)
+    const area = Math.PI * rad * rad
+    const circ = 2 * Math.PI * rad
+    const ok = secAng > 0 && secAng <= 360
+    return { rad, dia: rad * 2, area, circ, sector: ok ? (area * secAng) / 360 : null, arc: ok ? (circ * secAng) / 360 : null }
+  }, [mode, val, secAng])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Known measurement</label>
+          <select value={mode} onChange={(e) => setMode(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="r">Radius</option>
+            <option value="d">Diameter</option>
+            <option value="c">Circumference</option>
+            <option value="a">Area</option>
+          </select>
+        </div>
+        <Field label="Value" value={val} onChange={setVal} step="0.5" />
+      </div>
+      {r && (
+        <>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Result label="Radius" value={num(r.rad, 4)} />
+            <Result label="Diameter" value={num(r.dia, 4)} />
+            <Result label="Area" value={num(r.area, 4)} big />
+            <Result label="Circumference" value={num(r.circ, 4)} big />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3 items-end">
+            <Field label="Sector angle" value={secAng} onChange={setSecAng} suffix="°" step="15" />
+            {r.sector !== null && <Result label="Sector area" value={num(r.sector, 4)} />}
+            {r.arc !== null && <Result label="Arc length" value={num(r.arc, 4)} />}
+          </div>
+        </>
+      )}
+      <p className="text-xs text-muted-foreground">A = πr², C = 2πr. The pizza lesson: a 16-inch pizza has 2× the area of an 11.3-inch — area scales with the SQUARE of diameter, which is why two mediums rarely beat one large.</p>
+    </CardContent></Card>
+  )
+}

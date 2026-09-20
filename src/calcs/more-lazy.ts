@@ -174,6 +174,8 @@ export const MORE_CALC_COMPONENTS: Record<string, LazyExoticComponent<ComponentT
   'sleep-cycle-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.SleepCycleCalc }))),
   'water-intake-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.WaterIntakeCalc }))),
   'bac-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.BacCalc }))),
+  'triangle-area-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.TriangleAreaCalc }))),
+  'circle-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.CircleCalc }))),
   'sabbatical-cost-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SabbaticalCostCalc }))),
   'self-storage-roi-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SelfStorageCalc }))),
   'car-wash-economics-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.CarWashCalc }))),

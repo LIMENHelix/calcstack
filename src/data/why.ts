@@ -321,6 +321,10 @@ export const WHY_USE: Record<string, string> = {
     'Anyone past the 8-glasses myth uses it: 35 mL/kg says 80 kg needs 2.8 L — plus 350 mL per 30 minutes of exercise and more in heat.',
   'bac-calculator':
     'The Widmark estimate, honest about its limits: 80 kg male, 4 drinks, 2 hours → 0.073% — and fully sober only after ~7 hours. Time is the only cure.',
+  'triangle-area-calculator':
+    'Geometry students use it three ways: ½bh, Heron for three sides (3-4-5 → 6), or two sides + angle — with the triangle inequality checked for you.',
+  'circle-calculator':
+    'From any one measurement — radius, diameter, circumference, or area — get all four, plus sector and arc: r=5 → area 78.54, circumference 31.42.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

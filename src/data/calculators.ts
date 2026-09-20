@@ -4966,6 +4966,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'triangle-area-calculator',
+    title: 'Triangle Area Calculator — Base×Height, Heron\'s Formula & SAS',
+    shortTitle: 'Triangle Area',
+    category: 'School & Science',
+    description:
+      'Triangle area three ways: ½ base × height, Heron\'s formula from three sides, or two sides with the included angle — with triangle-inequality validation.',
+    tagline: 'Base 10, height 6 → 30. Three sides 3-4-5 → Heron returns exactly 6. Sides 7 and 9 at 45° → 22.27. Every homework format covered.',
+    intro:
+      'Triangle area questions arrive in three disguises and each has its own formula: base-and-height when you have it, Heron\'s when you only know the sides, and the sine formula when you have two sides and the angle between them. This calculator runs all three, validates that three sides can actually form a triangle, and flags right triangles when the Pythagorean shortcut applies.',
+    howItWorks: [
+      'Pick what you know: base & height, three sides, or two sides + angle.',
+      'Enter the measurements.',
+      'Read the area — exact decimal.',
+      'Heron mode rejects impossible triangles automatically.',
+      'Right triangles get flagged: the legs alone are base and height.',
+    ],
+    faq: [
+      {
+        q: 'How does Heron\'s formula work?',
+        a: 'Compute the semi-perimeter s = (a+b+c)/2, then A = √(s(s−a)(s−b)(s−c)). For 3-4-5: s = 6, and A = √(6×3×2×1) = √36 = 6 — matching ½×3×4 as it must. Heron\'s is the tool when height is unknown: land parcels from surveyed sides, sail sails, triangular garden beds. The formula validates reality first — if the two shorter sides do not sum beyond the longest, no triangle exists (3, 4, and 8 cannot close). Watch for degenerate cases: sides 2, 3, 5 sum exactly, giving zero area — a flattened line, not a triangle. The formula dates to Heron of Alexandria around 60 AD and remains the fastest general method without trigonometry.',
+      },
+      {
+        q: 'What if I know two sides and the angle between them?',
+        a: 'A = ½ab·sin(C) — the SAS formula, the most elegant of the three. Sides 7 and 9 with a 45° angle between them: ½×7×9×sin45° = 22.27. The sine term is doing geometric work: it converts the tilted side into an effective height — sin(90°) = 1 recovers the maximum area for given sides, which is why right angles maximize area and a collapsing angle (sin → 0) flattens the triangle to nothing. Critical detail: the angle must be the INCLUDED angle, the one between the two known sides. Given a non-included angle (SSA), the triangle may not even be unique — the infamous ambiguous case — which is why homework specifies "included" and this calculator requires it.',
+      },
+      {
+        q: 'Why is the area ½ × base × height?',
+        a: 'Because every triangle is exactly half of a parallelogram — duplicate the triangle, rotate the copy 180°, and the two form a parallelogram with the same base and height whose area is base × height. The triangle is half of that. The corollary students miss: any side can serve as the base, but the height must be measured PERPENDICULAR to it — the altitude, not a neighboring side. In an obtuse triangle the altitude can fall outside the triangle entirely, which is the classic homework trap. Practical confirmation from Heron: for right triangles the legs are perpendicular by definition, so ½ab always works — 3-4-5 gives 6 by both methods, which is how you know your Heron arithmetic is right.',
+      },
+    ],
+  },
+  {
+    slug: 'circle-calculator',
+    title: 'Circle Calculator — Area, Circumference, Radius, Sector & Arc',
+    shortTitle: 'Circle Calculator',
+    category: 'School & Science',
+    description:
+      'From any one circle measurement — radius, diameter, circumference, or area — get all the others, plus sector area and arc length for any angle.',
+    tagline: 'Radius 5 → area 78.54, circumference 31.42. Know only the area of 100? The radius is 5.64. Sectors and arcs included.',
+    intro:
+      'Circle problems give you one measurement and ask for three others — this calculator converts freely between radius, diameter, circumference, and area, then extends to sector area and arc length for the geometry course and the workshop alike. Everything flows from two formulas: A = πr² and C = 2πr.',
+    howItWorks: [
+      'Choose what you know: radius, diameter, circumference, or area.',
+      'Enter the value — all other measurements appear.',
+      'Add a sector angle for sector area and arc length.',
+      'Area scales with the square of radius — double the width, quadruple the area.',
+      'Circumference from diameter is just π × d — the original definition of π.',
+    ],
+    faq: [
+      {
+        q: 'How do I find the radius from the area or circumference?',
+        a: 'Invert the formulas: from area, r = √(A/π) — an area of 100 gives r = 5.64; from circumference, r = C/(2π) — a circumference of 31.42 gives r = 5. These inversions are the real-world cases: you can wrap a tape around a tree or pipe (circumference) but cannot measure its radius directly; you know a circular patio covers 200 sq ft but need the diameter for the edging order. Pipe-sizing is the professional version: HVAC ducts and plumbing are sold by diameter while airflow capacity scales with area — a 6-inch duct carries 28.3 sq in, and upgrading to 8-inch (50.3 sq in) nearly doubles capacity for 33% more width.',
+      },
+      {
+        q: 'Why does doubling the radius quadruple the area?',
+        a: 'Because area scales with the SQUARE of the radius — A = πr² means doubling r multiplies area by 4, tripling by 9. The pizza illustration is the classic: a 16-inch pizza (201 sq in) has twice the area of an 11.3-inch, and comfortably beats two 10-inch pizzas (157 sq in) — "two mediums" deals rarely beat one large on food-per-dollar. The same square law runs engineering: doubling pipe diameter quadruples flow capacity, doubling a circle of light coverage quadruples the area lit (which is why lumens spread thin so fast), and cell-tower coverage areas explode with range. Sectors scale linearly with angle instead: a 90° sector of an r=10 circle is exactly a quarter of its 314.16 area — 78.54, with a 15.71 arc.',
+      },
+      {
+        q: 'Where do sector area and arc length show up in real life?',
+        a: 'Anywhere a partial circle does work. Food: a pizza slice cut 8 ways from a 14-inch pie has area 19.2 sq in and a 5.5-inch crust edge — the crust-to-middle debate, settled by math. Landscaping: a sprinkler head sweeping 120° covers one-third of its full circle — radius 20 ft gives 419 sq ft of coverage, not the 1,257 the box implies. Construction: curved walkways need arc lengths for edging material (a 90° curve with 10-ft radius needs 15.7 ft of border), and circular driveways are sector minus sector (outer arc minus inner arc). Sports: the shot-put sector is 34.92° — legal throws must land inside its arcs. The formulas are just fractions of the whole: sector area = πr² × θ/360, arc = 2πr × θ/360.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
