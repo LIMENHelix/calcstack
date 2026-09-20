@@ -2592,3 +2592,82 @@ export function PhotoBoothCalc() {
     </CardContent></Card>
   )
 }
+// AMAZON FBA HOLIDAY PROFIT — node-verified defaults: $29.99 price, $8 unit cost, 15% referral ($4.50), $5.40 fulfillment → $12.09/unit = 40.3% margin. Q4 storage: 500 units × 0.3 cu ft × $2.40/cu ft = $360/mo vs $131 off-season — October-December storage is 2.8× the rate, and aged inventory surcharges punish anything unsold after the rush.
+export function FbaHolidayCalc() {
+  const [price, setPrice] = useNumber(29.99)
+  const [cost, setCost] = useNumber(8)
+  const [fulfill, setFulfill] = useNumber(5.4)
+  const [units, setUnits] = useNumber(500)
+  const [cuft, setCuft] = useNumber(0.3)
+  const [q4Months, setQ4Months] = useNumber(3)
+  const r = useMemo(() => {
+    const referral = price * 0.15
+    const profit = price - cost - referral - fulfill
+    const q4Storage = units * cuft * 2.4 * q4Months
+    const gross = profit * units
+    return { referral, profit, marginPct: price > 0 ? (profit / price) * 100 : 0, q4Storage, net: gross - q4Storage, gross }
+  }, [price, cost, fulfill, units, cuft, q4Months])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Sale price" value={price} onChange={setPrice} prefix="$" step="0.01" />
+        <Field label="Unit cost (landed)" value={cost} onChange={setCost} prefix="$" step="0.25" />
+        <Field label="FBA fulfillment fee" value={fulfill} onChange={setFulfill} prefix="$" step="0.10" />
+        <Field label="Units sent for Q4" value={units} onChange={setUnits} />
+        <Field label="Cubic feet per unit" value={cuft} onChange={setCuft} step="0.05" />
+        <Field label="Months stored at Q4 rates" value={q4Months} onChange={setQ4Months} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Profit per unit" value={usd(r.profit)} big />
+        <Result label="Q4 net after storage" value={usd(r.net)} big />
+        <Result label="Margin" value={`${num(r.marginPct, 1)}%`} />
+        <Result label="Referral fee (15%)" value={usd(r.referral)} />
+        <Result label="Q4 storage bill" value={usd(r.q4Storage)} />
+        <Result label="Gross profit (before storage)" value={usd(r.gross)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Referral is 15% for most categories (8% electronics, tiered for others). Q4 storage runs ~$2.40/cu ft vs ~$0.87 Jan–Sep; unsold units past 181 days add aged-inventory surcharges. Check Seller Central for your size tier's exact fulfillment fee.</p>
+    </CardContent></Card>
+  )
+}
+
+// ETSY PRICING — node-verified defaults: $18 item + $4.50 shipping charged; fees = $0.20 listing + 6.5% transaction on $22.50 ($1.46) + 3% + $0.25 payment processing ($0.93) = $2.59. Against $6 COGS and $4.50 ship cost: $9.41 net = 52.3% margin. The fee that bites is the one on SHIPPING — Etsy takes 6.5% of postage too.
+export function EtsyPricingCalc() {
+  const [price, setPrice] = useNumber(18)
+  const [shipCharge, setShipCharge] = useNumber(4.5)
+  const [cogs, setCogs] = useNumber(6)
+  const [shipCost, setShipCost] = useNumber(4.5)
+  const [offsiteAds, setOffsiteAds] = useState(false)
+  const r = useMemo(() => {
+    const total = price + shipCharge
+    const listing = 0.2
+    const transaction = total * 0.065
+    const payment = total * 0.03 + 0.25
+    const ads = offsiteAds ? total * 0.15 : 0
+    const fees = listing + transaction + payment + ads
+    const net = total - cogs - shipCost - fees
+    return { fees, net, marginPct: price > 0 ? (net / price) * 100 : 0, transaction, payment, ads }
+  }, [price, shipCharge, cogs, shipCost, offsiteAds])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Item price" value={price} onChange={setPrice} prefix="$" step="0.50" />
+        <Field label="Shipping charged to buyer" value={shipCharge} onChange={setShipCharge} prefix="$" step="0.50" />
+        <Field label="Cost of materials" value={cogs} onChange={setCogs} prefix="$" step="0.50" />
+        <Field label="Actual shipping cost" value={shipCost} onChange={setShipCost} prefix="$" step="0.50" />
+      </div>
+      <label className="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked={offsiteAds} onChange={(e) => setOffsiteAds(e.target.checked)} className="h-4 w-4" />
+        Sale came through Offsite Ads (+15% fee)
+      </label>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Net per sale" value={usd(r.net)} big />
+        <Result label="Margin on item price" value={`${num(r.marginPct, 1)}%`} big />
+        <Result label="Total Etsy fees" value={usd(r.fees)} />
+        <Result label="Transaction fee (6.5% incl. shipping)" value={usd(r.transaction)} />
+        <Result label="Payment processing (3% + $0.25)" value={usd(r.payment)} />
+        {offsiteAds ? <Result label="Offsite Ads fee (15%)" value={usd(r.ads)} /> : <Result label="Listing fee" value="$0.20" />}
+      </div>
+      <p className="text-xs text-muted-foreground">Your labor is NOT in this number — add it to materials for the honest margin. Sellers over $10k/yr are enrolled in Offsite Ads at 12% (15% below $10k, optional).</p>
+    </CardContent></Card>
+  )
+}

@@ -261,6 +261,10 @@ export const WHY_USE: Record<string, string> = {
     'Decor operators use it to justify the off-season: Halloween at $8,100 plus permanent lighting at $109,200 turns a 6-week Christmas sprint into a $219,900 year.',
   'photo-booth-pricing-calculator':
     'Event entrepreneurs use it before buying: $9,500 of booth at $750 an event with 90% margin pays back in 4.7 months — if the calendar fills.',
+  'amazon-fba-holiday-calculator':
+    'FBA sellers use it before the shipment: $12.09/unit margin meets $360/mo of Q4 storage at 2.8× rates — send what sells by Christmas, not what fits the container.',
+  'etsy-pricing-calculator':
+    'Etsy sellers use it before listing: $18 + $4.50 shipping loses $2.59 to fees — including 6.5% of the postage — leaving $9.41 before your labor is counted.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

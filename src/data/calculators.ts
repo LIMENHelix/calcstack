@@ -4030,6 +4030,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'amazon-fba-holiday-calculator',
+    title: 'Amazon FBA Holiday Profit Calculator — Q4 Storage Fees and True Unit Margin',
+    shortTitle: 'FBA Holiday Profit',
+    category: 'Freelance & Career',
+    description: 'Price a Q4 FBA shipment honestly: referral and fulfillment fees per unit, plus October–December storage at 2.8× the normal rate. See per-unit profit and net after the Q4 storage bill.',
+    tagline: 'Q4 storage costs 2.8× normal. Your margin has to survive it.',
+    intro: 'A $29.99 product with $8 landed cost nets $12.09 a unit after Amazon\'s referral and fulfillment fees — until 500 units sit in a Q4 warehouse at $2.40 per cubic foot. This calculator runs per-unit margin against the holiday storage bill so the shipment is priced before it ships.',
+    howItWorks: [
+      'Enter your sale price and landed unit cost (product + freight + duty).',
+      'Add the FBA fulfillment fee for your size tier from Seller Central\'s fee preview.',
+      'Enter units you are sending for Q4 and the cubic feet each unit occupies.',
+      'Set how many months the inventory sits at October–December storage rates.',
+      'Read per-unit profit, the Q4 storage bill, and net profit after storage.',
+    ],
+    faq: [
+      {
+        q: 'What are Amazon FBA fees in Q4?',
+        a: 'The fee stack per unit: referral fee (15% of sale price for most categories — 8% for electronics, tiered for a few others), fulfillment fee by size tier (roughly $3.22–$6+ for standard-size items under 3 lb, more for oversize), and monthly storage — which is where Q4 bites: roughly $2.40 per cubic foot October–December versus $0.87 January–September, a 2.8× multiplier. Add the aged-inventory surcharge for anything sitting 181+ days — inventory that misses the Christmas window gets taxed for staying. The calculator\'s defaults reflect current published rates; always pull your exact fulfillment fee from the Seller Central revenue calculator because size-tier boundaries move every year.',
+      },
+      {
+        q: 'How many units should I send to FBA for Q4?',
+        a: 'The storage math inverts the instinct to max out: every unit past your sell-through forecast costs $2.40/cu ft per month and risks the aged-inventory surcharge in January. Work backward from last year\'s Q4 velocity (or category benchmarks for a launch), forecast weekly sales, and size the shipment to sell through by December 25th plus a 10–15% buffer — not to maximize stock. A 500-unit shipment of a 0.3 cu ft item pays $360/month at Q4 rates; the same shipment sitting in February costs $131/month but the surcharge clock is running. Send in waves if your supplier lead time allows — a second shipment in early November beats 500 units aging since September.',
+      },
+      {
+        q: 'What profit margin should an FBA product have?',
+        a: 'The veteran rule is a minimum 30% margin after ALL Amazon fees at the intended sale price — and 40%+ if the product is seasonal, because Q4 storage and post-holiday returns erode the headline number. Below 25% margin, one fee change or a forced price match erases the product. The margin test that matters: run the calculator at your planned price, then at 15% off (the Q4 coupon reality), then with 2 extra months of storage — a product that stays profitable through all three scenarios is a real product. Private-label launches should also reserve 10% of revenue for PPC in the first 90 days; the margin on paper assumes organic sales that do not exist yet.',
+      },
+    ],
+  },
+  {
+    slug: 'etsy-pricing-calculator',
+    title: 'Etsy Pricing Calculator — True Fees, Net per Sale, and the Shipping-Fee Trap',
+    shortTitle: 'Etsy Pricing',
+    category: 'Freelance & Career',
+    description: 'Price an Etsy listing with every fee visible: listing, 6.5% transaction (on shipping too), payment processing, and optional Offsite Ads. See net per sale and true margin.',
+    tagline: 'Etsy takes 6.5% of your shipping charge too. Price like you know that.',
+    intro: 'An $18 item with $4.50 shipping loses $2.59 to fees before your materials — $0.20 to list, 6.5% of the total including postage, 3% plus $0.25 to process the payment. This calculator stacks every fee against your costs so the price you list is the price that pays you.',
+    howItWorks: [
+      'Enter your item price and the shipping you charge the buyer.',
+      'Add material cost and your actual postage cost.',
+      'Toggle Offsite Ads if the sale came through one (15% under $10k/yr, 12% above).',
+      'The tool stacks listing, transaction, and payment fees on the full order total.',
+      'Read net per sale and true margin — then add your labor to materials for the honest number.',
+    ],
+    faq: [
+      {
+        q: 'What fees does Etsy charge sellers?',
+        a: 'The full stack: $0.20 per listing (renews every 4 months or on each sale of a multi-quantity listing), a 6.5% transaction fee on the TOTAL order including the shipping you charge — the trap that surprises new sellers — and payment processing of 3% + $0.25 for US sellers. On an $18 item with $4.50 shipping that is $2.59 total, about 11.5% of the order. Optional but dangerous: Offsite Ads at 15% for shops under $10,000/year (mandatory at 12% once you cross $10k) applied when a buyer arrives via Etsy\'s Google/social ads — on a $22.50 order that is another $3.38. Etsy also collects sales tax from the buyer (marketplace facilitator), which is not your fee but explains buyer complaints about checkout totals.',
+      },
+      {
+        q: 'How do I price handmade items on Etsy profitably?',
+        a: 'The formula that keeps shops alive: (materials + labor at a real hourly wage + packaging) × 2 minimum for the base price, THEN verify fees still leave 30%+ margin — which this calculator checks. The labor omission is the classic failure: a $20 item with $6 of materials looks profitable until you admit it took 90 minutes. Price shipping honestly too — because Etsy fees the shipping charge, "free shipping" with the postage folded into the item price actually SAVES you the 6.5% on that portion and Etsy's search algorithm rewards free-shipping listings over $35. Run both structures in the calculator: the item-plus-shipping split versus the folded-in price, and list whichever nets more.',
+      },
+      {
+        q: 'Is Etsy still worth it versus Shopify?',
+        a: 'They solve different problems. Etsy is a marketplace: the fees buy you 90+ million active buyers searching with wallets out — for a new shop with no audience, that traffic is worth the 11–15%. Shopify is a storefront: $39/month plus ~2.9% + $0.30 processing, cheaper per sale but you generate every visitor yourself through ads, SEO, or social. The math crossover: a shop doing $2,000/month on Etsy pays roughly $250–$300 in fees; the same revenue on Shopify costs about $100 in subscription plus processing — but only if you can replace Etsy\'s free traffic, which typically costs more than the difference in ads. The winning pattern is both: Etsy for discovery, then repeat customers migrate to your own site where the margin lives.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
