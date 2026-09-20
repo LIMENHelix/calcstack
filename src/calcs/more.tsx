@@ -2323,6 +2323,77 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Social Security SURVIVOR benefits — a different, more generous rulebook than spousal. Widow(er)s can claim as early as 60 (50 if disabled) and at 60 always get exactly 71.5% of the base — the per-month reduction (28.5% spread over the months from 60 to survivor-FRA) flexes so the 60 number is constant. The base: worker's actual benefit, BUT if the worker claimed early the survivor is protected by the RIB LIM floor — the GREATER of the worker's reduced check or 82.5% of PIA; if the worker DELAYED, the DRCs carry over (delay to 70 → survivor gets 124%). The strategy superpower: NO deemed filing on survivor claims — a widow can take a reduced survivor benefit at 60 and switch to her own maxed benefit at 70 (or vice versa), the one remaining legal switch. Remarriage before 60 kills eligibility (unless it ends); after 60 it's fine. Survivor FRA runs on its own table, 2 years behind retirement FRA: 66 for born ≤1956, +2mo/yr, 67 for 1962+. Node-verified: base $2,600, FRA 67 → $1,859.00 at 60, $2,282.43 at 64 (36 mo early), $2,600 at FRA; worker claimed at 62 ($1,820) → floor kicks in, base $2,145 → $1,533.68 at 60; worker delayed to 70 → base $3,224; survivor FRA: 1957→794mo, 1960→800, 1962→804; own PIA $2,000 → $2,480 at 70, beat the $1,859 survivor-60 path for the switch.
+const SURV_FRA: [string, number][] = [
+  ['1956 or earlier', 792], ['1957', 794], ['1958', 796], ['1959', 798], ['1960', 800], ['1961', 802], ['1962 or later', 804],
+]
+export function SurvivorSSCalc() {
+  const [pia, setPia] = useNumber(2600)
+  const [actual, setActual] = useNumber(0)
+  const [birth, setBirth] = useState('804')
+  const [claimAge, setClaimAge] = useState('60')
+  const [ownPIA, setOwnPIA] = useNumber(2000)
+
+  const r = useMemo(() => {
+    const fra = Number(birth)
+    const m = Math.round(Number(claimAge) * 12)
+    // base: unclaimed → PIA; claimed → actual, with the 82.5% PIA floor if they claimed early
+    const base = actual <= 0 ? pia : actual < pia ? Math.max(actual, 0.825 * pia) : actual
+    const floored = actual > 0 && actual < pia && base > actual
+    let ben = base
+    if (m < fra) ben = base * (1 - 0.285 * (fra - m) / (fra - 720))
+    // own benefit at 70 for the switch comparison — retirement FRA runs 4mo ahead of survivor FRA (1955–1960 births), cap 804
+    const retFRAfixed = Math.min(804, fra + 4)
+    const ownAt70 = ownPIA * (1 + 0.08 * (840 - retFRAfixed) / 12)
+    const switchWins = ownPIA > 0 && ownAt70 > ben
+    return { base, floored, ben, ownAt70, switchWins, fra }
+  }, [pia, actual, birth, claimAge, ownPIA])
+
+  const fraLabel = r.fra >= 804 ? '67' : `66y ${r.fra - 792}m`
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Deceased worker's PIA" value={pia} onChange={setPia} prefix="$" />
+          <Field label="Their actual benefit at death (0 = never claimed)" value={actual} onChange={setActual} prefix="$" />
+          <Field label="Your own PIA (0 = no own record)" value={ownPIA} onChange={setOwnPIA} prefix="$" />
+          <div>
+            <div className="mb-1 text-sm font-medium">Your birth year</div>
+            <select value={birth} onChange={(e) => setBirth(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {SURV_FRA.map(([y, mo]) => <option key={y} value={mo}>{y}</option>)}
+            </select>
+          </div>
+          <div>
+            <div className="mb-1 text-sm font-medium">Claim survivor benefit at age</div>
+            <select value={claimAge} onChange={(e) => setClaimAge(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {['60', '61', '62', '63', '64', '65', '66', '67'].map((a) => <option key={a} value={a}>{a}</option>)}
+            </select>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Survivor benefit / month" value={usd(r.ben, 0)} />
+          <Result label="Per year" value={usd(r.ben * 12, 0)} />
+          <Result label="Base used" value={usd(r.base, 0)} />
+          <Result label="Your own at 70" value={ownPIA > 0 ? usd(r.ownAt70, 0) : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {Number(claimAge) * 12 < r.fra ? (
+            <>Claiming at {claimAge} (survivor FRA {fraLabel}) pays <span className="font-medium">{usd(r.ben, 0)}/mo — {num((r.ben / r.base) * 100, 1)}% of the {usd(r.base, 0)} base</span>. At 60 the benefit is always exactly 71.5% — the reduction schedule flexes so that number never changes. Waiting to FRA pays the full {usd(r.base, 0)}.</>
+          ) : (
+            <>At survivor FRA ({fraLabel}) the full base pays: <span className="font-medium">{usd(r.ben, 0)}/mo ({usd(r.ben * 12, 0)}/yr)</span>.</>
+          )}
+          {r.floored && <> The 82.5%-of-PIA floor protected you: your spouse's early claiming cut their check to {usd(actual, 0)}, but your base is <span className="font-medium">{usd(r.base, 0)}</span> — the floor, not their reduced amount.</>}
+          {r.switchWins && <> <span className="font-medium">The switch strategy pays:</span> take this survivor benefit now, let your own grow to {usd(r.ownAt70, 0)}/mo at 70, then switch — survivor claims are exempt from deemed filing, the one place the double-dip still lives.</>}
+          {ownPIA > 0 && !r.switchWins && <> Your own maxed benefit ({usd(r.ownAt70, 0)} at 70) doesn't beat this — claim your own early if needed and let the survivor benefit ripen to FRA instead.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Survivor benefits run on a different rulebook than spousal: up to 100% of what the worker received (or was owed), claimable from 60 — 50 if disabled — with the age-60 amount fixed at 71.5% of the base no matter your birth year. The base itself has teeth: if the worker claimed early, the widow's-limit floor pays the greater of their reduced check or 82.5% of their PIA; if they delayed past FRA, every delayed credit passes to you — a worker who waited to 70 leaves 124% of PIA. The strategy: survivor claims are exempt from deemed filing, so you can take a reduced survivor benefit at 60 while your own retirement benefit accrues 8%/yr to 70, then switch — or claim your own first and let the survivor benefit grow to FRA. Remarriage before 60 ends eligibility (unless that marriage ends); remarriage after 60 changes nothing. Divorced surviving spouses qualify on the same terms if the marriage lasted 10 years. Children's and dependent-parent benefits exist too. Estimates only — the SSA computes exact amounts, and the earnings test applies if you work before FRA.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Spousal Social Security — up to 50% of the worker's PIA, but only at the spouse's FRA; earlier claiming cuts it 25/36%/mo (first 36 months) then 5/12%/mo — max 35% cut at 62 vs FRA 67, so the floor is 32.5% of PIA. NO delayed credits on the spousal piece past FRA — if the worker has filed, waiting past FRA adds nothing to it. Deemed filing: a claim files for BOTH own + spousal; the own benefit reduces on its own schedule (5/9%/mo first 36, 5/12% beyond; +8%/yr DRC to 70) and the spousal "excess" (50% worker PIA − own PIA) reduces on the spousal schedule. Worker must have FILED for a current spouse to collect (divorced spouses are independently entitled once divorced 2+ years; marriage must have lasted 10+ years, claimant 62+ and unmarried; the ex's check is untouched). FRA: 66 + 2mo/yr for 1955–1959 births, 67 for 1960+. Survivor benefits are a DIFFERENT rule (up to 100% of the worker's amount). Node-verified: worker $2,400 / own $800, FRA 67: claim 64 → own $640 + excess $300 = $940; 67 → $1,200; 62 → $560 + $260 = $820; never-worked spouse: $1,200 at FRA, $780 at 62; own PIA $1,500 → excess $0; own claim at 70 → $992 + $400 = $1,392.
 const SS_FRA_MONTHS: [string, number][] = [
   ['1955 or earlier', 792], ['1956', 796], ['1957', 798], ['1958', 800], ['1959', 802], ['1960 or later', 804],
@@ -7077,6 +7148,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'survivor-benefit-calculator': SurvivorSSCalc,
   'spousal-social-security-calculator': SpousalSSCalc,
   'roth-5-year-rule-calculator': Roth5YearCalc,
   '457b-calculator': Plan457Calc,

@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'survivor-benefit-calculator':
+    'Widows and widowers use it in the first planning pass after a death: claiming at 60 locks in 71.5% of the base forever, the 82.5%-of-PIA floor repairs a spouse\'s early claiming, and the survivor switch — reduced survivor now, own maxed benefit at 70 — is the last legal double-dip.',
   'spousal-social-security-calculator':
     'Couples use it when the lower earner nears 62: the spousal maximum is 50% of the worker\'s PIA only at full retirement age — 32.5% at 62 — deemed filing reduces both pieces permanently, and waiting past FRA adds nothing to the spousal share.',
   'roth-5-year-rule-calculator':

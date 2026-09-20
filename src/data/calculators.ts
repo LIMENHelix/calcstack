@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'survivor-benefit-calculator',
+    title: 'Social Security Survivor Benefit Calculator 2026 — Widow/Widower Rules, the 82.5% Floor, and the Last Legal Switch',
+    shortTitle: 'Survivor Benefit',
+    category: 'Retirement',
+    description:
+      'Survivors can claim from age 60 at exactly 71.5% of the worker\'s benefit — protected by the 82.5%-of-PIA floor if the worker claimed early, boosted to 124% if they delayed to 70. And survivor claims dodge deemed filing: take one benefit now, switch to the other at 70.',
+    tagline: 'Your spouse\'s claiming decision becomes your check — and the one Social Security switch that still works is yours.',
+    intro:
+      'Survivor benefits follow a different and more generous rulebook than spousal benefits: a widow or widower can collect up to 100% of what the worker received, starting as early as 60 — and at 60 the amount is always exactly 71.5% of the base, no matter when you were born, because the reduction schedule flexes to make that number constant. The base has protections both directions: if the worker claimed early, the widow\'s-limit floor raises the survivor base to the greater of their reduced check or 82.5% of their PIA; if the worker delayed to 70, every delayed credit passes through — the survivor inherits 124%. The strategy most people miss: survivor claims are exempt from deemed filing, so a 60-year-old widow can take a reduced survivor benefit while her own benefit accrues 8% a year to 70, then switch — the last legal double-dip in the system. This calculator computes the exact survivor amount at any claiming age, applies the floor, and compares the switch strategy.',
+    howItWorks: [
+      'Enter the deceased worker\'s PIA, and their actual monthly benefit if they had claimed (0 if not).',
+      'Enter your own PIA — this powers the switch-strategy comparison.',
+      'Pick your birth year (sets survivor FRA) and the age you\'d claim the survivor benefit.',
+      'Read the monthly survivor check, the base after the 82.5% floor, and whether the 70-switch wins.',
+    ],
+    faq: [
+      {
+        q: 'My spouse claimed at 62 and passed away. Is my survivor benefit stuck at their reduced amount?',
+        a: 'Not fully — the widow\'s limit (RIB LIM) protects you. Your survivor base is the GREATER of what they were actually receiving or 82.5% of their PIA. If their 62-claim cut a $2,600 PIA to $1,820, your base is $2,145 — the floor — not $1,820. The other direction works too: if they delayed to 70, you inherit the full $3,224 including every delayed credit. This is why the higher earner delaying is really a couple\'s decision — the bigger check becomes the survivor\'s check for life.',
+      },
+      {
+        q: 'Can I take survivor benefits at 60 and my own at 70?',
+        a: 'Yes — this is the one place the old switching strategies survive. Survivor claims are exempt from the deemed-filing rule that killed "claim now, switch later" for retirement and spousal benefits. The play: claim the reduced survivor benefit at 60 (71.5% of base), let your own retirement benefit grow 8% a year to 70, then switch if yours is bigger. Or the reverse if your own is smaller: claim yours early, let the survivor benefit ripen to your survivor FRA. Run both orders — the calculator above shows the comparison.',
+      },
+      {
+        q: 'Does remarriage affect survivor benefits?',
+        a: 'It depends entirely on when. Remarry before 60 and you lose eligibility on the deceased spouse\'s record (unless that later marriage ends). Remarry at 60 or later — 50 if disabled — and you keep the survivor benefit in full. Divorced surviving spouses qualify on the same schedule if the marriage lasted at least 10 years. Also worth knowing: survivor benefits before FRA are subject to the earnings test if you\'re still working, and children of the deceased can draw their own benefits until 18 (19 in school) — a separate check that doesn\'t reduce yours dollar-for-dollar, subject to the family maximum.',
+      },
+    ],
+  },
+  {
     slug: 'spousal-social-security-calculator',
     title: 'Spousal Social Security Calculator 2026 — 50% of PIA, the Deemed-Filing Trap, and Why FRA Is the Ceiling',
     shortTitle: 'Spousal Social Security',
