@@ -55,15 +55,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          {CALCULATORS.length} calculators and counting. Newest: the investment-grade
-          business suite — self-storage NOI and cap rates, express car wash membership
-          economics, tax-prep season pricing, insurance book commissions, remodeling
-          markup vs margin, dumpster turns, welding shop rates, coffee carts,
-          food trucks, and dog walking books.
+          {CALCULATORS.length} calculators and counting. Newest: the career-moves and
+          peak-performance suite — MBA and bootcamp ROI, sabbatical runway, locum tenens
+          break-even day rates, open-house expected value, online coaching economics,
+          staffing-agency markup vs margin, Bompa taper planning, RPE-to-load conversions,
+          and Christmas-light season pricing.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['self-storage-roi-calculator', 'car-wash-economics-calculator', 'tax-prep-pricing-calculator', 'insurance-agent-commission-calculator', 'remodeling-contractor-markup-calculator', 'food-truck-economics-calculator'].includes(c.slug),
+            ['mba-roi-calculator', 'bootcamp-roi-calculator', 'locum-tenens-rate-calculator', 'open-house-roi-calculator', 'online-coaching-pricing-calculator', 'staffing-agency-markup-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

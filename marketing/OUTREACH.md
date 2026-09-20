@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 440 calculators live (667 indexed pages). Domain live at calcstack.app;
+**Status: 448 calculators live (676 indexed pages). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -842,3 +842,19 @@ Professional Carwashing & Detailing).
 - **Backlist ride-alongs** — laundromat ROI, vending routes, bounce houses,
   rental property analyzer. The business-evaluation library now covers the
   classic "businesses people buy" search cluster end to end.
+
+## Wave 70 — Career moves & peak performance (#441–#448, milestone wave)
+
+Milestone wave: 448 calculators live (676 indexed pages). This wave prices the
+decisions professionals actually lose sleep over — education ROI (MBA, bootcamp),
+sabbatical runway, locum vs employed medicine, open-house expected value,
+online-coaching economics, staffing markup vs margin — plus a performance
+cluster (Bompa taper, Tuchscherer RPE-to-load) and the seasonal Christmas-light
+gold rush. Audiences: career-switcher communities (r/careerguidance,
+r/codingbootcamp, B-school forums), physician locum groups (r/LocumTenens,
+locum Facebook groups, White Coat Investor), real-estate agents (r/realtors,
+BiggerPockets), online fitness coaches (r/personaltraining, Online Trainers
+Unite), staffing-industry operators (ASA, r/recruiting), strength and
+endurance athletes (r/powerlifting, r/weightlifting, r/running,
+r/triathlon), and landscapers/home-service operators entering holiday installs
+(r/landscaping, r/smallbusiness, Christmas-light installer Facebook groups).
