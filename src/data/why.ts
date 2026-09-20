@@ -205,6 +205,10 @@ export const WHY_USE: Record<string, string> = {
     'Contractors use it before blaming the bid: 45 idle minutes a day across a 5-person crew burns $71,562/yr — a full salary spent standing around, fixable with a 15-minute huddle and next-day staging.',
   'change-order-calculator':
     'Contractors use it before the scope creeps: $8,500 of direct work prices at $11,550 with OH&P and 3 days of general conditions — signed before the work, or it becomes an invoice argument.',
+  'sub-vs-in-house-calculator':
+    'GCs use it before self-performing: the $85k sub quote vs $67,100 in-house looks like $18k saved — until the crew\'s 3 weeks of lost billing make it $4,400. Idle crews flip it back.',
+  'retainage-calculator':
+    'Contractors use it before signing: 10% retainage on a $500k job at 12% margin holds 83% of the entire profit in escrow — the punch list is a cash-flow document, and closeout speed is profit collection.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

@@ -3160,6 +3160,69 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'sub-vs-in-house-calculator',
+    title: 'Subcontractor vs In-House Calculator — True Self-Perform Cost With Opportunity Cost Priced',
+    shortTitle: 'Sub vs In-House',
+    category: 'Trades & Engineering',
+    description:
+      'Should you self-perform or sub it out? Loaded in-house cost versus the sub quote, minus the crew\'s opportunity cost — the comparison most contractors run without the number that flips it.',
+    tagline: 'The $85k sub quote vs $67,100 in-house looks like an $18k saving — until the crew\'s 3 weeks of lost billing ($13,500) makes it $4,400. Idle crews flip it back.',
+    intro:
+      'Every GC runs this comparison, and most run it wrong: sub quote minus in-house cost, done. The missing line is opportunity cost — what the crew does NOT earn while self-performing. At the defaults: the $85,000 sub quote against $67,100 of loaded in-house cost looks like a $17,900 saving, but three weeks of the crew\'s billing contribution ($13,500) cuts the true saving to $4,400 — and if the crew would otherwise sit idle, the saving swings back to full. Utilization, scope risk, warranty chain, and licensing complete the picture. This calculator runs the honest version.',
+    howItWorks: [
+      'Enter the sub quote for the scope.',
+      'Enter loaded in-house labor, materials, and equipment.',
+      'Enter your supervision/overhead percentage.',
+      'Enter the crew\'s weekly billing contribution and the weeks the scope ties them up.',
+      'Read the gross saving, the opportunity cost, and the net decision.',
+    ],
+    faq: [
+      {
+        q: 'When should I self-perform instead of subbing?',
+        a: 'Four conditions, and the best answer combines them. Idle capacity: the crew with a gap week has near-zero opportunity cost — self-performing in the gaps is almost free money, which is why smart shops keep a list of small self-perform scopes sized to their schedule holes. Core trade superiority: self-perform where your crew genuinely beats the market on productivity — your framing crew frames, your electricians wire; the trade you are best at is the one where your cost curve beats the sub quote before opportunity cost even enters. Risk transfer argues the other way: unknowns (rock, rot, concealed conditions) belong with the sub at a fixed quote — self-performing risky scope keeps the tail risk in your estimate. And control-critical path: scopes where schedule reliability is everything and a flaky sub would stall five other trades justify self-performing even at a premium — the delay cost dwarfs the saving. The anti-pattern: self-performing to keep the crew busy at negative margin — busy crews and profitable crews are different achievements, and this calculator\'s opportunity-cost line is the difference between them.',
+      },
+      {
+        q: 'What costs hide on both sides of the comparison?',
+        a: 'The quote and the estimate both lie by omission — here is the full ledger. Hidden on the self-perform side: supervision and layout time (priced here as the overhead percentage — do not skip it), small tools and consumables, warranty callbacks (every self-performed defect is yours forever), licensing and code compliance for trades outside your license, and insurance exposure shifts. Hidden in the sub quote: exclusions (cleanup, disposal, patching, and protection are the classic missing lines — the cheapest quote often excludes the most), the sub\'s schedule reliability (a sub who starts three weeks late costs you general conditions at $300–600/day — see the change-order math), coordination management time, and COI/compliance admin. The quote hygiene that makes the comparison real: three sub quotes minimum against ONE scope sheet — identical inclusions and exclusions written down — because quotes against different scopes are random numbers. Verify COIs are in force, not just issued. And price the flaky-sub premium honestly: a reliable sub at +5% beats a flaky one at −10% once callbacks, delays, and babysitting hours are costed — your past job logs have the data.',
+      },
+      {
+        q: 'How does this change as the company grows?',
+        a: 'The answer inverts with scale, and the transition is where shops break. Small shop: sub everything outside your trade — your fixed costs are low, your crew utilization is the constraint, and the opportunity-cost math dominates (this calculator\'s default regime). Growth phase: self-perform expands selectively — each new self-performed trade adds fixed costs (a lead, a truck, insurance, tools) that must be fed through slow months; the discipline is adding capacity only when the pipeline feeds it at 80%+ utilization, because the crew that was profitably busy becomes the crew that is expensively idle. The fixed-cost trap: a shop that self-performs everything carries its entire cost structure through every downturn — subs are variable cost, crews are fixed, and the mix of the two IS your recession strategy. The metrics that govern the decision at scale: crew utilization percentage by trade, self-perform margin versus sub-adjusted margin per scope, and callback rates by source. The mature answer most successful GCs land on: self-perform one or two core trades deep, sub everything else wide, and keep the estimating muscle to price both directions — because the shop that can credibly self-perform gets honest sub quotes, and the shop that cannot is captive to them.',
+      },
+    ],
+  },
+  {
+    slug: 'retainage-calculator',
+    title: 'Retainage Calculator — What Withheld Payments Do to Cash Flow and Why Closeout Speed Is Profit Collection',
+    shortTitle: 'Retainage Cash Flow',
+    category: 'Trades & Engineering',
+    description:
+      'Price the retainage holdback — the share of your profit sitting in escrow, the carry cost on the float, and the contract terms and closeout tactics that release it faster.',
+    tagline: '10% retainage on a $500k job at 12% margin holds 83% of your ENTIRE profit in escrow. Closeout speed is profit collection — the punch list is a cash-flow document.',
+    intro:
+      'Retainage is the construction industry\'s quiet cash-flow killer: 5–10% of every progress payment withheld until completion. On a $500,000 job at a 12% margin, 10% retainage is $50,000 — 83% of the entire profit — sitting in the owner\'s account while you carry payroll and materials. Hold it 90 days past substantial completion on a 9% credit line and the float costs $1,110 on money you already earned. The levers are contractual (step-downs, caps, defined release triggers) and operational (punch lists that start before substantial completion, closeout docs collected monthly). This calculator prices the hold so it stops being invisible.',
+    howItWorks: [
+      'Enter the contract value and retainage percentage.',
+      'Enter your net margin — the comparison that makes retainage visceral.',
+      'Enter expected days held past completion and your cost of cash.',
+      'Read the holdback, its share of your profit, and the carry cost.',
+    ],
+    faq: [
+      {
+        q: 'What retainage terms should I negotiate before signing?',
+        a: 'Five, and all are easier before the contract than after. Step-down: retainage reducing from 10% to 5% at 50% completion is standard practice in many states and contract forms — asking costs nothing and halves the peak exposure. Cap: a total-dollar cap on retainage (it stops accruing past a fixed amount) bounds the worst case on large contracts. Defined release trigger: retainage releases at SUBSTANTIAL completion plus a fixed period (30 days is fair), not "final completion" — final completion can mean "whenever the owner finishes arguing," and the difference between those two triggers is the 90-days-held input in this calculator. Line-item release: retainage on early-completed scopes (site work, foundations) releases as those scopes finish rather than with the whole project — subs especially should push this. And flow-down symmetry for GCs: your sub contracts should mirror the owner contract — paying subs their retainage before you receive yours is a cash-flow sandwich you designed yourself. Know your state\'s prompt-payment act: most states set statutory deadlines and interest penalties for late retainage release — citing the statute in your closeout letter is free leverage, and some states cap retainage percentages by law on public and private work.',
+      },
+      {
+        q: 'How do I get retainage released faster once the job is done?',
+        a: 'Closeout is a process you start at 80% complete, not a scramble you start after it. The punch-list engine: walk areas as they finish — room by room, floor by floor, with the owner\'s rep signing off incrementally — so the "final" punch list is three items, not three hundred; a punch list that starts at substantial completion is already late. Closeout documents collected MONTHLY: warranties, O&M manuals, as-builts, attic stock, and training sign-offs gathered from subs as their scopes complete — the GC chasing a departed sub\'s warranty letter in month two of closeout is the universal delay story. Lien-release discipline: conditional releases exchanged with every progress payment, so the final release is a formality, not a negotiation — and never give an unconditional final release before the check clears. The release-request letter: at substantial completion, a written request citing the contract trigger and the state prompt-payment statute, with the complete closeout package attached — owners release faster when there is nothing left to ask for and a statute clock running. For subs: your release runs through the GC\'s, so file preliminary notices on day one of every job and calendar your lien deadlines — lien rights expire on their own schedule, and the sub who preserved them gets paid before the sub who got friendly.',
+      },
+      {
+        q: 'How should retainage change my bidding and cash planning?',
+        a: 'Price it and plan it — the contractors who treat retainage as a surprise are the ones it hurts. Bidding: on retainage-heavy contracts, the carry cost and the profit-lockup belong in your price — a $50,000 retainage held 90 days at 9% costs $1,110 of interest plus the risk premium of having 83% of profit contingent on closeout; on thin-margin public work with statutory retainage, that cost is as real as lumber. Cash-flow planning: model the retainage receivable as a separate line from progress receivables — it has a different clock, a different risk profile, and a different collection process; the 13-week cash-flow forecast that excludes retainage timing is optimistic fiction. The growth trap this prevents: revenue doubling while retainage receivables triple — each new job stacks another 10% of contract value into escrow, and fast-growing contractors routinely "grow broke" with profits all locked in retainage across ten jobs. Working-capital sizing: your credit line should cover peak stacked retainage plus normal float — this calculator per active job, summed, is that number. And the accounting hygiene: retainage receivable on the balance sheet, aged like any receivable, escalated when it crosses the contract release date — money you earned and finished is not a favor you are waiting on; it is a receivable you are owed.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

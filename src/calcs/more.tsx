@@ -7058,6 +7058,98 @@ export function ChangeOrderCalc() {
   )
 }
 
+// SUB VS IN-HOUSE — node-verified defaults: sub quote $85,000; in-house = (labor $19,800 + materials $38,000 + equipment $3,200) × 1.10 supervision = $67,100 → gross save $17,900. But the crew's 3 weeks carry opportunity cost: $4,500/wk of billing contribution × 3 = $13,500 → NET save only $4,400. The question is never "can we do it cheaper" — it is "what does the crew NOT earn while doing it."
+export function SubVsInHouseCalc() {
+  const [subQ, setSubQ] = useNumber(85000)
+  const [labor, setLabor] = useNumber(19800)
+  const [mats, setMats] = useNumber(38000)
+  const [equip, setEquip] = useNumber(3200)
+  const [sup, setSup] = useNumber(10)
+  const [oppWk, setOppWk] = useNumber(4500)
+  const [wks, setWks] = useNumber(3)
+
+  const r = useMemo(() => {
+    const inHouse = (labor + mats + equip) * (1 + sup / 100)
+    const gross = subQ - inHouse
+    const opp = oppWk * wks
+    const net = gross - opp
+    return { inHouse, gross, opp, net }
+  }, [subQ, labor, mats, equip, sup, oppWk, wks])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Sub quote" value={subQ} onChange={setSubQ} prefix="$" step="1000" />
+          <Field label="In-house labor (loaded)" value={labor} onChange={setLabor} prefix="$" step="1000" />
+          <Field label="Materials" value={mats} onChange={setMats} prefix="$" step="1000" />
+          <Field label="Equipment" value={equip} onChange={setEquip} prefix="$" step="500" />
+          <Field label="Supervision / OH" value={sup} onChange={setSup} suffix="%" step="1" />
+          <Field label="Crew billing contribution" value={oppWk} onChange={setOppWk} prefix="$" suffix="/wk" step="500" />
+          <Field label="Weeks tied up" value={wks} onChange={setWks} suffix="wks" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="In-house cost" value={usd(Math.round(r.inHouse))} />
+          <Result label="Gross saving" value={usd(Math.round(r.gross))} />
+          <Result label="Opportunity cost" value={usd(Math.round(r.opp))} />
+          <Result label="Net saving" value={`${r.net >= 0 ? '' : '−'}${usd(Math.abs(Math.round(r.net)))}`} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.net > 0
+            ? `Self-performing nets ${usd(Math.round(r.net))} after the crew's ${usd(Math.round(r.opp))} opportunity cost — real money, but thinner than the ${usd(Math.round(r.gross))} gross suggests. If the crew has idle weeks anyway, the opportunity cost drops and in-house wins bigger.`
+            : `The sub wins: self-performing saves ${usd(Math.round(r.gross))} on paper but sacrifices ${usd(Math.round(r.opp))} of crew contribution — net −${usd(Math.abs(Math.round(r.net)))}. Sub it, keep the crew on billable work, and spend management time on the schedule instead.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: in-house = (labor + materials + equipment) × (1 + supervision%); net saving = sub quote − in-house − opportunity cost. The inputs that flip the answer: crew utilization (a crew with a gap week has near-zero opportunity cost — self-perform shines in the gaps), scope risk (unknowns like rock or rot transfer to the sub at a fixed quote; self-perform keeps them), warranty chain (the sub warranties their scope; self-perform makes every callback yours), and licensing (self-performing licensed trades without the license is not a saving, it is a violation). The sub-quote hygiene that protects the comparison: three quotes minimum, same scope sheet, and check the exclusions line — the cheap sub quote that excludes cleanup, disposal, or patching is not cheaper. Sub costs beyond the quote: COI verification, schedule coordination, and the management time to babysit a weak sub — a reliable sub at +5% beats a flaky one at −10% once callbacks and delays are priced. The strategic frame: self-perform your CORE trade (where your crew&apos;s productivity beats the market) and sub the rest — the GC that self-performs everything carries fixed costs through every slow month. Estimate — your crew&apos;s actual productivity and real sub quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// RETAINAGE CASH FLOW — node-verified defaults: $500,000 contract at 12% margin = $60,000 profit; 10% retainage = $50,000 held — that is 83% of the job's ENTIRE profit sitting in escrow until release. Carried 90 days past substantial completion on a 9% line: $1,110 of interest on money you already earned. Retainage is not a billing detail — it is your profit, held hostage to the closeout checklist.
+export function RetainageCalc() {
+  const [contract, setContract] = useNumber(500000)
+  const [retPct, setRetPct] = useNumber(10)
+  const [margin, setMargin] = useNumber(12)
+  const [days, setDays] = useNumber(90)
+  const [locRate, setLocRate] = useNumber(9)
+
+  const r = useMemo(() => {
+    const ret = contract * (retPct / 100)
+    const profit = contract * (margin / 100)
+    const pctProfit = profit > 0 ? (ret / profit) * 100 : 0
+    const carry = ret * (locRate / 100) * (days / 365)
+    return { ret, profit, pctProfit, carry }
+  }, [contract, retPct, margin, days, locRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Contract value" value={contract} onChange={setContract} prefix="$" step="10000" />
+          <Field label="Retainage" value={retPct} onChange={setRetPct} suffix="%" step="1" />
+          <Field label="Net margin" value={margin} onChange={setMargin} suffix="%" step="1" />
+          <Field label="Days held past completion" value={days} onChange={setDays} suffix="days" step="15" />
+          <Field label="Your cash cost" value={locRate} onChange={setLocRate} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Retainage held" value={usd(Math.round(r.ret))} />
+          <Result label="Job profit" value={usd(Math.round(r.profit))} />
+          <Result label="% of profit in escrow" value={`${num(r.pctProfit, 0)}%`} big />
+          <Result label="Carry cost" value={usd(Math.round(r.carry))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${usd(Math.round(r.ret))} of retainage is ${num(r.pctProfit, 0)}% of this job's ${usd(Math.round(r.profit))} profit — held ${days} days past completion at a ${usd(Math.round(r.carry))} carry cost. Closeout speed IS profit collection: every week the punch list drags, your profit sits in someone else's account.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: retainage = contract × retainage%; compared against job profit (contract × margin); carry = retainage × rate × days/365. The insight that reframes closeout: at typical trade margins (8–15%), a 10% retainage holds MOST of the job&apos;s profit — the crew finished, the materials are paid, payroll cleared, and your profit sits in the owner&apos;s account until the paperwork says otherwise. Closeout-speed levers: start the punch list BEFORE substantial completion (walk areas as they finish, not at the end), pre-assemble closeout documents during the job (warranties, O&Ms, as-builts collected from subs monthly — not chased at the end), lien-release exchange at payment (conditional releases with each pay app), and a closeout meeting at 80% complete with the checklist agreed in writing. Contract terms to negotiate BEFORE signing: retainage step-down (10% to 5% at 50% complete is standard in many states — ASK), caps on total retainage, defined release triggers (substantial completion + 30 days, not &quot;final completion&quot; — final can mean never), and prompt-payment statutes (most states set legal deadlines for retainage release — know yours and cite it in the closeout letter). Watch the chain: if you are a sub, YOUR retainage release depends on the GC getting theirs — flow-down terms matter, and a sub&apos;s leverage is filing preliminary notices and lien rights on time, every time, no exceptions for friendly GCs. Estimate — your contract&apos;s retainage clause and your state&apos;s prompt-payment act govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12765,6 +12857,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'emr-impact-calculator': EmrImpactCalc,
   'crew-downtime-calculator': CrewDowntimeCalc,
   'change-order-calculator': ChangeOrderCalc,
+  'sub-vs-in-house-calculator': SubVsInHouseCalc,
+  'retainage-calculator': RetainageCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
