@@ -269,6 +269,10 @@ export const WHY_USE: Record<string, string> = {
     'Sellers use it before buying inventory: 13.6% of the $53 total plus $0.30 is $7.51 — a $20 item needs a $45 sale price to keep 40% margin.',
   'shopify-vs-etsy-calculator':
     'Shop owners use it at the migration decision: Shopify undercuts Etsy past ~24 orders/mo on fees — but Etsy\'s $259 includes the buyers, Shopify\'s $134 does not.',
+  'amortization-calculator':
+    'Borrowers use it before signing: $320k at 6.5% is $2,022.62/mo and $408,142 of interest — 79% of year one is the bank\'s money, not yours.',
+  'square-footage-calculator':
+    'DIYers use it before the cart: 12×14 is 168 sq ft, but flooring wants 184.8 with waste — $792.79 at $4.29/ft, measured twice, ordered once.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

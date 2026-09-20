@@ -4150,6 +4150,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'amortization-calculator',
+    title: 'Amortization Calculator — Monthly Payment, Total Interest, and the Year-1 Reality',
+    shortTitle: 'Amortization',
+    category: 'Loans & Debt',
+    description: 'Calculate any loan\'s monthly payment and total interest, and see how much of your first year goes to interest instead of principal. Works for mortgages, auto loans, and any fixed-rate installment loan.',
+    tagline: 'On a 30-year loan, the bank gets paid first. See exactly how much.',
+    intro: 'A $320,000 loan at 6.5% for 30 years costs $2,022.62 a month — and $408,142 in interest, more than the loan itself, with 79% of your first year\'s payments going to interest. This calculator shows the payment, the lifetime cost, and why early extra payments hit so hard.',
+    howItWorks: [
+      'Enter the loan amount.',
+      'Add the annual interest rate.',
+      'Set the term in years.',
+      'The tool computes the fixed monthly payment using the standard amortization formula.',
+      'Read total interest and the year-1 interest share — the number that explains the schedule.',
+    ],
+    faq: [
+      {
+        q: 'How is an amortized payment calculated?',
+        a: 'The formula is P × i / (1 − (1 + i)^(−n)), where P is principal, i is the monthly rate (annual ÷ 12), and n is the number of payments. For $320,000 at 6.5% over 30 years: monthly rate 0.5417%, 360 payments, giving $2,022.62. Each payment first covers that month\'s interest on the remaining balance; the rest reduces principal. Because early balances are large, early payments are mostly interest — in year one of this loan, about $1,600 of each $2,023 payment is interest. The schedule "amortizes" — kills the loan slowly at first, then accelerating as the balance shrinks.',
+      },
+      {
+        q: 'Why does so much of my payment go to interest at first?',
+        a: 'Interest is charged monthly on the outstanding balance, and the balance is never bigger than at the start — so interest is never bigger either. At 6.5% on $320,000, month one\'s interest charge alone is $1,733; your $2,023 payment reduces principal by only $289. This front-loading is why extra principal early is so powerful: an extra $289 in month one saves that dollar\'s interest for the remaining 359 months. It is also why refinancing late in a loan rarely helps — by year 20 of a 30-year mortgage, most of each payment is finally principal, and restarting the clock restarts the interest-heavy phase.',
+      },
+      {
+        q: 'How much does one extra payment a year save?',
+        a: 'On $320,000 at 6.5% for 30 years, one extra payment of $2,023 applied annually — or equivalently, paying $2,191 monthly — cuts the term by roughly 5 years and saves about $75,000 in interest. Biweekly payment plans exploit the same math: 26 half-payments equal 13 full payments a year. The mechanism is simple — every extra dollar of principal stops accruing interest for every remaining month — but the effect is largest early and shrinks as the balance falls. Check for prepayment penalties (rare on modern mortgages, common on some auto and personal loans) before sending extra.',
+      },
+    ],
+  },
+  {
+    slug: 'square-footage-calculator',
+    title: 'Square Footage Calculator — Area, Waste Factor, and Material Cost',
+    shortTitle: 'Square Footage',
+    category: 'Home & Yard',
+    description: 'Calculate square footage of any rectangular space, add a waste factor for flooring or tile, convert to square meters or acres, and price the material. The measuring step that every project starts with.',
+    tagline: 'A room that is "about 170 square feet" is how orders come up short.',
+    intro: 'A 12×14 room is 168 square feet — but flooring wants 10% waste, so you buy 184.8. At $4.29 a square foot, that is $792.79, and every project from tile to sod to paint starts with this exact number. Measure, add waste, price it — before you load the cart.',
+    howItWorks: [
+      'Measure length and width in feet (inches as decimals: 6\" = 0.5 ft).',
+      'Multiply — the tool does it — for raw square footage.',
+      'Add a waste factor: 10% straight-lay flooring, 15% diagonal or herringbone, 5–10% tile.',
+      'Enter the material price per square foot to cost the order.',
+      'Read conversions to square meters and acres for plans and listings.',
+    ],
+    faq: [
+      {
+        q: 'How do I calculate square footage of an odd-shaped room?',
+        a: 'Decompose into rectangles — every room is rectangles wearing a costume. An L-shaped room is two rectangles; measure each leg separately (say 12×14 and 6×8), compute each area (168 + 48), and add them (216 sq ft). Closets, alcoves, and bay windows are additional small rectangles to add; stairs and permanent cabinets are rectangles to subtract. For triangles (gable ends, angled walls): base × height ÷ 2. For circles (round patios, towers): π × radius². The waste factor then applies to the TOTAL, not each piece. When in doubt, sketch the floor plan and grid it — estimators who grid never reorder.',
+      },
+      {
+        q: 'How much waste should I add when ordering flooring or tile?',
+        a: 'The trade standards: 10% for straight-lay plank flooring in normal rectangular rooms, 15% for diagonal layouts, herringbone, or chevron (every edge piece is an angled cut), 5–10% for tile depending on layout and tile size (large-format tile in small rooms pushes toward 15% because cuts waste more per piece), and 10–15% for patterned carpet that must match at seams. Add 5% more if the room has many corners, angled walls, or doorways. Keep one box of flooring or a few tiles after install — dye lots change, and a future repair with unmatched material is visible from space.',
+      },
+      {
+        q: 'How many square feet is a typical house or room?',
+        a: 'Useful benchmarks: bedrooms run 120–200 sq ft (a 12×12 is 144), living rooms 200–400, kitchens 150–250, and a two-car garage about 400–440. The median new US single-family home is roughly 2,200–2,300 sq ft. Note that real-estate square footage (GLA — gross living area) excludes garages, basements below grade, and unfinished spaces, and appraisers measure exterior dimensions — listing square footage and flooring square footage for the same house can differ by 10%. For material ordering, always measure the actual room; for comparing homes, always ask whether the number is GLA, total structure, or "agent optimism."',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

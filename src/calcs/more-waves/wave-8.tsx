@@ -2739,3 +2739,70 @@ export function ShopifyVsEtsyCalc() {
     </CardContent></Card>
   )
 }
+// AMORTIZATION — node-verified defaults: $320,000 at 6.5% for 30 years → $2,022.62/mo, $408,142 total interest, $728,142 total paid. The interest exceeds the loan itself — the schedule front-loads it so year 1 is ~79% interest.
+export function AmortizationCalc() {
+  const [principal, setPrincipal] = useNumber(320000)
+  const [rate, setRate] = useNumber(6.5)
+  const [years, setYears] = useNumber(30)
+  const r = useMemo(() => {
+    const i = rate / 100 / 12
+    const n = Math.round(years * 12)
+    if (principal <= 0 || n <= 0) return { pmt: 0, totalInterest: 0, totalPaid: 0, yr1InterestPct: 0, n: 0 }
+    const pmt = i > 0 ? (principal * i) / (1 - Math.pow(1 + i, -n)) : principal / n
+    let bal = principal, totalInterest = 0, yr1Interest = 0, yr1Paid = 0
+    for (let m = 1; m <= n; m++) {
+      const ii = bal * i
+      totalInterest += ii
+      bal -= pmt - ii
+      if (m <= 12) { yr1Interest += ii; yr1Paid += pmt }
+    }
+    return { pmt, totalInterest, totalPaid: principal + totalInterest, yr1InterestPct: yr1Paid > 0 ? (yr1Interest / yr1Paid) * 100 : 0, n }
+  }, [principal, rate, years])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Loan amount" value={principal} onChange={setPrincipal} prefix="$" />
+        <Field label="Interest rate" value={rate} onChange={setRate} suffix="%" step="0.125" />
+        <Field label="Term" value={years} onChange={setYears} suffix="years" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Monthly payment" value={usd(r.pmt)} big />
+        <Result label="Total interest" value={usd(r.totalInterest)} big />
+        <Result label="Total paid over life" value={usd(r.totalPaid)} />
+        <Result label="Share of year-1 payments going to interest" value={`${num(r.yr1InterestPct, 0)}%`} />
+      </div>
+      <p className="text-xs text-muted-foreground">Principal and interest only — taxes, insurance, PMI, and HOA are not included. Early payments are mostly interest; extra principal in the first years saves the most.</p>
+    </CardContent></Card>
+  )
+}
+
+// SQUARE FOOTAGE — node-verified defaults: 12 ft × 14 ft room = 168 sq ft; +10% waste = 184.8 sq ft to buy; at $4.29/sq ft flooring = $792.79. Buy with waste, measure twice — a room that is "about 170" is how material orders come up short.
+export function SquareFootageCalc() {
+  const [length, setLength] = useNumber(14)
+  const [width, setWidth] = useNumber(12)
+  const [waste, setWaste] = useNumber(10)
+  const [pricePerFt, setPricePerFt] = useNumber(4.29)
+  const r = useMemo(() => {
+    const sqft = length * width
+    const withWaste = sqft * (1 + waste / 100)
+    return { sqft, withWaste, cost: withWaste * pricePerFt, acres: sqft / 43560, sqm: sqft * 0.092903 }
+  }, [length, width, waste, pricePerFt])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Length" value={length} onChange={setLength} suffix="ft" step="0.5" />
+        <Field label="Width" value={width} onChange={setWidth} suffix="ft" step="0.5" />
+        <Field label="Waste factor" value={waste} onChange={setWaste} suffix="%" />
+        <Field label="Material price per sq ft" value={pricePerFt} onChange={setPricePerFt} prefix="$" step="0.01" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Square footage" value={num(r.sqft, 1)} big />
+        <Result label="Buy amount (with waste)" value={num(r.withWaste, 1)} big />
+        <Result label="Material cost" value={usd(r.cost)} />
+        <Result label="In square meters" value={num(r.sqm, 1)} />
+        <Result label="In acres" value={num(r.acres, 4)} />
+      </div>
+      <p className="text-xs text-muted-foreground">For L-shaped rooms, split into rectangles and add the results. Waste factors: 10% for straight-lay flooring, 15% for diagonal or herringbone, 5–10% for tile.</p>
+    </CardContent></Card>
+  )
+}
