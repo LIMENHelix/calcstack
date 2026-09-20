@@ -52,16 +52,18 @@ const entries: SearchEntry[] = [
 export function searchAll(query: string, limit = 8): SearchEntry[] {
   const q = query.trim().toLowerCase()
   if (q.length < 2) return []
-  const terms = q.split(/\s+/)
+  const terms = q.split(/\s+/).map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
   const scored = entries
     .map((e) => {
       const t = e.title.toLowerCase()
       const k = e.keywords.toLowerCase()
       let score = 0
       for (const term of terms) {
+        const wordStart = new RegExp(`\\b${term}`).test(t) // "kansas" must not match "arKANSAS"
         if (t.startsWith(term)) score += 3
-        else if (t.includes(term)) score += 2
+        else if (wordStart) score += 2
         else if (k.includes(term)) score += 1
+        else if (t.includes(term)) score += 0.5
         else return null // every term must match something
       }
       return { e, score }

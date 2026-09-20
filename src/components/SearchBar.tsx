@@ -37,7 +37,7 @@ export function SearchBar() {
           if (e.key === 'Enter' && results[highlight]) go(results[highlight].path)
           if (e.key === 'Escape') setOpen(false)
         }}
-        placeholder="Search 150+ calculators, tools & data — try “texas tax” or “bmi”…"
+        placeholder="Search 500+ calculators, tools & data — try “texas tax” or “bmi”…"
         className="h-12 w-full rounded-xl border-2 border-primary/40 bg-background px-4 pr-12 text-base shadow-sm focus:border-primary focus:outline-none"
         aria-label="Search calculators and tools"
       />

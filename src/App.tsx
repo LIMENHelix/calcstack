@@ -4,11 +4,19 @@ import { Layout } from './components/Layout'
 
 // SPA routes keep the previous page's scroll position by default — without this,
 // clicking a calculator from a scrolled-down page lands you at the bottom of the new one.
+// Hash links (/directory#category) must scroll TO the anchor, not the top.
 function ScrollToTop() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1))
+      if (el) {
+        el.scrollIntoView()
+        return
+      }
+    }
     window.scrollTo(0, 0)
-  }, [pathname])
+  }, [pathname, hash])
   return null
 }
 import Home from './pages/Home'
