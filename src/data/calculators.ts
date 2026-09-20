@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'solar-sizing-calculator',
+    title: 'Solar Panel Sizing Calculator 2026 — How Many Panels From Your Actual Bill, Roof Reality Included',
+    shortTitle: 'Solar Sizing',
+    category: 'Home & Yard',
+    description:
+      'Size a solar system from 12 months of bills: annual kWh × offset ÷ sun hours with the real derate — panels needed, roof square footage, and why EVs and heat pumps belong in the size NOW.',
+    tagline: 'A $210/mo bill at 4.5 sun hours needs 11.7 kW — 30 panels and 600 sq ft of unshaded roof. Size from annual kWh, never one bill.',
+    intro:
+      'Solar sizing is arithmetic the sales deck prefers to do for you. The method: a $210 monthly bill at $0.16/kWh is 15,750 kWh a year; at 4.5 peak-sun-hours with NREL\'s 0.78 derate (inverter, soiling, temperature, wiring), a 95% offset needs 11.68 kW — thirty 400W panels on 600 sq ft of unshaded roof. The inputs that decide it: twelve months of usage (never one bill — seasonal swings distort double), your zip code\'s sun hours (Phoenix 6.5, Seattle 3.5 — NREL\'s PVWatts has yours), and future loads sized in NOW — an EV adds ~3,600 kWh/yr and panels cost less on today\'s install than tomorrow\'s add-on. Run this before any quote conversation and the proposal either matches the math or explains why.',
+    howItWorks: [
+      'Enter your average monthly bill and rate — from 12 months of bills, not one.',
+      'Enter peak sun hours for your zip (NREL PVWatts).',
+      'Set the target offset — 95–100% of expensive tiers; the last 5% can overpay under net-billing.',
+      'Add future loads: EV miles per month and a planned heat pump.',
+      'Read system kW, panel count, and usable roof square footage.',
+    ],
+    faq: [
+      {
+        q: 'Why can\'t I size from one month\'s bill?',
+        a: 'Because a single month lies in both directions. A July bill carries peak AC; a mild-April bill carries almost nothing — sizing to July oversizes the system 30–40% (paying for panels that export at wholesale rates), sizing to April undersizes and leaves you buying peak power all summer. Utilities and the DERATE both work on annual totals, so the input must be annual: pull 12 months of kWh from your utility portal (most show a usage graph; sum it) and use that. Same logic for rate: if you\'re on tiered pricing, the annual kWh ÷ annual dollars gives the blended rate, and the savings concentrate in the expensive tiers — which is why 95–100% offset targets the tiers, not the whole bill.',
+      },
+      {
+        q: 'How much roof do I actually need?',
+        a: 'About 20 sq ft of USABLE roof per 400W panel — and "usable" is the word that filters. South-facing (±45°) unshaded planes only: west works at a 10–15% production discount, east at slightly more, north is decorative. Shading is the silent killer — one chimney or vent pipe shadow across a string of panels on a string inverter can cut the string\'s output disproportionately (the weakest cell drags the series); microinverters or DC optimizers isolate each panel and are worth their premium exactly when the roof is complicated. Measure honestly: roof planes minus setbacks (fire code requires 3-ft ridges and pathways in most jurisdictions), minus vents and chimneys, minus the shade line of that oak at 4pm in December. A roof that fits 24 panels physically may fit 16 compliantly — and that number belongs in the quote conversation.',
+      },
+      {
+        q: 'Should I oversize for an EV or heat pump I don\'t have yet?',
+        a: 'If it\'s coming within about three years, yes — the economics are lopsided. Panels installed on today\'s project carry today\'s $/W with design, permitting, and mobilization already paid; an add-on project later pays all the fixed costs again plus a higher $/W on small size — the same panels cost 30–50% more as an afterthought. The loads to size in: an EV at 1,000 mi/mo adds ~3,600 kWh/yr (0.30 kWh/mile), a heat pump 4,000–8,000 depending on climate, a pool ~2,500. Two cautions: many utilities cap systems at 100–110% of TRAILING usage (a bigger system needs documented future load — the EV purchase order often satisfies it), and net-billing territories punish oversizing (exports earn cents) — in those, size to the certain loads and let the battery calculator carry the rest.',
+      },
+    ],
+  },
+  {
     slug: 'solar-quote-checker-calculator',
     title: 'Solar Quote Checker 2026 — Is My Quote Fair? $/W Benchmarks, Dealer-Fee Trap & Negotiation Floor',
     shortTitle: 'Solar Quote Checker',

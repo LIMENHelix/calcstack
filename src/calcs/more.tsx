@@ -5416,6 +5416,61 @@ export function SolarQuoteCalc() {
   )
 }
 
+// SOLAR SIZING — system kW from the bill, not the sales deck. Node-verified: $210/mo at $0.16/kWh = 15,750 kWh/yr; at 4.5 peak-sun-hours and 0.78 derate (inverter, soiling, temperature, wiring — NREL's standard loss stack), 95% offset needs 11.68 kW → 30 × 400W panels. Model: kW = annual kWh × offset ÷ (sun hours × 365 × derate). Honest edges: size from ANNUAL kWh not one bill (summer AC and winter heat distort single months — 12 months of usage is the input), roof is the constraint (a 400W panel ≈ 20 sqft of USABLE roof — south-facing unshaded only; shading from one chimney can kneecap a string — microinverters/optimizers price into this), future loads belong in the size NOW (EV +3,000 kWh/yr, heat pump +4,000-8,000, pool +2,500 — panels cost less on today's install than tomorrow's add-on; oversize 10-20% if any are coming), the offset sweet spot (95-100% targets the expensive tiers; the last 5% costs more than it saves under net-billing), and utility caps (some territories cap system size at 100-110% of trailing usage — check before designing bigger).
+export function SolarSizingCalc() {
+  const [bill, setBill] = useNumber(210)
+  const [rate, setRate] = useNumber(0.16)
+  const [sun, setSun] = useNumber(4.5)
+  const [offset, setOffset] = useNumber(95)
+  const [derate, setDerate] = useNumber(0.78)
+  const [ev, setEv] = useNumber(0)
+  const [heatPump, setHeatPump] = useState('no')
+
+  const r = useMemo(() => {
+    let kwhYr = (bill * 12) / Math.max(0.05, rate)
+    if (ev > 0) kwhYr += (ev * 12 * 0.30) // ~0.30 kWh/mile
+    if (heatPump === 'yes') kwhYr += 5000
+    const kw = (kwhYr * (offset / 100)) / (sun * 365 * derate)
+    const panels = Math.ceil((kw * 1000) / 400)
+    const roofSqft = panels * 20
+    return { kwhYr, kw, panels, roofSqft }
+  }, [bill, rate, sun, offset, derate, ev, heatPump])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Avg monthly bill" value={bill} onChange={setBill} prefix="$" step="10" />
+          <Field label="Rate" value={rate} onChange={setRate} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="Peak sun hours (your zip)" value={sun} onChange={setSun} step="0.25" />
+          <Field label="Target offset" value={offset} onChange={setOffset} suffix="%" step="5" />
+          <Field label="EV miles /mo (0 = none)" value={ev} onChange={setEv} step="500" />
+          <Field label="System derate" value={derate} onChange={setDerate} step="0.02" />
+        </div>
+        <div className="max-w-xs space-y-1">
+          <label className="text-sm font-medium">Heat pump planned?</label>
+          <select value={heatPump} onChange={(e) => setHeatPump(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="no">No</option>
+            <option value="yes">Yes (+5,000 kWh/yr)</option>
+          </select>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Annual usage" value={`${num(r.kwhYr, 0)} kWh`} />
+          <Result label="System size needed" value={`${num(r.kw, 2)} kW`} big />
+          <Result label="400W panels" value={`${r.panels}`} />
+          <Result label="Usable roof needed" value={`${num(r.roofSqft, 0)} sq ft`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {num(r.kwhYr, 0)} kWh/yr at {sun} sun-hours → {num(r.kw, 2)} kW, about {r.panels} panels needing {num(r.roofSqft, 0)} sq ft of unshaded south-ish roof. Sizing rule: panels cost less on today's install than tomorrow's add-on — build the EV or heat pump in now if either is within 3 years.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: annual kWh from your bills (12 months — never size off one bill; summer AC and winter heat distort), times target offset, divided by (peak-sun-hours × 365 × 0.78 derate — NREL's standard loss stack of inverter, soiling, temperature, and wiring). Find sun hours by zip in NREL's PVWatts — Phoenix ~6.5, Kansas City ~4.5, Seattle ~3.5. The roof is the real constraint: a 400W panel needs ~20 sqft of USABLE roof — south-facing unshaded; one chimney's shadow can kneecap a string of panels (microinverters or optimizers isolate the damage and price into the quote). Future loads belong in the size NOW: an EV adds ~0.30 kWh/mile (1,000 mi/mo = +3,600 kWh/yr), a heat pump +4,000–8,000, a pool +2,500 — panels installed today cost $/W less than an add-on project tomorrow. Utility caps exist: many territories limit systems to 100–110% of trailing usage — check before designing bigger. The offset sweet spot is 95–100% of the expensive tiers; under net-billing the last 5% can cost more than it saves. Estimates — PVWatts modeling and your utility's interconnection rules govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11088,6 +11143,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'home-battery-roi-calculator': BatteryRoiCalc,
   'solar-lease-vs-buy-calculator': SolarLeaseBuyCalc,
   'solar-quote-checker-calculator': SolarQuoteCalc,
+  'solar-sizing-calculator': SolarSizingCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
