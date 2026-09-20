@@ -4565,6 +4565,63 @@ export function BidWinRateCalc() {
   )
 }
 
+// MAINTENANCE AGREEMENT PRICING — the service contract priced bottom-up; most shops underprice it. Node-verified: 2 visits/yr × (1.25 hr × $37.25 burdened + $30 parts) = $153.13; admin $15/contract; member repair discount cost: 0.4 expected repairs/yr × $400 avg × 10% = $16 → true cost $184.13/yr. Priced at $199 → margin $14.88 = 7.5% (THIN); 20% margin needs $230. Honest edges: agreements are SOLD as revenue but their real value is UTILIZATION (shoulder-season tune-ups fill dead weeks — the visits cost less when they'd otherwise be idle hours, price that honestly as a second scenario), retention (agreement customers call YOU for the repair — the discount buys loyalty, and member households convert to replacement sales at multiples of retail lead cost), discount cost is real (members EXPECT the discount — expected repairs/yr × avg ticket × discount is a cost line, not marketing), no-show/cancel friction (book in the shoulder season or the agreement becomes a July liability), and churn (15-25%/yr typical — price to profit within year one or you're financing someone else's future customer).
+export function MaintenanceAgreementCalc() {
+  const [visits, setVisits] = useNumber(2)
+  const [hrs, setHrs] = useNumber(1.25)
+  const [rate, setRate] = useNumber(37.25)
+  const [parts, setParts] = useNumber(30)
+  const [admin, setAdmin] = useNumber(15)
+  const [expRepairs, setExpRepairs] = useNumber(0.4)
+  const [avgRepair, setAvgRepair] = useNumber(400)
+  const [disc, setDisc] = useNumber(10)
+  const [price, setPrice] = useNumber(199)
+
+  const r = useMemo(() => {
+    const visitCost = visits * (hrs * rate + parts)
+    const discCost = expRepairs * avgRepair * (disc / 100)
+    const cost = visitCost + admin + discCost
+    const profit = price - cost
+    const marginPct = price > 0 ? (profit / price) * 100 : 0
+    const be20 = cost / 0.8
+    return { visitCost, discCost, cost, profit, marginPct, be20 }
+  }, [visits, hrs, rate, parts, admin, expRepairs, avgRepair, disc, price])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Visits per year" value={visits} onChange={setVisits} step="1" />
+          <Field label="Hours per visit" value={hrs} onChange={setHrs} step="0.25" />
+          <Field label="Burdened labor rate" value={rate} onChange={setRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Parts/supplies per visit" value={parts} onChange={setParts} prefix="$" step="5" />
+          <Field label="Admin per contract /yr" value={admin} onChange={setAdmin} prefix="$" step="5" />
+          <Field label="Expected repairs /yr" value={expRepairs} onChange={setExpRepairs} step="0.1" />
+          <Field label="Avg repair ticket" value={avgRepair} onChange={setAvgRepair} prefix="$" step="50" />
+          <Field label="Member discount" value={disc} onChange={setDisc} suffix="%" step="1" />
+        </div>
+        <div className="max-w-xs">
+          <Field label="Agreement price /yr" value={price} onChange={setPrice} prefix="$" step="10" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="True cost per contract" value={usd(r.cost)} />
+          <Result label="Profit per contract" value={usd(r.profit)} big />
+          <Result label="Margin" value={`${num(r.marginPct, 1)}%`} />
+          <Result label="Price for 20% margin" value={usd(r.be20)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.profit > 0
+            ? `${usd(price)} clears cost by ${usd(r.profit)} — a ${num(r.marginPct, 1)}% margin. ${r.marginPct < 15 ? 'Thin: one extra callback visit erases the year. Price to ' + usd(Math.round(r.be20)) + ' or trim the discount.' : 'Healthy — the agreement pays for its visits and buys the customer relationship.'}`
+            : `${usd(price)} LOSES ${usd(-r.profit)} per contract per year before counting a single callback. The floor at 20% margin is ${usd(Math.round(r.be20))} — reprice, reduce visit scope, or drop the repair discount.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: visits × (hours × BURDENED rate + parts) + admin + the member discount's expected cost (expected repairs/yr × avg ticket × discount — members USE the discount, so it's a cost line, not marketing). Two honest complications: first, shoulder-season scheduling changes the real cost — a tune-up done in an otherwise-idle April week costs less than the burdened rate implies, so run a second scenario at the marginal rate; conversely, agreements redeemed in July peak season displace full-price calls and cost MORE. Second, the agreement's real value is retention and replacement conversion: member households call YOU for the repair and buy the replacement from you — that value justifies thin (not negative) margins. Churn runs 15–25%/yr — price to profit within year one, because a quarter of the book won't renew. Never sell below true cost counting on breakage; unused-agreement "profit" is a lawsuit and a reputation waiting. Estimates — your visit logs and renewal data govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10220,6 +10277,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'overtime-vs-hire-calculator': OvertimeVsHireCalc,
   'warranty-reserve-calculator': WarrantyReserveCalc,
   'bid-win-rate-calculator': BidWinRateCalc,
+  'maintenance-agreement-calculator': MaintenanceAgreementCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

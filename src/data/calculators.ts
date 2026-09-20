@@ -1134,6 +1134,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'maintenance-agreement-calculator',
+    title: 'Maintenance Agreement Pricing Calculator 2026 — Service Contracts Priced Bottom-Up, Discounts Included',
+    shortTitle: 'Maintenance Agreement Pricing',
+    category: 'Trades & Engineering',
+    description:
+      'Price an HVAC/plumbing/electrical service agreement honestly: visits at the burdened rate, parts, admin, and the member repair discount as a real cost line — then check the margin and the 20% floor price.',
+    tagline: 'Two tune-ups at burdened rates plus a 10% member discount cost $184/yr — the classic $199 agreement nets 7.5%, and a real margin starts at $230.',
+    intro:
+      'Most shops underprice their maintenance agreements because they count the visits and skip the discount. Two tune-up visits a year at a burdened $37.25/hr plus parts run $153; admin adds $15; and the 10% member repair discount — which members actually use — adds $16 of expected cost against 0.4 repairs a year on a $400 ticket. True cost: $184. The industry-standard $199 agreement nets $14.88, a 7.5% margin that one callback visit erases; a 20% margin requires $230. The agreement\'s real value is retention and shoulder-season utilization — but that justifies thin margins, never negative ones. This calculator builds the true cost line by line and shows exactly what the discount costs.',
+    howItWorks: [
+      'Enter visits per year, hours per visit, and your BURDENED labor rate.',
+      'Add parts/supplies per visit and annual admin cost per contract.',
+      'Enter expected repairs per year, average ticket, and the member discount — it\'s a cost, not marketing.',
+      'Enter the agreement price and read true cost, margin, and the 20%-margin floor.',
+    ],
+    faq: [
+      {
+        q: 'Why count the member discount as a cost?',
+        a: 'Because members use it — that\'s the point of the agreement from their side. If 40% of member households need a repair in a year at a $400 average ticket, a 10% discount costs you $16 per contract per year in expectation. Skipping it prices the agreement on revenue you\'ll never collect. The discount does real work — it locks the customer to you for the repair instead of price-shopping, and that loyalty is worth buying — but it\'s bought with dollars, so it belongs in the cost stack. The framing that keeps agreements profitable: the discount is the retention budget, and like any budget it needs a number, a cap, and a line in the price build-up.',
+      },
+      {
+        q: 'When can agreements profitably price below full cost?',
+        a: 'When shoulder-season utilization and retention value are counted honestly — and even then, only thin, never negative. Utilization: a tune-up performed in an idle April week costs the burdened rate on paper but displaces nothing; run a second scenario at the marginal cost of otherwise-idle labor and the agreement\'s economics brighten. Retention: member households call YOU for the repair (no lead cost) and buy replacements from you at multiples of retail lead cost — a $50/yr subsidy can be rational against $200/yr of avoided marketing and higher close rates. The hard rule: breakage is not a business model. Pricing below true cost while counting on members NOT using the visits is the gym-membership logic that ends in complaints, refunds, and regulators — price so the agreement wins when fully used.',
+      },
+      {
+        q: 'How does churn change the pricing?',
+        a: 'It shortens the payback window to one year, which disciplines everything. Agreement churn runs 15–25% annually in most markets — a quarter of your book won\'t renew, and acquisition cost (tech time selling it, the sign-up incentive, the first-visit scheduling scramble) lands in year one. An agreement priced to "make it up in year three" is financing someone else\'s future customer. So: price to cover true cost within year one at a real margin; treat renewals as the profit multiplier they are (renewal cost is near zero — the second year of an agreement is the profitable one); and attack churn operationally — the shops with 90% renewal are the ones who schedule the next visit before the tech leaves the driveway, not the ones with the cheapest plan. This calculator prices year one honestly; your renewal rate decides the rest.',
+      },
+    ],
+  },
+  {
     slug: 'bid-win-rate-calculator',
     title: 'Bid Win Rate Calculator 2026 — Estimating Costs vs Job Margin: the Pipeline Breakeven',
     shortTitle: 'Bid Win Rate',
