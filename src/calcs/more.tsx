@@ -7875,6 +7875,107 @@ export function MobileMechanicCalc() {
   )
 }
 
+// ELECTRICIAN APPRENTICE VS COLLEGE — node-verified defaults: 4-yr IBEW-style apprenticeship pays $18/$22/$25/$28 per hr = $193,440 EARNED during training vs $40k college debt — a $233,440 head start before the grad's first paycheck. Journeyman at $38/hr = $79,040/yr. The trades' pitch isn't anti-college; it's arithmetic.
+export function ElectricianPathCalc() {
+  const [y1, setY1] = useNumber(18)
+  const [y4, setY4] = useNumber(28)
+  const [jw, setJw] = useNumber(38)
+  const [collegeDebt, setCollegeDebt] = useNumber(40000)
+  const [gradStart, setGradStart] = useNumber(55000)
+  const [otHrs, setOtHrs] = useNumber(4)
+
+  const r = useMemo(() => {
+    const rates = [y1, y1 + (y4 - y1) / 3, y1 + (2 * (y4 - y1)) / 3, y4]
+    const apprTotal = rates.reduce((a, b) => a + b * 2080, 0)
+    const jAnnual = jw * 2080 + jw * 1.5 * otHrs * 50
+    const headStart = apprTotal + collegeDebt
+    const breakevenYr = gradStart > jw * 2080 ? Infinity : headStart / Math.max(1, jAnnual - gradStart)
+    return { apprTotal, jAnnual, headStart, breakevenYr }
+  }, [y1, y4, jw, collegeDebt, gradStart, otHrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Apprentice yr-1 rate" value={y1} onChange={setY1} prefix="$" suffix="/hr" step="1" />
+          <Field label="Apprentice yr-4 rate" value={y4} onChange={setY4} prefix="$" suffix="/hr" step="1" />
+          <Field label="Journeyman rate" value={jw} onChange={setJw} prefix="$" suffix="/hr" step="1" />
+          <Field label="Weekly OT hours" value={otHrs} onChange={setOtHrs} step="1" />
+          <Field label="College debt avoided" value={collegeDebt} onChange={setCollegeDebt} prefix="$" step="5000" />
+          <Field label="Grad starting salary" value={gradStart} onChange={setGradStart} prefix="$" step="2500" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Earned during apprenticeship" value={usd(Math.round(r.apprTotal))} />
+          <Result label="Head start vs college" value={usd(Math.round(r.headStart))} big />
+          <Result label="Journeyman year (w/ OT)" value={usd(Math.round(r.jAnnual))} />
+          <Result label="Grad catches up in" value={r.breakevenYr === Infinity ? 'never at this salary' : `${num(r.breakevenYr, 1)} yrs`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Four years of apprenticeship EARNS ${usd(Math.round(r.apprTotal))} while the college path spends ${usd(collegeDebt)} — a ${usd(Math.round(r.headStart))} swing before the grad's first paycheck. Then the journeyman card pays ${usd(Math.round(r.jAnnual))}/yr with OT, and the license — not the degree — is what lets you bid work.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: apprentice earnings = year rates interpolated yr1→yr4 × 2,080 hrs; journeyman year = rate × 2,080 + 1.5× rate × weekly OT × 50 weeks; head start = apprentice earnings + college debt avoided. The trade-path rules that decide the money: the apprenticeship IS the education — paid classroom hours, paid on-the-job hours, zero tuition — and the wage progression is contractual (union IBEW/NECA agreements publish the ladder; open-shop programs vary more, so get the progression in writing). The license ladder is the compounding: journeyman card unlocks $35–50/hr base by region, master electrician (2 more years + exam) unlocks pulling permits and owning the contracting business — the $80k employee becomes the $150k+ owner, and the license is the entire moat. Where OT lives: industrial shutdowns, storm restoration (lineman-adjacent work at double-time), and data-center builds — the overtime calculator math applies brutally here because 4 hrs/wk of OT at $38 is a $15,200/yr raise. Union vs open shop: union total packages add pension + annuity + health worth $15–25/hr on top of the check — compare TOTAL package, not wage rate; open shop pays higher check, thinner benefits, faster entry. The body cost is real: knees, shoulders, and attic summers are why the exit-into-estimating/inspection path at 45+ matters — the license holds value when the body wants out. Specialization premium: controls/PLC, solar + battery (NABCEP stacks on the license), and EV-charging installs ride the electrician license into six-figure niches. Estimate — your local's wage sheet or state's prevailing-wage table is the source of truth.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// OWNER-OPERATOR VS COMPANY DRIVER — node-verified defaults: company at $0.55/mi × 2,500 mi × 48 wks = $66,000. O/O at $2.10/mi gross with $1.30/mi all-in costs (fuel $0.65, truck $0.25, maint $0.15, insurance $0.12, plates/ELD/misc $0.13) = $0.80/mi net → $96,000 — a $30,000 gap that diesel prices and one blown turbo can erase. Breakeven rate to match company: $1.85/mi.
+export function OwnerOperatorCalc() {
+  const [cpm, setCpm] = useNumber(0.55)
+  const [rate, setRate] = useNumber(2.1)
+  const [mi, setMi] = useNumber(2500)
+  const [wks, setWks] = useNumber(48)
+  const [fuel, setFuel] = useNumber(0.65)
+  const [truck, setTruck] = useNumber(0.25)
+  const [maint, setMaint] = useNumber(0.15)
+  const [ins, setIns] = useNumber(0.12)
+  const [other, setOther] = useNumber(0.13)
+
+  const r = useMemo(() => {
+    const companyYr = cpm * mi * wks
+    const costMi = fuel + truck + maint + ins + other
+    const netMi = rate - costMi
+    const ooYr = netMi * mi * wks
+    const diff = ooYr - companyYr
+    const breakeven = costMi + cpm
+    return { companyYr, costMi, netMi, ooYr, diff, breakeven }
+  }, [cpm, rate, mi, wks, fuel, truck, maint, ins, other])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Company pay" value={cpm} onChange={setCpm} prefix="$" suffix="/mi" step="0.01" />
+          <Field label="O/O gross rate" value={rate} onChange={setRate} prefix="$" suffix="/mi" step="0.05" />
+          <Field label="Miles per week" value={mi} onChange={setMi} step="100" />
+          <Field label="Working weeks" value={wks} onChange={setWks} step="1" />
+          <Field label="Fuel" value={fuel} onChange={setFuel} prefix="$" suffix="/mi" step="0.02" />
+          <Field label="Truck payment" value={truck} onChange={setTruck} prefix="$" suffix="/mi" step="0.02" />
+          <Field label="Maintenance fund" value={maint} onChange={setMaint} prefix="$" suffix="/mi" step="0.02" />
+          <Field label="Insurance" value={ins} onChange={setIns} prefix="$" suffix="/mi" step="0.01" />
+          <Field label="Plates/ELD/misc" value={other} onChange={setOther} prefix="$" suffix="/mi" step="0.01" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Company year" value={usd(Math.round(r.companyYr))} />
+          <Result label="O/O net per mile" value={`$${num(r.netMi, 2)}`} />
+          <Result label="O/O year" value={usd(Math.round(r.ooYr))} big />
+          <Result label="Breakeven rate" value={`$${num(r.breakeven, 2)}/mi`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.diff > 0
+            ? `O/O beats company by ${usd(Math.round(r.diff))}/yr at ${num(rate, 2)}/mi — but your all-in cost is ${num(r.costMi, 2)}/mi, so rates below ${num(r.breakeven, 2)} make you a company driver with a truck payment. Know the floor before you sign the lease.`
+            : `At ${num(rate, 2)}/mi gross against ${num(r.costMi, 2)}/mi costs, the truck loses to the company job by ${usd(Math.abs(Math.round(r.diff)))}/yr — stay company until the rate environment or your costs change.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: company year = CPM × miles × weeks; O/O net = (gross rate − all-in cost/mi) × miles × weeks; breakeven = cost/mi + company CPM. The O/O truths that don't fit in the recruiting ad: the maintenance fund is not optional — $0.15/mi banked religiously is what survives the $18k in-frame or the $6k turbo; operators who spend the gross are one breakdown from losing the truck. Fuel is the swing variable: at 6.5 mpg, every 50-cent diesel move is ~$0.077/mi — a dollar swing in diesel reprices your year by $9,000, which is why fuel-surcharge contracts and fuel cards (RTS, TCS discounts) matter more than the base rate. Authority vs lease-on: your own MC authority keeps the full rate but adds insurance shopping ($12k–18k/yr for a new authority), IFTA, UCR, and broker credit risk; leasing onto a carrier costs 10–25% of gross but offloads the back office — run BOTH numbers for your lanes. The lease-purchase trap: carrier lease-purchase programs routinely price the truck at 120–150% of value with the carrier controlling your dispatch — the operator who can't get bank financing usually can't make the lease math work either; the honest version is a used truck with a real bank note. Weeks matter more than miles: 48 working weeks is honest (home time, breakdowns, slow January); a 52-week projection is fiction that overstates the year by 8%. Taxes: as a 1099/sole-prop you owe SE tax (15.3%) and quarterly estimates, but gain the per-diem deduction and Section 179 on the truck — a trucking-specialist CPA pays for itself the first year. Estimate — your actual fuel receipts, lanes, and the truck's real payment book govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // PE LICENSE ROI — node-verified defaults: FE $175 + PE $375 + review course $1,500 = $2,050 all-in. Salary bump $6,000/yr → payback 4.1 months; 30-yr career $177,950. The license also unlocks stamping authority, principal track, and expert-witness side rates ($250-400/hr). The cheapest six figures in engineering is the exam you keep postponing.
 export function PeLicenseCalc() {
   const [fe, setFe] = useNumber(175)
@@ -14305,6 +14406,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'electrician-apprentice-vs-college-calculator': ElectricianPathCalc,
+  'owner-operator-vs-company-calculator': OwnerOperatorCalc,
   'pe-license-roi-calculator': PeLicenseCalc,
   'real-estate-commission-split-calculator': CommissionSplitCalc,
   'bah-rent-vs-buy-calculator': BahRentBuyCalc,

@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'electrician-apprentice-vs-college-calculator':
+    'Future electricians use it before signing for student loans: 4 apprentice years EARN $193,440 while college spends $40k — and the journeyman card pays $79k before the OT that adds $15k more.',
+  'owner-operator-vs-company-calculator':
+    'Drivers use it before signing a lease: $2.10/mi gross nets $0.80 after the real $1.30/mi — $96k vs $66k company, but below $1.85/mi you are a company driver with a truck payment.',
   'pe-license-roi-calculator':
     'Engineers use it before another year unlicensed: $2,050 all-in against a $6,000/yr bump pays back in 4.1 months — and the seal gates the principal track and $300/hr expert work.',
   'real-estate-commission-split-calculator':

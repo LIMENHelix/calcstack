@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'electrician-apprentice-vs-college-calculator',
+    title: 'Electrician Apprentice vs College Calculator — Earn $193k During Training, Owe Nothing',
+    shortTitle: 'Apprentice vs College',
+    category: 'Careers & Salary',
+    description:
+      'Compare the electrician apprenticeship path against a college degree: paid training years, journeyman wages with OT, the license ladder — and the year a college grad catches up, if ever.',
+    tagline: 'Four apprentice years EARN $193,440 while college spends $40,000 — a $233,440 head start before the grad\'s first paycheck.',
+    intro:
+      'The trades-versus-college debate ends when you run the actual cash flows: a four-year electrical apprenticeship pays $18 rising to $28 an hour — $193,440 earned during training — while the degree path spends $40,000. The journeyman card then pays $79,040 a year before overtime, and 4 OT hours a week adds $15,200 more. This calculator runs your local wage ladder against the college alternative and names the year the graduate catches up — if the math says they ever do.',
+    howItWorks: [
+      'Enter year-1 and year-4 apprentice rates from your local\'s wage sheet.',
+      'Enter the journeyman rate and realistic weekly overtime.',
+      'Enter the college debt avoided and a grad\'s starting salary.',
+      'Read total apprentice earnings and the journeyman year with OT.',
+      'Read the head start and the graduate\'s catch-up timeline.',
+    ],
+    faq: [
+      {
+        q: 'Is an electrician apprenticeship really better than college financially?',
+        a: 'On cash flow, decisively: apprentice years pay $193,440 in the example while college costs $40,000 — a $233,440 swing by age 22. The journeyman card then pays $79,040/yr base (plus $15,200 with modest OT), and a graduate starting at $55,000 never catches the compound head start at those numbers. The honest caveats: the comparison flips for high-end degree paths (engineering, CS at $90k+ starts close the gap within a decade), the trades levy a body cost — knees, shoulders, attic summers — that desk work does not, and college earnings have a fatter right tail. The strongest honest framing: the apprenticeship is not a consolation prize, it is a different asset class — a license that appreciates (journeyman → master → contractor) with zero debt and paid training. The wrong reason to skip college is ideology; the right reason is this arithmetic plus knowing you prefer building to sitting.',
+      },
+      {
+        q: 'How does the electrician license ladder work?',
+        a: 'Three rungs, each gated by hours and exams. Apprentice (4 years, ~8,000 OJT hours plus classroom): paid training with contractual wage progression — union IBEW/NECA agreements publish the ladder in the contract; open-shop programs vary, so get the progression in writing before starting. Journeyman: the state license exam unlocks $35–50/hr base by region and the right to work unsupervised. Master electrician (typically 2 more years plus exam): the permit-pulling, business-owning license — this is where the $80k employee becomes the $150k+ contractor, and the license is the entire moat; customers cannot legally hire unlicensed electrical work. The specialization premiums stack on top: controls/PLC work, solar-plus-battery (NABCEP certification rides the license), EV-charging installation, and data-center builds all pay above the base card. The long-game move: the license holds its value when the body wants out — estimators, inspectors, and project managers are mostly former journeymen.',
+      },
+      {
+        q: 'Union or non-union electrical apprenticeship?',
+        a: 'Compare the total package, never the wage rate. Union (IBEW/NECA): the check rate is often equal or slightly lower than open shop, but the package adds pension, annuity, and family health insurance worth $15–25/hr on top — an invisible second paycheck that compounds for 30 years. Union apprenticeships also carry the strongest training (NJATC curriculum), the wage progression is contractual, and prevailing-wage public work is largely union territory. Open shop: faster entry (no waiting list for the apprenticeship class), often higher raw check early, thinner benefits, and merit-shop flexibility that suits people who plan to run their own company sooner. The decision framework: if you want a 30-year W-2 career with a defined pension, union math usually wins; if you want to own the contracting business by 35, either path works and the master\'s license is what matters. Either way, the apprenticeship beats paying for trade school — for-profit electrical programs charge $15–30k for what the apprenticeship pays YOU to learn, though a pre-apprenticeship can help when the union list is years long.',
+      },
+    ],
+  },
+  {
+    slug: 'owner-operator-vs-company-calculator',
+    title: 'Owner-Operator vs Company Driver Calculator — Net per Mile, Real Costs, Breakeven Rate',
+    shortTitle: 'Owner-Operator vs Company',
+    category: 'Auto & Transport',
+    description:
+      'Compare owning the truck against the company job honestly: all-in cost per mile (fuel, payment, maintenance fund, insurance), net per mile, and the breakeven rate that makes the truck worth it.',
+    tagline: '$2.10/mi gross minus $1.30/mi real costs nets $96k vs $66k company — but below $1.85/mi you\'re a company driver with a truck payment.',
+    intro:
+      'The owner-operator pitch quotes the gross; the bankruptcy court sees the net. At $2.10 a mile gross with honest costs — fuel $0.65, truck payment $0.25, maintenance fund $0.15, insurance $0.12, plates and misc $0.13 — you keep $0.80 a mile: $96,000 against the company driver\'s $66,000. But the breakeven is $1.85/mi, diesel is the swing variable, and one blown turbo is a $6,000 week. This calculator runs your real numbers, not the recruiting ad\'s.',
+    howItWorks: [
+      'Enter the company CPM offer and your realistic miles and working weeks.',
+      'Enter the O/O gross rate per mile for your lanes.',
+      'Enter every cost per mile — fuel, payment, maintenance fund, insurance, misc.',
+      'Read net per mile, the O/O year, and the gap against company.',
+      'Read the breakeven rate — your floor for accepting loads.',
+    ],
+    faq: [
+      {
+        q: 'Is being an owner-operator worth it over company driving?',
+        a: 'At good rates with disciplined costs, yes — the example shows a $30,000/yr edge. But the gap lives and dies on three things the ads skip: the maintenance fund ($0.15/mi banked religiously is what survives an $18k in-frame; operators who spend the gross are one breakdown from losing the truck), working weeks (48 is honest — home time, breakdowns, and slow January; a 52-week projection overstates the year by 8%), and the rate floor (below $1.85/mi in the example you are a company driver carrying a truck payment). The tax side helps: SE tax stings at 15.3%, but the per-diem deduction, Section 179 depreciation on the truck, and ordinary business write-offs claw much of it back — a trucking-specialist CPA pays for itself year one. The decision rule that works: one profitable year as a leased-on operator with clean books proves the model before you take on authority or a bigger note.',
+      },
+      {
+        q: 'Lease onto a carrier or get my own authority?',
+        a: 'Run both numbers for your lanes — the trade is margin for back office. Leasing on: the carrier takes 10–25% of gross but provides the authority, the insurance umbrella, plates, IFTA filing, and usually fuel-card discounts; you drive, they handle compliance. Your own MC authority: you keep the full rate but buy insurance solo ($12k–18k/yr for a new authority — the shock that kills most first-year carriers), file IFTA/UCR yourself, broker every load, and carry broker credit risk (30–45 day pay terms; factoring at 1.5–3% if you need cash faster). The stepwise path that survives: company driver → leased-on owner-operator (learn the cost book with a safety net) → own authority once you have lanes, cash reserves, and a factoring relationship. And the trap to name plainly: carrier lease-PURCHASE programs routinely price the truck at 120–150% of value with the carrier controlling your dispatch — the operator who can\'t get bank financing usually can\'t make the lease math work either; the honest version is a used truck with a real bank note.',
+      },
+      {
+        q: 'What does diesel price volatility do to the owner-operator math?',
+        a: 'It reprices your year by thousands per quarter — at 6.5 mpg, every 50-cent move in diesel is about $0.077/mile, so a dollar swing is $9,000 on the example year. The defenses: fuel-surcharge contracts (most carrier and broker contracts float a surcharge indexed to DOE weekly diesel — read whether YOUR agreement passes 100% of it through, because partial pass-through quietly transfers the risk to you), fuel cards (RTS, TCS, and carrier networks take 20–60 cents/gal off retail at the big chains — the discount alone can out-earn a rate concession), and driving technique (55 vs 65 mph is worth roughly 0.7 mpg — about $0.10/mi, which is why the megas govern their fleets). The strategic frame: fuel is not a cost to absorb, it is a cost to engineer — operators who spec APU instead of idling, run the discount network, and bid with the surcharge clause survive the spikes that wash out the ones who quoted flat rates in a cheap-diesel month.',
+      },
+    ],
+  },
+  {
     slug: 'pe-license-roi-calculator',
     title: 'PE License ROI Calculator — FE to PE Cost, Payback Months, and Career Value',
     shortTitle: 'PE License ROI',
