@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'hsa-medicare-trap-calculator':
+    'Workers 65+ on HDHPs use it before claiming Social Security: Part A backdates six months, the $9,750 family limit collapses to $4,062.50 for a December claim, and the excess owes 6% every year until withdrawn — so the last safe contribution month is May.',
   '72t-sepp-calculator':
     'Early retirees under 59½ use it before committing: the three IRS methods pay $13,812–$30,156/yr on $500k at 50, the lock runs the longer of 5 years or to 59½, and busting the schedule claws back 10% on every payment ever taken.',
   'roth-conversion-bracket-filler-calculator':

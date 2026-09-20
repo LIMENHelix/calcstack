@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'hsa-medicare-trap-calculator',
+    title: 'HSA Medicare Trap Calculator 2026 — The Retroactive Part A Rule That Creates Excess Contributions',
+    shortTitle: 'HSA Medicare Trap',
+    category: 'Retirement',
+    description:
+      'Claim Social Security after 65 and Medicare Part A backdates up to 6 months — retroactively killing HSA eligibility and turning those contributions into excess with a 6%-per-year penalty. Compute your real prorated limit and the last safe contribution month.',
+    tagline: 'Claim Social Security in December and Part A backdates to June — six months of HSA contributions just became illegal.',
+    intro:
+      'The HSA-Medicare trap catches thousands of people working past 65 on high-deductible plans: the moment any Medicare coverage begins, HSA contributions must stop — and when you claim Social Security after 65, Part A enrollment is retroactive up to six months. Contributions made during those backdated months were never eligible, and the IRS treats them as excess contributions with a 6% excise tax every year until removed. A couple claiming in December with family coverage plus the catch-up sees their $9,750 "limit" collapse to $4,062.50 — five months of eligibility, not twelve. This calculator computes your real prorated limit from your planned claim month, sizes any excess you\'ve already made, shows the recurring penalty, and names the last safe month to contribute.',
+    howItWorks: [
+      'Pick self-only or family HDHP coverage, and check the 55+ catch-up if it applies.',
+      'Choose the month you plan to claim Social Security or enroll in Medicare.',
+      'Enter how much you\'ve contributed this calendar year.',
+      'Read the prorated limit, any excess, the 6%-per-year excise cost, and the fix deadline.',
+    ],
+    faq: [
+      {
+        q: 'I claimed Social Security and now Part A backdated — what exactly do I owe?',
+        a: 'The contributions for the backdated months are excess contributions: a 6% excise tax on the excess amount for every year it remains in the account. The fix is to withdraw the excess plus its earnings before your tax-filing deadline (including extensions) — then it\'s ordinary income in the withdrawal year and the 6% stops. Miss the deadline and the 6% recurs annually until you remove it. A family-coverage couple who contributed the full $9,750 in a year where only five months were eligible faces $5,687.50 of excess — $341.25 per year in penalties until corrected.',
+      },
+      {
+        q: 'How do I keep contributing to my HSA past 65?',
+        a: 'Only one way: delay BOTH Social Security and Medicare while staying on a qualifying HDHP. You cannot claim Social Security without being enrolled in Part A — once you file for benefits, HSA contributions end retroactively. If you\'re working past 65 with employer coverage, delaying is usually fine (large-employer coverage lets you defer Part B penalty-free), but stop HSA contributions at least six months before you plan to claim anything. Some people skip Medicare at 65 specifically to keep maxing the HSA — run the numbers: family coverage plus catch-up is $9,750 of triple-tax-advantaged space per year, but a late Part B enrollment penalty is 10% per year of delay, forever, if you didn\'t have qualifying employer coverage.',
+      },
+      {
+        q: 'What can I do with the HSA after Medicare starts?',
+        a: 'The account remains the best retirement medical fund in the tax code. Tax-free: Medicare Part B, Part D, and Medicare Advantage premiums (not Medigap), plus all the usual qualified expenses — dental, vision, hearing, and IRS-eligible long-term-care premiums. After 65, non-medical withdrawals are simply ordinary income with no penalty — the HSA becomes a traditional IRA with a tax-free medical overlay. And the receipts trick survives: qualified expenses you paid out-of-pocket in any prior year can be reimbursed tax-free decades later, making the HSA a stealth emergency fund.',
+      },
+    ],
+  },
+  {
     slug: '72t-sepp-calculator',
     title: '72(t) SEPP Calculator 2026 — Penalty-Free IRA Withdrawals Before 59½, All Three IRS Methods',
     shortTitle: '72(t) SEPP',

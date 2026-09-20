@@ -2323,6 +2323,70 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// HSA + Medicare retroactive trap — the quiet excess-contribution bomb for everyone working past 65 on an HDHP. The rule: enrolling in ANY Medicare part ends HSA contribution eligibility, and when you claim Social Security after 65, Part A enrollment is RETROACTIVE up to 6 months (never before your 65th-birthday month) — contributions for those backdated months were never eligible. Eligible months = enrollment month − 7 (Part A effective = enrollment − 6; eligibility ends the month BEFORE that... precisely: eligible = max(0, enrollMo − retro − 1) with retro=6). Excess contributions get a 6% excise tax EVERY YEAR until withdrawn with earnings. The defense: stop HSA contributions 6+ months before you plan to claim SS/Medicare — or don't claim (but you can't refuse Part A once you take Social Security). 2026 limits: self $4,400, family $8,750, +$1,000 catch-up at 55+ (per person — a spouse's catch-up must go in their OWN HSA). Node-verified: family+catch-up $9,750, enroll December → Part A effective June → 5 eligible months → limit $4,062.50; contributed the full $9,750 → excess $5,687.50, excise $341.25/yr; enroll October → 3 eligible months → $2,437.50; enroll July → 0 eligible months, everything is excess; last safe contribution month for a December claim = May.
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+export function HsaMedicareTrapCalc() {
+  const [coverage, setCoverage] = useState<'self' | 'family'>('family')
+  const [catchup, setCatchup] = useState(true)
+  const [enrollMo, setEnrollMo] = useState('12')
+  const [contributed, setContributed] = useNumber(9750)
+
+  const r = useMemo(() => {
+    const limit = (coverage === 'self' ? 4400 : 8750) + (catchup ? 1000 : 0)
+    const em = Number(enrollMo)
+    const retroEffective = Math.max(1, em - 6) // Part A effective month
+    const eligMonths = Math.max(0, em - 6 - 1)
+    const eligLimit = (limit * eligMonths) / 12
+    const excess = Math.max(0, contributed - eligLimit)
+    const excise = excess * 0.06
+    const lastSafe = eligMonths // last month you may contribute FOR
+    return { limit, retroEffective, eligMonths, eligLimit, excess, excise, lastSafe, em }
+  }, [coverage, catchup, enrollMo, contributed])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <div>
+            <div className="mb-1 text-sm font-medium">HDHP coverage</div>
+            <select value={coverage} onChange={(e) => setCoverage(e.target.value as 'self' | 'family')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="self">Self-only</option>
+              <option value="family">Family</option>
+            </select>
+          </div>
+          <div>
+            <div className="mb-1 text-sm font-medium">Medicare/SS claim month</div>
+            <select value={enrollMo} onChange={(e) => setEnrollMo(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {MONTHS.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
+            </select>
+          </div>
+          <Field label="Contributed this calendar year" value={contributed} onChange={setContributed} prefix="$" />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={catchup} onChange={(e) => setCatchup(e.target.checked)} className="h-4 w-4" />
+            Age 55+ ($1,000 catch-up)
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Your real limit this year" value={usd(r.eligLimit, 2)} />
+          <Result label="HSA-eligible months" value={`${r.eligMonths} of 12`} />
+          <Result label="Excess contribution" value={usd(r.excess, 2)} />
+          <Result label="6% excise per year until fixed" value={usd(r.excise, 2)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Claiming Social Security or Medicare in <span className="font-medium">{MONTHS[r.em - 1]}</span> backdates Part A to <span className="font-medium">{MONTHS[r.retroEffective - 1]}</span> — so only {r.eligMonths} month{r.eligMonths === 1 ? '' : 's'} of HSA eligibility survive: <span className="font-medium">{usd(r.eligLimit, 2)}</span> of the {usd(r.limit)} headline limit. {r.excess > 0 ? (
+            <>You've over-contributed <span className="font-medium">{usd(r.excess, 2)}</span> — that excess owes 6% ({usd(r.excise, 2)}) every year it sits there. The fix: withdraw the excess plus earnings before the tax-filing deadline and it becomes ordinary income instead of a recurring penalty.</>
+          ) : (
+            <>You're inside the line — nothing to fix. The safe habit for anyone 65+: the last month you can contribute for is <span className="font-medium">{r.lastSafe > 0 ? MONTHS[r.lastSafe - 1] : 'none this year'}</span>, so stop contributions at least six months before any planned claim.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The mechanics nobody warns you about: signing up for Social Security after 65 automatically enrolls you in Medicare Part A, retroactively up to six months — and HSA contributions for any month of Medicare entitlement were never allowed, no matter that nobody told you at the time. The retroactive window can't reach before your 65th-birthday month, so this bites hardest at 65½ and beyond. The excess-contribution penalty is 6% per year, every year, until you withdraw the excess and its earnings (Form 8889 and a corrected 1099-SA); pull it before the filing deadline and it's just taxable income. Planning rules: stop HSA contributions six months before claiming Social Security; a spouse's $1,000 catch-up must go into their OWN HSA, not yours; and you cannot have Part A without taking Social Security once you've claimed — delaying SS past 65 while staying on an HDHP is the only way to keep contributing. Employer contributions count against the same prorated limit. After Medicare starts, the HSA still spends tax-free on premiums (Part B/D, Medicare Advantage — not Medigap) and, after 65, on anything at all as ordinary income with no penalty — the account stays useful, the contributions just end.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // 72(t) SEPP — substantially equal periodic payments: penalty-free IRA access before 59½, priced three IRS ways. RMD method: balance ÷ Single Life Expectancy (Pub 590-B Table I, 2022+ tables). Fixed amortization: pmt = balance × r ÷ (1 − (1+r)^−LE), where r ≤ the GREATER of 5% or 120% of the federal mid-term AFR — amortization pays roughly 2.2× the RMD method. Fixed annuitization ≈ amortization with a mortality/mid-year adjustment (≈ ×(1+r)^0.5 here; exact factors come from the IRS mortality table). The lock: payments must run the LONGER of 5 years or until 59½ — a 50-year-old is locked 9.5 years; a 57-year-old still runs to 62. Bust it (modify, stop, or add to the account) and the 10% penalty hits EVERY payment retroactively, plus interest — on the amortization schedule above that's ~$28,648. One mercy: a one-time switch from amortization/annuitization DOWN to the RMD method is allowed (Rev. Rul. 2002-62). Splitting IRAs first (into a "SEPP IRA" sized to the income need and a reserve IRA) is the standard safety play. Node-verified: $500k at 50, LE 36.2 → RMD $13,812.15/yr; amortization at 5% → $30,156.12; annuitization ≈ $30,900.83; lock ends 59½; bust cost ≈ $28,648.
 const SLE_TABLE: [number, number][] = [
   [45, 41.0], [46, 40.0], [47, 39.0], [48, 38.1], [49, 37.1], [50, 36.2], [51, 35.3], [52, 34.3], [53, 33.4], [54, 32.5], [55, 31.6], [56, 30.6], [57, 29.8], [58, 28.9], [59, 28.0], [60, 27.1], [61, 26.2], [62, 25.4], [63, 24.5], [64, 23.7], [65, 22.9],
@@ -7336,6 +7400,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'hsa-medicare-trap-calculator': HsaMedicareTrapCalc,
   '72t-sepp-calculator': Sepp72tCalc,
   'roth-conversion-bracket-filler-calculator': RothBracketFillCalc,
   'coast-fire-calculator': CoastFireCalc,
