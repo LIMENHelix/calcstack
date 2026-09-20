@@ -4369,6 +4369,57 @@ export function JobCostingCalc() {
   )
 }
 
+// EQUIPMENT HOURLY COST — own vs rent priced per operating hour, breakeven utilization solved. Node-verified: $55k skid steer, $10k salvage, 5-yr life, $3k/yr insurance+storage, maint $8/hr, fuel $6/hr → ownership $26/hr at 1,000 hrs/yr; rental $250/day (8-hr) + fuel = $37.25/hr; breakeven utilization 516 hrs/yr — below that RENT (at 400 hrs/yr owning costs $44/hr), above it OWN. Model: fixed costs (depreciation + insurance/storage) spread over actual operating hours, variable costs (maintenance, fuel) per hour. Honest edges: utilization is the ONLY variable that decides (the machine that sits is a bonfire — 40% utilization machines are why rental yards exist), rental rates INCLUDE maintenance and the latest model (no downtime cost, no repair risk — price your downtime honestly: a broken owned machine on a deadline job costs the rental ANYWAY plus the repair), financing changes the cash flow not the economics (interest is real; add it to fixed cost if financed), resale assumption drives depreciation (auction prices, not hopes), and tax (179/bonus depreciation helps cash but doesn't change the utilization math). Rates are illustrative — local yard quotes govern.
+export function EquipmentHourlyCalc() {
+  const [price, setPrice] = useNumber(55000)
+  const [salvage, setSalvage] = useNumber(10000)
+  const [life, setLife] = useNumber(5)
+  const [hrs, setHrs] = useNumber(1000)
+  const [maint, setMaint] = useNumber(8)
+  const [fuel, setFuel] = useNumber(6)
+  const [ins, setIns] = useNumber(3000)
+  const [rentDay, setRentDay] = useNumber(250)
+
+  const r = useMemo(() => {
+    const dep = (price - salvage) / Math.max(1, life)
+    const h = Math.max(1, hrs)
+    const ownHr = (dep + ins) / h + maint + fuel
+    const rentHr = rentDay / 8 + fuel
+    const be = rentHr - maint - fuel > 0 ? (dep + ins) / (rentHr - maint - fuel) : Infinity
+    return { dep, ownHr, rentHr, be }
+  }, [price, salvage, life, hrs, maint, fuel, ins, rentDay])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Purchase price" value={price} onChange={setPrice} prefix="$" step="5000" />
+          <Field label="Salvage/resale at end" value={salvage} onChange={setSalvage} prefix="$" step="1000" />
+          <Field label="Ownership years" value={life} onChange={setLife} step="1" />
+          <Field label="Operating hours /yr" value={hrs} onChange={setHrs} step="50" />
+          <Field label="Maintenance" value={maint} onChange={setMaint} prefix="$" suffix="/hr" step="1" />
+          <Field label="Fuel" value={fuel} onChange={setFuel} prefix="$" suffix="/hr" step="1" />
+          <Field label="Insurance+storage /yr" value={ins} onChange={setIns} prefix="$" step="500" />
+          <Field label="Rental rate (daily)" value={rentDay} onChange={setRentDay} prefix="$" step="25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Owning cost /hr" value={usd(r.ownHr)} />
+          <Result label="Rental cost /hr (incl fuel)" value={usd(r.rentHr)} />
+          <Result big label="Breakeven utilization" value={isFinite(r.be) ? `${num(r.be, 0)} hrs/yr` : 'Always own'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {hrs >= r.be
+            ? `At ${num(hrs, 0)} hrs/yr you're past the ${num(r.be, 0)}-hr breakeven — owning at ${usd(r.ownHr)}/hr beats renting at ${usd(r.rentHr)}/hr. The machine earns its parking spot.`
+            : `At ${num(hrs, 0)} hrs/yr you're UNDER the ${num(r.be, 0)}-hr breakeven — owning costs ${usd(r.ownHr)}/hr vs renting at ${usd(r.rentHr)}/hr. Rent it, and let the yard own the depreciation, the repairs, and the downtime.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: ownership = (price − salvage) ÷ years + annual insurance/storage, spread over your ACTUAL operating hours, plus maintenance and fuel per hour; rental = day rate ÷ 8 + fuel (fuel is yours either way). Utilization is the only variable that decides: below the breakeven hours the idle machine's fixed costs eat the savings — the machine that sits is a bonfire, and 40%-utilization iron is why rental yards exist. Rental also buys things ownership doesn't: zero repair risk, zero downtime cost (a broken owned machine on a deadline job costs the rental ANYWAY, plus the repair), and the current model every time. Financing changes cash flow, not economics — add interest to the fixed cost if financed. Resale drives everything: use auction comps, not hopes. Section 179/bonus depreciation improves cash and taxes but doesn't change the utilization math. Rates are illustrative — your dealer and yard quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10020,6 +10071,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'unpaid-internship-calculator': UnpaidInternshipCalc,
   'labor-burden-calculator': LaborBurdenCalc,
   'job-costing-calculator': JobCostingCalc,
+  'equipment-hourly-cost-calculator': EquipmentHourlyCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

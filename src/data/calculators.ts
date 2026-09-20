@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'equipment-hourly-cost-calculator',
+    title: 'Equipment Hourly Cost Calculator 2026 — Own vs Rent per Operating Hour, Breakeven Utilization',
+    shortTitle: 'Equipment Hourly Cost',
+    category: 'Trades & Engineering',
+    description:
+      'The true cost of owning a machine per operating hour — depreciation, insurance, maintenance, fuel — versus the rental rate, with the breakeven utilization that decides which side you should be on.',
+    tagline: 'A $55k skid steer costs $26/hr at 1,000 hours a year but $44/hr at 400 — the breakeven against renting is 516 hours, and utilization is the only variable that decides.',
+    intro:
+      'The purchase price is not the cost of a machine — the cost per operating hour is. A $55,000 skid steer with $10,000 resale after five years carries $9,000/yr of depreciation plus $3,000 of insurance and storage: spread over 1,000 operating hours with maintenance and fuel, that\'s $26/hr against a $37.25/hr rental equivalent — owning wins. But at 400 hours a year the same machine costs $44/hr and the rental yard wins, because fixed costs don\'t shrink when the machine sits. The breakeven — 516 hours a year in this case — is the number that should decide every equipment purchase, and it\'s the number almost nobody computes before signing. This calculator prices both sides per hour and solves the utilization that flips the decision.',
+    howItWorks: [
+      'Enter purchase price, realistic resale value (auction comps, not hopes), and ownership years.',
+      'Enter your ACTUAL annual operating hours — meter hours, not calendar optimism.',
+      'Add maintenance and fuel per operating hour, plus annual insurance and storage.',
+      'Enter the local daily rental rate for the equivalent machine.',
+      'Read owning cost/hr, rental cost/hr, and the breakeven utilization in hours per year.',
+    ],
+    faq: [
+      {
+        q: 'Why does utilization decide everything?',
+        a: 'Because depreciation and insurance run on the calendar while revenue runs on the meter. A $12,000/yr fixed-cost machine at 1,000 hours carries $12/hr of fixed cost; at 400 hours it carries $30/hr — the SAME machine, an 18-dollar swing, purely from sitting. This is the entire business model of rental yards: they buy machines at fleet discounts and keep utilization high across many customers, so their effective hourly cost is low even before the markup. The owner-operator\'s trap is buying for the busiest month and paying for twelve. Honest utilization tracking for one season — actual meter hours, not "we use it all the time" — is the single most valuable input in this calculator, and the one most buyers guess high.',
+      },
+      {
+        q: 'What does renting buy that owning doesn\'t?',
+        a: 'Three things with real dollar value. Zero repair risk: a hydraulic failure is the yard\'s problem and the yard\'s bill — on an owned machine it\'s a $4,000 surprise plus the rental you\'ll need ANYWAY while it\'s down. Zero downtime cost: on a deadline job, a broken owned machine means renting at panic rates while paying the repair — the rental\'s premium is partly downtime insurance, so price it as such. And the current model every time: rental fleets turn over fast, so you\'re running two-year-old machines with the latest emissions and safety kit, not defending a ten-year-old unit past its economic life. Owning wins on cost only when utilization is high enough that these embedded services are worth less than the rental premium — which is exactly what the breakeven hours quantify.',
+      },
+      {
+        q: 'How do financing and taxes change the math?',
+        a: 'Cash flow, not the decision — mostly. Financing replaces the lump purchase with payments plus interest; add the annual interest to fixed cost and the hourly math updates (on a $55k machine at 9% over 5 years, that\'s roughly $2,600/yr average — real money, worth including). Section 179 and bonus depreciation let you deduct the machine fast, improving after-tax cash meaningfully in the purchase year — but they don\'t change the utilization question, because depreciation is an allocation either way: the machine loses value per hour whether the IRS schedule admits it or not. The one tax trap worth knowing: expensing the full price in year one feels like the machine was subsidized, and owners then under-price their hourly rate for five years. Price the work off the ECONOMIC cost per hour and let the tax treatment be gravy, not the business model.',
+      },
+    ],
+  },
+  {
     slug: 'job-costing-calculator',
     title: 'Job Costing Calculator 2026 — Materials, Burdened Labor, Subs & Overhead Priced at Real Margin',
     shortTitle: 'Job Costing',

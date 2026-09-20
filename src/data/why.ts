@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'equipment-hourly-cost-calculator':
+    'Owners use it before buying iron: a $55k skid steer is $26/hr at 1,000 hours a year but $44/hr at 400 — breakeven against the rental yard is 516 hours, and utilization is the only variable that decides.',
   'job-costing-calculator':
     'Contractors use it before quoting: $3,800 materials + 60 burdened labor hours + subs + overhead + contingency = $8,819 true cost — the 20%-margin quote is $11,024, and the shop bidding $8,400 isn\'t efficient, it\'s unpriced.',
   'labor-burden-calculator':
