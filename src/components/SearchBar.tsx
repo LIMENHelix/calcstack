@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { searchAll } from '@/lib/searchIndex'
+import { searchAll, SEARCH_TOTAL } from '@/lib/searchIndex'
 
 export function SearchBar() {
   const [q, setQ] = useState('')
@@ -37,7 +37,7 @@ export function SearchBar() {
           if (e.key === 'Enter' && results[highlight]) go(results[highlight].path)
           if (e.key === 'Escape') setOpen(false)
         }}
-        placeholder="Search 500+ calculators, tools & data — try “texas tax” or “bmi”…"
+        placeholder={`Search ${SEARCH_TOTAL} calculators, tools & data — try “texas tax” or “bmi”…`}
         className="h-12 w-full rounded-xl border-2 border-primary/40 bg-background px-4 pr-12 text-base shadow-sm focus:border-primary focus:outline-none"
         aria-label="Search calculators and tools"
       />

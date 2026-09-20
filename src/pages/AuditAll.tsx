@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from 'react'
+import { Component, Suspense, type ReactNode } from 'react'
 import { ALL_COMPONENTS } from './CalculatorPage'
 import { CALCULATORS } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
@@ -44,7 +44,9 @@ export default function AuditAll() {
         <section key={slug} className="rounded-lg border p-4">
           <h2 className="mb-3 font-mono text-sm font-semibold">{slug}</h2>
           <Boundary slug={slug}>
-            <Comp />
+            <Suspense fallback={<div className="py-4 text-xs text-muted-foreground">Loading…</div>}>
+              <Comp />
+            </Suspense>
           </Boundary>
         </section>
       ))}

@@ -1,8 +1,9 @@
+import { Suspense } from 'react'
 import { useParams, Link } from 'react-router'
 import { CALCULATORS } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
-import { MORE_CALC_COMPONENTS } from '@/calcs/more'
+import { MORE_CALC_COMPONENTS } from '@/calcs/more-lazy'
 import { NICHE_CALC_COMPONENTS } from '@/calcs/niche'
 import { SPORTS_CALC_COMPONENTS } from '@/calcs/sports'
 import { CONSTRUCTION_CALC_COMPONENTS } from '@/calcs/construction'
@@ -135,7 +136,9 @@ export default function CalculatorPage() {
       <p className="mb-6 text-lg text-muted-foreground">{meta.tagline}</p>
 
       {/* Tool first — the calculator is the hero of the page */}
-      <Calc presets={variant?.presets} stateSlug={variant?.stateSlug} />
+      <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading calculator…</div>}>
+        <Calc presets={variant?.presets} stateSlug={variant?.stateSlug} />
+      </Suspense>
 
       <AdSlot />
 

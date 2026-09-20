@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { track } from '@vercel/analytics'
 import { CALCULATORS } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
-import { MORE_CALC_COMPONENTS } from '@/calcs/more'
+import { MORE_CALC_COMPONENTS } from '@/calcs/more-lazy'
 import { NICHE_CALC_COMPONENTS } from '@/calcs/niche'
 import { SPORTS_CALC_COMPONENTS } from '@/calcs/sports'
 import { CONSTRUCTION_CALC_COMPONENTS } from '@/calcs/construction'
@@ -111,7 +111,9 @@ export default function EmbedPage() {
           </a>
         </div>
         <div className="p-2">
-          <Calc presets={variant?.presets} />
+          <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading calculator…</div>}>
+            <Calc presets={variant?.presets} />
+          </Suspense>
         </div>
         <div className="border-t border-slate-100 px-4 py-2 text-right">
           <a

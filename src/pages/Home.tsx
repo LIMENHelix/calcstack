@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="CalcStack — 530 Free Calculators for Work, Money & Life"
+        title={`CalcStack — ${CALCULATORS.length + VARIANTS.length} Free Calculators for Work, Money & Life`}
         description="Free, instant calculators for every job and every money question: contractor bids, salon and studio pricing, paychecks by state, mortgages, training and nutrition math, retirement, and everyday life. No signup — runs in your browser."
       />
       <section className="mb-10 mt-4 text-center">

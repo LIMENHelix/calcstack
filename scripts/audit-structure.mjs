@@ -21,11 +21,11 @@ const badCats = [...new Set(cats.filter(c => !VALID_CATS.has(c)))]
 if (badCats.length) problems.push(`BAD CATEGORIES: ${badCats.join(', ')}`)
 
 // component registrations across all map files (+ paycheck registered directly in CalculatorPage)
-const mapFiles = readdirSync('src/calcs').filter(f => f.endsWith('.tsx'))
+const mapFiles = readdirSync('src/calcs').filter(f => f.endsWith('.tsx') || f.endsWith('.ts'))
 const compSlugs = ['paycheck-calculator']
 for (const f of mapFiles) {
   const src = readFileSync(`src/calcs/${f}`, 'utf8')
-  for (const m of src.matchAll(/'([a-z0-9-]+)':\s*[A-Z]\w+Calc/g)) compSlugs.push(m[1])
+  for (const m of src.matchAll(/'([a-z0-9-]+)':\s*(?:lazy\(|[A-Z]\w+Calc)/g)) compSlugs.push(m[1])
 }
 const compSet = new Set(compSlugs)
 const metaSet = new Set(slugs)

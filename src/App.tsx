@@ -19,27 +19,33 @@ function ScrollToTop() {
   }, [pathname, hash])
   return null
 }
+import { lazy, Suspense } from 'react'
 import Home from './pages/Home'
-import CalculatorPage from './pages/CalculatorPage'
-import BillAnalyzer from './pages/BillAnalyzer'
-import DataMortgage from './pages/DataMortgage'
-import DataSalaries from './pages/DataSalaries'
-import StateMortgage from './pages/StateMortgage'
-import Directory from './pages/Directory'
-import PersonaPage from './pages/PersonaPage'
-import PersonaIndex from './pages/PersonaIndex'
-import EmbedPage from './pages/EmbedPage'
-import EmbedTablePage from './pages/EmbedTablePage'
-import EmbedGallery from './pages/EmbedGallery'
-import TaxSeason from './pages/TaxSeason'
-import OpenEnrollment from './pages/OpenEnrollment'
-import HomeBuying from './pages/HomeBuying'
-import AuditAll from './pages/AuditAll'
+const CalculatorPage = lazy(() => import('./pages/CalculatorPage'))
+const BillAnalyzer = lazy(() => import('./pages/BillAnalyzer'))
+const DataMortgage = lazy(() => import('./pages/DataMortgage'))
+const DataSalaries = lazy(() => import('./pages/DataSalaries'))
+const StateMortgage = lazy(() => import('./pages/StateMortgage'))
+const Directory = lazy(() => import('./pages/Directory'))
+const PersonaPage = lazy(() => import('./pages/PersonaPage'))
+const PersonaIndex = lazy(() => import('./pages/PersonaIndex'))
+const EmbedPage = lazy(() => import('./pages/EmbedPage'))
+const EmbedTablePage = lazy(() => import('./pages/EmbedTablePage'))
+const EmbedGallery = lazy(() => import('./pages/EmbedGallery'))
+const TaxSeason = lazy(() => import('./pages/TaxSeason'))
+const OpenEnrollment = lazy(() => import('./pages/OpenEnrollment'))
+const HomeBuying = lazy(() => import('./pages/HomeBuying'))
+const AuditAll = lazy(() => import('./pages/AuditAll'))
+
+const PageFallback = (
+  <div className="py-20 text-center text-sm text-muted-foreground">Loading…</div>
+)
 
 export default function App() {
   return (
     <>
       <ScrollToTop />
+      <Suspense fallback={PageFallback}>
       <Routes>
       {/* Bare widget route for iframes — no site chrome */}
       <Route path="/embed/:slug" element={<EmbedPage />} />
@@ -70,6 +76,7 @@ export default function App() {
         }
       />
     </Routes>
+      </Suspense>
     </>
   )
 }
