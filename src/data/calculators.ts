@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'section-179-calculator',
+    title: 'Section 179 Calculator 2026 — $2,560,000 Expensing + 100% Bonus Depreciation, Layered Correctly',
+    shortTitle: 'Section 179',
+    category: 'Freelance & Career',
+    description:
+      '2026 OBBBA rules: §179 expenses up to $2,560,000 (phaseout above $4,090,000, heavy SUVs capped at $32,000), then permanent 100% bonus depreciation clears the rest — even into a loss. Compute your year-one deduction and tax saved.',
+    tagline: 'A $75,000 machine costs $48,750 after tax. The deduction is only limited if you layer it wrong.',
+    intro:
+      '2026 is the most generous equipment-expensing year in tax history: OBBBA lifted Section 179 to $2,560,000 (with the dollar-for-dollar phaseout starting at $4,090,000 of purchases) and made 100% bonus depreciation permanent for property acquired after January 19, 2025. The two aren\'t interchangeable, and the order matters: §179 gives asset-by-asset control but can\'t exceed your business taxable income — the excess carries forward; bonus depreciation has no income limit and can create a loss, but applies by asset class. Heavy SUVs (6,000–14,000 lb GVWR) get a separate $32,000 §179 cap with bonus on the remainder. This calculator layers them correctly: your eligible cost after the business-use percentage, the §179 amount after caps and income limits, the bonus remainder, and the actual tax saved at your marginal rate.',
+    howItWorks: [
+      'Enter the equipment cost and business-use percentage — over 50% is required.',
+      'Enter business taxable income BEFORE the deduction (the §179 income cap).',
+      'Enter total qualifying property placed in service this year — the phaseout test.',
+      'Read the layered deduction: §179 portion, 100% bonus portion, and tax saved.',
+    ],
+    faq: [
+      {
+        q: 'Section 179 or bonus depreciation — which do I use?',
+        a: 'Usually both, in that order. §179 first: you pick specific assets and exact amounts, which is how you land taxable income precisely where you want it — but it can\'t push you below zero (the excess carries forward to next year). Then 100% bonus depreciation clears whatever basis remains, with no income limit — it can create a loss. The classic case: $700,000 of equipment and $50,000 of income — §179 takes $50,000, bonus takes $650,000, and the business shows a loss. S-corp and partnership owners: that loss can still get suspended by basis, at-risk, or passive-loss rules on your personal return. One more wrinkle: many states don\'t conform to bonus depreciation, so the federal answer can be the wrong state answer.',
+      },
+      {
+        q: 'How does the heavy SUV rule work in 2026?',
+        a: 'Vehicles rated 6,000–14,000 lbs GVWR (most full-size SUVs and trucks) escape the luxury-auto caps but get their own §179 ceiling: $32,000 for 2026. An $80,000 SUV at 80% business use has $64,000 of eligible cost — §179 covers $32,000 of it and 100% bonus depreciation covers the other $32,000, so the full $64,000 still lands in year one. Vehicles under 6,000 lbs (sedans, small SUVs) are stuck with the luxury-auto limits — roughly $20k first year with bonus. Genuine work vehicles — vans, pickups with 6+ ft beds, vehicles seating 9+ — face no vehicle-specific cap at all. Business use must exceed 50%, and it\'s prorated: personal miles don\'t deduct.',
+      },
+      {
+        q: 'What kills the deduction?',
+        a: 'Five tripwires. Placed-in-service timing: ordering in December doesn\'t count — the equipment must be installed and operational by December 31. The 50% business-use line: at exactly 50% or below, §179 and bonus are both gone, and dropping below 50% in a LATER year triggers recapture — the deduction comes back as income. Real property mostly doesn\'t qualify (though certain improvement property — roofs, HVAC, fire systems for nonresidential buildings — does). Property acquired from related parties or by gift/inheritance is excluded. And the phaseout: past $4,090,000 of purchases in one year, §179 shrinks dollar-for-dollar — at $6,650,000 it\'s gone, and bonus depreciation becomes the whole game.',
+      },
+    ],
+  },
+  {
     slug: 'rule-of-55-calculator',
     title: 'Rule of 55 Calculator 2026 — Penalty-Free 401(k) Access at 55 (and the IRA Rollover That Kills It)',
     shortTitle: 'Rule of 55',

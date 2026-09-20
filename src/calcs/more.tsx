@@ -2323,6 +2323,58 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Section 179 + bonus depreciation, 2026 (OBBBA / Rev. Proc. 2025-32): §179 max $2,560,000, dollar-for-dollar phaseout above $4,090,000 placed-in-service, gone at $6,650,000; heavy SUVs (6,000–14,000 lb GVWR) capped at $32,000 of §179; 100% bonus depreciation PERMANENT for property acquired after Jan 19, 2025. The layer order: §179 first (asset-by-asset control, but capped by business TAXABLE income — excess carries forward, can't create a loss), then 100% bonus on remaining basis (no income limit, CAN create a loss). Both need >50% business use (deduction prorated). New AND used qualify. Node-verified: $75k equipment/100%/income $200k → $75,000 179 → $26,250 saved at 35% (matches section179.org); $80k SUV/80% → eligible $64,000, 179 capped $32,000 + bonus $32,000; $700k with only $50k income → 179 $50,000 (capped), bonus $650,000 (loss ok); $5.09M placed → cap falls to $1,560,000, bonus clears the remaining $3,530,000.
+export function Section179Calc() {
+  const [cost, setCost] = useNumber(75000)
+  const [busUse, setBusUse] = useNumber(100)
+  const [income, setIncome] = useNumber(200000)
+  const [placed, setPlaced] = useNumber(75000)
+  const [rate, setRate] = useNumber(35)
+  const [suv, setSuv] = useState(false)
+
+  const r = useMemo(() => {
+    const elig = (cost * busUse) / 100
+    const cap = Math.max(0, 2560000 - Math.max(0, placed - 4090000))
+    const effCap = suv ? Math.min(cap, 32000) : cap
+    const d179 = Math.min(elig, effCap, Math.max(0, income))
+    const bonus = Math.max(0, elig - d179)
+    const total = d179 + bonus
+    return { elig, cap, effCap, d179, bonus, total, saved: (total * rate) / 100, carry: Math.max(0, Math.min(elig, effCap) - d179) }
+  }, [cost, busUse, income, placed, rate, suv])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Equipment cost" value={cost} onChange={setCost} prefix="$" />
+          <Field label="Business use" value={busUse} onChange={setBusUse} suffix="%" />
+          <Field label="Business taxable income (before this)" value={income} onChange={setIncome} prefix="$" />
+          <Field label="Total qualifying property placed in service this year" value={placed} onChange={setPlaced} prefix="$" />
+          <Field label="Marginal tax rate" value={rate} onChange={setRate} suffix="%" />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={suv} onChange={(e) => setSuv(e.target.checked)} className="h-4 w-4" />
+            Heavy SUV (6,000–14,000 lb GVWR)
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Year-one deduction" value={usd(r.total, 0)} />
+          <Result label="§179 portion" value={usd(r.d179, 0)} />
+          <Result label="100% bonus portion" value={usd(r.bonus, 0)} />
+          <Result label="Tax saved" value={usd(r.saved, 0)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Year-one write-off: <span className="font-medium">{usd(r.total, 0)} of {usd(r.elig, 0)} eligible ({busUse}% of {usd(cost, 0)})</span>, saving <span className="font-medium">{usd(r.saved, 0)}</span> at {rate}% — net cost after tax: {usd(r.elig - r.saved, 0)}.
+          {r.d179 < r.elig && r.bonus > 0 && <> §179 took {usd(r.d179, 0)}{r.d179 >= Math.max(0, income) && income < r.elig ? <> (capped by your {usd(income, 0)} business income{r.carry > 0 && <> — {usd(r.carry, 0)} carries forward</>}</> : suv ? ' (SUV cap $32,000)' : r.d179 >= r.effCap ? ' (phaseout cap)' : ''}, and <span className="font-medium">100% bonus depreciation clears the remaining {usd(r.bonus, 0)}</span> — bonus has no income limit and can even create a loss.</>}
+          {placed > 4090000 && <> Note: with {usd(placed, 0)} placed in service, your §179 cap fell to {usd(r.cap, 0)}{r.cap === 0 ? ' — fully phased out; bonus depreciation is your tool' : ''}.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 rules under OBBBA (Rev. Proc. 2025-32): §179 expensing up to $2,560,000, reduced dollar-for-dollar when total qualifying property placed in service exceeds $4,090,000 — gone entirely at $6,650,000. Heavy SUVs between 6,000 and 14,000 lbs GVWR get a separate $32,000 §179 cap (the rest can still take bonus). Bonus depreciation is 100% and permanent for property acquired after January 19, 2025 — no phasedown. Layer them: §179 first for asset-by-asset control (it can't exceed business taxable income — the excess carries forward indefinitely), then bonus on the remaining basis (no income limit; can create or increase a loss — S-corp/partnership owners: basis, at-risk, and passive-loss rules can still suspend it). Requirements: tangible business property, new or used, placed in service this year, over 50% business use (deduction prorated; drop to ≤50% later and recapture hits). Watch state conformity — many states cap or decouple from bonus depreciation, so the federal saving can shrink at the state level. Vehicles ≤6,000 lbs follow the luxury-auto caps instead. Estimates — confirm placed-in-service timing and state rules with your CPA.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Rule of 55 (IRC §72(t)(2)(A)(v)) — separate from service in or after the calendar year you turn 55 (50 for qualified public-safety employees) and distributions from THAT employer's 401(k)/403(b) skip the 10% early-withdrawal penalty — no 72(t) schedule, no five-year lock, any amounts. The traps that void it: it applies ONLY to the plan of the employer you separated from (old employers' plans don't qualify unless you merge them INTO the current plan BEFORE separating); rolling to an IRA destroys the exception instantly (IRA = back to 59½); the plan must actually allow partial/periodic withdrawals (some only allow lump sums — check the SPD); and ordinary income tax still applies, with 20% mandatory withholding on cash distributions. Node-verified: separate at 56, draw $40k/yr → 3.5 penalty-free years, $140,000 accessible, $14,000 penalty avoided; public-safety at 50 → 9.5 years, $475,000, $47,500; separate at 53 → NOT eligible (rule is the year you turn 55, not "after 55"); at 59 → 0.5 years of coverage.
 export function RuleOf55Calc() {
   const [sepAge, setSepAge] = useNumber(56)
@@ -7570,6 +7622,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'section-179-calculator': Section179Calc,
   'rule-of-55-calculator': RuleOf55Calc,
   'social-security-bridge-calculator': SSBridgeCalc,
   'social-security-earnings-test-calculator': SSEarningsTestCalc,
