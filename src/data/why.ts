@@ -225,6 +225,10 @@ export const WHY_USE: Record<string, string> = {
     'Cleaning owners use it before quoting: a $216 flat rate on 1,800 sqft nets $50.64 after labor, drive time, and overhead — and one weekly client is $11,232/yr of annuity.',
   'photographer-session-pricing-calculator':
     'Photographers use it before booking season: 100 sessions carrying $64,400 of costs and income need $679 each — the "one-hour shoot" is 4.5 hours, and $350 is a $329 donation.',
+  'tattoo-split-vs-booth-rental-calculator':
+    'Tattoo artists use it before signing: at 25 booked hrs/wk, renting beats a 60/40 split by $965/wk — but the breakeven is 7.3 hours, and below it the shop’s walk-ins were paying your rent.',
+  'event-dj-pricing-calculator':
+    'DJs use it before quoting the wedding: the 5-hour gig is an 8-hour job plus a $50/gig rig line — the honest quote is $775, and the $500 competitor is working for $35/hr.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

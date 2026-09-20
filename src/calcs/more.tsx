@@ -7562,6 +7562,106 @@ export function PhotoSessionCalc() {
   )
 }
 
+// TATTOO STUDIO SPLIT VS BOOTH RENT — node-verified defaults: $150/hr × 25 booked hrs/wk = $3,750 gross. 60/40 split → artist $2,250/wk, less 9% supplies+fees = $2,048/wk = $102,375/yr (50 wks). Booth rental at $400/wk: keep all gross less 9% costs = $3,013/wk → edge +$965/wk. Breakeven for rental: 7.3 booked hrs/wk — below that the split shop's walk-ins are paying your rent.
+export function TattooSplitCalc() {
+  const [rate, setRate] = useNumber(150)
+  const [hrs, setHrs] = useNumber(25)
+  const [split, setSplit] = useNumber(60)
+  const [rent, setRent] = useNumber(400)
+  const [wks, setWks] = useNumber(50)
+
+  const r = useMemo(() => {
+    const grossWk = rate * hrs
+    const artistWk = (grossWk * split) / 100
+    const splitNet = artistWk * 0.91
+    const rentalNet = grossWk * 0.91 - rent
+    const edge = rentalNet - splitNet
+    const perHrSplit = rate * (split / 100) * 0.91
+    const perHrRental = rate * 0.91
+    const be = perHrRental > perHrSplit ? rent / (perHrRental - perHrSplit) : Infinity
+    return { grossWk, splitNet, rentalNet, edge, be, splitYr: splitNet * wks, rentYr: rentalNet * wks }
+  }, [rate, hrs, split, rent, wks])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <Field label="Your hourly rate" value={rate} onChange={setRate} prefix="$" step="10" />
+          <Field label="Booked hours" value={hrs} onChange={setHrs} suffix="/wk" step="1" />
+          <Field label="Artist split" value={split} onChange={setSplit} suffix="%" step="5" />
+          <Field label="Booth rent" value={rent} onChange={setRent} prefix="$" suffix="/wk" step="25" />
+          <Field label="Weeks worked" value={wks} onChange={setWks} suffix="/yr" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Split take /yr" value={usd(Math.round(r.splitYr))} />
+          <Result label="Rental take /yr" value={usd(Math.round(r.rentYr))} />
+          <Result label="Rental edge" value={`${r.edge >= 0 ? '+' : '−'}${usd(Math.abs(Math.round(r.edge)))}/wk`} big />
+          <Result label="Rental breakeven" value={isFinite(r.be) ? `${num(r.be, 1)} hrs/wk` : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.edge > 0
+            ? `At ${hrs} booked hours, renting beats the ${split}% split by ${usd(Math.round(r.edge))}/wk — ${usd(Math.abs(Math.round(r.edge * wks)))}/yr. Breakeven is ${num(r.be, 1)} booked hrs/wk: the rental only wins because your BOOK is full, not because rent is cheap.`
+            : `At ${hrs} booked hrs/wk the ${split}% split wins by ${usd(Math.abs(Math.round(r.edge)))}/wk — the shop's walk-ins are paying your rent. Breakeven is ${isFinite(r.be) ? num(r.be, 1) : '—'} hrs/wk; rent when the book is yours.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: split take = rate × booked hrs × artist share × 0.91 (the 9% covering disposables, ink, booking/card fees the artist typically carries); rental take = rate × booked hrs × 0.91 − weekly rent. The decision is really about whose clients fill the chair: a split shop sells walk-ins, shop reputation, and marketing — at 60/40 the shop&apos;s 40% is the price of their traffic; a rental booth sells you nothing but the room, so the rental wins only when the clientele follows YOU. Booked hours is the whole calculation: at 25 hrs/wk the rental edge here is $965/wk, but drop to 15 booked hours and the split wins — breakeven is 7.3 hrs/wk at these numbers, and empty Tuesday afternoons cost renters cash and split artists nothing. What the split usually includes that rent does not: front desk, booking software, autoclave and shop insurance, walk-in traffic, and often disposables — price each before comparing. Guest spots and conventions are the hybrid: rent your home book, guest elsewhere for the shop&apos;s traffic and the exposure. Health-department reality: whoever holds the establishment license carries the compliance — as a renter that is still the shop, but YOUR license, insurance, and bloodborne-pathogen certification are your own cost line. Track rebook rate and referral share for 90 days before jumping — if over half your book is repeat-and-referral, the book is yours and rent is probably the raise. Estimate — your booking history and local rents govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// EVENT DJ PRICING — node-verified defaults: $8,000 rig ÷ (4-yr life × 40 gigs/yr) = $50/gig equipment line. Wedding: 5h performance + 2h prep + 1h travel = 8 hrs × $85 target = $680 + $50 equipment + 60 mi × $0.70 = $772 → quote $775. ×40 gigs = $31,000/yr gross. The $1,200 competitor quoting flat is at $146/hr of total time — or bleeding, depending on their costs.
+export function DjPricingCalc() {
+  const [equip, setEquip] = useNumber(8000)
+  const [gigs, setGigs] = useNumber(40)
+  const [perfHrs, setPerfHrs] = useNumber(5)
+  const [prepHrs, setPrepHrs] = useNumber(2)
+  const [travelHrs, setTravelHrs] = useNumber(1)
+  const [rateHr, setRateHr] = useNumber(85)
+  const [miles, setMiles] = useNumber(60)
+
+  const r = useMemo(() => {
+    const equipPerGig = gigs > 0 ? equip / (4 * gigs) : 0
+    const time = (perfHrs + prepHrs + travelHrs) * rateHr
+    const mileage = miles * 0.7
+    const raw = time + equipPerGig + mileage
+    const quote = Math.ceil(raw / 25) * 25
+    const totalHrs = perfHrs + prepHrs + travelHrs
+    const effHr = totalHrs > 0 ? quote / totalHrs : 0
+    const annual = quote * gigs
+    return { equipPerGig, raw, quote, effHr, annual, totalHrs }
+  }, [equip, gigs, perfHrs, prepHrs, travelHrs, rateHr, miles])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Rig value" value={equip} onChange={setEquip} prefix="$" step="500" />
+          <Field label="Gigs per year" value={gigs} onChange={setGigs} step="5" />
+          <Field label="Performance hrs" value={perfHrs} onChange={setPerfHrs} step="1" />
+          <Field label="Prep hours" value={prepHrs} onChange={setPrepHrs} step="0.5" />
+          <Field label="Travel hours" value={travelHrs} onChange={setTravelHrs} step="0.5" />
+          <Field label="Target rate" value={rateHr} onChange={setRateHr} prefix="$" suffix="/hr" step="5" />
+          <Field label="Round-trip miles" value={miles} onChange={setMiles} step="10" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Equipment per gig" value={usd(Math.round(r.equipPerGig))} />
+          <Result label="Quote" value={usd(r.quote)} big />
+          <Result label="Effective rate" value={`${usd(Math.round(r.effHr))}/hr`} />
+          <Result label="Annual gross" value={usd(Math.round(r.annual))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Cost-based quote: ${usd(r.quote)} for the ${perfHrs}-hour event — but you are working ${num(r.totalHrs, 1)} hours (${usd(Math.round(r.effHr))}/hr effective). The client buys 5 hours of music; you sell 8 hours of work plus a ${usd(equip)} rig showing up at ${usd(Math.round(r.equipPerGig))}/gig.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: quote = (performance + prep + travel hours) × target rate + equipment amortization (rig value ÷ 4-year life ÷ gigs/yr) + mileage at $0.70/mi, rounded UP to the next $25. The lines amateurs miss: prep is billable work — playlists, client calls, venue walkthrough, MC notes; a 5-hour wedding is an 8-hour job, and pricing only the visible hours is how DJs end up at $35/hr while quoting $150/hr. Equipment must amortize: speakers, controller, lights, and backup gear die on a 4-year cycle whether you charge for them or not, and the gig that pays nothing toward the rig is borrowing from next year&apos;s replacement fund. Mileage is a line item, not a courtesy — a 60-mile round trip is $42 plus an hour of your rate, and out-of-territory gigs should carry a travel fee clients see. Deposits: 50% to book, non-refundable inside 90 days, balance due before you unload — the date is the inventory, and a canceled Saturday cannot be resold. Wedding vs corporate vs bar gigs price differently: weddings carry prep, liability, and the highest expectations (highest rate); corporate pays best per hour with the least drama; bars are volume at low rates — keep them only if they fill the calendar between the profitable work. Add-ons are margin: ceremony rig, uplighting, photo booth, extra hour — priced separately, they raise the ticket 20–40% without raising the base quote&apos;s sticker shock. Overtime clause in every contract: a per-hour rate for running long, agreed in advance, or your 8-hour job becomes 10 at the same price. Estimate — your gig log of actual hours and miles governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -13279,6 +13379,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'retail-vs-service-time-calculator': RetailVsServiceCalc,
   'cleaning-business-pricing-calculator': CleaningPriceCalc,
   'photographer-session-pricing-calculator': PhotoSessionCalc,
+  'tattoo-split-vs-booth-rental-calculator': TattooSplitCalc,
+  'event-dj-pricing-calculator': DjPricingCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

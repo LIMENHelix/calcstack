@@ -54,15 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          390 calculators and counting. Newest: the contractor business suite —
-          pricing discounts against margin, payment terms as APR, raising prices
-          with breakeven churn, the SaaS audit, workers comp and the experience
-          mod, crew downtime annualized, change orders, retainage, and
-          estimating GCs and contingency honestly.
+          400 calculators and counting. Newest: the service-business pricing suite —
+          salon chair rental vs commission, the no-show cost of empty chairs,
+          menu pricing from the hourly floor, retail vs chair time, cleaning
+          quotes with drive time priced in, photographer session CODB, tattoo
+          splits vs booth rent, and DJ gigs quoted with the rig amortized.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['discount-leverage-calculator', 'price-raise-calculator', 'workers-comp-calculator', 'crew-downtime-calculator', 'change-order-calculator', 'retainage-calculator'].includes(c.slug),
+            ['chair-rental-vs-commission-calculator', 'no-show-cost-calculator', 'salon-service-pricing-calculator', 'cleaning-business-pricing-calculator', 'photographer-session-pricing-calculator', 'event-dj-pricing-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

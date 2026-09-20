@@ -1,12 +1,12 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 392 calculators live (618 indexed pages). See LAUNCH.md for the domain-day
-sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
+**Status: 400 calculators live (626 indexed pages). Domain live at calcstack.app;
+sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
 
 The outreach destination is the embed gallery: https://calcstack.app/embeds —
-live working preview on-page, size presets, one-click copy for all 300 tools.
+live working preview on-page, size presets, one-click copy for all 400 tools.
 
 ## Rules of engagement
 
@@ -650,3 +650,37 @@ r/Construction and r/smallbusiness wikis.
 - **Backlist ride-alongs** — labor burden, job costing, equipment hourly cost,
   bid win rate, overtime-vs-hire, service-call fee. The trade cluster now runs
   estimate → bid → build → bill → insure end to end.
+
+
+## Wave 65 — Service-business pricing (#393–#400, milestone wave)
+
+Milestone wave: 400 calculators live on calcstack.app (dedicated domain!). The
+money-side of appointment and gig businesses — beauty, cleaning, photo, tattoo,
+events. Audiences: salon/spa industry media (Behindthechair, Modern Salon,
+American Salon), barber and stylist communities (r/hairstylist, Behind the
+Chair forums), cleaning-biz owners (r/sweatystartup, Cleaning Business
+Academy), photographer communities (r/photography, PetaPixel, Fstoppers,
+wedding-photographer forums), tattoo artist forums and r/tattoo, DJ communities
+(r/DJs, Mobile Beat), and creator-economy newsletters.
+
+- **Chair rental vs commission (#393)** — the $1,135/mo edge with the hidden
+  self-employment FICA priced in; classification-warning angle is citable by
+  industry media.
+- **No-show cost (#394)** — "$10,816/yr of empty chairs" headline; booking-
+  software blogs and any appointment business (med spas, trainers, therapists).
+- **Salon service pricing (#395)** — the hourly floor under every menu item;
+  salon-business coaches and booth-renter education content.
+- **Retail vs service time (#396)** — "sell in the gaps, never instead of a
+  booking"; the attach-rate framing lands with salon owners AND stylists.
+- **Cleaning business pricing (#397)** — drive-time-as-cost and the $11,232
+  weekly client; cleaning-biz YouTube/Facebook groups share pricing tools hard.
+- **Photographer session pricing (#398)** — CODB + "the one-hour shoot is 4.5
+  hours"; photography educators (SLR Lounge, PhotoPills community) live on
+  pricing content.
+- **Tattoo split vs booth rent (#399)** — booked-hours breakeven; tattoo
+  trade press and artist communities.
+- **Event DJ pricing (#400)** — "the 5-hour wedding is an 8-hour job"; Mobile
+  Beat and DJ association newsletters.
+- **Backlist ride-alongs** — fixed-bid pricing, retainer pricing, commission
+  draw, bid sheet, markup-vs-margin. The freelance cluster now runs
+  price → book → keep → grow for chair, camera, needle, and booth.

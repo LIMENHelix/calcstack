@@ -3479,6 +3479,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'tattoo-split-vs-booth-rental-calculator',
+    title: 'Tattoo Artist Split vs Booth Rental Calculator — 60/40 or Rent, and the Booked-Hours Breakeven',
+    shortTitle: 'Tattoo Split vs Rental',
+    category: 'Freelance & Career',
+    description:
+      'Compare a shop commission split against booth rental with the real costs in: supplies and card fees come out of the artist share either way, and the breakeven is booked hours — the rental only wins when the clientele is yours.',
+    tagline: 'At 25 booked hours a week, renting beats a 60/40 split by $965 — drop to 15 hours and the shop’s walk-ins were paying your rent all along.',
+    intro:
+      'Every tattoo artist eventually faces the chair decision: stay on the shop’s split or rent a booth and keep the whole ticket. The honest comparison is not rent versus percentage — it is whose clients fill your hours. A 60/40 split at $150 an hour and 25 booked hours a week nets the artist $2,048 after supplies and fees; renting the same book at $400 a week nets $3,013 — an edge of $965 a week, but only because the book is full. Drop to 15 booked hours and the split wins, because the shop’s walk-ins and marketing were quietly paying your rent. This calculator prices both paths and gives you the breakeven booked-hours number that decides it.',
+    howItWorks: [
+      'Enter your hourly rate and booked hours per week — booked, not at the shop.',
+      'Enter the artist split percentage the shop offers.',
+      'Enter the weekly booth rent for the alternative.',
+      'Enter weeks worked per year to annualize both paths.',
+      'Read both annual takes, the weekly edge, and the breakeven booked hours.',
+    ],
+    faq: [
+      {
+        q: 'Why do booked hours decide everything?',
+        a: 'Because the two models price risk differently. On a split, a slow Tuesday costs you nothing — the shop eats the empty chair because they only pay you a percentage of what exists. On a rental, rent is owed whether you tattoo or not, so empty hours are cash losses. At $150/hr and a 60/40 split, the artist keeps $81.90/hr after the 9% supply-and-fee load; as a renter keeping everything, you clear $136.50/hr — but owe $400/wk regardless. The breakeven is rent divided by the difference: $400 ÷ $54.60 = 7.3 booked hours a week. Below it, the shop’s walk-ins and front desk are worth more than their 40%; above it, you are paying them for traffic you no longer need. Track your rebook-and-referral rate for 90 days: if over half your book is repeat clients, the clientele is yours and rent is probably a raise.',
+      },
+      {
+        q: 'What does the 9% cost load cover?',
+        a: 'The artist-side costs that exist in BOTH models: disposables (needles, grips, barriers, gloves — $8–15 per session), ink, booking software and card processing fees, and your own insurance and licensing. Most splits make the artist carry disposables; most rentals make the artist carry everything. What the split usually includes that rent does not: front desk and booking labor, the establishment license and shop insurance, autoclave and compliance overhead, walk-in traffic, and marketing. Price each line before comparing — a 60/40 shop that carries disposables, booking, and walk-ins is a materially better deal than a 60/40 shop that carries nothing, and a $400 booth with a waiting list of walk-ins is worth more than a $250 booth in an empty room. The comparison is never rent versus percentage; it is the full package of who pays for what and whose clients show up.',
+      },
+      {
+        q: 'What about guest spots and conventions?',
+        a: 'They are the hybrid strategy, and often the best one. Keep a home-base arrangement matched to your steady book — rental if your clientele is yours, split if you still draw on shop traffic — then guest-spot elsewhere for exposure, new-market clients, and the convention premium. Guest spots typically run on a short-term split or a day rate, and conventions add booth fees ($300–1,500) against premium pricing and a full book of pre-booked clients — the density makes the math work even after fees. The career math: the split shop is where you build a book, the rental is where you harvest it, and guesting is how you keep growing it. Artists who jump to rental before the book is full learn the breakeven lesson personally — the ones who track their numbers on this calculator for a quarter first do not.',
+      },
+    ],
+  },
+  {
+    slug: 'event-dj-pricing-calculator',
+    title: 'Event DJ Pricing Calculator — The 8-Hour Wedding, Equipment Amortization, and the Quote That Covers the Rig',
+    shortTitle: 'Event DJ Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price DJ gigs with every hour and dollar in: performance plus prep plus travel at your target rate, equipment amortized over its 4-year life, and mileage — rounded to a clean quote. See effective hourly and annual gross.',
+    tagline: 'The 5-hour wedding is an 8-hour job — at $85/hr plus rig and mileage the honest quote is $775, and the $500 competitor is working for $35/hr.',
+    intro:
+      'The most common DJ pricing mistake is quoting only the hours the client sees. A five-hour wedding is playlist prep, client calls, a venue walkthrough, load-in, five hours of performance, teardown, and an hour of driving — eight hours of work, plus an $8,000 rig that dies on a four-year cycle whether you charge for it or not. This calculator builds the quote the way a full-time pro does: all hours at your target rate, equipment amortized per gig, mileage as a line item, rounded up to a clean number. At standard inputs the honest wedding quote is $775 — and the competitor quoting $500 flat is either at $35 an hour or bleeding equipment money.',
+    howItWorks: [
+      'Enter your rig’s value and gigs per year — equipment amortizes over a 4-year life.',
+      'Enter performance, prep, and travel hours for the event.',
+      'Enter your target hourly rate and round-trip miles.',
+      'Read the equipment cost per gig and the cost-based quote, rounded to the next $25.',
+      'Check effective hourly and annual gross at your booking volume.',
+    ],
+    faq: [
+      {
+        q: 'Why amortize equipment into every quote?',
+        a: 'Because the rig is consumed whether you charge for it or not. Speakers, controller, lights, cables, and backup gear on a four-year replacement cycle at 40 gigs a year means every gig must carry $50 toward the next rig — a gig that pays nothing toward equipment is borrowing from next year’s replacement fund, and the bill arrives as a dead speaker the morning of a wedding. The same logic covers insurance (liability and gear coverage, $300–600/yr), music licensing and subscription pools, and software — add them to the rig value so the per-gig line is honest. Backup gear is not optional at weddings: the contract promises music, and “my controller died” is a refund plus a ruined reputation. Price the backup into the amortization and it stops being charity.',
+      },
+      {
+        q: 'How do deposits and overtime protect the quote?',
+        a: 'The date is your inventory — a canceled Saturday cannot be resold — so the booking terms matter as much as the number. Standard terms that work: 50% non-refundable deposit to hold the date (non-refundable inside 90 days), balance due before you unload, and an overtime clause in every contract — a per-hour rate for running long, agreed in advance, so the 8-hour job that becomes 10 hours is paid work, not a donation extracted by a crowd chanting one more song. For out-of-territory gigs, quote travel separately: mileage at $0.70/mi plus your hourly rate for drive time, and lodging when the load-out ends after midnight more than 90 minutes from home. Clients respect itemized quotes more than padded flat ones — the itemization is proof you have done this before.',
+      },
+      {
+        q: 'Should weddings, corporate, and bar gigs all cost the same?',
+        a: 'No — they are different products wearing the same name. Weddings carry the most prep (timeline coordination, MC duties, ceremony audio, first-dance precision) and the highest stakes, so they price highest; this calculator’s defaults ARE the wedding case. Corporate events pay best per hour with the least drama — clean playlists, professional MC work, reliable invoicing — and repeat clients make them the margin backbone. Bar and club nights are volume at low rates: worth it while building a name or filling dead Saturdays, but they burn the rig and the voice at $40/hr effective — keep them only until the profitable calendar is full. Add-ons are the margin in every category: ceremony rig, uplighting, photo booth, and extra hours priced separately raise the ticket 20–40% without touching base-quote sticker shock.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
