@@ -886,6 +886,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'lifestyle-creep-calculator',
+    title: 'Lifestyle Creep Calculator 2026 — What Spending the Raise Actually Costs',
+    shortTitle: 'Lifestyle Creep',
+    category: 'Everyday Money',
+    description:
+      'A $20k raise invested at 7% becomes $558k in 20 years — or nothing at all. Price the creep, see the half-creep compromise, and the double tax on your FIRE number.',
+    tagline: 'Spend the $20k raise and it\'s gone. Invest it and it\'s $1.28 million by year 30. Split it and you get both.',
+    intro:
+      'Lifestyle creep is invisible because it arrives disguised as reward: the nicer apartment, the newer car, the subscriptions that multiply. Priced honestly, a $20,000 raise (about $13,600 after tax at a 32% marginal rate) invested at 7% real return becomes $557,539 in 20 years — or zero if absorbed. And recurring upgrades tax you twice: the $6,000/year lifestyle bump also adds $150,000 to the portfolio your retirement requires. The sustainable answer isn\'t monastic — it\'s mechanical: invest at least half of every raise automatically, enjoy the rest guilt-free. This calculator prices your raise both ways so the choice is informed instead of invisible.',
+    howItWorks: [
+      'Enter the gross raise and your marginal tax rate.',
+      'Set what share you\'ll invest (the planner standard: at least half).',
+      'Set your real return and horizon.',
+      'Read the creep cost — and the FIRE-target surcharge of the spent portion.',
+    ],
+    faq: [
+      {
+        q: 'Is investing half of every raise really enough?',
+        a: 'For most careers, yes — and the math is kinder than the discipline suggests. Half-creep on a $20k raise still invests $6,800/yr: $278,769 over 20 years at 7% real, while your lifestyle permanently improves by the other half. The savings rate ratchets upward with every raise without a single day of spending cuts. Where the rule breaks: early-career, when raises are large relative to spending (a 22-year-old doubling salary should invest far more than half — the lifestyle baseline hasn\'t calcified yet), and late-career, when peak earnings meet a short compounding runway (invest 70%+). The universal version: never let the savings rate fall after a raise, and push it up when the raise is big. The raise is the easiest money you\'ll ever redirect — you literally cannot miss what you never deposited.',
+      },
+      {
+        q: 'Why does recurring spending hurt more than one-time splurges?',
+        a: 'Because recurring spending compounds against you twice. First, the obvious one: $6,000/yr spent is $6,000/yr not invested — $245k of foregone growth over 20 years. Second, the one nobody prices: recurring expenses RAISE the portfolio you need. At a 4% withdrawal rate, every $1,000 of annual spending requires $25,000 of portfolio — so the $6,000 lifestyle bump adds $150,000 to your FIRE target while simultaneously removing the savings that would have built it. A one-time $6,000 splurge (the trip, the guitar) costs $6,000 once. The same money as a recurring upgrade costs $245k in growth plus $150k in target — that\'s why the new car payment hurts more than the vacation, and why auditing recurring charges beats skipping lattes.',
+      },
+      {
+        q: 'What\'s the mechanical setup that makes this automatic?',
+        a: 'Day-of-raise routing, in order of power. One: increase your 401(k)/403(b) deferral by the raise amount the day it lands — pre-tax, invisible, and at a 32% marginal rate a $20k raise costs you only $13.6k of paycheck feel. Two: if the 401(k) is maxed, set an automatic brokerage transfer dated the day after payday — automation beats intention. Three: the splurge valve — pick ONE concrete upgrade per raise (the parking spot, the cleaning service) and let it be guilt-free; chosen treats prevent the slow leak of unchosen ones. What fails: "I\'ll invest whatever\'s left" (nothing is ever left) and annual resolutions (creep operates monthly). The raise is the highest-leverage moment in personal finance — the only time money increases without asking anything of your current life. Spend the moment deliberately.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

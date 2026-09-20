@@ -61,6 +61,8 @@ export const WHY_USE: Record<string, string> = {
     'Parents sizing coverage use it to stop overpaying the back half: a 10/20/30 ladder delivers the same $1.5M early protection as a flat 30-year policy but expires with the mortgage — $22,490 cheaper over three decades.',
   'barista-fire-calculator':
     'Burned-out savers use it to price the middle path: $20k of chosen part-time income cuts the freedom number from $1.375M to $875k and pulls the date forward five years — with the job-loss shortfall shown before anyone quits.',
+  'lifestyle-creep-calculator':
+    'Anyone holding a raise uses it before absorbing it: $20k invested at 7% becomes $558k in 20 years, and the recurring-spend portion also inflates the FIRE target by 25× — the raise taxed at payroll and again at the finish line.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

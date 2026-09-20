@@ -3528,6 +3528,53 @@ export function BaristaFireCalc() {
   )
 }
 
+// LIFESTYLE CREEP COST — a raise is a fork: spend it (invisible) or invest it (life-changing). Node-verified: $20k raise at 32% marginal tax → $13,600/yr investable; invested at 7% real → $557,539 in 20 yrs, $1,284,667 in 30. Half-creep (spend half, invest half) → $278,769/20yr. Symmetric move: a $400/mo spending cut = $4,800/yr → $196,778/20yr — a raise you can give yourself with no boss required. The mechanism that makes creep dangerous: recurring lifestyle additions (car payment, nicer apartment, subscriptions) RAISE the FI number (25× annual spend) AND lower the savings rate — a $6k/yr lifestyle bump adds $150k to the FIRE target while removing $6k of annual investment capacity. Double-ended tax.
+export function LifestyleCreepCalc() {
+  const [raise, setRaise] = useNumber(20000)
+  const [marginal, setMarginal] = useNumber(32)
+  const [investPct, setInvestPct] = useNumber(50)
+  const [ret, setRet] = useNumber(7)
+  const [yrs, setYrs] = useNumber(20)
+
+  const r = useMemo(() => {
+    const fv = (p: number, rr: number, n: number) => (rr > 0 ? p * ((Math.pow(1 + rr, n) - 1) / rr) : p * n)
+    const afterTax = raise * (1 - marginal / 100)
+    const invested = afterTax * (investPct / 100)
+    const spent = afterTax - invested
+    const fvInvested = fv(invested, ret / 100, yrs)
+    const fvFull = fv(afterTax, ret / 100, yrs)
+    const creepCost = fvFull - fvInvested
+    const fireTargetAdd = spent * 25
+    return { afterTax, invested, spent, fvInvested, fvFull, creepCost, fireTargetAdd }
+  }, [raise, marginal, investPct, ret, yrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <Field label="Raise (gross)" value={raise} onChange={setRaise} prefix="$" />
+          <Field label="Marginal tax rate" value={marginal} onChange={setMarginal} suffix="%" />
+          <Field label="Share you'll invest" value={investPct} onChange={setInvestPct} suffix="%" step="10" />
+          <Field label="Real return" value={ret} onChange={setRet} suffix="%" step="0.5" />
+          <Field label="Years" value={yrs} onChange={setYrs} step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="After-tax raise" value={`${usd(r.afterTax)}/yr`} />
+          <Result label="Invested portion grows to" value={usd(r.fvInvested)} />
+          <Result label="If you'd invested it ALL" value={usd(r.fvFull)} />
+          <Result big label={`Creep cost over ${yrs} yrs`} value={usd(r.creepCost)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Spending {usd(r.spent)}/yr of this raise costs {usd(r.creepCost)} of future wealth — and if the spending is recurring, it also adds {usd(r.fireTargetAdd)} to your FIRE number (25× the new spend). The raise taxes you twice: once at payroll, once at the finish line.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The psychology is why this tool exists: raises feel like rewards and arrive gradually — exactly the conditions for invisible lifestyle upgrades. The defense is mechanical, not willpower: route the raise to investments the day it lands (increase the 401(k) deferral by the raise amount — you never see it, so you never miss it). The honest counterweight: zero-creep is misery economics, and a raise you can't enjoy at all is a recipe for burnout spending later. The sustainable rule many planners suggest: invest at least half of every raise — lifestyle still improves, savings rate still climbs, and each raise arrives faster at the FI finish than the last. The spending-cut symmetry deserves attention too: a permanent $400/month cut equals a $7,300 gross raise in wealth effect (after the same 32% tax) — and nobody's employer needs to approve it. Estimates — markets and your discipline govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9163,6 +9210,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'home-insurance-adequacy-calculator': HomeCoverageCalc,
   'term-life-ladder-calculator': LifeLadderCalc,
   'barista-fire-calculator': BaristaFireCalc,
+  'lifestyle-creep-calculator': LifestyleCreepCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
