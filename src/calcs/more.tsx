@@ -2521,6 +2521,75 @@ export function HomeEquityLoanCalc() {
   )
 }
 
+// COST OF WAITING (buy now vs wait for rates to fall) — the rent-burn and price-growth ledger nobody shows. Node-verified: $400k home, 20% down, 6.5%/30yr → $2,022.62/mo. Wait 1 year hoping for 5.5%: if prices stay flat → $1,816.92 (saves $205.69/mo) — but breakeven appreciation is 11.3%, i.e. prices can rise 11.3% before waiting loses on payment alone. At +3% appreciation ($412k): wait payment $1,871.43, saves only $151.19/mo — while costing $12,000 more price + $2,400 more down payment + $24,000 rent burned = $38,400 cash out the door, a 21.2-year payback on the monthly saving. A mere 0.25-pt drop (6.25%) with +3% prices: $2,029.40 — waiting costs MORE per month than buying now. Rule verified: each 1% price appreciation adds ~$20.23/mo at the buy-now rate (payment is linear in principal); each 0.25pt rate cut saves ~$52.28/mo (on this loan size). Omitted honestly: the year of equity/principal buildup foregone (~$4,300 of principal in year 1 on the buy-now loan) and the possibility prices FALL (symmetric math, opposite sign).
+export function CostOfWaitingCalc() {
+  const [price, setPrice] = useNumber(400000)
+  const [downPct, setDownPct] = useNumber(20)
+  const [rateNow, setRateNow] = useNumber(6.5)
+  const [rateLater, setRateLater] = useNumber(5.5)
+  const [appr, setAppr] = useNumber(3)
+  const [rent, setRent] = useNumber(2000)
+
+  const r = useMemo(() => {
+    const pmt = (P: number, i: number, n: number) => (i > 0 ? (P * i) / (1 - Math.pow(1 + i, -n)) : P / n)
+    const n = 360
+    const loanNow = price * (1 - downPct / 100)
+    const pNow = pmt(loanNow, rateNow / 1200, n)
+    const priceLater = price * (1 + appr / 100)
+    const loanLater = priceLater * (1 - downPct / 100)
+    const pWait = pmt(loanLater, rateLater / 1200, n)
+    const priceBump = priceLater - price
+    const extraDown = priceBump * (downPct / 100)
+    const rentBurned = rent * 12
+    const cashCost = priceBump + rentBurned // extra down is not "cost" (it's equity), but it IS cash needed
+    const monthlySaving = pNow - pWait
+    const paybackMonths = monthlySaving > 0 ? cashCost / monthlySaving : Infinity
+    // breakeven appreciation: payment is linear in principal → g* = pNow/pmt(loanNow, rateLater) − 1
+    const pFlat = pmt(loanNow, rateLater / 1200, n)
+    const breakEvenAppr = pFlat > 0 ? (pNow / pFlat - 1) * 100 : 0
+    const quarterCutSaving = pNow - pmt(loanNow, (rateNow - 0.25) / 1200, n)
+    const apprCost1pct = pmt(loanNow * 1.01, rateNow / 1200, n) - pNow
+    const waitWins = monthlySaving > 0 && paybackMonths < 120
+    return { pNow, pWait, priceBump, extraDown, rentBurned, cashCost, monthlySaving, paybackMonths, breakEvenAppr, quarterCutSaving, apprCost1pct, waitWins }
+  }, [price, downPct, rateNow, rateLater, appr, rent])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Home price today" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Down payment" value={downPct} onChange={setDownPct} suffix="%" />
+          <Field label="Rate available today" value={rateNow} onChange={setRateNow} suffix="%" step="0.125" />
+          <Field label="Rate you hope for" value={rateLater} onChange={setRateLater} suffix="%" step="0.125" />
+          <Field label="Price growth while waiting" value={appr} onChange={setAppr} suffix="%" step="0.5" />
+          <Field label="Rent paid while waiting" value={rent} onChange={setRent} prefix="$" suffix="/mo" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Payment if you buy now" value={usd(r.pNow, 2)} />
+          <Result label="Payment if you wait a year" value={usd(r.pWait, 2)} />
+          <Result label={r.monthlySaving >= 0 ? 'Monthly saving from waiting' : 'Extra monthly cost from waiting'} value={usd(Math.abs(r.monthlySaving), 2)} big />
+          <Result label="Breakeven appreciation" value={`${num(r.breakEvenAppr, 1)}%`} />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Price increase paid" value={usd(r.priceBump)} />
+          <Result label="Rent burned (12 months)" value={usd(r.rentBurned)} />
+          <Result label="Extra down payment needed" value={usd(r.extraDown)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.waitWins
+            ? `Waiting works IF the rate actually falls: you save ${usd(r.monthlySaving, 2)}/mo against ${usd(r.cashCost)} of price growth and rent — a ${num(r.paybackMonths / 12, 1)}-year payback. Prices could rise ${num(r.breakEvenAppr, 1)}% before waiting loses on payment alone.`
+            : r.monthlySaving > 0
+              ? `Waiting saves ${usd(r.monthlySaving, 2)}/mo but costs ${usd(r.cashCost)} in price growth and rent — a ${num(r.paybackMonths / 12, 1)}-year payback that outlasts most ownership windows. Buying now wins unless prices fall.`
+              : `Waiting loses on payment ALONE: at ${num(appr, 1)}% price growth, the hoped-for ${num(rateLater, 2)}% rate still costs ${usd(-r.monthlySaving, 2)}/mo MORE than buying at ${num(rateNow, 2)}% today — plus ${usd(r.cashCost)} of price growth and rent burned.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The asymmetry is the whole story: a 0.25-point rate cut saves {usd(r.quarterCutSaving, 0)}/month on this loan, while each 1% of price appreciation adds {usd(r.apprCost1pct, 0)}/month forever — and 100 cents of the rent is gone. Breakeven appreciation tells you how much prices can rise before waiting loses on the payment alone; rent and the extra down payment push the true breakeven lower. Waiting is still the right call when the down payment isn't ready, the job situation is unsettled, or you'd buy at the top of your budget — affordability beats timing. Omitted from the ledger: a year of principal buildup foregone (~1–1.5% of the loan in year one), the moving/security-deposit friction of the rental year, and the symmetric possibility that prices fall — if they drop {num(appr, 0)}% instead of rising, waiting wins by the same math with the sign flipped. Principal &amp; interest only — taxes, insurance, and PMI move with price too. Estimates — market outcomes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8139,6 +8208,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'heloc-calculator': HelocCalc,
   'heloc-vs-cash-out-refi-calculator': CashOutRefiCalc,
   'home-equity-loan-calculator': HomeEquityLoanCalc,
+  'cost-of-waiting-calculator': CostOfWaitingCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

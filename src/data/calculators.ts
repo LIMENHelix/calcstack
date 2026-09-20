@@ -359,6 +359,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'cost-of-waiting-calculator',
+    title: 'Cost of Waiting to Buy Calculator 2026 — Rate Hopes vs Price Growth and the Rent You Burn',
+    shortTitle: 'Cost of Waiting',
+    category: 'Housing & Mortgage',
+    description:
+      'Waiting a year for rates to fall only works if prices cooperate. Compute both payments, the breakeven appreciation, the rent burned, and the true payback period of the wait.',
+    tagline: 'A 1-point rate drop saves $206/month — unless prices rise 3% while you wait, burning $38,400 for a $151 saving with a 21-year payback.',
+    intro:
+      'The wait-for-lower-rates plan sounds prudent until you price it. A $400,000 home at 6.5% costs $2,022.62 a month; if rates fall a full point to 5.5% and prices stay flat, waiting a year saves $205.69. But prices rarely stay flat: at 3% appreciation the home costs $412,000, the saving shrinks to $151.19, and meanwhile you burned $24,000 in rent, paid $12,000 more for the house, and need $2,400 more down payment — $38,400 spent for a monthly saving that takes 21 years to pay back. If rates only dip a quarter point while prices rise 3%, waiting costs more per month than buying today. The breakeven appreciation — 11.3% for a full 1-point drop — is the number that decides. This calculator runs your exact scenario.',
+    howItWorks: [
+      'Enter today\'s price, down payment, and the rate available now.',
+      'Enter the rate you\'re hoping for and your honest guess at price growth.',
+      'Add your rent — the forgotten line in every wait-for-rates plan.',
+      'Read the payment comparison, the breakeven appreciation, and the payback period.',
+    ],
+    faq: [
+      {
+        q: 'How much can prices rise before waiting stops making sense?',
+        a: 'That\'s the breakeven appreciation, and it\'s bigger than most people expect for large rate drops: with a full 1-point cut (6.5% → 5.5%) on a $400,000 home with 20% down, prices can rise 11.3% before waiting loses on the monthly payment alone. But payment alone understates the wait — add the rent burned ($24,000 on $2,000/month) and the higher price paid, and the cash cost of the year reaches $36,000+ even when the monthly math still favors waiting. The realistic version: small rate hopes (a quarter point) break even at under 1% appreciation, while genuine 1-point drops tolerate a hot market. If your plan requires prices to stay flat, it isn\'t a plan.',
+      },
+      {
+        q: 'Isn\'t refinancing the escape hatch if rates fall after I buy?',
+        a: 'Yes, and it\'s the strongest argument for buying when you can afford it: rate optionality is one-sided. Buy at 6.5% and rates fall to 5.5% — refinance and capture the lower payment at yesterday\'s price. Wait for 5.5% and prices rise 8% — there\'s no refi for the purchase price; the $32,000 is permanent. The caveats are real: refinancing costs 2–3% of the loan ($6,000–10,000), you need to keep the home long enough to recoup it, and refis require the credit and income to still qualify. But structurally, "marry the house, date the rate" is correct — price is permanent, rate is revisable.',
+      },
+      {
+        q: 'When is waiting actually the right move?',
+        a: 'When the constraint is you, not the market. Wait when the down payment isn\'t there (buying at 5% down to beat appreciation often costs more in PMI than the appreciation saves), when employment is uncertain, when you\'d be at the absolute top of your budget with no reserve, or when you might move within 2–3 years — transaction costs (roughly 8–10% round trip) need time to amortize. Also when prices in your specific market are genuinely falling: the math is symmetric, and a 3% decline flips every number above in your favor. What the calculator kills is the comfortable middle case: affordable buyer, stable life, waiting purely on rate forecasts — the lease on a money-market forecast, paid in rent.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

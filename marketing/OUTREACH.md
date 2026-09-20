@@ -1,12 +1,12 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 295 calculators live (521 indexed pages). See LAUNCH.md for the domain-day
+**Status: 300 calculators live (526 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
 
 The outreach destination is the embed gallery: https://calcstack-eight.vercel.app/embeds —
-live working preview on-page, size presets, one-click copy for all 295 tools.
+live working preview on-page, size presets, one-click copy for all 300 tools.
 
 ## Rules of engagement
 
@@ -380,3 +380,37 @@ federal-employee communities (FedPilot-style blogs), fee-only planner newsletter
 
 Timing: SS claiming content is evergreen with January (SSA-1099/COLA letters)
 and open-enrollment (Oct–Nov) peaks. Rule-of-55 spikes in layoff news cycles.
+
+
+## Wave 57 — Home equity & the wait-for-rates debate (#296–#300, milestone wave)
+
+Milestone wave: 300 calculators live. The home-equity trio plus the
+buy-now-vs-wait ledger — pitch as a suite to real estate and mortgage audiences.
+Audiences: real estate blogs (BiggerPockets-adjacent), mortgage broker
+newsletters, r/FirstTimeHomeBuyer and r/RealEstate wikis, credit-union content
+pages, home-renovation contractor blogs, housing-market Substack writers.
+
+- **HELOC vs cash-out refi (#298)** — the flagship pitch. "The effective rate on
+  the cash" is a genuinely novel frame: a 3.5% holder pulling $50k via a 6.5%
+  cash-out pays 10.9% on that cash. Every mortgage blogger has written the
+  surface version of this comparison; nobody shows the solved rate. Correction
+  content earns links.
+- **HELOC (#297)** — the repayment-shock angle: "$354/mo for ten years, then
+  $434 for twenty" plus the post-TCJA deductibility rule (improve-the-home or
+  nothing). Pitch credit-union resource pages and renovation-cost blogs.
+- **Home equity loan (#299)** — the "boring option wins" story: same rate,
+  $36k vs $90k lifetime interest. Counter-intuitive and shareable. Pitch
+  debt-consolidation and home-improvement financing content.
+- **Cost of waiting (#300)** — the rate-watchers' reality check: 1-point hope,
+  $206/mo saving, $38,400 burned, 21-year payback. Perfect timing: the entire
+  housing-commentariat audience is waiting for rate cuts RIGHT NOW. Pitch
+  housing Substacks, first-time-buyer forums, and realtor newsletters — the
+  "date the rate" argument with the math actually done.
+- **QLAC (#296)** — retirement crossover for the same finance newsletters;
+  $210k RMD exclusion is the hook.
+- **Backlist ride-alongs** — mortgage PITI, refinance break-even, DTI, rent vs
+  buy for the same sites. The housing cluster now interlinks end to end.
+
+Timing: rate-cut expectations make cost-of-waiting evergreen-hot through 2026;
+HELOC content peaks in spring renovation season (Mar–May) and again in fall
+home-improvement cycles (Sep–Oct).
