@@ -1,4 +1,23 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "redirects": [
+    { "source": "/", "destination": "/calcstack/", "permanent": true },
+    { "source": "/calculators/:path*", "destination": "/calcstack/calculators/:path*", "permanent": true },
+    { "source": "/for/:path*", "destination": "/calcstack/for/:path*", "permanent": true },
+    { "source": "/data/:path*", "destination": "/calcstack/data/:path*", "permanent": true },
+    { "source": "/tools/:path*", "destination": "/calcstack/tools/:path*", "permanent": true },
+    { "source": "/embeds", "destination": "/calcstack/embeds", "permanent": true },
+    { "source": "/embed/:path*", "destination": "/calcstack/embed/:path*", "permanent": true },
+    { "source": "/directory", "destination": "/calcstack/directory", "permanent": true },
+    { "source": "/tax-season", "destination": "/calcstack/tax-season", "permanent": true },
+    { "source": "/open-enrollment", "destination": "/calcstack/open-enrollment", "permanent": true },
+    { "source": "/home-buying", "destination": "/calcstack/home-buying", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/calcstack/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/calcstack/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/calcstack/robots.txt", "destination": "/robots.txt" },
+    { "source": "/calcstack/:path*", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

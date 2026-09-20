@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'qlac-calculator',
+    title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
+    shortTitle: 'QLAC Calculator',
+    category: 'Retirement',
+    description:
+      'A Qualified Longevity Annuity Contract pulls up to $210,000 (2026) out of your RMD calculation until age 85. Compute the RMD cut, the tax saved each deferral year, and the age you break even on the premium.',
+    tagline: '$210,000 out of the RMD base cuts the forced withdrawal $7,924 a year — but the annuity only wins if you outlive 90.8.',
+    intro:
+      'A QLAC is the IRS-sanctioned way to shrink required minimum distributions: move up to $210,000 (2026, per person) from a traditional IRA or 401(k) into a fixed deferred annuity, and that premium exits the RMD calculation until payments begin — as late as age 85. A 72-year-old with a $1.5M IRA cuts the forced withdrawal from $56,604 to $48,679, saving $1,743 a year at the 22% bracket while the deferral lasts. But the tool is honest only with both sides priced: the annuity is illiquid until payout, pays flat dollars against inflation, and only beats the math if you live past the breakeven age — on a typical quote, around 90. This calculator computes your exact RMD reduction, the annual tax saved, and the breakeven age from a real insurer quote.',
+    howItWorks: [
+      'Enter your traditional IRA/401(k) balance and current age — the uniform lifetime table sets the RMD.',
+      'Enter the QLAC premium — capped at $210,000 per person for 2026.',
+      'Enter the payout start age and the monthly income from an actual insurer quote.',
+      'Read the RMD cut, tax saved per deferral year, and the annuity breakeven age.',
+    ],
+    faq: [
+      {
+        q: 'How much does a QLAC actually cut my RMDs?',
+        a: 'By the premium divided by your life-expectancy factor each year. At 73, the uniform lifetime factor is 26.5, so the full $210,000 premium reduces the RMD by $7,924.53 that year — $1,743 less tax at the 22% bracket, every year until payments start. On a $1.5M IRA that\'s the difference between a $56,604 and a $48,679 forced withdrawal. The effect compounds quietly: smaller RMDs also mean less income counting toward Medicare IRMAA tiers and the 85% Social Security taxability threshold, so the true saving often exceeds the bracket math.',
+      },
+      {
+        q: 'What happens if I die before the payments start?',
+        a: 'Without a rider, the premium is gone — that\'s the mortality-risk side of the bargain that funds the high payout. Two protections exist: a return-of-premium death benefit (your beneficiaries get the premium back if you die before annuitization) and a joint-and-survivor option (payments continue to a spouse). Both cut the monthly payout meaningfully — often 10–20% — because the insurer keeps less mortality spread. The honest framing: a QLAC is insurance, not an investment. You\'re buying certainty about income at 85+, and the premium is the price. If leaving that $210,000 to heirs matters more than outliving it, the QLAC is the wrong tool.',
+      },
+      {
+        q: 'QLAC or Roth conversion — which is better for RMDs?',
+        a: 'They solve the problem differently, and the answer is often both. A Roth conversion pays tax NOW at a chosen rate and removes the money from the RMD system forever — tax avoidance with prepayment. A QLAC defers tax until 85 and then still pays it — pure timing arbitrage, betting the late-life bracket is lower. Conversions win when your current bracket is at or below your expected RMD bracket, when heirs matter (Roth passes income-tax-free), and when you want liquidity. QLACs win when the IRA is so large that even after conversions the RMDs blow through IRMAA tiers, and when longevity insurance itself is the goal. The sophisticated play: convert to the top of the 22% bracket each year AND QLAC the remainder — conversions handle the tax, the QLAC handles the longevity tail.',
+      },
+    ],
+  },
+  {
     slug: 'q4-equipment-timing-calculator',
     title: 'Q4 Equipment Timing Calculator 2026 — The 40% Mid-Quarter Trap and the December 31 Deadline',
     shortTitle: 'Q4 Equipment Timing',

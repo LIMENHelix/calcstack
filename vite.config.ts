@@ -5,8 +5,25 @@ import { inspectAttr } from 'kimi-plugin-inspect-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/',
-  plugins: [inspectAttr(), react()],
+  base: '/calcstack/',
+  plugins: [
+    inspectAttr(),
+    react(),
+    {
+      name: 'root-to-base-redirect',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url === '/') {
+            res.statusCode = 302
+            res.setHeader('Location', '/calcstack/')
+            res.end()
+            return
+          }
+          next()
+        })
+      },
+    },
+  ],
   server: {
     port: 3000,
   },

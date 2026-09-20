@@ -2323,6 +2323,68 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
+const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
+export function QlacCalc() {
+  const [balance, setBalance] = useNumber(1500000)
+  const [premium, setPremium] = useNumber(210000)
+  const [age, setAge] = useState('73')
+  const [startAge, setStartAge] = useState('85')
+  const [incomeMo, setIncomeMo] = useNumber(3000)
+  const [bracket, setBracket] = useNumber(22)
+
+  const r = useMemo(() => {
+    const a = Number(age)
+    const factor = ULTABLE.find(([x]) => x === a)?.[1] ?? 26.5
+    const prem = Math.min(premium, 210000)
+    const before = balance / factor
+    const after = Math.max(0, balance - prem) / factor
+    const savedYr = before - after
+    const taxSaved = savedYr * (bracket / 100)
+    const deferYrs = Math.max(0, Number(startAge) - a)
+    const payback = incomeMo > 0 ? prem / (incomeMo * 12) : 0
+    const breakeven = Number(startAge) + payback
+    return { before, after, savedYr, taxSaved, deferYrs, payback, breakeven, prem, factor }
+  }, [balance, premium, age, startAge, incomeMo, bracket])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Traditional IRA/401(k) balance" value={balance} onChange={setBalance} prefix="$" />
+          <Field label="QLAC premium (max $210,000)" value={premium} onChange={setPremium} prefix="$" />
+          <Field label="Marginal bracket" value={bracket} onChange={setBracket} suffix="%" />
+          <div>
+            <div className="mb-1 text-sm font-medium">Current age</div>
+            <select value={age} onChange={(e) => setAge(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {ULTABLE.map(([a]) => <option key={a} value={a}>{a}</option>)}
+            </select>
+          </div>
+          <div>
+            <div className="mb-1 text-sm font-medium">Income starts at age</div>
+            <select value={startAge} onChange={(e) => setStartAge(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {['75', '77', '80', '82', '85'].map((x) => <option key={x} value={x}>{x}</option>)}
+            </select>
+          </div>
+          <Field label="Quoted monthly income at that age" value={incomeMo} onChange={setIncomeMo} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="RMD cut per year" value={usd(r.savedYr, 0)} />
+          <Result label="Tax saved per year" value={usd(r.taxSaved, 0)} />
+          <Result label="Deferral window" value={`${num(r.deferYrs, 0)} years`} />
+          <Result label="Annuity breakeven" value={`age ${num(r.breakeven, 1)}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          At {age}, your RMD without the QLAC is <span className="font-medium">{usd(r.before, 0)}</span> (balance ÷ {r.factor}); moving {usd(r.prem, 0)} into a QLAC drops it to <span className="font-medium">{usd(r.after, 0)}</span> — {usd(r.savedYr, 0)}/yr less forced taxable income, saving {usd(r.taxSaved, 0)} at {bracket}% for roughly {num(r.deferYrs, 0)} years{incomeMo > 0 && <>. The trade on the other side: {usd(incomeMo, 0)}/mo starting at {startAge} takes {num(r.payback, 1)} years to return the premium — breakeven at age {num(r.breakeven, 1)}</>}. It's longevity insurance plus a tax delay, not an investment: die before breakeven without a return-of-premium rider and the insurer keeps the difference.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 rules (SECURE 2.0 §202, IRS Notice 2025-67): up to $210,000 per person lifetime — $420,000 for a couple if each has qualified money — can move from a traditional IRA, 401(k), 403(b), or governmental 457(b) into a QLAC; the old 25%-of-balance cap is gone. The premium leaves the RMD calculation until income starts, which must be by the month after your 85th birthday. Fixed contracts only — variable and indexed annuities don't qualify; the issuer certifies via Form 1098-Q. Roth IRAs can't fund one. What a QLAC actually is: tax DEFERRAL (payments at 85 are ordinary income — the win is paying at a lower late-life bracket and dodging IRMAA tiers in between) plus mortality pooling (the payout beats any safe withdrawal rate because those who die early subsidize those who don't). The real risks: total illiquidity until payout, insurer solvency (state guaranty associations typically cover $250k–$500k — stay under your state's limit or split carriers), inflation (most QLACs pay flat dollars — $3,000 in 2041 buys less), and dying early without a death-benefit rider. Best fit: surplus IRA assets, family longevity, other liquid savings, and RMDs high enough to matter. Get real insurer quotes for the income input — payout rates vary widely.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Q4 equipment timing — two December traps. (1) MID-QUARTER CONVENTION: if >40% of the year's MACRS basis (EXCLUDING §179/bonus-expensed property) is placed in service in Q4, EVERY asset that year flips from half-year to mid-quarter convention — a Q4 asset's 5-year year-1 rate drops 20% → 5% (Q1 35%, Q2 25%, Q3 15%, Q4 5%). The escape: elect §179/bonus on the Q4 purchases — expensed property leaves the 40% test entirely. (2) PLACED-IN-SERVICE DEADLINE: ordered ≠ deductible — the asset must be installed and operational by Dec 31 or the year-one deduction slides a full year; at 32% on $50k that's $16,000 of tax deferred a year (~$1,280 of time value at 8%). Node-verified: quarters 30/20/10/50k → Q4 share 45.5% → mid-quarter trips; expensing the $50k Q4 buy → share 0%, safe; Q4 5-yr asset mid-quarter yr-1 = $2,500 vs $10,000 half-year.
 export function Q4TimingCalc() {
   const [q1, setQ1] = useNumber(30000)
@@ -7876,6 +7938,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
   'business-vehicle-writeoff-calculator': VehicleWriteoffCalc,

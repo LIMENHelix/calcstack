@@ -1,5 +1,29 @@
 # CalcStack Launch Sequence — Domain Go-Live Playbook
 
+**Domain decision (2026-09-19): the app lives at `limenhelix.com/calcstack`.**
+The codebase is migrated: Vite base `/calcstack/`, router basename `/calcstack`,
+sitemap + canonicals point at `https://limenhelix.com/calcstack/...`, and
+vercel.json 308-redirects every old root URL (`/calculators/*` etc.) into the
+new prefix, so the current calcstack-eight.vercel.app deployment keeps working
+unchanged.
+
+**Wiring (two options — do NOT touch limen-helix-live code beyond option A's 4 lines):**
+
+- **Option A (target URL — `limenhelix.com/calcstack`):** `limenhelix.com` stays
+  attached to the `limen-helix-live` project. Add ONE rewrite block to that
+  project's `vercel.json` (Vercel proxies external rewrites transparently):
+  ```json
+  "rewrites": [
+    { "source": "/calcstack/:path*", "destination": "https://calcstack-eight.vercel.app/calcstack/:path*" }
+  ]
+  ```
+  Redeploy that project and `limenhelix.com/calcstack` serves the app.
+- **Option B (zero changes to the other project):** use the subdomain
+  `calcstack.limenhelix.com` instead — attach it in the calcstack Vercel
+  project's Settings → Domains and add the CNAME at the registrar. (The app
+  still works; canonicals would want a follow-up swap from
+  `limenhelix.com/calcstack` to the subdomain.)
+
 Fire this the day the custom domain is live. Everything is sequenced so each step
 compounds the previous one. The hook everywhere: **100 free calculators, no signup,
 math runs in your browser.**

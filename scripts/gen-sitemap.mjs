@@ -2,7 +2,7 @@
 // whenever calculators or variants change:  node scripts/gen-sitemap.mjs
 import { readFileSync, writeFileSync } from 'node:fs'
 
-const SITE = 'https://calcstack-eight.vercel.app'
+const SITE = 'https://limenhelix.com/calcstack'
 
 const calcSrc = readFileSync('src/data/calculators.ts', 'utf8')
 const varSrc = readFileSync('src/data/variants.ts', 'utf8')
