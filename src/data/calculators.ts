@@ -390,6 +390,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'renovation-roi-calculator',
+    title: 'Renovation ROI Calculator 2026 — What Your Project Actually Returns at Resale (Cost vs Value Data)',
+    shortTitle: 'Renovation ROI',
+    category: 'Housing & Mortgage',
+    description:
+      'Every major project\'s real recoup rate from the 2025 Cost vs Value Report. Enter your quote, see the value added at resale, the true net cost, and the cost per year of enjoying it.',
+    tagline: 'A garage door returns 268% at resale; an upscale primary suite returns 18%. The $28,458 minor kitchen beats the $160,000 one.',
+    intro:
+      'The renovation industry sells dreams; the Cost vs Value Report prices them. Thirty-eight years of data say the same thing: exterior replacements dominate resale return — a $4,672 garage door came back as $12,507 of sale price in 2025 (267.7%), steel entry doors returned 216%, manufactured stone veneer 208% — while the most-loved interior projects recoup least: the upscale primary suite addition returns 18 cents per dollar. The minor kitchen remodel is the lone interior star at 112.9%, because surface refreshes beat gut renovations every single year. This calculator applies your project\'s national recoup rate to your actual quote and shows the number that matters for a home you\'ll live in: the true cost per year of enjoying the improvement.',
+    howItWorks: [
+      'Pick your project — the recoup rate comes from the 2025 Cost vs Value national data.',
+      'Enter your real quote (defaults are national averages where published).',
+      'Add the years you expect to own before selling.',
+      'Read the value added, the net cost, and the honest per-year price of the upgrade.',
+    ],
+    faq: [
+      {
+        q: 'Which renovations actually pay for themselves?',
+        a: 'In the 2025 report, five projects recouped more than 100% nationally: garage door replacement (267.7%), steel entry door (216.4%), manufactured stone veneer (207.9%), fiber-cement siding (113.7%), and the minor kitchen remodel (112.9%). Eight of the top ten were exterior work — curb appeal prices into every showing. Two cautions before treating these as profits: recoup over 100% is partly a hot-market artifact (the garage door was 194% in 2024), and the values are realtor survey estimates, not measured sales. The durable rule across 38 years of reports: modest, visible, exterior projects beat large, custom, interior ones — every year, in every region.',
+      },
+      {
+        q: 'Is a kitchen remodel worth it before selling?',
+        a: 'Only the minor one. The 2025 numbers are stark: the $28,458 minor kitchen (cabinet refacing, counters, hardware, appliances — no layout change) recoups 112.9%. The $80,000 major midrange kitchen recoups 51%, and the $160,000 upscale version recoups 36% — you\'d burn $102,400 of resale value to build someone else\'s dream kitchen. Buyers mentally discount anything personalized, and the fancier the choices, the more personal they are. If you\'re selling within 2 years, paint, hardware, counters, and curb appeal; leave the layout alone. If you\'re staying 10 years, ignore ROI entirely and build what you\'ll love — the per-year cost framing above is the right lens.',
+      },
+      {
+        q: 'How accurate are these recoup percentages for MY house?',
+        a: 'Directionally solid, decimally soft. The report surveys real estate professionals on what a project would add to sale price — it\'s expert estimation, not transaction data, and it varies sharply by region (Pacific and West South Central led in 2025) and by market temperature. Your actual recovery depends on the neighborhood ceiling (a $100,000 kitchen in a $300,000 neighborhood recovers almost nothing), workmanship quality, and timing. Use the numbers to rank projects against each other — that ordering is stable year over year — not to predict your exact sale price. And never renovate for resale alone: the projects people love most (suite additions, joy score 10/10) have the worst returns, and the best-returning garage door sparks no joy at all. Remodel for the years you\'ll live there.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

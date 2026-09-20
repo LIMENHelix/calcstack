@@ -29,6 +29,8 @@ export const WHY_USE: Record<string, string> = {
     'Owners with a known one-time expense use it to see the boring option win: $50k at 8% fixed costs $36,009 in interest against the HELOC\'s $90,373 at the same rate — and the 80% CLTV cap decides how much equity is actually borrowable.',
   'cost-of-waiting-calculator':
     'Buyers holding off for lower rates use it to price the wait itself: a 1-point drop saves $206/mo on a $400k home, but 3% price growth plus $24k of rent turns that into a 21-year payback — breakeven appreciation is the deciding number.',
+  'renovation-roi-calculator':
+    'Owners weighing a remodel use it before signing the contract: 2025 Cost vs Value data says the garage door returns 268% and the upscale suite addition 18% — so the tool reframes big interior projects as a per-year cost of enjoyment, not an investment.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

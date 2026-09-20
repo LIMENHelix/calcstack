@@ -2590,6 +2590,85 @@ export function CostOfWaitingCalc() {
   )
 }
 
+// RENOVATION ROI — Zonda/Remodeling 2025 Cost vs Value Report (38th year), national averages, verified against the published table: garage door $4,672→$12,507 (267.7%), steel entry door $2,435→$5,270 (216.4%), manufactured stone veneer $11,702→$24,328 (207.9%), fiber-cement siding $21,485→$24,420 (113.7%), minor kitchen midrange $28,458→$32,141 (112.9%), vinyl siding 96.5%, backup generator 95.3%, wood deck 94.9%, composite deck 88.5%, fiberglass grand entrance 84.7%, bath remodel midrange 80%, vinyl windows 76%, basement 71%, asphalt roof 68%, bath addition 53%, major kitchen midrange 51%, bath remodel upscale 42%, ADU 41%, major kitchen upscale 36%, primary suite midrange 32% / upscale 18%. Pattern (20+ years of the report): exterior replacements dominate; the more custom/expensive the interior project, the lower the recoup. Honest caveats: values are surveyed realtor ESTIMATES not measured sale prices; >100% recoup usually reflects a hot market year (garage door was 194% in 2024), so the model treats recoup as direction-solid/decimal-soft; regional variance is large (Pacific & West South Central led 2025).
+const RENO_PROJECTS: { name: string; cost: number; recoup: number }[] = [
+  { name: 'Garage door replacement', cost: 4672, recoup: 267.7 },
+  { name: 'Steel entry door replacement', cost: 2435, recoup: 216.4 },
+  { name: 'Manufactured stone veneer', cost: 11702, recoup: 207.9 },
+  { name: 'Fiber-cement siding', cost: 21485, recoup: 113.7 },
+  { name: 'Minor kitchen remodel (midrange)', cost: 28458, recoup: 112.9 },
+  { name: 'Vinyl siding replacement', cost: 17950, recoup: 96.5 },
+  { name: 'Backup power generator', cost: 13534, recoup: 95.3 },
+  { name: 'Wood deck addition', cost: 18263, recoup: 94.9 },
+  { name: 'Composite deck addition', cost: 25096, recoup: 88.5 },
+  { name: 'Fiberglass grand entrance', cost: 11754, recoup: 84.7 },
+  { name: 'Bathroom remodel (midrange)', cost: 25251, recoup: 80 },
+  { name: 'Vinyl window replacement', cost: 20000, recoup: 76 },
+  { name: 'Basement remodel', cost: 55000, recoup: 71 },
+  { name: 'Asphalt roofing replacement', cost: 30000, recoup: 68 },
+  { name: 'Bathroom addition (midrange)', cost: 60000, recoup: 53 },
+  { name: 'Major kitchen remodel (midrange)', cost: 80000, recoup: 51 },
+  { name: 'Bathroom remodel (upscale)', cost: 80000, recoup: 42 },
+  { name: 'ADU (accessory dwelling unit)', cost: 180000, recoup: 41 },
+  { name: 'Major kitchen remodel (upscale)', cost: 160000, recoup: 36 },
+  { name: 'Primary suite addition (midrange)', cost: 170000, recoup: 32 },
+  { name: 'Primary suite addition (upscale)', cost: 350000, recoup: 18 },
+]
+export function RenovationRoiCalc() {
+  const [proj, setProj] = useState('Minor kitchen remodel (midrange)')
+  const [quote, setQuote] = useNumber(28458)
+  const [yrs, setYrs] = useNumber(5)
+
+  const r = useMemo(() => {
+    const p = RENO_PROJECTS.find((x) => x.name === proj) ?? RENO_PROJECTS[4]
+    const valueAdded = quote * (p.recoup / 100)
+    const net = quote - valueAdded // negative = profit at resale
+    const perYear = yrs > 0 ? net / yrs : net
+    return { p, valueAdded, net, perYear }
+  }, [proj, quote, yrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium">Project (recoup % = 2025 Cost vs Value national average)</label>
+          <select
+            value={proj}
+            onChange={(e) => {
+              setProj(e.target.value)
+              const p = RENO_PROJECTS.find((x) => x.name === e.target.value)
+              if (p) setQuote(String(p.cost))
+            }}
+            className="flex h-9 w-full rounded-md border bg-background px-3 text-sm"
+          >
+            {RENO_PROJECTS.map((p) => (
+              <option key={p.name} value={p.name}>{p.name} — recoups {p.recoup}%</option>
+            ))}
+          </select>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Your quote / budget" value={quote} onChange={setQuote} prefix="$" />
+          <Field label="Years until you sell" value={yrs} onChange={setYrs} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Recoup rate (national)" value={`${num(r.p.recoup, 1)}%`} />
+          <Result label="Value added at resale" value={usd(r.valueAdded)} />
+          <Result big label={r.net >= 0 ? 'Net cost of the project' : 'Net profit at resale'} value={usd(Math.abs(r.net))} />
+          <Result label={r.net >= 0 ? 'True cost per year owned' : 'Profit per year owned'} value={usd(Math.abs(r.perYear))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.net >= 0
+            ? `The ${r.p.name} recoups ${num(r.p.recoup, 1)}% at resale: your ${usd(quote)} comes back as ${usd(r.valueAdded)} of sale price, so the project really costs ${usd(r.net)} — ${usd(Math.abs(r.perYear))}/year over ${yrs} years for the daily use of it. That framing is the honest one: remodel for how you live, treat resale recovery as a partial rebate.`
+            : `The ${r.p.name} recoups ${num(r.p.recoup, 1)}% nationally — your ${usd(quote)} returns ${usd(r.valueAdded)} at sale, a paper profit of ${usd(-r.net)}. Treat >100% recoup as a hot-market artifact (the garage door was 194% in 2024, 268% in 2025), not a promise; in a normal year assume closer to 100%.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Data: Zonda/Remodeling 2025 Cost vs Value Report (38th annual), national averages — top-10 project costs are the published job costs; default budgets for the remaining projects are placeholders to overwrite with your quote. Resale values are surveyed real-estate-professional estimates, not measured sale prices, and vary widely by region (Pacific and West South Central led in 2025). The durable pattern across two decades of reports: exterior replacements dominate ROI because curb appeal prices into every showing, while big custom interiors recoup least — the upscale primary suite addition returns 18¢ per dollar. The minor kitchen is the only interior project in the top five: surface refresh (refaced cabinets, counters, hardware) beats a gut renovation on return every single year. Not captured: your market's temperature, the joy of living in the improvement (NAR's Joy Score — suite additions rate a perfect 10 despite the worst ROI), and faster sale velocity, which agents cite as the real benefit of curb-appeal projects. Estimates — your market governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8209,6 +8288,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'heloc-vs-cash-out-refi-calculator': CashOutRefiCalc,
   'home-equity-loan-calculator': HomeEquityLoanCalc,
   'cost-of-waiting-calculator': CostOfWaitingCalc,
+  'renovation-roi-calculator': RenovationRoiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
