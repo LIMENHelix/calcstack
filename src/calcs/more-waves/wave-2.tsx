@@ -900,11 +900,12 @@ export function DaycareVsIncomeCalc() {
     const afterTax = salary * (1 - marginal / 100)
     const ctc = Math.min(kids, 10) * 2000 // child tax credit exists with or without the job — excluded from delta
     void ctc
-    const net = afterTax - daycare - workCosts
+    const fsaSave = Math.min(daycare, 5000) * (marginal / 100) // Dependent Care FSA: $5,000 pre-tax
+    const net = afterTax - daycare - workCosts + fsaSave
     const perHr = net / 2080
     const withMatch = net + match
-    const breakevenDaycare = afterTax - workCosts
-    return { afterTax, net, perHr, withMatch, breakevenDaycare }
+    const breakevenDaycare = afterTax - workCosts + fsaSave
+    return { afterTax, net, perHr, withMatch, breakevenDaycare, fsaSave }
   }, [salary, marginal, daycare, workCosts, kids, match])
 
   return (
@@ -918,16 +919,17 @@ export function DaycareVsIncomeCalc() {
           <Field label="Kids (for reference)" value={kids} onChange={setKids} step="1" />
           <Field label="401k match only this job brings" value={match} onChange={setMatch} prefix="$" />
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
           <Result label="After-tax salary" value={usd(r.afterTax)} />
           <Result big label="Net contribution /yr" value={usd(r.net)} />
           <Result label="Effective hourly" value={`${usd(r.perHr, 2)}/hr`} />
           <Result label="Daycare breakeven" value={`${usd(r.breakevenDaycare)}/yr`} />
+          <Result label="Dependent Care FSA saves" value={usd(r.fsaSave)} />
         </div>
         <div className="rounded-md border bg-muted/40 p-3 text-sm">
           {r.net > 0
             ? `The job nets ${usd(r.net)}/yr — ${usd(r.perHr, 2)}/hour. Thin, but add the 401(k) match (${usd(match)}) and the career-continuity value, and the long ledger looks different: five years out of the workforce typically costs re-entry wages plus five years of compounding raises and retirement contributions.`
-            : `The job COSTS ${usd(-r.net)}/yr on the short-term ledger. Before quitting, price the Dependent Care FSA ($5,000 pre-tax ≈ $1,700 back), part-time or remote options, and the career-gap penalty — the long-run ledger often still favors staying attached to work, even part-time.`}
+            : `The job COSTS ${usd(-r.net)}/yr on the short-term ledger. Before quitting, the Dependent Care FSA (already counted above: ${usd(r.fsaSave)}/yr back), part-time or remote options, and the career-gap penalty — the long-run ledger often still favors staying attached to work, even part-time.`}
         </div>
         <p className="text-xs text-muted-foreground">
           Why the second salary evaporates: it stacks on top of the first, so it starts at the household's marginal bracket — 22% federal in this example before FICA and state — while daycare is paid in after-tax dollars and unreimbursed work costs come straight off the top. What this ledger deliberately excludes (and you shouldn't): the child tax credit exists either way; the Dependent Care FSA ($5,000 pre-tax) and dependent care credit OFFSET daycare for two-earner households — worth roughly $1,700–2,000 here; retirement match and benefits value; and the thirty-year ledger — career gaps compound against you via lost raises, Social Security credits, and retirement contributions, which is why many families run a thin-or-negative few years deliberately and treat it as career insurance, not income. Not financial advice — the non-financial parts of this decision are yours alone; the calculator's job is to make the financial part honest.

@@ -7445,14 +7445,14 @@ export const CALCULATORS: CalculatorMeta[] = [
   },
   {
     slug: 'second-income-calculator',
-    title: 'Second Income Calculator 2026 — Is the Second Job Worth It After Childcare & Taxes?',
+    title: 'Second Income Calculator 2026 — What a Second Salary Actually Nets After Taxes',
     shortTitle: 'Second Income Calculator',
     category: 'Everyday Money',
     description:
-      'Free second income calculator. Stack the second salary on the first at 2026 marginal rates, subtract childcare, commuting and work costs — see the true hourly value.',
+      'Free second income calculator. Stack the second salary on the first at 2026 marginal rates, subtract commuting and work costs — see the true hourly value of any second job.',
     tagline: 'A $40,000 second job can be a $5/hour job in disguise.',
     intro:
-      'The second earner\'s salary never gets its own tax brackets — it stacks on top of the first earner\'s income and every dollar is taxed at the margin. Add childcare, commuting, and work lunches, and the two-income trap appears: a $40,000 salary can net under $10,000, or $5 an hour. This calculator does the honest stacking math so the stay-or-work decision is made with real numbers instead of a gross salary that will never arrive.',
+      'The second earner\'s salary never gets its own tax brackets — it stacks on top of the first earner\'s income and every dollar is taxed at the margin. Add commuting, work lunches, and any job-related costs, and the two-income trap appears: a $40,000 salary can net under $10,000, or $5 an hour. This calculator does the honest stacking math for any second job — side gig or full career — so the decision is made with real numbers instead of a gross salary that will never arrive. Have kids in daycare? The daycare-vs-income calculator prices that specific trade-off, including the Dependent Care FSA offset.',
     howItWorks: [
       'Enter the first earner\'s gross salary — the second income is taxed on top of it at 2026 MFJ marginal rates.',
       'Enter the second job\'s gross salary and your state tax rate.',
