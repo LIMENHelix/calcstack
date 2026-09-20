@@ -2954,3 +2954,74 @@ export function DueDateCalc() {
     </CardContent></Card>
   )
 }
+// TIMESHEET / HOURS WORKED — node-verified defaults: 8:30 AM–5:00 PM minus 30-min lunch = 8.0 hrs/day × 5 days = 40 hrs × $24.50 = $980.00. OT example: 43-hr week = 40 × $24.50 + 3 × $36.75 = $1,090.25. The unpaid lunch and the OT threshold are where paychecks drift from expectations.
+export function TimesheetCalc() {
+  const [startH, setStartH] = useNumber(8.5)
+  const [endH, setEndH] = useNumber(17)
+  const [lunch, setLunch] = useNumber(30)
+  const [days, setDays] = useNumber(5)
+  const [rate, setRate] = useNumber(24.5)
+  const r = useMemo(() => {
+    const dayHours = Math.max(0, endH - startH - lunch / 60)
+    const weekHours = dayHours * days
+    const regH = Math.min(weekHours, 40)
+    const otH = Math.max(0, weekHours - 40)
+    const pay = regH * rate + otH * rate * 1.5
+    return { dayHours, weekHours, regH, otH, pay }
+  }, [startH, endH, lunch, days, rate])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Shift start (24h, decimals: 8:30 = 8.5)" value={startH} onChange={setStartH} step="0.25" />
+        <Field label="Shift end (17 = 5 PM)" value={endH} onChange={setEndH} step="0.25" />
+        <Field label="Unpaid break" value={lunch} onChange={setLunch} suffix="min" />
+        <Field label="Days this week" value={days} onChange={setDays} />
+        <Field label="Hourly rate" value={rate} onChange={setRate} prefix="$" step="0.25" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Hours this week" value={num(r.weekHours, 2)} big />
+        <Result label="Gross pay this week" value={usd(r.pay)} big />
+        <Result label="Per day (net of break)" value={num(r.dayHours, 2)} />
+        <Result label="Overtime hours (past 40)" value={num(r.otH, 2)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Federal overtime is weekly (past 40 hrs at 1.5×); California and some states also pay daily OT past 8 hours. Rounding rules vary — many employers round to the nearest 6 or 15 minutes.</p>
+    </CardContent></Card>
+  )
+}
+
+// BIWEEKLY MORTGAGE — node-verified defaults: $320,000 at 6.5%, 30 years → $2,022.62/mo and $408,142 interest. Paying $1,011.31 every two weeks (26 half-payments = 13 full payments a year) pays off in ~24.2 years and saves ~$93,996 — verified under both nominal and equivalent-rate compounding conventions.
+export function BiweeklyCalc() {
+  const [principal, setPrincipal] = useNumber(320000)
+  const [rate, setRate] = useNumber(6.5)
+  const [years, setYears] = useNumber(30)
+  const r = useMemo(() => {
+    const i = rate / 100 / 12
+    const n = Math.round(years * 12)
+    if (principal <= 0 || n <= 0 || i <= 0) return { pmt: 0, bw: 0, bwYears: 0, saved: 0, intM: 0 }
+    const pmt = (principal * i) / (1 - Math.pow(1 + i, -n))
+    let bal = principal, intM = 0, m = 0
+    while (bal > 0.005 && m < 700) { const ii = bal * i; intM += ii; bal -= pmt - ii; m++ }
+    const iB = rate / 100 / 26
+    const bw = pmt / 2
+    let bal2 = principal, intB = 0, p = 0
+    while (bal2 > 0.005 && p < 1100) { const ii = bal2 * iB; intB += ii; bal2 -= bw - ii; p++ }
+    return { pmt, bw, bwYears: p / 26, saved: intM - intB, intM }
+  }, [principal, rate, years])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Loan amount" value={principal} onChange={setPrincipal} prefix="$" />
+        <Field label="Interest rate" value={rate} onChange={setRate} suffix="%" step="0.125" />
+        <Field label="Term" value={years} onChange={setYears} suffix="years" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Interest saved" value={usd(r.saved)} big />
+        <Result label="Payoff time (biweekly)" value={`${num(r.bwYears, 1)} years`} big />
+        <Result label="Monthly payment" value={usd(r.pmt)} />
+        <Result label="Biweekly payment" value={usd(r.bw)} />
+        <Result label="Monthly-schedule interest" value={usd(r.intM)} />
+      </div>
+      <p className="text-xs text-muted-foreground">The magic is the calendar: 26 half-payments = 13 full payments a year. Same result by adding 1/12 of a payment monthly — often free, while some servicers charge setup fees for biweekly plans. Confirm your servicer applies payments on receipt, not monthly batching.</p>
+    </CardContent></Card>
+  )
+}

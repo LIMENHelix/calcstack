@@ -281,6 +281,10 @@ export const WHY_USE: Record<string, string> = {
     'Investors use it to compare honestly: $10k → $26k in 7 years is 14.63% CAGR — the number that strips the calendar out of a good story.',
   'pregnancy-due-date-calculator':
     'Expecting parents use it the day the test turns: LMP + 280 days, current week, trimester — and the truth that the due date is a window, not an appointment.',
+  'timesheet-calculator':
+    'Workers use it on Sunday night: 8:30–5:00 minus the lunch is exactly 8.0 hrs — 40.0 a week, $980 at $24.50, and the OT line is where the money hides.',
+  'biweekly-mortgage-calculator':
+    'Homeowners use it to find the free money: 26 half-payments is a 13th payment a year — $94k saved and 6 years gone on $320k at 6.5%.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

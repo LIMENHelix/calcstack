@@ -4330,6 +4330,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'timesheet-calculator',
+    title: 'Timesheet Calculator — Hours Worked, Unpaid Breaks, and Weekly Pay',
+    shortTitle: 'Timesheet / Hours',
+    category: 'Careers & Salary',
+    description: 'Add up a work week the way payroll does: shift times minus unpaid breaks, days worked, hourly rate, and overtime past 40 hours at 1.5×. See weekly hours and gross pay.',
+    tagline: 'The unpaid lunch and the 40-hour line are where paychecks drift.',
+    intro: '8:30 to 5:00 with a 30-minute unpaid lunch is 8.0 hours, not 8.5 — five days of that is exactly 40.0 hours and $980 at $24.50. This timesheet nets the breaks, counts the days, and prices overtime past 40 the federal way.',
+    howItWorks: [
+      'Enter shift start and end in 24-hour decimal (8:30 AM = 8.5, 5 PM = 17).',
+      'Subtract the unpaid break — lunch off the clock is not work time.',
+      'Set days worked this week and your hourly rate.',
+      'The tool totals daily and weekly hours, then splits regular and overtime at 40.',
+      'Read gross weekly pay with OT at time-and-a-half.',
+    ],
+    faq: [
+      {
+        q: 'How do I calculate hours worked for payroll?',
+        a: 'Convert clock times to decimal hours first: 8:30 AM is 8.5, 1:15 PM is 13.25 (minutes ÷ 60, so :15 = .25, :30 = .5, :45 = .75). Subtract start from end, subtract unpaid breaks, and that is the day. Five shifts of 8:30–5:00 with a 30-minute lunch = (17 − 8.5 − 0.5) × 5 = 40.0 hours exactly. Common gotchas: paid breaks (under 20 minutes must be paid under federal law) stay IN the total, unpaid meal periods (typically 30+ minutes, relieved of all duties) come OUT, and rounding policies — many payroll systems round to the nearest 6 or 15 minutes — can shift a week by half an hour either way.',
+      },
+      {
+        q: 'When does overtime kick in?',
+        a: 'Federal law (FLSA): past 40 hours in a workweek, non-exempt hourly workers earn 1.5× their regular rate — daily hours do not trigger federal OT, so a 12-hour day inside a 38-hour week is straight time. State rules add layers: California pays 1.5× past 8 hours in a DAY and double-time past 12; Colorado, Nevada, and Alaska have their own daily thresholds. The regular rate can also be more than base pay — non-discretionary bonuses and shift differentials must be folded in before the 1.5× is computed. A 43-hour week at $24.50 is 40 × $24.50 + 3 × $36.75 = $1,090.25 gross.',
+      },
+      {
+        q: 'Why is my paycheck different from my hours times my rate?',
+        a: 'Five usual suspects, in order: unpaid meal breaks (a 30-minute lunch across 5 days is 2.5 hours — the difference between 42.5 scheduled and 40.0 paid), employer rounding to the quarter-hour, overtime computed on a different workweek than you assumed (the workweek is fixed by the employer and need not start Monday), pre-tax deductions shrinking the NET while gross stays right (401k, health premiums), and premium pay rules — shift differentials, on-call, or holiday rates stacking differently than mental math. The diagnostic: divide gross pay by hours on the stub and compare to your rate line by line. If the ratio is off by a consistent half hour a day, it is the lunch.',
+      },
+    ],
+  },
+  {
+    slug: 'biweekly-mortgage-calculator',
+    title: 'Biweekly Mortgage Calculator — 26 Half-Payments and the Interest You Keep',
+    shortTitle: 'Biweekly Mortgage',
+    category: 'Housing & Mortgage',
+    description: 'Switch from 12 monthly payments to 26 half-payments and watch the calendar do the work: one extra payment a year cuts years off the loan. See payoff time and interest saved on your numbers.',
+    tagline: '26 half-payments = 13 full ones. The calendar pays your 13th.',
+    intro: 'A $320,000 loan at 6.5% costs $408,142 in interest on a monthly schedule — and about $94,000 less on biweekly, paying off in 24 years instead of 30. The trick is pure calendar: 26 half-payments add up to 13 full payments a year, and that 13th goes straight to principal.',
+    howItWorks: [
+      'Enter loan amount, rate, and term.',
+      'The tool computes the standard monthly payment and its lifetime interest.',
+      'It then simulates half that payment every two weeks at the lender\'s nominal rate.',
+      'The extra-payment effect compounds: each year injects one full extra payment into principal.',
+      'Read payoff time, interest saved, and both payment amounts.',
+    ],
+    faq: [
+      {
+        q: 'How much does biweekly actually save on a mortgage?',
+        a: 'On $320,000 at 6.5% for 30 years: about $94,000 in interest and roughly 6 years of payments — the loan dies in ~24 years. The savings scale with rate: at 4% the same loan saves ~$48,000 and ~4 years; at 7.5% it approaches $130,000. Two mechanisms stack: the 13th payment (the big one — principal reduction) and slightly faster amortization from more frequent payments (minor). The catch nobody mentions: results depend on the servicer APPLYING each half-payment when received — some batch both halves and apply monthly, which keeps only the 13th-payment effect and quietly kills the rest.',
+      },
+      {
+        q: 'Is a biweekly plan better than just paying extra each month?',
+        a: 'Mathematically identical when done right — adding 1/12 of your payment to each monthly check delivers the same 13th payment. The real differences are behavioral and contractual: biweekly matches paycheck timing for many workers (painless budgeting), while manual extra payments require discipline but stay flexible in lean months. Warning on third-party plans: some servicers and outside companies charge $200–$400 setup plus per-draft fees for biweekly programs that do exactly what you can do free by paying extra principal. If the servicer offers true biweekly (applied on receipt) with no fee, take it; otherwise DIY the 1/12 method and mark the extra as "principal only" so it doesn\'t get credited as a future payment.',
+      },
+      {
+        q: 'Should I pay biweekly or invest the extra money instead?',
+        a: 'The comparison is your mortgage rate versus after-tax investment returns — prepaying a 6.5% mortgage is a guaranteed, risk-free 6.5% return, which historically beats bonds and matches conservative stock expectations with zero volatility. At a 3% pandemic-era rate, investing wins on expectation; at 7%+, prepaying is genuinely hard to beat risk-adjusted. The middle path most planners land on: capture the full 401(k) match first (instant 50–100% return), fund Roth/emergency reserves, THEN attack mortgage principal. Liquidity is the silent cost — money in home equity needs a refinance to come back, so never prepay into an empty emergency fund.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

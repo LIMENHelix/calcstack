@@ -154,6 +154,8 @@ export const MORE_CALC_COMPONENTS: Record<string, LazyExoticComponent<ComponentT
   'down-payment-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.DownPaymentCalc }))),
   'cagr-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.CagrCalc }))),
   'pregnancy-due-date-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.DueDateCalc }))),
+  'timesheet-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.TimesheetCalc }))),
+  'biweekly-mortgage-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.BiweeklyCalc }))),
   'sabbatical-cost-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SabbaticalCostCalc }))),
   'self-storage-roi-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SelfStorageCalc }))),
   'car-wash-economics-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.CarWashCalc }))),
