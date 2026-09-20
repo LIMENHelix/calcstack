@@ -159,7 +159,6 @@ export const MORE_CALC_COMPONENTS: Record<string, LazyExoticComponent<ComponentT
   'fraction-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.FractionCalc }))),
   'simple-interest-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.SimpleInterestCalc }))),
   'average-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.AverageCalc }))),
-  '15-vs-30-year-mortgage-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.FifteenVsThirtyCalc }))),
   'ovulation-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.OvulationCalc }))),
   'unit-converter': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.UnitConverterCalc }))),
   'standard-deviation-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.StdDevCalc }))),

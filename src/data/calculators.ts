@@ -4486,38 +4486,6 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
-    slug: '15-vs-30-year-mortgage-calculator',
-    title: '15 vs 30 Year Mortgage Calculator — The Real Cost of the Shorter Loan',
-    shortTitle: '15 vs 30 Year Mortgage',
-    category: 'Housing & Mortgage',
-    description:
-      'Compare a 15-year and 30-year mortgage side by side: monthly payments, total interest, interest saved, and equity after 5 years — with the rate discount priced in.',
-    tagline: '$400k at 6.5% vs 5.875%: the 15-year costs $820 more per month but saves $307,453 in interest and builds $71k more equity in 5 years.',
-    intro:
-      'Every lender quote comes as a fork: 30 years at a higher rate or 15 at a lower one. The 15-year always wins the math — less time AND a lower rate, typically a 0.5–0.75% discount — but costs $800+ more per month on a typical loan, which is real cash-flow risk. This calculator prices both paths on your actual numbers and shows the 5-year equity gap, because that is where the 15-year quietly builds wealth even if you sell early.',
-    howItWorks: [
-      'Enter the loan amount (price minus down payment).',
-      'Enter your quoted 30-year and 15-year rates.',
-      'Compare the two payments and the extra monthly cost of the 15.',
-      'Read total interest for each — the savings figure is usually six digits.',
-      'Check the 5-year equity gap: what the shorter loan builds even if you move.',
-    ],
-    faq: [
-      {
-        q: 'How much cheaper is a 15-year mortgage rate?',
-        a: 'Typically 0.5% to 0.75% below the 30-year rate — on $400,000 that is 6.5% versus about 5.875%. The savings then stack two ways: the lower rate itself, and amortization that is twice as fast, which means interest has half the time to accrue. Result on the example loan: $510,178 of interest over 30 years versus $202,725 over 15 — a difference of $307,453, roughly 77 cents saved for every dollar borrowed. The catch is cash flow: the 15-year payment is $3,348 versus $2,528, and that $820 monthly difference is mandatory. Lenders qualify you on the higher payment, so the 15-year can also shrink the house you are approved for.',
-      },
-      {
-        q: 'Is it smarter to take the 30-year and pay extra?',
-        a: 'For most buyers, yes — and the numbers are surprisingly close. Paying the 15-year amount on a 30-year loan captures roughly 85% of the interest savings while keeping the lower required payment as an emergency valve. Using the example: a $400k 30-year at 6.5% paid at $3,348/month retires in about 16.5 years with about $272k of interest — more than the 15-year\'s $203k because the rate is higher, but with total flexibility. The honest question is behavioral: will you actually send the extra $820 every month for 15 years? If yes, take the 30 and invest the option value. If the discipline is doubtful, the 15-year\'s forced savings is a feature, not a bug.',
-      },
-      {
-        q: 'What if I might move before the loan is paid off?',
-        a: 'The 15-year still wins if you can carry the payment — because amortization speed, not loan length, is what builds equity. After 5 years on $400k at these rates, the 30-year balance is about $374k while the 15-year balance is about $303k: roughly $71,000 more equity to take to the next house. But the payment differential deserves a stress test: if $820/month of forced savings would leave you with no emergency fund, the 30-year is the correct choice regardless of math — a missed payment costs more than decades of interest optimization. The third path: take the 30, autopay the 15-year equivalent, and drop to the required payment in any month life happens. You get 90% of the benefit with none of the fragility.',
-      },
-    ],
-  },
-  {
     slug: 'ovulation-calculator',
     title: 'Ovulation Calculator — Fertile Window, Next Period, and Due Date',
     shortTitle: 'Ovulation Calculator',

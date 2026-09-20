@@ -423,7 +423,15 @@ export function FifteenVsThirtyCalc(_props: CalcProps) {
     const fv = (mo: number, months: number) => (i > 0 ? mo * ((Math.pow(1 + i, months) - 1) / i) : mo * months)
     const wealth30 = fv(diff, 360)
     const wealth15 = fv(p15, 180)
-    return { p30, p15, int30, int15, diff, wealth30, wealth15, saved: int30 - int15 }
+    // 5-year equity gap — what the shorter term builds even if you sell early
+    const bal = (P: number, rate: number, n: number, paid: number) => {
+      const ri = rate / 100 / 12
+      if (ri <= 0) return P - (P / n) * paid
+      const p = (P * ri) / (1 - Math.pow(1 + ri, -n))
+      return P * Math.pow(1 + ri, paid) - p * ((Math.pow(1 + ri, paid) - 1) / ri)
+    }
+    const eq5 = bal(loan, rate30, 360, 60) - bal(loan, rate15, 180, 60)
+    return { p30, p15, int30, int15, diff, wealth30, wealth15, saved: int30 - int15, eq5 }
   }, [loan, rate30, rate15, investReturn])
 
   return (
@@ -441,6 +449,7 @@ export function FifteenVsThirtyCalc(_props: CalcProps) {
           <Result label="30-year payment" value={usd(r.p30, 2)} />
           <Result label="15-year payment" value={usd(r.p15, 2)} />
           <Result label="Monthly difference" value={usd(r.diff, 2)} />
+          <Result label="Extra equity after 5 years (15-yr)" value={usd(r.eq5)} />
         </div>
 
         <div className="overflow-x-auto rounded-lg border">

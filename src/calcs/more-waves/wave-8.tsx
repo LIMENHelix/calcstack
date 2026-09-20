@@ -3162,45 +3162,6 @@ export function AverageCalc() {
   )
 }
 
-// 15 VS 30 YEAR MORTGAGE — node-verified defaults: $400k, 30yr 6.5% → $2,528.27/mo, $510,178 interest; 15yr 5.875% → $3,348.47/mo, $202,725 interest. Saved: $307,453 for +$820/mo. The rate discount on 15s (~0.625%) stacks with the shorter amortization.
-export function FifteenVsThirtyCalc() {
-  const [loan, setLoan] = useNumber(400000)
-  const [r30, setR30] = useNumber(6.5)
-  const [r15, setR15] = useNumber(5.875)
-  const r = useMemo(() => {
-    const pmt = (P: number, rate: number, n: number) => { const i = rate / 100 / 12; return i === 0 ? P / n : (P * i) / (1 - Math.pow(1 + i, -n)) }
-    const p30 = pmt(loan, r30, 360)
-    const p15 = pmt(loan, r15, 180)
-    const i30 = p30 * 360 - loan
-    const i15 = p15 * 180 - loan
-    // Break-even: years until 15yr's extra monthly cost is "repaid" by interest saved — instant, but show equity gap at year 5
-    const bal = (P: number, rate: number, n: number, paid: number) => { const i = rate / 100 / 12; const p = pmt(P, rate, n); return i === 0 ? P - p * paid : P * Math.pow(1 + i, paid) - p * ((Math.pow(1 + i, paid) - 1) / i) }
-    const b30_5 = bal(loan, r30, 360, 60)
-    const b15_5 = bal(loan, r15, 180, 60)
-    return { p30, p15, i30, i15, saved: i30 - i15, diff: p15 - p30, eq5: b30_5 - b15_5 }
-  }, [loan, r30, r15])
-  return (
-    <Card><CardContent className="space-y-4 pt-6">
-      <div className="grid gap-3 sm:grid-cols-3">
-        <Field label="Loan amount" value={loan} onChange={setLoan} prefix="$" step="10000" />
-        <Field label="30-year rate" value={r30} onChange={setR30} suffix="%" step="0.125" />
-        <Field label="15-year rate" value={r15} onChange={setR15} suffix="%" step="0.125" />
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Result label="30-year payment" value={usd(r.p30) + '/mo'} />
-        <Result label="15-year payment" value={usd(r.p15) + '/mo'} />
-        <Result label="30-year total interest" value={usd(r.i30)} />
-        <Result label="15-year total interest" value={usd(r.i15)} />
-        <Result label="Interest saved with 15" value={usd(r.saved)} big />
-        <Result label="Extra monthly cost" value={usd(r.diff) + '/mo'} big />
-        <Result label="Extra equity after 5 years" value={usd(r.eq5)} />
-      </div>
-      <p className="text-xs text-muted-foreground">The 15-year wins on math; the 30-year wins on flexibility. Common compromise: take the 30, pay it like a 15 — you keep the safety valve and capture most of the savings.</p>
-    </CardContent></Card>
-  )
-}
-
-
 // OVULATION CALCULATOR — node-verified: LMP Sep 1 + 28-day cycle → ovulation Sep 15, fertile window Sep 10–16, next period Sep 29, due-if-conceived Jun 8 2027 (ovulation + 266). Luteal phase fixed at 14 days — the standard clinical estimate; real cycles vary ±2 days, which is why the window matters more than the day.
 export function OvulationCalc() {
   const [lmp, setLmp] = useState('2026-09-01')

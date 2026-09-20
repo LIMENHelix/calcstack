@@ -62,7 +62,7 @@ export default function Home() {
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['fraction-calculator', 'simple-interest-calculator', 'average-calculator', '15-vs-30-year-mortgage-calculator', 'ovulation-calculator', 'unit-converter'].includes(c.slug),
+            ['fraction-calculator', 'simple-interest-calculator', 'average-calculator', '15-year-mortgage-calculator', 'ovulation-calculator', 'unit-converter'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
