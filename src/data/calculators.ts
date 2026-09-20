@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'variable-speed-pump-roi-calculator',
+    title: 'Variable Speed Pool Pump Savings Calculator 2026 — The Cube Law Payback, Rebates Included',
+    shortTitle: 'VS Pool Pump ROI',
+    category: 'Home & Yard',
+    description:
+      'Power scales with the cube of speed: half flow draws an eighth of the watts. Price the single-speed to variable-speed swap with your real schedule and rate — rebates, payback, and five-year net.',
+    tagline: 'Half speed is ⅛ the power: a 1,800W single-speed at 8 hrs becomes 300W at 10 — $666/yr back, 1.7-year payback after the rebate.',
+    intro:
+      'The pool pump is the second-biggest electric load in a pool home, and the fix is physics, not sacrifice: pump power scales with the cube of speed, so half flow draws an eighth of the watts. A 1.5HP single-speed pulling 1,800W for 8 hours burns 5,256 kWh a year; a variable-speed at 300W for 10 hours uses 1,095 — $666/yr back at $0.16/kWh, paying back the $1,100 net cost (after the typical utility rebate) in 1.7 years and banking $2,229 over five. Slower water also filters better — more contact time per gallon — so the water improves while the bill shrinks. Federal rules now require variable-speed on most new installs; the single-speed is a stranded asset, making this replacement timing rather than upgrade vanity.',
+    howItWorks: [
+      'Enter your current pump\'s watts (nameplate or clamp meter) and daily run hours.',
+      'Enter the variable-speed\'s low-speed watts and planned daily hours.',
+      'Enter your electricity rate.',
+      'Enter the installed cost minus the utility rebate ($50–200 in pool states — claim it before buying).',
+      'Read annual kWh for both, yearly savings, payback, and five-year net.',
+    ],
+    faq: [
+      {
+        q: 'Why does slower circulation clean the water better?',
+        a: 'Two mechanisms, both favorable. Contact time: slower water spends longer in the filter media per pass, so each gallon gets cleaner per cycle — sand and cartridge filters both improve at lower flow rates. And total filtration volume actually rises: because low speed costs an eighth of the power, you can afford to run 10–12 hours instead of 8, moving MORE total water through the filter each day while using 80% less energy. The practical schedule: a long overnight low-speed run (cheap hours, quiet), plus a 2–3 hour midday high-speed window for skimmer action and the pressure-side cleaner — surface debris needs flow, and that window provides it. The old 8-hour single-speed schedule was sized by the pump\'s inefficiency, not the water\'s needs; the variable-speed schedule is sized by the water.',
+      },
+      {
+        q: 'What can go wrong with the swap?',
+        a: 'Four known failure modes, all avoidable. Flow minimums: gas heaters and salt chlorine generators trip their pressure switches below spec — check the manual\'s minimum GPM and set the low speed above it (this is the #1 "my heater stopped working" call after a VS install). Priming: variable-speeds need a high-speed prime cycle on startup — the default program includes it, don\'t delete it. Sizing: bigger isn\'t better — a 3HP VS pump on 1.5" plumbing cavitates and wastes the efficiency; match to the plumbing, not the ego. And schedule drift: the installer\'s program is a starting point — after a month, adjust run hours against water clarity (clear water at 8 low-speed hours means you can try 7; cloudiness means back up an hour). The pump pays back fastest when the schedule is tuned to the pool, not copied from the manual.',
+      },
+      {
+        q: 'How does this interact with time-of-use rates?',
+        a: 'It multiplies the win — the variable-speed schedule and TOU rates are natural allies. The long low-speed circulation belongs in the off-peak window (overnight at half the kWh price on most TOU plans), with only the short high-speed cleaning window at midday — and even that can sit in mid-peak rather than peak on most schedules. On a TOU plan with 2:1 peak/off-peak pricing, moving the 10-hour low-speed run off-peak roughly halves the remaining pump cost again beyond the wattage savings this calculator shows. Check your utility: pool-pump rebates and TOU enrollment are often both available and rarely claimed together. If you\'re still on flat-rate billing, the pump swap is also the moment to price the TOU switch — the pool is the load that makes TOU math work for pool homes.',
+      },
+    ],
+  },
+  {
     slug: 'attic-insulation-roi-calculator',
     title: 'Attic Insulation ROI Calculator 2026 — R-Value Upgrade Payback With Real Diminishing Returns + the 30% Credit',
     shortTitle: 'Attic Insulation ROI',

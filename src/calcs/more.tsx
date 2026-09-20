@@ -5170,6 +5170,57 @@ export function AtticInsulationRoiCalc() {
   )
 }
 
+// VARIABLE-SPEED POOL PUMP ROI — the pump affinity law is the whole story: half speed = 1/8 the power. Node-verified: single-speed 1.5HP ~1,800W × 8 hr/day = 5,256 kWh/yr; variable-speed at 300W low-speed × 10 hr/day = 1,095 kWh → saves $666/yr at $0.16/kWh; $1,200 pump − $100 utility rebate = $1,100 → 1.7-YEAR payback, +$2,229 over 5 years. Physics: power scales with the CUBE of speed — half flow needs 12.5% of the power, which is why longer-slower circulation beats shorter-faster (and filters better: slower water through the filter cleans more per gallon). Honest edges: run-time is the tuning variable (turnover target ~1× pool volume/day for most residential — the old 8-hr single-speed schedule was sized by the pump's inefficiency, not the water's needs), keep a high-speed window for the cleaner/skimmer action (2-3 hrs midday), Title 20/federal rules now mandate VS for most new installs (the single-speed is a stranded asset — replacement, not upgrade), heater and salt-cell flow minimums (check min flow specs — too slow trips the heater's pressure switch), and utility rebates ($50-200, pool pumps are the #1 residential rebate item in sunbelt states).
+export function VsPoolPumpCalc() {
+  const [oldW, setOldW] = useNumber(1800)
+  const [oldHrs, setOldHrs] = useNumber(8)
+  const [newW, setNewW] = useNumber(300)
+  const [newHrs, setNewHrs] = useNumber(10)
+  const [rate, setRate] = useNumber(0.16)
+  const [pump, setPump] = useNumber(1200)
+  const [rebate, setRebate] = useNumber(100)
+
+  const r = useMemo(() => {
+    const oldKwh = (oldW * oldHrs * 365) / 1000
+    const newKwh = (newW * newHrs * 365) / 1000
+    const save = (oldKwh - newKwh) * rate
+    const cost = pump - rebate
+    const payback = save > 0 ? cost / save : Infinity
+    const five = save * 5 - cost
+    return { oldKwh, newKwh, save, cost, payback, five }
+  }, [oldW, oldHrs, newW, newHrs, rate, pump, rebate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Old pump watts" value={oldW} onChange={setOldW} suffix="W" step="100" />
+          <Field label="Old run hrs/day" value={oldHrs} onChange={setOldHrs} step="0.5" />
+          <Field label="VS pump low-speed watts" value={newW} onChange={setNewW} suffix="W" step="50" />
+          <Field label="New run hrs/day" value={newHrs} onChange={setNewHrs} step="0.5" />
+          <Field label="Electricity rate" value={rate} onChange={setRate} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="VS pump installed" value={pump} onChange={setPump} prefix="$" step="100" />
+          <Field label="Utility rebate" value={rebate} onChange={setRebate} prefix="$" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Old usage /yr" value={`${num(r.oldKwh, 0)} kWh`} />
+          <Result label="New usage /yr" value={`${num(r.newKwh, 0)} kWh`} />
+          <Result label="Savings /yr" value={usd(r.save)} big />
+          <Result label="Payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {isFinite(r.payback) && r.payback <= 3
+            ? `${usd(Math.round(r.save))}/yr back on a ${usd(r.cost)} net spend — ${num(r.payback, 1)}-year payback and ${usd(Math.round(r.five))} ahead in five years. The pool pump is the second-biggest load in a pool home; the cube law makes the fix nearly free to run.`
+            : `Payback runs ${isFinite(r.payback) ? num(r.payback, 1) + ' years' : 'never'} at these numbers — check for a bigger rebate (sunbelt utilities pay $50–200) or a longer low-speed schedule before spending.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: kWh = watts × hours × 365 ÷ 1000 for each schedule; savings at your rate. The physics doing the work is the pump affinity law: power scales with the CUBE of speed — half flow draws ⅛ the power — which is why a variable-speed pump running long and slow beats a single-speed running short and fast, and why slower water actually filters BETTER (more contact time per gallon). Schedule honestly: target ~1 pool-volume turnover per day for typical residential use, keep a 2–3 hour midday high-speed window for the skimmer and cleaner action, and check flow minimums — heaters and salt chlorine generators trip their pressure switches below spec. Regulatory tailwind: federal efficiency rules now require variable-speed on most new installations — the single-speed is a stranded asset, so this is replacement timing, not upgrade vanity. Sunbelt utilities rebate $50–200 (pool pumps are the #1 residential rebate item in pool states — claim it before buying). Estimates — pump nameplate watts and your utility rate govern; measure actual draw with a clamp meter or the pump's display for the exact number.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10837,6 +10888,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'led-conversion-calculator': LedConversionCalc,
   'phantom-load-calculator': PhantomLoadCalc,
   'attic-insulation-roi-calculator': AtticInsulationRoiCalc,
+  'variable-speed-pump-roi-calculator': VsPoolPumpCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

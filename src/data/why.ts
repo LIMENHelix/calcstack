@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'variable-speed-pump-roi-calculator':
+    'Pool owners use it before the old pump dies: the cube law means 300W × 10 hrs replaces 1,800W × 8 — $666/yr back, 1.7-year payback after the rebate, and the water filters better.',
   'attic-insulation-roi-calculator':
     'Homeowners use it before blowing insulation: R-19→R-49 on 1,200 sqft saves $245/yr — 7.3-year payback after the 30% credit — but from R-30 it stretches to 11.6 years, and air sealing beats both.',
   'phantom-load-calculator':
