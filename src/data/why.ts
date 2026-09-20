@@ -177,6 +177,10 @@ export const WHY_USE: Record<string, string> = {
     'Sellers use it before skipping the agent: FSBO at 97% of the agent-achievable price nets $424,288 vs the pro\'s $427,500 — you must beat 97.7% of their price just to tie, and disclosure liability is yours either way.',
   'escalation-clause-calculator':
     'Buyers use it before the bidding war: base $440k escalating to a $460k cap lands at $454k with a $6,000 appraisal gap due in cash — set the cap at the price where losing feels fine.',
+  'counteroffer-ev-calculator':
+    'Job candidates use it before accepting: countering a $95k offer with $105k wins $6,750/yr in expected value even at 10% rescind risk — and a landed counter compounds to $114,639 over 10 years of raises.',
+  'non-compete-cost-calculator':
+    'Employees use it before signing: a 12-month non-compete on $110k carries $4,950 of expected cost — the signing premium to ask for — and the clause lives under state law, not the struck-down FTC ban.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

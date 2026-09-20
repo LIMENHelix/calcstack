@@ -6426,6 +6426,98 @@ export function EscalationClauseCalc() {
   )
 }
 
+// COUNTEROFFER EV — node-verified defaults: current $90k, offer $95k, counter $105k; outcomes 55% full accept, 35% split to midpoint ($100k), 10% rescind (stay at current). Accept gain $5,000; counter EV = 0.55×15,000 + 0.35×10,000 + 0.10×0 = $11,750 → counter wins by $6,750 of expected value. Compounding: if the counter lands, the $10k base delta at 3% raises compounds to $114,639 over 10 years. Rescind rates for polite, market-based counters are low single digits — the fear premium is the real cost of not asking.
+export function CounterofferEvCalc() {
+  const [cur, setCur] = useNumber(90000)
+  const [offer, setOffer] = useNumber(95000)
+  const [counter, setCounter] = useNumber(105000)
+  const [pa, setPa] = useNumber(55)
+  const [ps, setPs] = useNumber(35)
+
+  const r = useMemo(() => {
+    const split = (offer + counter) / 2
+    const pr = Math.max(0, 100 - pa - ps) / 100
+    const gainAccept = offer - cur
+    const ev = (pa / 100) * (counter - cur) + (ps / 100) * (split - cur) + pr * 0
+    const edge = ev - gainAccept
+    const delta = counter - offer
+    let cum = 0
+    let s = 1
+    for (let t = 0; t < 10; t++) {
+      cum += delta * s
+      s *= 1.03
+    }
+    return { split, pr: pr * 100, gainAccept, ev, edge, cum }
+  }, [cur, offer, counter, pa, ps])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Current salary" value={cur} onChange={setCur} prefix="$" step="1000" />
+          <Field label="Offer on the table" value={offer} onChange={setOffer} prefix="$" step="1000" />
+          <Field label="Your counter" value={counter} onChange={setCounter} prefix="$" step="1000" />
+          <Field label="P(counter accepted)" value={pa} onChange={setPa} suffix="%" step="5" />
+          <Field label="P(they split it)" value={ps} onChange={setPs} suffix="%" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Accept now gains" value={`${usd(Math.round(r.gainAccept))}/yr`} />
+          <Result label="Counter expected value" value={`${usd(Math.round(r.ev))}/yr`} big />
+          <Result label="Rescind risk assumed" value={`${num(r.pr, 0)}%`} />
+          <Result label="10-yr delta if accepted" value={usd(Math.round(r.cum))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.edge > 0
+            ? `Countering wins by ${usd(Math.round(r.edge))}/yr in expected value even at ${num(r.pr, 0)}% rescind risk — and if it lands, the ${usd(counter - offer)} base delta compounds to ${usd(Math.round(r.cum))} over 10 years of raises. Not countering is the expensive option.`
+            : `At these odds the counter does not pencil — either the rescind risk is set very high or the counter is too close to the offer to matter. Revisit the probabilities: real rescinds for polite counters are rare.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: counter EV = P(accept)×gain + P(split)×midpoint gain + P(rescind)×0; compared against accepting. The probability inputs are where honesty matters — actual offer rescissions over a professional, market-based counter are rare (recruiters report low single digits; the horror stories involve ultimatums, wildly off-market asks, or rescinding employers you are lucky to lose), while splits and full accepts dominate outcomes. Ground the counter in evidence: posted ranges for the same role, levels.fyi / Glassdoor / salary.com data, and one number above the middle of the comp band — a defensible counter is hard to punish. Anchoring detail: counter with a precise number ($103,500) rather than a round one — precise numbers read as researched and get accepted more often in negotiation studies. Beyond base: signing bonuses, extra PTO, remote days, and review-timing accelerations are cheaper for the employer to grant and stack onto the same conversation — ask for the base first, then the stack. Internal counters (your current employer matching) are a different game — the match arrives with a trust deficit and 6-month retention stats are ugly; the raise calculator can price that separately. Estimate — your market data and the employer&apos;s leverage govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// NON-COMPETE COST — node-verified defaults: $110k salary, 12-month restriction, 15% outside-industry discount, 30% chance of needing a job switch during the restricted window → expected cost $4,950 = the signing premium to ask for. 24-month restriction at 50% switch probability → $16,500. Frame: the clause is an insurance policy the employer buys; the expected cost is YOUR premium and belongs in the negotiation. FTC's 2024 ban was struck down in court (Ryan LLC v. FTC) — non-competes remain state-law matters: banned in CA/MN/OK/ND, restricted in most others.
+export function NonCompeteCostCalc() {
+  const [sal, setSal] = useNumber(110000)
+  const [mo, setMo] = useNumber(12)
+  const [disc, setDisc] = useNumber(15)
+  const [pSwitch, setPSwitch] = useNumber(30)
+
+  const r = useMemo(() => {
+    const expCost = sal * (disc / 100) * (mo / 12) * (pSwitch / 100)
+    const worst = sal * (disc / 100) * (mo / 12)
+    const perMonth = sal * (disc / 100) / 12
+    return { expCost, worst, perMonth }
+  }, [sal, mo, disc, pSwitch])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Salary" value={sal} onChange={setSal} prefix="$" step="5000" />
+          <Field label="Restriction length" value={mo} onChange={setMo} suffix="mo" step="6" />
+          <Field label="Outside-industry pay cut" value={disc} onChange={setDisc} suffix="%" step="5" />
+          <Field label="P(need a switch)" value={pSwitch} onChange={setPSwitch} suffix="%" step="10" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Expected cost of clause" value={usd(Math.round(r.expCost))} big />
+          <Result label="Worst case (forced switch)" value={usd(Math.round(r.worst))} />
+          <Result label="Cost per restricted month" value={usd(Math.round(r.perMonth))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The clause carries ${usd(Math.round(r.expCost))} of expected cost — that is the signing premium to ask for, or the raise delta that makes signing rational. Worst case if you must switch mid-restriction: ${usd(Math.round(r.worst))}.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: expected cost = salary × outside-industry discount × restriction years × probability of needing a switch during the window. The discount is the key input — what your skills fetch OUTSIDE the restricted industry/geography/role definition; narrow clauses (one competitor list, one metro) cost little, broad ones (the whole industry, nationwide) can cost the full 10–25% specialists command. Legal ground as of now: the FTC&apos;s 2024 nationwide ban was struck down (Ryan LLC v. FTC) and non-competes remain state law — fully banned in California, Minnesota, Oklahoma, and North Dakota, void or limited for low-wage workers in a growing list of states, and enforceable-but-narrowed elsewhere; several states require garden leave or notice periods. Negotiation levers this math funds: ask for the expected cost as a signing premium; narrow the scope (named competitors, not &quot;the industry&quot;); shorten duration (6 months is the defensible norm); add garden leave (they pay the restriction months) or a severance trigger (clause dies if THEY terminate you); and strike customer non-solicits that reach clients you never touched. Get one hour of an employment attorney&apos;s review ($300–500) for anything broad — cheap against the worst case shown above. Estimate — your state&apos;s statute and your leverage govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12119,6 +12211,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'staging-roi-calculator': StagingRoiCalc,
   'fsbo-vs-agent-calculator': FsboVsAgentCalc,
   'escalation-clause-calculator': EscalationClauseCalc,
+  'counteroffer-ev-calculator': CounterofferEvCalc,
+  'non-compete-cost-calculator': NonCompeteCostCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

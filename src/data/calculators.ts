@@ -2722,6 +2722,69 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'counteroffer-ev-calculator',
+    title: 'Salary Counteroffer Calculator — Expected Value of Countering vs Accepting, With Rescind Risk Priced',
+    shortTitle: 'Counteroffer EV',
+    category: 'Freelance & Career',
+    description:
+      'Should you counter? Expected value of countering versus accepting — accept/split/rescind probabilities priced honestly, plus the 10-year compounding of a higher base that makes one email worth six figures.',
+    tagline: 'Countering a $95k offer with $105k wins $6,750/yr in expected value even at 10% rescind risk — and if it lands, the delta compounds to $114,639 over 10 years.',
+    intro:
+      'The counteroffer decision is usually made on fear; run it on expected value. Current $90k, offer $95k, counter $105k: with 55% odds they accept, 35% they split the difference, and 10% they walk, the counter is worth $11,750/yr in expectation versus $5,000 for accepting — countering wins by $6,750 even with a one-in-ten disaster. And the disaster itself is rarer than the fear: polite, market-based counters get rescinded at low-single-digit rates. The kicker is compounding: a landed counter\'s $10k base delta grows with every future raise — $114,639 over ten years at 3%. One email, six figures. This calculator prices your numbers.',
+    howItWorks: [
+      'Enter your current salary, the offer, and the counter you are considering.',
+      'Estimate P(full accept) and P(split) — the remainder is the rescind risk.',
+      'Read the expected value of countering versus accepting.',
+      'Check the 10-year compounding line — the real argument for asking.',
+    ],
+    faq: [
+      {
+        q: 'How often do offers actually get rescinded over a counter?',
+        a: 'Rarely enough that it should not drive the decision — but not never, so price it. Recruiters and HR surveys consistently put rescission-over-negotiation in the low single digits when the counter is professional: a specific number, market evidence attached, enthusiasm for the role stated. The patterns that DO get rescinded read as warnings, not negotiations: ultimatums ("I need an answer today" cuts both ways), counters wildly above the posted band (asking $140k against a $95k offer signals a mismatch they cannot fix), repeated re-trading after agreement, and counters at companies already showing red flags — in which case the rescind is information. The mechanical protection: counter once, cleanly, with your evidence (posted ranges, levels.fyi/Glassdoor data), while explicitly confirming you want the job and will accept at $X. Companies expect negotiation — many initial offers carry a deliberate 5–10% negotiation cushion, which is the recruiter admitting the first number is not the real number. Set the rescind input to 5–10% for a sane employer, 15–20% only if the process has already been erratic.',
+      },
+      {
+        q: 'How do I pick the counter number?',
+        a: 'From evidence, anchored precisely. The evidence stack: the posted range if there is one (counter at the 60th–75th percentile of the band, not the top — the top is reserved for candidates with leverage you have not shown), aggregated comp data from levels.fyi for tech, Glassdoor and salary.com elsewhere, and any competing offer or current-salary anchor that is genuinely relevant. The precise-anchoring effect from negotiation research: $103,500 reads as researched and gets accepted or near-split more often than $105,000, which reads as a mood. Never counter with a range — a range invites them to the bottom of it. Then stack the non-base asks AFTER the base conversation: signing bonus (easiest yes — one-time money from a different budget), extra PTO week, remote days, title, and an accelerated first review ("6-month review with path to $X") which converts a no on base into a scheduled second bite. One counter, complete, professional — then silence. The person who speaks first after the number is on the table is usually the one who moves.',
+      },
+      {
+        q: 'Should I use my current employer\'s counteroffer?',
+        a: 'Take the new job anyway in most cases — the retention statistics on accepted internal counters are bleak. The mechanism: your resignation told your employer you were already looking; the counter buys them time to de-risk your departure, not loyalty from them. The numbers recruiters cite — half or more of counteroffer-accepters leave within 12 months anyway — reflect the trust deficit on both sides: they now see you as flight risk for the next layoff list, and you now know the raise was available only under threat, which answers the "why was I underpaid" question. The cases where accepting the internal counter pencils: the issue was purely money and comp bands (not management, growth, or culture), the counter comes with a real role change or title, and you were not actually eager to leave — you were underpaid, not unhappy. The clean play if you want to stay: negotiate the raise BEFORE interviewing elsewhere, with market data; an external offer used as leverage is a card you can play once, and playing it while preferring to stay bluffs with your employer\'s trust. This calculator prices the external counter; the internal one needs the raise-worth math plus a discount for the trust deficit.',
+      },
+    ],
+  },
+  {
+    slug: 'non-compete-cost-calculator',
+    title: 'Non-Compete Cost Calculator — What the Clause Costs You and the Signing Premium to Ask For',
+    shortTitle: 'Non-Compete Cost',
+    category: 'Freelance & Career',
+    description:
+      'Price a non-compete before signing it — expected cost from restriction length, outside-industry pay cut, and switch probability — plus the negotiation levers the math funds and the state-law landscape.',
+    tagline: 'A 12-month non-compete on a $110k salary carries $4,950 of expected cost — that is the signing premium to ask for. Broad 24-month clauses can cost $16,500.',
+    intro:
+      'A non-compete is an insurance policy the employer buys against your departure — and you are paying the premium unless you negotiate. Price it: on a $110,000 salary, a 12-month restriction with a 15% outside-industry pay cut and a 30% chance you need to switch during the window costs $4,950 in expectation — exactly the signing premium to request. Broaden it to 24 months and a coin-flip switch probability and the clause costs $16,500. The legal landscape matters: the FTC\'s 2024 ban was struck down, so non-competes live under state law — banned in California, Minnesota, Oklahoma, and North Dakota, restricted for low-wage workers elsewhere. This calculator prices the clause so the negotiation starts with a number instead of a vibe.',
+    howItWorks: [
+      'Enter the salary the clause covers.',
+      'Enter the restriction length in months.',
+      'Enter the pay cut you would take outside the restricted industry/geography/role.',
+      'Enter the probability you will need a job switch during the restricted window.',
+      'Read the expected cost — your asking number — and the worst case.',
+    ],
+    faq: [
+      {
+        q: 'Are non-competes even enforceable where I live?',
+        a: 'State law owns this question, and the map moved recently. Fully banned: California, Minnesota, Oklahoma, North Dakota — plus effectively void for most workers in a few others. Restricted: a growing list (Colorado, Illinois, Washington, Massachusetts, and more) bans them below salary thresholds, requires advance notice, or caps duration at 6–12 months. The FTC\'s 2024 nationwide ban was struck down in federal court (Ryan LLC v. FTC) before taking effect, so the federal layer is gone for now; the healthcare-specific bans several states passed still stand. Enforceable-but-narrowed is the modal state: courts will blue-pencil (rewrite) or refuse clauses that are broader than necessary — overbroad geography or "any role in the industry" language fails reasonableness tests in many states, but you do not want to fund the lawsuit that finds out. Practical hierarchy: read your state statute first (one search, five minutes), then assume a narrowly drafted clause is enforceable even where a broad one is not, and negotiate scope rather than relying on unenforceability — courts are a strategy for the desperate, not a plan.',
+      },
+      {
+        q: 'What negotiation levers work on a non-compete?',
+        a: 'Five, in order of how often they succeed. Shorten: 12–24 months to 6 — the most common yes, because the employer\'s legitimate interest (client relationships, trade secrets) decays in months, and you are arguing their own logic. Narrow the scope: a named-competitor list instead of "the industry," one metro instead of nationwide, your function instead of any role — scope is where the expected cost in this calculator lives, and narrowing it is worth more than duration cuts. Add a termination trigger: the clause dies or pays garden leave if THEY lay you off — the fairness argument is obvious and this is the term to insist on hardest. Garden leave: they pay some or all of the restriction period — common in finance, spreading elsewhere. And cash: the expected cost from this calculator as a signing bonus or base bump — the direct conversion. What to sacrifice first if trading: customer non-solicits are usually reasonable and worth conceding for non-compete relief. Get one hour of an employment attorney ($300–500) to review anything broad before signing — cheap against the worst-case number shown above, and their markup of the clause gives you the negotiation script.',
+      },
+      {
+        q: 'What if I already signed one?',
+        a: 'You have more room than the document suggests — enforceability is decided by courts, not contracts. First: check your state — in the banned states the clause is wallpaper regardless of what you signed; in threshold states confirm you are above the salary floor. Second: read the scope literally — most clauses are narrower than employees assume; "competitor" definitions, geography, and duration all bound what you cannot do, and employers drafting broadly sometimes create clauses courts will not enforce as written. Third: if a specific offer conflicts, options in ascending cost: ask the new employer\'s counsel to assess it (they often do — they have skin in your start date); negotiate a release with the old employer (surprisingly often free, especially if you are not client-facing or the new role is adjacent-not-competing); wait out a short restriction with a deferred start date (new employers do this for candidates they want); or litigate — the expensive last resort where the employer must prove legitimate interest and reasonableness. The DON\'T list matters more: do not solicit clients or take documents on the way out (converts a weak clause into a strong trade-secret case), do not lie about your destination (the lie is worse than the breach), and do not ignore a cease-and-desist — respond through counsel, because many are bluffs that a lawyer\'s letter ends.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
