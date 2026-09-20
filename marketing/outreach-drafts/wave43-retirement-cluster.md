@@ -14,7 +14,7 @@ workplace-plan coverage ($81k–$91k / $129k–$149k / $242k–$252k / $0–$10k
 all 2026 per Notice 2025-67). Send after Wave 42. Personalize every [bracket].
 One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -33,7 +33,7 @@ Subject: The IRMAA cliff your Medicare checklist is missing (2026 numbers)
 > lands on the Medicare bill at 65. This calculator shows the exact tier,
 > per-person and household cost, and the dollar headroom before the next cliff:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/medicare-irmaa-calculator
+> Live demo: https://calcstack.app/embed/medicare-irmaa-calculator
 >
 > One iframe, free forever, no signup, all math client-side. Verified against
 > the CMS 2026 fact sheet and SSA tables — including the compressed
@@ -58,7 +58,7 @@ Subject: The 40.7% tax rate hiding in your readers' withdrawal plans
 > own worked example to the dollar — and shows the effective rate on the next
 > $1,000 at the reader's actual bracket:
 >
-> https://calcstack-eight.vercel.app/embed/social-security-tax-calculator
+> https://calcstack.app/embed/social-security-tax-calculator
 >
 > One iframe on any withdrawal-strategy or Roth-conversion article. Free
 > forever.
@@ -81,7 +81,7 @@ Subject: "Can I deduct my IRA?" — the answer depends on coverage, not just inc
 > proportional reduction, round-up to $10, $200 floor — and routes the
 > nondeductible remainder to Form 8606 / Roth / backdoor:
 >
-> https://calcstack-eight.vercel.app/embed/traditional-ira-deduction-calculator
+> https://calcstack.app/embed/traditional-ira-deduction-calculator
 >
 > One iframe, free forever, runs entirely in the browser.
 >
@@ -101,7 +101,7 @@ Subject: Three verified embeds for the IRMAA / SS-tax / IRA-deduction conversati
 > coverage-based bands from Notice 2025-67 with the $200 floor and round-up
 > rule. All client-side, no signup, free forever:
 >
-> https://calcstack-eight.vercel.app/embeds
+> https://calcstack.app/embeds
 >
 > Happy to prioritize a variant if your readers need one (e.g., IRMAA tier
 > planning across multiple years).

@@ -8,7 +8,7 @@ test-drive before the due date. Parenting blogs get this question on every pregn
 post; embed the tool and let readers price their own situation. Send after Wave 27.
 Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -24,7 +24,7 @@ Subject: The first-year cost answer, as a calculator instead of a scary headline
 > clothes, buffer) and shows what actually drives the total: childcare at 73% of the
 > example budget, $19,640 for the year, $1,637/month:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/baby-first-year-cost-calculator
+> Live demo: https://calcstack.app/embed/baby-first-year-cost-calculator
 >
 > One iframe, free forever, no signup, all math client-side — nothing a reader enters
 > leaves their browser.
@@ -43,7 +43,7 @@ Subject: The daycare-dominated budget, computed for your readers' zip code reali
 > planning guides recommend (live on income minus the baby cost for a few months, bank
 > the difference):
 >
-> https://calcstack-eight.vercel.app/embed/baby-first-year-cost-calculator
+> https://calcstack.app/embed/baby-first-year-cost-calculator
 >
 > One iframe inside any childcare-cost or waitlist guide. Free forever, no signup.
 >
@@ -60,7 +60,7 @@ Subject: A first-year baby budget calculator for your family-finance toolkit
 > and get the monthly number that decides whether the budget survives — plus the
 > second-kid reality check (gear exists, childcare doubles):
 >
-> https://calcstack-eight.vercel.app/embed/baby-first-year-cost-calculator
+> https://calcstack.app/embed/baby-first-year-cost-calculator
 >
 > One iframe, free forever, runs entirely in the browser.
 >
@@ -77,7 +77,7 @@ Subject: The gear is 6% of the first year — show readers the other 94%
 > 6% of a typical first-year budget, next to childcare at 73% — which is genuinely
 > helpful framing for your audience (and makes the case for your value picks):
 >
-> https://calcstack-eight.vercel.app/embed/baby-first-year-cost-calculator
+> https://calcstack.app/embed/baby-first-year-cost-calculator
 >
 > One iframe on any registry-checklist page. Free forever, no signup.
 >

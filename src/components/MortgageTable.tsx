@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { HOME_VALUES } from '@/data/stats'
 import { monthlyPayment, usd } from '@/lib/calc'
 
-const SITE = 'https://calcstack-eight.vercel.app'
+const SITE = 'https://calcstack.app/calcstack'
 
 /** Interactive mortgage-by-state table — used on the data page AND the embed widget. */
 export function MortgageTable({ compact = false }: { compact?: boolean }) {

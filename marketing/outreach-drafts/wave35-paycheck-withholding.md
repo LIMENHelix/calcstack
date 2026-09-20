@@ -11,7 +11,7 @@ real 2026 paystub ($13,275.49 taxable biweekly → $3,228.51 federal) and uses t
 official 2026 brackets (Rev. Proc. 2025-32). That story — the phantom $546k salary —
 is the pitch. Send after Wave 34. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -29,7 +29,7 @@ Subject: Why your reps think their commission check was "taxed at 40%"
 > check, sees the phantom annual salary and the bracket it hit, and learns the
 > over-withholding returns only as a refund:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/paycheck-withholding-calculator
+> Live demo: https://calcstack.app/embed/paycheck-withholding-calculator
 >
 > Verified to the penny against a real 2026 paystub, official Rev. Proc. 2025-32
 > brackets. One iframe, free forever, no signup, all math client-side.
@@ -49,7 +49,7 @@ Subject: The bonus-withholding myth, as an interactive calculator
 > that big. It also shows the fix: the W-4 line that steadies withholding when
 > income is lumpy, and what the over-withholding means for next April's refund:
 >
-> https://calcstack-eight.vercel.app/embed/paycheck-withholding-calculator
+> https://calcstack.app/embed/paycheck-withholding-calculator
 >
 > 2026 brackets and standard deduction, verified against an actual paystub to the
 > penny. One iframe inside any bonus/commission/overtime explainer. Free forever.
@@ -70,7 +70,7 @@ Subject: A paystub-shock calculator for your W-4 guidance
 > gets gutted and what steady-state withholding should look like — which turns your
 > W-4 article from homework into a decision:
 >
-> https://calcstack-eight.vercel.app/embed/paycheck-withholding-calculator
+> https://calcstack.app/embed/paycheck-withholding-calculator
 >
 > One iframe, free forever, runs entirely in the browser — no paystub data leaves
 > the employee's machine.
@@ -91,7 +91,7 @@ Subject: The overtime-check calculator your readers keep asking for
 > what explodes. It's the receipt that overtime is still worth it — and that the
 > "missing" money is a refund, not a loss:
 >
-> https://calcstack-eight.vercel.app/embed/paycheck-withholding-calculator
+> https://calcstack.app/embed/paycheck-withholding-calculator
 >
 > One iframe on any overtime or paycheck breakdown post. Free forever, no signup.
 >

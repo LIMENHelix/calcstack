@@ -5,7 +5,7 @@ math is verified against the same codebooks their inspectors use — NEC, IPC, I
 and the site now covers a full residential plumbing stack, irrigation zone design, rafter-table
 math, and flooring ordering. Send after Wave 11. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -27,8 +27,8 @@ Subject: Free irrigation zone calculator — bucket test to precipitation rate
 > bucket-test supply × 80% vs zone demand, and precipitation rate (96.25 × GPM ÷ sq ft,
 > verified against Hunter's published worked examples) against soil intake:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/irrigation-zone-calculator
-> Full page: https://calcstack-eight.vercel.app/calculators/irrigation-zone-calculator
+> Live demo: https://calcstack.app/embed/irrigation-zone-calculator
+> Full page: https://calcstack.app/calculators/irrigation-zone-calculator
 >
 > One iframe embeds it on any tutorial page — readers design the zone while reading your
 > guide instead of after. Free forever, no signup, all math runs in their browser.
@@ -46,11 +46,11 @@ Subject: Rafter-table math as an embeddable calculator
 > for commons, √(2 + (pitch/12)²) for hips — with ridge deduction, overhang tail on slope,
 > plumb cut angle, and stock round-up:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/rafter-length-calculator
+> Live demo: https://calcstack.app/embed/rafter-length-calculator
 > We also ship a stair calculator with IRC R311.7 checks (7¾" riser, 10" tread, ⅜"
 > uniformity) and a flooring calculator with layout-correct waste factors:
-> https://calcstack-eight.vercel.app/embed/stair-calculator
-> https://calcstack-eight.vercel.app/embed/flooring-calculator
+> https://calcstack.app/embed/stair-calculator
+> https://calcstack.app/embed/flooring-calculator
 >
 > All embed with one iframe, free forever, no signup. Happy to match your page width.
 >
@@ -66,7 +66,7 @@ Subject: A full residential plumbing stack, embeddable
 > drain sizing (IPC 709 DFU → 710 tables, with the ⅛" slope rule), vent sizing (906.1),
 > and water heater sizing (first-hour rating vs tankless BTU at winter inlet temps):
 >
-> https://calcstack-eight.vercel.app/for/plumbers
+> https://calcstack.app/for/plumbers
 >
 > Each embeds individually with one iframe — your how-to articles get an interactive
 > worksheet instead of a static table. Free forever, no signup, math verified against
@@ -85,7 +85,7 @@ Subject: The waste factor is not 10% — embeddable flooring calculator
 > uses the carton coverage from their label, and warns about the attached-pad underlayment
 > warranty trap:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/flooring-calculator
+> Live demo: https://calcstack.app/embed/flooring-calculator
 >
 > It embeds on product or guide pages in 30 seconds — customers order the right box count,
 > which means fewer mid-job returns and dye-lot complaints for you. Free forever, no signup.

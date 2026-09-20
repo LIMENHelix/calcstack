@@ -5,7 +5,7 @@ import { CALCULATORS, CATEGORIES } from '@/data/calculators'
 import { Seo } from '@/components/Seo'
 import { Card, CardContent } from '@/components/ui/card'
 
-const SITE = 'https://calcstack-eight.vercel.app'
+const SITE = 'https://calcstack.app/calcstack'
 
 const SIZES = [
   { key: 'compact', label: 'Compact', height: 520, note: 'sidebars & blogs' },

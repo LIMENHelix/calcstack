@@ -7,7 +7,7 @@ with the reader's own income, spending, and stash, and a safe-withdrawal calcula
 that stress-tests the number with sequence-risk guardrails. The pair covers the whole
 ER decision arc. Send after Wave 23. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -22,12 +22,12 @@ Subject: The shockingly-simple-math table, as an embeddable calculator
 > return. Ours solves the closed form and reproduces the canonical table exactly at 5%
 > real, then shows what each 5-point bump buys in years:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/savings-rate-calculator
+> Live demo: https://calcstack.app/embed/savings-rate-calculator
 >
 > The natural companion is live too — the safe withdrawal calculator for the "will it
 > last 50 years" follow-up, with the 1966-window guardrail built in:
 >
-> https://calcstack-eight.vercel.app/embed/safe-withdrawal-calculator
+> https://calcstack.app/embed/safe-withdrawal-calculator
 >
 > One iframe each, free forever, no signup, all math client-side.
 >
@@ -44,8 +44,8 @@ Subject: Two calculators your FIRE tools page doesn't have
 > any real return) and a safe-withdrawal stress test that shows the year the money runs
 > out under your return and inflation assumptions:
 >
-> https://calcstack-eight.vercel.app/embed/savings-rate-calculator
-> https://calcstack-eight.vercel.app/embed/safe-withdrawal-calculator
+> https://calcstack.app/embed/savings-rate-calculator
+> https://calcstack.app/embed/safe-withdrawal-calculator
 >
 > One iframe each, free forever, runs entirely in the browser.
 >
@@ -62,7 +62,7 @@ Subject: The accumulation-side math for your coast-FIRE readers
 > calculator shows the years-to-FI at any rate with the current stash included — the
 > exact input a coast-FIRE decision needs (when does the heavy-saving phase end?):
 >
-> https://calcstack-eight.vercel.app/embed/savings-rate-calculator
+> https://calcstack.app/embed/savings-rate-calculator
 >
 > One iframe next to any coast-FIRE explainer. Free forever, no signup.
 >
@@ -79,7 +79,7 @@ Subject: The honest mirror for high earners: rate, not income
 > salary at a 10% rate retires later than a modest one at 40%, and every 5-point bump
 > shows up as years:
 >
-> https://calcstack-eight.vercel.app/embed/savings-rate-calculator
+> https://calcstack.app/embed/savings-rate-calculator
 >
 > One iframe inside any savings-rate or lifestyle-creep post. Free forever, no signup.
 >

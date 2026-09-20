@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const SITE = 'https://limenhelix.com' // pathname already carries the /calcstack basename
+const SITE = 'https://calcstack.app' // pathname already carries the /calcstack basename
 
 function setMeta(selector: string, attrs: Record<string, string>, content: string) {
   let tag = document.head.querySelector<HTMLMetaElement>(selector)

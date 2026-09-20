@@ -5,8 +5,8 @@ concrete yards, rebar weight, IRC joist spans, deck boards, fence posts, block c
 volumes, siding squares, paver stacks, roofing bundles, paint, tile, drywall, framing — all with
 editable cost layers. Send after Waves 1–2. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
-Contractor hub (all tools, one link): https://calcstack-eight.vercel.app/for/contractors
+Embed gallery: https://calcstack.app/embeds
+Contractor hub (all tools, one link): https://calcstack.app/for/contractors
 
 ---
 
@@ -22,10 +22,10 @@ Subject: Free materials calculators your project guides can embed
 > fence posts and concrete, concrete yards and mix spec, rebar by weight. Each embeds with one
 > iframe and works fully inside the frame:
 >
-> https://calcstack-eight.vercel.app/embeds
+> https://calcstack.app/embeds
 >
 > Example — the Deck Calculator next to a deck guide gives readers boards, joists, and screws
-> from just length and width: https://calcstack-eight.vercel.app/embed/deck-calculator
+> from just length and width: https://calcstack.app/embed/deck-calculator
 >
 > Free forever, no signup, all math runs in the reader's browser. Happy to build variants
 > (metric, specific lumber sizes) for a specific guide.
@@ -44,9 +44,9 @@ Subject: Your readers' bids are only as good as their material counts — free e
 > 10% over-order rule, rebar with laps) plus an editable cost layer that turns counts into a
 > first-pass bid:
 >
-> Framing: https://calcstack-eight.vercel.app/embed/framing-calculator
-> Concrete: https://calcstack-eight.vercel.app/embed/concrete-calculator
-> Bid sheet (materials + markup + labor in one): https://calcstack-eight.vercel.app/embed/bid-sheet-calculator
+> Framing: https://calcstack.app/embed/framing-calculator
+> Concrete: https://calcstack.app/embed/concrete-calculator
+> Bid sheet (materials + markup + labor in one): https://calcstack.app/embed/bid-sheet-calculator
 >
 > One iframe each, free forever, no signup, nothing tracked. These fit estimating guides and
 > "how to price a job" content perfectly.
@@ -64,7 +64,7 @@ Subject: Free project calculators for your contractor resources page
 > rebar weight, joist spans (IRC table values). Linking them saves your counter staff the same
 > phone math ten times a day:
 >
-> https://calcstack-eight.vercel.app/for/contractors
+> https://calcstack.app/for/contractors
 >
 > All free, no signup, runs in the browser. Individual tools embed on your own pages too.
 >
@@ -77,7 +77,7 @@ inline (IRC table value cited, or the yards formula), link only when it IS the a
 
 Blogs: pitch the Joist Span calculator as the differentiator — it turns IRC R502.3.1(2) into
 a pass/fail check, which no free embeddable tool does:
-https://calcstack-eight.vercel.app/embed/joist-span-calculator
+https://calcstack.app/embed/joist-span-calculator
 
 ## 5. Fence/deck supply companies + installer blogs (Template A)
 
@@ -89,8 +89,8 @@ Subject: Free fence/deck materials calculators — your customers order right th
 > calculators produce the full count — posts with gate doubling, rails by height, boards by
 > style, concrete bags — before the customer calls you:
 >
-> Fence: https://calcstack-eight.vercel.app/embed/fence-calculator
-> Deck: https://calcstack-eight.vercel.app/embed/deck-calculator
+> Fence: https://calcstack.app/embed/fence-calculator
+> Deck: https://calcstack.app/embed/deck-calculator
 >
 > Both embed free on your site (one iframe), which keeps customers on YOUR page while they
 > spec the job they're about to buy from you. No signup, nothing tracked, runs in the browser.

@@ -7,7 +7,7 @@ number dealers count on buyers never computing. Car-buying advice sites get "is 
 lease deal good" questions constantly; embed the tool and let readers run the quote on
 the page. Send after Wave 24. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -24,7 +24,7 @@ Subject: The money-factor-to-APR math your lease guides describe but don't compu
 > cost. Example it computes live: $28,500 cap cost, 60% residual on $30,000 MSRP,
 > 36 months, 0.0025 money factor → $407.92 pre-tax, $4,185 in finance charges:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/car-lease-payment-calculator
+> Live demo: https://calcstack.app/embed/car-lease-payment-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -40,7 +40,7 @@ Subject: A free calculator for "rate this lease deal" threads
 > split the payment into depreciation and finance, convert the money factor. This
 > calculator does exactly that with nothing else in the way — no signup, no lead form:
 >
-> https://calcstack-eight.vercel.app/embed/car-lease-payment-calculator
+> https://calcstack.app/embed/car-lease-payment-calculator
 >
 > It also shows what every $1,000 of cap-cost negotiation is worth per month, which is
 > the number your readers negotiate with. One iframe, free forever.
@@ -58,11 +58,11 @@ Subject: The lease-vs-loan comparison starts with an honest lease payment
 > residual, money factor — not the payment the dealer advertises. Our calculator does
 > that computation and converts the money factor to APR for the apples-to-apples:
 >
-> https://calcstack-eight.vercel.app/embed/car-lease-payment-calculator
+> https://calcstack.app/embed/car-lease-payment-calculator
 >
 > One iframe next to any lease-vs-buy analysis. Free forever, runs entirely in the
 > browser. (Our lease-vs-buy calculator is live too if you want the pair:
-> https://calcstack-eight.vercel.app/embeds)
+> https://calcstack.app/embeds)
 >
 > [Name], CalcStack
 
@@ -77,7 +77,7 @@ Subject: EV lease math for readers comparing the $299/month ads
 > to the payment, what the money factor really costs as APR, and the total over the
 > term — the three numbers the ad leaves out:
 >
-> https://calcstack-eight.vercel.app/embed/car-lease-payment-calculator
+> https://calcstack.app/embed/car-lease-payment-calculator
 >
 > One iframe inside any deal-analysis post. Free forever, no signup, works on mobile
 > (readers use it in the showroom).

@@ -8,7 +8,7 @@ example to the dollar. Labor-rights and payroll blogs get these questions consta
 embed the tool and let readers run it on-page. Send after Wave 17. Personalize every
 [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -25,7 +25,7 @@ Subject: An overtime calculator that handles California's daily rules correctly
 > rules, and no double-counting between daily and weekly overtime. We verified it against
 > the DLSE's own published worked example (8 hours × 7 days at $10 = $640), to the penny:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/overtime-calculator
+> Live demo: https://calcstack.app/embed/overtime-calculator
 >
 > One iframe, free forever, no signup, all math client-side — a reader's wage data never
 > leaves their browser.
@@ -43,7 +43,7 @@ Subject: The daily-overtime errors your readers don't know they're making
 > Our calculator shows both regimes side by side on the same timecard, so the difference
 > is visible in dollars:
 >
-> https://calcstack-eight.vercel.app/embed/overtime-calculator
+> https://calcstack.app/embed/overtime-calculator
 >
 > It's the rare free tool that implements CA §510's daily tiers and 7th-day rules instead
 > of just the FLSA weekly rule. One iframe next to any payroll-compliance post. Free
@@ -62,7 +62,7 @@ Subject: A free CA daily-overtime calculator for your California payroll guide
 > 12), the 7th-consecutive-day rule, and the weekly-rule interaction without double-counting
 > — verified against the Labor Commissioner's published example:
 >
-> https://calcstack-eight.vercel.app/embed/overtime-calculator
+> https://calcstack.app/embed/overtime-calculator
 >
 > One iframe embeds it into any California overtime guide. Free forever, runs entirely in
 > the browser.
@@ -80,7 +80,7 @@ Subject: What that extra shift actually costs before you approve it
 > hours before the schedule is published — including the California daily tiers if you
 > operate there:
 >
-> https://calcstack-eight.vercel.app/embed/overtime-calculator
+> https://calcstack.app/embed/overtime-calculator
 >
 > It embeds with one iframe on any labor-cost or scheduling post. Free forever, no signup.
 >

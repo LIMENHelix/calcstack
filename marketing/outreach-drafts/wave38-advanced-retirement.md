@@ -10,7 +10,7 @@ statute — AIME through the 2026 bend points ($1,286/$7,749) with the round-dow
 rule, verified against SSA's published anchors. Send after Wave 37. Personalize
 every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -28,7 +28,7 @@ Subject: The pro-rata rule, as an interactive calculator
 > conversion goes clean. It turns your cautionary footnote into the interactive
 > moment that actually changes behavior:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/backdoor-roth-pro-rata-calculator
+> Live demo: https://calcstack.app/embed/backdoor-roth-pro-rata-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -48,8 +48,8 @@ Subject: Two calculators your backdoor Roth readers need before December
 > after-tax room on a typical attending salary, worth $188,959 more over 20 years
 > converted than left after-tax:
 >
-> https://calcstack-eight.vercel.app/embed/backdoor-roth-pro-rata-calculator
-> https://calcstack-eight.vercel.app/embed/mega-backdoor-roth-calculator
+> https://calcstack.app/embed/backdoor-roth-pro-rata-calculator
+> https://calcstack.app/embed/mega-backdoor-roth-calculator
 >
 > One iframe each, free forever, runs entirely in the browser.
 >
@@ -69,7 +69,7 @@ Subject: The mega backdoor calculator for your RSU/bonus audience
 > converting $37,500/yr for 20 years at 7% = $1.54M tax-free versus $1.35M
 > left after-tax. It's the comments-section argument, settled:
 >
-> https://calcstack-eight.vercel.app/embed/mega-backdoor-roth-calculator
+> https://calcstack.app/embed/mega-backdoor-roth-calculator
 >
 > One iframe on any total-comp or benefits explainer. Free forever.
 >
@@ -89,7 +89,7 @@ Subject: Social Security as the actual statute — bend points and all
 > 40.8% at $8,000), and the exact 62-vs-70 swing on their own record. It pairs
 > naturally with your claiming-strategy content:
 >
-> https://calcstack-eight.vercel.app/embed/social-security-pia-calculator
+> https://calcstack.app/embed/social-security-pia-calculator
 >
 > One iframe, free forever, no signup.
 >

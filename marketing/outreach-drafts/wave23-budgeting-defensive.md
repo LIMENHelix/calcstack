@@ -7,7 +7,7 @@ minimum-payment trap simulated with the issuer's actual formula, and avalanche-v
 snowball as an exact dollar difference instead of doctrine. Send after Wave 22.
 Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -22,14 +22,14 @@ Subject: Three calculators for the three moves every budget pushes toward
 > calculator for each, and each embeds with one iframe:
 >
 > Emergency fund (essentials × coverage months, with a finish date):
-> https://calcstack-eight.vercel.app/embed/emergency-fund-calculator
+> https://calcstack.app/embed/emergency-fund-calculator
 >
 > Minimum-payment trap (issuer's real formula — $5,000 at 22% takes 18.9 years on
 > minimums, 58 months on a frozen payment):
-> https://calcstack-eight.vercel.app/embed/credit-card-minimum-payment-calculator
+> https://calcstack.app/embed/credit-card-minimum-payment-calculator
 >
 > Avalanche vs snowball (exact dollar and month difference on the reader's own debts):
-> https://calcstack-eight.vercel.app/embed/debt-avalanche-snowball-calculator
+> https://calcstack.app/embed/debt-avalanche-snowball-calculator
 >
 > Free forever, no signup, all math client-side.
 >
@@ -47,8 +47,8 @@ Subject: A baby-step 1 and baby-step 2 calculator pair
 > what the snowball costs in dollars — which is usually small enough that the
 > motivation argument wins honestly:
 >
-> https://calcstack-eight.vercel.app/embed/emergency-fund-calculator
-> https://calcstack-eight.vercel.app/embed/debt-avalanche-snowball-calculator
+> https://calcstack.app/embed/emergency-fund-calculator
+> https://calcstack.app/embed/debt-avalanche-snowball-calculator
 >
 > One iframe each, free forever, no signup.
 >
@@ -65,7 +65,7 @@ Subject: Free embeddable tools for client education
 > matches the CARD Act disclosure on the client's own statement, and a payoff-order
 > simulator for multi-debt clients:
 >
-> https://calcstack-eight.vercel.app/embeds
+> https://calcstack.app/embeds
 >
 > One iframe each, free forever, no signup, nothing the client enters leaves their
 > browser — a fit for counseling contexts where data privacy matters.
@@ -83,7 +83,7 @@ Subject: The "where did my payment go" calculator your audience keeps asking for
 > minimum formula stretched over 18.9 years on a $5,000 balance, then the one change
 > (freeze the payment) that cuts it to 58 months and saves $4,842:
 >
-> https://calcstack-eight.vercel.app/embed/credit-card-minimum-payment-calculator
+> https://calcstack.app/embed/credit-card-minimum-payment-calculator
 >
 > Free forever, no signup, works on mobile.
 >

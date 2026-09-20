@@ -9,7 +9,7 @@ correct lesser-of rule (a major tax site's own worked example overstates it by
 $1,900 — we checked) and this is the calculator tax-planning content deserves.
 Send after Wave 31. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -26,7 +26,7 @@ Subject: Your capital gains posts explain the rates — this calculator shows th
 > gain → $28,900 at 0%, only $11,100 at 15%, $1,665 total. That's the aha your
 > articles set up:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/capital-gains-tax-calculator
+> Live demo: https://calcstack.app/embed/capital-gains-tax-calculator
 >
 > 2026 breakpoints per IRS Rev. Proc. 2025-32, NIIT included. One iframe, free
 > forever, all math client-side.
@@ -47,7 +47,7 @@ Subject: A year-end sale-planning tool that gets the NIIT right
 > holding line: the same gain at ordinary rates vs 15% is often thousands of dollars
 > for waiting a month:
 >
-> https://calcstack-eight.vercel.app/embed/capital-gains-tax-calculator
+> https://calcstack.app/embed/capital-gains-tax-calculator
 >
 > One iframe inside any tax-loss harvesting or year-end checklist post. Free forever.
 >
@@ -66,7 +66,7 @@ Subject: Crypto gains are capital gains — give readers the real stacking math
 > forgets. The short-term line is the behavioral fix: seeing the same gain taxed at
 > 32% vs 15% is what convinces readers to wait:
 >
-> https://calcstack-eight.vercel.app/embed/capital-gains-tax-calculator
+> https://calcstack.app/embed/capital-gains-tax-calculator
 >
 > One iframe, free forever, no signup, nothing they enter leaves the browser.
 >
@@ -83,7 +83,7 @@ Subject: The 0% capital gains bracket is a retirement tool — show readers thei
 > the 0% ceiling this year — $49,450 single, $98,900 joint for 2026, minus whatever
 > ordinary income already filled. This calculator computes the room directly:
 >
-> https://calcstack-eight.vercel.app/embed/capital-gains-tax-calculator
+> https://calcstack.app/embed/capital-gains-tax-calculator
 >
 > Pairs naturally with your Roth-ladder content. One iframe, free forever.
 >

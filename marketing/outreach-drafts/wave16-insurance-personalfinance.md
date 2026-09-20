@@ -8,7 +8,7 @@ five minutes. Our calculator shows the rule and the gap side by side, which is e
 the buy-term-and-invest-the-difference test with the reader's own two quotes. Send after
 Wave 15. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -25,15 +25,15 @@ Subject: The DIME worksheet your clients should do before the first meeting
 > (the default worked example lands $440k apart — the moment the rule of thumb stops feeling
 > safe):
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/life-insurance-calculator
-> Full page: https://calcstack-eight.vercel.app/calculators/life-insurance-calculator
+> Live demo: https://calcstack.app/embed/life-insurance-calculator
+> Full page: https://calcstack.app/calculators/life-insurance-calculator
 >
 > And when the client asks the follow-up — "so term or whole life?" — the companion
 > calculator runs the buy-term-and-invest-the-difference test with their actual two quotes:
 > premiums paid on both sides, the difference compounded, and each side's end position
 > (what you hold minus what you paid). With typical quotes the gap is six figures:
 >
-> https://calcstack-eight.vercel.app/embed/term-vs-whole-life-calculator
+> https://calcstack.app/embed/term-vs-whole-life-calculator
 >
 > One iframe embeds either on your site as client homework. Free forever, no signup, runs
 > entirely in the browser — no client data leaves their machine.
@@ -52,7 +52,7 @@ Subject: How much life insurance does a new parent actually need?
 > have. Our calculator walks the four inputs and shows the 10× rule next to it so parents
 > can see the gap themselves:
 >
-> https://calcstack-eight.vercel.app/embed/life-insurance-calculator
+> https://calcstack.app/embed/life-insurance-calculator
 >
 > It embeds with one iframe on any new-parent finance checklist. Free forever, no signup,
 > no email gate — the number belongs to the reader, not a lead form.
@@ -70,11 +70,11 @@ Subject: An embeddable answer to "how much term life do I need"
 > with the 10× rule and its dollar gap displayed — and it links clean in a description or
 > embeds on a resource page:
 >
-> https://calcstack-eight.vercel.app/calculators/life-insurance-calculator
+> https://calcstack.app/calculators/life-insurance-calculator
 >
 > Also useful for your audience: a full money stack — net worth, savings goals, safe
 > withdrawal, Social Security breakeven — all embeddable, all free forever, no signup.
-> https://calcstack-eight.vercel.app/embeds
+> https://calcstack.app/embeds
 >
 > [Name], CalcStack
 
@@ -89,7 +89,7 @@ Subject: The coverage-gap calculator for your estate-planning checklist
 > with the gap in dollars, plus the term-vs-permanent framing your readers need (term for
 > the mortgage-and-kids window, permanent for estate liquidity and final expenses):
 >
-> https://calcstack-eight.vercel.app/embed/life-insurance-calculator
+> https://calcstack.app/embed/life-insurance-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >

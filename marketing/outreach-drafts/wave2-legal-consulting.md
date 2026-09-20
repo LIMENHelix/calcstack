@@ -1,7 +1,7 @@
 # Wave 2 outreach drafts — legal & consulting
 
 Ready-to-send after Wave 1. Personalize every [bracket]. One send per day.
-Embed gallery to reference: https://calcstack-eight.vercel.app/embeds
+Embed gallery to reference: https://calcstack.app/embeds
 
 ---
 
@@ -20,12 +20,12 @@ Subject: Embeddable billable-hours calculator for your practice-management reade
 > exactly that: target revenue, hourly rate, utilization % → required billable
 > hours per week/month, with the non-billable reality baked in.
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/billable-hours-calculator
-> Full page: https://calcstack-eight.vercel.app/calculators/billable-hours-calculator
+> Live demo: https://calcstack.app/embed/billable-hours-calculator
+> Full page: https://calcstack.app/calculators/billable-hours-calculator
 >
 > There's also a Realization Rate calculator — billed vs collected, what a
 > discount or write-off actually does to effective hourly value:
-> https://calcstack-eight.vercel.app/embed/realization-rate-calculator
+> https://calcstack.app/embed/realization-rate-calculator
 >
 > Both embed with one iframe, free forever, no signup, and everything computes in
 > the reader's browser. Happy to build a variant with law-firm-specific defaults
@@ -50,13 +50,13 @@ Subject: Free realization-rate tool — readers see what write-offs really cost
 > collected amounts, and get their realization rate plus the effective hourly value
 > they're actually earning.
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/realization-rate-calculator
-> Full page: https://calcstack-eight.vercel.app/calculators/realization-rate-calculator
+> Live demo: https://calcstack.app/embed/realization-rate-calculator
+> Full page: https://calcstack.app/calculators/realization-rate-calculator
 >
 > One iframe, works in WordPress Custom HTML blocks, free forever, no signup,
 > nothing tracked — the math runs in the reader's browser. A companion Billable
 > Hours calculator (revenue target → weekly hours required) is here if it fits:
-> https://calcstack-eight.vercel.app/embed/billable-hours-calculator
+> https://calcstack.app/embed/billable-hours-calculator
 >
 > Glad to customize inputs for a specific column.
 >
@@ -77,11 +77,11 @@ Subject: Two free embeddable tools for the BigLaw audience
 >
 > 1. Loan Payoff — the "how fast can I kill $200k of law school debt on a Cravath
 >    scale salary" question. Extra payments, payoff date, interest saved.
->    https://calcstack-eight.vercel.app/embed/loan-payoff-calculator
+>    https://calcstack.app/embed/loan-payoff-calculator
 >
 > 2. Billable Hours — what a bonus-hours threshold or utilization target means in
 >    actual weekly hours.
->    https://calcstack-eight.vercel.app/embed/billable-hours-calculator
+>    https://calcstack.app/embed/billable-hours-calculator
 >
 > Both embed with one iframe, free, no signup, all client-side math. Happy to add
 > a variant with BigLaw-specific defaults (market bonus scale, 2,000-hour targets).
@@ -105,12 +105,12 @@ Subject: Embeddable day-rate calculator for your pricing content
 > income target, business costs, billable days → required day rate, with the
 > effective-vs-stated rate gap shown.
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/consultant-day-rate-calculator
-> Full page: https://calcstack-eight.vercel.app/calculators/consultant-day-rate-calculator
+> Live demo: https://calcstack.app/embed/consultant-day-rate-calculator
+> Full page: https://calcstack.app/calculators/consultant-day-rate-calculator
 >
 > One iframe, free forever, no signup, everything client-side. There's also a
 > Realization Rate calculator for the proposal-to-cash gap:
-> https://calcstack-eight.vercel.app/embed/realization-rate-calculator
+> https://calcstack.app/embed/realization-rate-calculator
 >
 > Happy to build a variant with consulting-specific presets if useful.
 >

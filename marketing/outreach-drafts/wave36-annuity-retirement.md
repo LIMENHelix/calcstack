@@ -9,7 +9,7 @@ annuity any good?" into a Treasury-yield comparison — and it pairs with our pe
 lump-sum-vs-annuity tool, which computes the breakeven age on the same decision.
 Send after Wave 35. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -26,7 +26,7 @@ Subject: The implied-rate test your annuity posts are missing
 > math forward: what $100k pays at any rate, and the 0% floor nobody quotes. It turns
 > your framework article into an interactive worksheet:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/annuity-payout-calculator
+> Live demo: https://calcstack.app/embed/annuity-payout-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -46,7 +46,7 @@ Subject: A calculator that grades annuity quotes in implied-rate terms
 > life annuity LEGITIMATELY beats amortization math — the honest version of your
 > argument, not the scare version:
 >
-> https://calcstack-eight.vercel.app/embed/annuity-payout-calculator
+> https://calcstack.app/embed/annuity-payout-calculator
 >
 > One iframe inside any annuity-costs explainer. Free forever.
 >
@@ -65,8 +65,8 @@ Subject: The two tools your pension lump-sum readers need side by side
 > pension lump-sum tool computes how long the lump lasts drawing identical income
 > and the exact age where the pension overtakes it:
 >
-> https://calcstack-eight.vercel.app/embed/annuity-payout-calculator
-> https://calcstack-eight.vercel.app/embed/pension-lump-sum-vs-annuity-calculator
+> https://calcstack.app/embed/annuity-payout-calculator
+> https://calcstack.app/embed/pension-lump-sum-vs-annuity-calculator
 >
 > One iframe each, free forever, runs entirely in the browser — no pension details
 > leave the reader's machine.
@@ -86,7 +86,7 @@ Subject: The client-education calculator for annuity second opinions
 > implied rate before signing" is the whole game. It sends them to your calendar
 > already understanding the framework:
 >
-> https://calcstack-eight.vercel.app/embed/annuity-payout-calculator
+> https://calcstack.app/embed/annuity-payout-calculator
 >
 > One iframe on your annuity-review or client-education page. Free forever.
 >

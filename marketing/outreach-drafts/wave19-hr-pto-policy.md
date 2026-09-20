@@ -8,7 +8,7 @@ workforces actually use. HR blogs and small-business policy writers get "how muc
 should I offer / do I have?" questions constantly; embed the tool and let readers run it.
 Send after Wave 18. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -24,7 +24,7 @@ Subject: The PTO accrual math your policy articles stop short of
 > or per-hours-worked accrual (1-per-30 California sick leave style), any pay frequency,
 > accrual caps with the exact hours lost, and the ending balance in hours and days:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/pto-accrual-calculator
+> Live demo: https://calcstack.app/embed/pto-accrual-calculator
 >
 > One iframe, free forever, no signup, all math client-side — nothing an employee enters
 > leaves their browser.
@@ -42,7 +42,7 @@ Subject: A PTO calculator that shows what your policy actually costs
 > is 4.62 hours per biweekly check, and a 120-hour cap with 100 hours banked silently
 > erases about 100 hours of accrual if the employee takes nothing:
 >
-> https://calcstack-eight.vercel.app/embed/pto-accrual-calculator
+> https://calcstack.app/embed/pto-accrual-calculator
 >
 > It also covers the per-hours-worked method hourly workforces use, and the page notes
 > where use-it-or-lose-it forfeiture is flatly illegal (California, Montana, Nebraska).
@@ -61,7 +61,7 @@ Subject: A free accrual-projection tool for your PTO tracking guide
 > the projection layer on top of any payroll setup — current balance, per-period accrual,
 > planned usage, year-end balance:
 >
-> https://calcstack-eight.vercel.app/embed/pto-accrual-calculator
+> https://calcstack.app/embed/pto-accrual-calculator
 >
 > One iframe embeds it in any PTO-tracking or payroll-setup guide. Free forever, no
 > signup, runs entirely in the browser.
@@ -80,7 +80,7 @@ Subject: Sick leave accrual (1-per-30) as an embeddable calculator
 > statutory floor, and part-time scales automatically — plus the front-load alternative
 > and the accrual-cap vs forfeiture distinction:
 >
-> https://calcstack-eight.vercel.app/embed/pto-accrual-calculator
+> https://calcstack.app/embed/pto-accrual-calculator
 >
 > One iframe on any California sick-leave explainer. Free forever, no signup.
 >

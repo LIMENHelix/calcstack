@@ -2,7 +2,7 @@ import { useParams } from 'react-router'
 import { MortgageTable } from '@/components/MortgageTable'
 import { SalaryTable } from '@/components/SalaryTable'
 
-const SITE = 'https://calcstack-eight.vercel.app'
+const SITE = 'https://calcstack.app/calcstack'
 
 const TABLES: Record<string, { title: string; path: string; El: () => React.ReactElement }> = {
   'mortgage-by-state': {

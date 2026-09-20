@@ -10,7 +10,7 @@ in 2019). And the Bompa periodization planner turns a competition date into a
 dated macrocycle — the spreadsheet every coach builds by hand. Send after Wave
 40. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -27,7 +27,7 @@ Subject: The marathon predictor that shows its own error bars
 > nobody includes: predictions assume distance-appropriate training, and the
 > model breaks past the marathon. Your pace-chart readers get the honest version:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/race-time-predictor-calculator
+> Live demo: https://calcstack.app/embed/race-time-predictor-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -46,7 +46,7 @@ Subject: Wilks vs DOTS in one calculator — including why Wilks was retired
 > favoring heavier bodyweights. It also inverts the math: exact pounds needed
 > for the next 50-point DOTS milestone at the reader's current body weight:
 >
-> https://calcstack-eight.vercel.app/embed/wilks-score-calculator
+> https://calcstack.app/embed/wilks-score-calculator
 >
 > One iframe on any scoring-systems explainer or meet-prep article. Free forever.
 >
@@ -65,7 +65,7 @@ Subject: The Bompa macrocycle, generated instead of spreadsheeted
 > anatomical adaptation block Bompa insists on. It's the planning chapter of
 > Periodization Training for Sports as a tool:
 >
-> https://calcstack-eight.vercel.app/embed/periodization-planner
+> https://calcstack.app/embed/periodization-planner
 >
 > One iframe, free forever, runs entirely in the browser.
 >
@@ -84,9 +84,9 @@ Subject: Three evidence-based training calculators worth embedding together
 > reader's competition. All three are single iframes, all free, all computed
 > client-side:
 >
-> https://calcstack-eight.vercel.app/embed/race-time-predictor-calculator
-> https://calcstack-eight.vercel.app/embed/wilks-score-calculator
-> https://calcstack-eight.vercel.app/embed/periodization-planner
+> https://calcstack.app/embed/race-time-predictor-calculator
+> https://calcstack.app/embed/wilks-score-calculator
+> https://calcstack.app/embed/periodization-planner
 >
 > [Name], CalcStack
 

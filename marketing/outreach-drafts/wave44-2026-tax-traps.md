@@ -13,7 +13,7 @@ before the 2027 Saver's Match), and student-loan-interest round out the
 filing-season set. Send after Wave 43. Personalize every [bracket]. One per
 day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -32,7 +32,7 @@ Subject: Your 2026 QBI threshold number is probably the bracket boundary (check 
 > widened phase-in with correct SSTB applicable-percentage scaling, and the
 > W-2/UBIA limit — including the zero-wage solo-owner trap:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/qbi-deduction-calculator
+> Live demo: https://calcstack.app/embed/qbi-deduction-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -53,7 +53,7 @@ Subject: OBBBA quietly pulled ISO exercisers back into AMT range for 2026
 > Form 6251 core with the new numbers — exemption after phase-out, 26%/28%
 > TMT, AMT owed, and the marginal-rate warning:
 >
-> https://calcstack-eight.vercel.app/embed/amt-calculator
+> https://calcstack.app/embed/amt-calculator
 >
 > One iframe, free forever, no signup.
 >
@@ -74,7 +74,7 @@ Subject: The 400% cliff is back — your 2026 subsidy page needs the reverted ta
 > Form 8962 interpolation with all three FPL regions and shows cliff headroom
 > in dollars:
 >
-> https://calcstack-eight.vercel.app/embed/aca-subsidy-calculator
+> https://calcstack.app/embed/aca-subsidy-calculator
 >
 > One iframe, free forever, runs entirely in the browser.
 >
@@ -95,7 +95,7 @@ Subject: Three refundable-or-not credits your readers leave unclaimed — with l
 > $1 of AGI can cost $600; (3) student loan interest — above-the-line, but
 > phasing out at $85k–$100k:
 >
-> https://calcstack-eight.vercel.app/embeds
+> https://calcstack.app/embeds
 >
 > All free forever, no signup, client-side — safe to recommend to clients.
 >

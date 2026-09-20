@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /calcstack/embed/
 
-Sitemap: https://limenhelix.com/calcstack/sitemap.xml
+Sitemap: https://calcstack.app/calcstack/sitemap.xml

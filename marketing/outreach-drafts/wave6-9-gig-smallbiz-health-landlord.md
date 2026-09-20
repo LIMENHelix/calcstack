@@ -1,7 +1,7 @@
 # Wave 6–9 outreach drafts — gig, small business, healthcare, landlords
 
 Ready-to-send after Waves 3–5. Personalize every [bracket]. One send per day.
-Embed gallery to reference: https://calcstack-eight.vercel.app/embeds
+Embed gallery to reference: https://calcstack.app/embeds
 
 ---
 
@@ -12,7 +12,7 @@ Embed gallery to reference: https://calcstack-eight.vercel.app/embeds
 These communities ban self-promo on sight. Be a driver who happens to have a tool:
 - Answer "what am I really making" threads with the math INLINE:
   earnings − (miles × per-mile cost) − tax set-aside = true hourly.
-- Link https://calcstack-eight.vercel.app/calculators/gig-driver-hourly-calculator
+- Link https://calcstack.app/calculators/gig-driver-hourly-calculator
   only when it IS the answer, disclosed ("I built this").
 - 10 genuine no-link answers per 1 link. One ban here poisons the niche.
 
@@ -29,12 +29,12 @@ Subject: True-hourly calculator your readers will re-run weekly — embeddable
 > per-mile cost, and tax set-aside → true hourly, with the IRS-mileage-method
 > comparison baked in:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/gig-driver-hourly-calculator
-> Full page: https://calcstack-eight.vercel.app/calculators/gig-driver-hourly-calculator
+> Live demo: https://calcstack.app/embed/gig-driver-hourly-calculator
+> Full page: https://calcstack.app/calculators/gig-driver-hourly-calculator
 >
 > And for tax season content: Mileage vs Actual Expense — which method wins for
 > their specific car and miles:
-> https://calcstack-eight.vercel.app/embed/mileage-vs-actual-expense-calculator
+> https://calcstack.app/embed/mileage-vs-actual-expense-calculator
 >
 > One iframe each, free forever, no signup, all math in the reader's browser.
 > Happy to add platform-specific presets (DD/UE/Amazon Flex) if useful.
@@ -58,10 +58,10 @@ Subject: Quarterly-estimated-tax calculator for your 1099 readers
 > be?" and the IRS worksheet is miserable. I built a free calculator that walks
 > income, deductions, and self-employment tax to a per-quarter number:
 >
-> https://calcstack-eight.vercel.app/embed/quarterly-estimated-tax-calculator
+> https://calcstack.app/embed/quarterly-estimated-tax-calculator
 >
 > Pairs with the mileage deduction calculator for the same audience:
-> https://calcstack-eight.vercel.app/embed/mileage-deduction-calculator
+> https://calcstack.app/embed/mileage-deduction-calculator
 >
 > One iframe, free forever, no signup, nothing tracked. Glad to adjust for your
 > coverage.
@@ -83,11 +83,11 @@ Subject: Free small-business calculator toolkit for your resources page
 > weekly:
 >
 > - Employee True Cost (what a hire actually costs beyond salary):
->   https://calcstack-eight.vercel.app/calculators/employee-true-cost-calculator
+>   https://calcstack.app/calculators/employee-true-cost-calculator
 > - Cash Runway (months of cash left at current burn):
->   https://calcstack-eight.vercel.app/calculators/cash-runway-calculator
+>   https://calcstack.app/calculators/cash-runway-calculator
 > - Break-Even (units/revenue needed to cover fixed costs):
->   https://calcstack-eight.vercel.app/calculators/break-even-calculator
+>   https://calcstack.app/calculators/break-even-calculator
 >
 > All free forever, no signup, no tracking — everything computes locally in the
 > visitor's browser. Each is also embeddable if you'd rather host them on your
@@ -113,7 +113,7 @@ Subject: "What does office space really cost?" — free embeddable calculator
 > commercial lease calculator that adds base rent, NNN/CAM, and escalations into
 > the true monthly and per-sqft number:
 >
-> https://calcstack-eight.vercel.app/embed/commercial-lease-calculator
+> https://calcstack.app/embed/commercial-lease-calculator
 >
 > One iframe, free forever, no signup, client-side math. Evergreen fit for any
 > "cost of office space" post.
@@ -132,7 +132,7 @@ Subject: "What does an employee actually cost me?" — embeddable answer
 > free calculator shows the full stack: salary, employer FICA, unemployment,
 > workers' comp, benefits, overhead allocation:
 >
-> https://calcstack-eight.vercel.app/embed/employee-true-cost-calculator
+> https://calcstack.app/embed/employee-true-cost-calculator
 >
 > One iframe, free, no signup, nothing tracked. Glad to customize defaults.
 >
@@ -155,7 +155,7 @@ Subject: Free open-enrollment toolkit for your readers (no signup, runs locally)
 > and the Medicare deadline strip (Oct 15–Dec 7) — all free, no signup, all math
 > in the reader's browser:
 >
-> https://calcstack-eight.vercel.app/open-enrollment
+> https://calcstack.app/open-enrollment
 >
 > One link covers the whole season for your audience. Individual tools embed too.
 >
@@ -173,7 +173,7 @@ Subject: "What is my HSA worth in 20 years?" — free embeddable calculator
 > rarely see the compounding made concrete. Our free HSA Growth calculator shows
 > contributions compounding to a 20/30-year balance, invested vs spent:
 >
-> https://calcstack-eight.vercel.app/embed/hsa-growth-calculator
+> https://calcstack.app/embed/hsa-growth-calculator
 >
 > One iframe, free forever, no signup, all client-side. Happy to match your
 > default contribution limits for the current year.
@@ -184,7 +184,7 @@ Subject: "What is my HSA worth in 20 years?" — free embeddable calculator
 
 Template C: answer "HDHP or PPO?" threads with total-cost math inline (premiums +
 expected claims vs deductible/OOP max + HSA tax savings). Link
-https://calcstack-eight.vercel.app/calculators/health-plan-comparison-calculator
+https://calcstack.app/calculators/health-plan-comparison-calculator
 only when it IS the answer. Off-season it reads as spam — calendar this for October.
 
 ## 33. FIRE blogs (Root of Good, Millennial Revolution, Mad Fientist)
@@ -199,9 +199,9 @@ Subject: The #1 early-retirement question, as an embeddable tool
 > Two free calculators built for exactly that:
 >
 > - COBRA Cost — what keeping the old plan actually costs, 102% premium included:
->   https://calcstack-eight.vercel.app/embed/cobra-cost-calculator
+>   https://calcstack.app/embed/cobra-cost-calculator
 > - Health Plan Comparison — ACA options side by side on total expected cost:
->   https://calcstack-eight.vercel.app/embed/health-plan-comparison-calculator
+>   https://calcstack.app/embed/health-plan-comparison-calculator
 >
 > One iframe each, free forever, no signup, nothing tracked. Glad to customize.
 >
@@ -210,7 +210,7 @@ Subject: The #1 early-retirement question, as an embeddable tool
 ## 34. Medicare-adjacent sites (MedicareWire, 65 Incorporated)
 
 Pitch LINK, not embed (their platforms vary). The hook is the hub's Medicare
-deadline strip: https://calcstack-eight.vercel.app/open-enrollment
+deadline strip: https://calcstack.app/open-enrollment
 
 ---
 
@@ -221,7 +221,7 @@ deadline strip: https://calcstack-eight.vercel.app/open-enrollment
 Forums first (2 weeks of Template C answers on depreciation and proration threads
 BEFORE pitching anything). Then blog pitch: BRRRR Calculator embed — their
 flagship strategy as an on-page tool:
-https://calcstack-eight.vercel.app/embed/brrrr-calculator
+https://calcstack.app/embed/brrrr-calculator
 
 ## 36. Landlord software blogs (Avail, TurboTenant, Stessa, RentRedi)
 
@@ -236,9 +236,9 @@ Subject: Free prorated-rent and depreciation calculators for your resources blog
 > mid-month move-in?" and "what's my depreciation on this rental?" Free calculators
 > for both:
 >
-> - Prorated Rent: https://calcstack-eight.vercel.app/embed/prorated-rent-calculator
+> - Prorated Rent: https://calcstack.app/embed/prorated-rent-calculator
 > - Rental Depreciation (27.5-yr residential schedule):
->   https://calcstack-eight.vercel.app/embed/rental-depreciation-calculator
+>   https://calcstack.app/embed/rental-depreciation-calculator
 >
 > One iframe each, free forever, no signup, all math client-side. Happy to
 > customize defaults for your audience.
@@ -248,7 +248,7 @@ Subject: Free prorated-rent and depreciation calculators for your resources blog
 ## 37. Real-estate investor YouTube channels
 
 **Pitch:** BRRRR embed for deal-analysis videos; offer co-branded embed if asked.
-https://calcstack-eight.vercel.app/embed/brrrr-calculator
+https://calcstack.app/embed/brrrr-calculator
 
 ## 38. /r/Landlord + state landlord associations
 
@@ -258,7 +258,7 @@ State associations' resource pages: Template B, pitch the two landlord calculato
 ## 39. Tax-time cross-pitch (Feb–Apr): CPA/tax-prep blogs serving investors
 
 **Pitch:** Rental Depreciation for Schedule E content — Template A.
-https://calcstack-eight.vercel.app/embed/rental-depreciation-calculator
+https://calcstack.app/embed/rental-depreciation-calculator
 
 ---
 

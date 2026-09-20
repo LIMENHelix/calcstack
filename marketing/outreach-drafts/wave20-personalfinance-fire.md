@@ -8,7 +8,7 @@ and what a contribution really costs take-home pay after the tax saving. The mat
 take-home-cost lines are the parts readers screenshot. Send after Wave 19. Personalize
 every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -24,7 +24,7 @@ Subject: The 401(k) math your "how much should I contribute" post doesn't show
 > contributes 4% into a 6% match ($850 a year on an $85k salary), and the real take-home
 > cost after the pre-tax saving ($8,500 deferred costs $6,630 at a 22% marginal rate):
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/401k-contribution-calculator
+> Live demo: https://calcstack.app/embed/401k-contribution-calculator
 >
 > One iframe, free forever, no signup, all math client-side — nothing a reader enters
 > leaves their browser.
@@ -44,7 +44,7 @@ Subject: Max-out percentage math for the savings-rate crowd
 > and separates the employer match from the deferral limit correctly, which most free
 > tools get wrong:
 >
-> https://calcstack-eight.vercel.app/embed/401k-contribution-calculator
+> https://calcstack.app/embed/401k-contribution-calculator
 >
 > One iframe next to any savings-rate or max-out guide. Free forever, no signup.
 >
@@ -61,7 +61,7 @@ Subject: A calculator for the scariest form at a first job
 > it actually costs take-home after the tax saving, and the employer match they'd forfeit
 > by under-contributing:
 >
-> https://calcstack-eight.vercel.app/embed/401k-contribution-calculator
+> https://calcstack.app/embed/401k-contribution-calculator
 >
 > It embeds with one iframe in any first-job or open-enrollment guide. Free forever,
 > runs entirely in the browser.
@@ -79,7 +79,7 @@ Subject: Open enrollment content that answers "what happens to my paycheck"
 > frequency, tax savings at the reader's marginal rate, and the net take-home cost,
 > which is always smaller than people fear:
 >
-> https://calcstack-eight.vercel.app/embed/401k-contribution-calculator
+> https://calcstack.app/embed/401k-contribution-calculator
 >
 > One iframe, free forever, no signup.
 >

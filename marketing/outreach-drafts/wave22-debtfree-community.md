@@ -8,7 +8,7 @@ month difference. It even validates the Ramsey position honestly: when the diffe
 small, motivation wins, and the page says so. Send after Wave 21. Personalize every
 [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -25,7 +25,7 @@ Subject: Settle the avalanche/snowball debate with your readers' actual debts
 > saves $296 and 2 months. Sometimes it's thousands, sometimes it's nearly nothing, and
 > knowing which changes the answer:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/debt-avalanche-snowball-calculator
+> Live demo: https://calcstack.app/embed/debt-avalanche-snowball-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -43,7 +43,7 @@ Subject: A snowball calculator that also shows what snowball costs
 > When the difference is $300 over three years, "pick what keeps you going" is the right
 > advice, and the math now proves it instead of just asserting it:
 >
-> https://calcstack-eight.vercel.app/embed/debt-avalanche-snowball-calculator
+> https://calcstack.app/embed/debt-avalanche-snowball-calculator
 >
 > One iframe in any baby-step-2 guide. Free forever, no signup.
 >
@@ -60,7 +60,7 @@ Subject: A free tool for your "which debt first" videos
 > debts and see both strategies simulated on their actual numbers — months to debt-free,
 > interest each way, and the payoff order:
 >
-> https://calcstack-eight.vercel.app/embed/debt-avalanche-snowball-calculator
+> https://calcstack.app/embed/debt-avalanche-snowball-calculator
 >
 > Free forever, no signup, works on mobile. Your viewers run their own numbers instead
 > of asking in the comments.
@@ -78,7 +78,7 @@ Subject: The payoff-order math your balance-transfer readers need next
 > simulates avalanche vs snowball on their exact debts with real monthly interest
 > accrual, so they can see what the order is worth in dollars:
 >
-> https://calcstack-eight.vercel.app/embed/debt-avalanche-snowball-calculator
+> https://calcstack.app/embed/debt-avalanche-snowball-calculator
 >
 > One iframe beside any debt-strategy article. Free forever, runs entirely in the
 > browser.

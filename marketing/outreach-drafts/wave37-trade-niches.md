@@ -10,7 +10,7 @@ least-of-three statutory formula where heavy savers get ZERO — not the flat
 "$3,000 after 15 years" every article repeats. Send after Wave 36. Personalize
 every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -29,7 +29,7 @@ Subject: A per-diem calculator with the 2026 IRS rate and the W-2 catch
 > shrinks the taxable wages that Social Security, unemployment, and truck lenders
 > count:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/truck-driver-per-diem-calculator
+> Live demo: https://calcstack.app/embed/truck-driver-per-diem-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -49,7 +49,7 @@ Subject: The TSP front-loading penalty, finally quantified
 > Roth catch-up mandate for $150k+ earners. BRS members get the same 5% match
 > math on basic pay:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/tsp-calculator
+> Live demo: https://calcstack.app/embed/tsp-calculator
 >
 > One iframe inside any TSP contribution guide. Free forever.
 >
@@ -69,7 +69,7 @@ Subject: The 403(b) 15-year catch-up is not "$3,000 for everyone" — here's the
 > rule (15-year first, then age-50): an eligible 52-year-old teacher can defer
 > $35,500 in 2026; $38,750 at 60–63:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/403b-calculator
+> Live demo: https://calcstack.app/embed/403b-calculator
 >
 > One iframe, free forever, runs entirely in the reader's browser.
 >
@@ -88,7 +88,7 @@ Subject: A 403(b) worksheet calculator your employees can self-serve
 > catch-up used — and shows their 2026 maximum with the binding prong named.
 > Employees arrive at your office already knowing whether they're eligible:
 >
-> https://calcstack-eight.vercel.app/embed/403b-calculator
+> https://calcstack.app/embed/403b-calculator
 >
 > One iframe on your benefits portal or open-enrollment page. Free forever.
 >

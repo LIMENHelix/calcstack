@@ -21,7 +21,7 @@ export default function PersonaIndex() {
               '@type': 'ListItem',
               position: i + 1,
               name: `Calculators for ${p.job}`,
-              url: `https://calcstack-eight.vercel.app/for/${p.slug}`,
+              url: `https://calcstack.app/calcstack/for/${p.slug}`,
             })),
           }),
         }}

@@ -11,7 +11,7 @@ $40k/month). And the I-bond with the actual composite formula (4.26% = 0.90% +
 3-month penalty priced to the dollar, and the after-tax edge over savings
 accounts. Send after Wave 39. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -30,7 +30,7 @@ Subject: The ESPP calculator that catches the "always wait to qualify" mistake
 > run-up means buying at $17 — an instant 76% markup on cost), and applies the
 > $25,000 grant-date-value limit correctly:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/espp-calculator
+> Live demo: https://calcstack.app/embed/espp-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -50,7 +50,7 @@ Subject: The calculator that shows what a "recoverable draw" actually is
 > Recoverable vs non-recoverable side by side. It turns the contract clause into
 > a picture:
 >
-> https://calcstack-eight.vercel.app/embed/commission-draw-calculator
+> https://calcstack.app/embed/commission-draw-calculator
 >
 > One iframe on any offer-evaluation or comp-plan explainer. Free forever.
 >
@@ -71,7 +71,7 @@ Subject: I bonds with the formula TreasuryDirect actually uses
 > against a taxable savings account at the reader's own bracket — $500 ahead on
 > $10k over 10 years at 22%+5%:
 >
-> https://calcstack-eight.vercel.app/embed/i-bond-calculator
+> https://calcstack.app/embed/i-bond-calculator
 >
 > One iframe, free forever, runs entirely in the browser.
 >
@@ -90,8 +90,8 @@ Subject: Two calculators that make your ESPP and comp-plan pages stickier
 > pace and deficit trajectory. Both verified against primary sources (IRC §423 /
 > Pub 525; standard draw mechanics), both free to embed with one line:
 >
-> https://calcstack-eight.vercel.app/embed/espp-calculator
-> https://calcstack-eight.vercel.app/embed/commission-draw-calculator
+> https://calcstack.app/embed/espp-calculator
+> https://calcstack.app/embed/commission-draw-calculator
 >
 > No signup, no tracking on the embed, all computation in the reader's browser.
 >

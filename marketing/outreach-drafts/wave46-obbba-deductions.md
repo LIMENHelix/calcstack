@@ -12,7 +12,7 @@ second-income calculator. All math verified against IRS newsroom, Rev. Proc.
 2025-32, and published worked examples. Send after Wave 45. Personalize every
 [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 
 ---
 
@@ -31,7 +31,7 @@ Subject: A calculator for the $6,000 senior deduction — with the phase-out mat
 > 65+ stack (a both-65 couple deducts $47,500 total in 2026), tax saved at
 > their bracket, and phase-out headroom in dollars:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/senior-deduction-calculator
+> Live demo: https://calcstack.app/embed/senior-deduction-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -52,7 +52,7 @@ Subject: "No tax on tips/overtime" is a deduction with caps — your readers can
 > saved — a server with $18,000 of tips at a 12% bracket saves ~$2,160, not
 > "$18,000 tax free":
 >
-> https://calcstack-eight.vercel.app/embed/tips-overtime-deduction-calculator
+> https://calcstack.app/embed/tips-overtime-deduction-calculator
 >
 > One iframe, free forever, no signup.
 >
@@ -72,7 +72,7 @@ Subject: The $10,000 car loan interest deduction is really worth ~$616 — calcu
 > calculator amortizes their actual loan, applies the cap and phase-out, and
 > shows the real savings:
 >
-> https://calcstack-eight.vercel.app/embed/car-loan-interest-deduction-calculator
+> https://calcstack.app/embed/car-loan-interest-deduction-calculator
 >
 > One iframe, free forever, no signup.
 >
@@ -94,7 +94,7 @@ Subject: Three Schedule 1-A calculators your clients will ask about this season
 > itemize-vs-standard tool with the $40,400 SALT cap and the new 0.5%
 > charitable floor:
 >
-> https://calcstack-eight.vercel.app/embeds
+> https://calcstack.app/embeds
 >
 > Free forever, no signup, everything runs client-side — safe to hand to
 > clients.
@@ -115,7 +115,7 @@ Subject: The 2026 bunching question now has a different answer — a calculator 
 > deductions, $8k/yr giving → spread wins). This calculator runs the two-year
 > head-to-head with your reader's numbers and picks the winner in dollars:
 >
-> https://calcstack-eight.vercel.app/embed/charitable-bunching-calculator
+> https://calcstack.app/embed/charitable-bunching-calculator
 >
 > One iframe, free forever, no signup.
 >

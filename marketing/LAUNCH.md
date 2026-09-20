@@ -1,31 +1,18 @@
 # CalcStack Launch Sequence — Domain Go-Live Playbook
 
-**Domain decision (2026-09-19): the app lives at `limenhelix.com/calcstack`.**
-The codebase is migrated: Vite base `/calcstack/`, router basename `/calcstack`,
-sitemap + canonicals point at `https://limenhelix.com/calcstack/...`, and
-vercel.json 308-redirects every old root URL (`/calculators/*` etc.) into the
-new prefix, so the current calcstack-eight.vercel.app deployment keeps working
-unchanged.
+**Domain LIVE (2026-09-20): `calcstack.app` is attached to the Vercel project and
+serving.** The app lives at `calcstack.app/calcstack` (Vite base `/calcstack/`,
+router basename `/calcstack`); vercel.json 308-redirects `/`, `/calculators/*`,
+`/for/*`, `/data/*`, `/tools/*`, `/embeds`, `/embed/*`, `/directory` into the
+prefix. All hardcoded URLs (Seo.tsx canonicals/OG, embed snippets, MortgageTable,
+EmbedTablePage, PersonaIndex JSON-LD, robots.txt, gen-sitemap.mjs) and every
+marketing draft now point at `calcstack.app`. The old
+`calcstack-eight.vercel.app` deployment still resolves — no broken links.
 
-**Wiring (two options — do NOT touch limen-helix-live code beyond option A's 4 lines):**
+Phase 0 status: step 1 ✅ (domain live, HTTPS on), step 2 ✅ (URL swap shipped).
+Remaining: Search Console → Bing → AdSense after 50+ indexed pages.
 
-- **Option A (target URL — `limenhelix.com/calcstack`):** `limenhelix.com` stays
-  attached to the `limen-helix-live` project. Add ONE rewrite block to that
-  project's `vercel.json` (Vercel proxies external rewrites transparently):
-  ```json
-  "rewrites": [
-    { "source": "/calcstack/:path*", "destination": "https://calcstack-eight.vercel.app/calcstack/:path*" }
-  ]
-  ```
-  Redeploy that project and `limenhelix.com/calcstack` serves the app.
-- **Option B (zero changes to the other project):** use the subdomain
-  `calcstack.limenhelix.com` instead — attach it in the calcstack Vercel
-  project's Settings → Domains and add the CNAME at the registrar. (The app
-  still works; canonicals would want a follow-up swap from
-  `limenhelix.com/calcstack` to the subdomain.)
-
-Fire this the day the custom domain is live. Everything is sequenced so each step
-compounds the previous one. The hook everywhere: **100 free calculators, no signup,
+The hook everywhere: **394 free calculators, no signup,
 math runs in your browser.**
 
 ## Phase 0 — Technical go-live (Day 0, before any email)
@@ -33,7 +20,7 @@ math runs in your browser.**
 1. Point domain at Vercel; confirm HTTPS + www redirect.
 2. Swap hardcoded URLs (one commit): `Seo.tsx`, `EmbedPage.tsx`, `EmbedSnippet.tsx`,
    `EmbedGallery.tsx`, `public/robots.txt`, `scripts/gen-sitemap.mjs` — regenerate sitemap.
-3. Google Search Console: verify domain property, submit `sitemap.xml` (322 URLs),
+3. Google Search Console: verify domain property, submit `sitemap.xml` (620 URLs),
    request indexing on homepage + /directory + top 10 calculators.
 4. Bing Webmaster Tools: import from Search Console (free second engine, 5 minutes).
 5. AdSense application — submit only AFTER the domain shows 50+ indexed pages
@@ -54,7 +41,7 @@ math runs in your browser.**
 Work TARGETS.md top-down. Physician finance first (Wave 1 targets 1–5). One
 personalized email per site, Template A. Reference the milestone where natural:
 
-> "CalcStack just crossed 100 free calculators — all embeddable, all no-signup —
+> "CalcStack just crossed 390 free calculators — all embeddable, all no-signup —
 > and the wRVU one is built for exactly your audience."
 
 Pace: 1–2 emails/day max. Log every send in the tracker.
@@ -90,7 +77,7 @@ lead with Quarterly Estimated Tax + Mileage vs Actual while searches spike.
 
 - Embeds live (the only metric that compounds): target 5 by day 30
 - Search Console: impressions trending up week over week
-- Indexed pages: 322 within 2 weeks of sitemap submit
+- Indexed pages: 620 within 2 weeks of sitemap submit
 - AdSense: approved by day 30 (reapply with more indexed content if rejected)
 
 ## What NOT to do

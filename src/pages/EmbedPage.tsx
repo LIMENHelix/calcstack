@@ -36,7 +36,7 @@ import { TAXSEASON_CALC_COMPONENTS } from '@/calcs/taxseason'
 import { PaycheckCalc } from '@/calcs/paycheck'
 import type { CalcProps } from '@/calcs'
 
-const SITE = 'https://calcstack-eight.vercel.app'
+const SITE = 'https://calcstack.app/calcstack'
 const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   ...CALC_COMPONENTS,
   ...MORE_CALC_COMPONENTS,

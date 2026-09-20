@@ -10,7 +10,7 @@ and the Roth-vs-Traditional tool settles the account-type question with after-ta
 dollars. Together they are the two-tool IRA decision kit. Send after Wave 30.
 Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack-eight.vercel.app/embeds
+Embed gallery: https://calcstack.app/embeds
 Pair: roth-ira-contribution-limit-calculator · roth-vs-traditional-calculator
 
 ---
@@ -28,7 +28,7 @@ Subject: The 2026 Roth phase-out, as a calculator instead of a formula in prose
 > single filer at $160k MAGI gets exactly $4,000, at $167.9k the $200 floor keeps a
 > contribution alive:
 >
-> Live demo: https://calcstack-eight.vercel.app/embed/roth-ira-contribution-limit-calculator
+> Live demo: https://calcstack.app/embed/roth-ira-contribution-limit-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -47,7 +47,7 @@ Subject: A contribution-deadline tool for your IRA season traffic
 > excess-contribution penalty, which is the mistake your "common IRA errors" posts
 > warn about:
 >
-> https://calcstack-eight.vercel.app/embed/roth-ira-contribution-limit-calculator
+> https://calcstack.app/embed/roth-ira-contribution-limit-calculator
 >
 > One iframe inside any IRA-deadline or contribution-limits post. Free forever.
 >
@@ -65,8 +65,8 @@ Subject: Roth vs Traditional, settled with after-tax dollars instead of dogma
 > RMDs/heirs/uncertainty become the tie-breakers). Pair it with the 2026 limit tool
 > for the eligibility side:
 >
-> Roth vs Traditional: https://calcstack-eight.vercel.app/embed/roth-vs-traditional-calculator
-> 2026 limit: https://calcstack-eight.vercel.app/embed/roth-ira-contribution-limit-calculator
+> Roth vs Traditional: https://calcstack.app/embed/roth-vs-traditional-calculator
+> 2026 limit: https://calcstack.app/embed/roth-ira-contribution-limit-calculator
 >
 > One iframe each, free forever, runs entirely in the browser.
 >
@@ -84,7 +84,7 @@ Subject: Over the Roth limit? Your readers need the backdoor math, not another e
 > limit) and walks the backdoor path: traditional IRA contribution, conversion, and
 > the pro-rata rule if other pre-tax IRA money exists:
 >
-> https://calcstack-eight.vercel.app/embed/roth-ira-contribution-limit-calculator
+> https://calcstack.app/embed/roth-ira-contribution-limit-calculator
 >
 > One iframe inside any backdoor-Roth guide. Free forever, no signup.
 >
