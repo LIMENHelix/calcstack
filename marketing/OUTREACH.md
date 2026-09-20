@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 430 calculators live (658 indexed pages). Domain live at calcstack.app;
+**Status: 430 calculators live (657 indexed pages). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -687,7 +687,7 @@ wedding-photographer forums), tattoo artist forums and r/tattoo, DJ communities
 
 ## Wave 66 — Route & rate suite (#401–#410, milestone wave)
 
-Milestone wave: 430 calculators live (658 indexed pages). This wave prices the
+Milestone wave: 430 calculators live (657 indexed pages). This wave prices the
 driveway-and-route economy: the businesses where the wage is set by minutes
 between stops and the ticket at the scale house, not the menu price. Audiences:
 pressure-washing and exterior-cleaning communities (r/pressurewashing, Pressure
@@ -727,7 +727,7 @@ startup press that loves a pricing tool.
 
 ## Wave 67 — Trades, licenses & career ladders (#411–#421, milestone wave)
 
-Milestone wave: 430 calculators live (658 indexed pages). This wave owns the
+Milestone wave: 430 calculators live (657 indexed pages). This wave owns the
 career-ladder math of licensed work: apprenticeships vs degrees, license ROI,
 flat-rate price books, and the commission/match structures each profession
 hides in its fine print. Audiences: electrical and trades communities
@@ -770,7 +770,7 @@ communities (r/Teachers, ed newsletters).
 
 ## Wave 68 — Small-business reality checks (#422–#430, milestone wave)
 
-Milestone wave: 430 calculators live (658 indexed pages). This wave covers the
+Milestone wave: 430 calculators live (657 indexed pages). This wave covers the
 businesses everyone daydreams about and few people price: green trades, passive-
 income staples, and skilled-solo practices. Audiences: landscaping and lawn
 communities (r/landscaping, Lawn Care Forum, LawnSite), tree services
