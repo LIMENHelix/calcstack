@@ -7875,6 +7875,105 @@ export function MobileMechanicCalc() {
   )
 }
 
+// PE LICENSE ROI — node-verified defaults: FE $175 + PE $375 + review course $1,500 = $2,050 all-in. Salary bump $6,000/yr → payback 4.1 months; 30-yr career $177,950. The license also unlocks stamping authority, principal track, and expert-witness side rates ($250-400/hr). The cheapest six figures in engineering is the exam you keep postponing.
+export function PeLicenseCalc() {
+  const [fe, setFe] = useNumber(175)
+  const [pe, setPe] = useNumber(375)
+  const [course, setCourse] = useNumber(1500)
+  const [bump, setBump] = useNumber(6000)
+  const [yrs, setYrs] = useState('30')
+
+  const y = parseFloat(yrs) || 0
+  const r = useMemo(() => {
+    const cost = fe + pe + course
+    const paybackMo = bump > 0 ? (cost / bump) * 12 : 0
+    const career = bump * y - cost
+    return { cost, paybackMo, career }
+  }, [fe, pe, course, bump, y])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="FE exam fee" value={fe} onChange={setFe} prefix="$" step="5" />
+          <Field label="PE exam fee" value={pe} onChange={setPe} prefix="$" step="5" />
+          <Field label="Review course" value={course} onChange={setCourse} prefix="$" step="100" />
+          <Field label="Annual bump w/ PE" value={bump} onChange={setBump} prefix="$" suffix="/yr" step="500" />
+          <label className="space-y-1">
+            <span className="text-sm text-muted-foreground">Career years left</span>
+            <select value={yrs} onChange={(e) => setYrs(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="10">10 years</option>
+              <option value="20">20 years</option>
+              <option value="30">30 years</option>
+              <option value="40">40 years</option>
+            </select>
+          </label>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="All-in cost" value={usd(Math.round(r.cost))} />
+          <Result label="Payback" value={`${num(r.paybackMo, 1)} months`} big />
+          <Result label={`${y}-yr career value`} value={usd(Math.round(r.career))} />
+          <Result label="ROI multiple" value={`${num(r.cost > 0 ? r.career / r.cost : 0, 0)}×`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${usd(Math.round(r.cost))} all-in buys a ${usd(bump)}/yr raise that compounds across ${y} years: ${usd(Math.round(r.career))}. And that ignores the doors — stamping authority, the principal track, government step increases, and $250–400/hr expert-witness work that requires the seal.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: all-in cost = FE + PE exam fees + review course; career value = annual salary bump × years − cost. The numbers are the floor, not the ceiling: the PE's real value is structural — public-sector and consulting work legally requires a licensed engineer to sign and seal drawings, so the license converts you from replaceable staff into the person the firm cannot ship work without. Salary data: licensed civil/structural engineers run $5,000–10,000/yr above unlicensed peers at the same experience, and the gap widens with seniority because partner tracks and principal positions are license-gated. The timeline: FE senior year (pass rates drop sharply the longer you wait — take it in school), 4 years of supervised experience under a PE, then the PE exam; every year of delay pushes the bump a year right and at some firms caps your title at "engineer" forever. Cost discipline: state FE/PE fees run $175–375, review courses $500–2,000 (many employers reimburse — ask before paying), and the study investment is 200–300 hours over 4–6 months. The disciplines where it pays fastest: civil/structural (stamp is mandatory for the work itself), environmental, and fire protection; electrical and mechanical see smaller bumps in industry but the license still gates consulting. Software and petroleum engineers: the PE rarely applies to your work — skip it and spend the hours on PE-equivalent credentials for your field. Expert-witness and forensic work ($250–400/hr) is the retirement-phase dividend — it requires the license plus courtroom-credible experience. Estimate — your state board's fees and your firm's compensation bands govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// REAL ESTATE COMMISSION SPLIT & CAP — node-verified defaults: $450k home × 5.5% × listing side = $12,375 GCI/deal. 12 deals = $148,500 GCI. At 70/30 split with $20k cap: cap hits at $66,667 GCI → take $128,500 vs $103,950 uncapped → cap saves $24,550/yr. The 100% shop at $500/mo nets $142,500 — wins past ~$200k GCI, but carries zero broker support.
+export function CommissionSplitCalc() {
+  const [home, setHome] = useNumber(450000)
+  const [commPct, setCommPct] = useNumber(5.5)
+  const [split, setSplit] = useNumber(70)
+  const [cap, setCap] = useNumber(20000)
+  const [deals, setDeals] = useNumber(12)
+  const [flatFee, setFlatFee] = useNumber(500)
+
+  const r = useMemo(() => {
+    const gciDeal = (home * commPct) / 100 / 2
+    const gciYr = gciDeal * deals
+    const splitPct = split / 100
+    const gciToCap = splitPct < 1 ? cap / (1 - splitPct) : 0
+    const capped = gciYr <= gciToCap ? gciYr * splitPct : gciToCap * splitPct + (gciYr - gciToCap)
+    const noCap = gciYr * splitPct
+    const flat = gciYr - flatFee * 12
+    return { gciDeal, gciYr, gciToCap, capped, noCap, flat, saved: capped - noCap }
+  }, [home, commPct, split, cap, deals, flatFee])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Avg home price" value={home} onChange={setHome} prefix="$" step="10000" />
+          <Field label="Total commission" value={commPct} onChange={setCommPct} suffix="%" step="0.25" />
+          <Field label="Your split" value={split} onChange={setSplit} suffix="%" step="5" />
+          <Field label="Annual cap" value={cap} onChange={setCap} prefix="$" step="1000" />
+          <Field label="Deals per year" value={deals} onChange={setDeals} step="1" />
+          <Field label="100% shop fee" value={flatFee} onChange={setFlatFee} prefix="$" suffix="/mo" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="GCI per deal" value={usd(Math.round(r.gciDeal))} />
+          <Result label="Take with cap" value={usd(Math.round(r.capped))} big />
+          <Result label="Take uncapped" value={usd(Math.round(r.noCap))} />
+          <Result label="100%-fee shop" value={usd(Math.round(r.flat))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${deals} deals × ${usd(Math.round(r.gciDeal))} GCI = ${usd(Math.round(r.gciYr))} gross. The ${split}/${100 - split} split with a ${usd(cap)} cap pays you ${usd(Math.round(r.capped))} — ${usd(Math.round(r.saved))} more than uncapped — while the 100% shop at ${usd(flatFee)}/mo pays ${usd(Math.round(r.flat))} if you no longer need the broker's leads, desk, and errors-and-omissions umbrella.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: GCI per deal = price × commission ÷ 2 (one side); capped take = split on GCI up to cap ÷ (broker share), then 100% beyond; flat-shop take = GCI − 12 × monthly fee. The brokerage decision framework: splits buy you support — leads, training, transaction coordination, E&O insurance, and a managing broker's legal backstop — and the fair question every year is whether you still USE them; a 70/30 split costs $44,550 on the example year, which is either the most expensive training you ever bought or a bargain lead source, depending on where your deals come from. Caps change the loyalty math: capped models (KW-style) turn the split into a fixed annual cost — past $66,667 GCI in the example you are at 100%, which is why productive agents cluster at capped shops. The 100% fee shops win on pure math once you exceed roughly $200k GCI, but the monthly fee is owed in slow months too, E&O and tech fees stack ($100–300/mo more), and nobody hands you a floor call. What actually moves your take-home: average price point (moving from $300k to $450k homes is a 50% raise on the same deal count), listing-side share (listings leverage your time; buyer-side burns it), and referral fee avoidance (25% referral fees on relocation leads quietly re-create the split you escaped). Franchise fees: national brands skim 5–8% off the top BEFORE the split — ask whether your quoted split is pre- or post-franchise-fee, because that single line reorders the comparison. Teams invert everything: you take 50% but the rainmaker's leads replace prospecting — right for new agents, expensive for established ones. Estimate — your MLS production report and the brokerage's actual fee schedule (not the recruiting brochure) govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // BAH RENT VS BUY — node-verified defaults: E-5 w/ dependents BAH $2,100/mo. Rent at $1,650 → pocket $450/mo tax-free ($5,400/yr; taxable-equivalent $577/mo at 22%). Buy: PITI $1,850 + maintenance $150 = $2,000 → pocket only $100/mo, but $300/mo principal = $400/mo wealth. Renting pockets MORE cash monthly; buying wins on equity only if the PCS timeline cooperates (3-yr orders vs 5-yr breakeven on transaction costs).
 export function BahRentBuyCalc() {
   const [bah, setBah] = useNumber(2100)
@@ -14206,6 +14305,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'pe-license-roi-calculator': PeLicenseCalc,
+  'real-estate-commission-split-calculator': CommissionSplitCalc,
   'bah-rent-vs-buy-calculator': BahRentBuyCalc,
   'brs-tsp-match-calculator': BrsMatchCalc,
   'teacher-lane-change-roi-calculator': TeacherLaneCalc,

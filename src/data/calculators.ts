@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pe-license-roi-calculator',
+    title: 'PE License ROI Calculator — FE to PE Cost, Payback Months, and Career Value',
+    shortTitle: 'PE License ROI',
+    category: 'Careers & Salary',
+    description:
+      'Compute the return on a Professional Engineer license: FE and PE exam fees plus review course against the annual salary bump — payback in months, career value in six figures.',
+    tagline: '$2,050 all-in for a $6,000/yr raise — payback in 4.1 months, $177,950 over a career, before the doors the seal opens.',
+    intro:
+      'The PE is the cheapest six-figure decision in engineering: FE and PE fees plus a review course run about $2,050, and licensed engineers clear $5,000–10,000 more per year than unlicensed peers at the same experience. That is a 4-month payback and $177,950 over 30 years — before counting what the license unlocks: stamping authority, principal tracks, and $250–400/hr expert-witness work. This calculator runs your state\'s fees and your field\'s bump.',
+    howItWorks: [
+      'Enter the FE and PE exam fees for your state and the review course cost.',
+      'Enter the salary bump licensed engineers see in your discipline.',
+      'Read the all-in cost and payback in months.',
+      'Pick career years remaining — read the lifetime value and ROI multiple.',
+      'Ask your employer about reimbursement before paying anything.',
+    ],
+    faq: [
+      {
+        q: 'Is getting a PE license worth it?',
+        a: 'In the license-gated disciplines, it is not optional — civil, structural, environmental, and fire-protection work legally requires a PE to sign and seal drawings, so the license converts you from replaceable staff into the person the firm cannot ship work without. The salary bump runs $5,000–10,000/yr at equal experience and widens with seniority because partner and principal tracks are license-gated. The ROI in the example — $2,050 all-in against $6,000/yr — pays back in 4.1 months and compounds to ~$178k over 30 years. Where it matters less: electrical and mechanical in pure industry roles see smaller bumps, and software or petroleum engineers should usually skip it entirely for field-equivalent credentials. The retirement-phase dividend: expert-witness and forensic consulting at $250–400/hr requires the license plus credible experience — the seal is a decades-long annuity on a $2k stake.',
+      },
+      {
+        q: 'When should I take the FE and PE exams?',
+        a: 'FE senior year of college — pass rates fall sharply the longer you wait, and the exam tests coursework you will never use more freshly than at graduation. Then 4 years of supervised experience under a licensed PE (document it contemporaneously — state boards want verifiable supervision records), then the PE exam. Every year of delay pushes the salary bump a year right, and at some firms an unlicensed senior engineer caps permanently at "engineer" while licensed juniors pass them into project management. The study investment for the PE runs 200–300 hours over 4–6 months; review courses ($500–2,000) raise first-attempt pass rates materially, and many employers reimburse both the course and the fees — ask in writing before paying. State variance: fees, experience requirements, and comity (license transfer between states) differ — check YOUR state board, and if you might relocate, NCEES records make comity far easier than reconstructing transcripts later.',
+      },
+      {
+        q: 'What doors does the PE actually open beyond the raise?',
+        a: 'Five structural ones. Stamping authority: only a PE can sign and seal engineering documents for public use — the legal bottleneck that makes you indispensable. Government and utility pay scales: many public-sector ladders step licensed engineers into higher grades automatically. Consulting independence: a PE can hang a shingle — the license is the business license for solo engineering practice. Expert-witness work: litigation consulting at $250–400/hr is license-gated and becomes a lucrative late-career or retirement-phase practice. And the credibility multiplier in bidding: firms win public work partly on the licensed resumes attached, so principals protect and promote the people whose seals carry the firm\'s capacity. The career-strategy corollary: get the PE even if your current role does not need it — licenses are cheap to keep current (renewal fees plus continuing education hours) and expensive to reconstruct after a lapse, and the job that needs it rarely announces itself a year ahead.',
+      },
+    ],
+  },
+  {
+    slug: 'real-estate-commission-split-calculator',
+    title: 'Real Estate Commission Split Calculator — 70/30 vs Cap vs 100% Fee Shop, on Your GCI',
+    shortTitle: 'Commission Split & Cap',
+    category: 'Freelance & Career',
+    description:
+      'Compare brokerages on your real production: split with cap vs uncapped vs 100% fee shop. See your take-home per deal, the cap breakeven, and what the split actually costs you per year.',
+    tagline: '12 deals at $450k: the capped 70/30 pays $128,500, uncapped pays $103,950, the 100% shop pays $142,500 — but sells you no leads.',
+    intro:
+      'The brokerage question is not "what\'s the split" — it is what the split buys and when it stops. On 12 deals at a $450k average, a capped 70/30 pays $128,500; the same split uncapped pays $103,950 (the cap is worth $24,550); and a 100% fee shop at $500/mo pays $142,500 but hands you no leads, no training, and no backstop. This calculator runs your actual production through all three models so the recruiting brochures have to compete on math.',
+    howItWorks: [
+      'Enter your average home price and total commission rate — GCI per deal appears.',
+      'Enter your split and the brokerage\'s annual cap.',
+      'Enter your deals per year — read capped vs uncapped take-home.',
+      'Enter the 100% shop\'s monthly fee — read the flat-fee alternative.',
+      'Re-run at last year\'s real GCI from your MLS production report.',
+    ],
+    faq: [
+      {
+        q: 'What is a commission cap and when does it beat a straight split?',
+        a: 'A cap converts the broker\'s percentage into a fixed annual cost: you pay the split (say 30%) only until your total broker share hits the cap ($20k in the example), then keep 100% for the rest of the year. The breakeven is mechanical — the cap hits at cap ÷ broker share of GCI ($66,667 GCI at a 30% share with a $20k cap) — so past that production level, every additional dollar of GCI is yours. Who wins: capped models decisively favor productive agents — the example year saves $24,550 over the uncapped split — which is why top producers cluster at capped shops, while new agents producing under the cap threshold pay identically under either model and should choose on training and leads instead. Watch the fine print: caps reset annually (usually on your anniversary), some brokerages add franchise fees of 5–8% BEFORE the split, and "cap" marketing sometimes excludes royalty and tech fees that continue past the cap.',
+      },
+      {
+        q: 'Is a 100% commission brokerage worth it?',
+        a: 'On pure math, yes past roughly $200k GCI — the example shows $142,500 versus $128,500 capped — but the monthly fee is owed in slow months too, and the sticker price understates the real one: E&O insurance, tech fees, and transaction fees stack another $100–300/mo, and no one hands you floor calls, leads, training, or a managing broker who catches your contract mistakes. The honest test: where did last year\'s deals come from? If your book is repeat and referral clients who follow YOU, the brokerage is a compliance utility — pay the utility rate. If deals still arrive via broker leads, floor time, or relocation networks, the split is buying your pipeline and the "savings" of a fee shop are an illusion. Transaction coordinators and E&O become your problem to buy separately at a fee shop — price them in before comparing. The hybrid many productive agents land on: capped national brand for the E&O umbrella and legal backstop, own sphere for the leads.',
+      },
+      {
+        q: 'How do I actually increase my take-home as an agent?',
+        a: 'Brokerage shopping is the smallest lever — production levers dwarf it. Average price point: moving from $300k to $450k homes is a 50% raise on identical deal count, and it comes from farming a higher-priced zip, not working harder. Listing-side share: listings leverage your time (one listing appointment can produce the sign calls that sell three more); buyer-side work burns hours per dollar — mature agents run 60%+ listing side. Referral-fee discipline: relocation and referral-network leads take 25–35% off the top, quietly re-creating the split you escaped — build the direct sphere instead. Team math inverts everything: joining a team at 50% is expensive for established agents but rational for new ones, because the rainmaker\'s leads replace the 12–18 months of unpaid prospecting that washes most new licensees out. And the silent killer: franchise fees quoted pre- or post-split reorder every comparison — ask each brokerage for a written net-sheet on YOUR last 12 months of production, and the recruiting brochures stop mattering.',
+      },
+    ],
+  },
+  {
     slug: 'bah-rent-vs-buy-calculator',
     title: 'BAH Rent vs Buy Calculator — Pocket the Difference or Build Equity at This Duty Station',
     shortTitle: 'BAH Rent vs Buy',

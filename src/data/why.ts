@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'pe-license-roi-calculator':
+    'Engineers use it before another year unlicensed: $2,050 all-in against a $6,000/yr bump pays back in 4.1 months — and the seal gates the principal track and $300/hr expert work.',
+  'real-estate-commission-split-calculator':
+    'Agents use it at renewal time: on 12 deals the capped 70/30 beats uncapped by $24,550, and the 100% fee shop wins past $200k GCI — if you no longer need the leads.',
   'bah-rent-vs-buy-calculator':
     'Service members use it when orders drop: renting $450/mo under BAH pockets $5,400/yr tax-free — buying only beats it when the PCS window gives equity 5 years to clear the 8% drag.',
   'brs-tsp-match-calculator':
