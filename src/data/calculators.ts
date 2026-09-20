@@ -762,6 +762,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'drop-full-coverage-calculator',
+    title: 'When to Drop Full Coverage Calculator 2026 — The 10% Rule and the Breakeven Total-Loss Frequency',
+    shortTitle: 'Drop Full Coverage?',
+    category: 'Auto & Transport',
+    description:
+      'Is comprehensive and collision still worth it on your aging car? Compare the premium against the car\'s real value and max payout, then check the loan and emergency-fund gates.',
+    tagline: 'A $4,000 car at $600/year needs to be totaled every 5.8 years to break even — real drivers total one every 25.',
+    intro:
+      'Every renewal, the same quiet question: why am I paying $600 a year to insure a car worth $4,000? The math has a clean answer. The insurer will never pay more than actual cash value minus your deductible — $3,500 on that car — so the premium breaks even only if you total the car every 5.8 years, against a real-world total-loss frequency of about once per 25. The 10% rule catches it faster: premium over 10% of the car\'s value means drop. But two gates come first — a loan or lease makes full coverage mandatory, and your emergency fund must be able to replace the car tomorrow. This calculator runs the rule, the breakeven, and both gates.',
+    howItWorks: [
+      'Enter the car\'s actual cash value — KBB private party, not what you paid.',
+      'Enter your deductible and the comp/collision portion of your premium (from the declarations page).',
+      'Add your emergency fund and whether a lender still holds the title.',
+      'Read the max payout, breakeven frequency, and the drop/keep verdict.',
+    ],
+    faq: [
+      {
+        q: 'What exactly am I giving up when I drop comp and collision?',
+        a: 'Coverage for YOUR car\'s damage: collision pays when you hit something (or someone hits you and flees/is uninsured), comprehensive pays for theft, hail, flood, fire, vandalism, falling trees, and animal strikes. Everything else on your policy survives: liability (damage you cause others — never drop this), uninsured motorist, medical payments, and roadside. The sophisticated middle move: drop collision but keep comprehensive. Comprehensive is roughly a third of the combined premium because weather/theft claims are rarer than crashes, and those risks don\'t diminish as the car ages the way the at-fault-crash logic suggests — a $4,000 car is just as stealable and hail-dentable as a $40,000 one. Many carriers let you split them; ask.',
+      },
+      {
+        q: 'My car is worth $8,000 and full coverage costs $900. Which side of the line is that?',
+        a: 'Over the line — $900 is 11.3% of value, and the breakeven total-loss frequency ($900 against a $7,500 max payout at a $500 deductible) is 12%/year, three times the real-world rate. But the rule bends for two situations. First, the replacement gate: if $8,000 appearing tomorrow would hurt — or the car is essential to your income — the premium is buying liquidity, not just EV, and keeping it can be right. Second, your risk profile: park on the street in a hail zone, commute at deer o\'clock on rural highways, or have a new driver on the policy, and your personal loss frequency isn\'t the fleet average. The rule is a screen, not a law — run the breakeven against YOUR roads and YOUR savings.',
+      },
+      {
+        q: 'Will dropping coverage hurt my rates or record later?',
+        a: 'Not the way people fear — dropping comp/collision is a coverage change, not a lapse, and it doesn\'t mark your record. What DOES hurt: a full lapse in insurance (even a few days between policies flags you as higher-risk at the next quote — always overlap start/end dates), and claims themselves (an at-fault claim surcharges you 20–40% for 3–5 years, which is why filing a $1,200 claim on a $500 deductible is often a net loss). One renewal-season habit worth more than the drop decision: re-quote the whole policy every 1–2 years. Insurers price-optimize loyal customers upward; the same coverage often runs 15–30% cheaper at a competitor, and dropping comp/collision on an old car while raising liability to 100/300 frequently nets out to zero — better protection where it matters for the same money.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

@@ -53,6 +53,8 @@ export const WHY_USE: Record<string, string> = {
     'Drivers and homeowners use it at renewal: the breakeven claim rate (one per 4.7 yrs on a typical $500→$2,000 move) against your real claim history turns a gut-feel choice into a $1,700-per-decade expected win — gated by the emergency fund.',
   'umbrella-insurance-calculator':
     'Households use it to size liability protection against reality: net worth plus 10 years of garnishable wages minus current limits shows an $850k/$90k family $550k exposed — closed by a $1M umbrella at roughly $225/yr.',
+  'drop-full-coverage-calculator':
+    'Owners of aging cars use it at renewal: premium as % of actual cash value plus the breakeven total-loss frequency shows a $4k car at $600/yr needs totaling every 5.8 years to break even — against a real frequency of once in 25.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

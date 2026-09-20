@@ -3314,6 +3314,60 @@ export function UmbrellaCalc() {
   )
 }
 
+// WHEN TO DROP COMP/COLLISION — insuring a depreciating car against itself. Node-verified: $4,000 car, $500 deductible, $600/yr comp+collision → max payout $3,500; premium = 15.0% of car value (the 10% rule says DROP); breakeven total-loss frequency 600/3500 = 17.1%/yr vs the real ~4%/yr total-loss rate — you'd need to total the car every 5.8 years just to break even. Counter-example: $12,000 car at $700/yr → 5.8% of value, breakeven 6.1% ≈ realistic loss frequency → KEEP. Gates before dropping: (1) loan/lease requires full coverage (not optional); (2) can you write a check for the replacement TOMORROW — the e-fund gate; (3) liability is NEVER droppable — it's the part protecting your assets, not the car. Note: dropping collision while keeping comprehensive is often the smart middle (comp covers theft/weather/deer at ~1/3 the price).
+export function DropFullCoverageCalc() {
+  const [carValue, setCarValue] = useNumber(4000)
+  const [ded, setDed] = useNumber(500)
+  const [premium, setPremium] = useNumber(600)
+  const [efund, setEfund] = useNumber(8000)
+  const [hasLoan, setHasLoan] = useState(false)
+
+  const r = useMemo(() => {
+    const maxPayout = Math.max(0, carValue - ded)
+    const pctOfValue = carValue > 0 ? (premium / carValue) * 100 : 0
+    const breakEvenFreq = maxPayout > 0 ? (premium / maxPayout) * 100 : 0
+    const fiveYrPrem = premium * 5
+    const covered = efund >= carValue
+    const drop = !hasLoan && pctOfValue > 10 && covered
+    return { maxPayout, pctOfValue, breakEvenFreq, fiveYrPrem, covered, drop }
+  }, [carValue, ded, premium, efund, hasLoan])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Car's actual cash value (KBB private party)" value={carValue} onChange={setCarValue} prefix="$" />
+          <Field label="Comp/collision deductible" value={ded} onChange={setDed} prefix="$" step="250" />
+          <Field label="Comp + collision premium /yr" value={premium} onChange={setPremium} prefix="$" step="50" />
+          <Field label="Emergency fund" value={efund} onChange={setEfund} prefix="$" />
+        </div>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={hasLoan} onChange={(e) => setHasLoan(e.target.checked)} className="h-4 w-4" />
+          Car has a loan or lease (full coverage required by the lender)
+        </label>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Max the insurer will ever pay" value={usd(r.maxPayout)} />
+          <Result big label="Premium as % of car value" value={`${num(r.pctOfValue, 1)}%`} />
+          <Result label="Breakeven: total loss every X yrs" value={num(100 / r.breakEvenFreq, 1)} />
+          <Result label="5-year premium cost" value={usd(r.fiveYrPrem)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {hasLoan
+            ? 'Full coverage is not optional with a loan or lease — the lender owns the risk until the note is paid. Revisit the day after payoff.'
+            : r.drop
+              ? `Drop comp/collision: you'd need to total this car every ${num(100 / r.breakEvenFreq, 1)} years to break even (real-world: ~every 25), the premium runs ${num(r.pctOfValue, 1)}% of the car's value annually, and your e-fund covers replacement. Bank the ${usd(premium)}/yr — in ${num(r.maxPayout / premium, 1)} years you've self-funded the whole car.`
+              : !r.covered
+                ? `The math may favor dropping, but your emergency fund (${usd(efund)}) can't replace the car (${usd(carValue)}) tomorrow. Keep coverage until the fund catches up.`
+                : `Keep it: at ${num(r.pctOfValue, 1)}% of value the premium is still buying real protection — breakeven requires a total loss every ${num(100 / r.breakEvenFreq, 1)} years, close enough to real-world frequency that the coverage earns its keep.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The 10% rule is the quick screen: when the comp/collision premium exceeds 10% of the car's value per year, you're mostly insuring the insurer's profit. The deeper math is the breakeven frequency above — compare it against reality (total losses run ~4%/year fleet-wide; add deer/weather/theft for your area). The middle path most people miss: drop COLLISION but keep COMPREHENSIVE — theft, hail, flood, fire, and animal strikes stay covered for roughly a third of the combined premium, and those risks don't shrink as the car ages the way crash-logic does. Never drop liability — that's the coverage protecting your assets from the OTHER driver's lawyers, and state minimums ($25k/$50k in many states) are dangerously thin; raise liability while dropping comp/collision and the premium often stays flat. Also remember the insurer pays actual cash value MINUS deductible, and values depreciate monthly — rerun this every renewal. Estimates — your policy and state's rules govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8945,6 +8999,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'home-sale-capital-gains-calculator': HomeSaleGainsCalc,
   'deductible-optimizer-calculator': DeductibleOptimizerCalc,
   'umbrella-insurance-calculator': UmbrellaCalc,
+  'drop-full-coverage-calculator': DropFullCoverageCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
