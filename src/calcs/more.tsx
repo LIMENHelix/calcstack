@@ -5021,6 +5021,54 @@ export function WindowRoiCalc() {
   )
 }
 
+// LED CONVERSION ROI — the best payback in the house, verified. Node-verified: 40 sockets, $3 LED bulbs ($120), 60W→9W, 3 hrs/day, $0.16/kWh → 55.8 kWh saved per socket per year → $357/yr whole house → 4.0-MONTH payback; avoided incandescent replacements add $44/yr (1,000-hr bulbs at $1) → $401/yr total; LED lifespan at 3 hrs/day = 13.7 years. Honest edges: savings scale with HOURS (a closet bulb never pays back; the porch light that burns 12 hrs/day pays back in weeks — convert highest-use sockets first), lumens not watts (800lm = old 60W; check the box, "60W equivalent" is the lumen number), dimmer compatibility (cheap LEDs flicker on old dimmers — buy dimmable-rated or replace the dimmer), enclosed fixtures kill cheap LEDs early (heat — buy enclosed-rated for cans), color temperature (2700K warm = incandescent feel; 4000K+ is the office-blue people regret), and utility rebates (instant rebates at the register in many states make $1-2 bulbs common). The contrast content: LEDs pay back in months, windows in decades — efficiency money has a ranking.
+export function LedConversionCalc() {
+  const [bulbs, setBulbs] = useNumber(40)
+  const [price, setPrice] = useNumber(3)
+  const [oldW, setOldW] = useNumber(60)
+  const [newW, setNewW] = useNumber(9)
+  const [hrs, setHrs] = useNumber(3)
+  const [rate, setRate] = useNumber(0.16)
+
+  const r = useMemo(() => {
+    const saveKwh = ((oldW - newW) / 1000) * hrs * 365
+    const saveYr = saveKwh * rate * bulbs
+    const replYr = ((hrs * 365) / 1000) * 1 * bulbs
+    const cost = bulbs * price
+    const totalSave = saveYr + replYr
+    const paybackMo = totalSave > 0 ? (cost / totalSave) * 12 : Infinity
+    const lifeYrs = 15000 / (hrs * 365)
+    return { saveYr, replYr, cost, totalSave, paybackMo, lifeYrs }
+  }, [bulbs, price, oldW, newW, hrs, rate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Sockets to convert" value={bulbs} onChange={setBulbs} step="5" />
+          <Field label="LED price per bulb" value={price} onChange={setPrice} prefix="$" step="0.5" />
+          <Field label="Old bulb watts" value={oldW} onChange={setOldW} suffix="W" step="5" />
+          <Field label="LED watts" value={newW} onChange={setNewW} suffix="W" step="1" />
+          <Field label="Hours on per day" value={hrs} onChange={setHrs} step="0.5" />
+          <Field label="Electricity rate" value={rate} onChange={setRate} prefix="$" suffix="/kWh" step="0.01" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Conversion cost" value={usd(r.cost)} />
+          <Result label="Energy + bulb savings /yr" value={usd(r.totalSave)} />
+          <Result label="Payback" value={isFinite(r.paybackMo) ? `${num(r.paybackMo, 1)} months` : 'Never'} big />
+          <Result label="LED lifespan at this use" value={`${num(r.lifeYrs, 1)} yrs`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {num(r.totalSave, 0)} dollars a year on a {usd(r.cost)} spend — payback in {num(r.paybackMo, 1)} months, then it pays you for over a decade. The best ROI in the house isn't solar or windows; it's forty light bulbs.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: savings = (old watts − LED watts) × hours/day × 365 × your rate, plus avoided replacement bulbs (incandescents last ~1,000 hours; at 3 hrs/day that's one per socket per year). The levers that matter: HOURS dominate everything — the porch light burning 12 hrs/day pays back in weeks, the closet bulb never does, so convert by usage ranking, not room by room. Buy lumens not watts: 800 lumens replaces a 60W incandescent; "equivalent" claims on the box are the lumen number. Traps: cheap LEDs flicker on old dimmers (buy dimmable-rated or swap the dimmer), enclosed recessed cans cook non-rated bulbs early (heat kills the driver — buy enclosed-rated), and 4000K+ "daylight" bulbs in living spaces are the office-blue everyone regrets (2700K is the incandescent feel). Check utility instant rebates — many states make $1–2 bulbs common at the register. The contrast that reframes efficiency spending: this pays back in months while window replacement takes decades — spend efficiency dollars in payback order. Estimates — your bill's rate and your actual usage hours govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10685,6 +10733,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'generator-cost-calculator': GeneratorCostCalc,
   'smart-thermostat-roi-calculator': SmartThermostatCalc,
   'window-replacement-roi-calculator': WindowRoiCalc,
+  'led-conversion-calculator': LedConversionCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

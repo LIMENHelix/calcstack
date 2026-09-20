@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'led-conversion-calculator',
+    title: 'LED Conversion Calculator 2026 — Whole-House Payback in Months: Energy + Bulb Savings per Socket',
+    shortTitle: 'LED Conversion ROI',
+    category: 'Home & Yard',
+    description:
+      'The best payback in the house: cost to convert every socket vs energy savings plus avoided bulb replacements, ranked by usage hours. Convert the porch light first; the closet never matters.',
+    tagline: 'Forty sockets at $3 a bulb save $401/yr in energy and avoided replacements — a 4-month payback, then a decade of getting paid.',
+    intro:
+      'Efficiency spending has a ranking, and LED conversion sits at the top of it. Forty sockets converted at $3 a bulb ($120) against 60W incandescents running 3 hours a day saves 55.8 kWh per socket per year — $357 of electricity plus $44 of avoided replacement bulbs (incandescents die every ~1,000 hours) — $401/yr total, a 4-month payback, and bulbs that then last 13.7 years at that usage. The honest fine print: hours decide everything — the porch light burning 12 hours a day pays back in weeks while the closet bulb never does, so convert by usage ranking, not room by room. This calculator prices the whole house or one fixture, and the FAQ covers lumens, dimmers, and the color-temperature mistake everyone makes once.',
+    howItWorks: [
+      'Enter sockets to convert and LED price per bulb (check utility instant rebates first).',
+      'Enter old wattage and LED wattage — or use lumens: 800lm replaces 60W.',
+      'Enter average hours on per day — the input that decides everything.',
+      'Enter your electricity rate from the bill.',
+      'Read conversion cost, annual savings, payback months, and LED lifespan at your usage.',
+    ],
+    faq: [
+      {
+        q: 'Which bulbs should I convert first?',
+        a: 'By hours, not by room — the ranking is the whole optimization. A bulb burning 12 hours a day (porch, kitchen can lights, the garage fixture nobody turns off) saves four times what a 3-hour bulb saves and pays back in weeks; a closet bulb at ten minutes a day needs a decade. The quick audit: walk the house at dusk, note what\'s actually ON, and convert anything over 2 hours/day first — that\'s usually 8–12 sockets carrying 80% of the savings. Exterior fixtures on dusk-to-dawn sensors are the silent giants (they run 10–14 hours and nobody notices). Old CFLs are the judgment call: they\'re already efficient, so the gain is smaller — replace them as they fail rather than en masse, unless they\'re in the high-hour sockets where LED\'s instant-on and dimming win anyway.',
+      },
+      {
+        q: 'Why do my LED bulbs flicker or die early?',
+        a: 'Two fixable causes. Dimmer mismatch: old TRIAC dimmers expect an incandescent\'s resistive load and chop power in ways cheap LED drivers can\'t follow — the fix is dimmable-RATED bulbs (the box must say it) or a $25 LED-compatible dimmer; "dimmable" unlabeled bulbs flicker, buzz, and fail young. Heat: enclosed recessed cans and enclosed globes trap heat, and heat kills the LED driver electronics long before the diodes dim — enclosed-rated bulbs have heat sinks designed for it; standard bulbs in enclosed fixtures are the classic "LEDs don\'t last" story. The quality tell: buy bulbs with the Energy Star or DLC mark — the certification requires lumen-maintenance testing, so the 15,000-hour life claim is verified rather than printed. The $1 bin-store bulb has neither the driver nor the rating; at 3 hours a day the $3 bulb\'s extra cost is recovered before the first cheap one dies.',
+      },
+      {
+        q: 'What color temperature should I buy?',
+        a: '2700K for living spaces — full stop — because it replicates the incandescent warmth your rooms were designed around. The universal mistake: buying 4000K or 5000K "daylight" bulbs for the living room because the box promised brightness, then living in what feels like a dentist\'s office until the boxes get returned. The map that works: 2700K (warm) for bedrooms, living rooms, dining — anywhere people relax; 3000K for kitchens and baths where you want slightly crisper light; 4000K+ only for garages, workshops, and task areas. Also check CRI (color rendering index): 80 is standard, 90+ makes food, wood, and skin look right — kitchens and vanities are worth the CRI upgrade. And match within a room: mixed temperatures in one sightline read as a mistake even when each bulb is fine.',
+      },
+    ],
+  },
+  {
     slug: 'window-replacement-roi-calculator',
     title: 'Window Replacement ROI Calculator 2026 — The Honest Payback (and What Beats Windows 5-to-1)',
     shortTitle: 'Window Replacement ROI',
