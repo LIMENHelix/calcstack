@@ -2861,6 +2861,77 @@ export function HouseFlipCalc() {
   )
 }
 
+// RENTAL CASH FLOW — the honest 2026 ledger: at 7% money, most listings are cash-flow negative. Node-verified: $300k price, 20% down, 7%/30yr ($240k loan → DS $19,161/yr), rent $2,400/mo, vacancy 5% → EGI $27,360; opex = taxes $3,600 + ins $1,500 + mgmt 8% + maint 5% + CapEx 5% = $10,025 → NOI $17,335 → cash flow −$1,826/yr (−$152.13/mo); CoC −2.77% on $66,000 cash (down + 2% closing); cap rate 5.78%; DSCR 0.90 (lenders want ≥1.20–1.25); rent-to-price 0.80% (1% rule fails); the 50% rule (opex = half of gross) says NOI $14,400 — my itemized opex runs 36.6% of EGI, lighter than the rule, so the honest NOI is between. At rent $2,000: CF −$463.73/mo, DSCR 0.71. The levers that flip a deal: price (every $10k off = ~$800/yr DS), rate, rent.
+export function RentalCashFlowCalc() {
+  const [price, setPrice] = useNumber(300000)
+  const [downPct, setDownPct] = useNumber(20)
+  const [rate, setRate] = useNumber(7)
+  const [rent, setRent] = useNumber(2400)
+  const [vac, setVac] = useNumber(5)
+  const [tax, setTax] = useNumber(3600)
+  const [ins, setIns] = useNumber(1500)
+  const [mgmt, setMgmt] = useNumber(8)
+  const [maint, setMaint] = useNumber(5)
+  const [capex, setCapex] = useNumber(5)
+
+  const r = useMemo(() => {
+    const pmt = (P: number, i: number, n: number) => (i > 0 ? (P * i) / (1 - Math.pow(1 + i, -n)) : P / n)
+    const loan = price * (1 - downPct / 100)
+    const ds = pmt(loan, rate / 1200, 360) * 12
+    const gr = rent * 12
+    const egi = gr * (1 - vac / 100)
+    const opex = tax + ins + egi * ((mgmt + maint + capex) / 100)
+    const noi = egi - opex
+    const cf = noi - ds
+    const cashIn = price * (downPct / 100) + price * 0.02
+    const coc = cashIn > 0 ? (cf / cashIn) * 100 : 0
+    const cap = price > 0 ? (noi / price) * 100 : 0
+    const dscr = ds > 0 ? noi / ds : 0
+    const rtp = price > 0 ? (rent / price) * 100 : 0
+    const fifty = gr * 0.5
+    return { loan, ds, gr, egi, opex, noi, cf, cashIn, coc, cap, dscr, rtp, fifty }
+  }, [price, downPct, rate, rent, vac, tax, ins, mgmt, maint, capex])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Purchase price" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Down payment" value={downPct} onChange={setDownPct} suffix="%" step="5" />
+          <Field label="Loan rate (30-yr)" value={rate} onChange={setRate} suffix="%" step="0.125" />
+          <Field label="Monthly rent (market, not hoped)" value={rent} onChange={setRent} prefix="$" />
+          <Field label="Vacancy allowance" value={vac} onChange={setVac} suffix="%" step="1" />
+          <Field label="Property tax /yr" value={tax} onChange={setTax} prefix="$" />
+          <Field label="Insurance /yr" value={ins} onChange={setIns} prefix="$" />
+          <Field label="Management" value={mgmt} onChange={setMgmt} suffix="%" step="1" />
+          <Field label="Maintenance reserve" value={maint} onChange={setMaint} suffix="%" step="1" />
+          <Field label="CapEx reserve (roof, HVAC)" value={capex} onChange={setCapex} suffix="%" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="NOI (net operating income)" value={usd(r.noi)} />
+          <Result big label={r.cf >= 0 ? 'Cash flow /month' : 'MONTHLY LOSS'} value={usd(r.cf / 12, 2)} />
+          <Result label="Cash-on-cash return" value={`${num(r.coc, 2)}%`} />
+          <Result label="Cap rate" value={`${num(r.cap, 2)}%`} />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="DSCR (lenders want ≥1.20)" value={num(r.dscr, 2)} />
+          <Result label="Rent-to-price (1% rule)" value={`${num(r.rtp, 2)}%`} />
+          <Result label="50%-rule NOI check" value={usd(r.fifty)} />
+          <Result label="Cash needed (down + closing)" value={usd(r.cashIn)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.cf >= 0
+            ? `Positive cash flow: ${usd(r.cf / 12, 2)}/mo after vacancy, management, maintenance AND CapEx reserves. ${r.dscr >= 1.2 ? `DSCR ${num(r.dscr, 2)} clears the lender bar.` : `But DSCR ${num(r.dscr, 2)} is under 1.20 — a DSCR lender will charge for that or decline.`}`
+            : `This deal bleeds ${usd(-r.cf / 12, 2)}/month — the property pays you nothing and invoices you for the privilege. The flips, in order: negotiate price (every $10,000 off saves ~${usd((r.ds / r.loan) * 10000 / 12, 0)}/mo), raise rent to market, or walk. Appreciation might bail you out; that's speculation, not cash flow.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The model is the lender's: gross rent minus vacancy = effective income; minus taxes, insurance, management, maintenance, and CapEx reserves = NOI; minus debt service = cash flow. Three rule-of-thumb cross-checks included: the 1% rule (monthly rent ≥ 1% of price — this deal runs {num(r.rtp, 2)}%), the 50% rule (expenses ≈ half of gross rent → NOI {usd(r.fifty)}), and DSCR ≥ 1.20. Where the itemized and 50%-rule NOIs disagree, trust the WORSE one. Not modeled but real: depreciation shelters the cash flow from tax (residential rental over 27.5 years — see the rental depreciation calculator), principal paydown adds ~${usd(r.loan * 0.012, 0)}/yr of equity in year one on this loan, and appreciation/leverage is where rental fortunes are actually made — but cash flow is what keeps you solvent long enough to collect it. Estimates — your market and lender govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8484,6 +8555,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'contractor-bid-comparison-calculator': ContractorBidCalc,
   'diy-vs-hire-calculator': DiyVsHireCalc,
   'house-flip-calculator': HouseFlipCalc,
+  'rental-cash-flow-calculator': RentalCashFlowCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

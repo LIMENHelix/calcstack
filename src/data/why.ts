@@ -37,6 +37,8 @@ export const WHY_USE: Record<string, string> = {
     'Weekend warriors use it to settle the debate with arithmetic: a $600 pro-DIY gap is $50/hr of untaxed wages (the $800 pro bill takes $1,143 of gross salary at 30%) — with the 15% botch chance priced in before the verdict.',
   'house-flip-calculator':
     'Investors use it before writing the offer: the 70% rule sets a $220k ceiling on a $400k-ARV/$60k-rehab deal, and the full P&L shows $71.2k profit on $50.8k cash — plus the amber flag when your offer crosses the ceiling.',
+  'rental-cash-flow-calculator':
+    'Investors use it before offering: the lender-grade model prices vacancy, management, and CapEx honestly, so a $300k/$2,400-rent deal at 7% shows its real face — −$152/mo, 0.90 DSCR — instead of the seller\'s proforma fiction.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

@@ -514,6 +514,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'rental-cash-flow-calculator',
+    title: 'Rental Property Cash Flow Calculator 2026 — NOI, DSCR, Cash-on-Cash, and the Honest Verdict',
+    shortTitle: 'Rental Cash Flow',
+    category: 'Housing & Mortgage',
+    description:
+      'The lender-grade rental analysis: vacancy, management, maintenance, and CapEx reserves all priced in. NOI, monthly cash flow, cash-on-cash, cap rate, DSCR, plus the 1% and 50% rule cross-checks.',
+    tagline: 'A $300k rental at 7% with $2,400 rent loses $152/month — the tool that tells you before the closing does.',
+    intro:
+      'At 2026 mortgage rates, most listed rentals are cash-flow negative, and the ones that aren\'t fail the moment you price management, vacancy, and reserves honestly. This calculator runs the lender-grade model: gross rent minus vacancy gives effective income; taxes, insurance, management, maintenance, and CapEx reserves give NOI; debt service gives the verdict. A $300,000 purchase with $2,400 rent at 7% runs −$152 a month with a 0.90 DSCR — a deal no DSCR lender would touch, priced honestly. The levers are price, rate, and rent, and the tool shows what each is worth. Cross-checks included: the 1% rule, the 50% rule, and cash-on-cash on your real cash in.',
+    howItWorks: [
+      'Enter price, down payment, and the real loan rate (investment property, not primary).',
+      'Enter market rent — verified from comps, not the seller\'s proforma.',
+      'Set vacancy and the three reserves most analyses skip: management, maintenance, CapEx.',
+      'Read cash flow, DSCR, and the verdict — then stress the deal before offering.',
+    ],
+    faq: [
+      {
+        q: 'What cash-on-cash return makes a rental worth buying?',
+        a: 'The floor most investors quote is 8–10% cash-on-cash with all reserves priced in — below that, a REIT or index fund pays similar returns with zero 2 a.m. phone calls. But the real answer depends on what else the deal pays: principal paydown (~1.2% of the loan in year one, growing), depreciation shelter (a $300k rental shelters ~$9,400 of income over 27.5 years), and appreciation. A deal at 4% CoC in a genuinely appreciating market can beat a 10% CoC deal in a flat one on total return — but only cash flow keeps you solvent through the flat years. The non-negotiable: negative cash flow means YOU are the subsidy, and "appreciation will cover it" is speculation, not investing.',
+      },
+      {
+        q: 'What is DSCR and why does it decide my loan?',
+        a: 'Debt Service Coverage Ratio = NOI ÷ annual debt service — the property\'s ability to pay its own mortgage. DSCR lenders (the main channel for investor loans in 2026) want 1.20–1.25 minimum: the property clears its payment with 20–25% headroom. Below 1.0 the property literally cannot pay its own mortgage — you feed it monthly. DSCR loans price on the ratio: expect rate hits of 0.5–1.5 points as DSCR falls from 1.25 toward 0.75, and LTV caps tighten too. The practical use: solve backwards — at a given rate and price, DSCR ≥ 1.2 tells you the minimum rent the deal needs. If market rent isn\'t there, the price has to come down or the deal doesn\'t exist.',
+      },
+      {
+        q: 'Why do my numbers never match the seller\'s proforma?',
+        a: 'Because proformas are sales documents. The standard omissions: no vacancy (use 5–8%), no management ("I\'ll self-manage" — then your labor is the expense, 8–10% is the honest number either way), no CapEx reserve (roofs and HVACs are when, not if — 5% minimum), and "market rent" that\'s $200 above market. This tool\'s 50% rule cross-check exists for exactly this: if your itemized expenses come in far under half of gross rent, you\'ve underpriced something. When itemized and 50%-rule NOIs disagree, trust the worse one. And verify rent from actual leased comps — Rentometer or signed leases nearby — never from the listing.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
