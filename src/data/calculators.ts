@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'unpaid-internship-calculator',
+    title: 'Unpaid Internship Calculator 2026 — The True Cost of "Great Experience" vs the Career Premium It Buys',
+    shortTitle: 'Unpaid Internship Cost',
+    category: 'Careers & Salary',
+    description:
+      'Price an unpaid internship honestly: the paid summer job you give up plus extra living costs, against the career premium it actually produces — with the legality test and the outcome research most coordinators skip.',
+    tagline: 'A 12-week unpaid internship costs $12,000 against a $20/hr summer job — it needs to lift your starting salary $1,782/yr just to break even.',
+    intro:
+      '"Great experience" has a price: a 12-week unpaid internship at 40 hours a week costs $9,600 against a $20/hr paid summer job, plus $2,400 in extra housing — $12,000 of true cost before anyone says "exposure." The return side must then be proven, not assumed: NACE surveys consistently show paid interns getting more offers and higher starting salaries, while unpaid interns in some fields fare barely better than candidates with no internship at all. At a $3,000/yr career-start premium lasting eight years, the internship clears its cost by $8,198; at $1,500/yr it never does. And the legality question comes first — under the DOL primary-beneficiary test, most for-profit unpaid internships where the company benefits more than you are wage violations, not opportunities. This calculator prices both sides so the decision runs on outcomes, not prestige.',
+    howItWorks: [
+      'Enter the wage of the paid summer job you\'d otherwise take, plus hours and weeks.',
+      'Enter extra monthly living costs — housing away from home, relocation.',
+      'Enter the expected career premium: the lift to your STARTING salary from this specific program\'s outcome data.',
+      'Set how many years that premium plausibly lasts and a discount rate.',
+      'Read the true cost, the NPV, and the breakeven premium the internship must deliver.',
+    ],
+    faq: [
+      {
+        q: 'Is an unpaid internship even legal?',
+        a: 'Often not, in the for-profit sector. The DOL\'s primary-beneficiary test weighs seven factors around who benefits more from the arrangement — if the company derives immediate advantage from your work and you\'re displacing paid staff, the internship is likely a wage violation under the FLSA, however prestigious the logo. Unpaid roles are structurally normal only in government and nonprofits, where different rules apply. The practical takeaway: an unpaid offer from a for-profit company that COULD pay is a signal about how they value labor — including, eventually, yours. Engineering, tech, and finance pay interns $25–45/hr as the market norm; an unpaid offer in a paying field deserves direct skepticism, not gratitude.',
+      },
+      {
+        q: 'Does an unpaid internship actually lift starting salary?',
+        a: 'Less than the brochures imply, and less than a paid one. NACE outcome surveys consistently find PAID interns receive more job offers and higher starting salaries; unpaid interns in several fields track barely above candidates with no internship at all. The mechanisms that actually move offers — the network, the brand name on the resume, a concrete project you can walk an interviewer through — are available from paid roles too. Before accepting, ask the program for ITS outcome data: offer rate, median starting salary of past interns, conversion rate to full-time. A program that won\'t share outcomes is telling you the outcomes. The often-stronger alternative: paid campus research, or a part-time paid job plus a portfolio project you own end-to-end and can discuss line by line.',
+      },
+      {
+        q: 'What\'s the fair way to think about prestige exceptions?',
+        a: 'Price them, don\'t exempt them. Congress, major media, and marquee nonprofits run on unpaid internships, and for a small number of career paths the credential genuinely gates entry — the network and the name do pay. If you\'re pursuing one of those paths, the honest move is to run THIS calculator with the field\'s real premium: if the prestige lift is $5k/yr on starting salary with a decade of persistence, the math can justify it — knowingly. What prestige never justifies is skipping the arithmetic: the students who fare worst are those who pay $12k for "experience" in fields where the experience was purchasable for free, or where the resume line impresses no one who hires. Prestige is an asset only in markets that trade on it; everywhere else it\'s decoration at $1,000 a week.',
+      },
+    ],
+  },
+  {
     slug: 'walk-away-number-calculator',
     title: 'Walk-Away Number Calculator 2026 — The Minimum Acceptable Offer, Before You Negotiate',
     shortTitle: 'Walk-Away Number',

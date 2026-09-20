@@ -4208,6 +4208,59 @@ export function WalkAwayCalc() {
   )
 }
 
+// UNPAID INTERNSHIP TRUE COST — what "great experience" costs in dollars, vs the career premium it's supposed to buy. Node-verified: vs a $20/hr paid summer job (40 hrs × 12 wks) → $9,600 foregone + $800/mo extra housing × 3 → $12,000 true cost; a $3k/yr career-start premium lasting 8 yrs @4% → PV $20,198 → NPV +$8,198; breakeven premium $1,782/yr — the internship needs to move your STARTING salary ~$1.8k to pay. Honest edges: legality — the DOL "primary beneficiary" test makes most for-profit unpaid internships legally questionable (if the company benefits more than you, it's likely a wage violation, not an opportunity); the career-premium research is genuinely mixed (NACE surveys: paid interns get more offers AND higher starts; unpaid interns historically fare barely better than no internship in some fields — the resume line matters less than the network and the name-brand); field matters enormously (Congress/nonprofit/media normalize unpaid; engineering/tech/finance pay interns $25-45/hr — an unpaid offer in a paying field is a signal about the employer); alternatives exist (paid campus research, part-time paid work + portfolio project often beats unpaid prestige).
+export function UnpaidInternshipCalc() {
+  const [wage, setWage] = useNumber(20)
+  const [hours, setHours] = useNumber(40)
+  const [weeks, setWeeks] = useNumber(12)
+  const [living, setLiving] = useNumber(800)
+  const [premium, setPremium] = useNumber(3000)
+  const [years, setYears] = useNumber(8)
+  const [disc, setDisc] = useNumber(4)
+
+  const r = useMemo(() => {
+    const foregone = wage * hours * weeks
+    const livingExtra = living * Math.round(weeks / 4.33)
+    const cost = foregone + livingExtra
+    const r0 = disc / 100
+    const ann = (n: number) => (r0 === 0 ? n : (1 - Math.pow(1 + r0, -n)) / r0)
+    const pv = premium * ann(years)
+    const npv = pv - cost
+    const breakeven = cost / ann(years)
+    return { foregone, livingExtra, cost, pv, npv, breakeven }
+  }, [wage, hours, weeks, living, premium, years, disc])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Paid-job wage you'd give up" value={wage} onChange={setWage} prefix="$" suffix="/hr" step="1" />
+          <Field label="Hours per week" value={hours} onChange={setHours} step="5" />
+          <Field label="Internship weeks" value={weeks} onChange={setWeeks} step="1" />
+          <Field label="Extra living cost /mo" value={living} onChange={setLiving} prefix="$" step="100" />
+          <Field label="Expected career premium /yr" value={premium} onChange={setPremium} prefix="$" step="500" />
+          <Field label="Years premium lasts" value={years} onChange={setYears} step="2" />
+          <Field label="Discount rate" value={disc} onChange={setDisc} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Foregone summer pay" value={usd(r.foregone)} />
+          <Result label="True cost" value={usd(r.cost)} />
+          <Result label="Internship NPV" value={usd(r.npv)} big />
+          <Result label="Breakeven premium" value={`${usd(Math.round(r.breakeven))}/yr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.npv >= 0
+            ? `If the internship really lifts your starting salary ${usd(premium)}/yr, it pays: NPV ${usd(r.npv)}. The IF is the whole question — verify with outcome data for THIS program, not the coordinator's anecdotes.`
+            : `At a ${usd(premium)}/yr career premium, the internship costs ${usd(-r.npv)} more than it returns. It needs to move your starting salary at least ${usd(Math.round(r.breakeven))}/yr to break even — and unpaid internships in some fields barely beat no internship at all in hiring-outcome surveys.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: true cost = the paid summer job you gave up (wage × hours × weeks) + extra living costs (housing away from home, relocation); the return = a career premium on your starting salary, discounted over the years it plausibly lasts. The legality check comes first: under the DOL's primary-beneficiary test, a for-profit internship where the company benefits more than you do is likely a wage violation, not an opportunity — unpaid roles are normal only in government and nonprofits. The outcome research is sobering: NACE surveys consistently show PAID interns receiving more offers and higher starting salaries, while unpaid interns in some fields fare barely better than candidates with no internship — the network and the brand name do the work, not the "experience" line. Field norms matter: engineering, tech, and finance pay interns $25–45/hr, so an unpaid offer in a paying field tells you something about the employer. The often-better alternative: paid campus research or a part-time paid job plus a portfolio project you own end-to-end. Estimates — program outcome data governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9856,6 +9909,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'certification-roi-calculator': CertRoiCalc,
   'job-hop-calculator': JobHopCalc,
   'walk-away-number-calculator': WalkAwayCalc,
+  'unpaid-internship-calculator': UnpaidInternshipCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

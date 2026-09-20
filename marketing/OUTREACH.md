@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 300 calculators live (526 indexed pages). See LAUNCH.md for the domain-day
+**Status: 330 calculators live (556 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -414,3 +414,36 @@ pages, home-renovation contractor blogs, housing-market Substack writers.
 Timing: rate-cut expectations make cost-of-waiting evergreen-hot through 2026;
 HELOC content peaks in spring renovation season (Mar–May) and again in fall
 home-improvement cycles (Sep–Oct).
+
+## Wave 58 — Insurance gaps, life decisions & career money (#311–#330)
+
+Thirty calculators across three clusters since the milestone — pitch each to
+its own audience, or the whole set as "the decisions nobody prices."
+
+- **Insurance gap cluster (#311–#315)** — deductible optimizer (premium saved
+  vs exposure priced), umbrella insurance at ~$1/day per $1M, the
+  drop-full-coverage breakeven, home insurance adequacy vs rebuild cost, term
+  life ladder. Pitch: insurance consumer blogs, personal-finance newsletters,
+  r/Insurance and r/personalfinance wikis. The "you're paying $400/yr to
+  insure a $1,000 risk" frame earns links.
+- **Life-decision cluster (#316–#319)** — barista FIRE (Coast's working
+  sibling), lifestyle creep amortized, true commute cost, daycare vs second
+  income. Pitch: FIRE subreddits and blogs, parenting newsletters, dual-income
+  household content. Daycare-vs-second-income is the shareable one — the
+  career-interruption cost dwarfs the salary comparison.
+- **Career money suite (#320–#330)** — fixed-bid and retainer pricing,
+  S-corp election with the honest net, RSU vest tax, ISO vs NSO with the AMT
+  shadow, startup offer EV (probability-weighted equity vs the salary cut),
+  grad school ROI, certification ROI with study hours priced, the job-hop
+  premium vs the loyalty tax, the walk-away number, unpaid internship true
+  cost. Pitch: Blind/levels.fyi-adjacent blogs, tech-worker newsletters,
+  career Substack writers, HR/benefits blogs, r/cscareerquestions and
+  r/ExperiencedDevs wikis, grad-school forums, career-coach resource pages.
+- **Flagship pitches** — startup-offer EV ("0.1% with a $20k strike is $68k
+  of expected value — the salary cut is $120k") and walk-away number ("the
+  $105k offer that feels like a raise is a pay cut") are the correction
+  content that earns backlinks: everyone writes negotiation advice, nobody
+  publishes the arithmetic.
+- **Backlist ride-alongs** — salary-offer comparison, RSU vest tax, bonus
+  tax, 1099-vs-W2, freelance rate for the same career audiences. The careers
+  cluster now interlinks offer → negotiate → equity → switch → educate.

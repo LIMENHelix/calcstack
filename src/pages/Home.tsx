@@ -54,14 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          300 calculators and counting. Newest: the home equity suite — HELOC
-          two-phase payments and the repayment shock, HELOC vs cash-out refi
-          priced by the effective rate on the cash, the fixed home equity loan
-          with the CLTV cap, and the true cost of waiting for rates to fall.
+          330 calculators and counting. Newest: the career money suite — startup
+          equity priced by probability, grad school and certification ROI with the
+          hidden costs counted, the job-hop premium vs the loyalty tax, your
+          walk-away number before you negotiate, and the true cost of an unpaid
+          internship.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['heloc-calculator', 'heloc-vs-cash-out-refi-calculator', 'home-equity-loan-calculator', 'cost-of-waiting-calculator', 'qlac-calculator', 'q4-equipment-timing-calculator'].includes(c.slug),
+            ['startup-offer-calculator', 'grad-school-roi-calculator', 'certification-roi-calculator', 'job-hop-calculator', 'walk-away-number-calculator', 'unpaid-internship-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

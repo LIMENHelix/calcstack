@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'unpaid-internship-calculator':
+    'Students use it before accepting: a 12-week unpaid internship costs $12,000 against a $20/hr summer job — it must lift starting salary $1,782/yr to break even, and NACE data says paid interns get both more offers and higher starts.',
   'walk-away-number-calculator':
     'Candidates use it before the recruiter calls: on $100k total comp with a 10% risk premium and $8k of switching costs, the honest floor is $115,967 — the $105k offer that feels like a raise is a pay cut you chose under adrenaline.',
   'job-hop-calculator':
