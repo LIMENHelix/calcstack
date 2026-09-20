@@ -265,6 +265,10 @@ export const WHY_USE: Record<string, string> = {
     'FBA sellers use it before the shipment: $12.09/unit margin meets $360/mo of Q4 storage at 2.8× rates — send what sells by Christmas, not what fits the container.',
   'etsy-pricing-calculator':
     'Etsy sellers use it before listing: $18 + $4.50 shipping loses $2.59 to fees — including 6.5% of the postage — leaving $9.41 before your labor is counted.',
+  'ebay-fee-calculator':
+    'Sellers use it before buying inventory: 13.6% of the $53 total plus $0.30 is $7.51 — a $20 item needs a $45 sale price to keep 40% margin.',
+  'shopify-vs-etsy-calculator':
+    'Shop owners use it at the migration decision: Shopify undercuts Etsy past ~24 orders/mo on fees — but Etsy\'s $259 includes the buyers, Shopify\'s $134 does not.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

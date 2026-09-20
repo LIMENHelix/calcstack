@@ -2671,3 +2671,71 @@ export function EtsyPricingCalc() {
     </CardContent></Card>
   )
 }
+// EBAY FINAL VALUE FEE — node-verified defaults: $45 item + $8 shipping; FVF = 13.6% of $53 + $0.30 = $7.51. Against $20 cost and $7.50 postage: $17.99 net = 40% margin. eBay fees the shipping too, and the $0.30 per-order bite punishes cheap items hardest.
+export function EbayFeeCalc() {
+  const [price, setPrice] = useNumber(45)
+  const [shipCharge, setShipCharge] = useNumber(8)
+  const [cogs, setCogs] = useNumber(20)
+  const [shipCost, setShipCost] = useNumber(7.5)
+  const [fvfPct, setFvfPct] = useNumber(13.6)
+  const [promoted, setPromoted] = useNumber(0)
+  const r = useMemo(() => {
+    const total = price + shipCharge
+    const fvf = total * (fvfPct / 100) + 0.3
+    const ads = total * (promoted / 100)
+    const net = total - cogs - shipCost - fvf - ads
+    return { fvf, ads, net, marginPct: price > 0 ? (net / price) * 100 : 0, fees: fvf + ads }
+  }, [price, shipCharge, cogs, shipCost, fvfPct, promoted])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Item price" value={price} onChange={setPrice} prefix="$" step="0.50" />
+        <Field label="Shipping charged to buyer" value={shipCharge} onChange={setShipCharge} prefix="$" step="0.50" />
+        <Field label="Item cost" value={cogs} onChange={setCogs} prefix="$" step="0.50" />
+        <Field label="Actual shipping cost" value={shipCost} onChange={setShipCost} prefix="$" step="0.50" />
+        <Field label="Final value fee" value={fvfPct} onChange={setFvfPct} suffix="%" step="0.1" />
+        <Field label="Promoted Listings rate" value={promoted} onChange={setPromoted} suffix="%" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Net per sale" value={usd(r.net)} big />
+        <Result label="Margin on item price" value={`${num(r.marginPct, 1)}%`} big />
+        <Result label="Final value fee (+$0.30)" value={usd(r.fvf)} />
+        <Result label="Total eBay fees" value={usd(r.fees)} />
+      </div>
+      <p className="text-xs text-muted-foreground">13.6% is the most-common category rate on totals up to $7,500 — books run 15.3%, guitars 6.35%, sneakers 8% over $150. Store subscribers get discounted rates in some categories; check eBay's current fee table for yours.</p>
+    </CardContent></Card>
+  )
+}
+
+// SHOPIFY VS ETSY — node-verified defaults: $22.50 order total, 100 orders/mo. Etsy: $2.59/order = $259/mo. Shopify Basic: $39 + 100 × (2.9% × $22.50 + $0.30) = $134.25/mo. Crossover: 39 / (2.59 − 0.9525) ≈ 24 orders/month — above that, Shopify's math wins IF you can bring your own traffic.
+export function ShopifyVsEtsyCalc() {
+  const [orderTotal, setOrderTotal] = useNumber(22.5)
+  const [orders, setOrders] = useNumber(100)
+  const [plan, setPlan] = useNumber(39)
+  const [offsite, setOffsite] = useNumber(0)
+  const r = useMemo(() => {
+    const etsyPer = 0.2 + orderTotal * 0.065 + orderTotal * 0.03 + 0.25 + orderTotal * (offsite / 100)
+    const shopPer = orderTotal * 0.029 + 0.3
+    const etsy = etsyPer * orders
+    const shopify = plan + shopPer * orders
+    const cross = etsyPer > shopPer ? plan / (etsyPer - shopPer) : Infinity
+    return { etsy, shopify, diff: etsy - shopify, cross }
+  }, [orderTotal, orders, plan, offsite])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Average order total (incl. shipping)" value={orderTotal} onChange={setOrderTotal} prefix="$" step="0.50" />
+        <Field label="Orders per month" value={orders} onChange={setOrders} />
+        <Field label="Shopify plan (monthly)" value={plan} onChange={setPlan} prefix="$" />
+        <Field label="Etsy Offsite Ads rate" value={offsite} onChange={setOffsite} suffix="%" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Etsy fees per month" value={usd(r.etsy)} big />
+        <Result label="Shopify cost per month" value={usd(r.shopify)} big />
+        <Result label="Shopify saves" value={`${usd(r.diff)}/mo`} />
+        <Result label="Fee crossover" value={isFinite(r.cross) ? `${num(r.cross, 0)} orders/mo` : 'Never (Shopify pricier)'} />
+      </div>
+      <p className="text-xs text-muted-foreground">Fees only — Shopify brings zero traffic, Etsy brings buyers. The crossover assumes you can replace Etsy's audience; ad spend to do that is NOT in this math.</p>
+    </CardContent></Card>
+  )
+}

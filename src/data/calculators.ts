@@ -4090,6 +4090,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ebay-fee-calculator',
+    title: 'eBay Fee Calculator — Final Value Fees and Net per Sale',
+    shortTitle: 'eBay Fees',
+    category: 'Freelance & Career',
+    description: 'Calculate eBay final value fees on the total including shipping, the $0.30 per-order fee, and optional Promoted Listings. See net per sale and true margin before you list.',
+    tagline: 'eBay fees your shipping charge too — and the $0.30 bites cheap items hardest.',
+    intro: 'A $45 item with $8 shipping pays $7.51 in final value fees before your costs — 13.6% of the $53 total plus $0.30. This calculator stacks fees against item and postage costs so your net per sale is known before the listing goes live.',
+    howItWorks: [
+      'Enter your item price and the shipping you charge.',
+      'Add item cost and actual postage cost.',
+      'Set the final value fee for your category (13.6% default; books 15.3%, sneakers 8% over $150).',
+      'Add your Promoted Listings rate if you advertise.',
+      'Read net per sale, margin, and total fees.',
+    ],
+    faq: [
+      {
+        q: 'How much does eBay take from a sale?',
+        a: 'For most categories: 13.6% of the total order amount — item price plus shipping plus sales tax — up to $7,500 per order, plus a flat $0.30 per order. On a $53 order that is $7.51, or 14.2% effective. Category exceptions matter: books, DVDs, and music run 15.3%; sneakers $150+ run 8%; guitars 6.35%; trading cards 13.25%. Sellers above the free 250-listing allotment pay $0.35 insertion per listing, and Promoted Listings adds 2–10%+ when the sale comes through an ad. The $0.30 flat fee is regressive: on a $10 sale it is 3% by itself — cheap items carry the heaviest effective rate.',
+      },
+      {
+        q: 'Is selling on eBay still worth it?',
+        a: 'For used, rare, and one-off items, yes — eBay\'s audience for secondhand and collectible inventory is still the deepest, and 13.9% all-in beats most consignment. For new commodity goods, the math is tighter because you compete with Amazon sellers and retail arbitrage on price. The businesses that profit on eBay share a pattern: sourced cost under 50% of sale price, shipping bought through eBay labels at commercial rates (never retail USPS counter prices), and Promoted Listings used surgically at 2–4% on slow movers rather than blanket rates. Run every sourcing decision through the fee math before buying: an item at $20 cost needs a $45+ sale price to keep 40% margin after fees and postage.',
+      },
+      {
+        q: 'How do I reduce eBay fees legally?',
+        a: 'Five honest levers. One: buy postage through eBay labels — commercial pricing cuts the shipping COST that eats margin alongside the fee. Two: an eBay Store subscription ($21.95/mo Basic) discounts final value fees in several categories and adds free listings — it pencils out around $1,000–$2,000/month in sales. Three: skip Promoted Listings on items that sell organically; check your traffic report and only promote what stalls. Four: price shipping accurately instead of inflating it — eBay fees it either way, and inflated shipping repels buyers. Five: list in the right category — the fee schedule rewards correct categorization, and mis-categorized listings can pay the higher rate of whatever category they land in.',
+      },
+    ],
+  },
+  {
+    slug: 'shopify-vs-etsy-calculator',
+    title: 'Shopify vs Etsy Fee Calculator — Where the Crossover Actually Is',
+    shortTitle: 'Shopify vs Etsy',
+    category: 'Freelance & Career',
+    description: 'Compare monthly costs: Etsy\'s per-order fee stack vs Shopify\'s subscription plus processing. Find the order volume where Shopify wins on fees — and the traffic caveat that decides it.',
+    tagline: 'Shopify wins on fees at ~24 orders a month. Winning on traffic is the hard part.',
+    intro: 'At $22.50 average orders, Etsy takes $2.59 per sale while Shopify costs $39 a month plus 95¢ per order — the fee crossover sits near 24 orders a month. This calculator runs both stacks at your volume, with the one caveat that decides everything: Etsy brings buyers, Shopify brings none.',
+    howItWorks: [
+      'Enter your average order total including shipping.',
+      'Set monthly order volume.',
+      'Choose your Shopify plan cost.',
+      'Add Etsy\'s Offsite Ads rate if it applies to your shop.',
+      'Read both monthly costs and the crossover order count.',
+    ],
+    faq: [
+      {
+        q: 'Is Shopify cheaper than Etsy?',
+        a: 'On pure fees, past roughly 24 orders a month, yes: Etsy\'s stack ($0.20 listing + 6.5% transaction + 3% + $0.25 processing) runs about $2.59 on a $22.50 order, while Shopify Basic is $39 flat plus about 95¢ per order in processing. At 100 orders a month that is $259 versus $134. But the comparison hides the product: Etsy\'s fee includes access to 90+ million buyers searching the marketplace; Shopify\'s $39 buys a storefront with zero visitors. Sellers who move to Shopify for the fee savings without a traffic plan routinely trade a $125/month fee bill for a $500/month ad bill. The fee crossover only matters once you own an audience.',
+      },
+      {
+        q: 'When should an Etsy seller add a Shopify store?',
+        a: 'When repeat customers become a meaningful share of orders — that is the traffic you do not have to buy twice. The standard migration: keep Etsy for discovery (new buyers find you in search), and route repeats to your own site via packaging inserts, email lists you own, and social following. Signals you are ready: 30%+ repeat rate, an email list over 500, or social traffic already converting. Also consider the policy moat: Etsy can suspend shops, change fees (the Offsite Ads mandate at $10k caught sellers flat-footed), and delist products — a Shopify store is insurance on the revenue, not just a fee play. Run both in parallel; the calculator shows the fee picture of shifting volume gradually.',
+      },
+      {
+        q: 'What does Shopify actually cost per month all-in?',
+        a: 'The $39 Basic plan is the floor, not the total: processing at 2.9% + $0.30 per online transaction, plus the apps most stores end up needing ($10–$50/month for reviews, email, upsells), plus a theme if free ones do not fit. A realistic all-in for a small store is $60–$120/month before ads. Higher tiers cut processing rates (2.6% on the $105 plan) — the break-even on upgrading is around $15,000/month in volume. The cost that dwarfs all of it is customer acquisition: if your traffic plan is paid ads at $1.50+ per click with 2% conversion, that is $75 per order — versus Etsy\'s ~11.5% of order value. Fees are the visible cost; traffic is the real one.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
