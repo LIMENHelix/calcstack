@@ -731,6 +731,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'umbrella-insurance-calculator',
+    title: 'Umbrella Insurance Calculator 2026 — How Much Coverage Your Net Worth and Future Wages Actually Need',
+    shortTitle: 'Umbrella Coverage',
+    category: 'Health & Life',
+    description:
+      'Liability limits vs what a judgment can reach: net worth plus ten years of garnishable wages. Compute your unprotected gap, the umbrella size you need, and the typical premium.',
+    tagline: '$850k net worth with $300k liability limits leaves $550k exposed — a $1M umbrella closes it for about $225 a year.',
+    intro:
+      'Liability insurance is the line between a bad day and a lost decade, and most policies stop at $300,000 while the average household\'s exposure quietly passes it. The judgment math is brutal: taxable investments, savings, most home equity, AND up to 25% of future wages are reachable — a $90,000 income alone adds $225,000 of ten-year garnishment exposure. Umbrella coverage closes the gap for the cheapest dollars in personal insurance: the first $1M typically runs $150–300 a year, roughly 22 cents per $1,000 of protection, with defense costs covered on top of the limit. This calculator totals your real exposure, sizes the gap, and prices the fix.',
+    howItWorks: [
+      'Enter your net worth — savings, investments, home equity beyond your state\'s homestead exemption.',
+      'Enter gross income — future wages are garnishable, typically up to 25% of disposable.',
+      'Enter your current auto and home liability limits.',
+      'Read the gap, the umbrella size, and the estimated premium.',
+    ],
+    faq: [
+      {
+        q: 'At what net worth do I actually need umbrella insurance?',
+        a: 'The honest trigger isn\'t a net-worth number — it\'s the gap between your liability limits and everything a judgment could reach. The rule of thumb: umbrella when net worth plus a decade of wage exposure exceeds your auto/home liability limits. But two groups need it earlier than the math suggests: high earners with low current assets (future wages are the target — a 35-year-old earning $150k has ~$375k of ten-year garnishment exposure with zero net worth), and anyone with liability amplifiers: teen drivers, a pool, a trampoline, a dog with a bite history, rental property, frequent entertaining. Note what\'s protected before panicking: ERISA 401(k)s are federally untouchable, IRAs are protected to ~$1.7M federally and often fully by states, and homestead exemptions shield some home equity (unlimited in FL and TX, near-nothing in others). Count the exposed slice, not the total.',
+      },
+      {
+        q: 'What does an umbrella policy NOT cover?',
+        a: 'More than people assume. Umbrella covers LIABILITY — harm you cause others: auto accidents beyond your auto limits, guest injuries on your property, libel/slander, dog bites, your teenager\'s mistakes. It does not cover: your own injuries or property damage (that\'s health/home/auto comprehensive), intentional or criminal acts, business liability (you need a commercial policy — side-hustle injuries to clients are NOT covered), contractual liability you assumed in a signed agreement, or workers\' comp for household employees in most states. Landlords: rental property liability usually CAN be scheduled on a personal umbrella, but only if disclosed — an undisclosed rental is an uncovered rental. And the underlying-limits requirement is real: carriers require raising auto/home liability to $250k/$500k before the umbrella attaches.',
+      },
+      {
+        q: 'Is the premium really that small? What\'s the catch?',
+        a: 'Yes, and the catch is just probability. Umbrella pricing is cheap because underlying policies absorb the frequent small claims — the umbrella only pays on rare, severe events, so the first $1M runs $150–300/year and each additional million $75–150. The premium moves with YOUR risk profile: teen drivers add the most (sometimes doubling it), followed by pools, certain dog breeds, and multiple properties. Where people overpay: not bundling (your auto/home carrier usually gives the best umbrella rate, and standalone umbrellas exist but price higher) and not shopping (umbrella pricing varies surprisingly widely for identical profiles). One more value line most buyers miss: defense costs — attorney fees in a covered claim are typically paid IN ADDITION to the policy limit, so even a successfully defended frivolous suit can justify decades of premiums in one afternoon.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

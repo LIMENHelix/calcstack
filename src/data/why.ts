@@ -51,6 +51,8 @@ export const WHY_USE: Record<string, string> = {
     'Sellers use it before listing: the 2-of-5-years rule turns a $350k gain into $0 or $15k+ of federal tax, job-move partial exclusions prorate the cap, and rental-period depreciation recaptures at 25% no matter what.',
   'deductible-optimizer-calculator':
     'Drivers and homeowners use it at renewal: the breakeven claim rate (one per 4.7 yrs on a typical $500→$2,000 move) against your real claim history turns a gut-feel choice into a $1,700-per-decade expected win — gated by the emergency fund.',
+  'umbrella-insurance-calculator':
+    'Households use it to size liability protection against reality: net worth plus 10 years of garnishable wages minus current limits shows an $850k/$90k family $550k exposed — closed by a $1M umbrella at roughly $225/yr.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

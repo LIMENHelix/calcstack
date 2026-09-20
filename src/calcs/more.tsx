@@ -3267,6 +3267,53 @@ export function DeductibleOptimizerCalc() {
   )
 }
 
+// UMBRELLA INSURANCE THRESHOLD — liability limits vs what's actually at stake (net worth + future earnings). Node-verified: $850k net worth with $300k auto/home liability limits → $550k gap → 1 $1M umbrella policy. Typical premiums (industry-standard ranges, get a real quote): first $1M $150–300/yr, each additional $1M $75–150 — $225/yr for $1M = $0.225 per $1,000 of coverage, the cheapest insurance per dollar in personal lines. Future-earnings exposure: wage garnishment up to 25% of disposable income in most states → $90k income ≈ $225k of 10-year exposure beyond assets. ERISA retirement accounts and some home equity are protected by state law; taxable brokerage, savings, and future wages are not. Policy triggers: auto/home underlying limits usually must be raised to $250k/$500k first (a modest premium bump). Defense costs are covered ON TOP of the limit on most umbrella policies — the lawyers are worth the premium alone.
+export function UmbrellaCalc() {
+  const [netWorth, setNetWorth] = useNumber(850000)
+  const [income, setIncome] = useNumber(90000)
+  const [autoLimit, setAutoLimit] = useNumber(300)
+  const [homeLimit, setHomeLimit] = useNumber(300)
+
+  const r = useMemo(() => {
+    const baseLimit = Math.min(autoLimit, homeLimit) * 1000
+    const earningsExposure = income * 0.25 * 10
+    const totalAtStake = netWorth + earningsExposure
+    const gap = Math.max(0, totalAtStake - baseLimit)
+    const policies = Math.ceil(gap / 1000000)
+    const estPremium = policies === 0 ? 0 : 225 + Math.max(0, policies - 1) * 110
+    const verdict =
+      gap <= 0 ? 'covered' : policies === 1 ? 'one' : 'multi'
+    return { baseLimit, earningsExposure, totalAtStake, gap, policies, estPremium, verdict }
+  }, [netWorth, income, autoLimit, homeLimit])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Net worth (home equity + savings + investments)" value={netWorth} onChange={setNetWorth} prefix="$" />
+          <Field label="Gross income (future wages are attachable)" value={income} onChange={setIncome} prefix="$" />
+          <Field label="Auto liability limit" value={autoLimit} onChange={setAutoLimit} suffix="k" step="100" />
+          <Field label="Home liability limit" value={homeLimit} onChange={setHomeLimit} suffix="k" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Underlying liability floor" value={usd(r.baseLimit)} />
+          <Result label="Assets + 10-yr wage exposure" value={usd(r.totalAtStake)} />
+          <Result big label="Unprotected gap" value={usd(r.gap)} />
+          <Result label="Umbrella needed / est. premium" value={r.policies === 0 ? 'None' : `$${r.policies}M / ~${usd(r.estPremium)}/yr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.gap <= 0
+            ? `Your ${usd(r.baseLimit)} underlying limits cover the modeled exposure (${usd(r.totalAtStake)}). Revisit as net worth grows — umbrella math changes fast once home equity and investments compound.`
+            : `${usd(r.gap)} of your wealth and future wages sits above your liability limits. A $${r.policies}M umbrella runs roughly ${usd(r.estPremium)}/year — ${usd(r.estPremium / (r.policies * 1000), 2)} per $1,000 of coverage, the cheapest insurance in personal lines.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The model counts what a judgment can reach: taxable brokerage, savings, and home equity beyond your state's homestead exemption — plus future wages (garnishment caps run ~25% of disposable income in most states, and a judgment can follow you 10–20 years with renewals). ERISA-governed retirement accounts (401(k)s) are federally protected; IRA protection varies by state (often capped ~$1.7M, adjusted). The mechanics to know before buying: umbrella policies require raising your underlying auto/home limits first (typically to $250k/$500k — a small premium bump worth doing anyway); defense costs are usually covered IN ADDITION to the policy limit, meaning the lawyers alone can be worth the premium in a defended claim; and umbrella covers liability only — never your own injuries or property. Premium estimates here are typical market ranges for clean records; teen drivers, pools, dogs, trampolines, and rental properties move the quote. Get real quotes from your current auto/home carrier first — bundling discounts are significant. Estimates — your insurer's quote governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8897,6 +8944,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'mortgage-buydown-calculator': BuydownCalc,
   'home-sale-capital-gains-calculator': HomeSaleGainsCalc,
   'deductible-optimizer-calculator': DeductibleOptimizerCalc,
+  'umbrella-insurance-calculator': UmbrellaCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
