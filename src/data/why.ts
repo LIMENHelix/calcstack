@@ -181,6 +181,10 @@ export const WHY_USE: Record<string, string> = {
     'Job candidates use it before accepting: countering a $95k offer with $105k wins $6,750/yr in expected value even at 10% rescind risk — and a landed counter compounds to $114,639 over 10 years of raises.',
   'non-compete-cost-calculator':
     'Employees use it before signing: a 12-month non-compete on $110k carries $4,950 of expected cost — the signing premium to ask for — and the clause lives under state law, not the struck-down FTC ban.',
+  'relocation-package-calculator':
+    'Job movers use it before signing the offer: a $10k relocation lump is $7,600 after tax against $10,500 of real costs — the counter is $13,816 grossed up, and the clawback terms matter more than the amount.',
+  'career-break-calculator':
+    'Anyone planning a sabbatical uses it before resigning: six months off costs $37,200 in cash but $105,710 with retirement compounding — and ACA subsidies plus IRA continuity shrink it dramatically.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

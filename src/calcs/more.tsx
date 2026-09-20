@@ -6518,6 +6518,98 @@ export function NonCompeteCostCalc() {
   )
 }
 
+// RELOCATION PACKAGE ADEQUACY — node-verified defaults: $10,000 lump sum × (1−24% tax) = $7,600 net vs true costs $10,500 (move $6,000 + temp housing $2,500 + travel $800 + deposits/misc $1,200) → −$2,900 gap. Grossed-up ask = $10,500 ÷ 0.76 = $13,816. Key trap: since the TCJA (2018), moving expenses are NOT deductible and lump sums are taxable wages for non-military moves — a "$10k relocation" is a $7.6k relocation.
+export function RelocationPackageCalc() {
+  const [lump, setLump] = useNumber(10000)
+  const [tax, setTax] = useNumber(24)
+  const [move, setMove] = useNumber(6000)
+  const [temp, setTemp] = useNumber(2500)
+  const [travel, setTravel] = useNumber(800)
+  const [misc, setMisc] = useNumber(1200)
+
+  const r = useMemo(() => {
+    const net = lump * (1 - tax / 100)
+    const costs = move + temp + travel + misc
+    const gap = costs - net
+    const ask = tax < 100 ? costs / (1 - tax / 100) : Infinity
+    return { net, costs, gap, ask }
+  }, [lump, tax, move, temp, travel, misc])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Lump-sum offer" value={lump} onChange={setLump} prefix="$" step="500" />
+          <Field label="Your tax rate" value={tax} onChange={setTax} suffix="%" step="2" />
+          <Field label="Movers / transport" value={move} onChange={setMove} prefix="$" step="500" />
+          <Field label="Temp housing" value={temp} onChange={setTemp} prefix="$" step="250" />
+          <Field label="Travel & house-hunting" value={travel} onChange={setTravel} prefix="$" step="100" />
+          <Field label="Deposits & misc" value={misc} onChange={setMisc} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Lump sum after tax" value={usd(Math.round(r.net))} />
+          <Result label="True move costs" value={usd(Math.round(r.costs))} />
+          <Result label="Gap" value={r.gap > 0 ? `−${usd(Math.round(r.gap))}` : `+${usd(Math.round(-r.gap))}`} big />
+          <Result label="Grossed-up ask" value={isFinite(r.ask) ? usd(Math.round(r.ask)) : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.gap > 0
+            ? `The ${usd(lump)} lump sum is ${usd(Math.round(r.net))} after tax against ${usd(Math.round(r.costs))} of real costs — you are ${usd(Math.round(r.gap))} short. The correct ask is ${usd(Math.round(r.ask))} grossed up, or a direct-billed move instead of cash.`
+            : `The package covers the move with ${usd(Math.round(-r.gap))} to spare after tax — before negotiating more cash, negotiate the terms: no clawback after 12 months, and repayment prorated monthly.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: net = lump × (1 − tax rate); gap = itemized costs − net; grossed-up ask = costs ÷ (1 − tax rate). The tax trap is the headline: since the 2017 tax law, moving expenses are non-deductible and relocation cash is taxable W-2 wages for everyone except active-duty military — a $10,000 &quot;relocation package&quot; is $7,600 at a 24% bracket. Negotiation hierarchy: direct-billed or employer-paid movers beat cash (no tax hit on services the company buys), a grossed-up lump beats a flat one, and audited reimbursement beats both for you. Terms to fix before signing: clawback clauses (leave before 12–24 months and you repay — negotiate monthly proration, never all-or-nothing), what happens if THEY terminate you (repayment should die), and whether the lump appears in year-one W-2 at supplemental withholding. Cost line items people forget: breaking a lease (1–2 months), double-housing overlap, utility setup and deposits, new-state vehicle registration, and the spouse&apos;s lost income during the transition — the last one often dwarfs the move itself. Estimate — mover quotes and your lease terms govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// CAREER BREAK TRUE COST — node-verified defaults: 6 months off, $5,500/mo spend + $700/mo COBRA = $37,200 direct; skipped retirement contributions $1,500/mo × 6 = $9,000 → at 7% for 30 years = $68,510 future value. True cost $105,710 — the retirement compounding line is the one nobody prices. A sabbatical at 35 costs six figures at 65.
+export function CareerBreakCalc() {
+  const [mo, setMo] = useNumber(6)
+  const [spend, setSpend] = useNumber(5500)
+  const [cobra, setCobra] = useNumber(700)
+  const [ret, setRet] = useNumber(1500)
+  const [growth, setGrowth] = useNumber(7)
+  const [yrs, setYrs] = useNumber(30)
+
+  const r = useMemo(() => {
+    const direct = (spend + cobra) * mo
+    const retSkip = ret * mo
+    const fv = retSkip * Math.pow(1 + growth / 100, yrs)
+    const trueCost = direct + fv
+    return { direct, retSkip, fv, trueCost }
+  }, [mo, spend, cobra, ret, growth, yrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Months off" value={mo} onChange={setMo} suffix="mo" step="1" />
+          <Field label="Monthly spend" value={spend} onChange={setSpend} prefix="$" step="250" />
+          <Field label="Health insurance (COBRA)" value={cobra} onChange={setCobra} prefix="$" suffix="/mo" step="50" />
+          <Field label="Retirement contrib skipped" value={ret} onChange={setRet} prefix="$" suffix="/mo" step="250" />
+          <Field label="Growth rate" value={growth} onChange={setGrowth} suffix="%" step="0.5" />
+          <Field label="Years to retirement" value={yrs} onChange={setYrs} suffix="yrs" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Direct cost" value={usd(Math.round(r.direct))} />
+          <Result label="Retirement skipped" value={usd(Math.round(r.retSkip))} />
+          <Result label="Retirement future value lost" value={usd(Math.round(r.fv))} />
+          <Result label="True cost" value={usd(Math.round(r.trueCost))} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The break costs ${usd(Math.round(r.direct))} in cash — but the ${usd(Math.round(r.retSkip))} of skipped retirement contributions becomes ${usd(Math.round(r.fv))} by retirement. True cost: ${usd(Math.round(r.trueCost))}. Worth it? Often yes — but price it honestly, and keep contributing through the break if you can.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: direct = (monthly spend + insurance) × months; retirement impact = skipped contributions grown at your rate to retirement — the line that turns a $37k break into a $106k one. Insurance detail first because it bites first: COBRA keeps your employer plan 18 months at 102% of cost ($600–800/mo typical single coverage), while an ACA marketplace plan with break-year income may qualify for LARGE subsidies — at zero income for half a year, many breakers pay under $200/mo; run the ACA subsidy calculator before defaulting to COBRA. Ways to shrink the true cost: keep IRA contributions running through the break (fund from savings — the $7,000 IRA year is worth $53k at retirement at 7%/30yr), time the break across two tax years (half-year income twice can drop a bracket), and front-load the emergency fund so the break never touches credit. Career-side reality: breaks under 6 months rarely need explaining at all; over 6, have the one-sentence answer ready (sabbatical, family care, certification) — hiring managers accept reasons, not gaps. And the counterweight nobody quantifies: burnout-driven career collapses cost more than planned breaks — a priced break is a rational expense, not a guilty one. Estimate — your benefits office, ACA quote, and savings rate govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12213,6 +12305,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'escalation-clause-calculator': EscalationClauseCalc,
   'counteroffer-ev-calculator': CounterofferEvCalc,
   'non-compete-cost-calculator': NonCompeteCostCalc,
+  'relocation-package-calculator': RelocationPackageCalc,
+  'career-break-calculator': CareerBreakCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

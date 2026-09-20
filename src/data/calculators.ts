@@ -2785,6 +2785,69 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'relocation-package-calculator',
+    title: 'Relocation Package Calculator — After-Tax Adequacy, the Grossed-Up Ask, and Clawback Terms',
+    shortTitle: 'Relocation Package Adequacy',
+    category: 'Freelance & Career',
+    description:
+      'Is the relocation offer actually enough? After-tax value of the lump sum versus itemized true costs, the grossed-up number to counter with, and the clawback terms to fix before signing.',
+    tagline: 'A $10,000 relocation lump sum is $7,600 after tax against $10,500 of real costs — you are $2,900 short. The correct ask is $13,816 grossed up.',
+    intro:
+      'Relocation packages are quoted pre-tax and spent post-tax — that gap is the whole game. Since 2018, moving expenses are non-deductible and relocation cash is taxable wages for everyone except active-duty military, so a $10,000 lump sum is $7,600 at a 24% bracket. Against real itemized costs — movers $6,000, temp housing $2,500, travel $800, deposits and misc $1,200 — the package is $2,900 short. The counter is arithmetic: ask for $13,816 grossed up, or better, direct-billed movers that skip the tax hit entirely. This calculator prices the offer, the gap, and the ask — plus the clawback terms that matter more than the amount.',
+    howItWorks: [
+      'Enter the lump-sum offer and your marginal tax rate.',
+      'Itemize: movers, temporary housing, travel and house-hunting, deposits and misc.',
+      'Read the after-tax value, true costs, and the gap.',
+      'Use the grossed-up ask as your counter — or negotiate direct-billed services instead.',
+    ],
+    faq: [
+      {
+        q: 'Why is relocation cash taxed, and can I avoid it?',
+        a: 'The 2017 Tax Cuts and Jobs Act suspended the moving-expense deduction and the exclusion for employer moving reimbursements through at least 2025 — only active-duty military moves keep the old treatment. So employer relocation cash lands in your W-2 as wages: income tax, Social Security, and Medicare all apply, and the supplemental withholding (22% federal) often under-withholds against your real bracket. The avoidance strategies, best first: direct-billed services — the employer contracts and pays the moving company directly; the tax treatment of employer-arranged moves varies by structure, and many employers run them through accountable plans that can be cleaner than cash — ask HR how THEIR package is administered before assuming. Grossed-up lump sums: the employer pays costs ÷ (1 − your rate) so the net lands whole — the number this calculator produces; many large employers gross up automatically, others do it when asked. Relocation-specific RE perks (buyer-value option programs, home-sale assistance) have their own tax mechanics and are usually the best-structured option if offered. Bottom line: never evaluate a relocation number at face value — convert to after-tax first, which is the entire point of this tool.',
+      },
+      {
+        q: 'What should I negotiate besides the amount?',
+        a: 'Terms first — they cost the employer nothing and protect you enormously. The clawback: standard packages demand full repayment if you leave within 12–24 months. Negotiate monthly proration (leave at month 18 of 24, repay 25%, not 100%) and carve-outs: repayment dies if they terminate you, lay you off, or relocate you again. The tax structure from the first answer: direct-billed movers or gross-up beats flat cash. Then the components people forget to price: temporary housing duration (30 days is standard; push for 60 in tight rental markets), a house-hunting trip for two, lease-break coverage (1–2 months of rent), spouse job-search support (some employers offer it; the spouse\'s income gap during transition is usually the biggest hidden cost of the whole move), and storage (30–60 days between closings). Also pin the timing: when does the money arrive — upfront lump, reimbursement after receipts (float the costs on your credit line), or per-service? Reimbursement plans need a cash-flow plan. And get it all in the offer letter — verbal relocation promises evaporate between the recruiter and payroll.',
+      },
+      {
+        q: 'What does a real move actually cost line by line?',
+        a: 'The itemized reality, national ranges: full-service professional movers run $4,000–8,000 for a 2–3 bedroom interstate move (weight × distance; summer peak adds 20%), a container move (PODS-style) $2,000–4,500, and a DIY truck $1,200–2,500 plus your labor and the hotel-and-gas trail. Temporary housing: $2,000–3,500/month furnished in most metros — the line item that explodes when closings misalign. Travel and house-hunting: $500–1,500 per trip. The invisible stack: lease-break or overlap (1–2 months), utility deposits and setup ($200–600), vehicle registration and license transfers ($100–500 depending on state — some ad-valorem states charge thousands), new-driver\'s-license logistics, pet transport, and the first-month restock of everything you threw away. Selling or buying adds its own stack (the seller net sheet and closing-cost calculators price those). The buffer rule: whatever the itemized total is, add 15% — moves surface costs at 11 p.m. the night before. Plug the real quotes into this calculator; the ranges exist to sanity-check the quotes, not replace them.',
+      },
+    ],
+  },
+  {
+    slug: 'career-break-calculator',
+    title: 'Career Break Cost Calculator — The True Price of a Sabbatical, Retirement Compounding Included',
+    shortTitle: 'Career Break True Cost',
+    category: 'Freelance & Career',
+    description:
+      'What a sabbatical or career break really costs — direct spend and COBRA, plus the skipped retirement contributions that compound into the real number — and the moves that shrink it.',
+    tagline: 'Six months off costs $37,200 in cash — but the $9,000 of skipped retirement contributions becomes $68,510 by retirement. True cost: $105,710.',
+    intro:
+      'Career breaks are priced by the cash they burn; the compounding they interrupt is the real bill. Six months off at $5,500/month of spend plus $700 of COBRA is $37,200 direct — painful but graspable. Add the $1,500/month of retirement contributions you skip: $9,000 now, $68,510 of missing retirement balance at 7% over 30 years. True cost: $105,710. That is not an argument against the break — burnout collapses cost more than planned pauses — it is an argument for pricing it honestly and shrinking the compounding damage: keep IRA contributions running, time the break across two tax years, and check ACA subsidies before paying COBRA rates. This calculator runs the full ledger.',
+    howItWorks: [
+      'Enter months off and your monthly spending.',
+      'Enter health insurance during the break (COBRA quote or ACA estimate).',
+      'Enter the monthly retirement contributions you would skip.',
+      'Set the growth rate and years until retirement.',
+      'Read direct cost, retirement future value lost, and true cost.',
+    ],
+    faq: [
+      {
+        q: 'COBRA or ACA during the break?',
+        a: 'Run the ACA quote first — the break-year income is the trick. COBRA keeps your exact employer plan for 18 months at 102% of the premium: typically $600–800/month single, $1,700–2,200 family, no subsidies possible. The ACA marketplace prices on ANNUAL income: a half-year break can cut your year\'s income enough to qualify for large premium tax credits — subsidized Silver plans often run $100–400/month at reduced income, sometimes near zero with cost-sharing reductions at low enough income. The caution: subsidies reconcile on the year\'s TOTAL income, so a high-earning first half plus a break can still price you out — estimate the full year honestly, and update the marketplace when income changes. Strategy that works: elect COBRA retroactively only if needed (you have 60 days to elect, coverage is retroactive — some healthy breakers ride the election window uncovered, a gamble with real tail risk), or bridge with a short ACA plan. Watch the deductible reset either way: a January break restarts your deductible; a mid-year break on COBRA keeps the accumulation. Price both in this calculator — the insurance line is often the difference between a $30k break and a $40k one.',
+      },
+      {
+        q: 'How do I shrink the retirement damage?',
+        a: 'Four moves, in impact order. Keep the IRA contribution running: fund $7,000 from savings during the break — that single deposit is worth roughly $53,000 at retirement (7%, 30 years), and Roth contributions in a low-income break year go in at a temporarily cheap bracket. Time the break across two calendar years: July-to-December off means two half-income years, each potentially dropping a bracket and each preserving a full IRA/401(k) eligibility window — the same six months, a different tax footprint. Front-load before the break: if the break starts mid-year, max the 401(k) contributions during the working months (contribution limits are annual, not monthly — ask payroll to spike the percentage; mind the employer match true-up rules). And skip the 401(k) loan temptation: borrowing against the account to fund the break risks the 60-day repayment trap if the job ends — a loan that converts to a taxable distribution plus penalty. The break-year also quietly opens doors: Roth conversions at the temporarily low bracket (the conversion calculator prices that), HSA contributions if you are on a qualifying plan, and capital-gains harvesting at 0% — a planned break can be a tax-planning year, not just an expense.',
+      },
+      {
+        q: 'Will the gap hurt my career when I come back?',
+        a: 'Under six months, almost never — that window reads as a long vacation and rarely requires explanation at all; between jobs, on a resume, it disappears into month-level dates. Over six months, the answer is preparation, not the gap itself: hiring managers accept REASONS, not gaps — "planned sabbatical," "family care," "completed a certification" are complete sentences; an unexplained void invites the imagination. The return playbook: keep one professional thread alive during the break (a certification, freelance micro-projects, an industry newsletter presence — anything with a date on it), stay in light touch with your network before you need it, and frame the break as chosen and completed: "I took a planned year for X, finished in June, and I am fully available now." The structural protections: negotiate the break as an official leave if your employer offers sabbatical programs (job protection beats resignation), and if resigning, exit well — the reference from the employer you left gracefully is the break\'s career insurance. The counterweight this calculator exists to balance: an unplanned burnout exit — rage-quit, health collapse, divorce-adjacent chaos — costs more in cash and career than any priced sabbatical. A break you buy on purpose is an expense; the one that buys you is a crisis.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
