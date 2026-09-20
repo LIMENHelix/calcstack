@@ -4971,6 +4971,56 @@ export function SmartThermostatCalc() {
   )
 }
 
+// WINDOW REPLACEMENT ROI — the honest verdict: energy savings alone almost never pay for windows. Node-verified: 12 windows × $800 installed = $9,600; Energy Star-documented savings for replacing double-pane ~$220/yr on a $2,200 HVAC bill → 43.6-YEAR payback, NPV −$6,610 over 20 yrs @4%. Best case (single-pane, extreme climate, $450/yr): still 21 years. The correction content: $500 of air sealing + $1,500 of attic insulation routinely saves MORE ($300-400/yr) at 1/5 the cost — windows are the worst $/BTU in the envelope. Buy windows for the RIGHT reasons: comfort (cold spots, drafts at the glass), noise, function (won't open/paint-sealed/rotted), condensation between panes (failed seals — that glass IS leaking energy), aesthetics, and resale (window replacement recoups ~60-68% at sale per Cost-vs-Value — the sale, not the utility bill, is where money returns). Honest edges: failed-seal units can be REGLOZED ($200-400/window vs $800 replace), storm windows ($100-200) capture ~half the energy gain at 1/4 the cost, and low-e film ($8/sqft DIY) for sun-baked rooms. Never finance windows as an "energy investment" — the salesperson's payback slide assumes energy inflation and savings the field studies don't support.
+export function WindowRoiCalc() {
+  const [n, setN] = useNumber(12)
+  const [per, setPer] = useNumber(800)
+  const [hvac, setHvac] = useNumber(2200)
+  const [savePct, setSavePct] = useNumber(10)
+  const [years, setYears] = useNumber(20)
+  const [disc, setDisc] = useNumber(4)
+
+  const r = useMemo(() => {
+    const cost = n * per
+    const saveYr = (hvac * savePct) / 100
+    const r0 = disc / 100
+    const ann = (y: number) => (r0 === 0 ? y : (1 - Math.pow(1 + r0, -y)) / r0)
+    const pv = saveYr * ann(years)
+    const npv = pv - cost
+    const payback = saveYr > 0 ? cost / saveYr : Infinity
+    return { cost, saveYr, pv, npv, payback }
+  }, [n, per, hvac, savePct, years, disc])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Number of windows" value={n} onChange={setN} step="1" />
+          <Field label="Installed cost per window" value={per} onChange={setPer} prefix="$" step="50" />
+          <Field label="Annual HVAC energy spend" value={hvac} onChange={setHvac} prefix="$" step="100" />
+          <Field label="Expected energy savings" value={savePct} onChange={setSavePct} suffix="%" step="1" />
+          <Field label="Horizon (years)" value={years} onChange={setYears} step="5" />
+          <Field label="Discount rate" value={disc} onChange={setDisc} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Total installed cost" value={usd(r.cost)} />
+          <Result label="Energy savings /yr" value={usd(r.saveYr)} />
+          <Result label="Simple payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} big />
+          <Result label={`NPV over ${years} yrs`} value={usd(r.npv)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.npv < 0
+            ? `Energy alone loses ${usd(Math.abs(Math.round(r.npv)))} over ${years} years — payback ${num(r.payback, 1)} years on a product warrantied for 20. Buy windows for comfort, function, noise, or resale (~60–68% recouped at sale), not for the utility bill. For pure savings, air sealing + attic insulation return 5× more per dollar.`
+            : `Rare win: ${usd(Math.round(r.saveYr))}/yr pays back ${usd(r.cost)} in ${num(r.payback, 1)} years — this only happens with single-pane originals in an extreme climate. Verify the savings estimate against your actual bills before signing.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: total installed cost vs energy savings (Energy Star field data: replacing DOUBLE-pane saves ~$101–220/yr in typical climates; single-pane originals in extreme climates can reach $450–583), discounted over the horizon. The correction that matters: windows are the WORST dollar-per-BTU in the envelope — $500 of air sealing plus $1,500 of attic insulation routinely saves $300–400/yr, 5× the return per dollar, because air leaks beat glass conduction as the dominant loss. Buy windows for the right reasons: comfort (radiant cold at the glass is a real quality-of-life upgrade), function (painted-shut, rotted, or stuck), failed seals (condensation BETWEEN panes — but note those units can often be reglazed at $200–400 vs $800 replaced), noise, aesthetics, and resale (Cost-vs-Value data: ~60–68% recouped at sale — the closing table, not the utility bill, is where window money returns). Cheaper middle paths: storm windows ($100–200) capture about half the energy gain at a quarter of the cost; low-e film for sun-baked rooms. Never finance windows as an "energy investment" — the showroom payback slide assumes energy inflation and savings the field studies don't support. Estimates — installer quotes and your utility bills govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10634,6 +10684,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'tank-vs-tankless-calculator': TankVsTanklessCalc,
   'generator-cost-calculator': GeneratorCostCalc,
   'smart-thermostat-roi-calculator': SmartThermostatCalc,
+  'window-replacement-roi-calculator': WindowRoiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

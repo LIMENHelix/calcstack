@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'window-replacement-roi-calculator',
+    title: 'Window Replacement ROI Calculator 2026 — The Honest Payback (and What Beats Windows 5-to-1)',
+    shortTitle: 'Window Replacement ROI',
+    category: 'Home & Yard',
+    description:
+      'The calculation window salespeople skip: installed cost vs Energy Star-documented energy savings, discounted over 20 years — plus the comfort, resale, and reglazing angles that actually justify the spend.',
+    tagline: 'Twelve windows at $800 save ~$220/yr — a 43.6-year payback on a 20-year warranty. Air sealing plus attic insulation returns 5× more per dollar.',
+    intro:
+      'Window replacement is the worst dollar-per-BTU in the home envelope, and the field data has said so for years: replacing double-pane windows saves ~$101–220 a year in typical climates (Energy Star), so twelve $800 windows ($9,600) pay back in 43.6 years on a product warrantied for 20 — NPV −$6,610. Even the best case (single-pane originals in an extreme climate) stretches past 21 years. The money that actually moves the utility bill: $500 of air sealing plus $1,500 of attic insulation saves $300–400/yr — 5× the return per dollar. Windows still earn their price for comfort, function, noise, failed seals, aesthetics, and resale (~60–68% recouped at sale) — just never as an "energy investment." This calculator runs the honest numbers before the showroom visit.',
+    howItWorks: [
+      'Enter the window count and the real installed quote per window.',
+      'Enter annual HVAC energy spend from your utility bills.',
+      'Set expected savings: ~10% of HVAC for double-pane replacement; up to 20% for single-pane in extreme climates.',
+      'Set the horizon (match the warranty, ~20 years) and a discount rate.',
+      'Read payback years and NPV — then check the FAQ for the alternatives that beat windows.',
+    ],
+    faq: [
+      {
+        q: 'Why is window payback so bad when the ads promise huge savings?',
+        a: 'Because glass isn\'t where the heat escapes. Field studies consistently show air leakage and attic losses dominate the home energy balance, while windows — even old double-pane — carry a modest share of the load; swapping them moves the needle 5–12% on HVAC spend, not the 25–40% the showroom slide claims. The slide\'s other tricks: pricing savings in tomorrow\'s inflated energy dollars without discounting, assuming single-pane baseline homes (rarer every year), and quoting the extreme-climate maximum as typical. The corrected ranking for most houses: air sealing first (biggest leak, smallest price), attic insulation second, ducts sealed third, windows last — unless the windows have failed, in which case you\'re buying function and comfort and the energy is a small bonus.',
+      },
+      {
+        q: 'My windows have condensation between the panes — replace or repair?',
+        a: 'That\'s a failed seal — the insulating gas is gone and moisture is in — but the unit can often be REGLAZED: new insulated glass in the existing frame at $200–400 per window versus $800+ for full replacement. Reglazing restores the energy performance (the glass IS the performance; the frame is fine) at half the cost, and it\'s the right answer when frames are sound wood, fiberglass, or quality vinyl. Full replacement earns its premium when frames are rotted, warped, or painted shut, when you\'re changing style or size, or when the existing frames are cheap builder vinyl that has warped — reglazing a failing frame is new glass in a bad house. Get one reglazing quote before accepting any full-replacement pitch; the salesperson who never mentions reglazing is selling margin, not windows.',
+      },
+      {
+        q: 'If not for energy, when should I buy new windows?',
+        a: 'For the benefits that don\'t appear on a utility bill, priced honestly. Comfort: radiant cold at old glass creates the "cold room" effect and drafts people misattribute to leaks — new low-e glass genuinely fixes it, and comfort per dollar is a legitimate purchase when you sit next to the window every evening. Function: windows that won\'t open are a safety issue (egress), not an aesthetic one. Noise: laminated or dissimilar-glass units cut street noise dramatically — a quality-of-life upgrade with real value near roads. Resale: Cost-vs-Value data shows ~60–68% recouped at sale, and new windows photograph and appraise well. Aesthetics: sometimes you just want them — fine, buy them as the remodel they are. The line to refuse: financing $12,000 of windows with an "energy savings payback" pitch — run this calculator first and make the salesperson watch.',
+      },
+    ],
+  },
+  {
     slug: 'smart-thermostat-roi-calculator',
     title: 'Smart Thermostat ROI Calculator 2026 — Payback From Real HVAC Spend, Rebates & Demand-Response Credits',
     shortTitle: 'Smart Thermostat ROI',
