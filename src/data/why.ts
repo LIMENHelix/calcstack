@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'repair-vs-replace-calculator':
+    'Homeowners use it when the tech quotes the fix: a $900 repair on a 12-year-old system scores 10,800 on the rule, and the 4-year ledger — future failures plus the energy penalty — says keeping it costs $7,312 vs $2,167 net to replace.',
   'customer-ltv-cac-calculator':
     'Service-business owners use it before raising ad spend: a $450 ticket at 1.6 calls/yr over six years is $1,728 of MARGIN — 9.6:1 against $180 CAC means you could profitably pay $576 per customer.',
   'service-call-fee-calculator':

@@ -4766,6 +4766,59 @@ export function LtvCacCalc() {
   )
 }
 
+// REPAIR VS REPLACE — the $5,000 rule as a starting point, then the honest ledger. Node-verified: 12-yr-old HVAC, $900 repair, $6,500 replacement, 15-yr new-unit life, old unit has ~4 yrs left, energy savings 35% on $150/mo spend, future repairs escalating 25%/yr from 60% of current repair → rule score 900×12 = 10,800 (>5,000 → replace); 4-yr ledger: keep = $900 + $3,892 expected future repairs + $2,520 extra energy = $7,312 vs replace = $6,500 − $4,333 residual value at yr 4 = $2,167 net ownership cost. Honest edges: the $5,000 rule is a screening heuristic not a verdict (it ignores energy, refrigerant, and comfort), R-410A/R-22 refrigerant phase-outs make old-unit repairs escalate (priced refrigerant alone can make a $400 leak repair $1,200 — ask what refrigerant before approving), the "repair" answer is RIGHT when the unit is young, the repair is a wear part (capacitors, contactors, ignitors are $150-450 maintenance, not decline), or you're selling the house inside 2 years (buyers discount old systems but not dollar-for-dollar), warranties (a compressor under parts warranty changes everything — LABOR still bills, confirm coverage before deciding), and timing (off-season replacement quotes run 5-15% under July emergency pricing — the repair that buys you to October can be worth doing even when replacement wins).
+export function RepairReplaceCalc() {
+  const [age, setAge] = useNumber(12)
+  const [repair, setRepair] = useNumber(900)
+  const [replace, setReplace] = useNumber(6500)
+  const [newLife, setNewLife] = useNumber(15)
+  const [remainOld, setRemainOld] = useNumber(4)
+  const [moSpend, setMoSpend] = useNumber(150)
+  const [effSave, setEffSave] = useNumber(35)
+
+  const r = useMemo(() => {
+    const rule = repair * age
+    const effSaveYr = (moSpend * 12 * effSave) / 100
+    let futRep = 0
+    for (let y = 1; y <= remainOld; y++) futRep += repair * 0.6 * Math.pow(1.25, y)
+    const keepCost = repair + futRep + effSaveYr * remainOld
+    const residual = replace * Math.max(0, 1 - remainOld / newLife)
+    const replaceCost = replace - residual
+    const savings = keepCost - replaceCost
+    return { rule, effSaveYr, futRep, keepCost, replaceCost, savings }
+  }, [age, repair, replace, newLife, remainOld, moSpend, effSave])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Unit age (years)" value={age} onChange={setAge} step="1" />
+          <Field label="Repair quote" value={repair} onChange={setRepair} prefix="$" step="50" />
+          <Field label="Replacement quote" value={replace} onChange={setReplace} prefix="$" step="250" />
+          <Field label="New unit lifespan" value={newLife} onChange={setNewLife} step="1" />
+          <Field label="Years left in old unit" value={remainOld} onChange={setRemainOld} step="1" />
+          <Field label="Monthly energy spend" value={moSpend} onChange={setMoSpend} prefix="$" step="10" />
+          <Field label="Efficiency gain" value={effSave} onChange={setEffSave} suffix="%" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="$5,000 rule score" value={num(r.rule, 0)} />
+          <Result label={`Keep — ${remainOld}-yr cost`} value={usd(r.keepCost)} />
+          <Result label={`Replace — ${remainOld}-yr net cost`} value={usd(r.replaceCost)} />
+          <Result big label={r.savings >= 0 ? 'Replace saves' : 'Repair saves'} value={usd(Math.abs(r.savings))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.rule > 5000
+            ? `The rule flags replace (${num(r.rule, 0)} > 5,000) and the ledger agrees: keeping the old unit costs ${usd(Math.round(r.keepCost))} over ${remainOld} years vs ${usd(Math.round(r.replaceCost))} net for a new one. Get off-season quotes if it limps along.`
+            : `Rule score ${num(r.rule, 0)} is under 5,000 — ${r.savings >= 0 ? 'but the full ledger says REPLACE anyway: energy and the next failures tip it. Check refrigerant type and warranty before spending on the old unit.' : 'repair is the right call: the unit has years left and the fix doesn\'t cascade. Budget for the replacement at end of life.'}`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: the $5,000 rule (repair cost × age; over 5,000 → replace) screens, then the ledger decides — keeping costs the repair + expected future failures (escalating 25%/yr, industry-typical failure curve) + the efficiency penalty vs the new unit, while replacing costs the quote minus the unit's residual value at the end of the comparison window. Honest edges: refrigerant phase-outs (R-22 and now R-410A) make old-system repairs escalate — a $400 leak fix can become $1,200 with phased-out refrigerant, so ask what's in the system before approving anything; wear parts (capacitors, contactors, ignitors, $150–450) are maintenance, not decline — repair those at almost any age under 15; warranties change everything (a compressor under parts warranty still bills LABOR — confirm both before deciding); selling within 2 years flips the math (buyers discount old systems but not dollar-for-dollar); and timing is worth 5–15% — off-season replacement quotes beat July emergency pricing, so the repair that buys you to October can be worth doing even when replacement wins. Estimates — your quotes and the unit's nameplate govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10425,6 +10478,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'seasonal-cash-reserve-calculator': SeasonalReserveCalc,
   'service-call-fee-calculator': ServiceCallFeeCalc,
   'customer-ltv-cac-calculator': LtvCacCalc,
+  'repair-vs-replace-calculator': RepairReplaceCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

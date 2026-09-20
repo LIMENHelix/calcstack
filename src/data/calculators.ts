@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'repair-vs-replace-calculator',
+    title: 'Repair vs Replace Calculator 2026 — The $5,000 Rule Plus the Real Ledger (HVAC, Water Heaters, Appliances)',
+    shortTitle: 'Repair vs Replace',
+    category: 'Home & Yard',
+    description:
+      'Should you fix it or replace it? The $5,000 rule screens, then the honest ledger decides: repair plus expected future failures plus the energy penalty, versus replacement net of the new unit\'s residual value.',
+    tagline: 'A $900 repair on a 12-year-old system scores 10,800 on the rule — and the 4-year ledger says keeping it costs $7,312 vs $2,167 net to replace.',
+    intro:
+      'The $5,000 rule (repair cost × unit age; over 5,000, replace) is a useful screen but a lazy verdict — it ignores energy, refrigerant, and what fails next. The honest ledger prices both paths over the old unit\'s remaining life: keeping a 12-year-old HVAC after a $900 repair means $3,892 of expected future failures (they escalate ~25%/yr on aging systems) plus $2,520 of efficiency penalty — $7,312 total, against $2,167 net for the new unit after crediting its residual value. But repair IS right when the fix is a wear part (capacitors and ignitors are $150–450 of maintenance, not decline), when a warranty covers the part, or when you\'re selling within two years. This calculator runs the screen and the ledger together, with the refrigerant and timing traps priced in.',
+    howItWorks: [
+      'Enter the unit\'s age and the repair quote.',
+      'Enter the replacement quote and the new unit\'s expected lifespan.',
+      'Estimate the years left in the old unit (15 is typical HVAC end-of-life; water heaters 10–12).',
+      'Enter monthly energy spend and the efficiency gain of the new unit.',
+      'Read the rule score, both ledger totals, and which path saves how much.',
+    ],
+    faq: [
+      {
+        q: 'When is repairing the RIGHT call even past the rule?',
+        a: 'Three scenarios survive the ledger. Wear-part repairs: capacitors, contactors, ignitors, and thermocouples are $150–450 of routine maintenance on systems with years left — replacing a unit over a $200 capacitor is how $6,500 disappears. Warranty coverage: a compressor or heat exchanger under parts warranty changes the math completely — but confirm LABOR coverage too, because "covered part" with $800 of labor is half a repair bill, not a free fix. And the short-horizon sale: if you\'re selling within two years, buyers discount old systems but not dollar-for-dollar — a working repaired system plus a disclosure beats a $6,500 investment you won\'t recoup at closing. The flip: an off-season replacement quote runs 5–15% under July emergency pricing, so the repair that buys you to October can be worth doing even when replacement wins the ledger.',
+      },
+      {
+        q: 'What does the refrigerant phase-out do to the math?',
+        a: 'It breaks old-unit repairs by price escalation — ask what\'s in the system before approving anything. R-22 (pre-2010 systems) has been phased out so long that reclaimed refrigerant runs $100+/lb, turning a $400 leak repair into $1,200+. R-410A (most 2010–2023 systems) entered its phase-down under the AIM Act, with production cuts driving the same curve — repair quotes on R-410A systems will climb through the late 2020s as supply tightens. New systems use R-454B or R-32, which aren\'t backward-compatible. The practical rule: a refrigerant-involved repair on an R-22 system is almost always a replacement trigger regardless of the rule score, and on an R-410A system it shortens the old unit\'s honest remaining-life input by years.',
+      },
+      {
+        q: 'Does this work for water heaters, appliances, and cars?',
+        a: 'Same ledger, different constants — and the calculator takes them as inputs. Water heaters: 10–12 year lifespan, repairs under $300 favor fixing a young tank, but a leaking TANK is always replace (it\'s the one failure that isn\'t a repair). Appliances: washers/dryers/refrigerators run 10–13 years; the repair-is-right zone is a young unit with a sub-$300 fix, and the rule score works as-is. Vehicles are the special case: use the same rule but price "replacement" as the annual cost of the next car (payment + insurance delta + tax), not the sticker — a $2,000 repair on a paid-off car beats a $600/mo payment almost every time the frame and drivetrain are sound. In every case the honest inputs are the same three: what fails next, what efficiency buys, and how long the new thing lasts.',
+      },
+    ],
+  },
+  {
     slug: 'customer-ltv-cac-calculator',
     title: 'Customer LTV vs CAC Calculator 2026 — Lifetime Value in Margin Dollars vs Acquisition Cost',
     shortTitle: 'LTV vs CAC',
