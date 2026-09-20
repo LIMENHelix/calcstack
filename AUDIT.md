@@ -213,3 +213,15 @@ in any rendered output.
 
 Zero horizontal overflow on homepage, calculator pages, and the 50-state data table
 (tables scroll in-container). No element exceeded viewport width on any tested page.
+
+### Runtime bug found in tool testing (fixed same day)
+
+4. **Bill Analyzer dropped 4+ digit amounts without commas** — the amount regex
+   `\d{1,3}(?:,\d{3})*` matched "Rent 1450" as "145" + a trailing "0" token; the
+   parser uses the LAST numeric token, so the amount became $0 and the line was
+   silently discarded. A pasted "Rent 1450" vanished from the breakdown entirely.
+   Fixed: comma-grouped and plain-integer alternatives are now disjoint
+   (`\d{1,3}(?:,\d{3})+|\d+`). Also stripped `/mo`-style frequency residue from
+   labels. Verified in-browser: the four-bill test now totals $1,643.39/mo with
+   Rent categorized under Housing. Lesson recorded: parser regexes get a
+   node-verified test battery (13 formats) before ship, same as calculator math.
