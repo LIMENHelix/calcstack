@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'hvac-flat-rate-pricing-calculator',
+    title: 'HVAC Flat-Rate Pricing Calculator — Repair Margins, Install Margins, and the Book',
+    shortTitle: 'HVAC Flat-Rate Pricing',
+    category: 'Trades & Engineering',
+    description:
+      'Price HVAC work the flat-rate way: the $15 capacitor that bills at $285, the $5,800 changeout that clears 28%, and the overhead recovery that decides whether the book works.',
+    tagline: 'The capacitor sells at $285 because the book prices the diagnosis, the stocked van, and the warranty — not the part.',
+    intro:
+      'Flat-rate pricing is what separates HVAC businesses from guys with gauges. The capacitor repair bills $285 against $82 of true cost — $203 profit at $271/hr — because the book prices diagnosis, truck stock, and the callback warranty. The $5,800 changeout clears $1,616 at 27.9%. Repairs carry the margin, installs carry the revenue, and the book keeps both honest. This calculator prices both sides of the business with your real costs.',
+    howItWorks: [
+      'Enter a common repair: part cost, flat-rate book price, hours, and tech cost.',
+      'Read repair profit, margin, and effective dollars per hour.',
+      'Enter an install: equipment, materials, crew-hours, and sell price.',
+      'Read install cost and profit margin.',
+      'Tune the book price until repairs clear 65%+ and installs clear 25%+.',
+    ],
+    faq: [
+      {
+        q: 'How does flat-rate pricing work in HVAC?',
+        a: 'The book prices the JOB, not the minutes: a capacitor replacement is $285 whether it takes 20 minutes or an hour, quoted before work starts. That consistency is the product — customers buy a fixed price with no meter anxiety, and your tech\'s efficiency becomes your margin instead of their raise. The book price must carry what hourly billing hides: diagnosis expertise, stocked-truck inventory, the callback warranty (budget 2% of revenue), and overhead recovery — which is why a $15 part bills at $285 and why that is honest. The discipline that makes it work: prices built from real job histories (your actual average hours per task, not hope), techs quoting from the book never off it, and the diagnostic fee ($79–129, credited toward repair) filtering tire-kickers and paying for the drive. Flat-rate fails when the book is stale — reprice quarterly against supplier invoices, because equipment and refrigerant costs move.',
+      },
+      {
+        q: 'What margin should HVAC installs and repairs target?',
+        a: 'Repairs: 65–75% gross margin — the example capacitor job runs 71.2% and that is normal, not gouging, because repair pricing carries the diagnosis, the truck stock, and the warranty. Installs: 25–35% gross margin — equipment markup runs 25–40% over cost (not the 100%+ of repair parts), and labor variance is the killer: a 6-hour changeout that runs 9 hours burns the profit, so install pricing should assume your REAL crew-hour averages, padded. The portfolio logic: repairs pay the margin, installs pay the rent — service work funds the overhead, and changeout volume carries shoulder-season cash flow. Maintenance agreements are the keystone on top: $150–250/yr plans create scheduled shoulder-season work, lock the customer base, generate the repair pipeline (every tune-up finds the failing capacitor before it strands the compressor), and the agreement list is what the business sells for at exit — brokers price HVAC companies on recurring-agreement counts.',
+      },
+      {
+        q: 'Should HVAC companies charge for estimates?',
+        a: 'Diagnostics yes, install quotes no — the distinction is which product the visit sells. A repair diagnostic visit IS the service: the drive, the gauges, the expertise to find the failed board — charge $79–129 and credit it toward the repair. Free diagnostics train customers to collect three free diagnoses and hire the cheapest fix, and your tech\'s Tuesday evaporates. Install replacement quotes are different: that visit is a SALES call for a $5,800 job, the industry norm is free, and charging for it just sends the homeowner to the competitor\'s free estimate. The leaks to plug on both sides: unbilled second trips for parts not stocked (stock the top 20 SKUs and the van pays for itself), techs quoting off-book to be nice (the margin IS the niceness budget), and warranty callbacks priced at zero when the book was written. After-hours premiums apply here too: 1.5× book for nights and weekends is the price of a stocked truck and an awake tech — publish it and the complaints stop.',
+      },
+    ],
+  },
+  {
+    slug: 'plumbing-flat-rate-pricing-calculator',
+    title: 'Plumbing Flat-Rate Pricing Calculator — Water Heaters, Drain Calls, and the Book Price',
+    shortTitle: 'Plumbing Flat-Rate',
+    category: 'Trades & Engineering',
+    description:
+      'Price plumbing jobs flat-rate: the $1,650 water heater that clears $625, the $225 drain call at $147/hr, and the code items and warranty the book price must carry.',
+    tagline: 'The $1,650 water heater costs $1,025 all-in — customers compare your price to the box-store unit and forget the permit, the pan, and the license.',
+    intro:
+      'Plumbing\'s anchor job is the water heater: high ticket, half a day, and price-shopped harder than anything else you sell. The $1,650 flat price against $1,025 of true cost clears $625 — 37.9% — IF the book carries the permit, the expansion tank, the haul-away, and the warranty. The $225 drain call clears $147 in an hour. This calculator prices both with your real supplier invoices, labor cost, and overhead share so the book is math, not habit.',
+    howItWorks: [
+      'Enter the water heater: unit cost, parts, install hours, and your sell price.',
+      'Read the true cost, profit, and margin on the anchor job.',
+      'Enter a drain call price and hours — read the hourly it pays.',
+      'Check margins: WH 35%+, service calls 50%+, or the book needs repricing.',
+      'Re-run quarterly against supplier invoices — copper and units move.',
+    ],
+    faq: [
+      {
+        q: 'What should a water heater installation cost?',
+        a: 'Market flat rate for a standard 50-gallon gas atmospheric unit runs $1,400–2,000 installed depending on region — the example $1,650 sits mid-market against $1,025 of true cost ($650 unit, $120 parts, 3 labor hours, overhead share). What the price carries that the box-store tag does not: the permit and inspection ($50–150 depending on jurisdiction), code-required items customers never see (expansion tank, drain pan, seismic straps, dielectric unions — $80–150 of genuinely required parts), haul-away, same-day service, the warranty on both unit AND labor, and the licensed liability if the gas line or vent is wrong. That is the honest answer to "Home Depot sells it for $650": the appliance is $650; the installation is a licensed, permitted, warranted job. Tankless conversions price differently — $3,500–5,500 with gas-line upsizing and venting — and hybrid heat-pump units carry utility rebates that make the premium sellable.',
+      },
+      {
+        q: 'Flat rate or hourly for plumbing service work?',
+        a: 'Flat rate, from a book built on your own job histories — for the same reason as HVAC: customers buy a fixed quoted price with no meter anxiety, and your fastest plumber\'s speed becomes margin instead of a shorter paycheck. Fixture jobs are the margin carriers: toilet resets, faucet swaps, and disposal replacements bill $185–350 at 30–60% margins because the parts are trivial and the license is the product. The upsell architecture that stays honest: every service call ends with the whole-house look — shutoff valve condition, supply-line age, water heater date, pressure test — quoted flat from the book, never sold hard; the tech who finds the 12-year-old heater before the garage flood earns the five-star review AND the replacement. The failure modes: books never repriced against supplier increases, warranty callbacks budgeted at zero (2% of revenue is honest), apprentice hours billed at journeyman value without supervision, and drain-work price wars — the $99 cable special is a lead-buy, not a business, and it only works if the whole-house look rides along.',
+      },
+      {
+        q: 'Are after-hours plumbing premiums justified?',
+        a: 'Yes — and publishing the rate is what makes it accepted instead of resented. After-hours calls at 1.5× book price are not gouging; they are the price of a stocked truck, an awake plumber, and a family dinner interrupted at 9 PM — the customer\'s alternative is water damage compounding at hundreds of dollars an hour until morning. The operational rules: publish the after-hours rate on the website and the answering service script so the price is agreed before the truck rolls, require card-on-file for after-hours residential (the 2 AM collections call never goes well), and cap the on-call rotation — burnout in the on-call week is how shops lose their best plumbers. The premium does double duty as a triage tool: the customer who will not pay 1.5× for a dripping faucet at midnight will wait until 7 AM happily, and the one with the burst supply line pays gladly — the rate sorts urgency better than any dispatcher. Budget the after-hours margin into the book: it subsidizes the stocked trucks and the answering service that make the whole promise possible.',
+      },
+    ],
+  },
+  {
     slug: 'electrician-apprentice-vs-college-calculator',
     title: 'Electrician Apprentice vs College Calculator — Earn $193k During Training, Owe Nothing',
     shortTitle: 'Apprentice vs College',

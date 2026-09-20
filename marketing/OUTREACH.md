@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 409 calculators live (636 indexed pages). Domain live at calcstack.app;
+**Status: 421 calculators live (648 indexed pages). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -687,7 +687,7 @@ wedding-photographer forums), tattoo artist forums and r/tattoo, DJ communities
 
 ## Wave 66 — Route & rate suite (#401–#410, milestone wave)
 
-Milestone wave: 409 calculators live (636 indexed pages). This wave prices the
+Milestone wave: 421 calculators live (648 indexed pages). This wave prices the
 driveway-and-route economy: the businesses where the wage is set by minutes
 between stops and the ticket at the scale house, not the menu price. Audiences:
 pressure-washing and exterior-cleaning communities (r/pressurewashing, Pressure
@@ -724,3 +724,46 @@ startup press that loves a pricing tool.
 - **Backlist ride-alongs** — cleaning-business pricing, photographer CODB,
   salon suite, lawn-care pricing. The service-business cluster now runs 30+
   deep across beauty, events, cleaning, auto, routes, and knowledge work.
+
+## Wave 67 — Trades, licenses & career ladders (#411–#421, milestone wave)
+
+Milestone wave: 421 calculators live (648 indexed pages). This wave owns the
+career-ladder math of licensed work: apprenticeships vs degrees, license ROI,
+flat-rate price books, and the commission/match structures each profession
+hides in its fine print. Audiences: electrical and trades communities
+(r/electricians, r/Plumbing, r/HVAC, Mike Rowe WORKS / skilled-trades media),
+trucking and O/O forums (r/Truckers, OOIDA, TheTrucker), engineering students
+and early-career engineers (r/engineering, NCEES examinee forums, NSPE),
+real-estate agents (r/realtors, BiggerPockets agents, Inman), military finance
+communities (r/MilitaryFinance, Military Dollar, The Military Wallet), nursing
+communities (r/nursing, AllNurses, travel-nurse Facebook groups), and teacher
+communities (r/Teachers, ed newsletters).
+
+- **Nurse agency vs staff (#410)** — the $20/hr premium nets to $9,003/yr after
+  benefits and gap weeks; AllNurses debates this weekly.
+- **Nurse certification ROI (#411)** — CCRN pays back in 1.9 months; cert-prep
+  companies and nursing educators link tools like this.
+- **Teacher lane-change ROI (#412)** — the pension dividend angle ("the bump
+  pays twice") is the headline nobody else prices.
+- **Teacher summer gap (#413)** — the exact save-per-check number; teacher
+  Facebook groups reshare budgeting tools every August.
+- **BAH rent vs buy (#414)** — PCS-timeline breakeven with the 8% transaction
+  drag; military finance blogs and base-adjacent realtor content.
+- **BRS TSP match (#415)** — "the match IS the compensation"; every military
+  finance writer needs a link for the BRS explainer.
+- **PE license ROI (#416)** — 4.1-month payback; engineering-student and FE/PE
+  prep communities (NCEES examinees search this exact math).
+- **Commission split & cap (#417)** — capped vs uncapped vs fee-shop on real
+  GCI; Inman-style industry press and agent Facebook groups.
+- **Electrician apprentice vs college (#418)** — the $233,440 head start;
+  skilled-trades advocacy media (Mike Rowe, trade-school critics) run on this.
+- **Owner-operator vs company (#419)** — "$1.85/mi breakeven or you're a
+  company driver with a truck payment"; OOIDA and trucking YouTube.
+- **HVAC flat-rate (#420)** — the $285 capacitor explained; HVAC-business
+  coaches and ServiceTitan-adjacent content.
+- **Plumbing flat-rate (#421)** — the water-heater anchor job; plumbing-business
+  forums and trades-pricing YouTube.
+- **Backlist ride-alongs** — truck-driver pay + per-diem, VA funding fee,
+  teacher pay, 403(b)/457(b), overtime. The career-ladder cluster now spans
+  nurses, teachers, military, engineers, agents, electricians, plumbers, HVAC,
+  and truckers.

@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'hvac-flat-rate-pricing-calculator':
+    'HVAC owners use it to reprice the book: the $15 capacitor bills at $285 (71% margin, $271/hr) because the book prices diagnosis, truck stock, and warranty — installs run 28% and carry the rent.',
+  'plumbing-flat-rate-pricing-calculator':
+    'Plumbers use it before quoting the anchor job: the $1,650 water heater costs $1,025 all-in and clears $625 — if the book carries the permit, the code parts, and the callback warranty.',
   'electrician-apprentice-vs-college-calculator':
     'Future electricians use it before signing for student loans: 4 apprentice years EARN $193,440 while college spends $40k — and the journeyman card pays $79k before the OT that adds $15k more.',
   'owner-operator-vs-company-calculator':

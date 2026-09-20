@@ -7875,6 +7875,107 @@ export function MobileMechanicCalc() {
   )
 }
 
+// HVAC FLAT-RATE PRICING — node-verified defaults: capacitor repair: $15 part, 0.75h × $32 tech + $18 van + $25 overhead = $82 cost against the $285 book price → $203 profit (71.2%), $271/hr effective. 3-ton changeout: $2,800 equipment + $400 materials + 12 tech-hrs ($384) + $600 overhead = $4,184 against $5,800 → $1,616 (27.9%). Repairs carry the margin; installs carry the revenue; the flat-rate book is what keeps the two honest.
+export function HvacFlatRateCalc() {
+  const [part, setPart] = useNumber(15)
+  const [book, setBook] = useNumber(285)
+  const [hrs, setHrs] = useNumber(0.75)
+  const [techRate, setTechRate] = useNumber(32)
+  const [equip, setEquip] = useNumber(2800)
+  const [mats, setMats] = useNumber(400)
+  const [installHrs, setInstallHrs] = useNumber(12)
+  const [sellInstall, setSellInstall] = useNumber(5800)
+
+  const r = useMemo(() => {
+    const repCost = part + hrs * techRate + 18 + 25
+    const repProfit = book - repCost
+    const repMargin = book > 0 ? (repProfit / book) * 100 : 0
+    const repHr = hrs > 0 ? repProfit / hrs : 0
+    const instCost = equip + mats + installHrs * techRate + 600
+    const instProfit = sellInstall - instCost
+    const instMargin = sellInstall > 0 ? (instProfit / sellInstall) * 100 : 0
+    return { repCost, repProfit, repMargin, repHr, instCost, instProfit, instMargin }
+  }, [part, book, hrs, techRate, equip, mats, installHrs, sellInstall])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Repair part cost" value={part} onChange={setPart} prefix="$" step="5" />
+          <Field label="Flat-rate price" value={book} onChange={setBook} prefix="$" step="15" />
+          <Field label="Repair hours" value={hrs} onChange={setHrs} step="0.25" />
+          <Field label="Tech cost" value={techRate} onChange={setTechRate} prefix="$" suffix="/hr" step="2" />
+          <Field label="Install equipment" value={equip} onChange={setEquip} prefix="$" step="100" />
+          <Field label="Install materials" value={mats} onChange={setMats} prefix="$" step="25" />
+          <Field label="Install crew-hrs" value={installHrs} onChange={setInstallHrs} step="1" />
+          <Field label="Install sell price" value={sellInstall} onChange={setSellInstall} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Repair profit" value={`${usd(Math.round(r.repProfit))} (${num(r.repMargin, 0)}%)`} big />
+          <Result label="Repair $/hr" value={`${usd(Math.round(r.repHr))}/hr`} />
+          <Result label="Install profit" value={`${usd(Math.round(r.instProfit))} (${num(r.instMargin, 0)}%)`} />
+          <Result label="Install cost" value={usd(Math.round(r.instCost))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The $15 capacitor sells at ${usd(book)} because the book prices the DIAGNOSIS, the stocked van, and the warranty — not the part: ${usd(Math.round(r.repProfit))} profit at ${usd(Math.round(r.repHr))}/hr. The ${usd(sellInstall)} changeout clears ${usd(Math.round(r.instProfit))}. Repairs pay the margin, installs pay the rent.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: repair profit = flat-rate price − (part + hours × tech cost + van + overhead share); install profit = sell price − (equipment + materials + crew-hours + overhead). The flat-rate doctrine: price from the book, not the stopwatch — the customer buys a FIXED price quoted before work starts (no meter anxiety), and your tech's efficiency becomes your margin instead of their raise; the book price must carry diagnosis, stocked-truck inventory, callback warranty, and overhead recovery, which is why the $15 part bills at $285. Diagnostic fee discipline: $79–129 credited toward the repair — the fee filters tire-kickers, pays for the drive, and frames the flat-rate quote as the decision point. The install math is different: equipment markup runs 25–40% over cost (not the 100%+ of parts), labor is the variable that kills install margins (a 6-hour changeout that runs 9 burns the profit), and changeout volume carries the slow-season cash flow while repairs carry the margin. Maintenance agreements are the keystone: $150–250/yr plans create shoulder-season work, lock the customer base, and every tune-up is a structured opportunity to find the failing capacitor before it strands the compressor — the agreement list is also what the business sells for at exit. Pricing leaks to plug: unbilled second trips for parts not stocked (stock the top 20 SKUs), techs quoting off-book to be nice, and "free estimates" that should be diagnostic fees. Flat-rate honesty boundary: the book price is the same for the 20-minute swap and the 2-hour fight — that consistency is the product, and it only works if the book was built from real job histories. Estimate — your actual callbacks, install-hour logs, and supplier pricing govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// PLUMBING FLAT-RATE PRICING — node-verified defaults: 50-gal gas water heater: $650 unit + $120 parts + 3h × $35 + $150 overhead = $1,025 cost against $1,650 flat price → $625 profit (37.9%). Drain call: $225 flat − $78 cost = $147 in ~1 hour. The water heater is plumbing's anchor job: high ticket, half-day max, and the price book does the selling.
+export function PlumbingFlatRateCalc() {
+  const [unit, setUnit] = useNumber(650)
+  const [parts, setParts] = useNumber(120)
+  const [hrs, setHrs] = useNumber(3)
+  const [plumberRate, setPlumberRate] = useNumber(35)
+  const [sellWH, setSellWH] = useNumber(1650)
+  const [drainPrice, setDrainPrice] = useNumber(225)
+  const [drainHrs, setDrainHrs] = useNumber(1)
+
+  const r = useMemo(() => {
+    const whCost = unit + parts + hrs * plumberRate + 150
+    const whProfit = sellWH - whCost
+    const whMargin = sellWH > 0 ? (whProfit / sellWH) * 100 : 0
+    const drainCost = drainHrs * plumberRate + 18 + 25
+    const drainProfit = drainPrice - drainCost
+    const drainHr = drainHrs > 0 ? drainProfit / drainHrs : 0
+    return { whCost, whProfit, whMargin, drainCost, drainProfit, drainHr }
+  }, [unit, parts, hrs, plumberRate, sellWH, drainPrice, drainHrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Water heater cost" value={unit} onChange={setUnit} prefix="$" step="25" />
+          <Field label="Parts/materials" value={parts} onChange={setParts} prefix="$" step="10" />
+          <Field label="Install hours" value={hrs} onChange={setHrs} step="0.5" />
+          <Field label="Plumber cost" value={plumberRate} onChange={setPlumberRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="WH sell price" value={sellWH} onChange={setSellWH} prefix="$" step="25" />
+          <Field label="Drain call price" value={drainPrice} onChange={setDrainPrice} prefix="$" step="15" />
+          <Field label="Drain hours" value={drainHrs} onChange={setDrainHrs} step="0.25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="WH true cost" value={usd(Math.round(r.whCost))} />
+          <Result label="WH profit" value={`${usd(Math.round(r.whProfit))} (${num(r.whMargin, 0)}%)`} big />
+          <Result label="Drain call profit" value={usd(Math.round(r.drainProfit))} />
+          <Result label="Drain $/hr" value={`${usd(Math.round(r.drainHr))}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The ${usd(sellWH)} water heater costs ${usd(Math.round(r.whCost))} all-in — ${usd(Math.round(r.whProfit))} profit, half a day. The ${usd(drainPrice)} drain call clears ${usd(Math.round(r.drainProfit))} in an hour. Homeowners compare your flat price against the box-store unit price and forget the truck, the license, and the code.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: water-heater profit = flat price − (unit + parts + labor hours × plumber cost + overhead share); drain profit = flat price − (hours × cost + van + overhead). The plumbing flat-rate rules: the anchor job sets the reputation — water heaters are the highest-visibility flat-rate job in plumbing (customers price-shop three companies for the same Bradford White), so the book price must carry same-day service, permit, haul-away, code upgrades (expansion tank, pan, straps — $80–150 of parts customers never see), and the warranty; bid the visible job at market and make margin on the code items that are genuinely required. Fixture jobs are margin carriers: toilet resets, faucet swaps, and disposal replacements bill $185–350 at 30–60% margins because the parts are cheap and the license is the product. The upsell architecture: every service call ends with the whole-house look (shutoff valve condition, supply lines, water heater age, pressure test) — quoted flat from the book, never sold hard; the tech who finds the 12-year-old water heater BEFORE the garage flood is the one customers review five stars. Emergency premiums are earned: after-hours calls at 1.5× book price aren't gouging — they're the price of a truck stocked and a plumber awake at 2 AM; publish the after-hours rate and the complaints disappear. The numbers that kill plumbing shops: warranty callbacks priced at zero in the book (budget 2% of revenue), apprentice hours billed at journeyman value without supervision quality, and drain-work price wars — the $99 cable special is a lead-buy, not a business. License note: journeyman/master plumbing licenses gate permits in every state — the handyman who "also does water heaters" creates the callback market you profit from. Estimate — your supplier invoices, callback log, and local permit fees govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // ELECTRICIAN APPRENTICE VS COLLEGE — node-verified defaults: 4-yr IBEW-style apprenticeship pays $18/$22/$25/$28 per hr = $193,440 EARNED during training vs $40k college debt — a $233,440 head start before the grad's first paycheck. Journeyman at $38/hr = $79,040/yr. The trades' pitch isn't anti-college; it's arithmetic.
 export function ElectricianPathCalc() {
   const [y1, setY1] = useNumber(18)
@@ -14406,6 +14507,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'hvac-flat-rate-pricing-calculator': HvacFlatRateCalc,
+  'plumbing-flat-rate-pricing-calculator': PlumbingFlatRateCalc,
   'electrician-apprentice-vs-college-calculator': ElectricianPathCalc,
   'owner-operator-vs-company-calculator': OwnerOperatorCalc,
   'pe-license-roi-calculator': PeLicenseCalc,

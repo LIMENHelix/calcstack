@@ -55,16 +55,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          {CALCULATORS.length} calculators and counting. Newest: the route-and-rate suite for service
-          businesses — handyman hourly built backward from the year, window cleaning
-          per-pane vs storefront routes, junk removal priced off the scale ticket,
-          pool route density math, bookkeeping retainers with cleanup fees, tutoring
-          platform vs independent take-home, mobile mechanic vs the shop, and
-          detailing packages with true hourly after the van.
+          {CALCULATORS.length} calculators and counting. Newest: the trades-and-licenses
+          suite — HVAC and plumbing flat-rate book pricing, electrician apprentice vs
+          college cash flow, owner-operator vs company driver net-per-mile, PE license
+          ROI, real-estate commission caps, BAH rent-vs-buy, the BRS match, teacher
+          lane changes and summer gaps, and nurse agency vs staff math.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['handyman-hourly-rate-calculator', 'pool-service-route-calculator', 'junk-removal-pricing-calculator', 'tutoring-rate-calculator', 'auto-detailing-pricing-calculator', 'bookkeeping-pricing-calculator'].includes(c.slug),
+            ['hvac-flat-rate-pricing-calculator', 'plumbing-flat-rate-pricing-calculator', 'owner-operator-vs-company-calculator', 'pe-license-roi-calculator', 'brs-tsp-match-calculator', 'nurse-agency-vs-staff-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
