@@ -4710,6 +4710,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'factorial-calculator',
+    title: 'Factorial Calculator — n!, Permutations & Combinations, Exact Digits',
+    shortTitle: 'Factorial & Combinations',
+    category: 'School & Science',
+    description:
+      'Factorials, permutations, and combinations computed with exact big-integer arithmetic — 10!, P(10,3), C(52,5) — every digit correct, no floating-point rounding.',
+    tagline: '10! = 3,628,800 ways to line up 10 people. C(52,5) = 2,598,960 poker hands. Computed with exact integers — every digit, no rounding.',
+    intro:
+      'The counting questions that run statistics, probability, and card games: how many ways to arrange, select, or order n things. This calculator computes factorials, permutations, and combinations with exact integer arithmetic — 20! is 2,432,902,008,176,640,000 to the last digit, not the 2.43e18 approximation a normal calculator rounds to.',
+    howItWorks: [
+      'Enter n — the total number of items.',
+      'Read n! — the number of ways to arrange all n.',
+      'Enter k — how many you are choosing.',
+      'P(n,k) counts ordered selections (podium finishes).',
+      'C(n,k) counts unordered selections (committees, poker hands).',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between a permutation and a combination?',
+        a: 'Order. A permutation counts arrangements where sequence matters; a combination counts selections where it does not. Picking 3 people from 10 for gold-silver-bronze is a permutation: P(10,3) = 10×9×8 = 720 — because Alice-Bob-Carol and Carol-Alice-Bob are different podiums. Picking 3 people from 10 for a committee is a combination: C(10,3) = 720 ÷ 3! = 120 — the 6 orderings of the same trio collapse into one selection. The mnemonic: permutations are for podiums and passwords; combinations are for committees and cards. Poker hands are the famous case: C(52,5) = 2,598,960 possible 5-card hands, which is why a royal flush (4 of those hands) shows up once per 649,740 deals.',
+      },
+      {
+        q: 'Why do factorials grow so fast?',
+        a: 'Each step multiplies by the next integer, and multiplication compounds brutally: 10! = 3.6 million, 13! = 6.2 billion, 20! = 2.4 quintillion, and 52! — the ways to shuffle a card deck — is an 68-digit number larger than the count of atoms on Earth. The famous consequence: every properly shuffled deck in history has almost certainly produced an order that has never existed before. This explosive growth is why brute-force approaches die in computing: a traveling-salesman route through 15 cities has 1.3 trillion orderings (15!÷2), and 25 cities has more than any supercomputer can enumerate. It is also why combinations shrink things so much — dividing by k! removes the ordering explosion.',
+      },
+      {
+        q: 'What is 0! and why does it equal 1?',
+        a: 'Zero factorial equals 1 — by definition, but a sensible one. Two ways to see it. First, the pattern: n! = (n+1)! ÷ (n+1), so 4! = 5!÷5 = 24, 3! = 24÷4 = 6, 2! = 2, 1! = 1, and 0! = 1!÷1 = 1 — the recursion breaks anywhere else. Second, the meaning: n! counts arrangements of n items, and there is exactly one way to arrange zero items — the empty arrangement. It also has to be 1 for the formulas to work: C(n,n) = n! ÷ (n! × 0!) must equal 1 (there is exactly one way to choose everything), which forces 0! = 1. Same logic as x⁰ = 1: empty products equal the multiplicative identity.',
+      },
+    ],
+  },
+  {
+    slug: 'scientific-notation-converter',
+    title: 'Scientific Notation Converter — Standard, Engineering & Decimal Forms',
+    shortTitle: 'Scientific Notation',
+    category: 'School & Science',
+    description:
+      'Convert any number to scientific notation, engineering notation, or plain decimal — handles decimals, e-notation, and ×10^ text input, with order of magnitude shown.',
+    tagline: '0.0000000543 → 5.43 × 10⁻⁸. 47,000 → 47 × 10³ in engineering form. Avogadro: 6.022 × 10²³. All three forms at once.',
+    intro:
+      'Chemistry and physics run on numbers too big and too small for commas: a mole is 6.022 × 10²³ particles, a proton is 1.673 × 10⁻²⁷ kg. This converter moves any number between scientific notation, engineering notation (exponents in multiples of 3, matched to SI prefixes), and plain decimal — pasting 5.43e-8, 0.0000000543, or 5.43×10^-8 all work.',
+    howItWorks: [
+      'Type or paste the number — decimal, e-notation, or ×10^ text.',
+      'Read the scientific notation: one digit before the decimal point.',
+      'Read the engineering form: exponent in multiples of 3 for kilo/mega/milli/micro.',
+      'See the plain decimal when it is printable.',
+      'Order of magnitude (the exponent) is shown — the physicist\'s first question.',
+    ],
+    faq: [
+      {
+        q: 'How do I convert a number to scientific notation?',
+        a: 'Move the decimal point until exactly one non-zero digit sits before it, and count the moves — that count is the exponent. 0.0000000543: the point moves 8 places right → 5.43 × 10⁻⁸ (negative because the original was small). 47,000: the point moves 4 places left → 4.7 × 10⁴ (positive because the original was big). The rules that catch errors: scientific notation always has exactly one digit before the point (54.3 × 10⁻⁹ is engineering-ish, not scientific), the mantissa stays between 1 and 10, and leading zeros never count as significant. Quick check: the exponent tells you the order of magnitude — 10⁻⁸ means "hundred-millionths," 10⁴ means "tens of thousands."',
+      },
+      {
+        q: 'What is engineering notation and when do I use it?',
+        a: 'Engineering notation restricts exponents to multiples of 3 so they map directly onto SI prefixes: 47,000 = 47 × 10³ = 47 kilo-anything, 0.0000012 = 1.2 × 10⁻⁶ = 1.2 micro. Electronics lives here — resistors are 4.7 kΩ, capacitors are 100 µF, frequencies are 2.4 GHz — because component values and datasheets all speak in kilo, mega, milli, and micro. The mental conversion becomes trivial: exponent +3 is kilo, +6 mega, +9 giga; −3 milli, −6 micro, −9 nano. Use scientific notation for pure math and homework; use engineering notation whenever the number will be read against real units. The calculator shows both so you never convert by hand.',
+      },
+      {
+        q: 'How do significant figures work in scientific notation?',
+        a: 'They become unambiguous — which is half the point of the notation. 0.0000000543 has three significant figures (leading zeros are never significant), written cleanly as 5.43 × 10⁻⁸. The hard case in plain decimal: does 4,500 have two, three, or four sig figs? Impossible to tell. In scientific notation the ambiguity vanishes: 4.5 × 10³ (two), 4.50 × 10³ (three), 4.500 × 10³ (four) — trailing zeros after a decimal point ARE significant, and that final zero is a claim about measurement precision. Lab-report rule: your answer cannot carry more sig figs than your least precise input — multiplying 2.5 cm by 3.14159 gives 7.9, not 7.853975, because 2.5 only earned you two figures.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

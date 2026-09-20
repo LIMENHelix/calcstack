@@ -305,6 +305,10 @@ export const WHY_USE: Record<string, string> = {
     'Students use it for exact answers: √50 = 5√2 = 7.0711 — simplified radical and decimal together, plus cube and nth roots (³√27 = 3, ⁴√625 = 5).',
   'slope-calculator':
     'Geometry students and builders use the same math: (2,3) to (8,11) → slope 4/3, y = 1.333x + 0.333, angle 53.13°, grade 133% — slope, distance, midpoint in one shot.',
+  'factorial-calculator':
+    'Stats students use it for the counting questions: 10! = 3,628,800 arrangements, P(10,3) = 720 podiums, C(52,5) = 2,598,960 poker hands — exact BigInt digits, no float lies.',
+  'scientific-notation-converter':
+    'Chem and physics students live here: 0.0000000543 → 5.43 × 10⁻⁸, with engineering notation (multiples of 10³) and plain decimal alongside.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

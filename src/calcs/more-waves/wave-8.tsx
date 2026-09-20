@@ -3476,3 +3476,80 @@ export function SlopeCalc() {
     </CardContent></Card>
   )
 }
+
+
+// FACTORIAL / PERMUTATION / COMBINATION — node-verified (BigInt): 10! = 3,628,800; 20! = 2,432,902,008,176,640,000; P(10,3) = 720; C(10,3) = 120; C(52,5) = 2,598,960 poker hands. BigInt keeps every digit exact — doubles lie past 18!.
+function bigFact(n: number): bigint { let r = 1n; for (let i = 2n; i <= BigInt(n); i++) r *= i; return r }
+export function FactorialCalc() {
+  const [n, setN] = useNumber(10)
+  const [k, setK] = useNumber(3)
+  const r = useMemo(() => {
+    if (!Number.isInteger(n) || n < 0 || n > 5000 || !Number.isInteger(k) || k < 0 || k > n) return null
+    const f = bigFact(n)
+    const perm = n <= 500 && n - k >= 0 ? bigFact(n) / bigFact(n - k) : null
+    const comb = n <= 500 ? bigFact(n) / (bigFact(k) * bigFact(n - k)) : null
+    const fmtB = (x: bigint) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    const fStr = f.toString().length > 24 ? `${f.toString().slice(0, 12)}…e${f.toString().length - 1}` : fmtB(f)
+    return { factorial: fStr, perm: perm !== null ? fmtB(perm) : null, comb: comb !== null ? fmtB(comb) : null, digits: f.toString().length }
+  }, [n, k])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="n (total items)" value={n} onChange={setN} step="1" />
+        <Field label="k (chosen)" value={k} onChange={setK} step="1" />
+      </div>
+      {r ? (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label={`${n}! (factorial)`} value={r.factorial} big />
+          {r.perm && <Result label={`P(${n},${k}) — order matters`} value={r.perm} />}
+          {r.comb && <Result label={`C(${n},${k}) — order doesn't`} value={r.comb} />}
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">Whole numbers only, k ≤ n, n ≤ 5000 (factorials grow violently — 5000! has over 16,000 digits).</p>
+      )}
+      <p className="text-xs text-muted-foreground">Factorial counts arrangements: 10! = 3,628,800 ways to line up 10 people. Permutation P(10,3) = 720 podium finishes; combination C(10,3) = 120 committees. Poker: C(52,5) = 2,598,960 possible hands.</p>
+    </CardContent></Card>
+  )
+}
+
+// SCIENTIFIC NOTATION — node-verified: Avogadro 6.02214076e23; 0.0000000543 → 5.43e-8; 4500 → 4.50e3; engineering 47000 → 47e3 (exponent multiple of 3). Parses plain decimals, e-notation, and ×10^ text input.
+export function ScientificNotationCalc() {
+  const [raw, setRaw] = useState('0.0000000543')
+  const r = useMemo(() => {
+    const cleaned = raw.trim().toLowerCase().replace(/×10\^?/g, 'e').replace(/\s+/g, '')
+    const val = Number(cleaned)
+    if (!cleaned || Number.isNaN(val) || !Number.isFinite(val)) return null
+    if (val === 0) return { sci: '0 × 10⁰', eng: '0 × 10⁰', plain: '0', sig: 1, exp: 0 }
+    const exp = Math.floor(Math.log10(Math.abs(val)))
+    const mant = val / Math.pow(10, exp)
+    const engExp = Math.floor(exp / 3) * 3
+    const engMant = val / Math.pow(10, engExp)
+    const sup = (x: number) => String(x).replace('-', '⁻').split('').map((ch) => ({ '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' })[ch] ?? ch).join('')
+    const sig = cleaned.replace(/[^0-9]/g, '').replace(/^0+/, '').length || 1
+    return {
+      sci: `${num(mant, 6)} × 10${sup(exp)}`,
+      eng: `${num(engMant, 6)} × 10${sup(engExp)}`,
+      plain: Math.abs(val) >= 1e-6 && Math.abs(val) < 1e15 ? String(val) : val.toExponential(6),
+      sig, exp,
+    }
+  }, [raw])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Number (decimal, 5.43e-8, or 5.43×10^-8)</label>
+        <input value={raw} onChange={(e) => setRaw(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" />
+      </div>
+      {r ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label="Scientific notation" value={r.sci} big />
+          <Result label="Engineering notation (×10³ steps)" value={r.eng} big />
+          <Result label="Plain decimal" value={r.plain} />
+          <Result label={`Order of magnitude: 10^${r.exp}`} value={`~${r.sig} sig figs`} />
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">Enter a number — decimal, e-notation (5.43e-8), or text form (5.43×10^-8).</p>
+      )}
+      <p className="text-xs text-muted-foreground">Scientific: one digit before the point (5.43 × 10⁻⁸). Engineering: exponent in multiples of 3 to match SI prefixes — 47,000 = 47 × 10³ = 47 kilo. Avogadro: 6.022 × 10²³; a proton: 1.673 × 10⁻²⁷ kg.</p>
+    </CardContent></Card>
+  )
+}
