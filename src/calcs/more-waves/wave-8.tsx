@@ -2884,3 +2884,73 @@ export function DownPaymentCalc() {
     </CardContent></Card>
   )
 }
+// CAGR — node-verified defaults: $10,000 → $26,000 over 7 years = 14.63% compound annual growth rate. (26000/10000)^(1/7) − 1. The single number that makes any two investments comparable — total return lies about time, CAGR doesn't.
+export function CagrCalc() {
+  const [start, setStart] = useNumber(10000)
+  const [end, setEnd] = useNumber(26000)
+  const [years, setYears] = useNumber(7)
+  const r = useMemo(() => {
+    const cagr = start > 0 && years > 0 && end > 0 ? (Math.pow(end / start, 1 / years) - 1) * 100 : NaN
+    const totalReturn = start > 0 ? ((end - start) / start) * 100 : 0
+    const doubling = cagr > 0 ? 72 / cagr : Infinity
+    return { cagr, totalReturn, doubling }
+  }, [start, end, years])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Starting value" value={start} onChange={setStart} prefix="$" />
+        <Field label="Ending value" value={end} onChange={setEnd} prefix="$" />
+        <Field label="Years" value={years} onChange={setYears} step="0.5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="CAGR" value={isNaN(r.cagr) ? '—' : `${num(r.cagr, 2)}%/yr`} big />
+        <Result label="Total return" value={`${num(r.totalReturn, 1)}%`} />
+        <Result label="Doubling time (rule of 72)" value={isFinite(r.doubling) ? `${num(r.doubling, 1)} years` : '—'} />
+      </div>
+      <p className="text-xs text-muted-foreground">CAGR smooths the ride — a +50% year followed by −33% is a 0% CAGR, not +17%. Dividends count only if you add them back to the ending value.</p>
+    </CardContent></Card>
+  )
+}
+
+// PREGNANCY DUE DATE — node-verified defaults (Naegele's rule): LMP 2026-01-15 + 280 days = due 2026-10-22. Conception-date variant: conception + 266 days. Week counter floors completed weeks from LMP. Full term is 39–40 weeks; only ~4% of babies arrive on the due date itself.
+export function DueDateCalc() {
+  const [method, setMethod] = useState('lmp')
+  const [dateStr, setDateStr] = useState('2026-01-15')
+  const r = useMemo(() => {
+    const d = new Date(`${dateStr}T12:00:00`)
+    if (isNaN(d.getTime())) return null
+    const days = method === 'lmp' ? 280 : 266
+    const due = new Date(d.getTime() + days * 86400000)
+    const anchor = method === 'lmp' ? d : new Date(d.getTime() - 14 * 86400000)
+    const now = new Date()
+    const weeksAlong = Math.floor((now.getTime() - anchor.getTime()) / (7 * 86400000))
+    const trimester = weeksAlong < 14 ? 'First trimester' : weeksAlong < 28 ? 'Second trimester' : 'Third trimester'
+    return { due, weeksAlong, trimester }
+  }, [method, dateStr])
+  const fmt = (d: Date) => d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Calculate from</label>
+          <select value={method} onChange={(e) => setMethod(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="lmp">First day of last period</option>
+            <option value="conception">Conception date</option>
+          </select>
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">{method === 'lmp' ? 'Last period started' : 'Conception date'}</label>
+          <input type="date" value={dateStr} onChange={(e) => setDateStr(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" />
+        </div>
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label="Estimated due date" value={fmt(r.due)} big />
+          <Result label="Current progress" value={r.weeksAlong >= 0 && r.weeksAlong <= 45 ? `${r.weeksAlong} weeks` : '—'} big />
+          <Result label="Stage" value={r.weeksAlong >= 0 ? r.trimester : '—'} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">Naegele's rule assumes a 28-day cycle — your provider may adjust by ultrasound. Full term is 39–40 weeks; the due date is the center of a window, not an appointment.</p>
+    </CardContent></Card>
+  )
+}

@@ -4270,6 +4270,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'cagr-calculator',
+    title: 'CAGR Calculator — Compound Annual Growth Rate for Any Investment',
+    shortTitle: 'CAGR',
+    category: 'Investing & Crypto',
+    description: 'Compute compound annual growth rate from start value, end value, and years. Total return lies about time — CAGR is the single number that makes any two investments comparable.',
+    tagline: 'Total return lies about time. CAGR doesn\'t.',
+    intro: '$10,000 becoming $26,000 sounds great — until you learn it took 7 years, a 14.63% CAGR. CAGR strips the calendar out of growth so a 3-year flip and a 10-year hold can be compared honestly. This calculator gives the rate, the total return, and the rule-of-72 doubling time.',
+    howItWorks: [
+      'Enter the starting value of the investment, revenue stream, or account.',
+      'Enter the ending value.',
+      'Set the number of years between them.',
+      'The tool computes CAGR = (end ÷ start)^(1 ÷ years) − 1.',
+      'Compare against benchmarks — the S&P 500\'s long-run CAGR is roughly 10% nominal.',
+    ],
+    faq: [
+      {
+        q: 'What is CAGR and why does it matter?',
+        a: 'CAGR is the constant annual rate that would carry the start value to the end value in the given time — (end/start)^(1/years) − 1. It matters because raw returns hide time: 160% over 7 years (14.63% CAGR) is genuinely strong, while 160% over 20 years (4.9% CAGR) barely beat inflation. It is the standard scoreboard for comparing funds, business revenue growth, real estate appreciation, and portfolio performance across different holding periods. The limitation: CAGR smooths the path — two investments with identical CAGRs can have wildly different volatility, and the metric says nothing about the drawdowns along the way. Pair it with max drawdown or standard deviation for the honest picture.',
+      },
+      {
+        q: 'What is a good CAGR for a stock portfolio?',
+        a: 'Benchmarks first: the S&P 500 has compounded near 10% nominal (about 7% real, after inflation) over long modern history — that is the bar a passive index clears with zero effort. A "good" active result: 12%+ sustained over 10+ years puts you ahead of most professional managers, who mostly fail to beat the index after fees. Berkshire Hathaway\'s legendary run is ~20% CAGR over six decades — the number shows why compounding dominates: 20% for 50 years turns $10,000 into $91 million, while 10% makes it $1.17 million. For business revenue, 15–20% CAGR is strong for a mature company; venture-scale startups chase 100%+ early because the doubling math demands it.',
+      },
+      {
+        q: 'How is CAGR different from average annual return?',
+        a: 'Average return adds yearly returns and divides — and it is routinely wrong for money. A portfolio up 50% then down 33% has an average return of +8.5% but an actual ending value of 100 × 1.5 × 0.67 = 100.5, a CAGR of 0.25%. The gap grows with volatility: arithmetic average always overstates compound growth, and for volatile assets (crypto, small caps) the overstatement can be several points per year. Use CAGR when measuring what actually happened to money; use average return only when describing a typical single year. If a fund advertises "average annual returns," check whether they mean arithmetic — marketing departments know exactly which number is bigger.',
+      },
+    ],
+  },
+  {
+    slug: 'pregnancy-due-date-calculator',
+    title: 'Pregnancy Due Date Calculator — Naegele\'s Rule from LMP or Conception',
+    shortTitle: 'Due Date',
+    category: 'Health & Life',
+    description: 'Estimate your due date from last period or conception date, see how many weeks along you are today, and which trimester you are in. Naegele\'s rule: 280 days from LMP.',
+    tagline: 'The due date is the center of a window — not an appointment.',
+    intro: 'From the first day of your last period, add 280 days — a January 15 LMP lands on October 22. This calculator estimates the due date either way (period or conception), counts your current week, and names your trimester.',
+    howItWorks: [
+      'Choose whether you know your last period start or the conception date.',
+      'Enter the date.',
+      'The tool applies Naegele\'s rule: LMP + 280 days, or conception + 266 days.',
+      'Read the estimated due date, completed weeks, and current trimester.',
+      'Bring the estimate to your first appointment — your provider may adjust it by ultrasound.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is a due date calculator?',
+        a: 'Naegele\'s rule (LMP + 280 days) assumes a textbook 28-day cycle with ovulation on day 14 — real cycles vary, so first-trimester ultrasound is the gold standard and providers adjust the date when early ultrasound disagrees by more than about a week. Only about 4% of babies arrive on the exact due date; the honest framing is a window, with most spontaneous births landing between 39 and 41 weeks. Longer cycles shift ovulation (and the real due date) later; shorter cycles earlier. If your cycles run 35 days, mentally add a week to the estimate until your provider weighs in.',
+      },
+      {
+        q: 'Why do doctors count pregnancy from the last period?',
+        a: 'Historical practicality: the LMP is a date most people know, while conception almost always happens later (about day 14 of a 28-day cycle) and is rarely known exactly. So "40 weeks of pregnancy" includes roughly two weeks before conception occurred — at "4 weeks pregnant," the embryo is barely implanted. This is why the conception-date option in this calculator adds 266 days (280 − 14) instead. IVF pregnancies count from embryo transfer with the embryo's age added — a day-5 blastocyst transfer uses transfer + 261 days. Same 40-week math, better-known starting line.',
+      },
+      {
+        q: 'What are the trimester milestones?',
+        a: 'First trimester (weeks 1–13): implantation, organ formation, and the highest miscarriage-risk window — which is why many announce after week 12–13. Second (14–27): the anatomy scan at ~20 weeks, first felt movement around 18–22 weeks, and the viability milestone at ~24 weeks. Third (28–40): rapid growth, position checks, and the term definitions that matter — early term 37–38 weeks, full term 39–40, late term 41, post-term 42+. Many providers discuss induction by 41 weeks because risks to the baby climb gently past the due date. Each milestone maps to a week count from your LMP, which is exactly what the progress readout tracks.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

@@ -277,6 +277,10 @@ export const WHY_USE: Record<string, string> = {
     'Homebuyers use it before pre-approval: $2,950 of debts on $7,800 income is 37.8% — the 43% cap says max housing $2,504, and lenders read it before your score.',
   'down-payment-calculator':
     'First-time buyers use it to size the real check: 5% on $400k is $20,000 plus $12,000 closing plus $158/mo PMI — $32,000 cash to close, not $20,000.',
+  'cagr-calculator':
+    'Investors use it to compare honestly: $10k → $26k in 7 years is 14.63% CAGR — the number that strips the calendar out of a good story.',
+  'pregnancy-due-date-calculator':
+    'Expecting parents use it the day the test turns: LMP + 280 days, current week, trimester — and the truth that the due date is a window, not an appointment.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':
