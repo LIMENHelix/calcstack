@@ -328,6 +328,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'home-equity-loan-calculator',
+    title: 'Home Equity Loan Calculator 2026 — Fixed Payment, CLTV Limit, and Why It Beats the HELOC',
+    shortTitle: 'Home Equity Loan',
+    category: 'Housing & Mortgage',
+    description:
+      'The fixed-rate second mortgage: compute your max borrowable under the lender\'s CLTV cap, the fixed monthly payment, total interest, and the gap versus a HELOC at the same rate.',
+    tagline: '$50,000 at 8% fixed costs $36,009 in interest — the same money as a HELOC at 8% costs $90,373.',
+    intro:
+      'The home equity loan is the unglamorous sibling of the HELOC, and for a known, one-time expense it is usually the cheaper one: fixed rate, fixed term, amortization from day one. Borrow $50,000 at 8% for 15 years and you pay $477.83 a month and $36,009 in total interest. The same $50,000 drawn on a HELOC at the same 8% — ten years interest-only, twenty years amortizing — quietly runs $90,373, two and a half times as much, because the draw decade never touches principal. The constraint is your equity: lenders cap combined loan-to-value at about 80%, so a $400,000 home with a $300,000 mortgage has only $20,000 of borrowable room. This calculator applies the CLTV cap, prices the payment, and shows the HELOC gap on your exact numbers.',
+    howItWorks: [
+      'Enter your home value and mortgage balance — the CLTV cap sets your ceiling.',
+      'Enter the amount you want, the fixed rate, and the term.',
+      'Toggle whether the funds improve the home to see the after-tax interest cost.',
+      'Read the payment, lifetime interest, and the HELOC-at-the-same-rate comparison.',
+    ],
+    faq: [
+      {
+        q: 'How much can I actually borrow against my equity?',
+        a: 'Lenders cap combined loan-to-value — your first mortgage plus the new loan, divided by the home value — typically at 80%, sometimes 85–90% for a rate premium. The formula is: home value × cap − mortgage balance. A $400,000 home with a $300,000 mortgage at an 80% cap allows just $20,000, no matter how long you\'ve owned it. Appraisal matters too: the cap applies to the lender\'s appraised value, not your Zestimate, and a low appraisal shrinks the ceiling. Borrowers within a few years of a big purchase often discover they have far less usable equity than the appreciation headlines suggest.',
+      },
+      {
+        q: 'Home equity loan or HELOC — how do I choose?',
+        a: 'Amount known and needed all at once → the fixed loan almost always wins. The math above is decisive: at identical rates the HELOC\'s interest-only decade more than doubles lifetime interest ($90,373 vs $36,009 on $50,000 at 8%). The HELOC wins in two real situations: staged spending (a renovation paid to contractors in phases — you only pay interest on what you\'ve drawn) and fast repayment (a two-year bridge where the IO period is a feature, not a trap). Rate risk cuts the same direction: the fixed loan never moves, while most HELOCs float at prime plus a margin — a 2-point prime move adds $83/month per $50,000 drawn. If you choose the HELOC anyway, treat the draw payment as fiction and budget for the amortizing one.',
+      },
+      {
+        q: 'Is the interest deductible?',
+        a: 'Same rule as HELOCs, made permanent in 2025: only when the funds buy, build, or substantially improve the home securing the loan — a roof, an addition, a full kitchen. Debt consolidation, tuition, and cars don\'t qualify no matter which equity product you use. The cap is $750,000 of total mortgage debt (first plus second), and you must itemize — with the 2026 standard deduction at $16,100 single / $32,200 married, plenty of borrowers get nothing. When it does apply, it\'s real money: $36,009 of interest at the 24% bracket is $8,642 back. Either way, the loan is secured by your house — the comparison against an unsecured personal loan at 11% is really a question of whether the rate savings justifies the collateral.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

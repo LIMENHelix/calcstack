@@ -2448,6 +2448,79 @@ export function CashOutRefiCalc() {
   )
 }
 
+// HOME EQUITY LOAN (fixed-rate second mortgage) — the boring sibling that quietly wins. Node-verified: $50k @8.0% fixed → 15yr $477.83/mo, $36,009 interest; 10yr $606.64/mo, $22,797; 20yr $418.22/mo, $50,373. Same $50k as a HELOC at the SAME 8% (10y IO + 20y repay): $333.33 → $418.22/mo but $90,373 total interest — 2.5x the fixed loan, because the interest-only decade never touches principal. After-tax @24% when deductible (home improvement): $27,367. CLTV cap: most lenders cap combined-loan-to-value at 80% (some 85–90% for a pricing premium) — $400k home, $300k mortgage → max second = $400k×0.80 − $300k = $20,000. Deductibility: same OBBBA-permanent rule as HELOCs (buy/build/improve the securing home, $750k debt cap, itemizers only). Structure differences priced honestly: fixed rate + fixed term + lump sum + immediate amortization vs HELOC's variable rate, draw flexibility, and IO decade.
+export function HomeEquityLoanCalc() {
+  const [home, setHome] = useNumber(400000)
+  const [mort, setMort] = useNumber(300000)
+  const [want, setWant] = useNumber(50000)
+  const [rate, setRate] = useNumber(8.0)
+  const [term, setTerm] = useNumber(15)
+  const [cltvCap, setCltvCap] = useNumber(80)
+  const [improve, setImprove] = useState(true)
+  const [bracket, setBracket] = useNumber(24)
+
+  const r = useMemo(() => {
+    const maxLoan = Math.max(0, home * (cltvCap / 100) - mort)
+    const P = Math.min(want, maxLoan)
+    const i = rate / 1200
+    const n = Math.max(1, term * 12)
+    const p = i > 0 ? (P * i) / (1 - Math.pow(1 + i, -n)) : P / n
+    const interest = p * n - P
+    // HELOC at the same rate: 10y interest-only, then 20y amortization of the flat balance
+    const io = P * i
+    const repN = 240
+    const rep = i > 0 ? (P * i) / (1 - Math.pow(1 + i, -repN)) : P / repN
+    const helocInterest = io * 120 + rep * repN - P
+    const afterTax = improve ? interest * (1 - bracket / 100) : interest
+    return { maxLoan, P, capped: want > maxLoan, p, interest, helocInterest, helocGap: helocInterest - interest, afterTax }
+  }, [home, mort, want, rate, term, cltvCap, improve, bracket])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Home value" value={home} onChange={setHome} prefix="$" />
+          <Field label="Mortgage balance" value={mort} onChange={setMort} prefix="$" />
+          <Field label="Amount you want" value={want} onChange={setWant} prefix="$" />
+          <Field label="Lender CLTV cap" value={cltvCap} onChange={setCltvCap} suffix="%" step="5" />
+          <Field label="Fixed rate" value={rate} onChange={setRate} suffix="%" step="0.125" />
+          <Field label="Term (years)" value={term} onChange={setTerm} step="5" />
+        </div>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={improve} onChange={(e) => setImprove(e.target.checked)} className="h-4 w-4" />
+          Funds buy/build/improve this home (interest deductible for itemizers)
+        </label>
+        {improve && (
+          <div className="max-w-xs">
+            <Field label="Your marginal tax bracket" value={bracket} onChange={setBracket} suffix="%" />
+          </div>
+        )}
+        {r.capped && (
+          <p className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">
+            Your CLTV cap allows only {usd(r.maxLoan)} — the request is trimmed to that. Combined loan-to-value: home value × {num(cltvCap, 0)}% − mortgage balance.
+          </p>
+        )}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Max you can borrow" value={usd(r.maxLoan)} />
+          <Result big label="Fixed monthly payment" value={usd(r.p, 2)} />
+          <Result label="Total interest (life of loan)" value={usd(r.interest)} />
+          <Result label="Same $ as HELOC (same rate)" value={usd(r.helocInterest)} />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Result label="HELOC costs more by" value={usd(r.helocGap)} />
+          <Result label={improve ? 'Your interest after tax deduction' : 'Interest (not deductible)'} value={usd(improve ? r.afterTax : r.interest)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          At the same {num(rate, 2)}% rate, the fixed loan costs {usd(r.interest)} while the HELOC&apos;s interest-only decade inflates its lifetime cost to {usd(r.helocInterest)} — a {usd(r.helocGap)} gap for identical money. The HELOC&apos;s lower first payment is not a discount; it is deferred principal.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The home equity loan is the fixed-rate, lump-sum second mortgage: the rate never moves, amortization starts immediately, and the term (5–30 years, 10–15 typical) sets the payment. Its structural opposite is the HELOC — variable rate, draw-as-needed, interest-only draw decade — which at the same rate costs far more in lifetime interest precisely because the draw period never reduces principal. The HELOC wins only when you genuinely need the flexibility (staged renovation draws, uncertain amounts) or plan to repay fast. Deductibility follows the same OBBBA-permanent rule as HELOCs: interest is deductible only when proceeds buy, build, or substantially improve the securing home, within the $750,000 total mortgage-debt cap, for itemizers. Lenders cap combined loan-to-value at 80% typically (85–90% exists, at a rate premium), so equity = home value × cap − mortgage balance. Closing costs run 2–5% but many lenders offer no-closing-cost versions at a slightly higher rate — worth both quotes. Estimates — lender terms govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8065,6 +8138,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
   'heloc-calculator': HelocCalc,
   'heloc-vs-cash-out-refi-calculator': CashOutRefiCalc,
+  'home-equity-loan-calculator': HomeEquityLoanCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

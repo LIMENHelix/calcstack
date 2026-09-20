@@ -25,6 +25,8 @@ export const WHY_USE: Record<string, string> = {
     'Homeowners quoted a $354 interest-only payment use it before signing: the same $50,000 draw jumps to $434 when repayment starts and costs $96,639 in interest over the life — and the interest is deductible only if the money improves the house.',
   'heloc-vs-cash-out-refi-calculator':
     'Homeowners choosing between equity products use it to expose the number lenders never print: pulling $50k from a 3.5% mortgage via a 6.5% cash-out refi is an effective 10.9% loan on the cash — while a 6.8% holder refinancing down gets it nearly free.',
+  'home-equity-loan-calculator':
+    'Owners with a known one-time expense use it to see the boring option win: $50k at 8% fixed costs $36,009 in interest against the HELOC\'s $90,373 at the same rate — and the 80% CLTV cap decides how much equity is actually borrowable.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
