@@ -7875,6 +7875,71 @@ export function MobileMechanicCalc() {
   )
 }
 
+// MBA ROI — node-verified defaults: $120k tuition + 2 yrs forgone salary ($70k/yr) = $280k true cost. Post-MBA bump $35k/yr growing 3%/yr compounds to $401,236 extra earnings over 10 yrs → net +$121,236, payback 8.0 yrs. The sticker price is half the cost — the forgone paycheck is the other half, and the bump must compound to win.
+export function MbaRoiCalc() {
+  const [tuition, setTuition] = useNumber(120000);
+  const [years, setYears] = useNumber(2);
+  const [salary, setSalary] = useNumber(70000);
+  const [bump, setBump] = useNumber(35000);
+  const [raise, setRaise] = useNumber(3);
+  const r = useMemo(() => {
+    const total = tuition + salary * years;
+    let extra10 = 0;
+    for (let y = 1; y <= 10; y++) extra10 += bump * Math.pow(1 + raise / 100, y - 1);
+    const payback = bump > 0 ? total / bump : Infinity;
+    return { total, extra10, payback, net10: extra10 - total };
+  }, [tuition, years, salary, bump, raise]);
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Total tuition & fees" value={tuition} onChange={setTuition} prefix="$" />
+        <Field label="Years out of the workforce" value={years} onChange={setYears} step="0.5" />
+        <Field label="Current salary (forgone)" value={salary} onChange={setSalary} prefix="$" />
+        <Field label="Expected post-MBA raise" value={bump} onChange={setBump} prefix="$" />
+        <Field label="Annual raise on the bump" value={raise} onChange={setRaise} suffix="%" step="0.5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="True cost (tuition + forgone pay)" value={usd(r.total)} big />
+        <Result label="Payback period" value={isFinite(r.payback) ? `${num(r.payback, 1)} years` : 'Never'} big />
+        <Result label="Extra earnings over 10 years" value={usd(r.extra10)} />
+        <Result label="Net 10-year ROI" value={usd(r.net10)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Ignores debt interest and taxes; a bump that doesn't compound stretches payback well past year 10.</p>
+    </CardContent></Card>
+  );
+}
+
+// SABBATICAL COST — node-verified defaults: 6 months × $3,800 living expenses = $22,800, plus 6 × $5,200 forgone take-home = $31,200, plus 15% buffer $3,420 → $57,420 total runway needed. The time off costs your expenses twice: once out of savings and once out of the paychecks that never arrive.
+export function SabbaticalCostCalc() {
+  const [expenses, setExpenses] = useNumber(3800);
+  const [months, setMonths] = useNumber(6);
+  const [takehome, setTakehome] = useNumber(5200);
+  const [buffer, setBuffer] = useNumber(15);
+  const r = useMemo(() => {
+    const living = expenses * months;
+    const forgone = takehome * months;
+    const buf = living * (buffer / 100);
+    return { living, forgone, buf, total: living + forgone + buf };
+  }, [expenses, months, takehome, buffer]);
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Monthly living expenses" value={expenses} onChange={setExpenses} prefix="$" />
+        <Field label="Months away" value={months} onChange={setMonths} />
+        <Field label="Monthly take-home pay (forgone)" value={takehome} onChange={setTakehome} prefix="$" />
+        <Field label="Safety buffer" value={buffer} onChange={setBuffer} suffix="%" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Total runway needed" value={usd(r.total)} big />
+        <Result label="Living expenses" value={usd(r.living)} />
+        <Result label="Forgone take-home pay" value={usd(r.forgone)} />
+        <Result label="Safety buffer" value={usd(r.buf)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Add one-off costs (travel, insurance gaps) to monthly expenses. Returning to the same salary is assumed — budget extra if a job search follows.</p>
+    </CardContent></Card>
+  );
+}
+
 // SELF-STORAGE ROI — node-verified defaults: 120 units × $105 avg × 82% occupancy = $10,332/mo = $123,984/yr gross. OpEx 35% (no tenants, no toilets — taxes, insurance, manager software, gate/utilities) → NOI $80,590. At a $1.4M facility: 5.8% cap; at a 6% cap it values $1,343,160. Storage is real estate with a month-to-month lease — the revenue management (rate bumps) is the yield engine.
 export function SelfStorageCalc() {
   const [units, setUnits] = useNumber(120)
@@ -15458,6 +15523,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'mba-roi-calculator': MbaRoiCalc,
+  'sabbatical-cost-calculator': SabbaticalCostCalc,
   'self-storage-roi-calculator': SelfStorageCalc,
   'car-wash-economics-calculator': CarWashCalc,
   'tax-prep-pricing-calculator': TaxPrepCalc,

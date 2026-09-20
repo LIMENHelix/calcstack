@@ -3670,6 +3670,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'mba-roi-calculator',
+    title: 'MBA ROI Calculator — True Cost, Payback Period, and 10-Year Return',
+    shortTitle: 'MBA ROI',
+    category: 'Careers & Salary',
+    description: 'Compute the true cost of an MBA — tuition plus forgone salary — against the post-degree salary bump compounding over 10 years. See payback period and net return before you apply.',
+    tagline: 'The sticker price is half the cost. The paychecks you skip are the other half.',
+    intro: 'A $120,000 MBA does not cost $120,000 — two years out of the workforce at $70,000 makes the real bill $280,000, and the only thing that pays it back is the salary bump, compounding. This calculator totals tuition plus forgone pay, then runs the bump forward with annual raises to show your payback period and 10-year net return.',
+    howItWorks: [
+      'Enter total tuition and fees for the full program.',
+      'Add the years you will be out of the workforce and your current salary — that is the forgone-pay half of the true cost.',
+      'Enter the expected post-MBA salary bump and how fast it grows with raises.',
+      'The tool compounds the bump over 10 years and compares it against the true cost.',
+      'Read payback period, extra 10-year earnings, and net ROI before you write the deposit check.',
+    ],
+    faq: [
+      {
+        q: 'Is an MBA worth it financially?',
+        a: 'It depends almost entirely on the size of the bump, not the brand on the diploma. The break-even math: total cost (tuition + forgone salary) divided by the annual bump gives a crude payback — under 5 years is strong, 5–8 is typical for full-time programs, and past 10 the degree is a lifestyle choice, not an investment. The compounding matters more than people expect: a $35,000 bump growing 3% annually pays back $280,000 in year 8 but nets +$121,000 by year 10 — the back half of the decade does the heavy lifting. Part-time and executive programs change the equation completely by eliminating the forgone-salary half, which is often why they pencil out better despite identical tuition.',
+      },
+      {
+        q: 'What salary bump should I expect after an MBA?',
+        a: 'School-reported medians run $30,000–$60,000 for full-time programs at top-25 schools, but the distribution is wide and self-selected. Use the employment report for YOUR target school and YOUR target industry: consulting and investment banking pay the highest immediate bumps ($50,000+) but demand 60–80 hour weeks; tech product management and corporate strategy run $30,000–$45,000 with better hours. Career-switchers often see a bump against their OLD salary but not against what the new field pays non-MBAs after 2 more years of experience — the honest comparison is against your counterfactual career, not your current paycheck. If the bump is under $20,000, a full-time program almost never pays back.',
+      },
+      {
+        q: 'Should I include student loan interest in the cost?',
+        a: 'Yes, if you are borrowing. Graduate student loans currently run higher rates than undergraduate, and interest accrues while you are in school — $100,000 borrowed at 7% for a 2-year program adds roughly $14,000 before repayment starts, then more over a 10-year repayment schedule. A quick approximation: add 30–40% of the borrowed amount to the tuition figure over a standard repayment term. Also count the opportunity cost of the retirement contributions you skip — two years of missed 401(k) contributions plus employer match at a $70,000 salary is roughly $10,000–$15,000 of forgone compounding. The calculator keeps the inputs simple, so pad the tuition field with interest and the salary field with total compensation if you want the strict number.',
+      },
+    ],
+  },
+  {
+    slug: 'sabbatical-cost-calculator',
+    title: 'Sabbatical Cost Calculator — Runway, Forgone Pay, and Safety Buffer',
+    shortTitle: 'Sabbatical Cost',
+    category: 'Careers & Salary',
+    description: 'Price a sabbatical honestly: months of living expenses, the take-home pay you give up, and a safety buffer for the unexpected. See the total runway you need saved before you hand in the notice.',
+    tagline: 'Time off costs your expenses twice — once out of savings, once out of paychecks.',
+    intro: 'Six months away at $3,800 a month is not a $22,800 decision — it is a $57,000 one once you count the $31,200 of take-home pay that never arrives and a buffer for what goes wrong. This calculator totals living expenses, forgone income, and a safety margin so the number you save toward is the number that actually survives the trip.',
+    howItWorks: [
+      'Enter your real monthly living expenses — rent, food, insurance, everything that continues while you are away.',
+      'Add the number of months you plan to be off.',
+      'Enter your monthly take-home pay — the income the sabbatical costs you on top of your spending.',
+      'Set a safety buffer percentage for re-entry surprises and budget overruns.',
+      'Read the total runway: the savings target that covers spending, forgone pay, and the buffer.',
+    ],
+    faq: [
+      {
+        q: 'How much money do I need for a 6-month sabbatical?',
+        a: 'The honest formula is monthly expenses × months, plus monthly take-home × months, plus 15–20% buffer. For $3,800 expenses and $5,200 take-home over 6 months: $22,800 spending + $31,200 forgone pay + $3,420 buffer = $57,420 of runway. The forgone-pay half is the part people skip — it is not cash you need in the bank on day one, but it is real wealth you will not have afterward, and it is what makes re-entry stressful if the savings run dry. If you only want the cash-needed number, use expenses plus buffer ($26,220 here); if you want the true economic cost, use the full figure. Travel-heavy sabbaticals should add flights, insurance, and gear to the monthly expense input as one-off padding.',
+      },
+      {
+        q: 'How do I keep health insurance during a sabbatical?',
+        a: 'In the US, three main routes: COBRA continues your employer plan for up to 18 months but you pay the full premium plus 2% — typically $600–$800/month for single coverage, which is 2–4× what came out of your paycheck. ACA marketplace plans are usually cheaper if your sabbatical-year income is low, because subsidies scale with income — a mid-year sabbatical can qualify you for significant premium tax credits. A spouse or partner’s employer plan is the cheapest option if available, and leaving a job is a qualifying life event that opens their enrollment. Budget the full premium into your monthly expense input — health insurance is the single most-forgotten sabbatical cost and it can add $4,000–$6,000 to a 6-month break.',
+      },
+      {
+        q: 'Will a sabbatical hurt my career?',
+        a: 'The data says less than people fear, but the financing matters. A planned sabbatical with a return date — especially an employer-approved leave — reads neutrally on a resume; a savings-funded gap with a clear story reads fine in interviews. What hurts is an unplanned gap with no narrative. The financial risk is the sharper edge: returning to the same salary assumes the job is waiting or the search is short, so if your field has long hiring cycles, extend the buffer from 15% to 25% or add 1–2 months of expenses. The compounding cost is real but small — 6 months of missed retirement contributions at a $100,000 salary is roughly $5,000–$7,500 including match, which decades of growth multiplies, but one break in a 40-year career is a rounding error next to burnout-driven early exits.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
