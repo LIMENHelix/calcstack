@@ -159,3 +159,57 @@ Macro split (Mifflin + goal multipliers), Running pace + Riegel 1.06 predictions
 Mulch/Gravel/Concrete yields (incl. 0.6 ft³ per 80 lb bag, 1.4 t/yd³ crushed stone),
 Navy body fat (17.7% @ defaults), Final grade (97.0% needed @ defaults), Ohm's law all six
 modes, VBT velocity tables, Periodization planner, VO₂max estimate.
+
+---
+
+# Second Audit — 2026-09-20 (400-calculator milestone)
+
+Full-site sweep at the 400-calculator mark, covering structure, engine math, UI behavior,
+and mobile rendering. Evidence below; fixes shipped the same day.
+
+## Structural integrity (automated, `scripts/audit-structure.mjs`)
+
+Cross-checked metadata ↔ component registration ↔ explainer entries ↔ sitemap:
+399 core calculators + 131 variant pages = **530 calculator pages**, 626 indexed URLs total.
+
+| Check | Result |
+|---|---|
+| Duplicate slugs | none |
+| Metadata without a component | none (paycheck registered directly, verified) |
+| Components without metadata | none |
+| Missing "why use this" entries | none |
+| Persona/variant cross-references | all resolve (variants are template-generated) |
+| Invalid categories | none |
+
+## Runtime rendering (every calculator, live)
+
+The QA route `/audit-all` renders **all 399 components** with default inputs inside
+per-component error boundaries. Result: **0 crashes, 0 missing, 0 NaN/undefined/Infinity**
+in any rendered output.
+
+## Engine math re-verified (independent recomputation)
+
+- **Paycheck engine** (2026 federal brackets + 51 state rules):
+  - $21,000 single Kansas → federal $490.00, SS $1,302.00, Medicare $304.50, state $428.22, net $18,475.28 ✓
+  - Real paystub reproduction: $13,411 check, $135.51 pre-tax 401(k), 26 periods → federal withholding **$3,228.51 — exact match to the stub** ✓
+  - $75,000 single Texas → federal $7,670.00, net $61,592.50 ✓
+  - $150,000 MFJ California → federal $15,340.00, state $5,855.14 ✓
+- **Loan/mortgage core** (`monthlyPayment`, `monthsToPayoff`): $400k/6.5%/30yr = $2,528.27 ✓,
+  0% edge case ✓, negative-amortization guard returns Infinity and the UI surfaces it ✓
+- **Sales tax variants**: Los Angeles 9.5%, Chicago 10.25% ✓
+
+## UI bugs found and fixed
+
+1. **Hash-anchor links dead** — "View all in {category} →" from the homepage landed at the
+   *top* of the directory because the scroll-restoration hook always scrolled to (0,0) and
+   ignored `location.hash`. Fixed: hash present → `scrollIntoView()` on the anchor; else top.
+   Verified live: `/directory#fitness-sports` scrolls to the section.
+2. **Search substring ranking** — "kansas" ranked Arkansas results equally (ar**kansas**).
+   Fixed with word-boundary scoring; exact state now leads. Verified live.
+3. **Stale counts** — search placeholder said "150+" (site is 530 pages); hero and meta
+   titles refreshed to the 530-calculator, work-money-life framing. Verified live.
+
+## Mobile rendering (390×844 emulation)
+
+Zero horizontal overflow on homepage, calculator pages, and the 50-state data table
+(tables scroll in-container). No element exceeded viewport width on any tested page.
