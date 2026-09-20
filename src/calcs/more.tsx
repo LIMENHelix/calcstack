@@ -4622,6 +4622,57 @@ export function MaintenanceAgreementCalc() {
   )
 }
 
+// SEASONAL CASH RESERVE — slow-season deficit sized in advance, funded from peak months. Node-verified: peak $180k/mo × 8 months, slow $60k/mo × 4, gross margin 35%, fixed $35k/mo → peak contribution +$28k/mo, slow −$14k/mo → slow-season deficit $56k; reserve at 1.5× safety = $84k → set aside $10,500/mo during the 8 peak months. Annual profit still $168k — the business is fine, the TIMING is the problem. Honest edges: fixed costs don't take the winter off (rent, insurance, truck payments, key staff you can't lay off and rehire — the reserve exists so you keep the crew), receivables lag (December's work pays in February — slow-season revenue arrives LATE, making the cash trough deeper than the P&L trough; add a month of lag mentally), the 1.5× buffer covers the bad-weather year (a wet spring or warm winter isn't a surprise, it's a decade-certainty — size for the bad year, enjoy the good ones), discipline mechanics (separate account, transfer on invoice not on "what's left" — what can be spent will be), and alternatives priced (layoffs cost rehiring+training and your reputation; a line of credit at 9% on $56k for 4 months is ~$1,680 — cheap IF secured before you need it; banks lend umbrellas in sunshine).
+export function SeasonalReserveCalc() {
+  const [peakRev, setPeakRev] = useNumber(180000)
+  const [slowRev, setSlowRev] = useNumber(60000)
+  const [peakM, setPeakM] = useNumber(8)
+  const [slowM, setSlowM] = useNumber(4)
+  const [gm, setGm] = useNumber(35)
+  const [fixed, setFixed] = useNumber(35000)
+  const [safety, setSafety] = useNumber(1.5)
+
+  const r = useMemo(() => {
+    const peakContrib = (peakRev * gm) / 100 - fixed
+    const slowContrib = (slowRev * gm) / 100 - fixed
+    const annual = peakContrib * peakM + slowContrib * slowM
+    const deficit = Math.max(0, -slowContrib * slowM)
+    const reserve = deficit * safety
+    const setAside = peakM > 0 ? reserve / peakM : 0
+    return { peakContrib, slowContrib, annual, deficit, reserve, setAside }
+  }, [peakRev, slowRev, peakM, slowM, gm, fixed, safety])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Peak-month revenue" value={peakRev} onChange={setPeakRev} prefix="$" step="10000" />
+          <Field label="Slow-month revenue" value={slowRev} onChange={setSlowRev} prefix="$" step="5000" />
+          <Field label="Peak months" value={peakM} onChange={setPeakM} step="1" />
+          <Field label="Slow months" value={slowM} onChange={setSlowM} step="1" />
+          <Field label="Gross margin" value={gm} onChange={setGm} suffix="%" step="1" />
+          <Field label="Fixed costs /mo" value={fixed} onChange={setFixed} prefix="$" step="1000" />
+          <Field label="Safety multiplier" value={safety} onChange={setSafety} step="0.1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Slow-month contribution" value={usd(r.slowContrib)} />
+          <Result label="Slow-season deficit" value={usd(r.deficit)} />
+          <Result label="Reserve to hold" value={usd(r.reserve)} big />
+          <Result label="Set aside per peak month" value={usd(r.setAside)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.deficit > 0
+            ? `The slow season burns ${usd(Math.round(r.deficit))} — hold ${usd(Math.round(r.reserve))} (with the ${safety}× buffer) and fund it by moving ${usd(Math.round(r.setAside))}/mo to a separate account during the ${peakM} peak months. Annual profit is still ${usd(Math.round(r.annual))}: the business works, the calendar is the risk.`
+            : `Your slow months still cover fixed costs (+${usd(Math.round(r.slowContrib))}/mo) — no structural deficit. Keep one slow month of fixed costs (${usd(fixed)}) as a weather buffer and revisit if margins compress.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: monthly contribution = revenue × gross margin − fixed costs; slow-season deficit = negative contribution × slow months; reserve = deficit × safety multiplier, funded in equal transfers during peak months. Fixed costs don't take the winter off — rent, insurance, truck payments, and the key crew you can't lay off and rehire are exactly what the reserve protects. Two timing traps: receivables lag (December's work pays in February — the CASH trough is deeper and later than the P&L trough, so treat the deficit as conservative), and the bad-weather year (a wet spring or warm winter isn't a surprise, it's a decade-certainty — the 1.5× multiplier is how you pre-pay it). Alternatives priced: a line of credit at 9% on $56k for four months costs ~$1,680 — cheap, but arrange it while the books look good, because banks lend umbrellas in sunshine; layoffs save fixed cost but cost rehiring, training, and reputation. Mechanics that make it real: separate account, transfer on invoice (not on "what's left"), and no dipping for equipment — that's what the equipment calculator's numbers are for. Estimates — your monthly P&Ls govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10278,6 +10329,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'warranty-reserve-calculator': WarrantyReserveCalc,
   'bid-win-rate-calculator': BidWinRateCalc,
   'maintenance-agreement-calculator': MaintenanceAgreementCalc,
+  'seasonal-cash-reserve-calculator': SeasonalReserveCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

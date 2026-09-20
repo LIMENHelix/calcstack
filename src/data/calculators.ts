@@ -1134,6 +1134,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'seasonal-cash-reserve-calculator',
+    title: 'Seasonal Cash Reserve Calculator 2026 — Size the Slow-Season Deficit, Fund It From Peak Months',
+    shortTitle: 'Seasonal Cash Reserve',
+    category: 'Trades & Engineering',
+    description:
+      'For seasonal trade and service businesses: compute the slow-season cash deficit from contribution margin vs fixed costs, size the reserve with a safety buffer, and get the monthly set-aside to fund it during peak months.',
+    tagline: '$180k peak months and $60k slow months at 35% margin means a $56k winter deficit — hold $84k and move $10,500/mo during the season, or finance panic in January.',
+    intro:
+      'Seasonal businesses rarely fail from unprofitability — they fail from timing. A shop doing $180k months in season and $60k months off-season at a 35% gross margin with $35k of fixed costs contributes +$28k per peak month and BURNS $14k per slow month: a $56,000 winter deficit on a business that still nets $168,000 for the year. The reserve sized with a 1.5× buffer for the bad-weather year is $84,000 — funded by moving $10,500 a month to a separate account during the eight peak months, on invoice, not from "what\'s left." Fixed costs don\'t take the winter off, and receivables lag makes the cash trough deeper than the P&L trough. This calculator sizes the deficit and the discipline before January sizes it for you.',
+    howItWorks: [
+      'Enter peak-month and slow-month revenue, and how many months of each your year has.',
+      'Enter gross margin (after materials and direct labor) and monthly fixed costs.',
+      'Set a safety multiplier — 1.5× covers the bad-weather year that arrives roughly once a decade.',
+      'Read the slow-season deficit, the reserve to hold, and the monthly set-aside during peak months.',
+    ],
+    faq: [
+      {
+        q: 'Why a 1.5× safety multiplier?',
+        a: 'Because the deficit estimate assumes an average bad season, and weather doesn\'t do averages. A wet spring that delays six weeks of starts, or a warm winter that kills the furnace-replacement season, isn\'t a tail risk — it\'s a roughly once-a-decade certainty, and it lands exactly when the reserve is deployed. The 0.5× buffer covers one bad season without touching credit; tighter businesses run 1.25× with a pre-arranged credit line behind it, aggressive ones run 1× and accept the January financing scramble. What the multiplier is NOT for: funding growth, equipment, or owner draws. The reserve has one job — carrying fixed costs and key payroll across the trough — and every other use converts insurance into a loan you didn\'t price.',
+      },
+      {
+        q: 'How do receivables change the trough?',
+        a: 'They move it later and make it deeper than the P&L shows. Revenue earned in December on 30-day terms arrives in February — so the cash trough isn\'t November through February, it\'s roughly December through March, and its bottom is lower because slow-season receipts are collecting slow-season invoices. Commercial work on 60–90 day terms doubles the effect. The practical adjustment: either model slow-month revenue one month lower than the P&L shows (the conservative shortcut this calculator assumes), or build the reserve from the cash-flow statement rather than the income statement. If you\'ve ever been profitable-on-paper and overdrawn in February, you\'ve met the lag — it\'s the reason "we had a good year" and "we can\'t make payroll" can both be true in the same quarter.',
+      },
+      {
+        q: 'Reserve versus line of credit — which is better?',
+        a: 'Both, in layers — they solve different failures. The reserve solves the EXPECTED trough: zero interest, zero approval risk, always there. The credit line solves the reserve being wrong: the double-bad winter, the big customer paying 90 days late, the truck that dies in November. At 9%, drawing $56k for four months costs about $1,680 — genuinely cheap insurance — but the pricing is backward from what owners expect: banks approve seasonal lines when your financials show strength (apply in peak season, with last year\'s P&L), not when you need the money. The failure sequence to avoid: no reserve + no line + January = factoring receivables at usurious effective rates or supplier terms that wreck next season\'s material pricing. Fund the reserve for the average winter, arrange the line for the bad one, and renew it annually whether you draw it or not.',
+      },
+    ],
+  },
+  {
     slug: 'maintenance-agreement-calculator',
     title: 'Maintenance Agreement Pricing Calculator 2026 — Service Contracts Priced Bottom-Up, Discounts Included',
     shortTitle: 'Maintenance Agreement Pricing',
