@@ -824,6 +824,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'term-life-ladder-calculator',
+    title: 'Term Life Insurance Ladder Calculator 2026 — Match Coverage to Shrinking Obligations, Keep the Difference',
+    shortTitle: 'Life Insurance Ladder',
+    category: 'Health & Life',
+    description:
+      'Why buy one 30-year policy for peak need when obligations shrink? Ladder 10/20/30-year terms and see the lifetime premium savings with identical early coverage.',
+    tagline: 'A $1.5M ladder costs $15,760 over 30 years. The flat $1.5M 30-year policy costs $38,250. Same protection when it matters most.',
+    intro:
+      'Life insurance replaces obligations — the mortgage, child-rearing years, college — and every one of them shrinks on schedule. A flat 30-year policy sized for peak need spends its back half insuring obligations you no longer have. The ladder fixes it: three policies (10, 20, 30-year terms) that deliver the full $1.5M while the kids are small, $750k as the mortgage shrinks, $250k for the final stretch — and expire on cue. On illustrative healthy-35 rates the ladder costs $15,760 over three decades against the flat policy\'s $38,250. This calculator sizes your three legs from your real obligations and prices the savings with your actual quotes.',
+    howItWorks: [
+      'Enter the total coverage your family needs in each decade — peak now, less later.',
+      'Enter real per-$1k rates from quotes (illustrative defaults shown).',
+      'Read the three policy legs, year-one premium, and 30-year totals.',
+      'Compare against the flat policy and decide how much expiration risk you accept.',
+    ],
+    faq: [
+      {
+        q: 'How do I figure out the coverage for each decade?',
+        a: 'Add up obligations by when they expire. Years 1–10 usually carry everything: income replacement while kids are young (7–10× income is the standard starting point, though the life-insurance-needs calculator does it properly), the full mortgage balance, and college funding. Years 11–20: kids launch, the mortgage is half-amortized, retirement accounts have compounded — needs commonly drop 40–60%. Years 21–30: final mortgage years and a buffer for a spouse\'s early-retirement gap. The inputs are deliberately coarse because the obligations are estimates anyway — what matters is the SHAPE (declining) being priced into premiums instead of ignored. Sanity-check the year-one total against a needs analysis, then let the ladder do the discounting.',
+      },
+      {
+        q: 'What\'s the catch? Why doesn\'t everyone ladder?',
+        a: 'Three real ones. Expiration risk: the legs end on schedule regardless of health — if a leg expires while an obligation lives on (special-needs child, late-life mortgage, second family), replacement coverage at 50+ costs multiples of what you\'d have paid, if you qualify at all. Insurability assumptions: the ladder locks today\'s health class across all three legs — that\'s the advantage — but it means laddering LATER costs more than laddering now. And complexity: three policies means three bills and three beneficiaries to keep updated (minor, but real). The mitigations: round legs up when obligations are uncertain, favor conversion options (term→permanent without new underwriting) on the long leg, and revisit after major life changes. For most families with standard mortgage-and-kids timelines, the savings dwarf the risk.',
+      },
+      {
+        q: 'Should my employer coverage be part of the ladder?',
+        a: 'Count it last and trust it least. Group term through work is cheap (often subsidized) but evaporates with the job — exactly when a health change might make you uninsurable, the double-whammy that strands people at 50. It\'s also usually capped at 1–2× salary, far under real needs, and rarely portable (conversion options exist but at punishing rates). The sound structure: personal ladder sized to your FULL need, employer coverage treated as gravy. If employer coverage is generous and you\'re certain you\'ll stay (nobody is), you could trim the shortest leg by the group amount — but the premium saved is small and the job-loss risk is real. Own the ladder; let the job add to it.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

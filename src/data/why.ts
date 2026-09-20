@@ -57,6 +57,8 @@ export const WHY_USE: Record<string, string> = {
     'Owners of aging cars use it at renewal: premium as % of actual cash value plus the breakeven total-loss frequency shows a $4k car at $600/yr needs totaling every 5.8 years to break even — against a real frequency of once in 25.',
   'home-insurance-adequacy-calculator':
     'Homeowners use it at renewal: sqft × rebuild cost sets Coverage A (market value is land plus mood), the 80% coinsurance rule turns underinsurance into pro-rata partial payouts, and a 2% wind deductible is $7,000 in real dollars.',
+  'term-life-ladder-calculator':
+    'Parents sizing coverage use it to stop overpaying the back half: a 10/20/30 ladder delivers the same $1.5M early protection as a flat 30-year policy but expires with the mortgage — $22,490 cheaper over three decades.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

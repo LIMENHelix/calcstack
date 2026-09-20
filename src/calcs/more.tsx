@@ -3424,6 +3424,56 @@ export function HomeCoverageCalc() {
   )
 }
 
+// TERM LIFE LADDER — needs shrink as the mortgage amortizes and kids launch; coverage should too. Illustrative healthy-35yo rates per $1,000/yr (clearly illustrative — real quotes vary 2x by carrier/class): 10yr $0.45, 20yr $0.60, 30yr $0.85. Node-verified on those rates: flat $1.5M 30yr = $1,275/yr → $38,250 over 30 yrs. Ladder $750k/10yr + $500k/20yr + $250k/30yr = $852/yr initial, and the policies expire on schedule → $15,760 total. Savings $22,490 for IDENTICAL coverage years 1–10 ($1.5M), deliberately reduced later ($750k yrs 11–20, $250k yrs 21–30) as obligations fall. The risk priced honestly: ladder legs can't be extended — if health changes or the obligation outlives the leg (special-needs child, late second mortgage), replacement coverage at older ages costs multiples. Insurability lock: buy slightly longer than needed if uncertainty is high.
+export function LifeLadderCalc() {
+  const [need10, setNeed10] = useNumber(1500) // total coverage needed yrs 1-10, in $k
+  const [need20, setNeed20] = useNumber(750)
+  const [need30, setNeed30] = useNumber(250)
+  const [r10, setR10] = useNumber(0.45)
+  const [r20, setR20] = useNumber(0.60)
+  const [r30, setR30] = useNumber(0.85)
+
+  const r = useMemo(() => {
+    // ladder legs: 10yr leg = need10 - need20; 20yr leg = need20 - need30; 30yr leg = need30
+    const leg10 = Math.max(0, need10 - need20)
+    const leg20 = Math.max(0, need20 - need30)
+    const leg30 = Math.max(0, need30)
+    const premLadder = leg10 * r10 + leg20 * r20 + leg30 * r30 // $/yr (rates are per $k per yr)
+    const totLadder = leg10 * r10 * 10 + leg20 * r20 * 20 + leg30 * r30 * 30
+    const premFlat = need10 * r30
+    const totFlat = premFlat * 30
+    const savings = totFlat - totLadder
+    return { leg10, leg20, leg30, premLadder, totLadder, premFlat, totFlat, savings }
+  }, [need10, need20, need30, r10, r20, r30])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Coverage needed years 1–10" value={need10} onChange={setNeed10} suffix="k" step="100" />
+          <Field label="Years 11–20 (mortgage shrinking, kids older)" value={need20} onChange={setNeed20} suffix="k" step="100" />
+          <Field label="Years 21–30 (final obligations)" value={need30} onChange={setNeed30} suffix="k" step="100" />
+          <Field label="10-yr rate per $1k/yr" value={r10} onChange={setR10} prefix="$" step="0.05" />
+          <Field label="20-yr rate per $1k/yr" value={r20} onChange={setR20} prefix="$" step="0.05" />
+          <Field label="30-yr rate per $1k/yr" value={r30} onChange={setR30} prefix="$" step="0.05" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Ladder legs" value={`${usd(r.leg10 * 1000)} / ${usd(r.leg20 * 1000)} / ${usd(r.leg30 * 1000)}`} />
+          <Result label="Year-1 premium: ladder vs flat" value={`${usd(r.premLadder)} vs ${usd(r.premFlat)}`} />
+          <Result label="30-yr total: ladder vs flat" value={`${usd(r.totLadder)} vs ${usd(r.totFlat)}`} />
+          <Result big label="Lifetime savings from laddering" value={usd(r.savings)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          The ladder buys {usd(r.leg10 * 1000)} (10-yr) + {usd(r.leg20 * 1000)} (20-yr) + {usd(r.leg30 * 1000)} (30-yr) — full {usd(need10 * 1000)} protection while the mortgage is fat and the kids are small, stepping down as obligations do. You keep {usd(r.savings)} that the flat 30-year policy would have consumed insuring obligations you no longer have.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The logic: life insurance replaces obligations — income during child-rearing, the mortgage balance, college. All three shrink with time, so a level 30-year policy for peak need overspends in the back half. The ladder matches coverage to the curve. Rates above are illustrative defaults for a healthy 35-year-old; real term quotes vary widely by carrier, health class, and smoking status — get real per-$1k rates from a broker or aggregator and enter them. The honest risks: ladder legs expire on schedule with no extension — if your health changes or an obligation outlives its leg (special-needs child, late refinance, second family), replacement coverage at older ages costs multiples of today's rates. Mitigations: round legs UP when uncertain, buy the longest leg slightly longer than planned, and confirm each policy's conversion option (term → permanent without new underwriting) as an escape hatch. Layer with employer coverage last — group term evaporates with the job. Estimates — real quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9057,6 +9107,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'umbrella-insurance-calculator': UmbrellaCalc,
   'drop-full-coverage-calculator': DropFullCoverageCalc,
   'home-insurance-adequacy-calculator': HomeCoverageCalc,
+  'term-life-ladder-calculator': LifeLadderCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
