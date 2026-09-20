@@ -7150,6 +7150,112 @@ export function RetainageCalc() {
   )
 }
 
+// JOB OVERHEAD (GCs) LOADING — node-verified defaults: supervision $2,000/wk + trailer & utilities $400 + fence/toilets $150 + insurance $250 = $2,800/wk × 16 weeks = $44,800 of general conditions on a $500,000 contract = 9.0% loading. The bid mistake: pricing GCs as a gut-feel percentage instead of weekly cost × actual schedule — a job that slips 4 weeks unpriced is $11,200 straight off margin.
+export function JobOverheadCalc() {
+  const [sup, setSup] = useNumber(2000)
+  const [trailer, setTrailer] = useNumber(400)
+  const [temp, setTemp] = useNumber(150)
+  const [ins, setIns] = useNumber(250)
+  const [wks, setWks] = useNumber(16)
+  const [contract, setContract] = useNumber(500000)
+
+  const r = useMemo(() => {
+    const wk = sup + trailer + temp + ins
+    const total = wk * wks
+    const pct = contract > 0 ? (total / contract) * 100 : 0
+    const slip4 = wk * 4
+    return { wk, total, pct, slip4 }
+  }, [sup, trailer, temp, ins, wks, contract])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Supervision" value={sup} onChange={setSup} prefix="$" suffix="/wk" step="100" />
+          <Field label="Trailer & utilities" value={trailer} onChange={setTrailer} prefix="$" suffix="/wk" step="50" />
+          <Field label="Fence, toilets, temp" value={temp} onChange={setTemp} prefix="$" suffix="/wk" step="25" />
+          <Field label="Insurance & permits" value={ins} onChange={setIns} prefix="$" suffix="/wk" step="50" />
+          <Field label="Schedule" value={wks} onChange={setWks} suffix="wks" step="1" />
+          <Field label="Contract value" value={contract} onChange={setContract} prefix="$" step="10000" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Weekly GCs" value={usd(Math.round(r.wk))} />
+          <Result label="Total job GCs" value={usd(Math.round(r.total))} big />
+          <Result label="% of contract" value={`${num(r.pct, 1)}%`} />
+          <Result label="Cost of a 4-wk slip" value={usd(Math.round(r.slip4))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`This job carries ${usd(Math.round(r.total))} of general conditions — ${num(r.pct, 1)}% of contract. Every unpriced week of schedule slip burns ${usd(Math.round(r.wk))}. Bid GCs as weekly cost × real duration, never as a leftover percentage.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: weekly GCs = supervision + trailer/utilities + temporary facilities + insurance/permits; total = weekly × weeks. Why weekly beats percentage: general conditions are TIME-driven, not value-driven — the superintendent and the trailer cost the same in a $400k week as a $40k week, so a gut-feel 7% under-prices long thin jobs and over-prices short fat ones. Build the weekly line from YOUR last three jobs: supervision (loaded — the super&apos;s wage plus burden), trailer/office, utilities, toilets/fence/signage, insurance (builder&apos;s risk, project-specific GL), permits and fees, small tools, safety program costs, and winter conditions where they apply. The schedule link: GCs make schedule slip a priced event — the 4-week number above is what an unpriced extension requests... which is exactly why change orders carry a GCs daily rate (the change-order calculator prices that) and why delay claims itemize this weekly figure. Overhead versus GCs: GCs are JOB costs (this project&apos;s trailer), company overhead is OFFICE costs (rent, admin, estimating) recovered through markup — mixing them under-prices both. Estimating rule: itemize GCs per job from the schedule, then sanity-check as a percentage against your historicals — the itemized number is the bid, the percentage is the check. Estimate — your schedule and your last jobs&apos; actuals govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// ESTIMATE CONTINGENCY — node-verified defaults: $480,000 estimate × design-stage contingency (schematic 25% / design development 15% / construction documents 8% known-site) = $120,000 / $72,000 / $38,400. Unknown site conditions add a tier. The honest purpose: contingency is uncertainty PRICED, not padding — it shrinks as information grows, and a bid with no contingency line is an estimate that claims certainty it does not have.
+export function EstimateContingencyCalc() {
+  const [est, setEst] = useNumber(480000)
+  const [stage, setStage] = useState('dd')
+  const [site, setSite] = useState('known')
+  const [market, setMarket] = useState('stable')
+
+  const r = useMemo(() => {
+    const stagePct = stage === 'schematic' ? 25 : stage === 'dd' ? 15 : 8
+    const sitePct = site === 'unknown' ? 5 : 0
+    const mktPct = market === 'volatile' ? 4 : 0
+    const pct = stagePct + sitePct + mktPct
+    const cont = est * (pct / 100)
+    const total = est + cont
+    return { pct, cont, total }
+  }, [est, stage, site, market])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Base estimate" value={est} onChange={setEst} prefix="$" step="10000" />
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Design stage</label>
+            <select value={stage} onChange={(e) => setStage(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="schematic">Schematic (~25%)</option>
+              <option value="dd">Design development (~15%)</option>
+              <option value="cd">Construction docs (~8%)</option>
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Site conditions</label>
+            <select value={site} onChange={(e) => setSite(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="known">Known / new build (+0%)</option>
+              <option value="unknown">Unknown / renovation (+5%)</option>
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Market volatility</label>
+            <select value={market} onChange={(e) => setMarket(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="stable">Stable (+0%)</option>
+              <option value="volatile">Volatile materials (+4%)</option>
+            </select>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Recommended contingency" value={`${num(r.pct, 0)}%`} />
+          <Result label="Contingency dollars" value={usd(Math.round(r.cont))} big />
+          <Result label="Total to carry" value={usd(Math.round(r.total))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`At ${num(r.pct, 0)}%, carry ${usd(Math.round(r.cont))} of contingency on the ${usd(Math.round(est))} estimate — ${usd(Math.round(r.total))} total. Contingency shrinks as information grows: the same project drops from 25% at schematic to 8% at construction documents. An estimate without it claims certainty it does not have.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: contingency = base × (design-stage % + site % + market %). Anchors from standard estimating practice: schematic 20–30%, design development 12–18%, construction documents 5–10% — plus tiers for unknown site conditions (renovation, demolition, concealed utilities) and volatile material markets. The discipline that separates contingency from padding: it is drawn against IDENTIFIED uncertainty — an allowance schedule listing what it covers (design incompleteness, quantity risk, price risk) — and it is drawn DOWN as the project buys certainty; padding is a secret percentage applied everywhere and examined nowhere. Owner-side view: the owner carries their OWN contingency (separate from the contractor&apos;s) for scope changes and soft-cost surprises — 5–10% on new build, 10–20% on renovation — and a project where both sides carry honest contingencies finishes without the funding crisis. Escalation is a separate line in volatile markets: material escalation clauses (price at time of purchase, with index documentation) are fairer than burying a guess in contingency. Track accuracy: compare contingency carried versus consumed on every closed job — your own history calibrates these percentages better than any table. Estimate — your design documents and closed-job history govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12859,6 +12965,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'change-order-calculator': ChangeOrderCalc,
   'sub-vs-in-house-calculator': SubVsInHouseCalc,
   'retainage-calculator': RetainageCalc,
+  'job-overhead-calculator': JobOverheadCalc,
+  'estimate-contingency-calculator': EstimateContingencyCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 380 calculators live (606 indexed pages). See LAUNCH.md for the domain-day
+**Status: 392 calculators live (618 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -618,3 +618,35 @@ HR and people-ops newsletters, negotiation-content creators.
 - **Backlist ride-alongs** — salary-offer comparison, raise-worth, 1099-vs-W2,
   startup offer, job-hop. Career cluster now covers the full arc: offer →
   negotiate → stay/go → exit → break.
+
+## Wave 64 — Contractor business operations (#381–#392, milestone wave)
+
+Milestone wave: 392 calculators live. The business-of-construction suite:
+pricing discipline, cash flow, insurance, and estimating. Audiences: contractor
+forums (Contractor Talk, Electrician Talk), construction-business podcasts and
+newsletters (The Contractor Fight, ConExpo content), trade-association
+newsletters, estimating software blogs, small-business finance outlets,
+r/Construction and r/smallbusiness wikis.
+
+- **Discount leverage (#381)** — "make it up on volume" debunked with the
+  breakeven-volume formula; the sales-vs-margin tension is universal content.
+- **Payment terms APR (#382)** — 2/10 net 30 = 36.5% translation; AP/AR and
+  bookkeeping communities will cite it.
+- **Price raise churn math (#383)** — "the churn you get is the churn you
+  wanted"; the raise-letter timing makes it evergreen seasonal (Jan raises).
+- **SaaS creep (#384)** — shelfware audit; ops/office-manager crossover beyond
+  construction.
+- **Workers comp premium (#385)** + **EMR impact (#386)** — the mod as a
+  three-year shadow; safety-program ROI framing for trade associations.
+- **Crew downtime (#387)** — "45 idle minutes = a full salary" is the headline;
+  lean-construction and field-management audiences.
+- **Change order pricing (#388)** — GCs-per-day on time extensions; both
+  contractor AND owner audiences (each side cites it against the other).
+- **Sub vs in-house (#389)** — opportunity-cost framing; GC scaling content.
+- **Retainage (#390)** — "83% of your profit sits in escrow" hook; prompt-
+  payment statute angle makes it shareable in trade media.
+- **Job overhead / GCs (#391)** + **estimate contingency (#392)** — estimating-
+  discipline pair; preconstruction and estimator communities.
+- **Backlist ride-alongs** — labor burden, job costing, equipment hourly cost,
+  bid win rate, overtime-vs-hire, service-call fee. The trade cluster now runs
+  estimate → bid → build → bill → insure end to end.

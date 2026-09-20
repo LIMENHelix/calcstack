@@ -54,15 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          380 calculators and counting. Newest: the career negotiation suite —
-          counteroffer expected value with rescind risk priced, non-compete
-          clauses converted to a signing premium, relocation packages after tax,
-          the true cost of a career break, bonus-vs-base compounding, and the
-          tuition-benefit stay clause.
+          390 calculators and counting. Newest: the contractor business suite —
+          pricing discounts against margin, payment terms as APR, raising prices
+          with breakeven churn, the SaaS audit, workers comp and the experience
+          mod, crew downtime annualized, change orders, retainage, and
+          estimating GCs and contingency honestly.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['counteroffer-ev-calculator', 'non-compete-cost-calculator', 'relocation-package-calculator', 'career-break-calculator', 'signing-bonus-vs-salary-calculator', 'tuition-reimbursement-calculator'].includes(c.slug),
+            ['discount-leverage-calculator', 'price-raise-calculator', 'workers-comp-calculator', 'crew-downtime-calculator', 'change-order-calculator', 'retainage-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

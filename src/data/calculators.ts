@@ -3223,6 +3223,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'job-overhead-calculator',
+    title: 'Job Overhead (General Conditions) Calculator — Weekly GCs × Schedule, Bid Loading Done Right',
+    shortTitle: 'Job Overhead / GCs',
+    category: 'Trades & Engineering',
+    description:
+      'Price general conditions as weekly cost times schedule — supervision, trailer, temporary facilities, insurance — instead of a gut-feel percentage, and see what every unpriced week of slip costs.',
+    tagline: '$2,800/wk × 16 weeks = $44,800 of GCs on a $500k job — 9.0%. GCs are time-driven, not value-driven: a gut-feel percentage under-prices every long thin job.',
+    intro:
+      'General conditions are the bid line contractors feel instead of measure. The honest build: supervision $2,000/wk loaded, trailer and utilities $400, fence and toilets $150, insurance $250 — $2,800 per week, times 16 weeks, equals $44,800 on a $500,000 contract: 9.0%, not the 7% the gut said. And because GCs run on the calendar, schedule slip is a priced event — four unpriced weeks is $11,200 straight off margin. This calculator builds the weekly rate from your actuals and loads the bid with it — the same weekly figure your change orders and delay claims should be quoting.',
+    howItWorks: [
+      'Enter weekly supervision cost — loaded, not wage (burden included).',
+      'Enter trailer/office and utilities per week.',
+      'Enter temporary facilities (fence, toilets, signage) and insurance/permits per week.',
+      'Enter the schedule duration and contract value.',
+      'Read weekly GCs, total loading, and the cost of a 4-week slip.',
+    ],
+    faq: [
+      {
+        q: 'What belongs in general conditions versus company overhead?',
+        a: 'The split that under-prices both when mixed: GCs are JOB costs — things that exist because THIS project exists: the superintendent and their truck, the job trailer and its utilities, temporary fence/toilets/power, project-specific insurance (builder\'s risk, project GL), permits and fees, small tools and consumables, job-specific safety program costs, winter conditions, cleanup labor. Company overhead is OFFICE costs — things that exist whether or not this job does: rent, admin staff, estimating, software, the owner\'s salary, marketing — recovered through the markup on the whole bid. The test: "does this cost disappear the day this job ends?" Yes → GCs. No → overhead. The common leaks: the super\'s loaded wage (burden adds 30–50% — the labor-burden calculator builds it), insurance riders bought per project, and the pickup truck that is half job-cost half company. Get the split right and both numbers become auditable: GCs per week from job records, overhead rate from the P&L. Mixing them is how a contractor "wins" bids that lose money.',
+      },
+      {
+        q: 'Why bid GCs weekly instead of as a percentage?',
+        a: 'Because GCs run on the calendar, not the ledger — supervision and the trailer cost the same in a $40,000 production week as a $400,000 one. A flat percentage therefore misprices every job that is not average: long, thin jobs (extended schedule, modest monthly billings) get under-priced — the percentage was tuned on faster jobs and the extra weeks eat the margin; short, fat jobs get over-priced — which loses bids you should win. The weekly build also makes slip a number: when the schedule extends four weeks, the cost is weekly GCs × 4 — knowable in advance, claimable with documentation, and the exact daily/weekly figure that belongs in change-order pricing (the change-order calculator applies it) and in any delay claim. The calibration loop: after each job closes, divide actual GCs by actual weeks and compare to the bid rate — two or three closed jobs tune your weekly number to reality. The percentage check still has a role: divide the itemized total by contract value and compare against your historical range — if itemized says 9% and history says 6–7%, either the schedule is optimistic or a line is padded. Itemized for the bid, percentage for the sanity check.',
+      },
+      {
+        q: 'How do GCs interact with change orders and delay claims?',
+        a: 'They are the whole claim — which is why the weekly number must exist before you need it. Change orders with time impact: every added day of schedule carries the daily GCs rate (weekly ÷ working days); the change-order calculator builds the price as direct cost plus OH&P plus extension days × GCs rate — owners instinctively treat time as free, and the itemized weekly build is the evidence it is not. Delay claims: when the owner or another party delays the job, the compensable damage is extended GCs — your trailer, your supervision, your insurance running extra weeks — and claims live or die on whether you can document the weekly rate from job records rather than reconstructing it for litigation. The contractual protections: a defined GCs rate or schedule in the base contract (negotiated when everyone is friendly), written time-impact statements on every change order (even "zero days," so float erosion cannot be relitigated), and contemporaneous records — daily reports and cost records kept DURING the job, not assembled after. Contractors who can produce the weekly number from job costs settle delays at the table; contractors who reconstruct it settle at a discount. This calculator builds the number; the field records defend it.',
+      },
+    ],
+  },
+  {
+    slug: 'estimate-contingency-calculator',
+    title: 'Estimate Contingency Calculator — How Much to Carry by Design Stage, Site Risk, and Market',
+    shortTitle: 'Estimate Contingency',
+    category: 'Trades & Engineering',
+    description:
+      'Size estimate contingency honestly — design-stage percentages from schematic (25%) to construction documents (8%), plus site-unknown and market-volatility tiers — and why contingency is uncertainty priced, not padding.',
+    tagline: 'The same $480k project carries $120,000 of contingency at schematic and $38,400 at construction documents. Contingency shrinks as information grows — no line at all claims certainty you do not have.',
+    intro:
+      'Contingency is the most misunderstood line in estimating — treated as padding to hide or profit to harvest, when it is actually uncertainty priced. The discipline: contingency tracks information. At schematic, a $480,000 estimate carries 25% ($120,000); at design development, 15% ($72,000); at complete construction documents on a known site, 8% ($38,400) — with tiers added for unknown site conditions and volatile material markets. An estimate with no contingency line is not aggressive, it is claiming certainty the documents do not support. This calculator sizes the line by stage and risk — and the FAQ covers how to draw it down honestly.',
+    howItWorks: [
+      'Enter the base estimate.',
+      'Select the design stage — the dominant driver of uncertainty.',
+      'Select site conditions — renovation and concealed conditions add a tier.',
+      'Select market volatility — materials-price risk adds a tier in unstable markets.',
+      'Read the recommended percentage, the dollars, and the total to carry.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between contingency, allowances, and escalation?',
+        a: 'Three different lines covering three different unknowns, and conflating them is how estimates go soft. Contingency covers UNCERTAINTY in what is being built — design incompleteness, quantity risk, coordination gaps between trades; it shrinks as documents improve, which is the entire logic of the staged percentages. Allowances cover KNOWN items with unknown selections — the owner has not picked the tile, so the estimate carries $8/sqft for tile; allowances are placeholders for decisions, listed item by item with the unit basis written down, and they reconcile to actual selections by change order. Escalation covers TIME — material and labor price movement between estimate day and purchase day; in stable markets it is a small percentage, in volatile ones (lumber 2021, copper, switchgear lead times) it deserves its own clause: price-at-time-of-purchase with index documentation is fairer to both sides than burying a guess in contingency. The owner-side mirror: owners carry their OWN contingency (5–10% new build, 10–20% renovation) for scope changes and soft costs — separate from the contractor\'s — and projects where only one side carries contingency end in the funding crisis the other side predicted. Label all three lines separately in the estimate; the transparency is what makes the number defensible at review.',
+      },
+      {
+        q: 'How do I defend contingency to an owner who wants it cut?',
+        a: 'With the drawdown schedule and the allowance schedule — transparency is the defense. The argument that works: contingency is not a margin line, it is an uncertainty line, and it comes with a written management plan — it is drawn against identified risks (list them: design completeness at the current stage, site unknowns, long-lead price risk), it is tracked separately in job cost, and unspent contingency returns to the owner or rolls forward by agreement. The reframe that lands: cutting contingency does not remove the risk, it removes the budget for the risk — the unknowns remain, and they will surface as change orders at worse pricing with worse timing and worse feelings. Owners have lived this: the project that cut contingency to hit a number and then exceeded it in change orders is a universal story. The collaborative structure: shared savings clauses (unspent contingency splits 50/50) align incentives — the contractor is not tempted to spend it, the owner recovers the residue. What to watch from the other side: contingency as hidden profit — a contractor whose contingency is never reported, never reconciled, and always fully consumed is billing the line, not managing it; monthly contingency-versus-consumed reporting (the owner can ask for this) keeps the line honest. And calibrate from history: your own closed jobs — contingency carried versus consumed, by project type — are a better table than any industry percentage.',
+      },
+      {
+        q: 'How does contingency work differently on renovations?',
+        a: 'Renovation is the site-unknowns tier in this calculator for a reason: the building is concealing its conditions until demolition, and no document set fixes that. The specific unknowns: concealed utilities that are not where the as-builts swore (as-builts lie — they document intent, not reality), structural surprises (the beam that is not sized as drawn, the slab that is thinner), hazardous materials (asbestos and lead in pre-1980 buildings — testing BEFORE the estimate converts the biggest unknown into a priced line), code-triggered scope (opening walls triggers insulation, accessibility, and fire-alarm upgrades the program never wanted), and occupied-building logistics (night work, phasing, protection — productivity penalties that belong in the base, not contingency). The practices that shrink renovation contingency honestly: selective demolition and investigation BEFORE final pricing (open the ceiling, scan the slab, test the materials — $5–15k of pre-construction investigation routinely removes $50k+ of contingency), unit prices pre-agreed for the predictable unknowns (per yard of unsuitable soil, per square foot of unforeseen repair), and a clear allowance/contingency split so the owner sees which unknowns are priced and which are budgeted. The honest number: renovation contingency at 10–20% even with good documents is not conservatism — it is actuarial reality, and the contractors who carry it finish with the owner relationship intact.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

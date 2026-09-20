@@ -209,6 +209,10 @@ export const WHY_USE: Record<string, string> = {
     'GCs use it before self-performing: the $85k sub quote vs $67,100 in-house looks like $18k saved — until the crew\'s 3 weeks of lost billing make it $4,400. Idle crews flip it back.',
   'retainage-calculator':
     'Contractors use it before signing: 10% retainage on a $500k job at 12% margin holds 83% of the entire profit in escrow — the punch list is a cash-flow document, and closeout speed is profit collection.',
+  'job-overhead-calculator':
+    'Estimators use it before bidding: $2,800/wk × 16 weeks is $44,800 of GCs (9% of contract) — GCs run on the calendar, so a gut-feel percentage under-prices every long thin job and every week of slip.',
+  'estimate-contingency-calculator':
+    'Estimators use it before the review: the same $480k project carries $120k of contingency at schematic and $38k at construction documents — contingency is uncertainty priced, and it shrinks as information grows.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
