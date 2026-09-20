@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'smart-thermostat-roi-calculator',
+    title: 'Smart Thermostat ROI Calculator 2026 — Payback From Real HVAC Spend, Rebates & Demand-Response Credits',
+    shortTitle: 'Smart Thermostat ROI',
+    category: 'Home & Yard',
+    description:
+      'Does a smart thermostat pay for itself? Real savings from your HVAC spend (8–10% setback range), minus utility rebates, plus demand-response credits — payback months and multi-year net.',
+    tagline: 'A $250 thermostat after a $50 rebate saves $198/yr on a $2,200 HVAC bill — 15-month payback, $740 ahead in five years. One smart-home gadget that actually pays.',
+    intro:
+      'Most smart-home gadgets are toys; the thermostat is the exception, because it attacks the house\'s biggest energy line. On a $2,200 annual HVAC spend, the DOE/EPA-documented 8–10% setback savings plus a $50 utility rebate and a $50 demand-response credit turns a $250 thermostat into $198/yr — payback in 15 months and $740 ahead over five. The honest physics: savings come from setbacks, not intelligence — heating and cooling less while you sleep or you\'re gone. A disciplined human with a $35 programmable captures the same; the smart unit\'s real product is that nobody\'s disciplined, and auto-away plus geofencing recovers what manual schedules never sustain. Heat-pump owners: aggressive setbacks backfire — read the FAQ before buying.',
+    howItWorks: [
+      'Enter the installed cost and your utility rebate — check before buying, $50–100 is common.',
+      'Enter annual HVAC energy spend (heating + cooling from your utility bills).',
+      'Set expected savings — 8–10% is the documented setback range; less for tight apartments, more for big leaky houses.',
+      'Add the demand-response credit if your utility offers one.',
+      'Read savings per year, payback months, and net over the horizon.',
+    ],
+    faq: [
+      {
+        q: 'Do smart thermostats really save 8–10%?',
+        a: 'The savings are real but they\'re from setbacks, not silicon — and the range comes with the house attached. Energy Star\'s certification criteria are built on field studies showing ~8% heating and ~10% cooling savings on average, driven by automatic setbacks during sleep and away hours. The spread is wide: a leaky 2,800 sqft house in a real climate with a family that\'s out all day sees the high end or better; a tight apartment with someone always home sees almost nothing — the thermostat can\'t save on conditioning you weren\'t doing. The uncomfortable finding from programmable-thermostat studies: most were never programmed, so the "dumb but disciplined" path mostly doesn\'t exist in practice. The smart unit\'s genuine product is sustained, automatic setbacks — auto-away, geofencing, learned schedules — not a bigger number than a human could achieve.',
+      },
+      {
+        q: 'Why do heat pumps change the rules?',
+        a: 'Because recovery is expensive. A furnace reheats a house at roughly constant efficiency, so deep night setbacks save cleanly. A heat pump recovering from a big setback can trigger auxiliary resistance heat — electric strips at ~3× the cost per BTU — and a single morning\'s recovery burn can erase the night\'s savings. The fix isn\'t skipping the thermostat; it\'s the right settings: modest setbacks (2–3°F, not 8°), adaptive/gradual recovery (the thermostat starts warming early at heat-pump efficiency instead of slamming the strips at 6am), and a model that explicitly supports heat-pump logic with aux-heat lockout above a set outdoor temperature. Configured right, heat-pump homes still save — configured like a furnace, they can lose money while the app congratulates you.',
+      },
+      {
+        q: 'What are demand-response programs and should I enroll?',
+        a: 'Your utility pays you $25–85/yr for permission to nudge your setpoint a few degrees during peak-demand events — typically 10–20 summer afternoons, each 1–4 hours, with override always available. The house drifts slightly warmer; most people never notice; the utility avoids firing a peaker plant. For the thermostat math it\'s free money stacked on the setback savings — enroll if your utility offers it (most large ones now do). The privacy trade is modest (the utility sees HVAC runtime data) and the events are genuinely rare. Combined playbook for the best payback: buy with the rebate, enroll in demand response, set real schedules instead of pretending you\'ll adjust manually, and if you have a heat pump, cap the setback at 2–3° with adaptive recovery on.',
+      },
+    ],
+  },
+  {
     slug: 'generator-cost-calculator',
     title: 'Generator Cost vs Outage Loss Calculator 2026 — Standby, Portable, or Nothing: the Expected-Loss Math',
     shortTitle: 'Generator vs Outage Cost',

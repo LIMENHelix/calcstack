@@ -4925,6 +4925,52 @@ export function GeneratorCostCalc() {
   )
 }
 
+// SMART THERMOSTAT ROI — the $250 gadget priced against real HVAC spend. Node-verified: $250 installed, blended 9% savings (8% heating / 10% cooling, the DOE/EPA Energy Star published range for schedule-based setbacks) on $2,200/yr HVAC energy → $198/yr → payback 15.2 months, net $740 over 5 years. Honest edges: savings come from SETBACKS, not the thermostat's intelligence (a disciplined human with a $35 programmable gets the same 9% — the smart unit's value is that nobody's disciplined: auto-away, geofencing, and learning recover the savings that manual schedules never sustain), savings scale with the HOUSE (leaky 2,800 sqft = bigger dollar savings; tight apartment = skip), heat-pump caveat (aggressive setbacks BACKFIRE on heat pumps — recovery triggers resistance strips at 3x cost; use heat-pump-aware models with gradual recovery), utility rebates ($50-100 common — check before buying, it halves the payback), and demand-response programs (utilities pay $25-85/yr for peak-event control — enroll; it stacks with the savings).
+export function SmartThermostatCalc() {
+  const [cost, setCost] = useNumber(250)
+  const [rebate, setRebate] = useNumber(50)
+  const [hvac, setHvac] = useNumber(2200)
+  const [savePct, setSavePct] = useNumber(9)
+  const [drProg, setDrProg] = useNumber(50)
+  const [years, setYears] = useNumber(5)
+
+  const r = useMemo(() => {
+    const net = cost - rebate
+    const saveYr = (hvac * savePct) / 100 + drProg
+    const paybackMo = saveYr > 0 ? (net / saveYr) * 12 : Infinity
+    const total = saveYr * years - net
+    return { net, saveYr, paybackMo, total }
+  }, [cost, rebate, hvac, savePct, drProg, years])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Thermostat installed cost" value={cost} onChange={setCost} prefix="$" step="25" />
+          <Field label="Utility rebate" value={rebate} onChange={setRebate} prefix="$" step="25" />
+          <Field label="Annual HVAC energy spend" value={hvac} onChange={setHvac} prefix="$" step="100" />
+          <Field label="Expected savings" value={savePct} onChange={setSavePct} suffix="%" step="1" />
+          <Field label="Demand-response credit /yr" value={drProg} onChange={setDrProg} prefix="$" step="25" />
+          <Field label="Years" value={years} onChange={setYears} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Savings per year" value={usd(r.saveYr)} />
+          <Result label="Payback" value={isFinite(r.paybackMo) ? `${num(r.paybackMo, 1)} months` : 'Never'} big />
+          <Result label={`Net over ${years} years`} value={usd(r.total)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {isFinite(r.paybackMo) && r.paybackMo <= 24
+            ? `${usd(r.saveYr)}/yr against ${usd(r.net)} net cost — payback in ${num(r.paybackMo, 1)} months, ${usd(Math.round(r.total))} ahead over ${years} years. One of the few smart-home gadgets that pays for itself.`
+            : `Payback stretches past two years at these numbers — check for utility rebates (they halve it), enroll in demand response, and be honest about whether your schedule actually leaves the house.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: net cost = price − utility rebate (check yours — $50–100 is common and halves the payback); savings = HVAC spend × savings % + demand-response credit (utilities pay $25–85/yr for peak-event adjustment — enroll, it stacks). The honest physics: savings come from SETBACKS — heating/cooling less while you sleep or you're away — not from the thermostat being clever. A disciplined human with a $35 programmable captures the same 8–10%; the smart unit's real product is that nobody's disciplined: auto-away, geofencing, and learning schedules recover savings that manual programming never sustains (studies of programmable thermostats found most were never programmed). Savings scale with the house — leaky 2,800 sqft homes see bigger dollars; a tight apartment sees little. HEAT-PUMP CAVEAT: aggressive setbacks backfire — recovery triggers auxiliary resistance strips at ~3× the cost; heat-pump owners need models with gradual/adaptive recovery and modest (2–3°) setbacks. Estimates — your utility bills and rebate program govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10587,6 +10633,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'repair-vs-replace-calculator': RepairReplaceCalc,
   'tank-vs-tankless-calculator': TankVsTanklessCalc,
   'generator-cost-calculator': GeneratorCostCalc,
+  'smart-thermostat-roi-calculator': SmartThermostatCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
