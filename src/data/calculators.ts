@@ -3910,6 +3910,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'staffing-agency-markup-calculator',
+    title: 'Staffing Agency Markup Calculator — Bill Rate, Burden, and Margin per Head',
+    shortTitle: 'Staffing Markup',
+    category: 'Freelance & Career',
+    description: 'Price staffing placements correctly: pay rate plus statutory burden is your true cost, bill rate minus cost is gross margin. See markup vs margin and monthly margin per filled position.',
+    tagline: 'A 40% markup is only an 18% margin. Know which one you are quoting.',
+    intro: 'A $20/hr worker costs you $23 after FICA, SUTA, and comp — bill them at $28 and the $5 gap is 17.9% margin, not the 40% markup your sales deck says. This calculator separates markup from margin, prices the burden honestly, and scales the result to monthly margin per filled head.',
+    howItWorks: [
+      'Enter the worker\'s pay rate.',
+      'Add your statutory burden — employer FICA 7.65%, SUTA, workers\' comp, plus any benefits load.',
+      'Set the bill rate you are quoting the client.',
+      'Add filled positions to scale margin to a monthly book.',
+      'Read true cost, markup, margin, and monthly gross margin — run the business on the last two.',
+    ],
+    faq: [
+      {
+        q: 'What markup should a staffing agency charge?',
+        a: 'The industry band for light industrial and clerical staffing is a 35–55% markup on pay rate, which translates to a 15–25% gross margin after burden — the calculator shows both conversions because confusing them is how agencies go broke profitable. Skilled and professional staffing (IT, nursing, engineering) runs 60–75% markups because recruiting cost per placement is higher. The honest floor: your burden (typically 12–20% with comp) plus recruiting cost per hour plus overhead per hour plus profit target. If a client negotiates the bill rate down $1, that dollar comes straight out of margin — a $27 bill rate at $23 cost is a 14.8% margin, and at volume that $1 is $160,000 a year per 100 heads.',
+      },
+      {
+        q: 'What is included in the staffing burden rate?',
+        a: 'Everything you pay on top of the worker\'s wage: employer-side FICA at 7.65%, FUTA (effectively 0.6% on the first $7,000), SUTA (varies by state and your experience rating — 1–6%), workers\' compensation (2–15% depending on job class — light industrial runs 5–8%, clerical under 1%), plus any benefits, PTO, or ACA health contributions you carry. A clean burden estimate for light industrial is 15–20%; clerical can run 12–14%. Get your actual comp mod rate from your carrier — a 1.3 experience mod on a high-risk class can push burden past 25% and quietly erase margin on every legacy contract priced at the old rate.',
+      },
+      {
+        q: 'How much profit does a staffing agency make per employee?',
+        a: 'At a $5/hour gross margin, one filled W-2 temp position working full-time generates about $800/month or $10,400/year of gross margin — the monthly figure this calculator shows per head. Net profit is what remains after recruiter salaries, ATS/software, office, and bad debt (clients who pay in 60–90 days mean you float payroll — a real financing cost of 1–2% of revenue). Well-run agencies net 4–8% of revenue; the model only works at scale, which is why the per-head math matters more than the percentage. Ten heads at $800 is a side business; a hundred heads at $800 is an $80,000/month gross margin engine.',
+      },
+    ],
+  },
+  {
+    slug: 'rpe-to-load-calculator',
+    title: 'RPE to Load Calculator — Tuchscherer Chart for Working Weights',
+    shortTitle: 'RPE to Load',
+    category: 'Fitness & Sports',
+    description: 'Convert RPE and target reps into a working weight using the Tuchscherer/RTS percentage chart. Half-RPE steps interpolated, loads rounded to the nearest 5 lbs.',
+    tagline: 'RPE 8 at 5 reps is 81.1% — the chart knows, now so do you.',
+    intro: 'Autoregulation only works if the conversion is instant: an estimated 405 lb 1RM and a target of RPE 8 × 5 means 330 on the bar — 81.1% per the Tuchscherer chart. This calculator reads the chart for you, interpolates half-RPE steps, and rounds to plate-friendly numbers.',
+    howItWorks: [
+      'Enter your estimated 1RM for the lift — from a recent single or a rep-max calculator.',
+      'Set the prescribed reps.',
+      'Set the prescribed RPE — half steps allowed.',
+      'The tool reads the Tuchscherer/RTS percentage for that rep-RPE cell.',
+      'Load the rounded working weight; the exact figure is shown for kilogram plates.',
+    ],
+    faq: [
+      {
+        q: 'What does RPE 8 actually mean in the gym?',
+        a: 'RPE 8 means you finish the set with exactly 2 reps left in the tank — "reps in reserve" is the operational definition that made RPE useful for lifting. The Tuchscherer chart converts that to a percentage: RPE 8 × 5 reps is 81.1% of 1RM, because a true 5-rep max (RPE 10) is 86.3%, and each rep in reserve shifts the cell one column. The calibration trick every lifter should steal: periodically take a warm-up set to true failure and compare actual reps against predicted — if RPE 8 × 5 keeps producing 7 reps, your RPE 8 is really RPE 7.5 and the chart self-corrects within a few sessions.',
+      },
+      {
+        q: 'Is RPE better than percentage-based programming?',
+        a: 'They are the same system viewed from opposite directions — RPE IS percentages, adjusted for the day. Percentage programs assume your 1RM is fixed; RPE admits it moves ±5% with sleep, stress, nutrition, and accumulated fatigue. On a good day RPE 8 puts more weight on the bar than the spreadsheet would; on a bad day it protects the session. The research and two decades of RTS practice show autoregulated loads match or beat fixed-percentage programs for strength outcomes, mainly because they eliminate both junk-too-light days and grind-to-failure days. The honest answer: use percentages to plan the block, RPE to run the session.',
+      },
+      {
+        q: 'Why does the calculator say "off chart" for some combinations?',
+        a: 'The Tuchscherer chart bottoms out around 60% — below that, reps-to-failure stops mapping cleanly to percentage because endurance, fiber type, and technique efficiency dominate. A request like RPE 6 at 12 reps implies a load where individual variation swamps the table, so the honest answer is "unmapped" rather than a fake-precise number. If you need sub-60% work (deloads, speed work), program it by percentage directly or by velocity instead. The chart\'s useful range is roughly RPE 6.5–10 across 1–10 reps — inside that band it is the most battle-tested conversion in strength training.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

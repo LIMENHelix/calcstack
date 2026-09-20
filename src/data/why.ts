@@ -253,6 +253,10 @@ export const WHY_USE: Record<string, string> = {
     'Athletes use it the week it matters: Bompa\'s descent turns a 10-hour week into 6, then 4 — intensity held, fatigue gone, race day at the bottom.',
   'christmas-light-install-pricing-calculator':
     'Installers use it to price the season: 120 ft at $5.50 is a $760 job, and 3 jobs a day for 45 days is a $102,600 six-week sprint.',
+  'staffing-agency-markup-calculator':
+    'Agency owners use it before quoting: $20 pay + 15% burden is $23 cost — a $28 bill is 17.9% margin, $800/mo per head, and markup talk hides it.',
+  'rpe-to-load-calculator':
+    'Lifters use it at the rack: RPE 8 × 5 on a 405 e1RM is 330 on the bar — the Tuchscherer chart, half-steps interpolated, plates rounded.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

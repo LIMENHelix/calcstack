@@ -2459,3 +2459,68 @@ export function ChristmasLightsCalc() {
     </CardContent></Card>
   )
 }
+// STAFFING AGENCY MARKUP — node-verified defaults: $20/hr pay rate + 15% statutory burden (FICA 7.65%, SUTA, comp) = $23.00 cost. Bill at $28/hr → $5.00/hr gross margin = 17.9% of bill rate = 40% markup on pay → $800/month per filled head. Agencies die confusing markup with margin — this shows both.
+export function StaffingMarkupCalc() {
+  const [pay, setPay] = useNumber(20)
+  const [burden, setBurden] = useNumber(15)
+  const [bill, setBill] = useNumber(28)
+  const [heads, setHeads] = useNumber(12)
+  const r = useMemo(() => {
+    const cost = pay * (1 + burden / 100)
+    const gm = bill - cost
+    const marginPct = bill > 0 ? (gm / bill) * 100 : 0
+    const markupPct = pay > 0 ? (bill / pay - 1) * 100 : 0
+    return { cost, gm, marginPct, markupPct, monthly: gm * 160 * heads }
+  }, [pay, burden, bill, heads])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Pay rate to worker" value={pay} onChange={setPay} prefix="$" suffix="/hr" step="0.5" />
+        <Field label="Statutory burden (FICA, SUTA, comp)" value={burden} onChange={setBurden} suffix="%" step="0.5" />
+        <Field label="Bill rate to client" value={bill} onChange={setBill} prefix="$" suffix="/hr" step="0.5" />
+        <Field label="Filled positions" value={heads} onChange={setHeads} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Gross margin per hour" value={usd(r.gm)} big />
+        <Result label="Monthly gross margin" value={usd(r.monthly)} big />
+        <Result label="True cost per hour" value={usd(r.cost)} />
+        <Result label="Margin (% of bill rate)" value={`${num(r.marginPct, 1)}%`} />
+        <Result label="Markup (% of pay rate)" value={`${num(r.markupPct, 0)}%`} />
+      </div>
+      <p className="text-xs text-muted-foreground">Markup is on pay rate; margin is on bill rate. A 40% markup is only an 18–22% margin once burden lands — quote clients the bill rate, run the business on margin.</p>
+    </CardContent></Card>
+  )
+}
+
+// RPE TO LOAD — node-verified defaults (Tuchscherer/RTS chart): e1RM 405 lbs, target RPE 8 × 5 reps → chart % = 81.1% → 328.5 lbs → rounded 330. The chart reads "reps from failure": RPE 8 at 5 reps equals the % for 7 reps to failure.
+export function RpeLoadCalc() {
+  const [e1rm, setE1rm] = useNumber(405)
+  const [reps, setReps] = useNumber(5)
+  const [rpe, setRpe] = useNumber(8)
+  const BASE_PCT = [100, 95.5, 92.2, 89.2, 86.3, 83.7, 81.1, 78.6, 76.2, 73.9, 70.7, 68.0, 65.3, 62.6, 59.9]
+  const r = useMemo(() => {
+    const idx = Math.round(reps) - 1 + (10 - rpe)
+    if (idx < 0 || idx > BASE_PCT.length - 1) return { pct: NaN, raw: NaN, rounded: NaN }
+    const lo = Math.floor(idx)
+    const hi = Math.ceil(idx)
+    const pct = BASE_PCT[lo] + (BASE_PCT[hi] - BASE_PCT[lo]) * (idx - lo)
+    const raw = (e1rm * pct) / 100
+    const rounded = Math.round(raw / 5) * 5
+    return { pct, raw, rounded }
+  }, [e1rm, reps, rpe])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Estimated 1RM" value={e1rm} onChange={setE1rm} suffix="lbs" />
+        <Field label="Target reps" value={reps} onChange={setReps} />
+        <Field label="Target RPE" value={rpe} onChange={setRpe} step="0.5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Working weight" value={isNaN(r.rounded) ? 'off chart' : `${num(r.rounded, 0)} lbs`} big />
+        <Result label="Chart percentage" value={isNaN(r.pct) ? '—' : `${num(r.pct, 1)}%`} />
+        <Result label="Exact (unrounded)" value={isNaN(r.raw) ? '—' : `${num(r.raw, 1)} lbs`} />
+      </div>
+      <p className="text-xs text-muted-foreground">Tuchscherer/RTS chart for whole and half RPE steps. If the result says "off chart", the combo is too light to map reliably — below ~60% the RPE scale loses resolution.</p>
+    </CardContent></Card>
+  )
+}
