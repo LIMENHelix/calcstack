@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'welding-fabrication-pricing-calculator':
+    'Fabricators use it before quoting custom work: the gate costs $735 to produce and quotes at $985 — the shop rate carries the margin, the materials markup just covers the waste.',
+  'coffee-cart-economics-calculator':
+    'Cart owners use it before signing a pitch: breakeven is 12 cups/day against an $850 fixed floor — survivable anywhere, but only catering breaks the foot-traffic ceiling.',
   'food-truck-economics-calculator':
     'Truck owners use it before signing the note: 90 tickets at $14 nets $15.6k/mo BEFORE your wage — prime cost under 65% and 62 breakeven tickets/day decide if the truck pays you or owns you.',
   'dog-walking-income-calculator':

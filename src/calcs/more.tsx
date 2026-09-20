@@ -7875,6 +7875,107 @@ export function MobileMechanicCalc() {
   )
 }
 
+// WELDING / FABRICATION PRICING — node-verified defaults: custom gate — materials $380, 6 shop hrs × $45 loaded shop cost + $60 consumables + $25 overhead = $735 true cost. Priced at materials × 1.25 + 6 hrs × $85 shop rate = $985 → $250 profit (25.4%). Fabrication margin lives in the hourly rate; materials markup just covers handling and waste.
+export function WeldingPricingCalc() {
+  const [mats, setMats] = useNumber(380)
+  const [hrs, setHrs] = useNumber(6)
+  const [shopCost, setShopCost] = useNumber(45)
+  const [cons, setCons] = useNumber(60)
+  const [shopRate, setShopRate] = useNumber(85)
+  const [matMarkup, setMatMarkup] = useNumber(1.25)
+  const [mobile, setMobile] = useState('no')
+
+  const r = useMemo(() => {
+    const cost = mats + hrs * shopCost + cons + 25
+    const price = mats * matMarkup + hrs * shopRate + (mobile === 'yes' ? 150 : 0)
+    const profit = price - cost
+    const margin = price > 0 ? (profit / price) * 100 : 0
+    const effHr = hrs > 0 ? profit / hrs : 0
+    return { cost, price, profit, margin, effHr }
+  }, [mats, hrs, shopCost, cons, shopRate, matMarkup, mobile])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Materials cost" value={mats} onChange={setMats} prefix="$" step="20" />
+          <Field label="Shop hours" value={hrs} onChange={setHrs} step="0.5" />
+          <Field label="Loaded shop cost" value={shopCost} onChange={setShopCost} prefix="$" suffix="/hr" step="5" />
+          <Field label="Consumables" value={cons} onChange={setCons} prefix="$" step="5" />
+          <Field label="Shop rate charged" value={shopRate} onChange={setShopRate} prefix="$" suffix="/hr" step="5" />
+          <Field label="Materials markup" value={matMarkup} onChange={setMatMarkup} suffix="×" step="0.05" />
+          <label className="space-y-1">
+            <span className="text-sm text-muted-foreground">Mobile callout</span>
+            <select value={mobile} onChange={(e) => setMobile(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="no">Shop work</option>
+              <option value="yes">Mobile (+$150 minimum)</option>
+            </select>
+          </label>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="True job cost" value={usd(Math.round(r.cost))} />
+          <Result label="Quote price" value={usd(Math.round(r.price))} />
+          <Result label="Profit" value={`${usd(Math.round(r.profit))} (${num(r.margin, 0)}%)`} big />
+          <Result label="Profit per shop hr" value={`${usd(Math.round(r.effHr))}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Materials ${usd(mats)} + ${hrs} hrs quotes at ${usd(Math.round(r.price))} against ${usd(Math.round(r.cost))} true cost — ${usd(Math.round(r.profit))} profit, ${usd(Math.round(r.effHr))}/hr on the torch. The shop rate carries the welder, the rent, and the rework risk; the materials markup just covers handling and cut waste.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: true cost = materials + hours × loaded shop cost (wage + payroll burden + rent/power share) + consumables (gas, wire, discs, tips) + overhead; quote = materials × markup + hours × shop rate (+ callout minimum for mobile). The fabrication pricing doctrine: the shop rate is the margin engine — $65–125/hr by region and specialty (TIG, sanitary, aluminum, and certified work price at the top), and it must recover wage + payroll taxes + insurance + rent + equipment amortization; the materials markup (1.2–1.4×) is NOT profit — it covers cut waste, drops, handling, and the price-lock risk between quote and purchase. Quoting discipline: quote fixed only from drawings or an existing pattern — "custom, we'll figure it out" jobs are time-and-materials with a deposit, or they eat the shop; the estimate that takes 3 unpaid hours for a $900 job is a cost center, so qualify hard and charge design time on real projects. Minimums and callouts: mobile welding runs a 2-hour minimum plus trip charge (a $95 repair 40 minutes away loses money otherwise); shop work runs a bench minimum (1 hour) because the setup is the same for a bracket and a bumper. Rework and warranty: budget 2–3% of revenue — the cracked weld on the trailer you repaired comes back free, and the book should know it. Certification economics: AWS/ASME certs (D1.1 structural, pipe 6G) convert the same torch hours into 40–70% higher rates — the test fee is trivial against the rate jump, same math as the PE and CCRN ladders. Specialty niches out-earn general fab: aluminum TIG, sanitary/food-grade, handrails with code compliance, and repair work for contractors (fast turnarounds price at emergency rates). The deposits discipline: 50% on materials-heavy jobs before ordering — steel price swings between quote and build are yours to eat otherwise. Estimate — your consumables log and supplier quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// COFFEE CART ECONOMICS — node-verified defaults: 120 cups/day × $4.75 × 22 days = $12,540/mo gross; COGS 28% ($3,511); cart payment $400 + commissary $350 + permits $100 → net $8,179/mo (65.2%) before owner wage. Breakeven: 12 cups/day. The cart's economics beat a café on every line except ceiling — volume caps where foot traffic caps.
+export function CoffeeCartCalc() {
+  const [cups, setCups] = useNumber(120)
+  const [price, setPrice] = useNumber(4.75)
+  const [days, setDays] = useNumber(22)
+  const [cogsPct, setCogsPct] = useNumber(28)
+  const [cartPay, setCartPay] = useNumber(400)
+  const [commissary, setCommissary] = useNumber(350)
+
+  const r = useMemo(() => {
+    const gross = cups * price * days
+    const cogs = (cogsPct / 100) * gross
+    const fixed = cartPay + commissary + 100
+    const net = gross - cogs - fixed
+    const margin = gross > 0 ? (net / gross) * 100 : 0
+    const beCups = price * (1 - cogsPct / 100) > 0 && days > 0 ? Math.ceil(fixed / (price * (1 - cogsPct / 100)) / days) : 0
+    return { gross, cogs, fixed, net, margin, beCups }
+  }, [cups, price, days, cogsPct, cartPay, commissary])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Cups per day" value={cups} onChange={setCups} step="10" />
+          <Field label="Avg price" value={price} onChange={setPrice} prefix="$" step="0.25" />
+          <Field label="Days per month" value={days} onChange={setDays} step="1" />
+          <Field label="COGS" value={cogsPct} onChange={setCogsPct} suffix="%" step="1" />
+          <Field label="Cart payment" value={cartPay} onChange={setCartPay} prefix="$" suffix="/mo" step="50" />
+          <Field label="Commissary/pitch" value={commissary} onChange={setCommissary} prefix="$" suffix="/mo" step="25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Monthly gross" value={usd(Math.round(r.gross))} />
+          <Result label="Net (before wage)" value={`${usd(Math.round(r.net))} (${num(r.margin, 0)}%)`} big />
+          <Result label="Breakeven cups/day" value={num(r.beCups, 0)} />
+          <Result label="Fixed floor" value={`${usd(Math.round(r.fixed))}/mo`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${cups} cups at ${usd(price)} is ${usd(Math.round(r.gross))}/mo gross — net ${usd(Math.round(r.net))} before your wage. Breakeven is just ${r.beCups} cups/day: the cart survives almost any spot, but the ceiling is set by foot traffic, and only event catering breaks through it.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: gross = cups × price × days; net = gross − COGS − fixed (cart payment, commissary/pitch fees, permits); breakeven cups = fixed ÷ per-cup contribution ÷ days. The coffee-cart economics that make it the lowest-risk food business: the fixed floor is tiny ($850/mo in the example vs $8k+ for a café), breakeven is 12 cups/day — survivable almost anywhere — and the whole asset is mobile, so a dead spot costs a morning, not a lease. The ceiling is the trade: 120 cups/day is a GOOD stationary spot (office lobby, hospital entrance, farmers market anchor), volume caps where foot traffic caps, and there is no second register to open — growth is catering (office events, weddings, teacher-appreciation gigs at $300–600 booked flat) and additional carts, not more cups from the same corner. COGS discipline: 25–30% for espresso drinks (milk is the cost driver), drip and cold brew run 15–20% — the menu mix matters more than the supplier contract; pastries resold at 2× cost attach at 30–40% of orders and ride the same line. Pricing: $4.75–6.50 espresso drinks in metro markets, and the $0.25 size-upcharge structure (12/16oz) is nearly pure margin. The permit stack: health dept (mobile food or temporary food license, commissary agreement in most states), business license, and venue-specific permissions — the office-lobby deal needs the building's sign-off, not the city's vending permit. Seasonality: hot-drink winters beat iced summers for volume in most climates — the opposite of ice cream; plan the menu mix accordingly. Used-cart math: $8–20k equipped vs $30–60k new builds; the payment difference is 3–4% of gross, so buy quality used and spend the savings on the espresso machine (the machine is the product's heart — don't cheap out there). Estimate — your cup counts by daypart and supplier invoices govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // FOOD TRUCK ECONOMICS — node-verified defaults: $14 ticket × 90/day × 24 days = $30,240/mo gross. Costs: food 32% ($9,677) + 1 paid helper ($15/hr × 8h × 24 = $2,880) + truck payment $850 + commissary $600 + permits $150 + fuel/propane $500 = $14,657 → net $15,583/mo (51.5%) BEFORE the owner's own wage — the owner working the window draws their salary from that number. Prime cost discipline (food + labor ≤ 60–65%) is the line between a truck and a job.
 export function FoodTruckCalc() {
   const [ticket, setTicket] = useNumber(14)
@@ -15060,6 +15161,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'welding-fabrication-pricing-calculator': WeldingPricingCalc,
+  'coffee-cart-economics-calculator': CoffeeCartCalc,
   'food-truck-economics-calculator': FoodTruckCalc,
   'dog-walking-income-calculator': DogWalkingCalc,
   'bounce-house-rental-calculator': BounceRentalCalc,

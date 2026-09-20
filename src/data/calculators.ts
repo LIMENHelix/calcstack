@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'welding-fabrication-pricing-calculator',
+    title: 'Welding & Fabrication Pricing Calculator — Shop Rate, Materials Markup, and True Job Cost',
+    shortTitle: 'Welding & Fab Pricing',
+    category: 'Trades & Engineering',
+    description:
+      'Price fabrication work from true cost: loaded shop cost per hour, consumables, and materials markup against your shop rate — with mobile callout minimums and the rework reserve.',
+    tagline: 'The custom gate: $735 true cost quoted at $985 — the shop rate carries the welder; the materials markup just covers the waste.',
+    intro:
+      'Fabrication pricing fails in both directions: hourly-at-your-wage starves the shop, and gut-feel fixed quotes fund rework you never priced. The durable structure: materials at 1.2–1.4× (covering cut waste, drops, and handling — not profit) plus a shop rate of $65–125/hr that carries wage, burden, rent, equipment, and insurance. The custom gate in the example costs $735 to produce and quotes at $985 — 25% margin where it belongs. This calculator builds the quote from your real costs.',
+    howItWorks: [
+      'Enter materials cost from your supplier quote.',
+      'Enter shop hours and your loaded shop cost (wage + burden + rent/power share).',
+      'Enter consumables — gas, wire, discs, tips.',
+      'Set your shop rate and materials markup; toggle mobile callout.',
+      'Read quote price, profit, margin, and profit per torch hour.',
+    ],
+    faq: [
+      {
+        q: 'How do you price welding and fabrication work?',
+        a: 'Materials markup plus shop rate, quoted from drawings — never vibes. The split has a logic: the materials markup (1.2–1.4×) covers cut waste, drops, handling time, and the steel-price risk between quote and purchase — it is cost recovery, not profit. The shop rate ($65–125/hr depending on region and specialty) is the margin engine, and it must recover wage + payroll burden + insurance + rent + equipment amortization — price the rate from your true loaded cost, or growth just scales the leak. Quoting discipline separates shops from hobbyists: fixed quotes only from drawings or existing patterns; "custom, we\'ll figure it out" jobs are time-and-materials with a deposit; design time on real projects is billable. Deposits: 50% before ordering on materials-heavy jobs — steel price swings between quote and build belong to the customer unless you enjoy eating them. Minimums protect the calendar: 1-hour bench minimum in the shop (setup costs the same for a bracket as a bumper) and 2-hour minimums plus trip charges on mobile calls.',
+      },
+      {
+        q: 'What shop rate should a welding business charge?',
+        a: 'Build it from loaded cost, not from what the guy across town charges. The stack: your wage target + payroll burden (15.3% SE or employer share) + insurance (liability plus the truck) + rent and power share + equipment amortization (the welder, plasma table, and compressor all die on a schedule) — divided by billable hours, which are 50–65% of shop hours at best (quotes, cleanup, material runs, and rework eat the rest). Market bands: general repair and light fab runs $65–90/hr regionally; TIG, aluminum, and stainless command $85–125; sanitary/food-grade and certified structural work price at the top. Certification economics: AWS D1.1 structural or 6G pipe certs convert the same torch hours into 40–70% higher rates — the test fee is trivial against the rate jump, the same ladder logic as a nurse\'s CCRN or an engineer\'s PE. The niches that out-earn general fab: aluminum TIG, sanitary/food-grade, architectural railings with code compliance, and emergency repair for contractors — a down excavator pays emergency rates happily because their machine earns $200/hr idle.',
+      },
+      {
+        q: 'Is mobile welding worth it compared to shop work?',
+        a: 'As a premium-priced supplement, yes; as the whole business, only with discipline. Mobile economics: the truck, welder/generator, and fuel mean your loaded cost runs $15–25/hr above the shop, which is why the 2-hour minimum plus trip charge exists — a $95 repair 40 minutes away loses money without them. Where mobile wins: repair work (farm equipment, trailers, fences, gates on-site) where the customer\'s alternative is disassembly and hauling; contractor support (structural steel fixes, equipment repair at the job site) at emergency rates; and the convenience premium for customers who cannot move the work. Where it loses: production work (wind, weather, and position welding kill speed and quality — the shop\'s bench, jigs, and overhead crane earn their rent), and scattered low-ticket calls that burn route time. The honest hybrid: shop-based with mobile as a scheduled service line — batch mobile calls geographically like every route business, quote the callout minimum in the first sentence, and let the shop carry the margin while the truck carries the premium.',
+      },
+    ],
+  },
+  {
+    slug: 'coffee-cart-economics-calculator',
+    title: 'Coffee Cart Profit Calculator — Breakeven Cups, Monthly Net, and the Foot-Traffic Ceiling',
+    shortTitle: 'Coffee Cart Economics',
+    category: 'Freelance & Career',
+    description:
+      'Model a coffee cart or espresso stand: cups per day at your price into monthly net, the tiny breakeven that makes it survivable, and the catering lever that breaks the volume ceiling.',
+    tagline: 'Breakeven is 12 cups a day — the cart survives almost any spot, but the ceiling is foot traffic, and only catering breaks through it.',
+    intro:
+      'The coffee cart is the lowest-risk entry in food service: an $850/month fixed floor means breakeven at 12 cups a day, and 120 cups a day at $4.75 nets $8,179 a month before your wage. The trade is the ceiling — a stationary cart\'s volume caps where the foot traffic caps, and there is no second register to open. This calculator runs the cup math, shows your breakeven, and prices the catering lever that breaks through the ceiling.',
+    howItWorks: [
+      'Enter cups per day and average price.',
+      'Enter days per month and COGS percentage (espresso drinks run 25–30%).',
+      'Enter cart payment and commissary/pitch fees.',
+      'Read monthly gross, net before your wage, and margin.',
+      'Read breakeven cups/day — the floor that makes carts survivable.',
+    ],
+    faq: [
+      {
+        q: 'How much money does a coffee cart make?',
+        a: 'A well-placed cart doing 120 cups/day at $4.75 averages nets around $8,000/mo before the owner\'s wage — the example margin of 65% looks rich because labor is you. The range by location is brutal: an office-lobby anchor or hospital entrance does 100–160 cups/day; a random street corner does 30. So the business is a location business wearing an apron — the same cart, the same espresso, 4× the revenue at the right door. Growth levers since volume caps: catering bookings (office events, weddings, teacher-appreciation days at $300–600 flat — one booking equals 2–3 spot-days), pastry attach (resold at 2× cost, attaching at 30–40% of orders on the same transaction), and eventually a second cart with an employee, which is when the model stops being a job and starts being a business. Startup: $8–20k for a quality used cart build versus $30–60k new — and don\'t cheap out on the espresso machine, it IS the product.',
+      },
+      {
+        q: 'What permits does a coffee cart need?',
+        a: 'The stack varies by state and city but the shape is consistent: a health department license (mobile food facility or temporary food service — with a commissary agreement in most states, since carts lack full kitchens), a business license, seller\'s permit for sales tax, and venue-specific permission — the office-lobby deal needs the building\'s sign-off, not the city\'s vending permit, and farmers markets have their own vendor applications with waitlists. The commissary question matters: most health departments require cart food prep and water/wastewater handling through a licensed commissary kitchen ($200–500/mo), though self-contained carts with proper tanks and water heaters can qualify standalone in some jurisdictions — the spec of your cart determines which world you live in, so design for your state\'s code BEFORE buying. Fire and propane inspections apply to carts with gas equipment. Budget: $500–1,500 first-year permits plus commissary. The operator advantage: this stack is a weekend of paperwork versus a café\'s months — the cart\'s regulatory weight is as light as its fixed costs.',
+      },
+      {
+        q: 'Coffee cart vs coffee shop — which is the better business?',
+        a: 'Different risk profiles wearing the same apron. The cart: $8–20k entry, $850/mo fixed floor, 12-cup breakeven, total mobility (a dead spot costs a morning, not a lease) — but a hard volume ceiling at 120–160 cups/day and no seating revenue, no food program, no community-anchored brand value. The shop: $80–250k buildout, $6–12k/mo fixed (rent, labor, utilities), breakeven at 200–300 cups-equivalent/day — but seating multiplies ticket size, the food program doubles margins, and a beloved café builds a brand worth selling. The proven sequence: cart first — prove the menu, the workflow, and the neighborhood demand at 10% of the risk; the cart\'s cup counts by daypart are the business plan for the shop; some of the best cafés in every city started as the cart in their own future lobby. Seasonality runs on the drink mix: hot-drink winters out-sell iced summers in most climates (the opposite of ice cream), and catering carries the event season. Where carts genuinely beat shops forever: campuses, hospitals, and corporate parks where a café lease is impossible but a lobby cart deal is a phone call.',
+      },
+    ],
+  },
+  {
     slug: 'food-truck-economics-calculator',
     title: 'Food Truck Profit Calculator — Prime Cost, Breakeven Tickets, and Net Before Your Wage',
     shortTitle: 'Food Truck Economics',
