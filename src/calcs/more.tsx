@@ -4315,6 +4315,60 @@ export function LaborBurdenCalc() {
   )
 }
 
+// JOB COSTING — the full single-job price built bottom-up: marked-up materials + burdened labor + subs + allocated overhead, priced at target MARGIN. Node-verified: $3,800 materials +10% handling = $4,180; 60 labor hrs at $37.32 burdened = $2,239; subs $1,500; overhead $15/labor-hr = $900 → true cost $8,819 → price at 20% margin = $11,024, profit $2,205. Honest edges: overhead allocation is the line everyone skips (rent, insurance, office, trucks, YOUR salary as owner — annual overhead ÷ annual billable hours gives the per-hour number; skipping it prices every job below true cost), materials markup is legitimate (procurement, warranty risk, storage, waste — 10-15% standard), the contingency line (unknowns behind walls: 5-10% on remodels, honest bids carry it rather than eat it), and change orders (price them at FULL margin with the same formula — the "friendly discount" on changes is where the job's profit goes to die). Pair with labor-burden-calculator for the rate.
+export function JobCostingCalc() {
+  const [mat, setMat] = useNumber(3800)
+  const [matMarkup, setMatMarkup] = useNumber(10)
+  const [hours, setHours] = useNumber(60)
+  const [rate, setRate] = useNumber(37.32)
+  const [subs, setSubs] = useNumber(1500)
+  const [ohRate, setOhRate] = useNumber(15)
+  const [conting, setConting] = useNumber(5)
+  const [margin, setMargin] = useNumber(20)
+
+  const r = useMemo(() => {
+    const matCost = mat * (1 + matMarkup / 100)
+    const labor = hours * rate
+    const oh = hours * ohRate
+    const sub = matCost + labor + subs + oh
+    const cost = sub * (1 + conting / 100)
+    const m = Math.min(90, margin) / 100
+    const price = cost / (1 - m)
+    const profit = price - cost
+    const perSqftNote = { matCost, labor, oh, sub, cost, price, profit }
+    return perSqftNote
+  }, [mat, matMarkup, hours, rate, subs, ohRate, conting, margin])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Materials cost" value={mat} onChange={setMat} prefix="$" step="100" />
+          <Field label="Materials markup" value={matMarkup} onChange={setMatMarkup} suffix="%" step="1" />
+          <Field label="Labor hours" value={hours} onChange={setHours} step="5" />
+          <Field label="Burdened labor rate" value={rate} onChange={setRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Subcontractors" value={subs} onChange={setSubs} prefix="$" step="100" />
+          <Field label="Overhead per labor hr" value={ohRate} onChange={setOhRate} prefix="$" step="1" />
+          <Field label="Contingency" value={conting} onChange={setConting} suffix="%" step="1" />
+          <Field label="Target margin" value={margin} onChange={setMargin} suffix="%" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="True job cost" value={usd(r.cost)} />
+          <Result label="Price at margin" value={usd(r.price)} big />
+          <Result label="Profit on the job" value={usd(r.profit)} />
+          <Result label="Labor + overhead share" value={`${num(((r.labor + r.oh) / r.cost) * 100, 0)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Quote {usd(Math.round(r.price))} — below {usd(Math.round(r.cost))} you're paying the customer to let you work. Every line is real: materials with handling, labor at the BURDENED rate, subs, overhead allocation, contingency. The competitors undercutting you at {usd(Math.round(r.cost * 0.95))} aren't more efficient — they're unpriced.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: materials × (1 + markup — procurement, warranty risk, and waste are real, 10–15% is standard) + labor hours × burdened rate (from the labor-burden calculator, never the wage) + subs + overhead allocation (annual overhead — rent, insurance, office, trucks, owner salary — ÷ annual billable hours; the line everyone skips and the reason "busy" shops go broke) + contingency (5–10% on remodels — unknowns behind walls are certain, only their size is uncertain). Then price = cost ÷ (1 − margin), because margin divides by price. Change orders: run the SAME formula at full margin — the discounted "friendly" change order is where a job's profit goes to die, and a signed change-order process is worth more than any tool in the truck. Estimates — your supplier quotes and comp mod sheet govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9965,6 +10019,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'walk-away-number-calculator': WalkAwayCalc,
   'unpaid-internship-calculator': UnpaidInternshipCalc,
   'labor-burden-calculator': LaborBurdenCalc,
+  'job-costing-calculator': JobCostingCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

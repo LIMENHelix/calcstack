@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'job-costing-calculator',
+    title: 'Job Costing Calculator 2026 — Materials, Burdened Labor, Subs & Overhead Priced at Real Margin',
+    shortTitle: 'Job Costing',
+    category: 'Trades & Engineering',
+    description:
+      'Build the bid bottom-up: marked-up materials, labor at the burdened rate, subs, overhead allocation, and contingency — then price at true margin (cost ÷ (1 − margin)), not the markup that quietly nets less.',
+    tagline: '$3,800 of materials + 60 burdened labor hours + subs + overhead = $8,819 true cost — quote $11,024 or you\'re paying the customer to let you work.',
+    intro:
+      'Every profitable job is priced the same way: bottom-up, never top-down from the competitor\'s number. Materials at $3,800 carry a 10% handling markup ($4,180 — procurement, warranty risk, and waste are real costs), 60 labor hours at the BURDENED rate of $37.32 (not the $25 wage), $1,500 of subs, and $15/labor-hour of overhead allocation — rent, insurance, trucks, and the owner\'s salary that skipping shops never price — plus 5% contingency for what\'s behind the walls. True cost: $8,819. At a 20% margin the quote is $11,024, because margin divides by the PRICE and "cost plus 20%" silently nets 16.7%. This calculator builds the full stack and solves the quote, so the number on the proposal is arithmetic, not hope.',
+    howItWorks: [
+      'Enter materials cost and your handling markup (10–15% is standard).',
+      'Enter labor hours at the BURDENED rate — pair with the labor-burden calculator.',
+      'Add subcontractors and your overhead allocation per labor hour (annual overhead ÷ annual billable hours).',
+      'Add contingency — 5–10% on remodels; unknowns are certain, only their size isn\'t.',
+      'Set the target margin and read the true cost, the quote, and the profit.',
+    ],
+    faq: [
+      {
+        q: 'What is overhead allocation and why do I need it?',
+        a: 'It\'s the line that separates busy from profitable. Your shop has costs that no single job invoices: rent, insurance, office staff, trucks, tools, YOUR salary as owner. Annual overhead ÷ annual billable hours gives a per-hour number — often $10–$25 — that every labor hour must carry. Skip it and each job looks profitable while the year loses money: ten "profitable" jobs can still total less than the rent. The allocation doesn\'t need precision, it needs existence — a rough $15/hr allocated beats a precise $0. Revisit it quarterly: overhead creeps, billable hours season, and last year\'s number quietly rots.',
+      },
+      {
+        q: 'Why markup materials — isn\'t that gouging?',
+        a: 'No — it\'s pricing real work nobody sees. When you supply materials, you\'re providing procurement (ordering, wrong-item returns, delivery coordination), capital (you carry the cost between supplier invoice and customer payment), storage and transport, warranty risk (a failed part at month 11 is YOUR callback, not the supplier\'s), and waste/overage that never lands in the finished job. The trade standard of 10–15% prices exactly those functions. Customers can buy their own materials — and inherit the returns, the warranty chasing, and the wrong-size fittings — but they can\'t have your supply chain for free. The markup isn\'t margin on goods; it\'s the fee for a service they\'re using either way.',
+      },
+      {
+        q: 'How do I handle change orders without killing the relationship?',
+        a: 'With the same formula, at full margin, in writing, before the work — the relationship dies from surprise bills, not from prices. Run every change through this calculator exactly like the base bid: materials with markup, burdened hours, overhead, contingency, margin. The "friendly discount" on changes is where a job\'s profit goes to die — three discounted changes can erase the margin of the entire contract. The process that preserves both profit and goodwill: a one-page change-order form, priced on the spot, signed before work starts, with the schedule impact written on it. Customers respect tradespeople who price changes cleanly; they resent the ones who hand over a lump at the end. Clean paperwork IS the relationship strategy.',
+      },
+    ],
+  },
+  {
     slug: 'labor-burden-calculator',
     title: 'Labor Burden Calculator 2026 — True Employee Cost per Billable Hour & the Breakeven Bill Rate',
     shortTitle: 'Labor Burden Calculator',
