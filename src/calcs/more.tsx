@@ -4104,6 +4104,65 @@ export function CertRoiCalc() {
   )
 }
 
+// JOB HOP PREMIUM — switch vs stay, cumulative. Node-verified: $80k current, +15% hop premium, 3%/yr growth both paths, $5k one-time switch cost (unvested 401k match, benefits gap, etc.), 5-yr horizon @4% discount → stay $424,731 cumulative, hop $483,440 → +$58,710 nominal / +$53,857 PV; breakeven premium just 1.3% — almost ANY raise beats the friction over 5 years. Model: both paths grow at the same rate after the jump (conservative — hoppers historically compound faster because each hop resets to market), one-time cost netted at t0. Honest edges: the switching cost input is where honesty lives (unvested 401k match, ESPP discounts in the holding window, unvested RSUs, bonus timing, health-plan deductible resets — a December quit can cost a full annual bonus), the "loyalty tax" literature (ADP/Atlanta Fed wage trackers: job switchers have out-earned stayers most years since 2021), risk side is real (last-in-first-out, probation, unknown manager), and non-salary hops (title, scope, remote) don't show in this math — price them separately. Also honest: hopping every 18 months reads as flight risk in some fields; the premium has to cover that too.
+export function JobHopCalc() {
+  const [cur, setCur] = useNumber(80000)
+  const [prem, setPrem] = useNumber(15)
+  const [growth, setGrowth] = useNumber(3)
+  const [cost, setCost] = useNumber(5000)
+  const [years, setYears] = useNumber(5)
+  const [disc, setDisc] = useNumber(4)
+
+  const r = useMemo(() => {
+    const g = growth / 100, dr = disc / 100
+    let stay = 0, hop = 0, stayPV = 0, hopPV = 0
+    for (let y = 0; y < years; y++) {
+      const s = cur * Math.pow(1 + g, y)
+      const h = cur * (1 + prem / 100) * Math.pow(1 + g, y)
+      stay += s; hop += h
+      stayPV += s / Math.pow(1 + dr, y)
+      hopPV += h / Math.pow(1 + dr, y)
+    }
+    hop -= cost; hopPV -= cost
+    let minPrem = 0
+    for (let p = 0; p < 1; p += 0.0005) {
+      let pv = 0
+      for (let y = 0; y < years; y++) pv += (cur * p * Math.pow(1 + g, y)) / Math.pow(1 + dr, y)
+      if (pv >= cost) { minPrem = p; break }
+    }
+    return { stay, hop, diff: hop - stay, diffPV: hopPV - stayPV, minPrem: minPrem * 100 }
+  }, [cur, prem, growth, cost, years, disc])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Current salary" value={cur} onChange={setCur} prefix="$" step="5000" />
+          <Field label="New-offer premium" value={prem} onChange={setPrem} suffix="%" step="1" />
+          <Field label="Annual growth (both paths)" value={growth} onChange={setGrowth} suffix="%" step="0.5" />
+          <Field label="One-time switching cost" value={cost} onChange={setCost} prefix="$" step="1000" />
+          <Field label="Horizon (years)" value={years} onChange={setYears} step="1" />
+          <Field label="Discount rate" value={disc} onChange={setDisc} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Stay — cumulative pay" value={usd(r.stay)} />
+          <Result label="Switch — cumulative pay" value={usd(r.hop)} />
+          <Result label="Switch advantage (PV)" value={usd(r.diffPV)} big />
+          <Result label="Min premium to break even" value={`${num(r.minPrem, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.diffPV >= 0
+            ? `Switching wins by ${usd(r.diffPV)} in today's dollars over ${years} years — and the breakeven premium is only ${num(r.minPrem, 1)}%, so the offer clears the friction with room. Negotiate anyway: the first number is rarely the last.`
+            : `Staying wins on pure pay: the ${prem}% premium doesn't cover the ${usd(cost)} switching cost over ${years} years. You'd need at least ${num(r.minPrem, 1)}% — or non-salary reasons (scope, manager, trajectory) worth the difference.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: both paths grow at the same annual rate after the jump (conservative — switchers historically reset to market with each move, so the same-growth assumption UNDERSTATES hopping); the one-time switching cost nets out at the start. That cost input is where honesty lives: unvested 401(k) match, unvested RSUs, ESPP holding windows, a December departure can forfeit a full annual bonus, and a new health plan resets your deductible. Wage-tracker data (Atlanta Fed, ADP) has shown switchers out-earning stayers most years since 2021 — the "loyalty tax" is measurable, typically 3–8% annually. The risk side is real and unpriced here: probation periods, unknown managers, last-in-first-out in layoffs, and a resume pattern that reads flight-risk in some industries. What this misses on purpose: title, scope, remote flexibility, and the fact that the strongest raise is often the counteroffer you only get by having the offer. Estimates — your offer letters and grant statements govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9750,6 +9809,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'startup-offer-calculator': StartupOfferCalc,
   'grad-school-roi-calculator': GradSchoolRoiCalc,
   'certification-roi-calculator': CertRoiCalc,
+  'job-hop-calculator': JobHopCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'job-hop-calculator',
+    title: 'Job Hop Calculator 2026 — Switch vs Stay: the Loyalty Tax in Dollars, Cumulative & Present Value',
+    shortTitle: 'Job Hop Calculator',
+    category: 'Careers & Salary',
+    description:
+      'Price the job switch honestly: the new-offer premium grown over your horizon versus staying put — minus the one-time switching costs (unvested 401(k) match, RSUs, bonus timing, deductible resets). See the cumulative gap and the minimum premium that justifies jumping.',
+    tagline: 'On an $80k salary, a 15% hop is worth +$58,710 over five years — and the breakeven premium against $5k of switching costs is just 1.3%.',
+    intro:
+      'The "loyalty tax" is measurable: wage trackers (Atlanta Fed, ADP) have shown job switchers out-earning stayers most years since 2021, typically by 3–8% annually. On an $80k salary, a 15% hop premium compounding over five years produces $483,440 versus $424,731 for staying — a $58,710 gap, $53,857 in present value even after a $5,000 switching cost. The counterweight is the cost line most people never total: unvested 401(k) match, unvested RSUs, ESPP holding windows, a December departure that forfeits a full annual bonus, and a health-plan deductible that resets. This calculator runs both paths with honest growth assumptions and tells you the minimum premium that makes the jump pay — usually far lower than people assume.',
+    howItWorks: [
+      'Enter your current salary and the new offer\'s premium over it.',
+      'Enter the annual growth rate — applied to BOTH paths, which conservatively understates hopping.',
+      'Total the one-time switching costs: unvested match, unvested equity, forfeited bonus, deductible reset.',
+      'Set the horizon you\'re comparing over and a discount rate.',
+      'Read the cumulative gap, the present-value advantage, and the minimum premium to break even.',
+    ],
+    faq: [
+      {
+        q: 'What switching costs should I actually total?',
+        a: 'Everything that evaporates or resets at the transition. Unvested 401(k) match is the classic (check your vesting schedule — cliff and graded schedules both bite); unvested RSUs and options are often the giant for tech workers (the grant statement shows the number exactly); ESPP discounts in the holding window; and bonus timing — a December resignation commonly forfeits the entire annual bonus, which alone can exceed every other cost combined. Health insurance resets too: a new plan means a fresh deductible, so mid-year switches after heavy medical spend cost the accumulated progress. Add signing bonuses on the OTHER side — they exist partly to cover these frictions, so net them against the cost, not against the premium.',
+      },
+      {
+        q: 'Is the same-growth assumption fair?',
+        a: 'It\'s deliberately conservative — and still shows switching winning. In reality, stayers typically get 3–5% merit cycles while switchers reset to market with each move, so applying identical growth to both paths UNDERSTATES the hop advantage. The assumption exists for honesty, not accuracy: it isolates the premium and the switching cost so you can see the decision\'s skeleton without a compounding argument. If you want the full picture, run it twice — once at equal growth, once with stay-growth at your actual merit history — and the truth is somewhere between. The pattern that emerges in every version: over horizons of three years or more, even modest premiums swamp realistic switching costs.',
+      },
+      {
+        q: 'What does the math miss?',
+        a: 'Risk and the non-salary ledger. Risk: probation periods, unknown managers, last-in-first-out exposure in layoffs, and a resume pattern that reads flight-risk in conservative industries — hopping every 18 months closes doors even while it raises pay. Non-salary: title and scope (a hop to a bigger role compounds into the NEXT negotiation), remote flexibility, commute, and trajectory — none of which price into this calculator. And the strongest counterintuitive finding in comp data: the largest raise many people ever get from their CURRENT employer is the counteroffer triggered by having an outside offer — which means the option to hop has value even if you never take it. Run the numbers, then negotiate from knowledge either way.',
+      },
+    ],
+  },
+  {
     slug: 'certification-roi-calculator',
     title: 'Certification ROI Calculator 2026 — PMP, CFA, AWS & CPA Priced: Fees, Study Hours, Retakes vs the Raise',
     shortTitle: 'Certification ROI',
