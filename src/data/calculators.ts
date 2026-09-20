@@ -1103,6 +1103,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'iso-vs-nso-calculator',
+    title: 'ISO vs NSO Exercise Calculator 2026 — Cash Out Day One, the AMT Hit, and the December Escape Hatch',
+    shortTitle: 'ISO vs NSO',
+    category: 'Careers & Salary',
+    description:
+      'Same options, two tax machines. Compute the spread, exercise cost, ordinary tax (NSO) or AMT exposure (ISO), and total cash out — before you exercise anything.',
+    tagline: '10,000 options at a $5 strike with $40 FMV: NSO costs $172,500 day one; ISO costs $50,000 plus a ~$91,000 AMT shadow. Know which you hold.',
+    intro:
+      'Employee stock options split into two tax machines that share a name. NSOs tax the spread as ordinary income at exercise — $350,000 of spread at 35% is $122,500 due whether or not you sell a share. ISOs defer regular tax but feed the spread to the Alternative Minimum Tax — the exercise-and-hold that earns you all-LTCG treatment also hands you a paper-gains tax bill in April. The December mechanic matters: exercise late in the year and the disqualifying-disposition escape hatch (sell before December 31 → ordinary income, AMT evaporates) stays open while you see the real bill. This calculator prices both machines on your grant before you touch anything.',
+    howItWorks: [
+      'Pick ISO or NSO — check your grant agreement; they are not interchangeable.',
+      'Enter options to exercise, strike, and current FMV (409A for private companies).',
+      'Enter your marginal bracket.',
+      'Read the spread, the tax machine\'s bite, and total day-one cash.',
+    ],
+    faq: [
+      {
+        q: 'What exactly does an ISO qualifying disposition require — and what does it buy?',
+        a: 'Two clocks, both must run: hold the SHARES at least 1 year after exercise, AND sell at least 2 years after the grant date. Clear both and the entire gain — strike to sale price — becomes long-term capital gain (20% top rate + 3.8% NIIT), the best treatment in equity comp. Miss either and it\'s a disqualifying disposition: the spread at exercise becomes ordinary income, exactly like an NSO, plus LTCG/STCG on any post-exercise movement. The ISO bargain is real but the holding requirement is the risk: you\'re concentrating in one stock for a year minimum to earn the rate. The hybrid many planners favor: exercise early in the calendar year, hold 12 months, then sell on the qualifying schedule — and if the stock craters mid-year, the disqualifying sale before December 31 caps the damage at ordinary rates with real cash to pay it.',
+      },
+      {
+        q: 'How bad is the AMT really — and do I get it back?',
+        a: 'The AMT on exercise-and-hold is a prepayment, mostly recoverable — but slowly. Mechanism: the spread feeds AMT as a preference item; if AMT exceeds regular tax, you pay the difference (the hit), and generate an AMT credit usable in future years when regular tax exceeds AMT — typically dribbling back over 3–7 years unless the shares sell. The disaster pattern to refuse: exercise-and-hold a volatile stock into a decline — you owe AMT on the $40 phantom FMV while holding $12 shares you may not even be able to sell (private company). That scenario bankrupted people in 2000 and repeats every cycle. The honest controls: exercise in tranches sized to keep AMT under the regular-tax crossover, exercise in December (see the bill while the escape hatch is open), and never exercise-and-hold private shares with money you need. This calculator\'s flat-26% figure is a planning approximation — real Form 6251 netting deserves a CPA for anything five figures and up.',
+      },
+      {
+        q: 'Private company options: what\'s different?',
+        a: 'Everything that makes it harder. FMV is the 409A valuation — an appraisal, not a market — updated annually or on events; your exercise math runs on it, but the shares may be illiquid for years. Liquidity: no same-day sale, so NSO exercise or ISO AMT means real cash out with no way to sell — never exercise illiquid options with money you need, and check whether the company offers tender offers or secondary windows. The 83(i) and QSBS angles: early exercise (if your plan allows pre-vesting exercise) starts the capital-gains and QSBS clocks at near-zero spread — the single most powerful move in startup equity when available, converting future ordinary income into LTCG and potentially QSBS-excluded gain ($10M cap) after 5 years. Leaving the company starts the 90-day exercise clock on most plans — ISOs convert to NSOs after 90 days post-termination, and expired options are simply gone. Read the plan documents before giving notice, not after.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

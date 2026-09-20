@@ -3884,6 +3884,59 @@ export function RsuVestCalc() {
   )
 }
 
+// ISO vs NSO EXERCISE — the same options, two tax machines. Node-verified: 10,000 options, $5 strike, $40 FMV → spread $350,000. NSO: spread is ordinary income AT EXERCISE — 35% = $122,500 + $50,000 exercise cost = $172,500 total cash out, whether or not you sell a share. ISO: $50,000 exercise cash, no regular tax — but the $350k spread is an AMT preference item; flat-26% approximation ≈ $91,000 AMT hit (real AMT nets against regular tax with the exemption; this is the planning-grade estimate). Qualifying disposition (hold ≥1yr post-exercise AND ≥2yr post-grant): ISO gain all-LTCG — at $60 sale: $550k gain × 23.8% (20% + NIIT) = $130,900 vs NSO path $170,100. The ISO trap: exercise-and-hold into a crash — you owe AMT on a $40 phantom while holding $12 stock; the AMT credit dribbles back over years. Dec 31 mechanic: ISO exercises late in December let you see the AMT bill before the tax year closes (sell before Dec 31 of the SAME year → disqualifying disposition, ordinary income, AMT evaporates).
+export function IsoNsoCalc() {
+  const [opts, setOpts] = useNumber(10000)
+  const [strike, setStrike] = useNumber(5)
+  const [fmv, setFmv] = useNumber(40)
+  const [bracket, setBracket] = useNumber(35)
+  const [type, setType] = useState<'iso' | 'nso'>('iso')
+
+  const r = useMemo(() => {
+    const spread = Math.max(0, opts * (fmv - strike))
+    const exerciseCost = opts * strike
+    const nsoTax = spread * (bracket / 100)
+    const amtHit = spread * 0.26 // flat planning approximation
+    const cashOut = type === 'nso' ? exerciseCost + nsoTax : exerciseCost + amtHit
+    return { spread, exerciseCost, nsoTax, amtHit, cashOut }
+  }, [opts, strike, fmv, bracket, type])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="flex gap-2">
+          {(['iso', 'nso'] as const).map((t) => (
+            <button key={t} onClick={() => setType(t)}
+              className={`rounded-md border px-3 py-1.5 text-sm ${type === t ? 'border-primary bg-primary text-primary-foreground' : 'text-muted-foreground'}`}>
+              {t === 'iso' ? 'ISO (incentive)' : 'NSO (non-qualified)'}
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Options to exercise" value={opts} onChange={setOpts} step="500" />
+          <Field label="Strike price" value={strike} onChange={setStrike} prefix="$" />
+          <Field label="Current FMV" value={fmv} onChange={setFmv} prefix="$" />
+          <Field label="Your marginal bracket" value={bracket} onChange={setBracket} suffix="%" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Spread (the taxable thing)" value={usd(r.spread)} />
+          <Result label="Exercise cost" value={usd(r.exerciseCost)} />
+          <Result label={type === 'nso' ? 'Ordinary tax at exercise' : 'AMT exposure (approx)'} value={usd(type === 'nso' ? r.nsoTax : r.amtHit)} />
+          <Result big label="Total cash out day one" value={usd(r.cashOut)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {type === 'nso'
+            ? `NSO exercise is a taxable event immediately: ${usd(r.nsoTax)} of ordinary tax on the spread, due whether you sell or not. If you're exercising-and-selling same day (cashless), that's the whole story — clean but fully taxed.`
+            : `ISO defers regular tax, but the ${usd(r.spread)} spread feeds the AMT — planning-grade exposure ${usd(r.amtHit)}. The December mechanic: exercise late December and you can see the AMT bill while the disqualifying-disposition escape hatch (sell before year-end → ordinary income, no AMT) is still open.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The qualifying-disposition bargain for ISOs: hold the shares at least 1 year post-exercise AND 2 years post-grant, and the entire gain over strike becomes long-term capital gain — the best tax treatment equity comp offers. The price is the AMT year: you pay tax on paper gains you haven't sold, with the AMT credit recovering over future years (slowly). The disaster pattern to refuse: exercise-and-hold a volatile private/startup stock into a down round — tax owed on a phantom FMV while the shares can't be sold. Honest limits of this model: AMT here is a flat 26% planning approximation — the real computation nets against regular tax, applies the AMT exemption (phasing out at higher incomes), and interacts with state AMT; exercises within $50k of this estimate deserve a CPA running real Form 6251. NSO note: exercise withholding often defaults to 22% supplemental — the same under-withholding trap as RSUs applies if your bracket is higher. Estimates — your plan documents and CPA govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9526,6 +9579,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'retainer-pricing-calculator': RetainerCalc,
   's-corp-election-calculator': ScorpElectionCalc,
   'rsu-vest-tax-calculator': RsuVestCalc,
+  'iso-vs-nso-calculator': IsoNsoCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
