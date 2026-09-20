@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'attic-insulation-roi-calculator',
+    title: 'Attic Insulation ROI Calculator 2026 — R-Value Upgrade Payback With Real Diminishing Returns + the 30% Credit',
+    shortTitle: 'Attic Insulation ROI',
+    category: 'Home & Yard',
+    description:
+      'Heat flow is 1/R — each added inch saves less. Compute the real ceiling heat-flow cut, the 30% federal credit, and the payback year; see when more insulation stops paying and air sealing wins instead.',
+    tagline: 'R-19 to R-49 on 1,200 sqft cuts ceiling heat flow 61% — $245/yr back, 7.3-year payback after the credit. From R-30 it stretches to 11.6.',
+    intro:
+      'Insulation marketing ignores the physics: heat flow scales as 1/R, so every added inch saves less than the last. Going R-19 → R-49 on a 1,200 sqft attic cuts ceiling heat flow 61% — worth $245/yr on a $1,600 heating-and-cooling bill, a 7.3-year payback after the 30% federal credit. But from R-30 the same $1,800 spend saves $155/yr and takes 11.6 years, and past R-49 you\'re buying decimals. The prerequisites matter more than the product: air-seal the attic floor first ($200–400 DIY — insulation over leaks is a sweater in the wind), fix bath fans venting into the attic, then blow. This calculator runs the physics honestly so you stop at the R-value that pays.',
+    howItWorks: [
+      'Enter attic square footage and the installed cost per sq ft (DIY blown runs $0.80–1.20).',
+      'Enter current and target R-values — joists visible in the attic means under R-30.',
+      'Enter annual heating+cooling spend.',
+      'The 30% federal credit (up to $1,200/yr) applies automatically.',
+      'Read the heat-flow cut, yearly savings, and payback — and watch it lengthen as current R rises.',
+    ],
+    faq: [
+      {
+        q: 'Why does each added inch of insulation save less?',
+        a: 'Heat flow through a layer is proportional to 1/R, not to thickness — so the jump from R-5 to R-15 cuts flow 67%, while R-38 to R-49 cuts only 22%, and R-49 to R-60 buys 18% more reduction on a number that\'s already small. The ceiling is only ~25% of the home\'s envelope losses anyway, so even a 61% ceiling-flow cut is ~15% of the bill. This is the honest answer to "should I go past code?": in most climates, no — the DOE targets (R-49–60 cold climates, R-38–49 moderate, R-30 hot) already sit at the knee of the curve. Past target, the same money earns more in air sealing, duct sealing, or a smart thermostat — which is why this site ranks efficiency spend by payback rather than by brochure.',
+      },
+      {
+        q: 'What must I do BEFORE adding insulation?',
+        a: 'Air-seal the attic floor — insulation over leaks is a sweater in the wind, and the leaks are where the real loss lives. Recessed can lights, top plates, plumbing stacks, wire penetrations, and the attic hatch leak conditioned air 24/7; sealing them ($200–400 in caulk, foam, and a weatherstripped hatch, one weekend DIY) routinely saves as much as the insulation itself and makes the insulation perform to its rating. Also fix bath fans venting into the attic (moisture destroys insulation and grows mold — vent through the roof), mark and dam around heat sources, and check knob-and-tube wiring before burying anything. Then blow: cellulose or fiberglass at $0.80–1.20/sqft DIY with the big-box blower (free rental with 20+ bags) halves the installed cost and the payback period in one decision.',
+      },
+      {
+        q: 'How do I know my current R-value?',
+        a: 'A ruler and sixty seconds. Attic insulation R-value is roughly 3 per inch for fiberglass batts, 3.2–3.7 for blown cellulose, 2.2–2.7 for blown fiberglass — measure the average depth in a few spots and multiply. Visible ceiling joists mean under R-30 in most construction, full stop. The symptoms tell you too: ice dams on the roof in winter (heat escaping melts snow that refreezes at the eaves), an upstairs that bakes in summer, and heating bills that shame your square footage. For the exact number, a home energy audit ($150–400, often utility-subsidized) includes a blower-door test that finds the leaks AND measures the insulation — and the audit\'s report sequences the fixes by payback, which is worth more than any single upgrade.',
+      },
+    ],
+  },
+  {
     slug: 'phantom-load-calculator',
     title: 'Phantom Load Calculator 2026 — What Standby Power Costs Per Year, and Which Devices Are Actually Worth Killing',
     shortTitle: 'Phantom Load',

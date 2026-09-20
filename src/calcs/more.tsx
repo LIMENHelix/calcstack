@@ -5120,6 +5120,56 @@ export function PhantomLoadCalc() {
   )
 }
 
+// ATTIC INSULATION ROI — diminishing returns modeled physically, not by brochure. Node-verified: 1,200 sqft attic, R-19 → R-49 blown at $1.50/sqft = $1,800; ceiling heat-flow cut = (1/19 − 1/49)/(1/19) = 61% of ceiling load, ceiling ≈ 25% of envelope → 15.3% of the $1,600 heating+cooling bill = $245/yr → 7.3-YR payback. From R-30 the same spend saves $155/yr → 11.6 yrs — diminishing returns are the physics (heat flow is 1/R; each added R saves less than the last). Honest edges: AIR SEAL FIRST (insulation over leaks is a sweater in the wind — sealing attic penetrations $200-400 DIY is the prerequisite and raises the savings toward the modeled number), climate zone target (DOE: R-49 to R-60 cold climates, R-30-49 moderate, R-30 hot — more than the target buys little), DIY blown insulation ($0.80-1.20/sqft materials + free blower rental with 20+ bags — halves the cost and the payback), the 25C/179D-style federal credit (energy-efficiency home credit: 30% up to $1,200/yr for insulation — applies, claim it, cuts payback a third), and signs you're under-insulated (ice dams, upstairs summer sauna, visible joists in the attic — joists visible = under R-30).
+export function AtticInsulationRoiCalc() {
+  const [sqft, setSqft] = useNumber(1200)
+  const [perSqft, setPerSqft] = useNumber(1.5)
+  const [rOld, setROld] = useNumber(19)
+  const [rNew, setRNew] = useNumber(49)
+  const [bill, setBill] = useNumber(1600)
+  const [credit, setCredit] = useNumber(30)
+
+  const r = useMemo(() => {
+    const cost = sqft * perSqft
+    const creditAmt = (cost * Math.min(30, credit)) / 100
+    const netCost = cost - Math.min(1200, creditAmt)
+    const flowCut = rNew > rOld ? (1 / rOld - 1 / rNew) / (1 / rOld) : 0
+    const savePct = 0.25 * flowCut
+    const saveYr = bill * savePct
+    const payback = saveYr > 0 ? netCost / saveYr : Infinity
+    return { cost, netCost, flowCut: flowCut * 100, saveYr, payback }
+  }, [sqft, perSqft, rOld, rNew, bill, credit])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Attic square feet" value={sqft} onChange={setSqft} step="100" />
+          <Field label="Cost per sq ft installed" value={perSqft} onChange={setPerSqft} prefix="$" step="0.1" />
+          <Field label="Current R-value" value={rOld} onChange={setROld} step="1" />
+          <Field label="Target R-value" value={rNew} onChange={setRNew} step="1" />
+          <Field label="Heating+cooling /yr" value={bill} onChange={setBill} prefix="$" step="100" />
+          <Field label="Federal credit" value={credit} onChange={setCredit} suffix="%" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Cost after credit" value={usd(r.netCost)} />
+          <Result label="Ceiling heat-flow cut" value={`${num(r.flowCut, 0)}%`} />
+          <Result label="Savings /yr" value={usd(r.saveYr)} />
+          <Result label="Payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {isFinite(r.payback) && r.payback <= 10
+            ? `${num(r.flowCut, 0)}% less heat through the ceiling, ${usd(Math.round(r.saveYr))}/yr back — payback ${num(r.payback, 1)} years on an upgrade that lasts 30+. Air-seal the attic floor FIRST ($200–400 DIY): insulation over leaks is a sweater in the wind.`
+            : `Diminishing returns are biting: from R-${rOld}, the spend returns ${usd(Math.round(r.saveYr))}/yr — payback ${isFinite(r.payback) ? num(r.payback, 1) + ' years' : 'never'}. Heat flow is 1/R: each added point saves less than the last. If you're already at R-38+, spend the money on air sealing or ducts instead.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: heat flow through the ceiling scales as 1/R, so the flow cut from R-{rOld} to R-{rNew} is (1/old − 1/new)/(1/old) — that's why the first inches pay and the last inches don't; ceiling share of the envelope ≈ 25%, so bill savings = 25% × flow cut × heating+cooling spend. The federal energy-efficiency credit (30% up to $1,200/yr for insulation) is applied — claim it. Prerequisites in order: air-seal the attic floor first (can lights, top plates, plumbing stacks — $200–400 DIY, and it raises real savings toward the modeled number), fix bath fans venting into the attic, then blow insulation. DIY halves the cost: blown cellulose/fiberglass at $0.80–1.20/sqft with free blower rental from the big-box store on 20+ bags. Climate targets (DOE): R-49–60 cold, R-38–49 moderate, R-30 hot — beyond target buys little. Signs you're under-insulated: ice dams in winter, upstairs sauna in summer, visible joists in the attic (joists visible = under R-30). Estimates — your climate zone and actual bills govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10786,6 +10836,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'window-replacement-roi-calculator': WindowRoiCalc,
   'led-conversion-calculator': LedConversionCalc,
   'phantom-load-calculator': PhantomLoadCalc,
+  'attic-insulation-roi-calculator': AtticInsulationRoiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
