@@ -321,3 +321,31 @@ associations, retiree groups) that share tools with members. The pitch is always
 Timing: open enrollment season (Oct–Nov) when HR sends benefits emails — unions
 and HR pages update resources then. DROP/PSLF are evergreen; Fairness Act content
 peaks again at tax season when the 2026 SSA-1099s arrive.
+
+## Wave 55 — Retirement income & Roth mastery (#281–#285)
+
+The retirement-income cluster: Roth conversions, Social Security claiming, and
+coast FIRE. Audiences: Bogleheads forum, r/personalfinance and r/financialindependence
+wikis, AARP-adjacent retiree blogs, fee-only planner newsletters, early-retirement
+podcasts/show-note pages.
+
+- **Bracket-filler (#285)** — the flagship pitch. "Convert to the exact top of the
+  22% bracket, then check the IRMAA cliff two years out" is the planner-grade nuance
+  that earns links. Pitch Bogleheads Roth-conversion threads and planner newsletters.
+  December is peak season — conversions must settle by Dec 31.
+- **Roth 5-year rule (#281)** — the three-clocks explainer. Every conversion-ladder
+  thread on r/financialindependence eventually argues about seasoning; this settles it.
+  Pitch FIRE subreddit wikis and early-retirement blogs (Mad Fientist-adjacent).
+- **Spousal + Survivor SS (#282, #283)** — the pair. Spousal deemed-filing trap and
+  the survivor switch (the last legal claim-now-switch-later) are both
+  correction-content gold. Pitch widow/widower support orgs, AARP community
+  moderators, SSA-answers blogs. Survivor content is evergreen and high-trust.
+- **Coast FIRE (#284)** — r/coastFIRE and r/financialindependence sidebar material.
+  The "day saving becomes optional" framing is the shareable hook; the honest
+  real-return/SWR discussion is what earns the wiki link.
+- **Backlist ride-alongs** — conversion ladder, mega-backdoor, pro-rata, safe
+  withdrawal, IRMAA for the same sites. The Roth cluster now interlinks.
+
+Timing: Roth content peaks Nov–Dec (year-end conversion deadline) and again at tax
+season. Social Security claiming content is evergreen; survivor content spikes sadly
+but reliably. Coast FIRE peaks January (resolution season).
