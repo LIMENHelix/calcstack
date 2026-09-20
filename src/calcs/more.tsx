@@ -2323,6 +2323,58 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// 72(t) SEPP — substantially equal periodic payments: penalty-free IRA access before 59½, priced three IRS ways. RMD method: balance ÷ Single Life Expectancy (Pub 590-B Table I, 2022+ tables). Fixed amortization: pmt = balance × r ÷ (1 − (1+r)^−LE), where r ≤ the GREATER of 5% or 120% of the federal mid-term AFR — amortization pays roughly 2.2× the RMD method. Fixed annuitization ≈ amortization with a mortality/mid-year adjustment (≈ ×(1+r)^0.5 here; exact factors come from the IRS mortality table). The lock: payments must run the LONGER of 5 years or until 59½ — a 50-year-old is locked 9.5 years; a 57-year-old still runs to 62. Bust it (modify, stop, or add to the account) and the 10% penalty hits EVERY payment retroactively, plus interest — on the amortization schedule above that's ~$28,648. One mercy: a one-time switch from amortization/annuitization DOWN to the RMD method is allowed (Rev. Rul. 2002-62). Splitting IRAs first (into a "SEPP IRA" sized to the income need and a reserve IRA) is the standard safety play. Node-verified: $500k at 50, LE 36.2 → RMD $13,812.15/yr; amortization at 5% → $30,156.12; annuitization ≈ $30,900.83; lock ends 59½; bust cost ≈ $28,648.
+const SLE_TABLE: [number, number][] = [
+  [45, 41.0], [46, 40.0], [47, 39.0], [48, 38.1], [49, 37.1], [50, 36.2], [51, 35.3], [52, 34.3], [53, 33.4], [54, 32.5], [55, 31.6], [56, 30.6], [57, 29.8], [58, 28.9], [59, 28.0], [60, 27.1], [61, 26.2], [62, 25.4], [63, 24.5], [64, 23.7], [65, 22.9],
+]
+export function Sepp72tCalc() {
+  const [balance, setBalance] = useNumber(500000)
+  const [age, setAge] = useState('50')
+  const [rate, setRate] = useNumber(5)
+
+  const r = useMemo(() => {
+    const a = Number(age)
+    const le = SLE_TABLE.find(([x]) => x === a)?.[1] ?? 36.2
+    const rmd = balance / le
+    const rr = rate / 100
+    const amort = rr > 0 ? (balance * rr) / (1 - Math.pow(1 + rr, -le)) : balance / le
+    const annuit = amort * Math.sqrt(1 + rr)
+    const lock = Math.max(59.5 - a, 5)
+    const endAge = a + lock
+    const bust = amort * lock * 0.1
+    return { rmd, amort, annuit, lock, endAge, bust, le }
+  }, [balance, age, rate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="SEPP IRA balance" value={balance} onChange={setBalance} prefix="$" />
+          <div>
+            <div className="mb-1 text-sm font-medium">Age at first payment</div>
+            <select value={age} onChange={(e) => setAge(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {SLE_TABLE.map(([a]) => <option key={a} value={a}>{a}</option>)}
+            </select>
+          </div>
+          <Field label="Interest rate (≤ greater of 5% or 120% fed mid-term)" value={rate} onChange={setRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Max method (amortization)" value={`${usd(r.amort, 0)}/yr`} />
+          <Result label="Annuitization (approx)" value={`${usd(r.annuit, 0)}/yr`} />
+          <Result label="RMD method (smallest)" value={`${usd(r.rmd, 0)}/yr`} />
+          <Result label="Locked until" value={`age ${num(r.endAge, 1)}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Starting at {age}, the amortization method pays <span className="font-medium">{usd(r.amort, 0)}/yr ({usd(r.amort / 12, 0)}/mo)</span> — {num(r.amort / r.rmd, 1)}× the RMD method's {usd(r.rmd, 0)}. You're locked for <span className="font-medium">{num(r.lock, 1)} years, until {num(r.endAge, 1)}</span>: the longer of 5 years or 59½. Break the schedule — miss a payment, take extra, or roll money in — and the IRS claws back 10% on every payment ever taken: <span className="font-medium">about {usd(r.bust, 0)} plus interest</span> on this schedule. Need less income later? The one allowed switch is DOWN to the RMD method — it cuts the payment permanently but keeps the plan alive.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          A 72(t) SEPP program waives the 10% early-withdrawal penalty on IRA money before 59½ in exchange for rigidity: substantially equal payments, computed by one of three IRS methods, continuing for the longer of five years or until 59½. The interest rate cap is the greater of 5% or 120% of the federal mid-term AFR for either of the two months before payments start — the amortization and annuitization methods scale with it. The standard safety play is splitting first: move exactly enough into a dedicated SEPP IRA to generate the income you need, and keep the rest in a reserve IRA for real emergencies — money outside the program can still be tapped at 10% without busting the schedule. RMD-method payments recalculate annually with the balance (they flex with the market); amortization and annuitization are fixed. Compare the alternatives before committing: the rule-of-55 on a 401(k), a Roth conversion ladder (five-year seasoning, but flexible amounts), and penalty exceptions for unemployment health premiums or first-home costs all beat SEPP on flexibility. Ordinary income tax applies to every payment regardless. Annuitization here is approximated; exact IRS factors use a mortality table — verify with a CPA before the first withdrawal, because there's no undo.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Roth conversion bracket-filler — convert exactly enough to top out a chosen bracket and not a dollar more. Room = bracket top − taxable income (taxable = AFTER the standard deduction, 2026: $16,100 single / $32,200 MFJ). Conversion capped by the traditional IRA balance. Tax cost = bracketTax(income+conv) − bracketTax(income); effective rate lands just under the target marginal rate when the fill spans two brackets. IRMAA awareness: for anyone 63+, conversion MAGI (≈ taxable + standard deduction + tax-exempt interest) sets Medicare premiums TWO years later — 2026 single first cliff $109,000 MAGI, +$1,148.40/yr per person (Part B $202.90 → $298.60/mo) for crossing by $1. Node-verified: single $45,000 taxable fill 22% → convert $60,700, tax $12,814 (21.11% effective: $5,400 at 12% + $55,300 at 22%); MFJ $90,000 fill 22% → $121,400, tax $25,628; IRA $50,000 caps conversion → tax $10,460; MAGI check: $45,000 + $16,100 + $60,700 = $121,800 → $12,800 over the first IRMAA cliff.
 export function RothBracketFillCalc() {
   const [status, setStatus] = useState<'single' | 'mfj'>('single')
@@ -7284,6 +7336,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  '72t-sepp-calculator': Sepp72tCalc,
   'roth-conversion-bracket-filler-calculator': RothBracketFillCalc,
   'coast-fire-calculator': CoastFireCalc,
   'survivor-benefit-calculator': SurvivorSSCalc,

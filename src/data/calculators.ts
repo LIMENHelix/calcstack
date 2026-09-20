@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: '72t-sepp-calculator',
+    title: '72(t) SEPP Calculator 2026 — Penalty-Free IRA Withdrawals Before 59½, All Three IRS Methods',
+    shortTitle: '72(t) SEPP',
+    category: 'Retirement',
+    description:
+      'Substantially equal periodic payments waive the 10% early-withdrawal penalty — RMD, amortization, and annuitization methods computed side by side, with the lock-in period and the retroactive-penalty cost of busting the schedule.',
+    tagline: '$500,000 at age 50 can pay $30,156 a year penalty-free — but one wrong move claws back $28,648.',
+    intro:
+      'A 72(t) SEPP program is the IRS\'s bargain for early retirees: take substantially equal periodic payments from an IRA and the 10% early-withdrawal penalty is waived — no waiting for 59½. The catch is rigidity: payments must follow one of three approved methods and continue for the LONGER of five years or until 59½, so a 50-year-old is locked in for 9.5 years. The methods pay wildly different amounts — on a $500,000 balance at 50, the amortization method pays $30,156 a year while the RMD method pays $13,812. Break the schedule and the penalty comes back on every payment ever made, plus interest. This calculator prices all three methods from the current single-life table, shows your exact lock-in end date, and sizes the bust cost before you commit.',
+    howItWorks: [
+      'Enter the balance of the IRA you\'ve dedicated to the SEPP program.',
+      'Pick your age at the first payment — the single-life table sets the divisor.',
+      'Set the interest rate, capped at the greater of 5% or 120% of the federal mid-term AFR.',
+      'Compare the three methods, read your lock-in end age, and see the cost of breaking the schedule.',
+    ],
+    faq: [
+      {
+        q: 'Which 72(t) method should I choose?',
+        a: 'Amortization if you need maximum income — it pays roughly 2.2× the RMD method on the same balance. RMD if you want maximum safety: payments recalculate annually against the actual balance, so they flex down in a crash instead of draining the account, and the method is the least likely to bust. Annuitization lands in between. The deciding factor is usually income need versus the IRA balance — size the SEPP IRA to produce what you need with the method you prefer, and split off a reserve IRA for everything else. You get one switch in the program\'s life: from amortization or annuitization down to RMD, never the reverse.',
+      },
+      {
+        q: 'What exactly busts a SEPP program?',
+        a: 'Any modification: missing a payment, taking an extra dollar, changing the amount, rolling more money INTO the SEPP IRA, or transferring part of it out. The consequences are brutal and retroactive — the 10% penalty applies to every distribution taken since the program started, plus interest. On a $30,000/year program busted in year nine, that\'s a ~$27,000 bill. The safe harbors: the account running to zero on the RMD method is not a bust, and death or disability ends the program cleanly. This is why the standard advice is to size the SEPP IRA so you never need to touch it off-schedule.',
+      },
+      {
+        q: 'Is 72(t) better than a Roth conversion ladder for early retirement?',
+        a: 'Usually no — the ladder is more forgiving. A Roth conversion ladder converts flexible amounts each year and unlocks them five years later; you can skip a year, change amounts, or stop entirely with no penalty. A SEPP is locked: same payment, every year, for five years or until 59½ whichever is longer. SEPP wins in one scenario: you\'re within five years of 59½ and need income NOW with no seasoning wait. The rule of 55 on a current employer\'s 401(k) beats both when it\'s available. Many early retirees stack them: rule-of-55 401(k) to 59½, SEPP on an IRA if needed, Roth ladder as the flexible base.',
+      },
+    ],
+  },
+  {
     slug: 'roth-conversion-bracket-filler-calculator',
     title: 'Roth Conversion Bracket Filler 2026 — Convert Exactly to the Top of Your Bracket',
     shortTitle: 'Roth Bracket Filler',
