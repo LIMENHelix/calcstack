@@ -3853,7 +3853,7 @@ export const CALCULATORS: CalculatorMeta[] = [
     slug: 'taper-calculator',
     title: 'Taper Calculator — Bompa-Style Volume Descent for Race Week',
     shortTitle: 'Taper Calculator',
-    category: 'Sports & Fitness',
+    category: 'Fitness & Sports',
     description: 'Plan a proper taper: cut training volume 40–60% over 1–3 weeks while holding intensity. Works in hours, miles, tonnage, or sets — race day lands at the bottom of the descent.',
     tagline: 'Cut the volume, keep the intensity. The fitness stays, the fatigue leaves.',
     intro: 'Tudor Bompa\'s taper rule is simple and constantly violated: reduce volume 40–60% in the final weeks while keeping intensity near race pace. A 10-hour training week becomes 6 hours, then 4 — not slower, just shorter. This calculator descends your volume week by week in whatever unit you train in.',
