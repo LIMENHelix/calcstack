@@ -7875,6 +7875,58 @@ export function MobileMechanicCalc() {
   )
 }
 
+// BOUNCE HOUSE RENTAL — node-verified defaults: $2,800 combo unit, $185/day rate, 6 rentals/mo (weekend-heavy reality) = $1,110/mo gross; costs $20/rental (fuel + wear) + $90/mo liability share = $210 → net $900/mo, payback 3.1 months. 6-unit fleet: $8,880 gross / $7,380 net per month in season. Party rental has the fastest payback in the rental world — and a winter that doesn't care.
+export function BounceRentalCalc() {
+  const [unit, setUnit] = useNumber(2800)
+  const [rate, setRate] = useNumber(185)
+  const [rentals, setRentals] = useNumber(6)
+  const [units, setUnits] = useNumber(3)
+  const [season, setSeason] = useState('9')
+
+  const mo = parseFloat(season) || 0
+  const r = useMemo(() => {
+    const moGross = rate * rentals
+    const moNet = moGross - rentals * 20 - 90
+    const payback = moNet > 0 ? unit / moNet : 0
+    const fleetNet = moNet * units
+    const yrNet = fleetNet * mo
+    return { moGross, moNet, payback, fleetNet, yrNet }
+  }, [unit, rate, rentals, units, mo])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Unit cost" value={unit} onChange={setUnit} prefix="$" step="200" />
+          <Field label="Daily rate" value={rate} onChange={setRate} prefix="$" step="10" />
+          <Field label="Rentals/unit/mo" value={rentals} onChange={setRentals} step="1" />
+          <Field label="Units in fleet" value={units} onChange={setUnits} step="1" />
+          <label className="space-y-1">
+            <span className="text-sm text-muted-foreground">Season months</span>
+            <select value={season} onChange={(e) => setSeason(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="6">6 (cold climate)</option>
+              <option value="9">9 (moderate)</option>
+              <option value="12">12 (Sun Belt/indoor)</option>
+            </select>
+          </label>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Net per unit/mo" value={usd(Math.round(r.moNet))} />
+          <Result label="Payback per unit" value={`${num(r.payback, 1)} months`} big />
+          <Result label={`Fleet net (${units} units)`} value={`${usd(Math.round(r.fleetNet))}/mo`} />
+          <Result label="Year net (season)" value={usd(Math.round(r.yrNet))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Each ${usd(unit)} unit at ${usd(rate)}/day × ${rentals} rentals nets ${usd(Math.round(r.moNet))}/mo — paid off in ${num(r.payback, 1)} months. ${units} units over a ${mo}-month season nets ${usd(Math.round(r.yrNet))}/yr. The math is real; so are Saturday 6 AM setups, wet units, and the liability waiver.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: monthly net per unit = rate × rentals − (rentals × $20 fuel/wear + $90 liability/insurance share); year = fleet net × season months. The party-rental rules that decide survival: utilization is the whole game — a unit renting 6×/mo pays back in 3 months, and the same unit at 2×/mo is a garage decoration; the calendar reality is weekend-concentrated (Fri–Sun carry the month), so pricing weekday discounts 20–30% fills dead inventory at nearly zero marginal cost. Safety is the business model, not a footnote: liability insurance ($1,200–2,500/yr per small fleet) is mandatory and expensive BECAUSE the risk is real — wind anchoring (stakes/sandbags per ASTM F2374), attendant rules, and signed waivers with safety rules attached; one uninsured injury ends the business and possibly your personal assets, so LLC + insurance + waivers are the non-negotiable stack. The logistics math: delivery windows cluster (10 AM–12 PM setups, 6–8 PM pickups), each delivery is 90 minutes round-trip with setup — a 6-rental Saturday is a 12-hour day with a trailer; delivery fees beyond your radius ($2–3/mi) and park-setup fees (no power? you're bringing the generator, $25–50) are real revenue lines. Fleet mix: combo units (bounce + slide) rent for $185–275 and out-book plain bouncers; water slides are the summer premium ($250–400/day) and the winter liability; obstacle courses and interactive games serve the corporate/school-church market that books WEEKDAYS at full rate. The winter bridge in cold climates: indoor venue partnerships, tables/chairs/tents (lower margin but year-round), or hibernate the fleet and take a seasonal job — the calculator's season switch shows what each climate does to the year. Upsells with margin: concession machines ($50–75 with supplies at 80% margin), generators, attendants ($150–200/event for corporate gigs), and overnight add-ons. Estimate — your booking calendar and local competition's price sheet govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // VENDING MACHINE ROUTE — node-verified defaults: $3,500 machine, location does 45 vends/wk × $1.75 = $78.75/wk; COGS 45% + location commission 20% → net $27.56/wk → payback 127 weeks (2.4 yrs), $1,433/yr per machine. An 8-machine route nets $11,466/yr. Vending is a location business: the machine is inventory, the spot is the asset.
 export function VendingRouteCalc() {
   const [mach, setMach] = useNumber(3500)
@@ -14908,6 +14960,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'bounce-house-rental-calculator': BounceRentalCalc,
   'vending-machine-route-calculator': VendingRouteCalc,
   'laundromat-roi-calculator': LaundromatCalc,
   'notary-signing-agent-calculator': NotarySigningCalc,

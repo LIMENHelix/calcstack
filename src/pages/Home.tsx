@@ -55,15 +55,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          {CALCULATORS.length} calculators and counting. Newest: the trades-and-licenses
-          suite — HVAC and plumbing flat-rate book pricing, electrician apprentice vs
-          college cash flow, owner-operator vs company driver net-per-mile, PE license
-          ROI, real-estate commission caps, BAH rent-vs-buy, the BRS match, teacher
-          lane changes and summer gaps, and nurse agency vs staff math.
+          {CALCULATORS.length} calculators and counting. Newest: the small-business
+          reality-check suite — bounce house payback math, laundromat NOI and the
+          water-bill test, vending route payback, notary signing-agent true hourly,
+          massage pricing with the body cap, pest route annuities, mobile grooming,
+          tree service crew economics, and landscape install costing.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['hvac-flat-rate-pricing-calculator', 'plumbing-flat-rate-pricing-calculator', 'owner-operator-vs-company-calculator', 'pe-license-roi-calculator', 'brs-tsp-match-calculator', 'nurse-agency-vs-staff-calculator'].includes(c.slug),
+            ['bounce-house-rental-calculator', 'laundromat-roi-calculator', 'vending-machine-route-calculator', 'notary-signing-agent-calculator', 'massage-therapist-pricing-calculator', 'tree-service-pricing-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

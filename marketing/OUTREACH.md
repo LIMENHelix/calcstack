@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 421 calculators live (648 indexed pages). Domain live at calcstack.app;
+**Status: 430 calculators live (658 indexed pages). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -687,7 +687,7 @@ wedding-photographer forums), tattoo artist forums and r/tattoo, DJ communities
 
 ## Wave 66 — Route & rate suite (#401–#410, milestone wave)
 
-Milestone wave: 421 calculators live (648 indexed pages). This wave prices the
+Milestone wave: 430 calculators live (658 indexed pages). This wave prices the
 driveway-and-route economy: the businesses where the wage is set by minutes
 between stops and the ticket at the scale house, not the menu price. Audiences:
 pressure-washing and exterior-cleaning communities (r/pressurewashing, Pressure
@@ -727,7 +727,7 @@ startup press that loves a pricing tool.
 
 ## Wave 67 — Trades, licenses & career ladders (#411–#421, milestone wave)
 
-Milestone wave: 421 calculators live (648 indexed pages). This wave owns the
+Milestone wave: 430 calculators live (658 indexed pages). This wave owns the
 career-ladder math of licensed work: apprenticeships vs degrees, license ROI,
 flat-rate price books, and the commission/match structures each profession
 hides in its fine print. Audiences: electrical and trades communities
@@ -767,3 +767,39 @@ communities (r/Teachers, ed newsletters).
   teacher pay, 403(b)/457(b), overtime. The career-ladder cluster now spans
   nurses, teachers, military, engineers, agents, electricians, plumbers, HVAC,
   and truckers.
+
+## Wave 68 — Small-business reality checks (#422–#430, milestone wave)
+
+Milestone wave: 430 calculators live (658 indexed pages). This wave covers the
+businesses everyone daydreams about and few people price: green trades, passive-
+income staples, and skilled-solo practices. Audiences: landscaping and lawn
+communities (r/landscaping, Lawn Care Forum, LawnSite), tree services
+(r/arborists, TreeBuzz), pest control (r/pestcontrol, route-broker listings),
+groomers (r/doggrooming, pet-groomer Facebook groups), notaries (r/notary,
+Notary Cafe, signing-agent Facebook groups), massage therapists (r/massage,
+AMTA/ABMP communities), vending (r/vending, VendingNation YouTube community),
+laundromat investors (Laundromat Resource podcast/community, r/laundromats),
+party rental operators (r/partyrental, ARA — American Rental Association), and
+the side-hustle press that covers all of them.
+
+- **Landscape install costing (#422)** — dual-rate pricing and the
+  maintenance-annuity attach; LawnSite runs on pricing threads.
+- **Tree service pricing (#423)** — the $182/hr crew meter and insurance-as-
+  sales-tool angle; arborist communities and storm-season content.
+- **Pest control route (#424)** — the 15× monthly route-sale multiple; route
+  brokers and the tech-to-owner transition story.
+- **Mobile grooming pricing (#425)** — "$68/hr vs the salon's commission day";
+  groomer communities are fiercely loyal to tools that respect the body cap.
+- **Notary signing agent (#426)** — the 2-hour truth behind the "$125 for 45
+  minutes" pitch; Notary Cafe and the signing-agent course critics.
+- **Massage pricing (#427)** — body-cap framing (price is the only growth
+  lever); AMTA/ABMP communities and massage-business coaches.
+- **Vending route (#428)** — payback per machine and "the location is the
+  asset"; VendingNation-adjacent audiences and r/passive_income skeptics.
+- **Laundromat ROI (#429)** — the water-bill verification test; Laundromat
+  Resource and BizBuySell browsers search exactly this math.
+- **Bounce house rental (#430)** — 3.1-month payback with the ASTM/insurance
+  stack named; party-rental Facebook groups and side-hustle YouTube.
+- **Backlist ride-alongs** — lawn-care pricing, snow bids, cleaning routes,
+  event DJ, photographer CODB. The business-pricing library now spans 35+
+  specific trades and side businesses.

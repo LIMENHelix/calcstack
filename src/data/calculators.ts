@@ -3670,6 +3670,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'bounce-house-rental-calculator',
+    title: 'Bounce House Rental Calculator — Payback per Unit, Fleet Income, and the Season Reality',
+    shortTitle: 'Bounce House Rental',
+    category: 'Freelance & Career',
+    description:
+      'Model a party rental business honestly: unit payback in months, fleet-level monthly income, weekend utilization, and what the season length does to the year.',
+    tagline: 'A $2,800 combo unit at $185/day, 6 rentals a month, pays back in 3.1 months — then the season length decides the year.',
+    intro:
+      'Party rental has the fastest payback in the equipment-rental world: a $2,800 bounce-and-slide combo renting at $185 a day just six times a month nets $900 monthly — paid off in barely 3 months. A six-unit fleet over a 9-month season approaches six figures of net. The catch is everything around the math: Saturday 6 AM setups, wet units, wind anchoring, and the liability stack that is not optional. This calculator prices the unit, the fleet, and your climate\'s season honestly.',
+    howItWorks: [
+      'Enter unit cost and your market\'s daily rate.',
+      'Enter realistic rentals per unit per month — weekends carry the calendar.',
+      'Read net per unit per month and the payback period.',
+      'Enter fleet size and your season length in months.',
+      'Read the season-year net — the number the business plan lives on.',
+    ],
+    faq: [
+      {
+        q: 'Is a bounce house rental business profitable?',
+        a: 'The unit economics are the best in equipment rental — 3–4 month paybacks are normal because the asset is cheap ($1,800–3,500 for quality commercial combos) and the rate is strong ($150–275/day). The profitability traps are operational, not mathematical: utilization (a unit at 2 rentals/mo is a garage decoration — 6+/mo is the working threshold, and weekends carry the calendar), logistics (each delivery is ~90 minutes with setup — a 6-rental Saturday is a 12-hour trailer day), and cleaning/drying (a wet unit folded is a mold problem; rainy weekends cost the rental AND the drying labor). Fleet strategy: start with 2–3 combo units (bounce+slide out-books plain bouncers), add water slides for summer premium ($250–400/day), and obstacle courses for the corporate/school/church market that books WEEKDAYS at full rate. The insurance reality prices the fence-sitters out: liability runs $1,200–2,500/yr because the risk is real — wind anchoring per ASTM F2374, attendant rules, and signed waivers are the non-negotiable stack.',
+      },
+      {
+        q: 'How do I price bounce house rentals?',
+        a: 'By market scan plus your delivery radius: price the top 5 local competitors, position mid-to-upper (the cheapest operator in a party market attracts the worst problems), and make the delivery fee structure do the route work — free inside 10 miles, $2–3/mile beyond, park setups at +$25–50 when you bring the generator. Weekday discounts of 20–30% fill dead inventory at near-zero marginal cost — the unit sits anyway. The upsell ladder carries real margin: concession machines ($50–75 with supplies at 80% margin), attendants for corporate events ($150–200/event), overnight add-ons (+$50–75), and tables/chairs/tents as year-round attach items. Package pricing ("party package" = combo + concession + tables) raises average ticket 30–40% and simplifies the customer\'s decision. Deposits and cancellation policy: 25–50% deposit to book, rain-out reschedules instead of refunds, 48-hour cancellation window — weather risk belongs to the calendar, not to your revenue.',
+      },
+      {
+        q: 'What are the legal and safety requirements for a bounce house business?',
+        a: 'Three non-negotiables, in order. Insurance: general liability with an inflatables rider ($1,200–2,500/yr for a small fleet) — many parks and venues require certificates naming them additionally insured, so the policy is also your booking passport. Entity: an LLC separating business from personal assets — a single uninsured injury claim can reach personal assets without it, and inflatables are a plaintiff-attorney-friendly category. Operational compliance: ASTM F2374 is the standard of care — anchoring (stakes or 75-lb+ sandbags per anchor point), wind limits (shut down above 15–20 mph per manufacturer), supervision requirements, and capacity limits, with signed waivers attaching the safety rules to every rental; some states (and many parks) add inspection or registration requirements — check yours before the first booking. The safety record IS the marketing: the operator who leads with "we anchor to ASTM standard and carry $1M liability" wins the school, church, and corporate contracts that book weekday premium rates and never haggle. One injury handled badly ends the business; the stack above is what "handled well" costs.',
+      },
+    ],
+  },
+  {
     slug: 'vending-machine-route-calculator',
     title: 'Vending Machine Route Calculator — Payback per Machine, Route Income, and Sale Value',
     shortTitle: 'Vending Route ROI',
