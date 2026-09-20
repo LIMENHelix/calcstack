@@ -7875,6 +7875,102 @@ export function MobileMechanicCalc() {
   )
 }
 
+// NOTARY SIGNING AGENT — node-verified defaults: $110 avg fee × 4 signings/day × 21 days = $9,240/mo gross. Costs: 84 signings × ($8 print + $6 fuel) + $60/mo E&O/supplies = $1,236 → net $8,004/mo over 168 all-in hours (2h per signing incl. drive/print) = $47.64/hr. Direct title work at $150 vs signing services at $80 is a $5,880/mo gap on the same calendar.
+export function NotarySigningCalc() {
+  const [fee, setFee] = useNumber(110)
+  const [perDay, setPerDay] = useNumber(4)
+  const [days, setDays] = useNumber(21)
+  const [printPer, setPrintPer] = useNumber(8)
+  const [fuelPer, setFuelPer] = useNumber(6)
+  const [minPer, setMinPer] = useNumber(120)
+
+  const r = useMemo(() => {
+    const n = perDay * days
+    const gross = fee * n
+    const cost = (printPer + fuelPer) * n + 60
+    const net = gross - cost
+    const hrs = (n * minPer) / 60
+    const hr = hrs > 0 ? net / hrs : 0
+    const directGap = (150 - 80) * n
+    return { n, gross, cost, net, hrs, hr, directGap }
+  }, [fee, perDay, days, printPer, fuelPer, minPer])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Avg fee per signing" value={fee} onChange={setFee} prefix="$" step="5" />
+          <Field label="Signings per day" value={perDay} onChange={setPerDay} step="1" />
+          <Field label="Days per month" value={days} onChange={setDays} step="1" />
+          <Field label="Print cost/signing" value={printPer} onChange={setPrintPer} prefix="$" step="1" />
+          <Field label="Fuel per signing" value={fuelPer} onChange={setFuelPer} prefix="$" step="1" />
+          <Field label="Minutes all-in" value={minPer} onChange={setMinPer} step="10" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Signings/mo" value={num(r.n, 0)} />
+          <Result label="Gross" value={usd(Math.round(r.gross))} />
+          <Result label="Net" value={usd(Math.round(r.net))} big />
+          <Result label="True hourly" value={`${usd(Math.round(r.hr))}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${num(r.n, 0)} signings at ${usd(fee)} grosses ${usd(Math.round(r.gross))}/mo but burns ${num(r.hrs, 0)} all-in hours — net ${usd(Math.round(r.net))}, ${usd(Math.round(r.hr))}/hr. And the channel gap is brutal: direct title work at $150 vs signing-service $80 is ${usd(Math.round(r.directGap))}/mo on the identical calendar.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: net = signings × (fee − print − fuel) − monthly E&O/supplies; true hourly counts ALL time per signing (drive, print/scan-back, the appointment). The signing-agent economics: the fee tier you live in decides the business — direct title/escrow relationships pay $125–200, signing services pay $70–100 (they take the middle), and snap-dispatch platforms race to $50–75 bottoms; the career arc is taking service volume while building direct relationships, because the direct book is the only version with pricing power. The all-in-hours trap: a "$125 for 45 minutes" signing is really 2 hours door-to-door (print 2 loan packages — 150+ pages each — drive, sign, scan-back, drops), so the true hourly is half the headline; track minutes per signing for a month and price from data. Print economics matter at scale: a dual-tray laser printer is mandatory (letter/legal mixed sets), toner is the second-biggest cost after fuel, and $8/signing print cost is the honest number. Startup costs: notary commission + bond ($50–150), LSA certification/background ($100–300), E&O insurance ($50–100/yr), printer, and a reliable car — under $1,000 all-in, which is why the field floods when mortgage rates drop and starves when they rise; volume follows refinances, so the 2021-style gold rush and the 2023-style drought are the same business at different rate cycles. Tax note: notary fees themselves are exempt from self-employment tax (but not income tax), while signing-agent service fees beyond the notarial act are NOT exempt — track them separately; a notary-savvy CPA is worth it. Density rules apply: cluster same-area signings, decline the 45-minute-drive $70 signing, and evenings/weekends price higher because borrowers need them. Estimate — your market's rate environment and your minutes-per-signing log govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// MASSAGE THERAPIST PRICING — node-verified defaults: 20 sessions/wk × $85 = $7,361/mo gross. Costs: room $600 + supplies $8/session + software/insurance $50 = $1,343/mo → net $6,018. True hours: 20 × 80 min = 115.5h/mo (turnover time counts) → $52.12/hr true. Spa employment pays $25–35/hr hands-on with no room risk; independence pays double with the book-building year priced in.
+export function MassagePricingCalc() {
+  const [sess, setSess] = useNumber(20)
+  const [price, setPrice] = useNumber(85)
+  const [room, setRoom] = useNumber(600)
+  const [supp, setSupp] = useNumber(8)
+  const [turnMin, setTurnMin] = useNumber(20)
+  const [maxDay, setMaxDay] = useNumber(5)
+
+  const r = useMemo(() => {
+    const mo = sess * price * 4.33
+    const moCost = room + supp * sess * 4.33 + 50
+    const moNet = mo - moCost
+    const trueHrs = (sess * 4.33 * (60 + turnMin)) / 60
+    const hr = trueHrs > 0 ? moNet / trueHrs : 0
+    const spaWk = 30 * sess // $30/hr employee equivalent on hands-on hrs
+    const bodyCapYr = maxDay * 5 * 48 // sessions/yr at body-sustainable pace
+    return { mo, moCost, moNet, trueHrs, hr, spaWk, bodyCapYr }
+  }, [sess, price, room, supp, turnMin, maxDay])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Sessions per week" value={sess} onChange={setSess} step="1" />
+          <Field label="Price per 60 min" value={price} onChange={setPrice} prefix="$" step="5" />
+          <Field label="Room rent" value={room} onChange={setRoom} prefix="$" suffix="/mo" step="50" />
+          <Field label="Supplies/session" value={supp} onChange={setSupp} prefix="$" step="1" />
+          <Field label="Turnover min" value={turnMin} onChange={setTurnMin} step="5" />
+          <Field label="Body cap/day" value={maxDay} onChange={setMaxDay} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Monthly gross" value={usd(Math.round(r.mo))} />
+          <Result label="Monthly net" value={usd(Math.round(r.moNet))} big />
+          <Result label="True hourly" value={`${usd(Math.round(r.hr))}/hr`} />
+          <Result label="Spa pays for same" value={`${usd(Math.round(r.spaWk))}/wk`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${sess} sessions at ${usd(price)} grosses ${usd(Math.round(r.mo))}/mo — net ${usd(Math.round(r.moNet))} after the room and supplies, ${usd(Math.round(r.hr))}/hr counting turnover. The spa pays ${usd(Math.round(r.spaWk))}/wk for the same hands. And the body cap is the real ceiling: ${maxDay} sessions/day is a career-length decision, not a hustle metric.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: monthly net = sessions × price × 4.33 − (room + supplies × sessions + software/insurance); true hourly counts turnover time between clients (linens, notes, reset) — a "60-minute" session occupies 80 minutes of your day. The pricing rules for bodywork: the session price must carry the body cap — massage has a hard physical ceiling (4–6 hands-on sessions/day sustainable long-term; burnout and repetitive-strain end more careers than competition), so growth comes from PRICE and retention, never volume; annual $5 increases on a full book of regulars out-earn the client churn they cost. Employment math honestly: spa/clinic jobs pay $25–35/hr of hands-on time with zero room risk, laundry done for you, and bookings filled — the right move for the first 1–2 years while building skills and a client base; independence roughly doubles per-session economics but adds the room, the marketing, the admin, and the empty-Tuesday risk. Retention is the business: rebooking before checkout, treatment plans for chronic issues (weekly for 4 weeks, then maintenance), and packages/memberships (6-session packs at 10% off, monthly membership at slight discount with auto-draft) — a base of 60–80 recurring clients is a durable practice; the same count of one-timers is a treadmill. The modalities that raise the ceiling: deep tissue/sports at +$10–20, prenatal certification, lymphatic drainage (post-surgical referrals from surgeons are the highest-retention channel in the industry), and medical massage billed to workers comp/auto where legal. Tax and license notes: state licensing (500–1,000 hours by state), liability insurance ($200–300/yr), LLC once independent, and the 1099-vs-W2 misclassification fight is real in spas — if the spa sets your hours and prices, the IRS thinks you're an employee regardless of the paperwork. Estimate — your booking software's utilization report and your region's rate card govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // PEST CONTROL ROUTE — node-verified defaults: 400 quarterly accounts × $120 = $16,000/mo recurring revenue. 133 stops/mo ÷ 14/day = 9.5 route days = 45% route fill. Gross per route hour: $16,000 ÷ 77.8 route hrs = $205.7/hr; after chem ($400/mo) = $200.5/hr. Pest routes print because one quarterly visit anchors 3 months of revenue — density decides how much of the calendar is profit.
 export function PestRouteCalc() {
   const [accts, setAccts] = useNumber(400)
@@ -14714,6 +14810,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'notary-signing-agent-calculator': NotarySigningCalc,
+  'massage-therapist-pricing-calculator': MassagePricingCalc,
   'pest-control-route-calculator': PestRouteCalc,
   'mobile-grooming-pricing-calculator': MobileGroomingCalc,
   'landscape-install-costing-calculator': LandscapeInstallCalc,

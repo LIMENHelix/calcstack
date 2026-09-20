@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'notary-signing-agent-calculator',
+    title: 'Notary Signing Agent Calculator — True Hourly After Print, Drive, and the Channel Gap',
+    shortTitle: 'Notary Signing Agent',
+    category: 'Freelance & Career',
+    description:
+      'Run the real loan-signing economics: fee per signing, all-in hours including print and drive, and the $5,880/mo gap between direct title work and signing-service fees.',
+    tagline: '84 signings at $110 nets $8,004/mo — $47.64/hr once the printing, driving, and scan-backs count. And direct title work pays nearly double the services.',
+    intro:
+      'The signing-agent pitch quotes the fee; the calendar shows the truth. A $125 signing is two hours door-to-door — two 150-page print sets, the drive, the signing, the scan-back — so the true hourly is half the headline. Eighty-four signings a month nets $8,004 after printing and fuel, and the channel gap dwarfs everything else: direct title relationships pay $125–200 where signing services pay $70–100 for the identical appointment. This calculator runs your real fees, volume, and minutes into the honest monthly and hourly numbers.',
+    howItWorks: [
+      'Enter your average fee, signings per day, and working days.',
+      'Enter print cost and fuel per signing — the invisible per-unit costs.',
+      'Enter all-in minutes per signing (print + drive + appointment + scan-back).',
+      'Read monthly gross, net, and true hourly.',
+      'Read the direct-vs-service gap — the pricing power you are building toward.',
+    ],
+    faq: [
+      {
+        q: 'How much do notary signing agents really make?',
+        a: 'The example full-time pace — 4 signings/day, 21 days — nets about $8,000/mo, $47.64/hr on all-in time, and that is a GOOD month in a decent rate environment. Volume follows the mortgage cycle: refinance waves flood the field (2021) and rate spikes starve it (2023), so the honest annual number is lumpy — buyer/seller closings and seller-side work continue through high-rate periods, but refi volume is the tide. The per-signing truth: "$125 for a 45-minute appointment" is really 2 hours door-to-door with printing, driving, and scan-backs — track your minutes per signing for a month before believing any course-seller\'s income claims. Startup is genuinely cheap: commission and bond ($50–150), certification and background check ($100–300), E&O ($50–100/yr), dual-tray laser printer — under $1,000 all-in, which is exactly why the field floods when rates drop. The survivors treat it as a route business: cluster same-area signings, decline the 45-minute-drive $70 job, and build the direct title relationships that pay double.',
+      },
+      {
+        q: 'Signing services vs direct title work — what is the difference?',
+        a: 'About $5,880 a month on a full calendar — the single biggest lever in the business. Signing services (Snapdocs, SigningOrder platforms) are middlemen: the title company pays $150–200, the service keeps $50–100, you get $70–100. Direct relationships with title/escrow offices pay the full $125–200 to you. The career arc: take service volume to build speed and reputation, then convert to direct — introduce yourself to local escrow officers, be the notary who never makes an error and always scan-backs within the hour, and ask for their overflow directly. The platform trap: snap-dispatch apps race fees toward $50–75 bottoms because supply floods in every refi wave — you cannot win the lowest-bidder game on 2-hour appointments. What makes you bookable at the top tier: error-free packages (a missed initial can delay a funding and end a relationship), fast scan-backs, availability for evening/weekend signings (borrowers need them, price accordingly), and RON capability where your state allows remote online notarization.',
+      },
+      {
+        q: 'What are the tax rules for notary signing agents?',
+        a: 'One unusual break and one common mistake. The break: fees for the NOTARIAL ACT itself are exempt from self-employment tax (IRC §1402(c)(1)) — though still subject to income tax. The mistake: assuming everything you earn is exempt — signing-agent service fees beyond the notarization (travel, printing, witnessing logistics, the signing service portion) are NOT exempt and owe the normal 15.3% SE tax. In practice, most signing-agent income is service income; only the state-set notarial fee portion qualifies for the exemption, so track them separately in your books and let a notary-savvy CPA allocate correctly. The deductions that matter: mileage (the biggest — at 2-hour rounds of driving, the standard mileage rate is worth thousands per year), printing and toner, E&O, certification, the printer, home office if you print/scan there, and phone. Quarterly estimated taxes apply the moment you are 1099 — set aside 25–30% of net or April becomes a penalty festival.',
+      },
+    ],
+  },
+  {
+    slug: 'massage-therapist-pricing-calculator',
+    title: 'Massage Therapist Pricing Calculator — Session Price, True Hourly, and the Body Cap',
+    shortTitle: 'Massage Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price massage sessions against the real day: room rent, supplies, turnover time between clients, and the physical ceiling that makes pricing — not volume — the only growth lever.',
+    tagline: '20 sessions at $85 nets $6,018/mo — $52/hr counting turnover. The spa pays $30/hr for the same hands; the body cap is the real boss.',
+    intro:
+      'Massage economics are governed by a ceiling no hustle culture escapes: 4–6 hands-on sessions a day is the sustainable lifetime pace, so growth comes from price and retention, never volume. Twenty sessions a week at $85 nets $6,018 a month after room and supplies — $52 an hour once the 20-minute turnover between clients counts. The spa down the street pays $30 an hour for the same hands. This calculator prices your week honestly, compares employment, and puts the body cap on the dashboard where it belongs.',
+    howItWorks: [
+      'Enter sessions per week and your 60-minute price.',
+      'Enter room rent, supplies per session, and turnover minutes.',
+      'Read monthly gross, net, and the true hourly with turnover counted.',
+      'Compare against what a spa pays for the same hands-on hours.',
+      'Set the body cap per day — the ceiling your pricing must respect.',
+    ],
+    faq: [
+      {
+        q: 'How much should a massage therapist charge?',
+        a: 'Whatever the body cap demands — that is the whole analysis. With a hard ceiling of 4–6 sustainable hands-on sessions a day (repetitive strain ends more massage careers than competition), the session price is the only growth lever: $85 sessions at 20/week net $52/hr true; the same calendar at $70 nets $40 — and both cost your wrists identically. Market anchors: independent 60-minute sessions run $70–120 by region, spa menu prices $100–160 (of which the employed therapist sees $25–35), and modality premiums (deep tissue, sports, prenatal, lymphatic) add $10–25. The retention engine is what makes premium pricing stick: rebooking before checkout, treatment plans for chronic issues (weekly × 4 then maintenance), and memberships/6-packs at 10% off with auto-draft — a base of 60–80 recurring clients is a durable practice; the same count of one-timers is a marketing treadmill. Raise prices $5 annually on the full book — the churn costs less than the increase earns.',
+      },
+      {
+        q: 'Spa employment or independent practice?',
+        a: 'Employment first, independence when the book follows you. The spa/clinic years (1–2) pay $25–35/hr of hands-on time but include everything you don\'t yet want to buy: filled bookings, laundry, the room, the software, and thousands of reps against every body type. Independence roughly doubles per-session economics ($52/hr true in the example) but adds room rent ($400–900/mo), marketing, admin, and the empty-Tuesday risk — it works when 60–80 recurring clients would follow you, not before. The middle paths: room rental inside a wellness collective (your business, shared lobby), chair-massage corporate gigs ($60–100/hr booked, light on the body), and the 2-days-employed + 3-days-independent hybrid. Watch the misclassification fight: if the spa sets your hours, prices, and rules while calling you a 1099 contractor, the IRS disagrees — that paperwork matters for your SE tax and their payroll liability. Either path: liability insurance ($200–300/yr), state license currency, and CE hours are the fixed costs of staying legal.',
+      },
+      {
+        q: 'What modalities actually increase massage income?',
+        a: 'The referral-channel ones, not the menu-filler ones. Lymphatic drainage is the standout: post-surgical referrals (plastic surgeons, oncology rehab) create the highest-retention client channel in the industry — prescribed, recurring, insurance-adjacent in some states, and priced $95–150. Sports/deep tissue commands +$10–20 with team and gym partnerships. Prenatal certification converts 9 months of recurring twice-monthly clients who then become postpartum clients. Medical massage billed to workers\' comp and auto claims (where state-legal) pays set fee schedules that beat spa wages, though the documentation load is real. The certification economics mirror the nursing math: a $400–800 modality course that adds $15/session pays back in a month on a full book. What does NOT move income: collecting modalities without a referral channel behind them — five certificates on the wall with no surgeon, gym, or doula sending clients are wall decorations. Build one channel per modality and the price ladder builds itself.',
+      },
+    ],
+  },
+  {
     slug: 'pest-control-route-calculator',
     title: 'Pest Control Route Calculator — Recurring Revenue, Route Fill, and the Sale Value of the Book',
     shortTitle: 'Pest Control Route',
