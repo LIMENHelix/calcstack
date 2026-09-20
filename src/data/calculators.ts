@@ -3970,6 +3970,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'holiday-decor-stacking-calculator',
+    title: 'Holiday Decor Season Stacking Calculator — Halloween, Christmas, and the Off-Season',
+    shortTitle: 'Decor Season Stacking',
+    category: 'Trades & Engineering',
+    description: 'One crew, four seasons: stack Halloween installs, the Christmas rush, and permanent landscape lighting in the off-season into a single revenue year. See the stacked total vs a Christmas-only operation.',
+    tagline: 'Christmas pays for 6 weeks. Stacking pays for 52.',
+    intro: 'A Christmas-only light business grosses $102,600 in six weeks and starves for 46. Stack 18 Halloween jobs at $450 and off-season permanent lighting at $2,600 a job and the same crew, truck, and ladders produce a $219,900 year. This calculator stacks your seasons and shows what the off-months are worth.',
+    howItWorks: [
+      'Enter your Halloween install count and average ticket — October warms up the crew.',
+      'Add the Christmas season: job count and average per-foot-driven ticket.',
+      'Set off-season permanent lighting volume and ticket for January–September.',
+      'The tool totals each season and the stacked year.',
+      'Compare stacked revenue against Christmas-only — the delta is what the off-season is worth to you.',
+    ],
+    faq: [
+      {
+        q: 'How do Christmas light installers make money the rest of the year?',
+        a: 'The three-season stack is the standard playbook. Halloween (October) is the warm-up: smaller tickets ($300–$600), shorter installs, and it fills the calendar before the Christmas rush while retraining last year\'s crew. Permanent landscape and architectural lighting (January–September) is the margin engine: $2,000–$4,000 tickets, no deadline pressure, and it sells to the exact same homeowner who buys Christmas lights. Some operators add event/wedding lighting and patio bistro installs for restaurants. The businesses that fail are the ones that treat December 26 to October 1 as vacation — the stacked model roughly doubles revenue on the same fixed costs, and it keeps your best installers on payroll instead of rehiring every November.',
+      },
+      {
+        q: 'What does a permanent landscape lighting job cost the customer?',
+        a: 'Professional permanent lighting runs $2,000–$5,000 for a typical home: roofline LED track systems (the "permanent Christmas lights" that change color by app) run $25–$35 per linear foot installed, while landscape uplighting packages (8–15 fixtures, transformer, timer) run $1,800–$3,500. The sales pitch writes itself after a Christmas install: the customer already watched your crew transform the house, and the rehang discount next year plus a permanent system often bundle. Margin runs 50–60% on permanent work because there is no seasonal deadline compressing your schedule — it is the scheduling flexibility that makes the off-season jobs more profitable per hour than the rush.',
+      },
+      {
+        q: 'How big can a holiday decor business get?',
+        a: 'Single-crew Christmas-only operations cap around $100,000–$150,000 per season — the constraint is working days, not demand. Stacked multi-crew operators scale to $500,000–$1M+ because Halloween and permanent lighting smooth the hiring problem that limits Christmas-only growth. The franchise data point: the big holiday-decor franchises publish average revenues in the $200,000–$400,000 range per territory, and the independent advantage is keeping the 6–8% royalty as profit. The ceiling on the whole model is crew leadership — a trained crew lead who can run a jobsite alone is worth more than any marketing channel, because every crew lead is another $100,000+ of season capacity.',
+      },
+    ],
+  },
+  {
+    slug: 'photo-booth-pricing-calculator',
+    title: 'Photo Booth Pricing Calculator — Startup Cost, Payback, and Event Economics',
+    shortTitle: 'Photo Booth Pricing',
+    category: 'Freelance & Career',
+    description: 'Price a photo booth business: startup cost, per-event price and variable cost, events per month. See margin per event, startup payback, and annual gross margin.',
+    tagline: 'A $9,500 booth at $750 an event pays itself back in under 5 months.',
+    intro: 'The photo booth math is unusually clean: $9,500 of equipment, $750 average events, $75 of attendant-paper-travel cost, and three events a month means the booth pays for itself in 4.7 months and throws off $27,000 a year in gross margin. This calculator runs your prices and volume against that model.',
+    howItWorks: [
+      'Enter startup cost: booth shell, camera or iPad, printer, props, backdrop.',
+      'Set your average event price — weddings run $600–$900, corporate higher.',
+      'Add variable cost per event: attendant hours, print media, travel.',
+      'Set realistic monthly volume — 3 events is a side business, 8+ is a job.',
+      'Read margin per event, payback period, and annual gross margin.',
+    ],
+    faq: [
+      {
+        q: 'Is a photo booth business profitable?',
+        a: 'The unit economics are among the best in events: a $750 booking with $75 of variable cost is a 90% gross margin, and the equipment pays back in 4–6 months at modest volume — the calculator\'s defaults (3 events/month) hit payback in 4.7 months and $27,000 annual gross margin. The catch is demand generation, not margin: booths are booked 6–12 months out for wedding season, so year one is marketing-heavy and the payback assumes you actually fill the calendar. The operators who win treat it as a weekday problem — Saturdays sell themselves by year two, and corporate events, brand activations, school dances, and holiday parties on weeknights are where utilization doubles. Digital-only booths (no printer) cut variable cost to near zero and enable $350–$500 budget tiers.',
+      },
+      {
+        q: 'How much should I charge for photo booth rental?',
+        a: 'Market bands by format: open-air digital booths $350–$550 per event, print booths $600–$900, 360 video booths $800–$1,200, and mirror/premium booths $900–$1,500. Price by package hours (3-hour base, $100–$150 per extra hour) rather than flat — it protects you from the 6-hour wedding. Corporate pricing is a different book entirely: brands pay $1,500–$3,000 for activations with custom overlays and data capture, because the booth is lead generation for them, not entertainment. Never discount below your variable cost floor, and add travel beyond 30 miles — a $75 travel line is easier to defend than a higher base price.',
+      },
+      {
+        q: 'What are the hidden costs of a photo booth business?',
+        a: 'The ones that bite: attendant labor (a $750 event with a 5-hour attendant commitment at $25/hr is $125 of labor — put it in the variable cost input or the margin flatters itself), printer media (DyeSub paper+ribbon runs $0.30–$0.50 per print strip, ~$30–$60 per busy event), insurance (event liability ~$400–$600/year, required by most venues), software subscriptions ($50–$100/month for the booth app and gallery hosting), and the replacement cycle — iPads, printers, and backdrops wear out on a 3–4 year clock. Booking software and a real contract with a cancellation clause are the unglamorous pieces that separate the operators from the hobbyists: the deposit (typically 50%) is what makes a booked date real.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

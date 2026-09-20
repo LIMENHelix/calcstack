@@ -257,6 +257,10 @@ export const WHY_USE: Record<string, string> = {
     'Agency owners use it before quoting: $20 pay + 15% burden is $23 cost — a $28 bill is 17.9% margin, $800/mo per head, and markup talk hides it.',
   'rpe-to-load-calculator':
     'Lifters use it at the rack: RPE 8 × 5 on a 405 e1RM is 330 on the bar — the Tuchscherer chart, half-steps interpolated, plates rounded.',
+  'holiday-decor-stacking-calculator':
+    'Decor operators use it to justify the off-season: Halloween at $8,100 plus permanent lighting at $109,200 turns a 6-week Christmas sprint into a $219,900 year.',
+  'photo-booth-pricing-calculator':
+    'Event entrepreneurs use it before buying: $9,500 of booth at $750 an event with 90% margin pays back in 4.7 months — if the calendar fills.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

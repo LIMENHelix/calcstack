@@ -142,6 +142,8 @@ export const MORE_CALC_COMPONENTS: Record<string, LazyExoticComponent<ComponentT
   'christmas-light-install-pricing-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.ChristmasLightsCalc }))),
   'staffing-agency-markup-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.StaffingMarkupCalc }))),
   'rpe-to-load-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.RpeLoadCalc }))),
+  'holiday-decor-stacking-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.DecorStackingCalc }))),
+  'photo-booth-pricing-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.PhotoBoothCalc }))),
   'sabbatical-cost-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SabbaticalCostCalc }))),
   'self-storage-roi-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SelfStorageCalc }))),
   'car-wash-economics-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.CarWashCalc }))),

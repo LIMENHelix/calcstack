@@ -2524,3 +2524,71 @@ export function RpeLoadCalc() {
     </CardContent></Card>
   )
 }
+// HOLIDAY DECOR SEASON STACKING — node-verified defaults: Halloween 18 jobs × $450 = $8,100; Christmas 135 × $760 = $102,600; permanent landscape lighting 6/mo × 7 off-months × $2,600 = $109,200. Stacked year = $219,900 vs $102,600 Christmas-only — the same crew, truck, and ladders earning in all four seasons.
+export function DecorStackingCalc() {
+  const [hJobs, setHJobs] = useNumber(18)
+  const [hAvg, setHAvg] = useNumber(450)
+  const [cJobs, setCJobs] = useNumber(135)
+  const [cAvg, setCAvg] = useNumber(760)
+  const [pJobs, setPJobs] = useNumber(6)
+  const [pAvg, setPAvg] = useNumber(2600)
+  const [pMonths, setPMonths] = useNumber(7)
+  const r = useMemo(() => {
+    const h = hJobs * hAvg
+    const c = cJobs * cAvg
+    const p = pJobs * pAvg * pMonths
+    return { h, c, p, year: h + c + p }
+  }, [hJobs, hAvg, cJobs, cAvg, pJobs, pAvg, pMonths])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Halloween jobs" value={hJobs} onChange={setHJobs} />
+        <Field label="Halloween avg ticket" value={hAvg} onChange={setHAvg} prefix="$" />
+        <Field label="Christmas jobs" value={cJobs} onChange={setCJobs} />
+        <Field label="Christmas avg ticket" value={cAvg} onChange={setCAvg} prefix="$" />
+        <Field label="Permanent lighting jobs/mo (off-season)" value={pJobs} onChange={setPJobs} />
+        <Field label="Permanent lighting avg ticket" value={pAvg} onChange={setPAvg} prefix="$" />
+        <Field label="Off-season months" value={pMonths} onChange={setPMonths} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Stacked year revenue" value={usd(r.year)} big />
+        <Result label="Christmas-only revenue" value={usd(r.c)} />
+        <Result label="Halloween" value={usd(r.h)} />
+        <Result label="Permanent lighting (off-season)" value={usd(r.p)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Halloween warms up the crew before the Christmas rush; permanent lighting keeps them employed January–September. One customer list buys all three seasons.</p>
+    </CardContent></Card>
+  )
+}
+
+// PHOTO BOOTH PRICING — node-verified defaults: $9,500 startup (booth, printer, props), $750 avg event, $75/event variable (attendant, paper, travel). At 3 events/mo payback is 4.7 months; 40 events/yr grosses $30,000, nets $27,000 before your time. Weekend business with weekday pricing power at corporate events.
+export function PhotoBoothCalc() {
+  const [startup, setStartup] = useNumber(9500)
+  const [price, setPrice] = useNumber(750)
+  const [variable, setVariable] = useNumber(75)
+  const [eventsMo, setEventsMo] = useNumber(3)
+  const r = useMemo(() => {
+    const margin = price - variable
+    const monthly = margin * eventsMo
+    const payback = monthly > 0 ? startup / monthly : Infinity
+    const annual = margin * eventsMo * 12
+    return { margin, monthly, payback, annual }
+  }, [startup, price, variable, eventsMo])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Startup cost (booth, printer, props)" value={startup} onChange={setStartup} prefix="$" />
+        <Field label="Price per event" value={price} onChange={setPrice} prefix="$" />
+        <Field label="Variable cost per event" value={variable} onChange={setVariable} prefix="$" />
+        <Field label="Events per month" value={eventsMo} onChange={setEventsMo} step="0.5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Margin per event" value={usd(r.margin)} big />
+        <Result label="Startup payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} months` : 'Never'} big />
+        <Result label="Monthly gross margin" value={usd(r.monthly)} />
+        <Result label="Annual gross margin" value={usd(r.annual)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Weddings book Saturdays at full price; corporate events book Tuesdays at a premium. The idle booth on weekdays is the pricing opportunity — school dances and brand activations fill it.</p>
+    </CardContent></Card>
+  )
+}
