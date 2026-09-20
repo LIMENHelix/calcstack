@@ -855,6 +855,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'barista-fire-calculator',
+    title: 'Barista FIRE Calculator 2026 — How Part-Time Income Shrinks Your Freedom Number by 25×',
+    shortTitle: 'Barista FIRE',
+    category: 'Retirement',
+    description:
+      'Every $1,000 of sustainable part-time income removes $25,000 from your FIRE number. Compute your barista number, years to reach it vs full FIRE, and the job-loss shortfall risk.',
+    tagline: '$20k of part-time income cuts the target from $1,375k to $875k — five years earlier, at the cost of a job you chose.',
+    intro:
+      'Barista FIRE is the middle path: quit the career, keep a low-stress income, let the portfolio cover the gap. The leverage is startling — at a 4% withdrawal rate, every $1,000 of part-time income replaces $25,000 of portfolio, so $20,000 a year of bookstore-or-consulting money shrinks a $1,375,000 target to $875,000 and pulls freedom forward five years at a $30k savings rate. The honest risks get priced too: if the part-time income dies, the portfolio alone supports only $35k against $55k of expenses, and healthcare bridging to 65 is often the real reason for the part-time job. This calculator computes both numbers, both timelines, and the shortfall.',
+    howItWorks: [
+      'Enter annual expenses and the part-time income you could sustain happily.',
+      'Enter your current portfolio, annual saving, real return, and withdrawal rate.',
+      'Read the barista number vs the full FIRE number and the years to each.',
+      'Check the job-loss shortfall — the risk line most barista plans skip.',
+    ],
+    faq: [
+      {
+        q: 'How is barista FIRE different from coast FIRE?',
+        a: 'Coast FIRE stops SAVING but keeps working full-time to cover current expenses — the existing portfolio compounds untouched until traditional retirement. Barista FIRE semi-retires NOW: the portfolio is already being drawn, and part-time work covers the difference between spending and the safe withdrawal. Coast is the safer structure (no withdrawals during accumulation), barista is the earlier freedom (years reclaimed immediately). Many people sequence them: coast until the barista number, then downshift. The shared requirement both hide: the plan dies if spending rises — lifestyle inflation after downshifting is the common failure mode, because part-time income rarely scales the way career income did.',
+      },
+      {
+        q: 'What part-time jobs actually work for this?',
+        a: 'The ones chosen for durability and benefits, not pay. The canonical picks: jobs with health coverage for part-timers (a handful of large employers offer this — the benefit alone can be worth $6,000–15,000/yr against ACA pricing), seasonal work that concentrates income (tax prep, retail holidays, national parks), skill freelancing at reduced load (the old profession at 10 hours a week often pays the same effective rate), and genuinely low-stress service work chosen for social structure. The screening questions: could I do this at 60? Does it survive a recession (when the portfolio is also down)? Does it offer benefits? The last one matters more than the wage — healthcare before 65 is the line item that breaks unplanned baristas, and a part-time job with coverage is a healthcare plan with a paycheck attached.',
+      },
+      {
+        q: 'What happens if the part-time income stops?',
+        a: 'That\'s the shortfall line in the results, and it deserves respect: the portfolio alone covers (barista number × withdrawal rate), and the gap against expenses comes out of principal — sustainable for months, corrosive for years, catastrophic if it coincides with a market crash in the first five years (sequence-of-returns risk is front-loaded). The mitigations in order of reliability: expense flexibility (a barista budget with 20% discretionary fat can absorb the loss entirely), re-employability (the barista plan works best with skills that re-hire fast), a 10–15% portfolio buffer above the bare number, and geographic arbitrage as the emergency valve. The people for whom barista fails aren\'t the ones whose math was wrong — they\'re the ones whose plan had exactly one moving part.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

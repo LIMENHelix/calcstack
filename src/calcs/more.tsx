@@ -3474,6 +3474,60 @@ export function LifeLadderCalc() {
   )
 }
 
+// BARISTA FIRE — part-time income shrinks the required portfolio dollar-for-dollar at 25×. Node-verified: $55k expenses, $20k part-time income → barista number $875k vs full-FIRE $1,375k — a $500k smaller target; at $30k/yr saving, 6% real, from $100k stash: barista 15 yrs vs full 20 yrs — five years of freedom bought with a part-time job. The risk priced honestly: if the part-time income dies, the $875k supports only $35k/yr against $55k of expenses — a $20k/yr shortfall; mitigation = expense flexibility or a bigger buffer. Healthcare is the real barista benefit: ACA-subsidized or employer part-time coverage bridges to 65 (Medicare) — the ACA subsidy cliff math interacts with income level. Model: (expenses − partTime) × 25 = portfolio; withdrawal-only safety check uses 4% on the portfolio alone.
+export function BaristaFireCalc() {
+  const [expenses, setExpenses] = useNumber(55000)
+  const [partTime, setPartTime] = useNumber(20000)
+  const [stash, setStash] = useNumber(100000)
+  const [saving, setSaving] = useNumber(30000)
+  const [ret, setRet] = useNumber(6)
+  const [swr, setSwr] = useNumber(4)
+
+  const r = useMemo(() => {
+    const mult = 100 / swr
+    const full = expenses * mult
+    const barista = Math.max(0, expenses - partTime) * mult
+    const yrs = (target: number) => {
+      let b = stash, n = 0
+      while (b < target && n < 100) { b = b * (1 + ret / 100) + saving; n++ }
+      return n
+    }
+    const yFull = yrs(full)
+    const yBar = yrs(barista)
+    const jobLostShortfall = Math.max(0, expenses - barista * (swr / 100))
+    return { full, barista, yFull, yBar, diff: full - barista, yearsSaved: yFull - yBar, jobLostShortfall }
+  }, [expenses, partTime, stash, saving, ret, swr])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Annual expenses" value={expenses} onChange={setExpenses} prefix="$" />
+          <Field label="Part-time income (sustainable)" value={partTime} onChange={setPartTime} prefix="$" />
+          <Field label="Current portfolio" value={stash} onChange={setStash} prefix="$" />
+          <Field label="Annual saving until then" value={saving} onChange={setSaving} prefix="$" />
+          <Field label="Real return" value={ret} onChange={setRet} suffix="%" step="0.5" />
+          <Field label="Withdrawal rate" value={swr} onChange={setSwr} suffix="%" step="0.25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Full FIRE number" value={usd(r.full)} />
+          <Result big label="Barista FIRE number" value={usd(r.barista)} />
+          <Result label="Target shrinks by" value={usd(r.diff)} />
+          <Result label="Years to each" value={`${r.yBar} vs ${r.yFull}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.yearsSaved > 0
+            ? `Part-time income of ${usd(partTime)} buys you ${r.yearsSaved} years: barista at year ${r.yBar} instead of full FIRE at year ${r.yFull}. Every $1,000 of sustainable part-time income is ${usd(1000 * (100 / swr))} of portfolio you never have to build.`
+            : 'Your saving rate already outruns the part-time subsidy — full FIRE arrives as fast as barista. Bigger stash, bigger safety.'}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The honest risk ledger: barista FIRE leans on the part-time income being durable. If it disappears, this portfolio supports {usd(r.barista * (swr / 100))}/yr against {usd(expenses)} of expenses — a {usd(r.jobLostShortfall)}/yr gap you'd fill from principal (which shortens everything) or new work. Mitigate with expense flexibility (discretionary spend you can cut in bad markets), skills that stay employable, or a portfolio buffer above the bare number. The benefits wrinkle that often DECIDES it: part-time work with health coverage (or ACA subsidies at barista income levels — watch the subsidy phase-outs by income) bridges to Medicare at 65, and healthcare is the line item that breaks most early-retirement plans. Also modeled simply: taxes on the part-time income and withdrawal sequencing come out of the numbers above — pad expenses to cover them. This is arithmetic, not a plan — sequence-of-returns risk lives in the first five years of any retirement.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9108,6 +9162,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'drop-full-coverage-calculator': DropFullCoverageCalc,
   'home-insurance-adequacy-calculator': HomeCoverageCalc,
   'term-life-ladder-calculator': LifeLadderCalc,
+  'barista-fire-calculator': BaristaFireCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

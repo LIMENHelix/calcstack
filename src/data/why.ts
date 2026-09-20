@@ -59,6 +59,8 @@ export const WHY_USE: Record<string, string> = {
     'Homeowners use it at renewal: sqft × rebuild cost sets Coverage A (market value is land plus mood), the 80% coinsurance rule turns underinsurance into pro-rata partial payouts, and a 2% wind deductible is $7,000 in real dollars.',
   'term-life-ladder-calculator':
     'Parents sizing coverage use it to stop overpaying the back half: a 10/20/30 ladder delivers the same $1.5M early protection as a flat 30-year policy but expires with the mortgage — $22,490 cheaper over three decades.',
+  'barista-fire-calculator':
+    'Burned-out savers use it to price the middle path: $20k of chosen part-time income cuts the freedom number from $1.375M to $875k and pulls the date forward five years — with the job-loss shortfall shown before anyone quits.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
