@@ -3996,6 +3996,59 @@ export function StartupOfferCalc() {
   )
 }
 
+// GRAD SCHOOL ROI — the degree priced as an investment, tuition + foregone salary vs the raise, in present value. Node-verified: $60k tuition, 2 full-time years, $70k current salary, $95k post-grad, 4% discount, 30-yr career → foregone-salary PV $132,027, total cost $192,027, raise PV $385,148 → NPV +$193,122, breakeven in career year 13. Downside case ($80k post-grad): NPV −$37,967 — a $10k/yr raise NEVER pays back two years out of the workforce. Model: tuition at t0 (conservative), salary annuity during school, raise annuity from graduation to retirement. Honest edges: part-time/employer-funded degrees change the math completely (foregone salary → ~0 is the whole game), field dominates (CS/eng/nursing MS vs humanities MA are different planets), the raise must be YOUR field's actual post-degree premium (BLS/levels/pay transparency data), not the brochure's "average graduate earns". Opportunity cost is the giant: $70k/yr invested instead compounds too — that's why we discount at 4% real.
+export function GradSchoolRoiCalc() {
+  const [tuition, setTuition] = useNumber(60000)
+  const [years, setYears] = useNumber(2)
+  const [current, setCurrent] = useNumber(70000)
+  const [newSal, setNewSal] = useNumber(95000)
+  const [disc, setDisc] = useNumber(4)
+  const [career, setCareer] = useNumber(30)
+
+  const r = useMemo(() => {
+    const r0 = disc / 100
+    const ann = (n: number) => (r0 === 0 ? n : (1 - Math.pow(1 + r0, -n)) / r0)
+    const foregone = current * ann(years)
+    const totalCost = tuition + foregone
+    const pvRaise = (newSal - current) * (ann(career) - ann(years))
+    const npv = pvRaise - totalCost
+    let breakeven: number | null = null
+    for (let n = Math.ceil(years) + 1; n <= career; n++) {
+      if ((newSal - current) * (ann(n) - ann(years)) >= totalCost) { breakeven = n; break }
+    }
+    return { foregone, totalCost, pvRaise, npv, breakeven }
+  }, [tuition, years, current, newSal, disc, career])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Total tuition & fees" value={tuition} onChange={setTuition} prefix="$" step="5000" />
+          <Field label="Years out of workforce" value={years} onChange={setYears} step="1" />
+          <Field label="Current salary" value={current} onChange={setCurrent} prefix="$" step="5000" />
+          <Field label="Expected post-degree salary" value={newSal} onChange={setNewSal} prefix="$" step="5000" />
+          <Field label="Discount rate (real)" value={disc} onChange={setDisc} suffix="%" step="0.5" />
+          <Field label="Career years remaining" value={career} onChange={setCareer} step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="True cost (tuition + foregone pay)" value={usd(r.totalCost)} />
+          <Result label="PV of the raise" value={usd(r.pvRaise)} />
+          <Result label="Degree NPV" value={usd(r.npv)} big />
+          <Result label="Breakeven" value={r.breakeven ? `Year ${r.breakeven}` : 'Never'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.npv >= 0
+            ? `At these numbers the degree pays for itself: ${usd(r.npv)} in today's dollars, breakeven in career year ${r.breakeven ?? '—'}. The catch: ${usd(r.foregone)} of the cost is the salary you stop earning — which is why employer-funded or part-time programs change the decision entirely.`
+            : `The math says no: the raise never recovers ${usd(r.totalCost)} of tuition and foregone salary over a ${career}-year career. Non-financial reasons can still justify it — career pivots, required credentials, the work itself — but call it consumption, not investment.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: tuition at time zero (conservative — most is spread over enrollment), current salary discounted as an annuity during school, the salary PREMIUM (new minus current, not the whole new salary) discounted from graduation through the career. The post-degree salary is the input that decides everything — get it from BLS Occupational Outlook, pay-transparency sites, or offer data in YOUR field, not program marketing ("average graduate earns" survivorship-skews hard: graduates who were already employed and sponsored pull the mean up). What this misses on purpose: loan interest (a $60k degree financed at 7% adds real cost — run the loan separately), field-switching upside that isn't salary, the option value of credentials that unlock licensed roles, and the risk that you don't finish — roughly 4 in 10 graduate enrollees don't complete within six years, and a half-finished degree pays nothing. Estimates — your actual offers and program costs govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9640,6 +9693,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'rsu-vest-tax-calculator': RsuVestCalc,
   'iso-vs-nso-calculator': IsoNsoCalc,
   'startup-offer-calculator': StartupOfferCalc,
+  'grad-school-roi-calculator': GradSchoolRoiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

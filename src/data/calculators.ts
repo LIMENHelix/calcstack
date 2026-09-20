@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'grad-school-roi-calculator',
+    title: 'Grad School ROI Calculator 2026 — Is a Master\'s Degree Worth It? True Cost vs the Raise, in Present Value',
+    shortTitle: 'Grad School ROI',
+    category: 'Careers & Salary',
+    description:
+      'Price a master\'s degree as an investment: tuition PLUS the salary you stop earning, against the post-degree raise discounted over your remaining career. See the NPV, the breakeven year, and the cases that never pay back.',
+    tagline: 'A $60k degree plus two years out of the workforce really costs $192k — a $25k/yr raise pays it back in career year 13, but a $10k raise never does.',
+    intro:
+      'The advertised cost of grad school is tuition; the real cost is tuition plus the salary you stop earning while enrolled — on a $70k job and a two-year full-time program, that\'s $192,000 in present value, not $60,000. The payback side is equally misunderstood: what matters is the raise over what you\'d have earned anyway, discounted over your remaining career. At a 4% real discount rate, a $25k/yr premium over 30 years is worth $385k — the degree wins by $193k, breakeven in year 13. A $10k/yr premium loses $38k and never recovers. This calculator runs the full NPV so the decision rests on your field\'s actual post-degree premium — not the program brochure\'s "average graduate earns."',
+    howItWorks: [
+      'Enter total tuition and fees, and the years you\'ll be out of the workforce (full-time enrollment).',
+      'Enter your current salary — this is the hidden cost, the pay you stop earning.',
+      'Enter the expected post-degree salary from BLS, pay-transparency data, or real offers in YOUR field.',
+      'Set a real discount rate (4% is a fair default) and your remaining career years.',
+      'Read the true cost, the present value of the raise, the degree NPV, and the breakeven career year.',
+    ],
+    faq: [
+      {
+        q: 'Why is foregone salary counted as a cost?',
+        a: 'Because money you stop earning is as real as money you spend — it\'s just less visible. Two years out of a $70k job is $132k of present-value income gone, more than double most master\'s tuitions. This is exactly why the structure of the program changes the decision more than the sticker price: a part-time or employer-sponsored degree keeps the salary flowing, collapsing the true cost from $192k to near tuition alone — the same degree at a third of the economic price. If your employer offers tuition assistance, that benefit is worth more than most raises: use it before you evaluate quitting to study full-time.',
+      },
+      {
+        q: 'What post-degree salary should I enter?',
+        a: 'Your field\'s actual premium, from hard data: the BLS Occupational Outlook Handbook for licensed professions, levels.fyi and pay-transparency postings for tech, and real offer letters if you have them. Never the program\'s marketing average — it\'s survivorship-biased (sponsored students who kept their jobs inflate it) and it blends fields where the degree is a license (nursing, engineering, accounting) with fields where it\'s decoration. The honest sensitivity test: run the calculator at your pessimistic salary assumption, not your hopeful one. If the NPV is negative at pessimistic and positive at optimistic, you\'re making a bet, not an investment — size it accordingly.',
+      },
+      {
+        q: 'What does this calculator leave out?',
+        a: 'Deliberately: loan interest (a $60k degree financed at 7% costs real money — model the debt separately with the loan payoff calculator), completion risk (roughly 4 in 10 graduate enrollees don\'t finish within six years, and a half-finished degree pays nothing), the non-salary option value of credentials that unlock licensed roles, and career-pivot upside that doesn\'t show in salary immediately. The discount rate does quiet work too: at 4% real it prices the fact that your foregone salary invested in index funds would compound. A degree that barely clears NPV zero at 4% is losing to doing nothing and investing the difference.',
+      },
+    ],
+  },
+  {
     slug: 'startup-offer-calculator',
     title: 'Startup Offer Calculator 2026 — Equity Expected Value vs the Salary Cut, Dilution Included',
     shortTitle: 'Startup Offer Calculator',
