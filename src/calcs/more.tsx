@@ -3028,6 +3028,55 @@ export function HoaTrueCostCalc() {
   )
 }
 
+// SELLER NET SHEET — what you actually walk away with; the sale price is a fantasy number until the ledger runs. Node-verified: $450k sale, 5.5% commission ($24,750), seller closing 1.5% ($6,750), $280k payoff, $5k concessions → net $133,500 (29.7% of price). Post-NAR-settlement (Aug 2024) mechanics: commissions were ALWAYS negotiable, but buyer-agent compensation is no longer published on MLS — it's now negotiated as a buyer-agent fee, often requested as a seller concession; a 2.5% buyer-agent concession on $450k = $11,250. Costs sellers forget: prorated property tax to closing day, HOA transfer/estoppel fees ($200–500 typical), title/escrow (seller side varies by state custom), home warranty concession (~$500), repair credits after inspection, and mortgage payoff per diem interest + any prepayment penalty.
+export function SellerNetSheetCalc() {
+  const [sale, setSale] = useNumber(450000)
+  const [commPct, setCommPct] = useNumber(5.5)
+  const [closePct, setClosePct] = useNumber(1.5)
+  const [payoff, setPayoff] = useNumber(280000)
+  const [conc, setConc] = useNumber(5000)
+  const [repairs, setRepairs] = useNumber(0)
+  const [baConcession, setBaConcession] = useNumber(0)
+
+  const r = useMemo(() => {
+    const comm = sale * (commPct / 100)
+    const close = sale * (closePct / 100)
+    const ba = sale * (baConcession / 100)
+    const costs = comm + close + conc + repairs + ba
+    const net = sale - costs - payoff
+    const pct = sale > 0 ? (net / sale) * 100 : 0
+    return { comm, close, ba, costs, net, pct }
+  }, [sale, commPct, closePct, payoff, conc, repairs, baConcession])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Sale price" value={sale} onChange={setSale} prefix="$" />
+          <Field label="Total commission" value={commPct} onChange={setCommPct} suffix="%" step="0.25" />
+          <Field label="Seller closing costs (title, escrow, transfer tax)" value={closePct} onChange={setClosePct} suffix="%" step="0.25" />
+          <Field label="Mortgage payoff (incl. per diem)" value={payoff} onChange={setPayoff} prefix="$" />
+          <Field label="Buyer concessions" value={conc} onChange={setConc} prefix="$" />
+          <Field label="Repair credits after inspection" value={repairs} onChange={setRepairs} prefix="$" />
+          <Field label="Buyer-agent fee concession (post-2024)" value={baConcession} onChange={setBaConcession} suffix="%" step="0.25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Commission" value={usd(r.comm)} />
+          <Result label="Closing + concessions + credits" value={usd(r.close + conc + repairs + r.ba)} />
+          <Result label="Total selling costs" value={usd(r.costs)} />
+          <Result big label="Net proceeds at closing" value={usd(r.net)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          You keep {num(r.pct, 1)}% of the sale price — {usd(r.net)} from {usd(sale)}. The two negotiable levers are the commission (everything is negotiable post-2024 settlement — interview three agents and price them) and concessions (a {usd(sale * 0.01)} price cut and a {usd(sale * 0.01)} concession cost the same, but the concession often closes the deal).
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The post-August-2024 landscape: buyer-agent compensation is no longer advertised on the MLS — buyers negotiate their agent's fee directly, then often ask the seller to cover it as a concession (the buyer-agent concession field). In practice many sellers still pay it; the difference is it's now a negotiated line item instead of a default. Costs this sheet expects sellers to forget: property tax proration to the closing date, HOA estoppel/transfer fees, courier and wire fees on the payoff, per-diem interest to the payoff date, and any prepayment penalty on the existing loan (rare on conventional, check the note). Capital gains: if it's your primary residence 2 of the last 5 years, $250,000 single / $500,000 married of gain is excluded — run the numbers BEFORE you celebrate the net, because above the exclusion the IRS is a silent partner. For inherited or investment property, different rules entirely (stepped-up basis / 1031). Estimates — your closing disclosure governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8654,6 +8703,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'rental-cash-flow-calculator': RentalCashFlowCalc,
   'property-tax-appeal-calculator': PropertyTaxAppealCalc,
   'hoa-true-cost-calculator': HoaTrueCostCalc,
+  'seller-net-sheet-calculator': SellerNetSheetCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

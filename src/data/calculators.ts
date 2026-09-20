@@ -607,6 +607,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'seller-net-sheet-calculator',
+    title: 'Seller Net Sheet Calculator 2026 — What You Actually Walk Away With After Commission, Payoff, and Concessions',
+    shortTitle: 'Seller Net Sheet',
+    category: 'Housing & Mortgage',
+    description:
+      'Run the full seller ledger: commission, closing costs, mortgage payoff, concessions, repair credits, and the post-2024 buyer-agent fee — see real net proceeds before you list.',
+    tagline: 'A $450,000 sale with a $280,000 payoff nets $133,500 — 29.7% of the sticker. Know your number before you pick a list price.',
+    intro:
+      'Sellers anchor on the sale price; the wire at closing tells the truth. Commission, closing costs, concessions, repair credits, and the mortgage payoff all come off the top — on a $450,000 sale with a $280,000 loan, the net is $133,500, under 30% of the sticker. The 2024 NAR settlement changed the mechanics without changing the math: buyer-agent fees are no longer baked into MLS listings, so they show up as negotiated concessions instead. This calculator runs the complete ledger, including the lines sellers forget — tax proration, HOA estoppel fees, per-diem payoff interest — so the number you plan your next chapter around is the number that actually arrives.',
+    howItWorks: [
+      'Enter your expected sale price and the total commission you\'ve negotiated.',
+      'Enter seller-side closing costs, the mortgage payoff, and any concessions or repair credits.',
+      'Add a buyer-agent fee concession if the buyer requests one.',
+      'Read your net proceeds and the percentage of price you actually keep.',
+    ],
+    faq: [
+      {
+        q: 'What did the 2024 NAR settlement actually change for sellers?',
+        a: 'Mechanics, not economics. Before August 2024, listing agreements typically published a buyer-agent commission offer on the MLS; now that field is gone. Buyers sign agreements with their agents specifying the fee, then commonly ask sellers to cover it as a concession in the offer. In practice, most sellers still fund buyer-agent compensation — it just arrives as a negotiated concession line instead of a preset split. What\'s genuinely different: the negotiation is explicit now, so commission variance between agents has widened and interviewing three agents on price and service pays real money. One caution: refusing buyer-agent compensation entirely can shrink your buyer pool (buyers must fund it from cash they\'d rather use for down payment) — in most markets it\'s still marketing spend, not charity.',
+      },
+      {
+        q: 'What costs do sellers forget until the closing disclosure?',
+        a: 'The same five, every time. Property tax proration — you owe taxes through the closing day, credited against the buyer\'s bill. Payoff padding — your lender\'s payoff quote includes per-diem interest to the payoff date plus reconveyance and wire fees, running a few hundred over your statement balance. HOA estoppel and transfer fees, $200–500, for the association\'s status letter. Title/escrow splits that vary by local custom — in some counties the seller pays the owner\'s title policy, in others the buyer does; know your local default before negotiating. And repair credits after inspection — budget 0.5–1% of price unless you pre-inspected. Together these routinely add $2,000–4,000 to a "clean" sheet. This calculator\'s closing-cost percentage field is where they belong.',
+      },
+      {
+        q: 'Will I owe capital gains tax on the sale?',
+        a: 'Probably not if it\'s your home — the §121 exclusion shelters $250,000 of gain (single) or $500,000 (married filing jointly) if you owned AND lived in it 2 of the last 5 years. Gain = net sale proceeds minus your adjusted basis (purchase price + improvements + certain closing costs), so the exclusion covers most primary-residence sales even in appreciated markets. The traps: selling before the 2-year mark (partial exclusion exists for job moves, health, unforeseen circumstances), converted rentals (depreciation recapture at 25% on the depreciation you claimed), inherited property (stepped-up basis usually erases the gain — different and better math), and investment property (no §121 at all; a 1031 exchange defers instead). Above the exclusion, long-term rates are 0/15/20% plus the 3.8% net investment income tax at higher incomes. Run the gain BEFORE listing, not after closing.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

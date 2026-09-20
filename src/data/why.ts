@@ -43,6 +43,8 @@ export const WHY_USE: Record<string, string> = {
     'Owners holding an assessment notice use it before the deadline: implied market value vs comp-supported value × the tax rate shows a $35k over-assessment is $630/yr — $6,898 over a decade — for a filing most counties charge nothing for.',
   'hoa-true-cost-calculator':
     'Buyers comparing HOA vs non-HOA homes use it to convert the fee into house-price terms: $400/mo at 6.5% weighs like $63,284 of mortgage, and 5% growth turns the stream into $318,906 over 30 years — before the reserve-study questions that predict special assessments.',
+  'seller-net-sheet-calculator':
+    'Sellers use it before picking a list price: a $450k sale with a $280k payoff nets $133,500 after commission, closing, and concessions — and the post-2024 buyer-agent concession field keeps the sheet honest in the new commission landscape.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
