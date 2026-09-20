@@ -3553,3 +3553,89 @@ export function ScientificNotationCalc() {
     </CardContent></Card>
   )
 }
+
+
+// RANDOM NUMBER GENERATOR + DICE — probability-verified: 2d6 sums to 7 with probability 6/36 = 16.7%, snake eyes 2.8%. Uses crypto.getRandomValues (not Math.random) — rejection sampling avoids modulo bias, so raffles and DMs get honest randomness.
+export function RandomNumberCalc() {
+  const [min, setMin] = useNumber(1)
+  const [max, setMax] = useNumber(100)
+  const [count, setCount] = useNumber(1)
+  const [noDup, setNoDup] = useState(false)
+  const [rolls, setRolls] = useState<number[]>([])
+  const draw = () => {
+    const lo = Math.min(min, max), hi = Math.max(min, max)
+    const range = hi - lo + 1
+    if (range <= 0) return
+    const n = Math.min(Math.max(1, Math.floor(count)), noDup ? range : 100)
+    const buf = new Uint32Array(1)
+    const out: number[] = []
+    const seen = new Set<number>()
+    const lim = Math.floor(0x100000000 / range) * range
+    let guard = 0
+    while (out.length < n && guard < 100000) {
+      guard++
+      crypto.getRandomValues(buf)
+      if (buf[0] >= lim) continue // rejection sampling — kills modulo bias
+      const v = lo + (buf[0] % range)
+      if (noDup && seen.has(v)) continue
+      seen.add(v)
+      out.push(v)
+    }
+    setRolls(out)
+  }
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="Min" value={min} onChange={setMin} step="1" />
+        <Field label="Max" value={max} onChange={setMax} step="1" />
+        <Field label="How many" value={count} onChange={setCount} step="1" />
+      </div>
+      <label className="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked={noDup} onChange={(e) => setNoDup(e.target.checked)} className="h-4 w-4" />
+        No repeats (raffle mode)
+      </label>
+      <button onClick={draw} className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">Generate</button>
+      {rolls.length > 0 && (
+        <div>
+          <Result label={`${rolls.length} random number${rolls.length > 1 ? 's' : ''}`} value={rolls.join(',  ')} big />
+          <p className="mt-2 text-xs text-muted-foreground">Sum: {num(rolls.reduce((a, b) => a + b, 0), 0)} · Min {Math.min(...rolls)} · Max {Math.max(...rolls)} · Mean {num(rolls.reduce((a, b) => a + b, 0) / rolls.length, 2)}</p>
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">Dice quick-reference: d6 = min 1 max 6; 2d6 sums to 7 on 16.7% of rolls, snake eyes 2.8%. Uses crypto-grade randomness with rejection sampling — fair enough for raffles and tabletop critical hits.</p>
+    </CardContent></Card>
+  )
+}
+
+// WORD COUNTER — verified: "Hello world, this is a test." → 6 words, 28 chars, 23 no-space chars, 1 sentence. Reading time at 200 wpm (adult average), speaking at 130 wpm (presentation pace). Keyword density for the top term shown.
+export function WordCountCalc() {
+  const [text, setText] = useState('Paste or type your text here. Every metric updates live — words, characters, sentences, paragraphs, reading time, and speaking time.')
+  const r = useMemo(() => {
+    const t = text
+    const words = t.trim() === '' ? [] : t.trim().split(/\s+/)
+    const wc = t.trim() === '' ? 0 : words.length
+    const chars = t.length
+    const noSpace = t.replace(/\s/g, '').length
+    const sents = t.split(/[.!?]+/).filter((s) => s.trim().length > 0).length
+    const paras = t.split(/\n\s*\n/).filter((p) => p.trim().length > 0).length
+    const freq = new Map<string, number>()
+    words.map((w) => w.toLowerCase().replace(/[^a-z0-9'-]/g, '')).filter((w) => w.length > 2).forEach((w) => freq.set(w, (freq.get(w) ?? 0) + 1))
+    const top = [...freq.entries()].sort((a, b) => b[1] - a[1])[0]
+    return { wc, chars, noSpace, sents, paras, read: wc / 200, speak: wc / 130, top }
+  }, [text])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <textarea value={text} onChange={(e) => setText(e.target.value)} rows={5} className="w-full rounded-md border bg-background px-3 py-2 text-sm" />
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result label="Words" value={num(r.wc, 0)} big />
+        <Result label="Characters" value={num(r.chars, 0)} />
+        <Result label="Characters (no spaces)" value={num(r.noSpace, 0)} />
+        <Result label="Sentences" value={num(r.sents, 0)} />
+        <Result label="Paragraphs" value={num(r.paras, 0)} />
+        <Result label="Reading time (200 wpm)" value={`${num(r.read, 1)} min`} />
+        <Result label="Speaking time (130 wpm)" value={`${num(r.speak, 1)} min`} />
+        {r.top && r.top[1] > 1 && <Result label="Top word" value={`“${r.top[0]}” × ${r.top[1]} (${num((r.top[1] / r.wc) * 100, 1)}%)`} />}
+      </div>
+      <p className="text-xs text-muted-foreground">Limits that matter: X post 280 chars, meta description ~155, SMS 160, college essays 650 words. Reading pace: 200 wpm average adult, 130 wpm spoken — a 10-minute talk is about 1,300 words.</p>
+    </CardContent></Card>
+  )
+}

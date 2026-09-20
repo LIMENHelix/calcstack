@@ -168,6 +168,8 @@ export const MORE_CALC_COMPONENTS: Record<string, LazyExoticComponent<ComponentT
   'slope-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.SlopeCalc }))),
   'factorial-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.FactorialCalc }))),
   'scientific-notation-converter': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.ScientificNotationCalc }))),
+  'random-number-generator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.RandomNumberCalc }))),
+  'word-counter': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.WordCountCalc }))),
   'sabbatical-cost-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SabbaticalCostCalc }))),
   'self-storage-roi-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SelfStorageCalc }))),
   'car-wash-economics-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.CarWashCalc }))),

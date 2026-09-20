@@ -309,6 +309,10 @@ export const WHY_USE: Record<string, string> = {
     'Stats students use it for the counting questions: 10! = 3,628,800 arrangements, P(10,3) = 720 podiums, C(52,5) = 2,598,960 poker hands — exact BigInt digits, no float lies.',
   'scientific-notation-converter':
     'Chem and physics students live here: 0.0000000543 → 5.43 × 10⁻⁸, with engineering notation (multiples of 10³) and plain decimal alongside.',
+  'random-number-generator':
+    'Teachers raffling prizes and DMs rolling damage use it: crypto-grade randomness, no-repeat mode, any range — with dice odds baked in (2d6 sums to 7 on 16.7% of rolls).',
+  'word-counter':
+    'Writers and students use it against limits: live words, characters, sentences, reading time at 200 wpm and speaking at 130 — a 10-minute talk is ~1,300 words.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

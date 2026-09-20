@@ -4774,6 +4774,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'random-number-generator',
+    title: 'Random Number Generator — Any Range, No Repeats, Dice Odds',
+    shortTitle: 'Random Number Generator',
+    category: 'School & Science',
+    description:
+      'Generate random numbers in any range with crypto-grade randomness — single draws, bulk lists, and a no-repeat raffle mode, with dice probability reference built in.',
+    tagline: 'Crypto-grade randomness with rejection sampling — fair enough for raffles, classrooms, and tabletop critical hits. No-repeat mode included.',
+    intro:
+      'Most random number generators quietly cheat: Math.random plus modulo arithmetic biases low numbers. This one uses the browser\'s cryptographic random source with rejection sampling, so every value in your range is exactly equally likely — the difference matters when a raffle prize or a draft pick is on the line. Draw one number or a hundred, with optional no-repeat mode for picking winners.',
+    howItWorks: [
+      'Set the min and max of your range.',
+      'Choose how many numbers to draw.',
+      'Turn on no-repeat mode for raffles and draft orders.',
+      'Hit generate — results show sum, min, max, and mean.',
+      'For dice: d6 is min 1 max 6; 2d6 needs two draws and sums to 7 on 16.7% of rolls.',
+    ],
+    faq: [
+      {
+        q: 'Is this random number generator actually fair?',
+        a: 'Yes — and the reason is worth understanding, because most web generators are not. The naive approach (Math.random() × range, rounded) has two flaws: Math.random is a pseudorandom generator not designed for fairness under scrutiny, and the modulo shortcut biases toward low numbers when the range does not evenly divide the generator\'s output space. This tool uses crypto.getRandomValues — the same source that secures encryption keys — plus rejection sampling, which discards any raw value that would skew the distribution. Result: every integer in your range has exactly 1/n probability. For classroom picks and giveaway winners it is overkill in the right direction; for legal lotteries you still need certified hardware, but nothing on the web gets closer without one.',
+      },
+      {
+        q: 'How do I simulate dice with a random number generator?',
+        a: 'One die: min 1, max 6, draw 1. Multiple dice: draw that many numbers and read the sum shown below the results. The probabilities that make tabletop players smart: a single d6 is flat — each face 16.67% — but 2d6 is a bell curve: 7 appears on 6 of 36 combinations (16.7%), while 2 and 12 appear once each (2.8%). This is why Settlers of Catan hexes labeled 6 and 8 (five combinations each) are the valuable ones, and why casino craps is built on the same curve. Advantage rolls in D&D (roll twice, keep higher) shift a d20\'s average from 10.5 to about 13.8 — the generator\'s bulk-draw mode lets you see that distribution yourself in 100 rolls.',
+      },
+      {
+        q: 'What is the no-repeat mode for?',
+        a: 'Raffles, draft orders, bingo calls, and classroom cold-calling — any draw where each item can only win once. Technically it is sampling without replacement: the generator keeps a ledger of drawn values and rejects duplicates, which is exactly how pulling names from a hat works. Two constraints to know: the draw count cannot exceed the range size (you cannot pick 30 unique winners from 20 entries), and no-repeat draws are not independent — each draw slightly changes the odds for the rest, which is the point. For team assignments, draw the full no-repeat list equal to your roster size, then deal the first n to team A, next n to team B — a provably fair split that ends the "you rigged it" debate before it starts.',
+      },
+    ],
+  },
+  {
+    slug: 'word-counter',
+    title: 'Word Counter — Words, Characters, Reading & Speaking Time',
+    shortTitle: 'Word Counter',
+    category: 'School & Science',
+    description:
+      'Live word count, characters (with and without spaces), sentences, paragraphs, reading time at 200 wpm, speaking time at 130 wpm, and top-word density.',
+    tagline: 'A 10-minute talk is about 1,300 words. An X post is 280 characters. Meta descriptions cut at ~155. Every count updates live as you type.',
+    intro:
+      'Every writing task has a hidden limit: the 650-word college essay, the 280-character post, the 155-character meta description, the 10-minute speech. This counter tracks words, characters both ways, sentences, and paragraphs live, then converts to the times that actually matter — reading time at the adult average of 200 wpm and speaking time at presentation pace, 130 wpm.',
+    howItWorks: [
+      'Paste or type your text — everything updates live.',
+      'Words, characters, no-space characters, sentences, paragraphs.',
+      'Reading time at 200 wpm — how long your audience needs.',
+      'Speaking time at 130 wpm — how long your talk runs.',
+      'Top-word density flags accidental repetition.',
+    ],
+    faq: [
+      {
+        q: 'How many words is a 5-minute speech?',
+        a: 'About 650 words at the standard presentation pace of 130 words per minute — and pace matters more than people think. Conversation runs 150–160 wpm, audiobook narrators hold 150–160, but clear public speaking lands at 120–140 wpm because audiences need processing time. TED talks average around 140–150 wpm; auctioneers hit 250+. The preparation math: write the talk, count the words, divide by 130, and if it runs long, cut words rather than planning to talk faster — speed-reading your speech is the number-one sign of an unprepared speaker. For slides, the matching heuristic is roughly one slide per minute, so 650 words pairs with about five slides.',
+      },
+      {
+        q: 'What are the character limits I should know?',
+        a: 'X (Twitter): 280 characters. SMS: 160 per segment — longer texts split and sometimes scramble order. Google meta description: ~155–160 characters before truncation in search results; title tags cut at ~60. Instagram captions: 2,200 max but truncate at ~125. LinkedIn posts truncate at ~140 before "see more." YouTube titles: 100 characters, descriptions show ~157 before folding. College application essays (Common App): 650 words hard cap. The SEO nuance: meta limits are pixels, not characters — Google truncates around 920–1,000 pixels, which is why 155 characters of wide letters (WWW) cut sooner than 155 of narrow ones (iii). Draft to 150 characters and you are safe under both rules.',
+      },
+      {
+        q: 'How is reading time calculated?',
+        a: 'Word count ÷ reading speed. The adult silent-reading average is about 200–230 words per minute for non-fiction (this tool uses 200 for conservative estimates); technical material drops to 100–150, fiction skimming rises to 250–300. Medium built its signature "X min read" label on exactly this math at 265 wpm — theirs runs faster because it targets engaged skimmers. Where the number earns its keep: newsletters that respect reader time (the 3-minute read converts better than the 12-minute one), documentation pages that warn "15 min" honestly, and meeting agendas that price agenda items in minutes of reading. For comprehension-critical material — contracts, medical instructions — estimate at 150 wpm, because reading slowly enough to retain is a different exercise than reading.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
