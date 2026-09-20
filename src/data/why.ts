@@ -197,6 +197,10 @@ export const WHY_USE: Record<string, string> = {
     'Business owners use it before the price-increase letter: a 10% raise with 5% churn adds $29,700/yr and tolerates 28.6% churn before losing — the clients who leave over $15/mo were your most expensive revenue.',
   'saas-creep-calculator':
     'Business owners use it quarterly: a $2,400/mo stack at 8% vendor creep costs $93,496 over 3 years, and the surveyed 30–45% shelfware share means the audit hour is the best-paid hour of the quarter.',
+  'workers-comp-calculator':
+    'Trade contractors use it before renewal: $500k payroll at $5.50/$100 with a 1.25 mod is $34,375/yr — the class code drives more than the payroll, and a sub without a COI lands on your payroll at audit.',
+  'emr-impact-calculator':
+    'Trade contractors use it after a claim: a $30k claim that moves the mod to 1.22 costs $48,150 all-in — three years of surcharge on top — and the formula punishes frequency harder than severity.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

@@ -3035,6 +3035,69 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'workers-comp-calculator',
+    title: 'Workers Comp Premium Calculator — Payroll × Class Rate × Experience Mod, With the Audit Traps',
+    shortTitle: 'Workers Comp Premium',
+    category: 'Trades & Engineering',
+    description:
+      'Estimate your workers comp premium — payroll per $100 times class rate times your experience mod — with the class-code, subcontractor-COI, and audit true-up traps that blindside trade businesses.',
+    tagline: '$500k payroll at $5.50/$100 with a 1.25 mod = $34,375/yr. The class code drives more than the payroll — and a sub without a COI lands on YOUR payroll at audit.',
+    intro:
+      'Workers comp premiums are arithmetic most owners never see itemized: payroll per $100 × class rate × experience mod. On $500,000 of payroll at a $5.50 trade rate that is $27,500 — and a 1.25 experience mod pushes it to $34,375, a $6,875 surcharge for a bad claims year that follows you for three. Class rates span $0.40 clerical to $15+ roofing per $100, so the CODE assignment moves the premium more than the payroll does. The traps live at audit: misclassified codes get back-billed, and subcontractors without certificates of insurance get added to YOUR payroll. This calculator builds the estimate and prices the mod.',
+    howItWorks: [
+      'Enter annual payroll — the auditable number, not the projection.',
+      'Enter the class rate per $100 (your declarations page or broker has it).',
+      'Enter your experience modification rate (1.0 = average; your rating worksheet has yours).',
+      'Add fees and state assessments.',
+      'Read base premium, the mod adjustment, and the total.',
+    ],
+    faq: [
+      {
+        q: 'What is the experience mod and how do I find mine?',
+        a: 'The experience modification rate (EMR, e-mod, or just "the mod") is your claims history as a premium multiplier: 1.00 means your losses match the average for your class codes, 0.85 means you run safer than average (15% discount), 1.25 means a claims problem (25% surcharge). It is computed by the rating bureau (NCCI in most states, independent bureaus in CA, and the monopolistic states separately) from three years of loss data, excluding the most recent policy year — so this year\'s claim hits your premium next year and stays for three. Finding yours: it prints on your declarations page and your experience rating worksheet — ask your broker for the worksheet, because it shows exactly which claims are driving the number (and worksheet errors are common enough that reviewing it annually is standard practice). Threshold note: mods only apply to employers above a premium eligibility threshold (~$5–10k depending on state) — below it you pay straight class rates with no mod either way. The mod is the whole game for mid-size trade shops: it follows you across carriers (switching insurers does not escape it) and it is the number general contractors ask for on bids — a mod over 1.0 can disqualify you from work, which prices safety beyond the premium.',
+      },
+      {
+        q: 'Why did my audit come back with a huge bill?',
+        a: 'The audit true-up catches three things, all preventable. Estimated vs actual payroll: premiums are quoted on PROJECTED payroll; the year-end audit re-bills at actual — a growth year means a back-bill, and pay-as-you-go billing (premium computed on actual monthly payroll) eliminates the shock. Subcontractor exposure: any sub without a valid certificate of insurance gets their pay added to YOUR payroll at audit — the classic five-figure surprise — so collect COIs before the first day on site, verify the policy is in force (not just issued), and re-collect at every renewal. Class-code drift: the auditor reassigns codes to what people actually DO — the office manager who visits job sites, the owner who picks up tools — and the re-code back-bills at the higher rate for the whole year. The defense file: payroll records by class code (not lumped), COIs current and filed, clear separation of clerical versus field staff duties, and your own pre-audit estimate from this calculator so the auditor\'s number gets checked, not accepted. Dispute rights exist — audit findings can be challenged with documentation, and brokers who specialize in your trade earn their commission exactly here.',
+      },
+      {
+        q: 'How do I actually lower the premium?',
+        a: 'Four levers in impact order. The mod: every point of EMR is a point of premium — safety programs, return-to-work protocols, and fast claim reporting drag the mod down over the three-year window (the EMR impact calculator prices what one prevented claim saves: the claim plus $18k of surcharge). Class codes: verify every employee is coded to their actual duties — legitimate re-coding (the estimator who never leaves the office is clerical) is free money, and misclassification the other direction is audit bait. Payroll structure: overtime premium pay (the time-and-a-half HALF) is excluded from WC payroll in most states, and severance is excluded too — sloppy payroll reporting overpays. And structure: deductibles (trade a $2,500–25,000 per-claim deductible for a meaningful premium cut if your claims are rare), dividend plans (group programs return premiums to safe shops), pay-as-you-go billing, and — at sufficient size — captive or self-insured arrangements. What does NOT work: under-reporting payroll (the audit catches it and adds penalties), misclassifying field staff as clerical (fraud, and the audit back-bills plus penalties), and dropping coverage (personal liability for injuries, stop-work orders, and fines that dwarf premiums — plus most GCs will not let you on site). The premium is negotiable at the margins and arithmetic at the core — work both.',
+      },
+    ],
+  },
+  {
+    slug: 'emr-impact-calculator',
+    title: 'Experience Mod (EMR) Impact Calculator — The True 3-Year Cost of One Workers Comp Claim',
+    shortTitle: 'EMR Claim Impact',
+    category: 'Trades & Engineering',
+    description:
+      'What one claim really costs — the claim itself plus three years of premium surcharge from the mod jump — and why claim frequency is punished harder than severity in the rating formula.',
+    tagline: 'A $30,000 claim that moves your mod 1.00 → 1.22 costs $48,150 all-in — $18,150 of premium surcharge over 3 years on top of the claim. Safety budgets are ROI math, not virtue.',
+    intro:
+      'A workers comp claim bills you twice: once for the claim, and again for three years through your experience mod. A $30,000 claim moving a shop from 1.00 to 1.22 adds $6,050/year to premiums for three policy years — $18,150 of surcharge, making the true cost $48,150 before downtime, deductibles, or the OSHA log. The rating formula has a second trap: it splits every claim into a fully-counted primary layer and a discounted excess layer, so three $10,000 claims damage your mod MORE than one $30,000 claim — frequency is punished, severity discounted. This calculator prices the mod damage so safety spending gets evaluated as the investment it is.',
+    howItWorks: [
+      'Enter your base premium at EMR 1.0 (from the workers comp calculator or your broker).',
+      'Enter your current and projected experience mod.',
+      'Enter the cost of the claim driving the change.',
+      'Read the annual surcharge, the 3-year total, and the true cost of the claim.',
+    ],
+    faq: [
+      {
+        q: 'Why does claim frequency hurt more than one big claim?',
+        a: 'The primary/excess split is the mechanism. Each claim divides into primary losses — roughly the first $17,000–20,000 (varies by state and year) — which count at 100% weight in the mod formula, and excess losses above that, which count at a discounted weight. So three separate $10,000 claims land ~$30,000 of fully-weighted primary loss on your worksheet, while one $30,000 claim lands ~$18,000 primary plus $12,000 discounted excess. Same dollars paid, very different mod damage. The insurance logic behind it: frequency predicts future claims better than severity — a shop with many small injuries has a safety culture problem; a shop with one bad accident had a bad day. The strategic consequence cuts two ways. Defensive: preventing the small frequent claims (cuts, strains, slips — the modified-duty candidates) protects the mod more than preventing the rare catastrophic one, though you do both. And offensive, with a caution: some employers avoid REPORTING small claims and pay them out of pocket — legal in some states as "self-pay" where allowed, but it risks penalties, and an unreported small injury that becomes a big claim (the back strain that needs surgery in year two) is a coverage disaster. Report claims; manage them actively instead.',
+      },
+      {
+        q: 'What actually moves the mod back down?',
+        a: 'Time plus management — the mod is a trailing three-year window, so this year\'s discipline buys relief in years two through four. The levers, ranked: return-to-work programs are the single biggest — a worker back on modified duty (light tasks within restrictions) converts an expensive lost-time claim into a cheap medical-only claim, and lost-time claims cost multiples of medical-only ones; have the modified-duty job descriptions written BEFORE you need them. Immediate reporting: claims reported within 48 hours cost dramatically less than claims reported at week three — lag correlates with litigation, and litigation multiplies cost; make same-day reporting the non-negotiable shop rule. Claim reviews: reserves set on open claims flow into the mod — a $50,000 reserve on a claim that settles for $12,000 damaged your mod at the $50,000 level, so review reserves with your broker before the unit-stat filing date and challenge inflated ones. Close claims: open claims count at reserves; closed claims count at actuals — nagging the adjuster to close the lingering file is mod management. And the paperwork: verify your unit-stat report annually — rating worksheets carry wrong claims, wrong codes, and claims that are not yours more often than brokers admit. None of this is fast; all of it compounds.',
+      },
+      {
+        q: 'How does the mod affect getting work, not just premiums?',
+        a: 'The mod is your safety reputation in one number, and general contractors read it that way. Prequalification: many GCs, project owners, and government contracts screen subs by EMR — 1.0 is the common disqualification line, some owners demand 0.85–0.95; a shop at 1.25 does not get the bid regardless of price, which prices the mod in revenue, not premiums. The bid math: a $6,000 annual mod surcharge on $500,000 of revenue is 1.2 points of margin — in trades bidding at 5–8% margins, the mod alone can move you from competitive to priced-out. The insurance-market effect: a high mod shrinks your carrier options — standard markets decline, you land in assigned-risk pools at surcharge rates, and the spiral compounds. The sales use of a good mod: shops at 0.85 put it in the bid packet — safety as a marketing asset, because owners know a safe sub is a schedule-reliable sub. For GCs reading this from the other side: requiring sub EMRs under 1.0 with current COIs is standard risk transfer, and this calculator prices why — a sub\'s claim on your project can touch your mod through your own policy depending on structure. The mod is a three-year shadow on everything: premiums, bids, and carrier access. Manage it like the balance-sheet item it is.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

@@ -6890,6 +6890,87 @@ export function SaasCreepCalc() {
   )
 }
 
+// WORKERS COMP PREMIUM — node-verified defaults: $500k payroll ÷ 100 × $5.50 class rate = $27,500 base; EMR 1.25 → $34,375 (+$6,875). Class rates per $100 of payroll run $0.40 clerical to $15+ roofing — the class code drives more than the payroll. Audit tip: verify class codes annually — misclassification cuts both ways, and the audit at policy end re-bills actual payroll.
+export function WorkersCompCalc() {
+  const [payroll, setPayroll] = useNumber(500000)
+  const [rate, setRate] = useNumber(5.5)
+  const [emr, setEmr] = useNumber(1.0)
+  const [fees, setFees] = useNumber(750)
+
+  const r = useMemo(() => {
+    const base = (payroll / 100) * rate
+    const modded = base * emr
+    const total = modded + fees
+    const emrDelta = modded - base
+    const per100 = payroll > 0 ? (total / payroll) * 100 : 0
+    return { base, modded, total, emrDelta, per100 }
+  }, [payroll, rate, emr, fees])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Annual payroll" value={payroll} onChange={setPayroll} prefix="$" step="25000" />
+          <Field label="Class rate" value={rate} onChange={setRate} prefix="$" suffix="/$100" step="0.5" />
+          <Field label="Experience mod (EMR)" value={emr} onChange={setEmr} step="0.05" />
+          <Field label="Fees & state assessments" value={fees} onChange={setFees} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Base premium" value={usd(Math.round(r.base))} />
+          <Result label="EMR adjustment" value={`${r.emrDelta >= 0 ? '+' : '−'}${usd(Math.abs(Math.round(r.emrDelta)))}`} />
+          <Result label="Total premium" value={usd(Math.round(r.total))} big />
+          <Result label="Per $100 payroll" value={`${usd(Math.round(r.per100 * 100) / 100)}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Base premium ${usd(Math.round(r.base))} at ${usd(rate)}/$100 of payroll${emr !== 1 ? `, and your ${num(emr, 2)} EMR ${emr > 1 ? 'adds' : 'saves'} ${usd(Math.abs(Math.round(r.emrDelta)))}` : ''} — total ${usd(Math.round(r.total))}. The mod is a three-year shadow: one bad claim year follows you long after the claim closes.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: premium = payroll ÷ 100 × class rate × EMR + fees. Class rates per $100 of payroll span the wild range of job risk — $0.30–0.50 clerical, $3–6 plumbing/HVAC, $8–15 roofing and framing — and the code assignment is the first place premiums go wrong: audit your codes annually, because a clerical employee coded as field staff (or a roofer coded as clerical, which the audit catches with back-billing) distorts the number both directions. The EMR (experience modification rate) is your safety record as a multiplier: 1.0 is average, 0.85 is a good shop, 1.25 is a claims problem — and it applies for three years, which is why claim management is premium management. Payroll audit reality: premiums are estimated on projected payroll and trued-up at audit — subcontractors WITHOUT certificates of insurance get added to YOUR payroll at audit, the classic $20k surprise; collect COIs from every sub before they step on site. Cost levers: pay-as-you-go billing (premium follows actual monthly payroll — ends the audit true-up shock), safety programs that drag the mod down (see the EMR calculator), deductible plans, and grouping payroll correctly across codes. Monopolistic states (OH, ND, WA, WY) require state-fund coverage — no private market. Estimate — your rating bureau sheet and broker quote govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// EXPERIENCE MOD (EMR) IMPACT — node-verified defaults: $30,000 claim pushes EMR 1.00 → 1.22 on a $27,500 base premium → +$6,050/yr surcharge × 3 years = $18,150 of premium damage ON TOP of the claim — true cost $48,150. The mod math (actual vs expected losses, weighted by size with primary/excess splits) punishes FREQUENCY more than severity: three $10k claims hurt the mod more than one $30k claim.
+export function EmrImpactCalc() {
+  const [basePrem, setBasePrem] = useNumber(27500)
+  const [oldEmr, setOldEmr] = useNumber(1.0)
+  const [newEmr, setNewEmr] = useNumber(1.22)
+  const [claimCost, setClaimCost] = useNumber(30000)
+
+  const r = useMemo(() => {
+    const surcharge = basePrem * Math.max(newEmr - oldEmr, 0) * (oldEmr > 0 ? 1 / oldEmr : 1)
+    const threeYr = surcharge * 3
+    const trueCost = claimCost + threeYr
+    return { surcharge, threeYr, trueCost }
+  }, [basePrem, oldEmr, newEmr, claimCost])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Base premium (at EMR 1.0)" value={basePrem} onChange={setBasePrem} prefix="$" step="2500" />
+          <Field label="Current EMR" value={oldEmr} onChange={setOldEmr} step="0.05" />
+          <Field label="Projected EMR" value={newEmr} onChange={setNewEmr} step="0.05" />
+          <Field label="The claim itself" value={claimCost} onChange={setClaimCost} prefix="$" step="5000" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Premium surcharge /yr" value={usd(Math.round(r.surcharge))} />
+          <Result label="3-year surcharge" value={usd(Math.round(r.threeYr))} big />
+          <Result label="True cost of the claim" value={usd(Math.round(r.trueCost))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The claim cost ${usd(Math.round(claimCost))} — but the mod jump to ${num(newEmr, 2)} adds ${usd(Math.round(r.surcharge))}/yr for three years: ${usd(Math.round(r.threeYr))} of premium damage. True cost ${usd(Math.round(r.trueCost))}. This is why safety budgets pay: preventing one claim saves more than the claim.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: annual surcharge = base premium × EMR increase; the mod applies for three policy years (the claim stays in your experience window until it ages out). The mechanism worth knowing: the mod compares YOUR losses to expected losses for your class codes and payroll, with each claim split into primary (first ~$17–20k, fully counted) and excess (discounted) layers — which is why claim FREQUENCY is punished harder than severity: three $10k claims put $30k+ of fully-counted primary losses on your sheet, while one $30k claim counts only ~$18k at full weight. Levers that move the mod: return-to-work programs (claims close faster and cheaper when the worker comes back on modified duty — claim cost drives the mod, and lost-time claims cost multiples of medical-only), immediate reporting (late-reported claims cost more — lag time correlates with litigation), fight fraud but never fight legitimacy (denied legitimate claims return as lawsuits), and unit-stat review — the rating bureau sheet has errors more often than you would think, and your broker can challenge wrong claim data. The strategic view: the mod is a three-year shadow, so safety investment this year buys premium relief years 2–4; a $10k safety program that prevents one median claim returns the $18k surcharge shown above plus the avoided deductible, downtime, and OSHA log. Note: mods only apply above a premium threshold (~$5–10k varies by state) — small shops may be un-rated. Estimate — your experience rating worksheet (ask your broker for it) governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12593,6 +12674,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'payment-terms-calculator': PaymentTermsCalc,
   'price-raise-calculator': PriceRaiseCalc,
   'saas-creep-calculator': SaasCreepCalc,
+  'workers-comp-calculator': WorkersCompCalc,
+  'emr-impact-calculator': EmrImpactCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
