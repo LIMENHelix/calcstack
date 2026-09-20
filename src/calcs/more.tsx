@@ -7875,6 +7875,108 @@ export function MobileMechanicCalc() {
   )
 }
 
+// BAH RENT VS BUY — node-verified defaults: E-5 w/ dependents BAH $2,100/mo. Rent at $1,650 → pocket $450/mo tax-free ($5,400/yr; taxable-equivalent $577/mo at 22%). Buy: PITI $1,850 + maintenance $150 = $2,000 → pocket only $100/mo, but $300/mo principal = $400/mo wealth. Renting pockets MORE cash monthly; buying wins on equity only if the PCS timeline cooperates (3-yr orders vs 5-yr breakeven on transaction costs).
+export function BahRentBuyCalc() {
+  const [bah, setBah] = useNumber(2100)
+  const [rent, setRent] = useNumber(1650)
+  const [piti, setPiti] = useNumber(1850)
+  const [maint, setMaint] = useNumber(150)
+  const [prin, setPrin] = useNumber(300)
+  const [years, setYears] = useNumber(3)
+  const [txnPct, setTxnPct] = useNumber(8)
+  const [homePrice, setHomePrice] = useNumber(280000)
+
+  const r = useMemo(() => {
+    const pocketRent = bah - rent
+    const pocketBuy = bah - piti - maint
+    const wealthBuy = pocketBuy + prin
+    const txnCost = (homePrice * txnPct) / 100
+    const buyNet = wealthBuy * 12 * years - txnCost
+    const rentNet = pocketRent * 12 * years
+    const diff = buyNet - rentNet
+    return { pocketRent, pocketBuy, wealthBuy, txnCost, buyNet, rentNet, diff }
+  }, [bah, rent, piti, maint, prin, years, txnPct, homePrice])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="BAH (with dep.)" value={bah} onChange={setBah} prefix="$" suffix="/mo" step="50" />
+          <Field label="Rent option" value={rent} onChange={setRent} prefix="$" suffix="/mo" step="50" />
+          <Field label="PITI if buying" value={piti} onChange={setPiti} prefix="$" suffix="/mo" step="50" />
+          <Field label="Maintenance/mo" value={maint} onChange={setMaint} prefix="$" step="25" />
+          <Field label="Principal/mo" value={prin} onChange={setPrin} prefix="$" step="25" />
+          <Field label="Years at station" value={years} onChange={setYears} step="1" />
+          <Field label="Home price" value={homePrice} onChange={setHomePrice} prefix="$" step="10000" />
+          <Field label="Buy+sell costs" value={txnPct} onChange={setTxnPct} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Pocket renting" value={`${usd(Math.round(r.pocketRent))}/mo`} />
+          <Result label="Wealth buying" value={`${usd(Math.round(r.wealthBuy))}/mo`} />
+          <Result label="Transaction drag" value={usd(Math.round(r.txnCost))} />
+          <Result label={`${years}-yr buy vs rent`} value={`${r.diff >= 0 ? '+' : '−'}${usd(Math.abs(Math.round(r.diff)))}`} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.diff > 0
+            ? `Buying wins by ${usd(Math.round(r.diff))} over ${years} years — the principal paydown outruns the ${usd(Math.round(r.txnCost))} transaction drag. But one PCS moved up a year flips it; the margin IS your orders.`
+            : `Renting wins by ${usd(Math.abs(Math.round(r.diff)))} over ${years} years — the ${usd(Math.round(r.txnCost))} of buying and selling eats the equity. Pocket the ${usd(Math.round(r.pocketRent))}/mo tax-free and invest the difference instead.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: pocket renting = BAH − rent; wealth buying = (BAH − PITI − maintenance) + principal paydown; the honest comparison subtracts round-trip transaction costs (agent commission ~5–6% + closing ~2–3% ≈ 8%) from the buy side over your years at station. The military-specific rules: BAH is TAX-FREE — $450/mo pocketed is like $577/mo of taxable side income at 22%, which is why "rent under BAH and bank the difference" is the oldest wealth move in the enlisted playbook. The PCS breakeven is the whole decision: buying needs roughly 5 years for appreciation and principal to clear the 8% round-trip drag — on 3-year orders you are betting on the market, and 2020s rate-lock (selling a 3% mortgage into a 7% market) cuts both ways. The VA loan changes the math only partially: 0% down and no PMI lower the entry cost, but funding fee (2.15% first use, 3.3% subsequent — waived with disability rating) and the same selling costs remain. The landlord fallback: buying with a plan to rent it out at the next PCS works when rent covers PITI + maintenance + 8–10% management + vacancy (1 month/yr) — run that number BEFORE buying, not after orders drop; a negative-cash-flow rental 2,000 miles away is a second mortgage, not an investment. Deployment angle: during deployment, BAH keeps paying rent or mortgage either way — the pocketed difference funds the TSP aggressively while tax-free combat pay stacks. Watch the BAH rate protection: rates are grandfathered at your arrival (rate protection), so a market drop doesn't cut YOUR BAH — but new arrivals get the lower rate, which matters when you rent out the spare room. Estimate — your duty station's BAH table, real rents, and actual orders length govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// BRS TSP MATCH — node-verified defaults: E-4 base $3,200/mo, 5% contribution = $160/mo draws the full $160/mo match = $1,920/yr free. Match alone invested 20 yrs at 7% = $83,348 — from money that was never yours to miss. Continuation pay at 12 yrs (2.5× monthly base, E-6 at $4,100) = $10,250 bonus for 4 more years. Under BLS (pre-2018 legacy) there is NO match — opting into BRS was the 2018 decision; new accessions are BRS by default.
+export function BrsMatchCalc() {
+  const [base, setBase] = useNumber(3200)
+  const [contrib, setContrib] = useNumber(5)
+  const [years, setYears] = useNumber(20)
+  const [ret, setRet] = useNumber(7)
+  const [contBase, setContBase] = useNumber(4100)
+
+  const r = useMemo(() => {
+    const mine = (base * contrib) / 100
+    const match = (base * Math.min(contrib, 5)) / 100 // 1% auto + 4% match ≈ 5% at 5%
+    const rm = ret / 100 / 12
+    const n = years * 12
+    const fvMatch = rm > 0 ? match * ((Math.pow(1 + rm, n) - 1) / rm) : match * n
+    const fvMine = rm > 0 ? mine * ((Math.pow(1 + rm, n) - 1) / rm) : mine * n
+    const contPay = 2.5 * contBase
+    return { mine, match, matchYr: match * 12, fvMatch, fvMine, contPay }
+  }, [base, contrib, years, ret, contBase])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Monthly base pay" value={base} onChange={setBase} prefix="$" step="100" />
+          <Field label="Your contribution" value={contrib} onChange={setContrib} suffix="%" step="1" />
+          <Field label="Years investing" value={years} onChange={setYears} step="1" />
+          <Field label="Annual return" value={ret} onChange={setRet} suffix="%" step="0.5" />
+          <Field label="Base at 12 yrs" value={contBase} onChange={setContBase} prefix="$" suffix="/mo" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Free match/yr" value={usd(Math.round(r.matchYr))} />
+          <Result label="Match at retirement" value={usd(Math.round(r.fvMatch))} big />
+          <Result label="Your 5% grows to" value={usd(Math.round(r.fvMine))} />
+          <Result label="Continuation pay (12yr)" value={usd(Math.round(r.contPay))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {contrib >= 5
+            ? `Full match captured: ${usd(Math.round(r.match))}/mo of free money — ${usd(Math.round(r.matchYr))}/yr — grows to ${usd(Math.round(r.fvMatch))} by retirement. You're doing the single highest-ROI move in military finance.`
+            : `At ${contrib}%, you're leaving ${usd(Math.round((base * Math.min(5 - contrib, 5)) / 100))}/mo of match on the table — money that compounds to real retirement dollars. Bump to 5% in myPay today; future-you keeps the difference.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: match = base × min(contribution, 5%) — BRS pays 1% automatic plus up to 4% matching, so 5% in draws the full 5%; growth compounds monthly at your return assumption. The BRS rules that matter: the match is the compensation — legacy BLS (High-3) had no match at all, so BRS members who skip TSP are turning down pay the old system never offered. Contribution source: TSP contributions come from BASE pay only (not BAH/BAS), and Roth TSP is the default right answer for junior enlisted — your bracket is low (deployments can drop it to zero in CZTE months, making Roth contributions effectively tax-free forever), and the match itself always lands in traditional. Fund choice: the C Fund (S&P 500) or a Lifecycle target-date fund beat the default G Fund for anyone under 40 — the G Fund's "safety" is a guaranteed inflation loss over 20 years. Continuation pay: at 12 years of service, BRS offers a bonus of 2.5× monthly base (active; 0.5× Guard/Reserve) for 4 more years of obligation — take it and invest it, and it alone is a five-figure TSP deposit. The pension trade: BRS pays 2.0%/yr instead of 2.5% (40% vs 50% at 20 years) — the match and continuation pay are the compensation for that cut, which is exactly why leaving the match unclaimed makes BRS strictly worse than the old system. Deployment stacking: CZTE months let you stuff Roth TSP (and even exceed normal limits toward the $70,000 total additions cap in tax-free zones) — the deployed-year Roth stack is the closest thing to a cheat code in military finance. Estimate — your LES, your state tax situation, and DoD's current continuation-pay multiplier govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // TEACHER LANE-CHANGE ROI — node-verified defaults: MA costs $14,000; lane bump $2,400/yr → payback 5.8 yrs, 25-yr career net $46,000. The hidden dividend: pension = 2% × 30 yrs × final salary — the bump raises final salary, adding $1,440/yr of pension for a 20-yr retirement = $28,800. Grand total $74,800 on a $14k degree. The lane change is the only raise teachers control.
 export function TeacherLaneCalc() {
   const [cost, setCost] = useNumber(14000)
@@ -14104,6 +14206,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'bah-rent-vs-buy-calculator': BahRentBuyCalc,
+  'brs-tsp-match-calculator': BrsMatchCalc,
   'teacher-lane-change-roi-calculator': TeacherLaneCalc,
   'teacher-summer-gap-calculator': TeacherSummerCalc,
   'nurse-agency-vs-staff-calculator': NurseAgencyCalc,

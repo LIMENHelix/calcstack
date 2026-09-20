@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'bah-rent-vs-buy-calculator':
+    'Service members use it when orders drop: renting $450/mo under BAH pockets $5,400/yr tax-free — buying only beats it when the PCS window gives equity 5 years to clear the 8% drag.',
+  'brs-tsp-match-calculator':
+    'Service members use it before touching myPay: 5% in draws the full 5% match — $160/mo free for an E-4, compounding to $83k — and continuation pay at 12 years is a five-figure deposit.',
   'teacher-lane-change-roi-calculator':
     'Teachers use it before enrolling: a $14k MAT with a $2,400 lane bump pays back in 5.8 years, nets $46k in salary — then the pension formula pays the bump again for life, $28,800 more.',
   'teacher-summer-gap-calculator':

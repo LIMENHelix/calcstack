@@ -954,6 +954,8 @@ export const PERSONAS: Persona[] = [
       'What can a deployment savings sprint become?',
     ],
     calcSlugs: [
+      'bah-rent-vs-buy-calculator',
+      'brs-tsp-match-calculator',
       'va-funding-fee-calculator',
       'military-retirement-calculator',
       'tsp-calculator',

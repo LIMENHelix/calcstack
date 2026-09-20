@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'bah-rent-vs-buy-calculator',
+    title: 'BAH Rent vs Buy Calculator — Pocket the Difference or Build Equity at This Duty Station',
+    shortTitle: 'BAH Rent vs Buy',
+    category: 'Housing & Mortgage',
+    description:
+      'Compare renting under BAH and pocketing the tax-free difference against buying with a VA loan — with transaction costs and your actual orders length priced in.',
+    tagline: 'Renting at $1,650 against $2,100 BAH pockets $450/mo tax-free — buying only wins if your orders give the equity 5 years.',
+    intro:
+      'BAH rent-vs-buy is not the civilian question — your housing allowance is tax-free, your timeline is set by orders not choice, and the transaction drag of buying ($22,400 on a $280k home) has to clear inside a PCS window. Renting at $1,650 against $2,100 BAH pockets $450 a month tax-free — the taxable equivalent of $577 of side income. Buying banks principal but only nets ahead when the orders cooperate. This calculator prices both with your real BAH, real costs, and your actual years at station.',
+    howItWorks: [
+      'Enter your BAH (with dependents rate) and the rent you would actually pay.',
+      'Enter the PITI, maintenance, and principal paydown of the home you would buy.',
+      'Enter years at this duty station — be pessimistic; orders move.',
+      'Read the monthly pocket/wealth of each path and the transaction drag.',
+      'Read the multi-year verdict: buy wins only when equity outruns the drag.',
+    ],
+    faq: [
+      {
+        q: 'Should I buy a house at my duty station?',
+        a: 'Only when three things align: orders long enough (the round-trip transaction cost of buying and selling runs ~8% of price — $22,400 on a $280k home — and equity plus appreciation typically needs 5 years to clear it), a market you would hold as a rental if PCS comes early (rent covering PITI + maintenance + 8–10% management + a month of vacancy per year), and a price where the VA loan keeps total housing near or under BAH. The default answer on 3-year orders is rent under BAH and bank the difference — $450/mo tax-free invested at 7% for a 20-year career is six figures. The 2020s wrinkle: rate-lock cuts both ways — selling a 3% mortgage into a 7% market suppresses prices, and buying now means your future PCS may force a sale into whatever rates exist then.',
+      },
+      {
+        q: 'Is pocketing BAH instead of spending it on housing smart?',
+        a: 'It is the oldest wealth move in the enlisted playbook, and the tax math is why: BAH is tax-free, so $450/mo pocketed equals roughly $577/mo of taxable side income at the 22% bracket. Rate protection makes it safer than civilians realize — BAH is grandfathered at your arrival rate, so a local market drop does not cut YOUR allowance. The discipline is the whole trick: the difference has to actually get invested (auto-transfer to TSP or a brokerage on payday), not absorbed into lifestyle. The upgrade path: house-hacking — rent a 3-bedroom, take a roommate at $600/mo, and the pocket doubles; or buy the duplex with the VA loan and let the other unit pay the PITI, which flips the rent-vs-buy verdict at almost any orders length.',
+      },
+      {
+        q: 'How does the VA loan change the buy math?',
+        a: 'It lowers the entry cost, not the exit cost — and exits are where duty-station buying loses. VA loan benefits: 0% down, no PMI, and typically better rates than conventional, so you can buy with almost nothing saved. The costs that remain: the funding fee (2.15% of loan on first use, 3.3% subsequent — waived entirely with any VA disability rating), closing costs (~2–3%), and the eventual ~5–6% agent commission when you sell. The funding fee matters more than people think: rolled into the loan on a $280k purchase it is $6,000–9,200 of extra balance — equity you start underwater on. If you have a disability rating, the waived fee plus 0% down makes buying at a long station genuinely attractive; without it, price the fee in before deciding. And never count on "I\'ll just rent it out" without running the landlord numbers first — a negative-cash-flow rental 2,000 miles away is a second mortgage, not an investment.',
+      },
+    ],
+  },
+  {
+    slug: 'brs-tsp-match-calculator',
+    title: 'BRS TSP Match Calculator — the Free 5%, What It Compounds To, and Continuation Pay',
+    shortTitle: 'BRS TSP Match',
+    category: 'Retirement',
+    description:
+      'See exactly what the Blended Retirement System match is worth: the free 5% on your base pay, what it compounds to over a career, and the continuation-pay bonus at 12 years.',
+    tagline: 'An E-4 skipping TSP leaves $160/mo on the table — $83,348 of free money by retirement. The match IS the compensation.',
+    intro:
+      'Under the Blended Retirement System, the government matches your TSP up to 5% of base pay — and a stunning number of members leave it unclaimed. An E-4 at $3,200/mo contributing 5% draws $160/mo of free money: $1,920/yr that compounds to $83,348 over a 20-year career at 7%. Add continuation pay at 12 years (2.5× monthly base — a five-figure TSP deposit) and the BRS package rivals the old pension for anyone who actually claims it. This calculator shows your match, its future value, and the continuation bonus.',
+    howItWorks: [
+      'Enter your monthly base pay and TSP contribution percentage.',
+      'Read the free match per year — anything under 5% shows what you are leaving.',
+      'Enter years and expected return — read what the match alone compounds to.',
+      'Read what your own 5% grows to alongside it.',
+      'Enter base pay at 12 years — read the continuation-pay bonus.',
+    ],
+    faq: [
+      {
+        q: 'How does the BRS TSP match actually work?',
+        a: 'The government contributes 1% of base pay automatically (starting at 60 days, vested at 2 years), then matches your contributions dollar-for-dollar on the first 3% and 50 cents per dollar on the next 2% — totaling 5% when you contribute 5%. The mechanics that matter: contributions come from BASE pay only (not BAH or BAS), the match always lands in TRADITIONAL TSP even when you contribute Roth, and matching is per-paycheck — a member who front-loads contributions and hits the annual limit in October loses November and December\'s match. Set a flat percentage in myPay that spreads across 12 months. New accessions are BRS by default and auto-enrolled at 5% — but members who lowered it to 1% during a tight month are leaving 4% of base pay unclaimed every single paycheck.',
+      },
+      {
+        q: 'Roth or traditional TSP for military members?',
+        a: 'Roth, for almost everyone junior — the military tax situation is uniquely favorable to it. Junior enlisted taxable income sits in the 10–12% brackets after BAH and BAS are excluded (allowances are tax-free and never counted), so Roth contributions are taxed at the lowest rates you will ever see — and in combat-zone tax-excluded (CZTE) months, Roth contributions go in effectively tax-free forever: no tax in, no tax on growth, no tax out. Traditional TSP makes sense later in career when base pay pushes into the 22%+ brackets, or when a working spouse raises household income. The deployed-year stack is the closest thing to a cheat code in military finance: CZTE months let you contribute toward the much larger total-additions cap ($70,000 in 2026) instead of the normal elective limit, all Roth-eligible. Fund choice matters as much as the account: C Fund (S&P 500) or a Lifecycle fund for anyone under 40 — the default G Fund\'s "safety" is a guaranteed inflation loss across a 20-year horizon.',
+      },
+      {
+        q: 'Is continuation pay worth taking at 12 years?',
+        a: 'Almost always yes if you were staying anyway — 2.5× monthly base pay (active component; 0.5× for Guard/Reserve) is a $10,000+ bonus for committing to 4 more years, payable as a lump sum or installments. The catch is the election window: continuation pay must be elected BEFORE completing 12 years of service — miss the window and it is gone permanently, and services require the paperwork months in advance. The smart deployment of it: invest the lump directly into TSP or an IRA rather than absorbing it into lifestyle, and it becomes a five-figure retirement deposit at the exact midpoint where compounding still has runway. Tax note: continuation pay is fully taxable income in the year received — installments spread the bracket hit if your income straddles one. The strategic frame: BRS cut the pension multiplier to 2.0%/yr from 2.5% — the match and continuation pay are the compensation for that cut, so claiming BOTH is what makes BRS competitive with the legacy system for careerists.',
+      },
+    ],
+  },
+  {
     slug: 'teacher-lane-change-roi-calculator',
     title: 'Teacher Master\'s Degree ROI Calculator — Lane Change Payback and the Pension Dividend',
     shortTitle: 'Lane Change ROI',
