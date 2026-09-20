@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ev-home-charging-calculator',
+    title: 'EV Home Charging Calculator 2026 — Level 2 Install Payback vs Public Charging, TOU & Credits Stacked',
+    shortTitle: 'EV Home Charging ROI',
+    category: 'Auto & Transport',
+    description:
+      'What a Level 2 home charger saves versus public fast-charging dependence — per-year savings from your miles and rates, install payback, and the credit/rebate stack that cuts the install cost.',
+    tagline: 'Depending on public charging for 60% of miles costs $626/yr extra — a $1,200 home charger pays back in 1.9 years, then every mile is 2.7× cheaper than gas.',
+    intro:
+      'Public fast charging is the EV tax nobody budgets for: at $0.45/kWh it prices per-mile like a gasoline hybrid. A driver covering 12,000 miles a year at 0.30 kWh/mi spends $576 charging at home versus $1,202 with a 60%-public mix — the $626 difference pays back a $1,200 Level 2 install in 1.9 years, and every mile after that runs 2.7× cheaper than gas at $3.60. The install quote is the real variable — $400 panel-adjacent, $2,500+ if the panel needs upgrading — and the federal 30% credit (up to $1,000) plus utility rebates stack on top. Low-mileage drivers: a standard outlet adds ~40 miles overnight and may be all you ever need. This calculator prices your actual miles and mix.',
+    howItWorks: [
+      'Enter annual miles and your EV\'s efficiency (0.30 kWh/mi average; 0.25 sedans, 0.45 trucks).',
+      'Enter your home rate and the public fast-charge rate you actually pay.',
+      'Enter what share of charging is currently public.',
+      'Enter the Level 2 install quote — after the federal 30% credit and utility rebate.',
+      'Read annual kWh, all-home cost, savings vs your mix, and install payback.',
+    ],
+    faq: [
+      {
+        q: 'Why does the install quote vary so wildly?',
+        a: 'Because the charger is cheap and the electrical path is not. The EVSE itself is $300–700; the quote lives or dies on your panel. Best case — a modern 200A panel with breaker space two feet from where the car parks: $400–600 for a 240V circuit and you\'re done. The expensive cases: a full or elderly 100A panel needing an upgrade ($1,500–3,000 alone), long conduit runs to a detached garage, or trenching. Before accepting any quote: know your panel\'s amperage and spare capacity, get three electrician bids (not the charger vendor\'s installer, who marks up), and check the credit stack — the federal credit covers 30% of charger AND install up to $1,000, and many utilities add $250–500 rebates. A $2,800 quote can land at $1,400 after both — which halves the payback in one phone call.',
+      },
+      {
+        q: 'Do I even need Level 2?',
+        a: 'Fewer people than the forums say. Level 1 — the standard outlet — adds roughly 4–5 miles of range per hour, so overnight (10 hrs) covers 40–50 miles daily. If your commute plus errands stays under that and you plug in nightly, L1 is free and sufficient; many households run years on it. Level 2 earns its install when: daily miles regularly exceed ~50, you share one EV between drivers, you take frequent weekend trips that need a fast turnaround, your climate is cold (winter range loss eats the L1 margin), or you\'re on TOU rates with a short cheap window (L2 finishes the charge inside the off-peak hours L1 can\'t). The honest test: track your miles for two weeks. If the worst day is under 40, L1 suffices and this calculator\'s install input is $0.',
+      },
+      {
+        q: 'How do I minimize per-mile cost once the charger\'s in?',
+        a: 'Three stacking moves. First, TOU rates: if your utility offers off-peak pricing, set the car\'s scheduled charging to the cheap window — at $0.11 off-peak versus $0.24 peak, the same kWh cost half; run the TOU calculator with your EV\'s kWh included, because EVs are the load that makes TOU plans pencil. Second, free public charging with intent: workplace chargers, grocery-store L2 while shopping — free electrons harvested opportunistically displace home kWh; just never pay DC-fast prices for convenience you don\'t need. Third, efficiency habits that compound: preconditioning while plugged in (the grid heats the cabin, not the battery), keeping tires at spec, and eco-mode highway speeds — the difference between 0.27 and 0.33 kWh/mi is $216/yr at these defaults. The charging network subscription question (EA/EVgo memberships) only pencils if public charging is structural for you — at that point the home-charger math says move the load home instead.',
+      },
+    ],
+  },
+  {
     slug: 'solar-sizing-calculator',
     title: 'Solar Panel Sizing Calculator 2026 — How Many Panels From Your Actual Bill, Roof Reality Included',
     shortTitle: 'Solar Sizing',

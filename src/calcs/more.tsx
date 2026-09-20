@@ -5471,6 +5471,54 @@ export function SolarSizingCalc() {
   )
 }
 
+// EV HOME CHARGING ROI — Level 2 install priced against public-charging dependence. Node-verified: 12,000 mi/yr at 0.30 kWh/mi = 3,600 kWh; all-home at $0.16 = $576/yr vs 60% public DC at $0.45 = $1,202/yr → home charging saves $626/yr → $1,200 L2 install pays back in 1.9 yrs; vs gas (28 mpg × $3.60) = $1,543/yr — home charging is 2.7× cheaper per mile. Honest edges: install cost variance is THE variable (panel-adjacent garage $400-600; panel upgrade needed $2,500-4,000 — the quote depends on your electrical panel, not the charger), TOU stacking (off-peak $0.11 drops the home number to $396/yr — pair with the TOU calculator; EVs are the load that makes TOU pencil), Level 1 is free and fine for low miles (standard outlet, ~40 mi overnight — under 30 mi/day commuters may never need L2), utility rebates ($250-500 common + federal 30% credit up to $1,000 on charger+install — claim both), and apartment/renter reality (no dedicated parking → this math is aspirational; workplace + public mix is the renter's actual plan).
+export function EvHomeChargingCalc() {
+  const [mi, setMi] = useNumber(12000)
+  const [eff, setEff] = useNumber(0.3)
+  const [homeR, setHomeR] = useNumber(0.16)
+  const [pubR, setPubR] = useNumber(0.45)
+  const [pubShare, setPubShare] = useNumber(60)
+  const [install, setInstall] = useNumber(1200)
+
+  const r = useMemo(() => {
+    const kwh = mi * eff
+    const allHome = kwh * homeR
+    const mixed = kwh * (pubShare / 100) * pubR + kwh * (1 - pubShare / 100) * homeR
+    const save = mixed - allHome
+    const payback = save > 0 ? install / save : Infinity
+    return { kwh, allHome, mixed, save, payback }
+  }, [mi, eff, homeR, pubR, pubShare, install])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Miles per year" value={mi} onChange={setMi} step="1000" />
+          <Field label="EV efficiency" value={eff} onChange={setEff} suffix="kWh/mi" step="0.02" />
+          <Field label="Home rate" value={homeR} onChange={setHomeR} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="Public fast-charge rate" value={pubR} onChange={setPubR} prefix="$" suffix="/kWh" step="0.05" />
+          <Field label="% public charging now" value={pubShare} onChange={setPubShare} suffix="%" step="5" />
+          <Field label="L2 install quote" value={install} onChange={setInstall} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Annual kWh" value={num(r.kwh, 0)} />
+          <Result label="All-home cost /yr" value={usd(r.allHome)} />
+          <Result label="Home charging saves /yr" value={usd(r.save)} big />
+          <Result label="Install payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {pubShare > 0
+            ? `Depending on public charging for ${pubShare}% costs you ${usd(Math.round(r.save))}/yr extra — the ${usd(install)} install pays back in ${num(r.payback, 1)} years, then every mile is 2–3× cheaper than the fast charger (and 2.7× cheaper than gas at these rates).`
+            : `All home already — ${usd(Math.round(r.allHome))}/yr for ${num(mi, 0)} miles. Stack off-peak TOU rates and it drops further; the EV is the load that makes TOU billing pencil.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: annual kWh = miles × efficiency (0.30 kWh/mi is a fair EV average — trucks 0.45+, efficient sedans 0.25); all-home cost vs your current home/public mix; install payback from the L2 quote. The install quote is THE variable: panel-adjacent garage with breaker space runs $400–600; a panel upgrade or long conduit run is $2,500–4,000 — the electrician's quote depends on your panel, not the charger. Credits stack: federal 30% (up to $1,000 on charger + install) plus utility rebates ($250–500 common) — claim both before paying. Level 1 reality check: a standard outlet adds ~40 miles overnight — commuters under ~30 mi/day may never need L2 at all; don't buy infrastructure you won't use. TOU stacking: at $0.11 off-peak the all-home number drops to ~$396/yr here — set the car's charge window once and it's permanent. Renters: without dedicated parking this math is aspirational — workplace plus public mix is the actual plan, and it still beats gas at 28 mpg. Estimates — your electrician's quote and utility rate schedule govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11144,6 +11192,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'solar-lease-vs-buy-calculator': SolarLeaseBuyCalc,
   'solar-quote-checker-calculator': SolarQuoteCalc,
   'solar-sizing-calculator': SolarSizingCalc,
+  'ev-home-charging-calculator': EvHomeChargingCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

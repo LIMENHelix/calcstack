@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'ev-home-charging-calculator':
+    'EV owners use it before the electrician visit: 60% public charging dependence costs $626/yr extra at 12k miles — a $1,200 Level 2 install pays back in 1.9 years, and credits halve the quote.',
   'solar-sizing-calculator':
     'Solar shoppers use it before the quote calls: a $210/mo bill at 4.5 sun-hours needs 11.7 kW — thirty panels on 600 sq ft — and the EV belongs in the size now, not as tomorrow\'s 40%-more-expensive add-on.',
   'solar-quote-checker-calculator':
