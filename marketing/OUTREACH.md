@@ -349,3 +349,34 @@ podcasts/show-note pages.
 Timing: Roth content peaks Nov–Dec (year-end conversion deadline) and again at tax
 season. Social Security claiming content is evergreen; survivor content spikes sadly
 but reliably. Coast FIRE peaks January (resolution season).
+
+## Wave 56 — Social Security claiming & early access (#288–#290, plus SS backlist)
+
+The SS claiming suite is now six deep — pitch the CLUSTER, not a single tool.
+Audiences: retiree forums (AARP community, RetirementWeb), widow/widower orgs
+(Grief-support and financial-transition nonprofits), 55–62 pre-retiree groups,
+federal-employee communities (FedPilot-style blogs), fee-only planner newsletters.
+
+- **SS Bridge (#289)** — the flagship. "Delaying 62→70 is a $147,840 annuity
+  purchase at a 9.6% COLA payout" converts a tired debate into a transaction.
+  Pitch Bogleheads SS threads, Early Retirement Now–adjacent blogs, planner
+  newsletters. The survivor-benefit multiplier angle (delay protects the widow)
+  is the emotional close.
+- **Earnings test (#288)** — correction content: "withheld ≠ lost" and
+  "IRA withdrawals don't count, wages do" are the two hooks. Pitch
+  working-retiree content sites and SSA-answers blogs. Tax season + January
+  SSA-1099 mailings are the peaks.
+- **Survivor + spousal (#283, #282)** — ride-along anchors for widow/widower
+  orgs; the survivor switch (exempt from deemed filing) is genuinely news to
+  most advisors' clients. High-trust evergreen content.
+- **Rule of 55 + 72(t) (#290, #286)** — the 55–59 early-access pair. Pitch
+  r/financialindependence, retire-early forums, public-safety union newsletters
+  (age-50 rule for police/fire/EMS is the hook). The "IRA rollover kills it"
+  warning is the shareable nugget.
+- **HSA Medicare trap (#287)** — crossover for 65+ still-working audiences;
+  HR benefits blogs and Medicare-adjacent newsletters. Open enrollment season.
+- **Backlist ride-alongs** — PIA, breakeven, Fairness Act, bracket-filler,
+  IRMAA for the same sites. Interlinking is the pitch: "a suite, not a page."
+
+Timing: SS claiming content is evergreen with January (SSA-1099/COLA letters)
+and open-enrollment (Oct–Nov) peaks. Rule-of-55 spikes in layoff news cycles.
