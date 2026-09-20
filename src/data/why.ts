@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'remodeling-contractor-markup-calculator':
+    'Remodelers use it before signing the contract: 1.5× on $50k direct is a 33% margin — $17k net after overhead — and the markup-vs-margin confusion is where busy contractors go broke.',
+  'dumpster-rental-pricing-calculator':
+    'Roll-off operators use it to run the turns game: each $425 rental nets $270 after tipping and the driver — 8 cans at 4 turns is $8,240/mo, and yard-sitters earn nothing.',
   'welding-fabrication-pricing-calculator':
     'Fabricators use it before quoting custom work: the gate costs $735 to produce and quotes at $985 — the shop rate carries the margin, the materials markup just covers the waste.',
   'coffee-cart-economics-calculator':

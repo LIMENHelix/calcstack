@@ -7875,6 +7875,106 @@ export function MobileMechanicCalc() {
   )
 }
 
+// REMODELING CONTRACTOR MARKUP — node-verified defaults: kitchen remodel — subs+materials $38k + own crew labor $12k = $50k direct; 1.5× markup = $75,000 price → $25,000 gross profit (33.3% GM). Overhead share $8k → net $17,000 (22.7%). The markup-vs-margin confusion is where contractors go broke busy: a 50% markup is only a 33% margin, and overhead eats the difference.
+export function RemodelMarkupCalc() {
+  const [subsMats, setSubsMats] = useNumber(38000)
+  const [labor, setLabor] = useNumber(12000)
+  const [markup, setMarkup] = useNumber(1.5)
+  const [ohShare, setOhShare] = useNumber(8000)
+  const [changeOrders, setChangeOrders] = useNumber(2500)
+
+  const r = useMemo(() => {
+    const direct = subsMats + labor
+    const price = direct * markup + changeOrders
+    const gp = price - direct
+    const gm = price > 0 ? (gp / price) * 100 : 0
+    const net = gp - ohShare
+    const netPct = price > 0 ? (net / price) * 100 : 0
+    return { direct, price, gp, gm, net, netPct }
+  }, [subsMats, labor, markup, ohShare, changeOrders])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Subs + materials" value={subsMats} onChange={setSubsMats} prefix="$" step="1000" />
+          <Field label="Own crew labor" value={labor} onChange={setLabor} prefix="$" step="500" />
+          <Field label="Markup" value={markup} onChange={setMarkup} suffix="×" step="0.05" />
+          <Field label="Overhead share" value={ohShare} onChange={setOhShare} prefix="$" step="500" />
+          <Field label="Change orders" value={changeOrders} onChange={setChangeOrders} prefix="$" step="250" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Contract price" value={usd(Math.round(r.price))} />
+          <Result label="Gross profit" value={`${usd(Math.round(r.gp))} (${num(r.gm, 1)}% GM)`} />
+          <Result label="Net after overhead" value={`${usd(Math.round(r.net))} (${num(r.netPct, 1)}%)`} big />
+          <Result label="Direct cost" value={usd(Math.round(r.direct))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${num(markup, 2)}× on ${usd(Math.round(r.direct))} direct = ${usd(Math.round(r.price))} contract — but a ${num((markup - 1) * 100, 0)}% markup is only a ${num(r.gm, 1)}% MARGIN, and after ${usd(ohShare)} overhead the job nets ${usd(Math.round(r.net))}. ${r.netPct < 8 ? 'Under 8% net is one surprise from a loss — the markup needs to move.' : 'That net covers the surprises — this price holds.'}`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: price = direct cost × markup + change orders; gross margin = gross profit ÷ price (a 50% markup = 33.3% margin — the confusion between the two bankrupts contractors); net = gross profit − overhead share. The remodeling economics that separate survivors: the markup must fund three things — overhead (office, insurance, trucks, estimating hours, warranty reserve), profit, and the slippage between estimate and reality (hidden rot, code upgrades, client changes that never quite get billed); 1.35× is survival territory, 1.5–1.67× is healthy residential remodeling, design-build firms run higher because design time is real cost. The estimating disciplines: labor is the liar — subs quote, materials invoice, but your own crew's hours drift 15–25% on remodels (existing conditions never match assumptions), so estimate labor from your job-cost history by task type, not from new-construction brain. Change orders are margin protection, not awkwardness: priced at full markup, signed BEFORE the work, and tracked — the example's $2,500 of properly-papered changes is the difference between a 22.7% net and a complaint. Payment schedule as risk management: deposit to order materials (25–33%), progress draws tied to milestones, final 10% at substantial completion — never let receivables exceed work-in-place, because the customer who owes you $30k holds leverage no contract gives back. The warranty reserve: 1–2% of revenue banked — callbacks are certain, the only question is whether you priced them. Where margin hides: allowances set honestly (lowball allowances make your bid pretty and your change orders ugly), and the pre-construction agreement — charging $1,500–5,000 for design/estimating on real projects filters tire-kickers and pays for the 20 hours every real bid costs. License note: contractor licensing, permit responsibility, and insurance (GL + workers comp on subs without their own certificates) are the legal floor — one uninsured sub injury reaches through to you. Estimate — your job-costing history by project type governs every number here.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// DUMPSTER RENTAL — node-verified defaults: 20-yd at $425/10-day rental × 4 turns/mo = $1,700/mo per can. 8 cans = $13,600/mo gross; each turn costs $155 ($95 tipping + $60 fuel/driver) + $400/mo yard/insurance → net $8,240/mo. $270 net per turn — the truck earns the money, the cans are just the reason it rolls.
+export function DumpsterRentalCalc() {
+  const [rate, setRate] = useNumber(425)
+  const [turns, setTurns] = useNumber(4)
+  const [cans, setCans] = useNumber(8)
+  const [tipping, setTipping] = useNumber(95)
+  const [fuelDriver, setFuelDriver] = useNumber(60)
+  const [days, setDays] = useState('10')
+
+  const r = useMemo(() => {
+    const revTurn = rate
+    const costTurn = tipping + fuelDriver
+    const netTurn = revTurn - costTurn
+    const moNet = cans * turns * netTurn - 400
+    const yrNet = moNet * 12
+    const maxTurns = Math.floor(30 / (parseFloat(days) || 10)) + 1
+    const fillPct = maxTurns > 0 ? (turns / maxTurns) * 100 : 0
+    return { costTurn, netTurn, moNet, yrNet, maxTurns, fillPct }
+  }, [rate, turns, cans, tipping, fuelDriver, days])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Rate per rental" value={rate} onChange={setRate} prefix="$" step="15" />
+          <Field label="Turns per can/mo" value={turns} onChange={setTurns} step="0.5" />
+          <Field label="Cans in fleet" value={cans} onChange={setCans} step="1" />
+          <Field label="Tipping fee/turn" value={tipping} onChange={setTipping} prefix="$" step="5" />
+          <Field label="Fuel+driver/turn" value={fuelDriver} onChange={setFuelDriver} prefix="$" step="5" />
+          <label className="space-y-1">
+            <span className="text-sm text-muted-foreground">Rental period</span>
+            <select value={days} onChange={(e) => setDays(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="7">7-day</option>
+              <option value="10">10-day</option>
+              <option value="14">14-day</option>
+            </select>
+          </label>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Net per turn" value={usd(Math.round(r.netTurn))} />
+          <Result label="Fleet net/mo" value={usd(Math.round(r.moNet))} big />
+          <Result label="Fleet net/yr" value={usd(Math.round(r.yrNet))} />
+          <Result label="Utilization" value={`${num(r.fillPct, 0)}% of max turns`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Each turn nets ${usd(Math.round(r.netTurn))} after the landfill and the driver. ${cans} cans at ${turns} turns is ${usd(Math.round(r.moNet))}/mo — running at ${num(r.fillPct, 0)}% of what a ${days}-day rental period allows. The cans sitting in your yard earn nothing; the turns are the business.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: net per turn = rental rate − tipping fee − fuel/driver; monthly = cans × turns × net − yard/insurance; utilization compares turns against the rental period's theoretical max. The dumpster-business truths: utilization is the whole game — a can earns only while on someone's driveway, so the operational disciplines are tight delivery windows, same-day swap-outs (a customer ready Tuesday gets the can Tuesday, not Thursday — the Thursday delivery lost 2 days of the next rental), and a rental period SHORT enough to force turns (7–10 day standard, $10–20/day overage fees that actually get charged — the overage fee is both revenue and the nudge that returns your can). Tipping fees are the cost lever: $60–120/ton at the transfer station means the 20-yard that comes back with 4 tons of roofing shingles cost double the household-cleanout can — weight limits with overage pricing (2 tons included, $60–75/ton beyond) are how the pros protect the margin; publish them in the contract or eat the shingles. Prohibited items are legal, not preference: tires, batteries, chemicals, appliances with refrigerant — a contaminated load rejected at the station is YOUR cost and your re-trip; the contract lists them and the driver photographs every pickup. Customer mix: contractors (remodelers, roofers) are the annuity — recurring monthly turns, price-insensitive to $25 — homeowners are the marketing; roofer relationships specifically are gold (tear-offs on schedule, heavy but predictable weight). Fleet economics: cans cost $4,500–6,500 new (used half that), last 10+ years, and the roll-off truck ($80–150k) is the real capital decision — the truck's capacity (turns/day) caps the whole fleet; a second truck doubles the business, a third can doesn't. Seasonality: spring/summer construction peaks, winter slows — contractor accounts smooth it. Estimate — your transfer-station rate sheet and dispatch log govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // WELDING / FABRICATION PRICING — node-verified defaults: custom gate — materials $380, 6 shop hrs × $45 loaded shop cost + $60 consumables + $25 overhead = $735 true cost. Priced at materials × 1.25 + 6 hrs × $85 shop rate = $985 → $250 profit (25.4%). Fabrication margin lives in the hourly rate; materials markup just covers handling and waste.
 export function WeldingPricingCalc() {
   const [mats, setMats] = useNumber(380)
@@ -15161,6 +15261,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'remodeling-contractor-markup-calculator': RemodelMarkupCalc,
+  'dumpster-rental-pricing-calculator': DumpsterRentalCalc,
   'welding-fabrication-pricing-calculator': WeldingPricingCalc,
   'coffee-cart-economics-calculator': CoffeeCartCalc,
   'food-truck-economics-calculator': FoodTruckCalc,

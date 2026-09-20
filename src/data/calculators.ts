@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'remodeling-contractor-markup-calculator',
+    title: 'Remodeling Contractor Markup Calculator — Gross Margin, Overhead, and the Net That Survives',
+    shortTitle: 'Remodeling Markup',
+    category: 'Trades & Engineering',
+    description:
+      'Price remodels so the margin survives reality: direct cost × markup into contract price, gross margin vs markup untangled, overhead share, and the change-order line that protects the job.',
+    tagline: 'A 50% markup is only a 33% margin — and after overhead, the $75k kitchen nets $17,000. The confusion between the two bankrupts contractors.',
+    intro:
+      'The most expensive confusion in contracting is markup versus margin: 1.5× markup on $50,000 of direct cost is a $75,000 contract — but that is a 33.3% gross MARGIN, and after the $8,000 overhead share the job nets $17,000, not the $25,000 the markup number promised. This calculator prices the remodel honestly: direct costs, markup, change orders, overhead, and the net percentage that tells you whether the price survives the surprises.',
+    howItWorks: [
+      'Enter subs + materials and your own crew\'s loaded labor.',
+      'Enter your markup multiplier — watch it convert to true gross margin.',
+      'Enter the overhead share this job must carry.',
+      'Enter expected change orders — priced at full markup, signed first.',
+      'Read contract price, gross profit, and net after overhead.',
+    ],
+    faq: [
+      {
+        q: 'What markup should a remodeling contractor charge?',
+        a: 'Residential remodeling runs 1.5–1.67× on direct cost (a 33–40% gross margin), with design-build firms higher because design hours are real cost. The markup must fund three things: overhead (office, insurance, trucks, estimating hours, warranty reserve), profit, and the slippage between estimate and reality — hidden rot, code upgrades, and the client changes that never quite get billed. Contractors running 1.35× survive only with surgical estimating and low overhead; below that you are busy and broke. The confusion that kills: markup ≠ margin — a 50% markup yields a 33% margin (markup divides by cost; margin divides by price), so "I charge 50%" means you keep 33 cents of every dollar BEFORE overhead. The disciplines that protect it: change orders at full markup signed BEFORE the work, a payment schedule that never lets receivables exceed work-in-place (deposit 25–33%, milestone draws, final 10% at substantial completion), honest allowances (lowball allowances make pretty bids and ugly change orders), and a 1–2% warranty reserve — callbacks are certain, the only question is whether you priced them.',
+      },
+      {
+        q: 'How do I estimate remodeling jobs accurately?',
+        a: 'From your own job-cost history, by task type — never from new-construction brain. The asymmetry that wrecks remodel estimates: subs quote and materials invoice, but YOUR crew\'s labor drifts 15–25% on remodels because existing conditions never match assumptions (the wall that was supposed to open cleanly has knob-and-tube; the floor is not level; the plumbing stack is galvanized). Track actual hours per task type on every job — demo, framing, tile, trim-out — and estimate from YOUR averages, padded. The estimating process that filters profit from charity: site visit with photos and measurements, scope document line by line (what IS included), exclusions named (what is NOT), allowances stated at real mid-grade numbers, and a validity window because supplier prices move. Charge for the deep work: pre-construction agreements ($1,500–5,000 for design and detailed estimating on real projects) filter tire-kickers and pay for the 20 hours every serious bid costs — homeowners who balk at paying for a real estimate were never going to pay for a real remodel. And the license floor: contractor licensing, permit responsibility, and certificates of insurance from every sub — one uninsured sub injury reaches through to you.',
+      },
+      {
+        q: 'How should remodeling contracts handle change orders?',
+        a: 'As margin protection, not awkwardness — the change order is a normal business document, and the contractors who treat it as confrontation are the ones absorbing $4,000 of "while you\'re at it" per job. The rules: every change priced in writing at full markup BEFORE the work starts (verbal approvals evaporate at final invoice), the schedule impact stated alongside the price ("adds 3 days" matters as much as "adds $850"), and a signature — a text reply counts if your contract says so. The psychology that makes it easy: present changes as choices, not problems — "We found galvanized supply lines behind the tub wall; replacing them while we\'re in there is $1,400, leaving them is zero but they\'ll fail eventually — which would you like?" Homeowners choose upgrades happily when informed; they revolt over surprise line items at the end. Track change-order percentage per job (changes ÷ original contract): 5–10% is a healthy remodel; over 20% means your estimating missed scope, and the fix is in the pre-construction process, not the client. The final-invoice protection: substantial-completion walkthrough with a signed punch list — payment and the punch list happen together, not the list first and the check whenever.',
+      },
+    ],
+  },
+  {
+    slug: 'dumpster-rental-pricing-calculator',
+    title: 'Dumpster Rental Pricing Calculator — Net per Turn, Fleet Income, and the Utilization Game',
+    shortTitle: 'Dumpster Rental Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price roll-off dumpster rentals by the turn: tipping fees, fuel, and driver time against your rate — fleet-level monthly income, utilization against the rental period, and the weight-limit math.',
+    tagline: 'Each $425 rental nets $270 after the landfill and the driver — 8 cans at 4 turns is $8,240/mo, and cans in the yard earn nothing.',
+    intro:
+      'The dumpster business is a turns game: a can earns only while it sits on someone else\'s driveway. Each $425 ten-day rental of a 20-yard can nets $270 after the tipping fee and the driver — eight cans turning four times a month is $8,240 monthly net. The margin killers are weight overages absorbed instead of charged and swap-outs delivered Thursday that the customer needed Tuesday. This calculator prices the turn, the fleet, and the utilization honestly.',
+    howItWorks: [
+      'Enter your rental rate and turns per can per month.',
+      'Enter fleet size.',
+      'Enter tipping fee per turn and fuel/driver cost.',
+      'Pick the rental period — utilization compares against its max turns.',
+      'Read net per turn, fleet monthly and yearly net.',
+    ],
+    faq: [
+      {
+        q: 'Is a dumpster rental business profitable?',
+        a: 'The unit economics are solid — $250–300 net per turn on a 20-yard can — and the business case is utilization: a $5,000 can turning 4×/mo pays for itself in under two years and lasts ten. What separates profitable operators: turns (the can in your yard earns nothing — same-day swap-outs and short rental periods force utilization; 7–10 day standards with $10–20/day overage fees that actually get charged, because the overage fee is both revenue and the nudge that returns your can), weight discipline (tipping runs $60–120/ton, so 2 tons included with $60–75/ton beyond protects you from the roofing-tearoff surprise — publish it in the contract or eat the shingles), and the contractor book (remodelers and roofers are the annuity — recurring monthly turns, price-insensitive to $25 — while homeowners are the marketing). The capital shape: cans are cheap ($4,500–6,500 new, half that used); the roll-off truck ($80–150k) is the real decision, and its turns-per-day capacity caps the whole fleet — a second truck doubles the business, a third can doesn\'t.',
+      },
+      {
+        q: 'How do you price dumpster rentals?',
+        a: 'Flat rate by can size and rental period, with the weight limit printed in the same sentence: 10-yard $300–375, 20-yard $400–475, 30-yard $475–575, 40-yard $550–650 (regional variation is wide — landfill proximity drives tipping fees, which drive everything). The price includes: delivery, the rental period, pickup, and disposal up to the weight cap. What rides on top: weight overage ($60–75/ton beyond included tonnage — photographed scale tickets settle disputes), daily overage past the rental period ($10–20/day), trip fees for blocked or overloaded pickups ($75–125 — the can that can\'t be loaded costs a turn), and prohibited-item contamination (tires, batteries, chemicals, refrigerant appliances — the load rejected at the station is YOUR re-trip and YOUR cost; the contract lists them and the driver photographs every pickup). Market positioning: price at market, win on service — same-day delivery and answering the phone are the differentiators in a commodity market; the cheapest operator attracts the customers who dispute every charge.',
+      },
+      {
+        q: 'What does it take to start a dumpster rental business?',
+        a: 'The honest capital stack: a used roll-off truck ($50–90k used, $80–150k new), 5–8 cans to start ($25–40k mixed new/used), insurance (commercial auto + general liability, $8–15k/yr — the truck is heavy and the loads are heavy), yard space (zoned for it — neighbors complain about can storage), and DOT compliance (CDL drivers, DOT number, drug consortium). Total realistic entry: $90–150k. The startup sequence that works: buy the truck and 5 cans, work contractor relationships BEFORE the yard fills (roofers and remodelers commit to recurring turns; homeowners find you by search), and reinvest into cans — the fleet grows from cash flow once turns exceed 3/can. The margins live in operations: route-dense dispatching (fuel and driver hours are per-turn costs — clustered deliveries cut both), driver skill (a scratched driveway is a claim; a skilled placement is a review), and can maintenance (paint and repair keep the fleet rentable-looking — the can on the driveway is your billboard). Seasonality: construction peaks spring through fall; the contractor base and roofer relationships smooth winter. The exit is real: fleets with contracted commercial accounts sell at 3–4× annual earnings.',
+      },
+    ],
+  },
+  {
     slug: 'welding-fabrication-pricing-calculator',
     title: 'Welding & Fabrication Pricing Calculator — Shop Rate, Materials Markup, and True Job Cost',
     shortTitle: 'Welding & Fab Pricing',
