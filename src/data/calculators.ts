@@ -4582,6 +4582,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pythagorean-theorem-calculator',
+    title: 'Pythagorean Theorem Calculator — Solve for Hypotenuse or Missing Leg',
+    shortTitle: 'Pythagorean Theorem',
+    category: 'School & Science',
+    description:
+      'Solve a² + b² = c² instantly — find the hypotenuse from two legs or a missing leg from the hypotenuse, with perfect-triple detection built in.',
+    tagline: 'Legs 3 and 4 → hypotenuse exactly 5. Hypotenuse 13 with leg 5 → the other leg is 12. The theorem carpenters trust more than their squares.',
+    intro:
+      'Two thousand five hundred years old and still the hardest-working theorem in math class and on the job site: a² + b² = c² for any right triangle. This calculator solves both directions — two legs into a hypotenuse, or hypotenuse-and-leg into the missing leg — and flags when your numbers land on a perfect integer triple like 3-4-5 or 8-15-17.',
+    howItWorks: [
+      'Choose what to solve for: hypotenuse or missing leg.',
+      'Enter the two sides you know.',
+      'Read the third side — exact decimal, no rounding games.',
+      'If the result is a whole number, the calculator calls out the perfect triple.',
+      'Leg must be shorter than the hypotenuse — it checks that for you.',
+    ],
+    faq: [
+      {
+        q: 'What are Pythagorean triples and why do they matter?',
+        a: 'Triples are whole-number side sets that satisfy a² + b² = c² exactly: 3-4-5, 5-12-13, 8-15-17, 7-24-25, and 20-21-29 are the classics. They matter beyond homework because they give exact right angles with no measurement error — carpenters square foundations and deck corners with the 3-4-5 rule: mark 3 ft on one side and 4 ft on the other, and when the diagonal reads exactly 5 ft the corner is perfectly 90°. Scaling works too: 6-8-10 and 9-12-15 are the same triple multiplied. Any multiple of any triple is another triple, so 3-4-5 alone covers everything from picture frames to house slabs. The generator formula (m²−n², 2mn, m²+n² for m>n) produces every primitive triple — m=2, n=1 gives 3-4-5.',
+      },
+      {
+        q: 'Where is the Pythagorean theorem used in real life?',
+        a: 'Anywhere a diagonal matters. Construction: squaring corners with 3-4-5, sizing rafters (run² + rise² = rafter²), and checking that a rectangular foundation is true by comparing its two diagonals. Navigation and logistics: straight-line distance between two points is the hypotenuse of the east-west and north-south legs — 30 miles east and 40 miles north is exactly 50 miles direct. Screen sizes: a "55-inch TV" is the diagonal — a 48×27-inch screen is 55.1 inches diagonal. Sports: the throw from third to first is the hypotenuse of a 90-ft diamond (127.3 ft). The theorem also hides inside every distance formula in physics, statistics (standard deviation is a generalized hypotenuse), and machine learning (Euclidean distance).',
+      },
+      {
+        q: 'Does it work for triangles without a right angle?',
+        a: 'No — a² + b² = c² is exactly true only for right triangles, and the deviation from equality actually classifies the triangle: if c² < a² + b² the triangle is acute (all angles under 90°), if c² > a² + b² it is obtuse. That comparison is the fastest way to classify a triangle from side lengths alone. For non-right triangles the generalization is the Law of Cosines: c² = a² + b² − 2ab·cos(C), which reduces to Pythagoras when C = 90° because cos(90°) = 0 — the theorem is the special case, not the exception. One more caveat: the theorem assumes flat (Euclidean) geometry, which is why long-distance flight paths on a sphere use great-circle formulas instead.',
+      },
+    ],
+  },
+  {
+    slug: 'quadratic-formula-calculator',
+    title: 'Quadratic Formula Calculator — Roots, Discriminant & Vertex',
+    shortTitle: 'Quadratic Formula',
+    category: 'School & Science',
+    description:
+      'Solve any quadratic ax² + bx + c = 0: both roots, the discriminant, and the vertex — with complex roots handled when the discriminant goes negative.',
+    tagline: 'x² − 5x + 6 = 0 → x = 3 and x = 2, discriminant 1, vertex at (2.5, −0.25). Two roots, one root, or complex — all three cases shown.',
+    intro:
+      'The quadratic formula never fails — factoring does. x = (−b ± √(b²−4ac)) / 2a solves every quadratic, and the discriminant (b²−4ac) tells you what kind of answer to expect before you compute anything. This calculator returns both roots, the discriminant with its meaning, the parabola\'s vertex, and complex roots in a ± bi form when the curve never touches the x-axis.',
+    howItWorks: [
+      'Enter coefficients a, b, and c from ax² + bx + c = 0.',
+      'Read the discriminant — its sign predicts the root count.',
+      'Get both roots (or the double root, or the complex pair).',
+      'See the vertex — the parabola\'s turning point at (−b/2a, c − b²/4a).',
+      'Check your factoring homework: the roots multiply to c/a and sum to −b/a.',
+    ],
+    faq: [
+      {
+        q: 'What does the discriminant tell you?',
+        a: 'Everything about the roots before you solve: b²−4ac > 0 means two distinct real roots (the parabola crosses the x-axis twice), = 0 means one repeated real root (it touches the axis exactly at the vertex), < 0 means two complex conjugate roots (it never crosses). The discriminant also controls whether factoring is possible over the integers: roots are rational only when the discriminant is a perfect square. x²−5x+6 has discriminant 1 — a perfect square — so it factors as (x−2)(x−3). x²−4x+1 has discriminant 12 — not a perfect square — so the roots 2±√3 are irrational and no integer factoring exists. Check the discriminant first and you know whether to factor, complete the square, or go straight to the formula.',
+      },
+      {
+        q: 'When should I factor instead of using the formula?',
+        a: 'Factor when it is quick — the formula when it is not. Factoring is faster and builds intuition when the discriminant is a perfect square and coefficients are small: x²−5x+6 becomes (x−2)(x−3) in seconds. But the formula works on everything, always: 2x²+4x−4 has roots 0.732 and −2.732 that no amount of staring would factor. The professional habit: compute the discriminant first. Perfect square → factor or formula, your choice. Not a perfect square → formula directly. Negative → complex roots, done. The two sanity checks that catch 90% of errors: the roots must sum to −b/a and multiply to c/a. For x²−5x+6: roots 3 and 2 sum to 5 = −(−5)/1 and multiply to 6 = 6/1. Ten seconds, errors eliminated.',
+      },
+      {
+        q: 'What is the vertex and why is it useful?',
+        a: 'The vertex is the parabola\'s turning point — the minimum when a > 0 (cup opens up) or maximum when a < 0 (opens down) — sitting at x = −b/2a, y = c − b²/4a. It is the answer to every optimization word problem: a ball\'s peak height, maximum revenue, minimum cost. A projectile following h = −16t² + 64t + 6 peaks at t = −64/(2·−16) = 2 seconds, reaching h = 70 feet — no calculus needed. The vertex also anchors the graph: the parabola is symmetric about the vertical line through it, so knowing the vertex plus one point gives you the whole curve. For x²−5x+6 the vertex is (2.5, −0.25) — the curve bottoms out a quarter-unit below the axis, exactly between its roots at 2 and 3, as symmetry demands.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

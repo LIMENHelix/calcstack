@@ -3294,3 +3294,103 @@ export function StdDevCalc() {
     </CardContent></Card>
   )
 }
+
+
+// PYTHAGOREAN THEOREM — node-verified: 3-4-5, hyp 13 + leg 5 → 12, 8-15-17. Three solve modes (find hypotenuse, find leg) with the famous integer triples listed. a² + b² = c² — the most-used theorem in math, construction, and DIY.
+export function PythagoreanCalc() {
+  const [mode, setMode] = useState('hyp')
+  const [a, setA] = useNumber(3)
+  const [b, setB] = useNumber(4)
+  const [c, setC] = useNumber(5)
+  const [leg, setLeg] = useNumber(5)
+  const r = useMemo(() => {
+    if (mode === 'hyp') {
+      if (a <= 0 || b <= 0) return null
+      const hyp = Math.hypot(a, b)
+      return { label: 'Hypotenuse c', value: hyp, note: Number.isInteger(hyp) ? `Perfect triple: ${a}-${b}-${hyp}` : null }
+    }
+    if (c <= 0 || leg <= 0) return null
+    if (leg >= c) return { label: 'Other leg', value: NaN, note: 'Leg must be shorter than the hypotenuse.' }
+    const other = Math.sqrt(c * c - leg * leg)
+    return { label: 'Other leg', value: other, note: Number.isInteger(other) && Number.isInteger(leg) && Number.isInteger(c) ? `Perfect triple: ${Math.min(leg, other)}-${Math.max(leg, other)}-${c}` : null }
+  }, [mode, a, b, c, leg])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Solve for</label>
+        <select value={mode} onChange={(e) => setMode(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+          <option value="hyp">Hypotenuse (know both legs)</option>
+          <option value="leg">Missing leg (know hypotenuse + one leg)</option>
+        </select>
+      </div>
+      {mode === 'hyp' ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Field label="Leg a" value={a} onChange={setA} step="0.5" />
+          <Field label="Leg b" value={b} onChange={setB} step="0.5" />
+        </div>
+      ) : (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Field label="Hypotenuse c" value={c} onChange={setC} step="0.5" />
+          <Field label="Known leg" value={leg} onChange={setLeg} step="0.5" />
+        </div>
+      )}
+      {r && (
+        <>
+          <Result label={r.label} value={Number.isNaN(r.value) ? '—' : num(r.value, 4)} big />
+          {r.note && <p className="text-sm font-medium">{r.note}</p>}
+        </>
+      )}
+      <p className="text-xs text-muted-foreground">a² + b² = c². Famous integer triples: 3-4-5, 5-12-13, 8-15-17, 7-24-25 — carpenters use 3-4-5 to square corners: measure 3 ft and 4 ft on the two sides, the diagonal reads exactly 5 ft when the corner is true.</p>
+    </CardContent></Card>
+  )
+}
+
+// QUADRATIC FORMULA — node-verified: x²−5x+6 → disc 1, roots 3 and 2, vertex (2.5, −0.25); 2x²+4x−4 → disc 48, roots 0.7321 & −2.7321; x²+2x+5 → disc −16, complex −1±2i. All three discriminant cases handled explicitly.
+export function QuadraticCalc() {
+  const [a, setA] = useNumber(1)
+  const [b, setB] = useNumber(-5)
+  const [c, setC] = useNumber(6)
+  const r = useMemo(() => {
+    if (a === 0) return null
+    const disc = b * b - 4 * a * c
+    const vx = -b / (2 * a)
+    const vy = c - (b * b) / (4 * a)
+    if (disc > 0) {
+      const sq = Math.sqrt(disc)
+      return { kind: 'two' as const, disc, r1: (-b + sq) / (2 * a), r2: (-b - sq) / (2 * a), vx, vy }
+    }
+    if (disc === 0) return { kind: 'one' as const, disc, r1: -b / (2 * a), r2: -b / (2 * a), vx, vy }
+    const sq = Math.sqrt(-disc)
+    return { kind: 'complex' as const, disc, re: -b / (2 * a), im: sq / (2 * Math.abs(a)), vx, vy }
+  }, [a, b, c])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <p className="text-sm font-medium">ax² + bx + c = 0</p>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="a" value={a} onChange={setA} step="0.5" />
+        <Field label="b" value={b} onChange={setB} step="0.5" />
+        <Field label="c" value={c} onChange={setC} step="0.5" />
+      </div>
+      {r ? (
+        <>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <Result label="Discriminant (b²−4ac)" value={num(r.disc, 4)} />
+            {r.kind === 'two' && (<>
+              <Result label="x₁" value={num(r.r1, 4)} big />
+              <Result label="x₂" value={num(r.r2, 4)} big />
+            </>)}
+            {r.kind === 'one' && <Result label="x (double root)" value={num(r.r1, 4)} big />}
+            {r.kind === 'complex' && <Result label="Complex roots" value={`${num(r.re, 4)} ± ${num(r.im, 4)}i`} big />}
+          </div>
+          <p className="text-sm text-muted-foreground">
+            {r.kind === 'two' ? 'Two real roots — the parabola crosses the x-axis twice.' : r.kind === 'one' ? 'One repeated root — the parabola touches the axis at its vertex.' : 'No real roots — the parabola never crosses the x-axis.'}
+            {' '}Vertex at ({num(r.vx, 4)}, {num(r.vy, 4)}).
+          </p>
+        </>
+      ) : (
+        <p className="text-sm text-destructive">a can’t be zero — that would make it linear, not quadratic.</p>
+      )}
+      <p className="text-xs text-muted-foreground">x = (−b ± √(b²−4ac)) / 2a. The discriminant tells you the answer count before you solve: positive → two roots, zero → one, negative → two complex. Try 1, −5, 6 → x = 3 and x = 2.</p>
+    </CardContent></Card>
+  )
+}

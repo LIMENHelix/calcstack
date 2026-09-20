@@ -297,6 +297,10 @@ export const WHY_USE: Record<string, string> = {
     'Everyone uses it mid-task: 5 miles is 8.0467 km, 10 kg is 22.046 lb, 98.6°F is exactly 37°C — length, weight, volume, area, speed, temperature.',
   'standard-deviation-calculator':
     'Analysts use it on any pasted column: {2,4,4,4,5,5,7,9} → mean 5, sample SD 2.138, population SD 2.000 — with the n vs n−1 choice explained.',
+  'pythagorean-theorem-calculator':
+    'Students and carpenters use the same theorem: legs 3 and 4 → hypotenuse exactly 5. Solves for hypotenuse or missing leg, and flags the perfect triples.',
+  'quadratic-formula-calculator':
+    'Algebra students use it nightly: x² − 5x + 6 → x = 3 and x = 2, discriminant 1, vertex (2.5, −0.25) — all three discriminant cases handled, complex roots included.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':
