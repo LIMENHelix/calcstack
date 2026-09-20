@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'junk-removal-pricing-calculator':
+    'Junk removal operators use it before printing the price book: a $280 half-load keeps $162 after the dump fee, crew, and fuel — and dense loads at household prices are where that margin dies.',
+  'pool-service-route-calculator':
+    'Pool techs use it before saying yes to a new account: the same $150/mo pool pays $58/hr next to your route and $35/hr thirty minutes away — density is the business.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

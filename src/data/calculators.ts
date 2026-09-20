@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'junk-removal-pricing-calculator',
+    title: 'Junk Removal Pricing Calculator — True Job Cost, Profit per Job, and the Day Total',
+    shortTitle: 'Junk Removal Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price junk removal jobs by truckload fraction and see what you actually keep: dump fees, crew labor, fuel, and overhead subtracted — profit per job, per field hour, and per day.',
+    tagline: '$280 for a half truckload keeps $162 after the dump, the crew, and the fuel — the scale ticket decides your margin.',
+    intro:
+      'Junk removal quotes look like pure profit — until the transfer station takes its cut and the crew takes its hours. A $280 half-truckload job carries a $55 dump fee, $33 in load labor, $18 in fuel, and overhead, leaving $162 — a 57.9% margin that evaporates fast on dense loads, long drives, or "half loads" that arrive as full ones. This calculator prices any job against its real costs so the fraction-of-truck price book is built on scale tickets, not vibes — and shows what a full route day is actually worth.',
+    howItWorks: [
+      'Enter the job price and the dump/transfer fee for that load type.',
+      'Add load labor hours, crew cost per hour, fuel, and your per-job overhead share.',
+      'Read true job cost, profit, and margin per job.',
+      'Read profit per field hour — including the drive/load buffer that unpaid time eats.',
+      'Read the day total at your jobs-per-day pace.',
+    ],
+    faq: [
+      {
+        q: 'How should I price junk removal jobs?',
+        a: 'By truckload fraction with photo or on-site confirmation before dispatch — the industry-standard price book runs from a minimum ($75–125) through quarter, half, three-quarter, and full loads. The confirmation step is not optional: a "half load" quoted from a phone call becomes a full load at the curb, and the on-site quote with the book open is how the franchise operators protect margin. Weight surcharges ride on top: transfer stations charge by the ton, so dense loads — concrete, dirt, roofing, wet junk — need per-item or per-bedload pricing, since a "quarter load" of broken concrete can cost three times the dump fee of household junk. Specialty items each carry disposal line items worth listing on the quote sheet: mattresses (+$25–50), refrigerators and AC units (+$25–35 for EPA refrigerant recovery), tires, e-waste, and paint.',
+      },
+      {
+        q: 'What is a good profit margin for junk removal?',
+        a: 'On a well-routed day, 50–60% gross margin per job is achievable — the example job keeps $162 of $280 (57.9%). The margin killers are structural, not hourly: scattered stops that burn fuel and windshield time, dense loads accepted at household-junk prices, dedicated trips under your minimum, and "whole truckload deals" that undercut your own fraction math — a full truck at ten times your minimum price should clear at least five times the profit. The margin levers: two-person crew speed (the truck sits at the dump either way — load faster and run six jobs instead of four), donation triage (usable goods to charity cut dump weight and earn review goodwill), and route clustering by ZIP with same-day windows. Track profit per field hour, not per job — that number exposes which load types and neighborhoods actually pay.',
+      },
+      {
+        q: 'Do I need a minimum charge for junk removal?',
+        a: 'Yes — a single-item pickup at $75–95 only pencils when routed as an add-on to an existing trip. A dedicated trip under roughly $125 loses money after fuel, dump minimums, and crew time: the example economics put even a bare-minimum trip at $100+ of real cost before any profit. Structure it as a stated minimum on the website and quote flow — "single-item pickups from $89 when scheduled on our route day" — which converts the minimum into a scheduling tool instead of a wall. The route-day trick also fills the truck: a morning anchor job plus afternoon add-ons in the same ZIP code is how operators turn marginal single items into a profitable route instead of a day of losing trips.',
+      },
+    ],
+  },
+  {
+    slug: 'pool-service-route-calculator',
+    title: 'Pool Service Route Calculator — Net per Route Hour and the Density Test for New Stops',
+    shortTitle: 'Pool Service Route',
+    category: 'Freelance & Career',
+    description:
+      'Compute what a pool route really pays per hour after chemicals and drive time, and test the next stop: the same $150/month account pays $58/hr nearby and $35/hr across town.',
+    tagline: 'Same $150 pool: $58/hr two doors down, $35/hr thirty minutes away — density is the whole business.',
+    intro:
+      'Pool service is a route business wearing a cleaning uniform. Twelve pools at $150 a month is $1,800 of revenue — but the 25-minute service plus 8-minute gaps makes a 6.6-hour day, and after chemicals the route nets $58 an hour. The next customer is where the math bites: that same $150 account pays $57.95/hr when it sits next to an existing stop and $34.77/hr when it costs 30 minutes of drive time — a 40% wage cut for identical work at an identical price. This calculator nets your route honestly and grades every new stop by its true drive-time cost.',
+    howItWorks: [
+      'Enter pools on route, monthly price, and chemical cost per pool.',
+      'Enter service minutes per stop and drive minutes between stops.',
+      'Read monthly revenue, the route-day length, and net dollars per route hour.',
+      'Enter the drive time to a far-away prospect — compare its true hourly against a nearby add.',
+      'Re-price, re-route, or pass: the marginal-stop hourly tells you which.',
+    ],
+    faq: [
+      {
+        q: 'What is a pool route worth when buying or selling?',
+        a: 'The market rule is 10–12 times monthly service revenue for a tight route — and materially less for a scattered one, because the buyer is purchasing future route hours, and drive time is the tax on every one of them. The density test prices it exactly: 12 pools at 8-minute gaps is a 6.6-hour day; the same 12 at 20-minute gaps is a 9-hour day earning identical revenue — same book, 36% worse wage, lower multiple. Due diligence before buying: verify accounts with service agreements and payment history (not just a customer list), drive the actual route at service hours, check the average account age and churn rate, and confirm equipment access notes transfer. Sellers get the multiple by cleaning the route first — drop or move the outliers, tighten the map, and the same accounts appraise higher.',
+      },
+      {
+        q: 'How many pools can one tech service per week?',
+        a: 'The working ceiling is 60–80 weekly accounts before service quality slips — at 25 minutes of service plus tight drive gaps, that is four to five route days of 12–15 stops each. Past the ceiling you are not growing a route, you are hiring one: techs run $18–25/hr plus vehicle and insurance, and the business becomes margin × routes rather than your own hours. The ceiling moves with the stop profile: pools with spas, water features, or heavy tree debris run 35–45 minutes and cut daily capacity by a third — which is why per-stop pricing by complexity (standard, spa-inclusive, premium) keeps the hourly honest. The calculator shows the boundary directly: raise minutes-per-stop and watch the day length and net hourly move.',
+      },
+      {
+        q: 'Should chemicals be included in my monthly pool service price?',
+        a: 'Included-in-price is the residential standard, and it works when you track per-pool usage — chemicals run $8–15 per pool per month on a maintained pool, but a problem pool in an algae cycle or with heavy bather load can triple that, silently converting a $150 account into a $90 one. The protection is the service agreement: chemicals included for a maintained pool, with algae remediation, phosphate treatment, and post-storm recovery quoted separately as one-time services ($150–600 depending on severity). Repair work is the margin on top of the route: filter cleans ($85–150), salt cell service, and pump or heater installs bill at shop rates with no drive penalty — route techs trained to spot and quote repairs outperform route-only operators by 30–50% on the same stops. Lock the base with annual agreements and auto-pay; month-to-month pool customers churn at the first cold snap.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

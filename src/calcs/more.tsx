@@ -7875,6 +7875,109 @@ export function MobileMechanicCalc() {
   )
 }
 
+// JUNK REMOVAL PRICING — node-verified defaults: half truckload at $280. Dump fee $55 + labor 1.5h × $22 = $33 + fuel $18 + overhead $12 → true cost $118, profit $162 (57.9% margin). 2 field hours total → $81.00/hr profit. 5-job day: revenue $1,400, profit $810. Volume pricing only works if every add-on cost rides along.
+export function JunkRemovalCalc() {
+  const [price, setPrice] = useNumber(280)
+  const [dumpFee, setDumpFee] = useNumber(55)
+  const [laborHrs, setLaborHrs] = useNumber(1.5)
+  const [crewRate, setCrewRate] = useNumber(22)
+  const [fuel, setFuel] = useNumber(18)
+  const [overhead, setOverhead] = useNumber(12)
+  const [jobsDay, setJobsDay] = useNumber(5)
+
+  const r = useMemo(() => {
+    const labor = laborHrs * crewRate
+    const cost = dumpFee + labor + fuel + overhead
+    const profit = price - cost
+    const margin = price > 0 ? (profit / price) * 100 : 0
+    const fieldHrs = laborHrs + 0.5 // drive/load buffer
+    const profitHr = fieldHrs > 0 ? profit / fieldHrs : 0
+    const dayRev = jobsDay * price
+    const dayProfit = jobsDay * profit
+    return { labor, cost, profit, margin, profitHr, dayRev, dayProfit }
+  }, [price, dumpFee, laborHrs, crewRate, fuel, overhead, jobsDay])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Job price" value={price} onChange={setPrice} prefix="$" step="20" />
+          <Field label="Dump/transfer fee" value={dumpFee} onChange={setDumpFee} prefix="$" step="5" />
+          <Field label="Load labor hours" value={laborHrs} onChange={setLaborHrs} step="0.25" />
+          <Field label="Crew cost" value={crewRate} onChange={setCrewRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Fuel per job" value={fuel} onChange={setFuel} prefix="$" step="2" />
+          <Field label="Overhead per job" value={overhead} onChange={setOverhead} prefix="$" step="2" />
+          <Field label="Jobs per day" value={jobsDay} onChange={setJobsDay} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="True job cost" value={usd(Math.round(r.cost))} />
+          <Result label="Profit per job" value={`${usd(Math.round(r.profit))} (${num(r.margin, 0)}%)`} big />
+          <Result label="Profit per field hour" value={`${usd(Math.round(r.profitHr))}/hr`} />
+          <Result label="Day profit" value={`${usd(Math.round(r.dayProfit))} of ${usd(Math.round(r.dayRev))}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.profit > 0
+            ? `${usd(price)} looks like easy money until the dump takes ${usd(dumpFee)} and the crew takes ${usd(Math.round(r.labor))} — you keep ${usd(Math.round(r.profit))} per job, ${usd(Math.round(r.dayProfit))} on a ${jobsDay}-job day. The fraction-of-truck price is marketing; the dump scale ticket is reality.`
+            : `At ${usd(price)} this job loses ${usd(Math.abs(Math.round(r.profit)))} — the dump fee and crew cost more than the ticket. Raise the fraction price or stop accepting this load type.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: true cost = dump fee + load labor × crew cost + fuel + overhead share (insurance, truck payment, phone, ads ÷ jobs); profit per field hour counts a 30-min drive/load buffer per job. The pricing rules that keep junk removal profitable: price by truckload fraction with photo confirmation BEFORE dispatch — a "half load" quoted from a phone call becomes a full load at the curb, so the on-site quote (with the price book open) is the industry standard for a reason. Minimums are survival: a single-item pickup at $75–95 only works routed as an add-on to an existing trip — dedicated trips under $125 lose money after fuel and dump minimums. Weight surcharges are not optional: transfer stations charge by the ton, so dense loads (concrete, dirt, roofing, wet junk) need per-item pricing — a "quarter load" of broken concrete can cost 3× the dump fee of household junk. Specialty fees ride on top: mattress/boxspring +$25–50 (many stations surcharge), refrigerator/AC +$25–35 (EPA refrigerant recovery), tires, e-waste, and paint each carry disposal line items — list them on the quote sheet, not as surprises. The margin levers: two-person crew speed (the truck sits at the dump either way — load faster, do 6 jobs not 4), donation triage (usable goods to charity cuts dump weight AND earns goodwill reviews), and route clustering by ZIP with same-day windows. Volume discount trap: "whole truckload deals" that undercut your own fraction math — a full truck at 10× your minimum should clear at least 5× the profit. Estimate — your scale tickets and route log govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// POOL SERVICE ROUTE DENSITY — node-verified defaults: 12 pools × $150/mo = $1,800/mo revenue; chems $12/pool = $144/mo. Weekly: $415.70 rev − $33.26 chem over a 6.60h route day (25 min service + 8 min drive × 12) = $57.95/hr net. Marginal stop near route: $57.95/hr; marginal stop 30 min away: $34.77/hr — same $150 price, 40% worse wage. Density IS the business.
+export function PoolRouteCalc() {
+  const [pools, setPools] = useNumber(12)
+  const [monthly, setMonthly] = useNumber(150)
+  const [chem, setChem] = useNumber(12)
+  const [stopMin, setStopMin] = useNumber(25)
+  const [driveMin, setDriveMin] = useNumber(8)
+  const [farDrive, setFarDrive] = useNumber(30)
+
+  const r = useMemo(() => {
+    const revMo = pools * monthly
+    const chemMo = pools * chem
+    const revWk = revMo / 4.33
+    const chemWk = chemMo / 4.33
+    const netWk = revWk - chemWk
+    const dayHrs = (pools * (stopMin + driveMin)) / 60
+    const netHr = dayHrs > 0 ? netWk / dayHrs : 0
+    const nearStop = (monthly / 4.33 - chem / 4.33) / ((stopMin + driveMin) / 60)
+    const farStop = (monthly / 4.33 - chem / 4.33) / ((stopMin + farDrive) / 60)
+    return { revMo, chemMo, revWk, netWk, dayHrs, netHr, nearStop, farStop }
+  }, [pools, monthly, chem, stopMin, driveMin, farDrive])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Pools on route" value={pools} onChange={setPools} step="1" />
+          <Field label="Monthly price" value={monthly} onChange={setMonthly} prefix="$" step="10" />
+          <Field label="Chems per pool" value={chem} onChange={setChem} prefix="$" suffix="/mo" step="2" />
+          <Field label="Minutes per stop" value={stopMin} onChange={setStopMin} step="5" />
+          <Field label="Drive min between" value={driveMin} onChange={setDriveMin} step="1" />
+          <Field label="Far-stop drive min" value={farDrive} onChange={setFarDrive} step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Monthly revenue" value={usd(Math.round(r.revMo))} />
+          <Result label="Net per route hour" value={`${usd(Math.round(r.netHr))}/hr`} big />
+          <Result label="Next stop nearby" value={`${usd(Math.round(r.nearStop))}/hr`} />
+          <Result label="Next stop far away" value={`${usd(Math.round(r.farStop))}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${pools} pools at ${usd(monthly)}/mo is ${usd(Math.round(r.revMo))}/mo — but the route day runs ${num(r.dayHrs, 1)} hours, so you net ${usd(Math.round(r.netHr))}/hr. Add the neighbor's pool and that hour pays ${usd(Math.round(r.nearStop))}; add one ${farDrive} minutes away and the same price pays ${usd(Math.round(r.farStop))}. Same customer, different business.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: weekly revenue = pools × monthly ÷ 4.33; route-day hours = pools × (service + drive) ÷ 60; net/hr = (weekly revenue − chemical cost) ÷ route-day hours; marginal stops priced the same but costed by their true drive time. The density doctrine that runs pool service: a route is worth its minutes between stops — 12 pools at 8-minute gaps is a 6.6-hour day; the same 12 pools at 20-minute gaps is a 9-hour day earning the same revenue, which is why established routes sell for 10–12× monthly service revenue ONLY when tight (scattered routes sell for less or not at all). Growth rule: buy or market INTO your existing map — a $150/mo account two doors from a current stop is worth more than $180/mo across town; discount the tight one to win it and you still come out ahead. Chemical margin: most services bake chems into the monthly price — track per-pool usage, because a problem pool (algae cycles, high bather load) can triple chem cost and needs a re-price or a repair referral. Repair work is the real margin: filter cleans ($85–150), salt cell cleans, pump/heater installs, and green-to-clean turnarounds ($300–600) bill at shop rates with no drive penalty — route techs who spot and quote repairs outperform route-only operators by 30–50% on the same stops. The ceiling math: one tech tops out at 60–80 weekly accounts before service quality slips; past that, you are hiring ($18–25/hr techs) and the business becomes margin × routes, not your hours. Season contracts and auto-pay are the retention spine — month-to-month pool customers churn at the first cold snap. Estimate — your route GPS log and chem purchase records govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -13598,6 +13701,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'junk-removal-pricing-calculator': JunkRemovalCalc,
+  'pool-service-route-calculator': PoolRouteCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
