@@ -2323,6 +2323,72 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Social Security bridge — what delaying actually COSTS in portfolio terms, and what it buys. Claim early (62): PIA × 70% (FRA 67). Delay to 70: PIA × 124%. The bridge = the checks you skip: early-monthly × months delayed, pulled from your portfolio instead ($1,540 × 96 months = $147,840). The gain: (delayed − early) × 12 = the annuity you bought with that bridge money ($14,256/yr for life, COLA-adjusted, inflation-protected — compare: a $147,840 single-premium annuity at 70 pays roughly $11–13k/yr WITHOUT full COLA). Payback age = delay age + forgone ÷ annual gain — the classic ~80.4 for 62→70 at FRA 67. Implicit payout rate of the bridge "annuity": gain ÷ bridge ≈ 9.6% — far above any safe withdrawal rate, which is why delay is the cheapest longevity insurance available. Node-verified: PIA $2,200/FRA 67 → 62 = $1,540, 70 = $2,728, bridge $147,840, gain $14,256/yr, payback 10.37 yrs (age 80.4); 62→67 → bridge $92,400, gain $7,920/yr, payback 11.7 yrs.
+export function SSBridgeCalc() {
+  const [pia, setPia] = useNumber(2200)
+  const [fromAge, setFromAge] = useState('62')
+  const [toAge, setToAge] = useState('70')
+
+  const r = useMemo(() => {
+    const FRA = 67 * 12
+    const factor = (ageYrs: number) => {
+      const m = ageYrs * 12
+      if (m < FRA) {
+        const e = FRA - m
+        return 1 - Math.min(e, 36) * (5 / 9) / 100 - Math.max(0, e - 36) * (5 / 12) / 100
+      }
+      return 1 + Math.min(m - FRA, 36) * (2 / 3) / 100
+    }
+    const a = Number(fromAge), b = Number(toAge)
+    const early = pia * factor(a)
+    const late = pia * factor(b)
+    const mo = Math.max(0, (b - a) * 12)
+    const bridge = early * mo
+    const gainYr = (late - early) * 12
+    const payback = gainYr > 0 ? bridge / gainYr : 0
+    const payoutRate = bridge > 0 ? (gainYr / bridge) * 100 : 0
+    return { early, late, bridge, gainYr, payback, breakAge: b + payback, payoutRate, mo }
+  }, [pia, fromAge, toAge])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="PIA (benefit at FRA 67)" value={pia} onChange={setPia} prefix="$" />
+          <div>
+            <div className="mb-1 text-sm font-medium">Claiming from age</div>
+            <select value={fromAge} onChange={(e) => setFromAge(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {['62', '63', '64', '65', '66', '67', '68', '69'].map((x) => <option key={x} value={x}>{x}</option>)}
+            </select>
+          </div>
+          <div>
+            <div className="mb-1 text-sm font-medium">Delaying to age</div>
+            <select value={toAge} onChange={(e) => setToAge(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {['63', '64', '65', '66', '67', '68', '69', '70'].map((x) => <option key={x} value={x}>{x}</option>)}
+            </select>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Bridge cost (checks skipped)" value={usd(r.bridge, 0)} />
+          <Result label="Gain per year for life" value={usd(r.gainYr, 0)} />
+          <Result label="Breakeven age" value={num(r.breakAge, 1)} />
+          <Result label="Implicit payout rate" value={`${num(r.payoutRate, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {Number(toAge) <= Number(fromAge) ? (
+            <>Pick a delay age later than the claiming age — the bridge is the checks you skip between them.</>
+          ) : (
+            <>Claiming at {fromAge} pays {usd(r.early, 0)}/mo; waiting to {toAge} pays {usd(r.late, 0)}/mo. The delay costs <span className="font-medium">{usd(r.bridge, 0)}</span> — the {r.mo} checks you skip, pulled from your portfolio instead — and buys <span className="font-medium">{usd(r.gainYr, 0)} extra per year, for life, COLA-adjusted</span>. That's an implicit {num(r.payoutRate, 1)}% payout on the bridge money — no bond ladder or commercial annuity at {toAge} matches it, and none carries a government COLA. Breakeven is age {num(r.breakAge, 1)}; median life expectancy at 62 is ~82 (men) to ~85 (women), and the higher earner's delay also raises the survivor's check.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The bridge framing turns an abstract "should I delay" into a concrete portfolio question: delaying from {fromAge} to {toAge} means funding {usd(r.early, 0)}/month of spending from savings for {r.mo} months — {usd(r.bridge, 0)} in today's dollars — in exchange for {usd(r.gainYr, 0)} more per year for life, indexed to inflation. Think of it as buying a COLA-protected annuity at a {num(r.payoutRate, 1)}% payout rate when commercial single-premium annuities at 70 pay meaningfully less without a true CPI adjustment. Assumptions: FRA 67 (born 1960+), standard reduction (5/9%/month first 36, 5/12% beyond) and 8%/year delayed credits to 70; COLAs scale both sides, so today's-dollars math holds. Honest counters: delaying only wins if you live past breakeven (age {num(r.breakAge, 1)}) — health, family history, and whether you have a younger spouse who'd inherit the bigger check all matter; the bridge years are also your Roth-conversion sweet spot (lower income before benefits start — see the bracket-filler); and if working before FRA, the earnings test can withhold the early checks anyway. The 62-vs-70 gap is 77% — this is usually the highest-return "asset" a healthy 62-year-old can buy.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Social Security earnings test, 2026 (SSA 2026 COLA fact sheet): under FRA all year → exempt $24,480 ($2,040/mo), withhold $1 per $2 over; year you REACH FRA → exempt $65,160 ($5,430/mo) counting only pre-FRA-month earnings, withhold $1 per $3; from the FRA month on, no test at all. Countable = wages + net self-employment only — pensions, 401(k)/IRA withdrawals, investment income, annuities don't count. SSA withholds whole checks (ceil of withheld ÷ monthly benefit), reconciles to actual earnings later. The part nobody believes: withheld benefits are NOT lost — at FRA, SSA recalculates your benefit, crediting the withheld months, permanently raising the check (actuarially it roughly returns the money over life expectancy; you lose only the time value). First-year grace rule: in the year you retire mid-year, any month under $2,040 (or $5,430, FRA year) pays a full check regardless of annual earnings. Node-verified: $1,800/mo, $40k wages, under FRA → excess $15,520, withheld $7,760 ≈ 5 checks, keep $13,840; FRA-year $80k pre-FRA wages, $2,000/mo, 8 benefit months → withheld $4,946.67 ≈ 3 checks; $24,480 exactly → $0; $150k wages, $2,000/mo → all 12 checks withheld ($24,000 cap).
 export function SSEarningsTestCalc() {
   const [year, setYear] = useState<'under' | 'fra'>('under')
@@ -7455,6 +7521,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'social-security-bridge-calculator': SSBridgeCalc,
   'social-security-earnings-test-calculator': SSEarningsTestCalc,
   'hsa-medicare-trap-calculator': HsaMedicareTrapCalc,
   '72t-sepp-calculator': Sepp72tCalc,

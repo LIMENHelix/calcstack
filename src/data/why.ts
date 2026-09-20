@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'social-security-bridge-calculator':
+    'Pre-retirees use it when "should I delay" gets abstract: delaying 62→70 is a $147,840 portfolio bridge that buys a 9.6% COLA-protected payout for life — breakeven 80.4, and no commercial annuity at 70 matches it.',
   'social-security-earnings-test-calculator':
     'Workers claiming SS before full retirement age use it before taking the part-time job: 2026 withholds $1 per $2 over $24,480 — $40,000 of wages skips about five checks — but the FRA recalculation returns it as a permanently higher benefit, so the real cost is timing.',
   'hsa-medicare-trap-calculator':

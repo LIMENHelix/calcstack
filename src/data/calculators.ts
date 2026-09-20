@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'social-security-bridge-calculator',
+    title: 'Social Security Bridge Calculator 2026 — What Delaying Costs Your Portfolio vs What It Buys',
+    shortTitle: 'SS Bridge Calculator',
+    category: 'Retirement',
+    description:
+      'Delaying Social Security from 62 to 70 means funding the checks you skip from savings — the "bridge." Price it: the exact bridge cost, the extra annual income it buys for life, the breakeven age, and the implicit payout rate that beats any annuity.',
+    tagline: 'Delaying 62→70 costs $147,840 of portfolio and buys a 9.6% COLA-protected payout — the cheapest annuity in America.',
+    intro:
+      'Every "should I delay Social Security" article argues about breakeven ages; few answer the actual question: what does delaying cost my portfolio, and what does it buy? The bridge calculator frames it as a transaction. Delaying from 62 to 70 means covering $1,540 a month from savings for 96 months — a $147,840 bridge on a $2,200 PIA — in exchange for $14,256 more per year, for life, adjusted for inflation. That\'s a 9.6% implicit payout rate on the bridge money, backed by a government COLA, when no commercial annuity at 70 comes close. The breakeven is age 80.4; median life expectancy at 62 is 82–85. This calculator prices YOUR bridge: the checks you\'d skip, the income they\'d buy, the breakeven age, and the payout rate — for any claiming pair from 62 to 70.',
+    howItWorks: [
+      'Enter your PIA — the benefit at full retirement age, from your SSA statement.',
+      'Pick the age you\'d otherwise claim and the age you\'d delay to.',
+      'Read the bridge cost (checks you\'d skip), the annual gain, and the breakeven age.',
+      'Compare the implicit payout rate to any annuity quote or safe withdrawal rate.',
+    ],
+    faq: [
+      {
+        q: 'Why compare delaying to buying an annuity?',
+        a: 'Because that\'s what it is, mechanically. Both convert a lump of savings into guaranteed lifetime income — and Social Security\'s "annuity" is actuarially cheap: 8% per year of delay (plus forgone-check value), inflation-adjusted, backed by the US government, with survivor benefits attached. A $147,840 single-premium immediate annuity for a 70-year-old pays roughly $11,000–$13,000 a year without a full CPI adjustment; delaying buys $14,256 a year WITH one for the same money. Economists (Shiller, among others) have called delaying the best annuity deal available — the bridge calculator just makes the price tag explicit so you can judge whether you can afford the purchase.',
+      },
+      {
+        q: 'What if I die before the breakeven age?',
+        a: 'Then claiming early was the better deal for you — breakeven math is honest about that. Three things soften it. First, joint life: for a married couple, the relevant horizon is the SECOND death, and the higher earner\'s bigger check becomes the survivor\'s check — delaying protects the widow(er) for decades. Second, breakeven on total dollars isn\'t the whole story; the bigger late-life check is insurance against outliving savings, which matters most exactly when portfolios are depleted. Third, the middle path: delay to 67 or 68 captures much of the gain with a smaller bridge — run 62→67 above ($92,400 bridge, 11.7-year payback) and compare.',
+      },
+      {
+        q: 'Does the bridge money have to come from a specific account?',
+        a: 'From wherever is tax-smartest — and here\'s the part that makes the strategy sing: the bridge years are also your Roth-conversion sweet spot. Income is low (no benefits yet, no RMDs), so you can fill the 12% or 22% bracket with conversions while drawing the bridge from taxable accounts at capital-gains rates. The two moves compound: delay raises guaranteed income, conversions shrink future RMDs, and both cut the taxes on Social Security later (up to 85% of benefits become taxable above the provisional-income thresholds). Spending IRA money for the bridge while converting is counterproductive — that keeps ordinary income high; taxable or cash accounts first.',
+      },
+    ],
+  },
+  {
     slug: 'social-security-earnings-test-calculator',
     title: 'Social Security Earnings Test Calculator 2026 — Working While Claiming: What\'s Withheld, What\'s Returned',
     shortTitle: 'SS Earnings Test',
