@@ -2669,6 +2669,76 @@ export function RenovationRoiCalc() {
   )
 }
 
+// CONTRACTOR BID COMPARISON — normalize three bids before comparing; raw price lies. Model: adjusted bid = quoted price + allowance gaps (items excluded or under-allowanced that you WILL pay: flooring, fixtures, permits, disposal) + time cost (weeks of schedule × your weekly cost of delay — rent overlap, storage, eating out, a kitchen you can't cook in). Node-verified: bids $48,000 (+$3,500 flooring gap, 8 wks) / $52,500 (all-in, 6 wks) / $46,500 (+$4,000 exclusions, 10 wks) → adjusted $51,500 / $52,500 / $50,500; mid $51,500; spread −1.9%/0%/+1.9%. Underbid flag (rule of thumb, labeled as such): a bid >15% below the middle of three is statistically the change-order bid — priced to win the signature, recovered in "unforeseens." Also flagged: missing allowances make the cheapest raw bid the most expensive adjusted one.
+export function ContractorBidCalc() {
+  const [p1, setP1] = useNumber(48000)
+  const [g1, setG1] = useNumber(3500)
+  const [w1, setW1] = useNumber(8)
+  const [p2, setP2] = useNumber(52500)
+  const [g2, setG2] = useNumber(0)
+  const [w2, setW2] = useNumber(6)
+  const [p3, setP3] = useNumber(46500)
+  const [g3, setG3] = useNumber(4000)
+  const [w3, setW3] = useNumber(10)
+  const [wkCost, setWkCost] = useNumber(0)
+
+  const r = useMemo(() => {
+    const bids = [
+      { n: 'Bid A', p: p1, gap: g1, w: w1 },
+      { n: 'Bid B', p: p2, gap: g2, w: w2 },
+      { n: 'Bid C', p: p3, gap: g3, w: w3 },
+    ].map((b) => ({ ...b, adj: b.p + b.gap + b.w * wkCost }))
+    const adjs = bids.map((b) => b.adj)
+    const sorted = [...adjs].sort((a, b) => a - b)
+    const mid = sorted[1]
+    const low = sorted[0]
+    const lowball = mid > 0 && low < 0.85 * mid
+    const best = bids.reduce((a, b) => (b.adj < a.adj ? b : a))
+    const worst = bids.reduce((a, b) => (b.adj > a.adj ? b : a))
+    return { bids, mid, lowball, best, worst, spread: worst.adj - best.adj }
+  }, [p1, g1, w1, p2, g2, w2, p3, g3, w3, wkCost])
+
+  const bidFields = [
+    { n: 'Bid A', p: p1, sp: setP1, g: g1, sg: setG1, w: w1, sw: setW1 },
+    { n: 'Bid B', p: p2, sp: setP2, g: g2, sg: setG2, w: w2, sw: setW2 },
+    { n: 'Bid C', p: p3, sp: setP3, g: g3, sg: setG3, w: w3, sw: setW3 },
+  ]
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        {bidFields.map((b) => (
+          <div key={b.n} className="grid grid-cols-2 gap-3 rounded-lg border p-3 sm:grid-cols-4">
+            <p className="col-span-2 text-sm font-medium sm:col-span-4">{b.n}</p>
+            <Field label="Quoted price" value={b.p} onChange={b.sp} prefix="$" />
+            <Field label="Excluded items you'll still pay for" value={b.g} onChange={b.sg} prefix="$" />
+            <Field label="Quoted schedule" value={b.w} onChange={b.sw} suffix="wks" step="1" />
+          </div>
+        ))}
+        <div className="max-w-xs">
+          <Field label="Your cost per extra week (rent overlap, storage, takeout)" value={wkCost} onChange={setWkCost} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-3 gap-3">
+          {r.bids.map((b) => (
+            <Result key={b.n} label={`${b.n} true cost`} value={usd(b.adj)} big={b === r.best} />
+          ))}
+        </div>
+        {r.lowball && (
+          <p className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">
+            One bid sits more than 15% below the middle — the classic change-order pattern: priced to win the signature, recovered later in "unforeseen" extras. Before accepting it, get the exclusion list in writing and ask for their last three change-order totals by name.
+          </p>
+        )}
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.best.n} is the real low bid at {usd(r.best.adj)} true cost — {usd(r.spread)} separates best from worst after exclusions and schedule. {Math.min(p1, p2, p3) === r.best.p ? 'The cheapest raw quote also wins adjusted — that\'s a clean bid.' : `The cheapest raw quote (${usd(Math.min(p1, p2, p3))}) is NOT the cheapest project once its exclusions are priced back in.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Three bids only work when they bid the same job. Normalize before comparing: add back every exclusion and allowance gap (a $500 flooring allowance against $4,000 of real flooring is a $3,500 hidden cost), then price the schedule — a 10-week kitchen renovation against a 6-week one costs real money in rent overlap, storage, and takeout. The 15%-below-middle flag is a contractor-industry rule of thumb, not a statistic: a dramatically low bid usually means missing scope, and scope missed at bid time returns as change orders at contract time. Verify what the price assumes: licensed and insured (ask for certificates), permits included, payment schedule tied to milestones (never more than ~10–30% down; final 10–15% only after walkthrough), and the same material grades across bids. The best bid is rarely the lowest — it's the most complete. Estimates — your contract governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8289,6 +8359,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'home-equity-loan-calculator': HomeEquityLoanCalc,
   'cost-of-waiting-calculator': CostOfWaitingCalc,
   'renovation-roi-calculator': RenovationRoiCalc,
+  'contractor-bid-comparison-calculator': ContractorBidCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

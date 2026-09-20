@@ -421,6 +421,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'contractor-bid-comparison-calculator',
+    title: 'Contractor Bid Comparison Calculator — Normalize 3 Bids, Price the Exclusions, Flag the Change-Order Trap',
+    shortTitle: 'Bid Comparison',
+    category: 'Housing & Mortgage',
+    description:
+      'Three bids only compare after you add back the exclusions and price the schedule. Normalize each bid to true cost, see the real spread, and flag the suspiciously low one.',
+    tagline: 'The $46,500 bid with $4,000 of exclusions is a $50,500 project — the cheapest quote is rarely the cheapest job.',
+    intro:
+      'Every homeowner is told to get three bids; almost nobody is told how to compare them. Raw prices lie because contractors bid different scopes: one excludes flooring, another carries a $500 allowance against $4,000 of real material, a third quotes 10 weeks against 6 — and a month of rent overlap or takeout dinners is real money. This calculator normalizes each bid to true cost (price + exclusions you\'ll still pay + schedule cost), shows the honest spread, and flags the pattern every experienced homeowner learns once: a bid more than 15% below the middle is usually priced to win the signature and recovered later in change orders.',
+    howItWorks: [
+      'Enter each bid\'s quoted price, schedule, and the items excluded or under-allowanced.',
+      'Add your weekly cost of delay if the schedule matters (rent overlap, storage, eating out).',
+      'Read the true-cost ranking — it often flips the raw-price ranking.',
+      'Heed the underbid flag: get exclusions in writing before signing the low one.',
+    ],
+    faq: [
+      {
+        q: 'Why does the cheapest bid so often end up the most expensive job?',
+        a: 'Scope asymmetry. Contractors bid the same project differently: one prices real flooring, another carries a $500 allowance against your $4,000 taste — the difference doesn\'t disappear, it just moves from the bid to your wallet after signing. Change orders are the second mechanism: work "not included" in a low bid returns at retail-plus pricing once the contractor owns the job. That\'s why this tool adds exclusions back before ranking. The fix at bid time: hand all three contractors the SAME written scope and material list, and require each to list exclusions explicitly. A bid with no exclusion list isn\'t complete — it\'s unverifiable.',
+      },
+      {
+        q: 'Is a bid 15–20% below the others really a red flag?',
+        a: 'It\'s a rule of thumb, not a law — but the logic is mechanical. Licensed contractors pay similar prices for labor, materials, insurance, and permits in the same market, so a bid far below the middle means something is missing: scope, insurance, permits, realistic labor hours, or profit (the last one means the contractor may not finish). Sometimes it\'s legitimate — a slow season, a crew between jobs, a specialist for whom your job is quick. Verify before rejecting or accepting: ask for the exclusion list, proof of insurance and license, the payment schedule (never more than ~10–30% down), and references whose projects finished on budget. If the low bid survives verification, take it and enjoy the discount.',
+      },
+      {
+        q: 'What should the payment schedule look like?',
+        a: 'Milestones, not dates, and never front-loaded. A reasonable structure: ~10% at signing (some states cap deposits by law — California caps at $1,000 or 10%, whichever is less), progress payments tied to completed phases you can inspect (demolition done, rough-in passed inspection, drywall hung), and a final 10–15% only after walkthrough and punch list. Red flags: large deposits ("I need money for materials" — established contractors have supplier credit), cash-only discounts, and pressure to pay ahead of milestones. The payment schedule is your only real leverage once work begins — money you\'ve paid is leverage you\'ve spent.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

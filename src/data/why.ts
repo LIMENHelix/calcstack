@@ -31,6 +31,8 @@ export const WHY_USE: Record<string, string> = {
     'Buyers holding off for lower rates use it to price the wait itself: a 1-point drop saves $206/mo on a $400k home, but 3% price growth plus $24k of rent turns that into a 21-year payback — breakeven appreciation is the deciding number.',
   'renovation-roi-calculator':
     'Owners weighing a remodel use it before signing the contract: 2025 Cost vs Value data says the garage door returns 268% and the upscale suite addition 18% — so the tool reframes big interior projects as a per-year cost of enjoyment, not an investment.',
+  'contractor-bid-comparison-calculator':
+    'Owners with three quotes use it before signing: exclusions and schedule get priced back in, and the $46.5k bid with $4k of gaps exposes itself as a $50.5k project — while a bid 15% under the middle triggers the change-order warning.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
