@@ -1134,6 +1134,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'warranty-reserve-calculator',
+    title: 'Warranty Reserve Calculator 2026 — Callback Cost as a % of Revenue, With a Statistical Buffer',
+    shortTitle: 'Warranty Reserve',
+    category: 'Trades & Engineering',
+    description:
+      'Price callbacks before they happen: jobs × callback rate × true callback cost, plus a 2σ buffer for bad-luck streaks — the reserve percentage of revenue that keeps warranty work from eating your margin.',
+    tagline: '150 jobs at a 6% callback rate and $850 per callback means $7,650/yr of expected warranty work — reserve 0.76% of revenue, not zero.',
+    intro:
+      'Every trade business does warranty work; the profitable ones price it before it happens. A shop running 150 jobs a year at a 6% callback rate and $850 per callback — four unbillable burdened hours, materials, a truck roll, and the schedule hole where a paying job would have been — carries $7,650 of expected annual warranty cost, 0.46% of $1.65M revenue. Add a two-sigma buffer for the streaks (callbacks cluster, because bad weeks happen) and the honest reserve is $12,595, 0.76% of revenue — booked monthly as jobs complete, not expensed in panic when the phone rings. This calculator sizes the reserve and shows the rate as the quality metric it really is: a callback rate drifting from 4% to 7% is a training problem with a dollar sign.',
+    howItWorks: [
+      'Enter jobs per year and average job value.',
+      'Enter your callback rate — from a callback log; if you don\'t keep one, that\'s finding #1.',
+      'Enter the true cost per callback: unbillable burdened hours + materials + truck roll.',
+      'Read expected annual warranty cost, the buffered reserve, and the % of revenue to book monthly.',
+    ],
+    faq: [
+      {
+        q: 'Why book a reserve instead of expensing callbacks as they happen?',
+        a: 'Because the job that created the obligation should carry its cost — accrual discipline, not accounting trivia. A $11,000 job completed in March that generates an $850 callback in October was an $11,000 job with $850 of attached cost all along; expensing the callback in October makes March\'s job look more profitable than it was and October\'s worse, corrupting every pricing decision downstream. Booking a per-job reserve at completion (revenue × your reserve percentage) matches cost to the work that caused it, smooths the P&L, and — the real payoff — makes callback rate visible as a management number instead of a series of annoying surprises. Shops that expense-as-they-go systematically overstate job profitability and underinvest in the QA that would shrink the rate.',
+      },
+      {
+        q: 'What\'s a realistic callback rate and cost?',
+        a: 'Established trade shops run 3–6%; new crews, new service lines, and weather-exposed work run higher — if you don\'t have a log, assume 6% and start logging today, because the true number is management gold. Cost per callback: count it all — 3–5 unbillable hours at the BURDENED rate (not the wage), materials, the truck roll (mileage + the truck\'s hourly cost), and the opportunity cost of the schedule hole where a paying job would have been. $600–$1,200 is the honest range for most field trades; $850 is a fair default. What the ledger never shows: a callback on a referred client costs future revenue you\'ll never trace. Fast, cheerful warranty response is the cheapest marketing a trade business buys — the reserve funds doing it without resentment.',
+      },
+      {
+        q: 'How does the reserve connect to quality management?',
+        a: 'The reserve is the PRICE of your quality level — which makes the callback rate the most actionable number in the shop. Drift from 4% to 7% across 150 jobs costs an extra $3,825 a year at $850 per callback; that\'s the budget for the fix — training, checklists, a second-set-of-eyes rule on the failure modes that dominate your log. Categorize every callback (installation error, material failure, customer expectation, weather) and the Pareto pattern appears fast: two or three causes usually carry most of the cost. Expectation-management callbacks — the ones where nothing failed but the customer expected different — shrink with better scope documents, not better technicians. The reserve tells you what quality costs; the log tells you where to buy it down. Either alone is trivia; together they\'re a quality system with a P&L.',
+      },
+    ],
+  },
+  {
     slug: 'overtime-vs-hire-calculator',
     title: 'Overtime vs Hiring Calculator 2026 — When Chronic OT Costs More Than a New Employee',
     shortTitle: 'Overtime vs Hire',

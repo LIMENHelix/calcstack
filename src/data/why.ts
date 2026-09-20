@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'warranty-reserve-calculator':
+    'Owners use it at budget time: 150 jobs at a 6% callback rate and $850 per callback is $7,650/yr of expected warranty work — reserve 0.76% of revenue booked monthly, and read the rate as the quality metric it is.',
   'overtime-vs-hire-calculator':
     'Shop owners use it when OT stops being a surge: four people on 10 chronic OT hours burn $2,235/wk at burdened rates — a $4,000 hire pays back in 5.4 weeks, and the fatigue costs never show on payroll.',
   'equipment-hourly-cost-calculator':

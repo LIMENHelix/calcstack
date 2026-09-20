@@ -4472,6 +4472,50 @@ export function OvertimeVsHireCalc() {
   )
 }
 
+// WARRANTY RESERVE — the callback cost priced BEFORE it happens, as a % of revenue. Node-verified: 150 jobs/yr at $11k avg = $1.65M revenue; 6% callback rate × $850 avg callback (4 burdened hrs + materials + truck roll) → expected $7,650/yr = 0.46% of revenue; with a 2σ statistical buffer (sqrt(np(1-p)) × cost = $2,472) → reserve $12,595 = 0.76% of revenue. Honest edges: callback COST is more than the fix (unbillable burdened hours + materials + truck roll + the schedule hole where a paying job would have been + reputation — a callback on a referred client costs future revenue), callback RATE is a quality metric hiding in a cost line (rate creeping 4%→7% is a training/QA problem with a dollar sign), accrual discipline (book the reserve monthly per job, not when the phone rings — the work that generates the revenue should carry its warranty cost), and the trade standard: 0.5-1% of revenue for established trades, more for new crews or new service lines. Buffers via binomial sigma are illustrative statistics, not a guarantee.
+export function WarrantyReserveCalc() {
+  const [jobs, setJobs] = useNumber(150)
+  const [avgJob, setAvgJob] = useNumber(11000)
+  const [rate, setRate] = useNumber(6)
+  const [cbCost, setCbCost] = useNumber(850)
+
+  const r = useMemo(() => {
+    const rev = jobs * avgJob
+    const p = Math.min(100, rate) / 100
+    const expected = jobs * p * cbCost
+    const pct = rev > 0 ? (expected / rev) * 100 : 0
+    const sigma = Math.sqrt(jobs * p * (1 - p)) * cbCost
+    const reserve = expected + 2 * sigma
+    const reservePct = rev > 0 ? (reserve / rev) * 100 : 0
+    return { rev, expected, pct, sigma, reserve, reservePct }
+  }, [jobs, avgJob, rate, cbCost])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Jobs per year" value={jobs} onChange={setJobs} step="10" />
+          <Field label="Average job value" value={avgJob} onChange={setAvgJob} prefix="$" step="500" />
+          <Field label="Callback rate" value={rate} onChange={setRate} suffix="%" step="0.5" />
+          <Field label="Avg cost per callback" value={cbCost} onChange={setCbCost} prefix="$" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Annual revenue" value={usd(r.rev)} />
+          <Result label="Expected warranty cost /yr" value={usd(r.expected)} />
+          <Result label="Reserve with 2σ buffer" value={usd(r.reserve)} big />
+          <Result label="Reserve as % of revenue" value={`${num(r.reservePct, 2)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Set aside {num(r.reservePct, 2)}% of revenue ({usd(Math.round(r.reserve))}/yr) — book it monthly as each job completes, not when the phone rings. If your callback rate drifts up, treat it as the quality metric it is: the reserve tells you the PRICE of the problem, and the fix is training, not bigger reserves.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: expected cost = jobs × callback rate × cost per callback; reserve = expected + 2σ buffer (binomial standard deviation × cost — covers bad-luck streaks, illustrative statistics not a guarantee). The callback COST input is where honesty lives: 3–5 unbillable burdened hours + materials + truck roll + the schedule hole where a paying job would have been — $850 is a fair default, and a callback on a referred client quietly costs future revenue too. The callback RATE is a quality metric wearing a dollar sign: a drift from 4% to 7% is a training or QA problem announcing itself in the ledger — fix the process, not the reserve. Accrual discipline: the job that generates the revenue should carry its warranty cost, so book per job at completion; shops that expense callbacks as they occur systematically overstate job profitability. Trade standard: 0.5–1% of revenue for established crews, more for new crews, new service lines, or weather-exposed work. Estimates — your callback log governs, and if you don't have one, that's finding #1.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10125,6 +10169,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'job-costing-calculator': JobCostingCalc,
   'equipment-hourly-cost-calculator': EquipmentHourlyCalc,
   'overtime-vs-hire-calculator': OvertimeVsHireCalc,
+  'warranty-reserve-calculator': WarrantyReserveCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
