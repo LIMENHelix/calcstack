@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'self-storage-roi-calculator':
+    'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
+  'car-wash-economics-calculator':
+    'Wash developers use it before the land contract: 380 cars/day plus 900 members is $739k NOI at 16% yield-on-cost — the membership book is why PE pays 10×.',
   'tax-prep-pricing-calculator':
     'Preparers use it before setting the fee schedule: 120 returns at $350 is a $60k season at $78/hr true — and extensions plus advisory work are what turn the sprint into a firm.',
   'insurance-agent-commission-calculator':

@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 430 calculators live (657 indexed pages). Domain live at calcstack.app;
+**Status: 440 calculators live (667 indexed pages). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -687,7 +687,7 @@ wedding-photographer forums), tattoo artist forums and r/tattoo, DJ communities
 
 ## Wave 66 — Route & rate suite (#401–#410, milestone wave)
 
-Milestone wave: 430 calculators live (657 indexed pages). This wave prices the
+Milestone wave: 440 calculators live (667 indexed pages). This wave prices the
 driveway-and-route economy: the businesses where the wage is set by minutes
 between stops and the ticket at the scale house, not the menu price. Audiences:
 pressure-washing and exterior-cleaning communities (r/pressurewashing, Pressure
@@ -727,7 +727,7 @@ startup press that loves a pricing tool.
 
 ## Wave 67 — Trades, licenses & career ladders (#411–#421, milestone wave)
 
-Milestone wave: 430 calculators live (657 indexed pages). This wave owns the
+Milestone wave: 440 calculators live (667 indexed pages). This wave owns the
 career-ladder math of licensed work: apprenticeships vs degrees, license ROI,
 flat-rate price books, and the commission/match structures each profession
 hides in its fine print. Audiences: electrical and trades communities
@@ -770,7 +770,7 @@ communities (r/Teachers, ed newsletters).
 
 ## Wave 68 — Small-business reality checks (#422–#430, milestone wave)
 
-Milestone wave: 430 calculators live (657 indexed pages). This wave covers the
+Milestone wave: 440 calculators live (667 indexed pages). This wave covers the
 businesses everyone daydreams about and few people price: green trades, passive-
 income staples, and skilled-solo practices. Audiences: landscaping and lawn
 communities (r/landscaping, Lawn Care Forum, LawnSite), tree services
@@ -803,3 +803,42 @@ the side-hustle press that covers all of them.
 - **Backlist ride-alongs** — lawn-care pricing, snow bids, cleaning routes,
   event DJ, photographer CODB. The business-pricing library now spans 35+
   specific trades and side businesses.
+
+## Wave 69 — Business-investment grade (#431–#440, milestone wave)
+
+Milestone wave: 440 calculators live (667 indexed pages). This wave prices the
+businesses people actually buy and start: food service, pet care, fabrication,
+rental fleets, professional practices, and the two institutional darlings
+(storage + express wash). Audiences: food-truck communities (r/foodtrucks,
+Food Truck Empire, Roaming Hunger vendors), pet-care pros (r/dogwalking,
+Pet Sitters International, Rover host forums), welders and fab shops
+(r/Welding, Fabricators forums, WeldingWeb), coffee entrepreneurs
+(r/coffeebusiness, Barista Hustle), remodelers and GCs (r/Construction,
+Contractor Talk), dumpster/hauling operators (r/sweatystartup, waste-industry
+groups), tax pros (r/taxpros, CPA practice forums), insurance agents
+(r/InsuranceAgent, Agency Nation), self-storage investors (Self-Storage Talk,
+Inside Self-Storage), and car-wash investors (r/carwash, CarWash.com forums,
+Professional Carwashing & Detailing).
+
+- **Food truck economics (#431)** — prime-cost discipline and the breakeven
+  tickets/day number; Food Truck Empire-style content and culinary schools.
+- **Dog walking income (#432)** — platform vs own-book gap + the overnight
+  stack; Rover/Wag host communities live on fee math.
+- **Welding/fab pricing (#433)** — shop rate vs materials markup doctrine;
+  WeldingWeb pricing threads are evergreen.
+- **Coffee cart economics (#434)** — 12-cup breakeven vs café comparison;
+  Barista Hustle and specialty-coffee entrepreneur communities.
+- **Remodeling markup (#435)** — markup-vs-margin untangled; Contractor Talk
+  and NAHB education content cite this constantly.
+- **Dumpster rental (#436)** — the turns game; hauling/waste startup groups.
+- **Tax prep pricing (#437)** — season true-hourly + advisory pivot; r/taxpros
+  and practice-management newsletters.
+- **Insurance agent commissions (#438)** — the book-as-annuity model + 2× exit;
+  Agency Nation and carrier-recruiting content.
+- **Self-storage ROI (#439)** — ECRI/rate-bump engine; Self-Storage Talk and
+  the storage-investing podcast circuit (Storable-adjacent media).
+- **Car wash economics (#440)** — membership annuity + PE multiple; car-wash
+  investor forums and commercial-brokerage newsletters.
+- **Backlist ride-alongs** — laundromat ROI, vending routes, bounce houses,
+  rental property analyzer. The business-evaluation library now covers the
+  classic "businesses people buy" search cluster end to end.

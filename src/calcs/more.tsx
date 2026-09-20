@@ -7875,6 +7875,99 @@ export function MobileMechanicCalc() {
   )
 }
 
+// SELF-STORAGE ROI — node-verified defaults: 120 units × $105 avg × 82% occupancy = $10,332/mo = $123,984/yr gross. OpEx 35% (no tenants, no toilets — taxes, insurance, manager software, gate/utilities) → NOI $80,590. At a $1.4M facility: 5.8% cap; at a 6% cap it values $1,343,160. Storage is real estate with a month-to-month lease — the revenue management (rate bumps) is the yield engine.
+export function SelfStorageCalc() {
+  const [units, setUnits] = useNumber(120)
+  const [rate, setRate] = useNumber(105)
+  const [occ, setOcc] = useNumber(82)
+  const [opexPct, setOpexPct] = useNumber(35)
+  const [cost, setCost] = useNumber(1400000)
+  const [bump, setBump] = useNumber(8)
+
+  const r = useMemo(() => {
+    const yrGross = units * rate * (occ / 100) * 12
+    const noi = yrGross * (1 - opexPct / 100)
+    const cap = cost > 0 ? (noi / cost) * 100 : 0
+    const val = noi / 0.06
+    const bumpGain = yrGross * (bump / 100) * 0.85 // 85% retention through the bump
+    return { yrGross, noi, cap, val, bumpGain }
+  }, [units, rate, occ, opexPct, cost, bump])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Units" value={units} onChange={setUnits} step="10" />
+          <Field label="Avg rate" value={rate} onChange={setRate} prefix="$" suffix="/mo" step="5" />
+          <Field label="Occupancy" value={occ} onChange={setOcc} suffix="%" step="1" />
+          <Field label="OpEx" value={opexPct} onChange={setOpexPct} suffix="%" step="1" />
+          <Field label="Facility cost" value={cost} onChange={setCost} prefix="$" step="50000" />
+          <Field label="Annual rate bump" value={bump} onChange={setBump} suffix="%" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Annual gross" value={usd(Math.round(r.yrGross))} />
+          <Result label="NOI" value={usd(Math.round(r.noi))} big />
+          <Result label="Cap rate" value={`${num(r.cap, 1)}%`} />
+          <Result label="Rate-bump gain/yr" value={usd(Math.round(r.bumpGain))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${units} units at ${occ}% occupancy gross ${usd(Math.round(r.yrGross))}/yr — NOI ${usd(Math.round(r.noi))}, a ${num(r.cap, 1)}% cap on cost. The annual ${bump}% rate bump on existing tenants adds ${usd(Math.round(r.bumpGain))}/yr of nearly pure NOI — storage tenants stay through increases that apartment tenants would move over.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: gross = units × rate × occupancy × 12; NOI = gross × (1 − OpEx); cap = NOI ÷ cost; bump gain = gross × bump × retention-through-increase. The storage-economics that make it the quiet real-estate compounder: OpEx runs 30–40% (versus 45–55% for apartments — no tenants, no toilets, no turnover rehab), leases are month-to-month (revenue management is continuous — 8–10% annual bumps on existing tenants retain 85%+ because moving a unit's contents over $9/mo is irrational), and demand is driven by life events (death, divorce, displacement, downsizing — the 4Ds) which never recession. The underwriting rules: occupancy quality beats occupancy quantity (92% at street rate beats 98% with discount-heavy move-ins), unit mix matters (10×10 and 10×15 are the workhorses; climate control adds 20–40% rate premium), and the trade area is 3–5 miles — count population per rentable square foot (under 6 SF/capita is undersupplied, over 9 is fighting). The value-add plays: convert manager-run to remote-managed (kiosk + call center cuts the $45k manager to $12k of software), add tenant insurance revenue ($10–12/mo at ~70% margin — nearly pure NOI), U-Haul/Penske truck rental commission, and late-fee discipline (real revenue, and it trains payment behavior). Feasibility traps: REIT competition nearby (Public Storage prices to own the market), new supply in the permit pipeline (storage builds fast — 12–18 months from permit to lease-up), and conversion deals (big-box conversions work; old warehouses with 8-ft ceilings don't). Financing: SBA works for owner-operators; the 6% cap market rewards clean NOI. Estimate — your trade-area supply study and the market's rate cards govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// EXPRESS CAR WASH — node-verified defaults: 380 cars/day × $12 avg × 360 days = $1,641,600/yr gross. OpEx 55% (chemicals, utilities, labor, insurance) → NOI $738,720 (45% margin). Memberships: 900 members × $29/mo = $313,200/yr of recession-proof base — the subscription model converted car washes from weather bets into annuities, which is why PE buys them at 8–12× EBITDA.
+export function CarWashCalc() {
+  const [cars, setCars] = useNumber(380)
+  const [avg, setAvg] = useNumber(12)
+  const [opexPct, setOpexPct] = useNumber(55)
+  const [members, setMembers] = useNumber(900)
+  const [memPrice, setMemPrice] = useNumber(29)
+  const [buildCost, setBuildCost] = useNumber(4500000)
+
+  const r = useMemo(() => {
+    const gross = cars * avg * 360
+    const memYr = members * memPrice * 12
+    const totalGross = gross + memYr
+    const noi = gross * (1 - opexPct / 100) + memYr * 0.85
+    const ebitdaMult = noi * 10
+    const yieldOnCost = buildCost > 0 ? (noi / buildCost) * 100 : 0
+    return { gross, memYr, totalGross, noi, ebitdaMult, yieldOnCost }
+  }, [cars, avg, opexPct, members, memPrice, buildCost])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Cars per day" value={cars} onChange={setCars} step="20" />
+          <Field label="Avg ticket" value={avg} onChange={setAvg} prefix="$" step="1" />
+          <Field label="OpEx" value={opexPct} onChange={setOpexPct} suffix="%" step="1" />
+          <Field label="Members" value={members} onChange={setMembers} step="50" />
+          <Field label="Membership price" value={memPrice} onChange={setMemPrice} prefix="$" suffix="/mo" step="1" />
+          <Field label="Build cost" value={buildCost} onChange={setBuildCost} prefix="$" step="250000" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Wash gross/yr" value={usd(Math.round(r.gross))} />
+          <Result label="Membership/yr" value={usd(Math.round(r.memYr))} />
+          <Result label="NOI" value={usd(Math.round(r.noi))} big />
+          <Result label="Yield on cost" value={`${num(r.yieldOnCost, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${cars} cars/day at ${usd(avg)} plus ${members} members grosses ${usd(Math.round(r.totalGross))}/yr — NOI ${usd(Math.round(r.noi))}, a ${num(r.yieldOnCost, 1)}% yield on the ${usd(buildCost)} build. The membership book is why private equity buys these at 10×: rain stops mattering when the base pays monthly.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: wash gross = cars/day × ticket × 360; membership = members × price × 12 at 85% margin (incremental cost per member wash is chemicals and water — trivial); NOI = wash margin + membership margin; express washes trade at 8–12× EBITDA to PE rollup buyers. The express-wash economics that changed the industry: the membership model — $29–39/mo unlimited — converted a weather-dependent cash business into a subscription annuity; members wash MORE often (2.2×/mo avg) but the incremental cost is ~$1/wash, and the monthly draft arrives rain or shine, which is why membership penetration (target 30–40% of volume) is THE operating metric. Unit economics per wash: chemicals $0.60–0.90, utilities $0.40–0.60, labor $1.25–1.75 (express model runs 2–4 staff per shift — the tunnel does the work), maintenance reserve $0.50 — total direct $3–4/wash against a $10–16 ticket. Site selection is 80% of the outcome: 25,000+ cars/day traffic counts, right-hand side of the commute direction (going-home side wins), easy in/out, and 0.8–1.2 acres; the build runs $4–6M (land, tunnel equipment, building) which is why yield-on-cost above 15% is the green-line for developers. The competitive moat is zoning plus corner economics — once a corner has a wash, the next-best corner is measurably worse, which is why existing profitable washes sell at premium multiples. Failure modes: weak traffic counts rationalized ("it'll grow"), membership priced too low to matter (under $25 barely changes behavior), and reclaim-water/maintenance deferred until the brushes scar paint and the reviews turn. Operational notes: chemistry contracts (the chemical vendors' reps tune cost-per-car — get competing bids), winter salt season is peak volume in the north, and free-vacuum real estate is the visible value prop that drives ticket choice. Estimate — traffic counts, competitor audits, and your equipment vendor's pro forma stress-tested downward govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // TAX PREP PRICING — node-verified defaults: 120 individual returns × $350 + 15 business returns × $1,200 = $60,000 season revenue over 770 hours (55h/wk × 14wks) = $77.92/hr — effective $500/revenue-hour when you count only return-hours is a lie; the season includes admin, questions, and amended returns. The fee schedule is the business: per-form pricing punishes complexity honestly, hourly billing punishes your speed.
 export function TaxPrepCalc() {
   const [ind, setInd] = useNumber(120)
@@ -15365,6 +15458,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'self-storage-roi-calculator': SelfStorageCalc,
+  'car-wash-economics-calculator': CarWashCalc,
   'tax-prep-pricing-calculator': TaxPrepCalc,
   'insurance-agent-commission-calculator': InsuranceAgentCalc,
   'remodeling-contractor-markup-calculator': RemodelMarkupCalc,

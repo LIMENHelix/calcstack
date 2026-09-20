@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'self-storage-roi-calculator',
+    title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
+    shortTitle: 'Self-Storage ROI',
+    category: 'Savings & Investing',
+    description:
+      'Underwrite a storage facility honestly: units × rate × occupancy into NOI and cap rate, with the annual rate-bump economics that make storage the quiet real-estate compounder.',
+    tagline: '120 units at 82% occupancy throws $80,590 NOI — and the 8% annual bump on existing tenants adds $8,400 of near-pure NOI every year.',
+    intro:
+      'Self-storage is real estate stripped to its compounding core: no tenants to evict, no toilets to fix, month-to-month leases, and customers who stay through rate increases that would empty an apartment building. The example facility — 120 units at $105 average, 82% occupied — produces $80,590 of NOI on 35% OpEx, a 5.8% cap on a $1.4M basis. This calculator underwrites the facility and prices the revenue-management engine that drives the yield.',
+    howItWorks: [
+      'Enter unit count, average rate, and occupancy.',
+      'Enter OpEx percentage (30–40% is the storage band).',
+      'Read annual gross, NOI, and cap rate on your cost basis.',
+      'Enter the annual rate bump on existing tenants — read its NOI gain.',
+      'Compare cap rate against the 6% market to see the valuation.',
+    ],
+    faq: [
+      {
+        q: 'Is self-storage a good investment?',
+        a: 'The economics explain why institutions piled in: OpEx runs 30–40% versus 45–55% for apartments (no tenant turnover rehab, no unit turns, minimal staffing), demand is driven by the 4Ds (death, divorce, displacement, downsizing) which never recession — storage famously gained occupancy through 2008 — and month-to-month leases make revenue management continuous. The yield engine is the rate bump: 8–10% annual increases on existing tenants retain 85%+ because moving a unit\'s contents over $9/mo is irrational, so the bump flows nearly pure to NOI — the example facility adds $8,400/yr from bumps alone. The underwriting disciplines: occupancy quality over quantity (92% at street rate beats 98% stuffed with discounted move-ins), trade-area supply analysis (under 6 rentable SF per capita is undersupplied; over 9 SF/capita you are fighting), and unit mix (10×10s and 10×15s are the workhorses; climate control carries a 20–40% premium). The failure modes: REIT competition nearby (Public Storage prices to own markets), new supply in the permit pipeline (storage builds in 12–18 months), and conversions with wrong bones (8-ft ceilings kill old-warehouse deals).',
+      },
+      {
+        q: 'What does it cost to build or buy self-storage?',
+        a: 'Existing facilities trade at 5.5–7% cap rates (the example $80,590 NOI supports ~$1.15–1.35M at market), so buying at a 5.8% cap is market — the returns come from operations, not the entry discount. New builds run $60–100 per rentable SF all-in (land, construction, soft costs) with 24–36 month lease-up to stabilization — development yield-on-cost must exceed market caps by 150–200+ bps to justify the lease-up risk. The value-add plays that lift NOI: remote management conversion (kiosk + call center replaces a $45k manager with $12k of software), tenant insurance programs ($10–12/mo per unit at ~70% margin), truck rental commissions, late-fee discipline (real revenue that also trains payment behavior), and online move-in flows (60%+ of customers now rent without visiting — the website IS the office). Financing: SBA 7(a) and 504 work well for owner-operators; banks understand storage cash flow. Exit: institutional buyers pay premiums for stabilized, clean-NOI facilities in growing trade areas — the operational cleanup IS the value creation.',
+      },
+      {
+        q: 'How does storage revenue management work?',
+        a: 'Storage pioneered the airline-style pricing that apartments later copied: street rates for new customers flex with occupancy (raise when full, discount when leasing up), while existing-customer rates climb on a schedule (8–10% annually is the industry rhythm) because switching costs — a weekend, a truck, a friend\'s back — dwarf the increase. The mechanics: ECRI (existing customer rate increase) programs run on anniversaries or semi-annually, with scripted notices; retention through bumps runs 85–95% when the facility is well-kept. The management software (SiteLink, storEDGE) automates the whole engine — rate matrices by unit type and occupancy tier, ECRI scheduling, and revenue analytics. The adjacent revenue lines worth building: tenant insurance ($10–12/mo at ~70% margin — some operators cover their entire payroll with it), late fees (real revenue AND payment-behavior training), admin fees at move-in ($20–25), and lock sales. What NOT to do: discount wars with a new competitor (match on value and condition instead — you cannot out-cheap a lease-up), and heavy first-month-free promotions that attract churn-prone customers who move out at month two. The metric dashboard: occupancy by unit type, revenue per available SF, ECRI retention, and move-in source — the trade-area map is the strategy.',
+      },
+    ],
+  },
+  {
+    slug: 'car-wash-economics-calculator',
+    title: 'Car Wash Economics Calculator — Volume, Memberships, NOI, and the PE Multiple',
+    shortTitle: 'Car Wash Economics',
+    category: 'Freelance & Career',
+    description:
+      'Model an express car wash: cars per day and ticket into gross, memberships as the annuity layer, NOI and yield-on-cost — plus why private equity pays 8–12× EBITDA.',
+    tagline: '380 cars/day plus 900 members grosses $1.95M/yr — $739k NOI. Memberships turned a weather bet into an annuity, which is why PE pays 10×.',
+    intro:
+      'The express car wash is the subscription business hiding in plain sight. The wash volume alone — 380 cars a day at a $12 average — grosses $1.64M a year; 900 unlimited members at $29 add $313,200 that arrives rain or shine. Total NOI lands near $739,000, a 16% yield on a $4.5M build — and the membership base is precisely why private-equity rollups pay 8–12× EBITDA for these sites. This calculator models the volume, the membership layer, and the development math.',
+    howItWorks: [
+      'Enter cars per day and average ticket.',
+      'Enter OpEx percentage (50–58% is the honest band for express).',
+      'Enter members and membership price — the annuity layer.',
+      'Read wash gross, membership revenue, and total NOI.',
+      'Read yield on cost against your build budget — 15%+ is the green line.',
+    ],
+    faq: [
+      {
+        q: 'Are car washes profitable?',
+        a: 'Express tunnels are among the highest-margin retail businesses: 40–50% NOI margins at scale because the tunnel does the work — 2–4 staff per shift while chemicals ($0.60–0.90/car), utilities ($0.40–0.60), and maintenance reserves total $3–4 of direct cost against a $10–16 ticket. The example site produces $739k NOI on $1.95M gross. What decides profitability is 80% real estate: 25,000+ cars/day traffic counts, the going-home side of the commute, easy ingress/egress, and 0.8–1.2 acres — a weak corner cannot be marketed out of its geometry. The build runs $4–6M (land, tunnel, building), so developers underwrite to 15%+ yield-on-cost, and existing profitable sites sell at 8–12× EBITDA because the corner moat is real — once a corner has a wash, the next-best corner is measurably worse. The failure modes: weak traffic rationalized as "it\'ll grow," deferred maintenance until brushes scar paint and reviews turn, and reclaim-water systems neglected until the utility bill doubles.',
+      },
+      {
+        q: 'How do car wash memberships work financially?',
+        a: 'Memberships converted the industry from a weather bet into an annuity — the single change that brought private equity in. The mechanics: $29–39/mo unlimited plans; members wash 2.2×/mo on average at an incremental cost of about $1 per wash (chemicals, water, power) — so a $29 member who washes twice yields $27 of margin, and one who washes daily still yields. The strategic effects: the monthly draft arrives during rainy weeks and winter lulls (smoothing the revenue curve that killed old-model washes), membership penetration of 30–40% of volume is the target metric PE underwrites, and the member base raises the exit multiple directly — a wash with 1,500 members is an annuity book with a tunnel attached. Pricing discipline: under $25/mo barely changes behavior (you discount the customers you already had); $29–39 with a genuinely differentiated top tier ($49 with ceramics) maximizes enrollment AND revenue per member. Retention mechanics: RFID or license-plate recognition (friction kills renewals), easy-but-not-instant cancellation (the honest version: cancel anytime, effective end of billing cycle), and win-back campaigns on churned members — the rejoin rate is surprisingly strong because the habit was the product.',
+      },
+      {
+        q: 'What does it cost to build an express car wash?',
+        a: 'Budget $4–6M all-in: land ($800k–2M for the right corner — do not compromise here; the corner IS the moat), tunnel equipment ($1.2–1.8M for a 100-ft+ express tunnel), building and site work ($1.5–2.5M), and soft costs (engineering, permits, utility taps). The financing path: conventional with 25–30% down, SBA 504 structures well for owner-operators (the real estate and equipment split fits its two-note design), and equipment leasing on the tunnel can reduce the initial equity need. The development disciplines: traffic-count studies and competitor audits BEFORE the land contract (your equipment vendor\'s pro forma is a sales document — stress it down 20%), water/sewer capacity confirmed with the municipality (tunnels need real GPM and the reclaim system is a permit item), and entitlement risk priced (car washes face NIMBY zoning fights — conditional-use timelines belong in the budget). Operating ramp: new washes take 12–18 months to volume stabilization; the membership book builds over 24 months. The exit math that justifies the build: at stabilization, 8–12× EBITDA from rollup buyers means a site producing $700k NOI exits at $5.6–8.4M against a $4.5M cost — the spread is the developer\'s margin.',
+      },
+    ],
+  },
+  {
     slug: 'tax-prep-pricing-calculator',
     title: 'Tax Preparation Pricing Calculator — Season Revenue, True Hourly, and the Advisory Pivot',
     shortTitle: 'Tax Prep Pricing',

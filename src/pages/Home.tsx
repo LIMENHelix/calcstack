@@ -55,15 +55,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          {CALCULATORS.length} calculators and counting. Newest: the small-business
-          reality-check suite — bounce house payback math, laundromat NOI and the
-          water-bill test, vending route payback, notary signing-agent true hourly,
-          massage pricing with the body cap, pest route annuities, mobile grooming,
-          tree service crew economics, and landscape install costing.
+          {CALCULATORS.length} calculators and counting. Newest: the investment-grade
+          business suite — self-storage NOI and cap rates, express car wash membership
+          economics, tax-prep season pricing, insurance book commissions, remodeling
+          markup vs margin, dumpster turns, welding shop rates, coffee carts,
+          food trucks, and dog walking books.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['bounce-house-rental-calculator', 'laundromat-roi-calculator', 'vending-machine-route-calculator', 'notary-signing-agent-calculator', 'massage-therapist-pricing-calculator', 'tree-service-pricing-calculator'].includes(c.slug),
+            ['self-storage-roi-calculator', 'car-wash-economics-calculator', 'tax-prep-pricing-calculator', 'insurance-agent-commission-calculator', 'remodeling-contractor-markup-calculator', 'food-truck-economics-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
