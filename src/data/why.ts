@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'handyman-hourly-rate-calculator':
+    'Handymen use it before quoting anything: $65k take-home on 25 billable hrs/wk needs $70.32/hr — and a 4-hour minimum with a trip fee is what makes the faucet swap pay.',
+  'window-cleaning-pricing-calculator':
+    'Window cleaners use it to split the business in two: the $198 home pays $59/hr with drive time, the 8-stop storefront route pays $70/hr and repeats every month.',
   'junk-removal-pricing-calculator':
     'Junk removal operators use it before printing the price book: a $280 half-load keeps $162 after the dump fee, crew, and fuel — and dense loads at household prices are where that margin dies.',
   'pool-service-route-calculator':

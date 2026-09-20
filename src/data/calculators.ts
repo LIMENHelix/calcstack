@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'handyman-hourly-rate-calculator',
+    title: 'Handyman Hourly Rate Calculator — Build Your Rate Backward From the Year You Want',
+    shortTitle: 'Handyman Hourly Rate',
+    category: 'Freelance & Career',
+    description:
+      'Compute the hourly rate a handyman business actually needs: take-home goal plus overhead plus self-employment tax, divided by honest billable hours — plus the minimum ticket that makes small jobs pay.',
+    tagline: 'Taking home $65k on 25 billable hours a week requires $70/hr — the $35 guy on Facebook is pricing a wage, not a business.',
+    intro:
+      'Most handymen pick a rate by looking at what others charge and ducking under it. The math runs the other way: to take home $65,000 with $850/month of overhead, you need $84,384 of gross — self-employment tax alone is $9,184 — and 25 billable hours a week (a genuinely full schedule) across 48 weeks means every billed hour must carry $70.32. This calculator builds your rate backward from the year you want, then shows the minimum ticket that keeps the 45-minute faucet swap from losing money.',
+    howItWorks: [
+      'Enter your take-home goal and monthly overhead (truck, insurance, tools, phone, ads).',
+      'Enter honest billable hours per week and working weeks per year.',
+      'Read the gross revenue target and the hourly rate that carries it.',
+      'Enter your trip fee and minimum hours — read the minimum ticket.',
+      'Compare against a full-day revenue reality check.',
+    ],
+    faq: [
+      {
+        q: 'Why does a handyman need a minimum charge?',
+        a: 'Because unpaid drive time eats small jobs alive. A 45-minute faucet swap at $70/hr invoices $52.50 — against 30 minutes of unpaid driving each way, that is $35/hr before overhead, below the rate the year requires. The standard fix is a minimum ticket: 2–4 hour minimum plus a trip fee ($45 in the example), which turns the same faucet swap into a $326 visit that also catches the running toilet and the loose hinge — customers accept minimums readily when the pitch is "I will knock out your whole list." The route-day version: batch the small stuff by ZIP code on one day a week, and the minimums stack into a full-margin day.',
+      },
+      {
+        q: 'Should I quote fixed prices or charge hourly?',
+        a: 'Both, by job type. Hourly (with your minimum) is right for unknown-condition work — rot behind tile, mystery leaks, "while you are here" lists — where scope can double mid-job. Fixed quotes win on repeatable work once your job log shows real hours: ceiling fans ($150–250), garbage disposals ($180–280), TV mounts ($100–175), faucet swaps, toilet rebuilds. Fixed pricing converts YOUR speed into margin — the job that took three hours your first year takes 75 minutes in year three, and hourly billing would pay you less for being better. The rule: quote fixed from your log, bill hourly from the unknown, and never quote fixed on anything you have not done at least ten times.',
+      },
+      {
+        q: 'What overhead belongs in the rate?',
+        a: 'Everything the business spends that is not billed to a specific job: truck payment and commercial insurance, general liability ($500–1,500/yr for most handyman operations), tool purchase and replacement (budget $100–200/mo — tools walk off and wear out), phone and software, advertising, licensing, and continuing education. The common miss is self-employment tax: 15.3% on 92.35% of net — $9,184 on a $65k target — which employees never see because employers split it. Two legal lines that are not optional: most states cap unlicensed handyman job size (commonly $500–1,000 including materials — check your state before the big bathroom job), and general liability is the line between a bad day and a bankruptcy. The calculator folds all of it into the rate — $850/mo of overhead adds $8.50 to every hour.',
+      },
+    ],
+  },
+  {
+    slug: 'window-cleaning-pricing-calculator',
+    title: 'Window Cleaning Pricing Calculator — Per-Pane Quotes, True Hourly, and the Storefront Route',
+    shortTitle: 'Window Cleaning Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price window cleaning by the pane, see your true hourly after drive time and supplies, and compare residential homes against a storefront route that pays $70/hr on repeat.',
+    tagline: 'A 22-pane home in-and-out quotes $198 and pays $59/hr — the 8-stop storefront route pays $70/hr and repeats every month.',
+    intro:
+      'Window cleaning has two businesses inside it: residential homes that pay premium per visit, and storefront routes that pay less per stop but repeat forever with zero marketing. A 22-pane home at $4.50 per side quotes at $198 and nets $59/hr after drive time; eight storefront stops at $35 each run a tight $70/hr route. This calculator prices both models with the real time costs, so the quote sheet and the route plan come from the same math.',
+    howItWorks: [
+      'Enter panes, price per side, and sides (1 for exterior-only, 2 for in-and-out).',
+      'Enter work hours, drive hours, and supplies — read the true residential hourly.',
+      'Enter storefront stops and price per stop — read the route hourly.',
+      'Read the 3-home residential day revenue as the premium-day benchmark.',
+      'Tune the pane price until both models clear your floor rate.',
+    ],
+    faq: [
+      {
+        q: 'Should window cleaning be priced per pane or per window?',
+        a: 'Per pane — a picture window and a 6-over-6 double-hung both photograph as "one window" but clean nothing alike, and per-window pricing loses money on every divided-light home. Per-side rates run $4–7 depending on region and access; count panes on the walkthrough, quote from the count, and the quote survives contact with the job. Standard modifiers: storm windows double the pane count, skylights and second-story glass carry access premiums, and French panes (the true divided lites) price higher than grids-between-glass. First cleans are a separate quote: initial visits run 1.5–2× maintenance price for hard water, construction residue, and neglected tracks — skip that distinction and the first visit eats the year\'s margin on that account.',
+      },
+      {
+        q: 'How do storefront routes work?',
+        a: 'Storefronts — restaurants, retail, offices with street glass — sign monthly or bi-weekly service agreements and pay on invoice. Stops run $25–50 each and take 15–25 minutes with a squeegee and no ladder; a tight route of 8 stops in one corridor pays $70/hr and repeats without a single marketing dollar. The discipline is density, same as pool routes: stops in one corridor beat scattered accounts at double the price. The tradeoffs: early mornings (before open), weather holds that compress the schedule, and slower pay cycles on commercial invoices. The strategic value beyond the hourly: storefronts are the winter bridge when residential slows, and a book of commercial accounts is a sellable asset — routes trade at multiples of monthly revenue.',
+      },
+      {
+        q: 'What add-ons actually carry margin?',
+        a: 'The minutes-per-dollar winners: screens ($3–5 each, cleaned with a brush while the glass dries), tracks and sills ($1–2 per window), hard-water stain removal ($15–40 per pane, quoted on inspection — mineral deposit remover plus elbow grease at full-rate pricing), gutter cleaning, and skylight interiors. The seasonal giant is holiday lights — installation and removal at $400–1,500 per home fills the November–January trough exactly when glass work dies, using the same ladder skills and customer list. Package the add-ons at the quote: "full service" (glass + screens + tracks) at a bundled price anchors higher than glass-only and costs you minutes. Insurance is the non-negotiable overhead: general liability always, and workers comp the moment a helper touches a ladder — ladder falls are the industry\'s defining claim.',
+      },
+    ],
+  },
+  {
     slug: 'junk-removal-pricing-calculator',
     title: 'Junk Removal Pricing Calculator — True Job Cost, Profit per Job, and the Day Total',
     shortTitle: 'Junk Removal Pricing',

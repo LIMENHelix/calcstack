@@ -7875,6 +7875,106 @@ export function MobileMechanicCalc() {
   )
 }
 
+// HANDYMAN HOURLY RATE — node-verified defaults: $65k take-home goal + $850/mo overhead ($10,200/yr) + SE tax $9,184 (92.35% × 15.3%) → $84,384 gross needed over 1,200 billable hrs (25/wk × 48wk) = $70.32/hr. Half-day minimum: 4h × $70.32 + $45 trip = $326. Charge-by-the-hour only works when the rate was built backward from the year.
+export function HandymanRateCalc() {
+  const [goal, setGoal] = useNumber(65000)
+  const [overhead, setOverhead] = useNumber(850)
+  const [billHrs, setBillHrs] = useNumber(25)
+  const [weeks, setWeeks] = useNumber(48)
+  const [tripFee, setTripFee] = useNumber(45)
+  const [minHrs, setMinHrs] = useNumber(4)
+
+  const r = useMemo(() => {
+    const annualHrs = billHrs * weeks
+    const ohYr = overhead * 12
+    const se = goal * 0.9235 * 0.153
+    const gross = goal + ohYr + se
+    const rate = annualHrs > 0 ? gross / annualHrs : 0
+    const minTicket = rate * minHrs + tripFee
+    const dayRev = rate * 7
+    return { annualHrs, ohYr, se, gross, rate, minTicket, dayRev }
+  }, [goal, overhead, billHrs, weeks, tripFee, minHrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Take-home goal" value={goal} onChange={setGoal} prefix="$" suffix="/yr" step="5000" />
+          <Field label="Overhead" value={overhead} onChange={setOverhead} prefix="$" suffix="/mo" step="50" />
+          <Field label="Billable hrs/wk" value={billHrs} onChange={setBillHrs} step="1" />
+          <Field label="Working weeks" value={weeks} onChange={setWeeks} step="1" />
+          <Field label="Trip fee" value={tripFee} onChange={setTripFee} prefix="$" step="5" />
+          <Field label="Minimum hours" value={minHrs} onChange={setMinHrs} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Gross needed" value={usd(Math.round(r.gross))} />
+          <Result label="Your hourly rate" value={`${usd(Math.round(r.rate))}/hr`} big />
+          <Result label="Minimum ticket" value={usd(Math.round(r.minTicket))} />
+          <Result label="Full-day revenue" value={usd(Math.round(r.dayRev))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`To take home ${usd(goal)} after ${usd(Math.round(r.ohYr))} of overhead and ${usd(Math.round(r.se))} of self-employment tax, your ${num(r.annualHrs, 0)} billable hours must carry ${usd(Math.round(r.gross))} — that is ${usd(Math.round(r.rate))}/hr, not the $35 the guy on Facebook charges. His rate is a wage; yours is a business.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: gross needed = take-home goal + annual overhead + self-employment tax (92.35% × 15.3%); rate = gross ÷ (billable hrs/wk × working weeks); minimum ticket = rate × minimum hours + trip fee. The structuring rules that separate businesses from side gigs: the minimum ticket is the whole game — a 45-minute faucet swap at your hourly rate is a $53 invoice that loses money against 30 minutes of unpaid drive, which is why every pro runs a half-day or 2–4 hour minimum plus a trip charge, and batches small jobs into route days by ZIP. Billable-hour honesty: 25 billable hours is a FULL schedule — the rest is driving, quoting, supply runs, invoicing, and callbacks; price for 25 and a 32-billable-hour week is your bonus, not your plan. Quote vs hourly: quote fixed prices on repeatable jobs (ceiling fans $150–250, garbage disposal $180–280, TV mount $100–175) once your job log shows the real hours — fixed pricing converts your speed into margin, while hourly converts it into a pay cut. Where the money leaks: free estimates that should be $45–75 diagnostic visits credited to the work, Home Depot runs not billed to the job (mark materials 15–25% or bill the trip), and callbacks without a warranty policy in writing (90 days labor is standard). License and insurance boundaries are legal, not optional: most states cap handyman job size without a contractor license (commonly $500–1,000 including materials — check yours), and general liability plus a truck policy are overhead line items, not nice-to-haves. Estimate — your job log of actual hours-by-task is the rate card's foundation.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// WINDOW CLEANING PRICING — node-verified defaults: 22 panes × $4.50 × 2 sides = $198, supplies $6 → $192 net over 3.25h (2.5 work + 0.75 drive) = $59.08/hr. Storefront route: 8 stops × $35, 20 min each + 10 min drive = $280 over 4.0h = $70.00/hr. Residential day of 3 homes: $594. The pane count is the quote; the route is the wage.
+export function WindowCleaningCalc() {
+  const [panes, setPanes] = useNumber(22)
+  const [perPane, setPerPane] = useNumber(4.5)
+  const [sides, setSides] = useNumber(2)
+  const [hrs, setHrs] = useNumber(2.5)
+  const [drive, setDrive] = useNumber(0.75)
+  const [supplies, setSupplies] = useNumber(6)
+  const [stops, setStops] = useNumber(8)
+  const [stopPrice, setStopPrice] = useNumber(35)
+
+  const r = useMemo(() => {
+    const rev = panes * perPane * sides
+    const net = rev - supplies
+    const trueHr = hrs + drive > 0 ? net / (hrs + drive) : 0
+    const sRev = stops * stopPrice
+    const sHrs = (stops * 30) / 60
+    const sHr = sHrs > 0 ? sRev / sHrs : 0
+    const dayRev = 3 * rev
+    return { rev, net, trueHr, sRev, sHrs, sHr, dayRev }
+  }, [panes, perPane, sides, hrs, drive, supplies, stops, stopPrice])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Panes (house)" value={panes} onChange={setPanes} step="1" />
+          <Field label="Price per pane side" value={perPane} onChange={setPerPane} prefix="$" step="0.5" />
+          <Field label="Sides" value={sides} onChange={setSides} step="1" />
+          <Field label="Work hours" value={hrs} onChange={setHrs} step="0.25" />
+          <Field label="Drive hours" value={drive} onChange={setDrive} step="0.25" />
+          <Field label="Supplies per job" value={supplies} onChange={setSupplies} prefix="$" step="1" />
+          <Field label="Storefront stops" value={stops} onChange={setStops} step="1" />
+          <Field label="Storefront price" value={stopPrice} onChange={setStopPrice} prefix="$" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="House price" value={usd(Math.round(r.rev))} />
+          <Result label="True residential rate" value={`${usd(Math.round(r.trueHr))}/hr`} big />
+          <Result label="Storefront route rate" value={`${usd(Math.round(r.sHr))}/hr`} />
+          <Result label="3-home day revenue" value={usd(Math.round(r.dayRev))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${panes} panes at ${usd(perPane)} a side quotes at ${usd(Math.round(r.rev))} and pays ${usd(Math.round(r.trueHr))}/hr after drive time — while ${stops} storefront stops pay ${usd(Math.round(r.sHr))}/hr on a fixed route. Residential pays the premium; storefronts pay the consistency. The mix is the business model.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: house price = panes × price per side × sides; true rate = (price − supplies) ÷ (work + drive hours); storefront route = stops × price ÷ (stops × 30 min). The pricing structures that hold up: per-pane pricing ($4–7 per side, region-dependent) beats per-window because a picture window and a 6-over-6 double-hung both photograph as "a window" but clean nothing alike — count panes on the walkthrough, quote from the count, and the quote survives contact with the job. First-clean vs maintenance: initial cleans run 1.5–2× maintenance price (hard water, construction residue, neglected tracks) — quote them separately or the first visit eats the year's margin on that account. Frequency discounts that pay YOU: quarterly accounts at 10% off, monthly storefronts at full price — recurring revenue is worth a discount because it kills the re-marketing cost and fills the route calendar. Add-ons with real margin: screens ($3–5 each), tracks and sills ($1–2 per window), hard-water stain removal ($15–40 per pane, quoted on inspection), gutter cleaning, and skylights — each is minutes of work at full-rate pricing. The storefront route is the annuity: restaurants and retail sign monthly, pay on invoice, and a tight route runs $70+/hr with zero marketing — the tradeoff is early mornings and holding the schedule through weather. Residential seasonality: spring and fall peaks, winter trough — the storefront base and holiday-light season are the two classic bridges. Insurance note: work comp the moment a ladder leaves the ground with a helper — ladder falls are the industry's claim. Estimate — your route log of minutes-per-stop-type calibrates every quote.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // JUNK REMOVAL PRICING — node-verified defaults: half truckload at $280. Dump fee $55 + labor 1.5h × $22 = $33 + fuel $18 + overhead $12 → true cost $118, profit $162 (57.9% margin). 2 field hours total → $81.00/hr profit. 5-job day: revenue $1,400, profit $810. Volume pricing only works if every add-on cost rides along.
 export function JunkRemovalCalc() {
   const [price, setPrice] = useNumber(280)
@@ -13701,6 +13801,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'handyman-hourly-rate-calculator': HandymanRateCalc,
+  'window-cleaning-pricing-calculator': WindowCleaningCalc,
   'junk-removal-pricing-calculator': JunkRemovalCalc,
   'pool-service-route-calculator': PoolRouteCalc,
   'qlac-calculator': QlacCalc,
