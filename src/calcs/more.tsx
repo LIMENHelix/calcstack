@@ -3368,6 +3368,62 @@ export function DropFullCoverageCalc() {
   )
 }
 
+// HOME INSURANCE ADEQUACY — dwelling coverage = REBUILD cost, never market value (the land can't burn). Node-verified: 2,000 sqft × $175/sqft local rebuild = $350,000 dwelling coverage — correct even if the home's market value is $450k (overinsured on dirt) or $250k in a cheap market (underinsured on lumber). Percentage-deductible shock: a 2% wind/hail deductible on $350k dwelling = $7,000 out of pocket vs the $1,000 flat deductible people assume — a $6,000 surprise per storm claim. 80% coinsurance rule: insure below 80% of replacement cost and PARTIAL losses pay pro-rata — insured $240k vs required $280k (80% of $350k) → a $50k kitchen fire pays $42,857. Extended replacement cost endorsement (125%/150%) is the cheap hedge against post-disaster cost surges (lumber +40% after regional catastrophes is documented). Flood and earthquake are NEVER in the base policy — separate policies, and flood zones lie by omission (1/3 of NFIP claims come from outside high-risk zones).
+export function HomeCoverageCalc() {
+  const [sqft, setSqft] = useNumber(2000)
+  const [costSqft, setCostSqft] = useNumber(175)
+  const [dwelling, setDwelling] = useNumber(240000)
+  const [windPct, setWindPct] = useNumber(2)
+  const [extended, setExtended] = useState(true)
+
+  const r = useMemo(() => {
+    const rebuild = sqft * costSqft
+    const required80 = rebuild * 0.8
+    const underinsured = dwelling < required80
+    const coinRatio = dwelling < required80 && dwelling > 0 ? dwelling / required80 : 1
+    const windDed = dwelling * (windPct / 100)
+    const effCap = dwelling * (extended ? 1.25 : 1)
+    const gap = rebuild - dwelling
+    return { rebuild, required80, underinsured, coinRatio, windDed, effCap, gap }
+  }, [sqft, costSqft, dwelling, windPct, extended])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Finished square footage" value={sqft} onChange={setSqft} step="100" />
+          <Field label="Local rebuild cost /sqft" value={costSqft} onChange={setCostSqft} prefix="$" step="25" />
+          <Field label="Your dwelling coverage (Coverage A)" value={dwelling} onChange={setDwelling} prefix="$" />
+          <Field label="Wind/hail deductible" value={windPct} onChange={setWindPct} suffix="%" step="0.5" />
+        </div>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={extended} onChange={(e) => setExtended(e.target.checked)} className="h-4 w-4" />
+          Extended replacement cost endorsement (125% of Coverage A)
+        </label>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Rebuild cost (what Coverage A should be)" value={usd(r.rebuild)} />
+          <Result big label={r.gap >= 0 ? 'Coverage gap' : 'Coverage cushion'} value={usd(Math.abs(r.gap))} />
+          <Result label="Wind/hail deductible in dollars" value={usd(r.windDed)} />
+          <Result label="Effective cap with endorsement" value={usd(r.effCap)} />
+        </div>
+        {r.underinsured && (
+          <p className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">
+            Under the 80% coinsurance rule: dwelling coverage below {usd(r.required80)} means even PARTIAL losses pay pro-rata — a $50,000 kitchen fire would pay {usd(50000 * r.coinRatio)}. You're self-insuring the difference on every claim, not just total losses.
+          </p>
+        )}
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.gap <= 0
+            ? `Coverage meets the rebuild estimate (${usd(r.rebuild)}) with cushion — verify the wind/hail deductible (${usd(r.windDed)} per storm claim) is money you can actually produce.`
+            : `You're ${usd(r.gap)} short of rebuild cost. Premium saved on that gap is roughly ${usd(Math.abs(r.gap) * 0.003, 0)}/yr — trivial against a ${usd(r.gap)} exposure. Raise Coverage A to ${usd(r.rebuild)} and take the extended endorsement.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The core confusion: dwelling coverage insures the STRUCTURE at rebuild cost — lumber, labor, code upgrades — while market value includes land (which survives every disaster) and market sentiment (which rebuilds nothing). In cheap markets rebuild exceeds market value (underinsurance trap); in hot coastal markets the reverse (overpaying to insure dirt). Find local rebuild cost from your insurer's replacement-cost estimator or a local builder — $150–250/sqft spans most US markets in 2026, higher for custom/historic. The percentage-deductible trap deserves its own line: coastal and hail-state policies increasingly carry 1–5% wind/hail deductibles computed on DWELLING COVERAGE, not the claim — that's real dollars shown above, per storm. Not in the base policy, ever: flood (NFIP or private, 30-day wait, and ~1/3 of NFIP claims come from OUTSIDE high-risk zones), earthquake, sewer backup (cheap endorsement — buy it), and ordinance/law coverage for code-required upgrades on older homes (also cheap, also buy it). Recheck Coverage A annually — construction inflation outpaced CPI for years. Estimates — your policy's declarations page governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9000,6 +9056,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'deductible-optimizer-calculator': DeductibleOptimizerCalc,
   'umbrella-insurance-calculator': UmbrellaCalc,
   'drop-full-coverage-calculator': DropFullCoverageCalc,
+  'home-insurance-adequacy-calculator': HomeCoverageCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

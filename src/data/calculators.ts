@@ -793,6 +793,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'home-insurance-adequacy-calculator',
+    title: 'Home Insurance Adequacy Calculator 2026 — Rebuild Cost vs Coverage, the 80% Rule, and the % Deductible Trap',
+    shortTitle: 'Coverage Check',
+    category: 'Housing & Mortgage',
+    description:
+      'Dwelling coverage should equal rebuild cost, not market value. Compute your true replacement need, expose the percentage-deductible dollar shock, and test the 80% coinsurance rule.',
+    tagline: 'A 2% wind deductible on $350k of coverage is $7,000 per storm — and insuring to 80% short pays even a kitchen fire pro-rata.',
+    intro:
+      'Most homeowners insure the wrong number. Dwelling coverage should equal what the house costs to REBUILD — labor and lumber — which has nothing to do with market value: the land survives every fire, and in cheap markets rebuild exceeds market price while hot markets insure dirt. Two traps compound it: the 80% coinsurance rule (insure below 80% of replacement and even partial losses pay pro-rata — a $50k kitchen fire pays $42,857), and percentage wind/hail deductibles computed on the dwelling limit, not the claim — 2% on $350,000 is $7,000 out of pocket per storm. This calculator sizes your real need, prices the deductible in dollars, and shows whether your policy would actually rebuild you.',
+    howItWorks: [
+      'Enter finished square footage and local rebuild cost per square foot ($150–250 spans most 2026 markets).',
+      'Enter your Coverage A dwelling limit from the declarations page.',
+      'Enter your wind/hail deductible percentage and whether you carry extended replacement cost.',
+      'Read the rebuild gap, the deductible in dollars, and the coinsurance warning.',
+    ],
+    faq: [
+      {
+        q: 'Why shouldn\'t I insure my home for what it\'s worth?',
+        a: 'Because the policy rebuilds structures, not real estate. Market value includes the land — which can\'t burn, flood upward, or blow away — plus location premium, school districts, and market mood. Rebuild cost is construction only: square footage × local cost/sqft, adjusted for custom finishes, older-home code upgrades, and post-disaster price surges. In a $250k market, rebuilding your home might cost $350k (insure $350k — market value is irrelevant). In San Francisco, a $1.8M home might rebuild for $500k (insure $500k — the extra $1.3M is land). Insurers estimate this with replacement-cost tools; the errors come from stale square footage, missing renovations, and wrong quality grades. Check the inputs, not just the output — and re-check after any remodel, because your $60k kitchen just raised rebuild cost whether you told the insurer or not.',
+      },
+      {
+        q: 'What is the 80% coinsurance rule and how does it bite?',
+        a: 'Most policies require insuring to at least 80% of full replacement cost; fall below and PARTIAL losses pay only in proportion — (coverage ÷ 80% of replacement) × the loss, minus deductible. The example is brutal: $240k of coverage against a $350k rebuild means a $50,000 kitchen fire pays $42,857 — you eat $7,143 plus the deductible on a PARTIAL claim, and a total loss leaves you $110,000 short. The trap springs silently because home prices and construction costs drift apart: people insure to purchase price from years ago while rebuild costs inflated 30–40%. The fix is cheap — raising Coverage A costs roughly $3/year per $1,000 of coverage — and the extended replacement endorsement (125–150% of Coverage A) hedges the surge pricing that follows regional disasters. This is the highest-value 20 minutes in personal insurance.',
+      },
+      {
+        q: 'What disasters does my policy NOT cover?',
+        a: 'The two big ones are always separate: flood (rising water from outside — NFIP or private market, 30-day waiting period, and about a third of NFIP claims come from outside high-risk zones so "not in a flood zone" isn\'t safety) and earthquake (separate policy or endorsement; percentage deductibles of 5–25% apply). The fixable gaps inside the policy: sewer/drain backup (excluded by default, covered by a cheap endorsement — buy it), ordinance-or-law (code-required upgrades when rebuilding an older home — another cheap endorsement), and mold/gradual damage (mostly excluded). Also capped: jewelry, firearms, and cash have tiny sublimits ($1,500–2,500 typical) — schedule valuables separately. Hurricane-prone states add the named-storm deductible (the percentage trap above). Read the exclusions page once; it\'s shorter than the policy and matters more.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
