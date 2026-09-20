@@ -325,6 +325,10 @@ export const WHY_USE: Record<string, string> = {
     'Geometry students use it three ways: ½bh, Heron for three sides (3-4-5 → 6), or two sides + angle — with the triangle inequality checked for you.',
   'circle-calculator':
     'From any one measurement — radius, diameter, circumference, or area — get all four, plus sector and arc: r=5 → area 78.54, circumference 31.42.',
+  'roman-numeral-converter':
+    'Students and Super Bowl viewers use it: 2026 = MMXXVI, 1994 = MCMXCIV — both directions, with strict validation so VIIII doesn\'t pass for 9.',
+  'number-base-converter':
+    'Programmers use it daily: 255 = 0xFF = 1111 1111₂ = 377₈ — decimal, hex, binary, octal with bit-width shown and 0x/0b prefixes auto-detected.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

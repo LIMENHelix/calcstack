@@ -3939,3 +3939,110 @@ export function CircleCalc() {
     </CardContent></Card>
   )
 }
+
+
+// ROMAN NUMERALS — node-verified both directions: 2026 → MMXXVI, 1994 → MCMXCIV, 49 → XLIX, 3999 → MMMCMXCIX (the standard ceiling); MMXXVI → 2026, MCMXCIV → 1994. Subtractive notation validated; standard form caps at 3,999 (M cannot repeat 4×).
+const ROMAN_TABLE: readonly (readonly [number, string])[] = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']]
+function toRoman(n: number): string {
+  let s = ''
+  for (const [v, sym] of ROMAN_TABLE) while (n >= v) { s += sym; n -= v }
+  return s
+}
+function fromRoman(s: string): number | null {
+  const m: Record<string, number> = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 }
+  if (!/^[IVXLCDM]+$/.test(s)) return null
+  let t = 0
+  for (let i = 0; i < s.length; i++) {
+    const cur = m[s[i]]
+    const nxt = i + 1 < s.length ? m[s[i + 1]] : 0
+    t += cur < nxt ? -cur : cur
+  }
+  return t > 0 && toRoman(t) === s ? t : null // strict: VIIII is not valid for 9
+}
+export function RomanNumeralCalc() {
+  const [numIn, setNumIn] = useNumber(2026)
+  const [romIn, setRomIn] = useState('MMXXVI')
+  const rom = numIn >= 1 && numIn <= 3999 && Number.isInteger(numIn) ? toRoman(numIn) : null
+  const parsed = fromRoman(romIn.toUpperCase().trim())
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <Field label="Number → Roman" value={numIn} onChange={setNumIn} step="1" />
+          <p className="mt-2 text-lg font-semibold">{rom ?? 'Standard range: 1–3,999'}</p>
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">Roman → Number</label>
+          <input value={romIn} onChange={(e) => setRomIn(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm uppercase" />
+          <p className="mt-2 text-lg font-semibold">{parsed !== null ? num(parsed, 0) : romIn.trim() ? 'Not valid standard notation' : ''}</p>
+        </div>
+      </div>
+      <div className="rounded-md border bg-muted/40 p-3 text-sm">
+        Key values: I=1 · V=5 · X=10 · L=50 · C=100 · D=500 · M=1000. Subtraction pairs: IV=4, IX=9, XL=40, XC=90, CD=400, CM=900.
+      </div>
+      <p className="text-xs text-muted-foreground">Rule: a smaller numeral before a larger one subtracts (CM = 900); after, it adds (VI = 6). Never four repeats — 4 is IV, not IIII (clock faces cheat). Years: 2026 = MMXXVI; Super Bowls and movie credits still run on these.</p>
+    </CardContent></Card>
+  )
+}
+
+// NUMBER BASE CONVERTER — node-verified: 255 = FF = 11111111₂ = 377₈; 2026 = 7EA = 11111101010₂. Parses 0x/0b/0o prefixes and bare digits; grouping for readability. The everyday tool of programmers and the "why is FF 255" homework question.
+export function NumberBaseCalc() {
+  const [input, setInput] = useState('255')
+  const [base, setBase] = useState('10')
+  const r = useMemo(() => {
+    let s = input.trim().toLowerCase()
+    let b = Number(base)
+    if (s.startsWith('0x')) { b = 16; s = s.slice(2) }
+    else if (s.startsWith('0b')) { b = 2; s = s.slice(2) }
+    else if (s.startsWith('0o')) { b = 8; s = s.slice(2) }
+    if (!s || !/^[0-9a-z]+$/.test(s)) return null
+    let ok = true
+    for (const ch of s) {
+      const d = parseInt(ch, 36)
+      if (Number.isNaN(d) || d >= b) { ok = false; break }
+    }
+    if (!ok) return null
+    const n = parseInt(s, b)
+    if (Number.isNaN(n) || n < 0 || !Number.isSafeInteger(n)) return null
+    const pad = (str: string, size: number) => { const rem = str.length % size; return (rem ? ' '.repeat(0) + str : str).replace(new RegExp(`(.{${size}})(?=[^ ])`, 'g'), '$1 ') }
+    const bin = n.toString(2)
+    const binGrouped = pad(bin.length % 4 ? '0'.repeat(4 - (bin.length % 4)) + bin : bin, 4).trim()
+    return {
+      dec: n.toLocaleString('en-US'),
+      hex: n.toString(16).toUpperCase(),
+      bin: binGrouped,
+      oct: n.toString(8),
+      bits: bin.length,
+    }
+  }, [input, base])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Value (or 0xFF / 0b1010 / 0o17)</label>
+          <input value={input} onChange={(e) => setInput(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm font-mono" />
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">Input base</label>
+          <select value={base} onChange={(e) => setBase(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="10">Decimal (10)</option>
+            <option value="16">Hexadecimal (16)</option>
+            <option value="2">Binary (2)</option>
+            <option value="8">Octal (8)</option>
+          </select>
+        </div>
+      </div>
+      {r ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label="Decimal" value={r.dec} big />
+          <Result label="Hexadecimal" value={r.hex} big />
+          <Result label="Binary" value={r.bin} />
+          <Result label="Octal" value={r.oct} />
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">Enter digits valid for the selected base — hex allows 0–9 and A–F.</p>
+      )}
+      {r && <p className="text-xs text-muted-foreground">{r.bits} bits — max value at that width: {(Math.pow(2, r.bits) - 1).toLocaleString('en-US')}. Hex is binary compressed 4:1 — each hex digit is exactly 4 bits, which is why 0xFF = 1111 1111 = 255.</p>}
+    </CardContent></Card>
+  )
+}

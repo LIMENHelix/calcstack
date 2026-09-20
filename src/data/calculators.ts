@@ -5030,6 +5030,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'roman-numeral-converter',
+    title: 'Roman Numeral Converter — Numbers to Roman & Back, Strictly Validated',
+    shortTitle: 'Roman Numerals',
+    category: 'School & Science',
+    description:
+      'Convert between numbers and Roman numerals both ways — 2026 = MMXXVI — with strict validation so sloppy forms like VIIII are rejected, not accepted.',
+    tagline: '2026 = MMXXVI. 1994 = MCMXCIV. Both directions, strict validation — and the subtraction rule explained so the answer makes sense.',
+    intro:
+      'Roman numerals still run the Super Bowl, movie copyright dates, clock faces, and monarch names — and the conversion trips everyone on the same rule: a smaller numeral BEFORE a larger one subtracts. This converter works both directions with strict validation, so VIIII comes back rejected (the correct 9 is IX) and you learn the actual standard, not just the answer.',
+    howItWorks: [
+      'Type a number (1–3,999) — get the Roman numeral instantly.',
+      'Or type a Roman numeral — get the number, if the notation is valid.',
+      'Invalid forms are rejected with the standard explained.',
+      'Key values: I=1, V=5, X=10, L=50, C=100, D=500, M=1000.',
+      'Subtraction pairs: IV=4, IX=9, XL=40, XC=90, CD=400, CM=900.',
+    ],
+    faq: [
+      {
+        q: 'How do Roman numerals actually work?',
+        a: 'Add normally, subtract on inversion. Numerals run large to small and add up: MMXXVI = 1000+1000+10+10+5+1 = 2026. The exception: when a smaller numeral appears before a larger one, it subtracts — IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900. Two strictness rules keep notation unambiguous: never repeat a numeral four times (4 is IV, never IIII — clock faces that show IIII are a historical quirk, possibly for visual symmetry with VIII), and only I, X, and C can subtract (never V, L, or D — 95 is XCV, not VC). The subtractor also only pairs with the next two sizes up: I pairs with V and X, so 99 is XCIX, never IC.',
+      },
+      {
+        q: 'Why does the standard stop at 3,999?',
+        a: 'Because M repeats at most three times, and there is no standard numeral beyond M (1,000) — MMMCMXCIX (3,999) is the ceiling of classic notation. The Romans themselves rarely needed more; when they did, they used vinculum notation (a bar over a numeral multiplying it by 1,000 — V̄ = 5,000) or apostrophus forms, neither of which survived into consistent modern use. Modern appearances respect the ceiling: Super Bowl LVIII (58), movie credits, book chapters, and outline numbering all stay comfortably under 4,000. Fun edge case: the year 1888 is the longest "modern" year to write — MDCCCLXXXVIII, 13 characters — one reason printers reportedly disliked it.',
+      },
+      {
+        q: 'Where are Roman numerals still used today?',
+        a: 'More places than you notice: Super Bowl numbering (LX in 2026), Olympic Games, monarchs and popes (Charles III, Benedict XVI), movie and TV copyright dates in end credits, book front matter and chapter headings, clock and watch faces, building cornerstones, and formal outlines (I, A, 1, a). The persistence is partly prestige — Roman numerals signal formality and permanence — and partly practical: they distinguish sequences from cardinal counts, so "Henry VIII" cannot be confused with eight Henrys. The NFL nearly dropped them for Super Bowl 50 because "L" looked weak alone, relented, and returned to numerals the next year — the closest the tradition came to retiring.',
+      },
+    ],
+  },
+  {
+    slug: 'number-base-converter',
+    title: 'Number Base Converter — Decimal, Hex, Binary & Octal',
+    shortTitle: 'Number Base Converter',
+    category: 'School & Science',
+    description:
+      'Convert between decimal, hexadecimal, binary, and octal with bit-width shown — accepts 0x/0b/0o prefixes, groups binary digits, validates input per base.',
+    tagline: '255 = 0xFF = 1111 1111₂ = 377₈. Prefixes auto-detected, binary grouped in nibbles, bit width shown — the programmer\'s everyday converter.',
+    intro:
+      'Computers speak binary but humans can\'t read 32-digit strings of ones and zeros — so programming runs on hexadecimal, which compresses binary exactly 4:1 with zero information loss. This converter moves between decimal, hex, binary, and octal instantly, auto-detects 0x/0b/0o prefixes, groups binary for readability, and shows the bit width — the number that decides whether your value fits in a byte.',
+    howItWorks: [
+      'Enter a value — plain digits, or prefixed (0xFF, 0b1010, 0o17).',
+      'Pick the input base; prefixes override it automatically.',
+      'Read all four bases at once.',
+      'Binary is grouped in 4-bit nibbles for easy hex cross-checks.',
+      'Bit width shows how many binary digits the value needs.',
+    ],
+    faq: [
+      {
+        q: 'Why do programmers use hexadecimal?',
+        a: 'Because hex is binary with the tedium removed: each hex digit encodes exactly 4 bits, so 0xFF = 1111 1111 and 0xA5 = 1010 0101 — conversion is mechanical, no arithmetic. A 32-bit value that reads 11111111111111111111111111111111 in binary is just FFFFFFFF in hex. This is why memory addresses, color codes (#FF5733 = red FF, green 57, blue 33 in hex pairs), MAC addresses, and byte-level data all print in hex. Octal survives mainly in Unix file permissions (chmod 755 = rwxr-xr-x, three 3-bit groups). The classic milestones to know: 0xFF = 255 (one byte), 0xFFFF = 65,535 (16-bit ceiling — the old integer-overflow wall in games), and 2,147,483,647 = 0x7FFFFFFF, the 32-bit signed maximum that broke things in 2038-style bugs.',
+      },
+      {
+        q: 'How do I convert decimal to binary by hand?',
+        a: 'Two methods, both worth knowing. Repeated halving: divide by 2, record the remainder, repeat — 13 → 6 r1, 3 r0, 1 r1, 0 r1 — read the remainders bottom-up: 1101. Verify: 8+4+1 = 13. Faster with practice: place values. Binary places are 128, 64, 32, 16, 8, 4, 2, 1 — for 202, take 128 (leftover 74), take 64 (leftover 10), skip 32 and 16, take 8 (leftover 2), take 2 → 11001010. Hex conversion is then trivial: group the bits in fours from the right (1100 1010) and convert each nibble (C, A) → 0xCA. The place-value table doubles each step — that exponential doubling is why 8 bits max at 255, 16 bits at 65,535, and 32 bits at 4.29 billion.',
+      },
+      {
+        q: 'What are bits, bytes, and why 255?',
+        a: 'A bit is one binary digit (0 or 1); a byte is 8 bits, the fundamental unit because early computers standardized on it for characters. Eight bits give 2⁸ = 256 combinations, numbered 0–255 — hence 255 as the per-channel color maximum (RGB 255,0,0 is pure red), the old-school stat cap in RPGs, and the IPv4 octet ceiling (255.255.255.255). The powers of two become second nature: 2¹⁰ = 1,024 (why "kilobyte" meant 1,024 bytes historically), 2¹⁶ = 65,536, 2³² ≈ 4.29 billion (the 32-bit address limit that capped old systems at 4 GB RAM), 2⁶⁴ ≈ 18.4 quintillion. When a number in software mysteriously maxes at 255, 65,535, or 2.1 billion, you have found the integer width — and probably the bug.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
