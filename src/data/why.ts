@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'walk-away-number-calculator':
+    'Candidates use it before the recruiter calls: on $100k total comp with a 10% risk premium and $8k of switching costs, the honest floor is $115,967 — the $105k offer that feels like a raise is a pay cut you chose under adrenaline.',
   'job-hop-calculator':
     'Employees with an offer in hand use it before deciding: a 15% hop on $80k is +$58,710 over five years after switching costs, and the breakeven premium is just 1.3% — but unvested equity and bonus timing decide what the switch really costs.',
   'certification-roi-calculator':

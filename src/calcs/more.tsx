@@ -4163,6 +4163,51 @@ export function JobHopCalc() {
   )
 }
 
+// WALK-AWAY NUMBER — the minimum acceptable offer, built BEFORE the negotiation so emotion doesn't set the floor. Node-verified: $100k current total comp, 10% risk premium for the unknown, $8k one-time switching costs (unvested match, forfeited bonus, deductible reset) amortized over an expected 3-yr tenure → min base $112,667; a $15k signing bonus amortized over the same tenure drops the base requirement to $107,667; growth-adjusted (you'd get 3% staying) → $115,967. Model: floor = current comp × (1+risk) + switching costs/expected tenure − signing/tenure. Honest edges: TOTAL comp is the base (base + bonus + match + RSUs + ESPP + health value — most people anchor on base and accept less), the risk premium is personal (stable team + growing role = 5-8%; toxic situation = the premium can be NEGATIVE — paying to leave is sometimes right, but know you're doing it), signing bonuses come with clawbacks (12-24mo repayment terms — read them), and the floor is private: naming your number first anchors low, so the calculator exists to make "I'll get back to you" an informed sentence.
+export function WalkAwayCalc() {
+  const [comp, setComp] = useNumber(100000)
+  const [risk, setRisk] = useNumber(10)
+  const [costs, setCosts] = useNumber(8000)
+  const [tenure, setTenure] = useNumber(3)
+  const [signing, setSigning] = useNumber(15000)
+  const [growth, setGrowth] = useNumber(3)
+
+  const r = useMemo(() => {
+    const t = Math.max(1, tenure)
+    const amort = costs / t
+    const minBase = comp * (1 + risk / 100) + amort
+    const minWithSigning = minBase - signing / t
+    const minGrowthAdj = comp * (1 + growth / 100) * (1 + risk / 100) + amort - signing / t
+    return { amort, minBase, minWithSigning, minGrowthAdj }
+  }, [comp, risk, costs, tenure, signing, growth])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Current TOTAL comp /yr" value={comp} onChange={setComp} prefix="$" step="5000" />
+          <Field label="Risk premium for switching" value={risk} onChange={setRisk} suffix="%" step="1" />
+          <Field label="One-time switching costs" value={costs} onChange={setCosts} prefix="$" step="1000" />
+          <Field label="Expected tenure at new job (yrs)" value={tenure} onChange={setTenure} step="1" />
+          <Field label="Signing bonus offered" value={signing} onChange={setSigning} prefix="$" step="5000" />
+          <Field label="Raise you'd get staying" value={growth} onChange={setGrowth} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Floor (before signing bonus)" value={usd(r.minBase)} />
+          <Result label="Floor with signing spread" value={usd(r.minWithSigning)} />
+          <Result big label="Walk-away number" value={usd(r.minGrowthAdj)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Below {usd(Math.round(r.minGrowthAdj))} in year-one total comp, staying is the financially better move — you'd be paying to switch. This number exists so the negotiation happens against arithmetic, not adrenaline. Don't volunteer it: floors anchor.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: floor = current TOTAL comp (base + bonus + 401(k) match + RSU/ESPP value + health-plan value — anchoring on base alone is how people accept less) grown by the raise you'd get staying, plus a risk premium for the unknown (5–8% for a stable move; genuinely toxic situations can justify a NEGATIVE premium — paying to leave is sometimes the right trade, but run it knowingly), plus one-time switching costs (unvested match/equity, forfeited bonus, deductible resets) amortized over expected tenure, minus any signing bonus spread the same way. Signing-bonus fine print matters: most carry 12–24 month clawback provisions, so it's not yours until the term runs. Negotiation hygiene: the floor is private — naming it first anchors the conversation low; the informed version of "I'll get back to you" is the whole point of knowing it. Estimates — your comp statements and offer letters govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9810,6 +9855,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'grad-school-roi-calculator': GradSchoolRoiCalc,
   'certification-roi-calculator': CertRoiCalc,
   'job-hop-calculator': JobHopCalc,
+  'walk-away-number-calculator': WalkAwayCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

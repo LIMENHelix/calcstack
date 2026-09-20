@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'walk-away-number-calculator',
+    title: 'Walk-Away Number Calculator 2026 — The Minimum Acceptable Offer, Before You Negotiate',
+    shortTitle: 'Walk-Away Number',
+    category: 'Careers & Salary',
+    description:
+      'Compute the floor before the negotiation: current total comp plus a risk premium plus amortized switching costs, minus any signing bonus — the number below which staying beats switching, so emotion never sets your price.',
+    tagline: 'On $100k total comp with a 10% risk premium and $8k of switching costs, the walk-away number is $115,967 — not the $105k that "feels like a raise."',
+    intro:
+      'Negotiations are lost before they start — by people who never computed their floor. The walk-away number is the minimum year-one total comp below which staying is financially better than switching: current TOTAL compensation (base + bonus + 401(k) match + equity + health value, not just base) grown by the raise you\'d get anyway, plus a risk premium for the unknown employer, plus switching costs (unvested match, forfeited bonus, deductible resets) amortized over expected tenure, minus a signing bonus spread the same way. On $100k comp with $8k of frictions and a 10% risk premium, the honest floor is $115,967 — the offer that "feels like a raise" at $105k is actually a pay cut you chose under adrenaline. This calculator builds the number before the call, so the conversation runs on arithmetic.',
+    howItWorks: [
+      'Enter current TOTAL compensation — base + bonus + match + equity + benefits value.',
+      'Set a risk premium for the unknown: 5–8% for a normal move, more for unproven companies.',
+      'Total one-time switching costs: unvested 401(k) match, unvested equity, forfeited bonus, deductible reset.',
+      'Enter expected tenure at the new role and any signing bonus (mind the clawback term).',
+      'Read the walk-away number — and keep it private; floors anchor negotiations downward.',
+    ],
+    faq: [
+      {
+        q: 'Why total comp and not base salary?',
+        a: 'Because base is often 70–80% of the real number, and anchoring on it is how people accept less while feeling like they got more. A $95k base with a 10% bonus target, 4% match, and $6k of RSUs is $115k of comp — an offer of $102k base "with potential" is a cut wearing a raise\'s clothes. The discipline: pull your actual statements (W-2 Box 1 plus employer benefits contributions is a good approximation), price each component, and negotiate against the total. Employers know the breakdown; candidates who don\'t negotiate one-handed.',
+      },
+      {
+        q: 'How big should the risk premium be?',
+        a: 'Match it to what you\'re giving up, not to bravado. Leaving a stable team and a growing role for an unproven company: 8–15% is defensible — you\'re pricing probation periods, unknown management, last-in-first-out layoff exposure, and benefits you haven\'t read yet. A lateral move to a comparable company: 5–8%. And the honest exception: genuinely toxic situations can justify a NEGATIVE premium — paying to leave is sometimes the right trade for health and trajectory — but run the number knowingly, so the choice is deliberate rather than discovered later. What the premium should never be is zero: a switch with no premium is a bet you made for free.',
+      },
+      {
+        q: 'Should I tell the recruiter my walk-away number?',
+        a: 'No — and that\'s half the point of computing it. Floors anchor: the first number spoken bends the whole negotiation toward it, so a stated floor becomes the ceiling. The walk-away number\'s job is to make your SILENCE informed — to turn "I\'ll need to think about it" from a stall into an actual comparison, and to let you decline sub-floor offers in one sentence without agonizing. Share aspirations (the research-backed range above your floor), not floors. The negotiation hygiene that pairs with this calculator: let them number first, counter above your floor with justification tied to market data, and treat the signing bonus as amortized comp, not a gift — it usually carries a 12–24 month clawback that makes it a loan until the term runs.',
+      },
+    ],
+  },
+  {
     slug: 'job-hop-calculator',
     title: 'Job Hop Calculator 2026 — Switch vs Stay: the Loyalty Tax in Dollars, Cumulative & Present Value',
     shortTitle: 'Job Hop Calculator',
