@@ -345,6 +345,18 @@ export const WHY_USE: Record<string, string> = {
     'Anyone setting a goal weight uses it: at 5 ft 10, Devine says 161 lb, Robinson 157, Miller 155 — the four formulas define a zone, not a verdict.',
   'tire-size-calculator':
     'Drivers plus-sizing wheels use it: 225/45R17 is 24.97 in tall; jump to 235/40R18 and the speedo reads 59 at a true 60 — within the 3% rule.',
+  'recipe-scaler-calculator':
+    'Cooks use it when the guest list doubles: paste the ingredient lines, set 1.5×, and 2.5 cups of flour becomes 3¾ — snapped to real kitchen fractions.',
+  'countdown-calculator':
+    'Anyone with a date circled uses it: days until, weeks-plus-days, and the business-day count — because deadlines live on business days and vacations on calendar ones.',
+  'time-duration-calculator':
+    'Shift workers use it nightly: 8:30 to 5:15 minus 30 for lunch is 8h 15m = 8.25 decimal hours — the number payroll actually wants. Overnight wraps handled.',
+  'markdown-calculator':
+    'Shoppers use it at the clearance rack: 30% off plus an extra 20% is NOT 50% — it is 44%, $89.99 becomes $50.39, and tax gets the last word.',
+  'oven-temperature-converter':
+    'Bakers with a British recipe use it: 350°F = 177°C = gas mark 4, and the fan oven knocks off 20°C — the one conversion Thanksgiving depends on.',
+  'cups-to-grams-converter':
+    'Bakers use it to end the variance: 2.5 cups of flour is 300 g — but a cup of sugar is 200 g and butter 227 g, because volume lies and mass doesn\'t.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

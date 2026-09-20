@@ -11,7 +11,7 @@ const result = esbuild.buildSync({
     contents: `
 import { CALCULATORS } from './src/data/calculators'
 import { VARIANTS } from './src/data/variants'
-globalThis.__calcstackCount = CALCULATORS.length + VARIANTS.length
+globalThis.__calcstackCount = CALCULATORS.length
 `,
     loader: 'ts',
     resolveDir: process.cwd(),

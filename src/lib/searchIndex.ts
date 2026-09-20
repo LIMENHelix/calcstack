@@ -75,4 +75,4 @@ export function searchAll(query: string, limit = 8): SearchEntry[] {
 export const ALL_ENTRIES = entries
 
 /** Total searchable pages — the single source for every "N calculators" claim on the site. */
-export const SEARCH_TOTAL = CALCULATORS.length + VARIANTS.length
+export const SEARCH_TOTAL = CALCULATORS.length

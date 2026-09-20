@@ -1,5 +1,4 @@
 import { CALCULATORS, CATEGORIES } from '@/data/calculators'
-import { VARIANTS } from '@/data/variants'
 import { Seo } from '@/components/Seo'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -7,7 +6,7 @@ const MAILTO =
   'mailto:chrishubbel72@gmail.com?subject=Advertise%20on%20CalcStack&body=Business%20name%3A%0AWebsite%3A%0AWhich%20pages%20or%20professions%20fit%20your%20customers%3F%0A'
 
 export default function Advertise() {
-  const total = CALCULATORS.length + VARIANTS.length
+  const total = CALCULATORS.length
   return (
     <>
       <Seo

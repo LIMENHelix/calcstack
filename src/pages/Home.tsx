@@ -1,6 +1,5 @@
 import { Link } from 'react-router'
 import { CALCULATORS, CATEGORIES } from '@/data/calculators'
-import { VARIANTS } from '@/data/variants'
 import { PERSONAS } from '@/data/personas'
 import { Seo } from '@/components/Seo'
 import { SearchBar } from '@/components/SearchBar'
@@ -11,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Seo
-        title={`CalcStack — ${CALCULATORS.length + VARIANTS.length} Free Calculators for Work, Money & Life`}
+        title={`CalcStack — ${CALCULATORS.length} Free Calculators for Work, Money & Life`}
         description="Free, instant calculators for every job and every money question: contractor bids, salon and studio pricing, paychecks by state, mortgages, training and nutrition math, retirement, and everyday life. No signup — runs in your browser."
       />
       <section className="mb-10 mt-4 text-center">
@@ -19,7 +18,7 @@ export default function Home() {
           The math behind your work, <span className="text-primary">answered in seconds.</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          {CALCULATORS.length + VARIANTS.length} free calculators — by profession, by state, by goal. Bid sheets and
+          {CALCULATORS.length} free calculators — by profession, by state, by goal. Bid sheets and
           salon pricing, paychecks and mortgages, training cycles and retirement math. Results update as you type,
           and every calculation runs in your browser — no accounts, no uploads, no email gates.
         </p>

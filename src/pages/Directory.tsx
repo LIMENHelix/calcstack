@@ -23,7 +23,7 @@ export default function Directory() {
       />
       <h1 className="mb-2 text-3xl font-extrabold tracking-tight">Everything on CalcStack</h1>
       <p className="mb-6 text-muted-foreground">
-        {CALCULATORS.length + VARIANTS.length} calculators, {HOME_VALUES.length} state data pages, and
+        {CALCULATORS.length} calculators, {HOME_VALUES.length} state data pages, and
         our flagship tools — all free, all instant.
       </p>
 

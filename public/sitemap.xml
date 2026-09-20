@@ -189,11 +189,13 @@
   <url><loc>https://calcstack.app/calcstack/calculators/cost-of-living-comparison-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/cost-of-waiting-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/cost-segregation-calculator</loc></url>
+  <url><loc>https://calcstack.app/calcstack/calculators/countdown-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/counteroffer-ev-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/credit-card-minimum-payment-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/crew-downtime-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/critical-power-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/crypto-profit-calculator</loc></url>
+  <url><loc>https://calcstack.app/calcstack/calculators/cups-to-grams-converter</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/custodial-roth-ira-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/customer-ltv-cac-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/date-difference-calculator</loc></url>
@@ -340,6 +342,7 @@
   <url><loc>https://calcstack.app/calcstack/calculators/maintenance-reserve-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/make-ready-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/marginal-tax-bracket-calculator</loc></url>
+  <url><loc>https://calcstack.app/calcstack/calculators/markdown-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/markup-margin-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/massage-therapist-pricing-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/mba-roi-calculator</loc></url>
@@ -372,6 +375,7 @@
   <url><loc>https://calcstack.app/calcstack/calculators/online-coaching-pricing-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/open-house-roi-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/ote-calculator</loc></url>
+  <url><loc>https://calcstack.app/calcstack/calculators/oven-temperature-converter</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/overtime-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/overtime-exempt-threshold-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/overtime-vs-hire-calculator</loc></url>
@@ -486,6 +490,7 @@
   <url><loc>https://calcstack.app/calcstack/calculators/real-estate-commission-split-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/realization-rate-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/rebar-calculator</loc></url>
+  <url><loc>https://calcstack.app/calcstack/calculators/recipe-scaler-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/refinance-break-even-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/relocation-package-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/remodeling-contractor-markup-calculator</loc></url>
@@ -667,6 +672,7 @@
   <url><loc>https://calcstack.app/calcstack/calculators/term-life-ladder-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/term-vs-whole-life-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/tile-calculator</loc></url>
+  <url><loc>https://calcstack.app/calcstack/calculators/time-duration-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/timesheet-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/tip-calculator</loc></url>
   <url><loc>https://calcstack.app/calcstack/calculators/tip-calculator-delivery</loc></url>

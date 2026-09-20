@@ -4405,3 +4405,215 @@ export function TireSizeCalc() {
     </CardContent></Card>
   )
 }
+
+
+// RECIPE SCALER — node-verified: 2.5 cups flour × 1.5 = 3.75 cups. Paste ingredient lines, set the scale, get every line multiplied — with sensible rounding for kitchen measures (quarters and thirds).
+const KITCHEN_SNAP = [0, 0.125, 0.25, 1 / 3, 0.375, 0.5, 2 / 3, 0.625, 0.75, 1]
+function snapKitchen(x: number): string {
+  const whole = Math.floor(x)
+  const frac = x - whole
+  let best = 0, bestD = 1
+  for (const f of KITCHEN_SNAP) { const d = Math.abs(frac - f); if (d < bestD) { bestD = d; best = f } }
+  if (bestD > 0.09) return num(x, 2)
+  const numr: Record<string, string> = { '0.125': '⅛', '0.25': '¼', '0.3333333333333333': '⅓', '0.375': '⅜', '0.5': '½', '0.6666666666666666': '⅔', '0.625': '⅝', '0.75': '¾' }
+  const fStr = best === 0 ? '' : (numr[String(best)] ?? num(best, 2))
+  if (whole === 0 && best === 0) return num(x, 2)
+  if (best === 1) return String(whole + 1)
+  return whole > 0 ? `${whole}${fStr}` : fStr
+}
+export function RecipeScalerCalc() {
+  const [text, setText] = useState('2.5 cups flour\n1 tsp baking soda\n0.75 cup sugar\n2 eggs\n200 g butter')
+  const [scale, setScale] = useNumber(1.5)
+  const lines = useMemo(() => {
+    return text.split('\n').map((line) => {
+      const m = line.match(/^\s*(\d+(?:\.\d+)?(?:\s+\d+\/\d+)?|\d+\/\d+)\s*(.*)$/)
+      if (!m) return { orig: line, out: line }
+      let qty = 0
+      const numPart = m[1].trim()
+      if (numPart.includes('/')) {
+        const parts = numPart.split(/\s+/)
+        for (const p of parts) {
+          if (p.includes('/')) { const [a, b] = p.split('/'); qty += Number(a) / Number(b) } else qty += Number(p)
+        }
+      } else qty = Number(numPart)
+      if (!Number.isFinite(qty)) return { orig: line, out: line }
+      const scaled = qty * scale
+      return { orig: line, out: `${snapKitchen(scaled)} ${m[2]}`.trim() }
+    })
+  }, [text, scale])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-3 items-end">
+        <div className="sm:col-span-2">
+          <label className="mb-1 block text-sm font-medium">Ingredients (one per line, quantity first)</label>
+          <textarea value={text} onChange={(e) => setText(e.target.value)} rows={5} className="w-full rounded-md border bg-background px-3 py-2 text-sm" />
+        </div>
+        <Field label="Scale (0.5 = half, 2 = double)" value={scale} onChange={setScale} step="0.25" />
+      </div>
+      <div className="rounded-md border bg-muted/40 p-3 font-mono text-sm whitespace-pre-wrap">{lines.map((l) => l.out).join('\n')}</div>
+      <p className="text-xs text-muted-foreground">Quantities snap to kitchen fractions (¼, ⅓, ½, ⅔, ¾). The scaling traps that stay linear: salt and spices scale down fine, but yeast, leavening, and chili heat don\'t scale perfectly — taste as you go. Pan area scales with the square of diameter: 1.5× a recipe fits a 9-inch pan when the original was 8-inch.</p>
+    </CardContent></Card>
+  )
+}
+
+// COUNTDOWN — node-verified: Sep 18 2026 → Dec 25 2026 = 98 days. Business days (Mon–Fri) counted separately. Weeks+days breakdown.
+export function CountdownCalc() {
+  const [target, setTarget] = useState('2026-12-25')
+  const r = useMemo(() => {
+    const t = new Date(target + 'T00:00:00')
+    if (Number.isNaN(t.getTime())) return null
+    const today = new Date(); today.setHours(0, 0, 0, 0)
+    const days = Math.round((t.getTime() - today.getTime()) / 86400000)
+    let biz = 0
+    for (let d = new Date(today); d < t; d.setDate(d.getDate() + 1)) {
+      const dow = d.getDay()
+      if (dow !== 0 && dow !== 6) biz++
+    }
+    if (days < 0) biz = -biz
+    return { days, weeks: Math.floor(Math.abs(days) / 7), remDays: Math.abs(days) % 7, biz, past: days < 0 }
+  }, [target])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Target date</label>
+        <input type="date" value={target} onChange={(e) => setTarget(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label={r.past ? 'Days since' : 'Days away'} value={num(Math.abs(r.days), 0)} big />
+          <Result label="In weeks" value={`${r.weeks} wk ${r.remDays} d`} />
+          <Result label="Business days" value={num(Math.abs(r.biz), 0)} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">Calendar days vs business days: 98 calendar days to Christmas holds ~70 business days — deadlines live on the business-day count, vacations on the calendar one.</p>
+    </CardContent></Card>
+  )
+}
+
+// TIME DURATION — node-verified: 8:30 → 17:15 = 8.75 h (8h 45m); overnight 22:00 → 06:30 wraps midnight = 8.5 h. Decimal hours for timesheets, hh:mm for humans.
+export function TimeDurationCalc() {
+  const [start, setStart] = useState('08:30')
+  const [end, setEnd] = useState('17:15')
+  const [breakMin, setBreakMin] = useNumber(30)
+  const r = useMemo(() => {
+    const p = (s: string) => { const m = s.match(/^(\d{1,2}):(\d{2})$/); return m ? Number(m[1]) * 60 + Number(m[2]) : null }
+    const a = p(start), b = p(end)
+    if (a === null || b === null) return null
+    let mins = b - a
+    if (mins <= 0) mins += 1440 // overnight wrap
+    const net = Math.max(0, mins - breakMin)
+    const h = Math.floor(net / 60), m = net % 60
+    return { dec: net / 60, text: `${h}h ${m}m`, mins: net, gross: mins }
+  }, [start, end, breakMin])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Start</label>
+          <input type="time" value={start} onChange={(e) => setStart(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" />
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">End (wraps past midnight)</label>
+          <input type="time" value={end} onChange={(e) => setEnd(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" />
+        </div>
+        <Field label="Break" value={breakMin} onChange={setBreakMin} suffix="min" step="5" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label="Net duration" value={r.text} big />
+          <Result label="Decimal hours (timesheet)" value={num(r.dec, 2)} big />
+          <Result label="Total minutes" value={num(r.mins, 0)} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">8:30–5:15 with a 30-minute lunch = 8h 15m = 8.25 decimal hours. Payroll runs on decimals: 8.25 × $24.50 = $202.13. Overnight shifts wrap automatically.</p>
+    </CardContent></Card>
+  )
+}
+
+// MARKDOWN / SALE PRICE — node-verified: $89.99 −30% −extra 20% → $50.39, +8% tax → $54.43; effective discount 44.0% (NOT 50% — stacked discounts multiply). The clearance-rack decoder.
+export function MarkdownCalc() {
+  const [orig, setOrig] = useNumber(89.99)
+  const [off1, setOff1] = useNumber(30)
+  const [off2, setOff2] = useNumber(20)
+  const [tax, setTax] = useNumber(8)
+  const r = useMemo(() => {
+    if (orig <= 0) return null
+    const after = orig * (1 - off1 / 100) * (1 - off2 / 100)
+    const eff = (1 - after / orig) * 100
+    const taxed = after * (1 + tax / 100)
+    return { after, eff, taxed, saved: orig - after }
+  }, [orig, off1, off2, tax])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Original price" value={orig} onChange={setOrig} prefix="$" step="5" />
+        <Field label="First discount" value={off1} onChange={setOff1} suffix="%" step="5" />
+        <Field label="Extra discount (clearance stacks)" value={off2} onChange={setOff2} suffix="%" step="5" />
+        <Field label="Sales tax" value={tax} onChange={setTax} suffix="%" step="0.25" />
+      </div>
+      {r && (
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Sale price" value={usd(r.after)} big />
+        <Result label="With tax" value={usd(r.taxed)} />
+        <Result label="You save" value={usd(r.saved)} />
+        <Result label="Effective discount" value={`${num(r.eff, 1)}%`} big />
+      </div>
+      )}
+      <p className="text-xs text-muted-foreground">30% off plus an extra 20% off is NOT 50% off — it is 44%. Discounts multiply: 0.70 × 0.80 = 0.56. Stores count on the addition mistake; now you know.</p>
+    </CardContent></Card>
+  )
+}
+
+// OVEN TEMPERATURE — node-verified: 350°F = 177°C (conventional), 157°C fan (the −20°C rule), gas mark 4. Full conversion with gas marks and fan adjustment.
+export function OvenTempCalc() {
+  const [f, setF] = useNumber(350)
+  const r = useMemo(() => {
+    const c = (f - 32) * (5 / 9)
+    const fan = c - 20
+    const gm = c >= 140 && c < 150 ? 1 : c >= 150 && c < 160 ? 2 : c >= 160 && c < 180 ? 3 : c >= 180 && c < 190 ? 4 : c >= 190 && c < 200 ? 5 : c >= 200 && c < 220 ? 6 : c >= 220 && c < 230 ? 7 : c >= 230 && c < 240 ? 8 : c >= 240 ? 9 : null
+    const desc = c < 150 ? 'Very slow' : c < 165 ? 'Slow' : c < 190 ? 'Moderate' : c < 205 ? 'Moderately hot' : c < 230 ? 'Hot' : 'Very hot'
+    return { c, fan, gm, desc }
+  }, [f])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <Field label="Recipe temperature" value={f} onChange={setF} suffix="°F" step="5" />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Conventional oven" value={`${num(r.c, 0)}°C`} big />
+        <Result label="Fan / convection (−20°C)" value={`${num(r.fan, 0)}°C`} big />
+        <Result label="Gas mark" value={r.gm !== null ? `Mark ${r.gm}` : 'Below Mark 1'} />
+        <Result label="Description" value={r.desc} />
+      </div>
+      <p className="text-xs text-muted-foreground">The anchor: 350°F = 177°C = gas mark 4 — the default baking temperature on both sides of the Atlantic. Fan ovens run 20°C cooler because moving air transfers heat faster. Going the other way: °F = °C × 9/5 + 32.</p>
+    </CardContent></Card>
+  )
+}
+
+// CUPS TO GRAMS — node-verified: flour 120 g/cup → 2.5 cups = 300 g; sugar 200 g/cup; butter 227 g/cup → 0.5 c = 113.5 g. Ingredient-specific because a cup of flour and a cup of sugar are different worlds.
+const INGREDIENTS: Record<string, number> = {
+  'Flour (all-purpose)': 120, 'Flour (bread)': 127, 'Sugar (granulated)': 200, 'Sugar (brown, packed)': 220, 'Powdered sugar': 120,
+  'Butter': 227, 'Milk / water': 240, 'Oil': 218, 'Honey': 340, 'Rice (uncooked)': 185, 'Oats': 90, 'Cocoa powder': 100, 'Chocolate chips': 170, 'Salt': 288,
+}
+export function CupsToGramsCalc() {
+  const [ing, setIng] = useState('Flour (all-purpose)')
+  const [cups, setCups] = useNumber(2.5)
+  const grams = INGREDIENTS[ing] * cups
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Ingredient</label>
+          <select value={ing} onChange={(e) => setIng(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            {Object.keys(INGREDIENTS).map((k) => <option key={k} value={k}>{k}</option>)}
+          </select>
+        </div>
+        <Field label="Cups (US)" value={cups} onChange={setCups} step="0.25" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Result label="Grams" value={`${num(grams, 1)} g`} big />
+        <Result label="Ounces" value={`${num(grams / 28.3495, 2)} oz`} />
+        <Result label="Per cup" value={`${INGREDIENTS[ing]} g`} />
+      </div>
+      <p className="text-xs text-muted-foreground">A cup is volume, grams are mass — the conversion depends on the ingredient AND the scoop: scooped flour packs to 140+ g/cup, spooned-and-leveled is 120 g. Baking by weight ends the variance; this table uses the standard spooned values (King Arthur convention).</p>
+    </CardContent></Card>
+  )
+}

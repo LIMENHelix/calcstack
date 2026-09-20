@@ -5350,6 +5350,198 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'recipe-scaler-calculator',
+    title: 'Recipe Scaler — Double or Halve Any Recipe, Kitchen Fractions',
+    shortTitle: 'Recipe Scaler',
+    category: 'Everyday Money',
+    description:
+      'Multiply a whole recipe at once — paste ingredient lines, set the scale, and every quantity snaps to real kitchen fractions (¼, ⅓, ½, ¾).',
+    tagline: '2.5 cups of flour at 1.5× becomes 3¾ cups — every line scaled, snapped to the fractions measuring cups actually have.',
+    intro:
+      'Scaling a recipe means multiplying a dozen lines without a single arithmetic slip — and rounding to fractions that exist on a measuring cup. Paste the ingredient list, set the scale (0.5 halves, 2 doubles, 1.5 feeds six instead of four), and every quantity is scaled and snapped to kitchen fractions automatically.',
+    howItWorks: [
+      'Paste ingredients, one per line, quantity first (2.5 cups flour).',
+      'Set the scale factor — 0.5, 1.5, 2, 3…',
+      'Read the scaled list, snapped to ¼/⅓/½/⅔/¾ fractions.',
+      'Mixed fractions work: 1 1/2 cups parses correctly.',
+      'Watch the traps: leavening, yeast, and chili heat don\'t scale linearly.',
+    ],
+    faq: [
+      {
+        q: 'Do all ingredients scale equally when doubling a recipe?',
+        a: 'No — and the exceptions are where doubled recipes fail. Scale fully: flour, sugar, liquids, butter. Scale cautiously: salt (scale to 1.5× on a double, taste up), spices and chili (heat compounds — 1.5× on a double), leavening (baking powder/soda at 1.75× for a double — over-leavened batter collapses), and yeast (1.5× is usually plenty). Don\'t scale at all: cooking time — a doubled casserole is deeper, not twice as hot, so it needs ~50% more time at the same temperature, and doubled cookies bake in the same minutes on two sheets. Eggs are the awkward unit: 1.5× on a 2-egg recipe means 3 eggs, but 0.75× on 2 eggs means beating one and weighing out half (~25 g).',
+      },
+      {
+        q: 'How does pan size change when I scale a recipe?',
+        a: 'Pan area scales with the square of diameter — the most-missed math in baking. An 8-inch round pan holds 50 sq in of batter; a 9-inch holds 64 (28% more); a 9×13 pan holds 117 sq in. So 1.5× an 8-inch recipe fits a 9-inch perfectly, and doubling an 8-inch round recipe fits a 9×13 rectangle. Depth matters as much as area: batter deeper than the original bakes slower in the center — drop the oven 25°F and extend time rather than cranking heat. The batter-depth rule: keep the scaled batter the same depth as the original and baking time stays nearly identical. Springform and bundt pans are volume-first: a 10-inch bundt holds about 12 cups of batter; never fill any pan past two-thirds.',
+      },
+      {
+        q: 'Why do bakers insist on weighing ingredients?',
+        a: 'Because a "cup of flour" varies by 30% depending on how it is scooped — dipping the cup packs flour to 140–160 g, spooning and leveling gives the standard 120 g. That variance is bigger than recipe scaling errors, which is why professional baking runs entirely in grams: 500 g of flour is 500 g every time, in any kitchen, with any scoop. Volume is fine for liquids (water and milk are consistent) and tolerant ingredients, but flour, cocoa, and powdered sugar compress. The conversion discipline: use the cups-to-grams converter with spooned-and-leveled values, weigh once, write the grams on the recipe card — and every future batch is identical. A $15 scale eliminates the single largest source of baking inconsistency.',
+      },
+    ],
+  },
+  {
+    slug: 'countdown-calculator',
+    title: 'Countdown Calculator — Days Until Any Date, Business Days Too',
+    shortTitle: 'Countdown',
+    category: 'Everyday Money',
+    description:
+      'Days until any date — with weeks-plus-days breakdown and a business-day count, because deadlines and vacations count differently.',
+    tagline: 'Christmas is 98 days away — but only ~70 business days. Deadlines live on one count, vacations on the other.',
+    intro:
+      'How long until the wedding, the deadline, the launch, the holiday? Pick a date and get calendar days, weeks-plus-days, and — the count that actually matters for work — business days excluding weekends. Past dates work too, showing days since.',
+    howItWorks: [
+      'Pick the target date.',
+      'Read calendar days remaining.',
+      'See the weeks + days breakdown.',
+      'Check business days — the deadline number.',
+      'Past dates count backward: days since.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between calendar days and business days?',
+        a: 'Calendar days count everything; business days count Monday–Friday only. The gap is roughly 30%: 98 calendar days hold about 70 business days, and a "30-day notice" means 30 calendar days while "30 business days" is nearly six weeks. Contracts exploit the ambiguity: "net 30" invoices mean calendar days, but "5–7 business days" shipping stretches a week-plus. Legal deadlines vary by jurisdiction — some count calendar days unless the last lands on a weekend, others exclude weekends throughout. The practical rule: when a deadline matters, ask which count it uses, and compute business days explicitly for project plans — a 20-business-day sprint is four calendar weeks, not 20 days.',
+      },
+      {
+        q: 'How do I plan backward from a date?',
+        a: 'Anchor the deadline, then subtract milestones in business days — the method event planners and launch teams run. Example: product launch December 15 → freeze features 10 business days earlier (December 1), complete testing 15 days before that (November 10), lock scope 20 days before testing (mid-October). Buffers belong at the risky stages, not spread evenly — a 20% buffer on the testing block catches more disasters than padding everything. The psychology matters too: countdowns in weeks feel longer than the same span in days (14 weeks vs 98 days), which is why fitness challenges sell "6 weeks" and due-date apps show both. Use weeks for motivation, business days for commitments.',
+      },
+      {
+        q: 'What about holidays in business-day counts?',
+        a: 'This calculator counts Monday–Friday; federal holidays are not excluded — that is deliberate, because holiday schedules differ by employer, state, and country. The manual adjustment: subtract the holidays falling in your window (roughly one per month on average in the US). For exact contractual counts, the list matters: the US federal calendar has 11 holidays, but markets close for 9 (NYSE), banks follow the Federal Reserve schedule, and state employers add their own. When the number decides money — contract penalties, notice periods, visa windows — verify against the counterparty\'s official calendar, because "10 business days" means something different at a bank (closed Veterans Day) than at a retailer (open).',
+      },
+    ],
+  },
+  {
+    slug: 'time-duration-calculator',
+    title: 'Time Duration Calculator — Hours Between Times, Decimal for Payroll',
+    shortTitle: 'Time Duration',
+    category: 'Careers & Salary',
+    description:
+      'Hours and minutes between two times — overnight shifts wrap midnight, breaks subtract, and decimal hours come ready for the timesheet.',
+    tagline: '8:30 to 5:15 minus a 30-minute lunch = 8h 15m = 8.25 decimal hours — the number payroll actually wants.',
+    intro:
+      'The shift math everyone does badly in their head: end minus start, minus the break, in both human (8h 15m) and payroll (8.25) formats. Overnight shifts wrap midnight automatically — 22:00 to 06:30 is 8.5 hours, not an error.',
+    howItWorks: [
+      'Enter start and end times.',
+      'Subtract break minutes for unpaid lunch.',
+      'Read duration as hours+minutes and decimal hours.',
+      'Overnight shifts wrap past midnight automatically.',
+      'Multiply decimal hours by your rate for gross pay.',
+    ],
+    faq: [
+      {
+        q: 'Why does payroll use decimal hours?',
+        a: 'Because wage math needs decimals: 8h 45m × $24.50 is not calculator-friendly until it is 8.75 × $24.50 = $214.38. The conversion table every worker should know: 15 min = 0.25, 30 min = 0.50, 45 min = 0.75 — and the awkward ones, 10 min = 0.167, 20 min = 0.333. Employers round differently, and the method matters to your check: quarter-hour rounding (nearest 0.25) is the legal common standard; 7-minute grace rules round 7:53 to 8:00; and some systems truncate, which costs workers minutes daily. Federal law requires the rounding to even out over time — always rounding against the employee is a wage violation. Check your stub: the decimal conversion on this page is the exact one honest payroll uses.',
+      },
+      {
+        q: 'How do overnight shifts work in time math?',
+        a: 'They wrap through midnight: 22:00 to 06:30 is 8.5 hours — this calculator detects the wrap when the end is earlier than the start. Where overnight math gets legally interesting: the FLSA workday boundary decides which day overtime lands on, most states split the shift at midnight or at the employer\'s declared workday start, and California daily overtime (over 8 hours in a workday) can trigger mid-shift. Shift differentials add a layer: night premiums of 5–15% typically apply to hours after a set time (often 11 PM), so a 10 PM–6 AM shift might earn base pay for 1 hour and premium for 7. When the paycheck looks wrong on an overnight, the workday-boundary definition in your handbook is the first thing to check.',
+      },
+      {
+        q: 'What counts as paid break time?',
+        a: 'Federal law: short breaks (5–20 minutes) are paid work time; bona fide meal periods (30+ minutes, fully relieved of duty) can be unpaid. The traps: "relieved of duty" is literal — answering one work call during lunch converts the whole period to paid time in most interpretations; working through lunch at your desk is paid time regardless of what the timesheet says; and several states (California, New York, others) mandate meal breaks by shift length with premium-pay penalties when skipped. Smoke-break math adds up fast: four 10-minute breaks daily is 0.67 paid hours — 2.9 hours a week. If your timesheet auto-deducts 30 minutes whether or not you ate, that deduction is only legal when the meal break was genuinely duty-free — a common and litigated wage-theft pattern.',
+      },
+    ],
+  },
+  {
+    slug: 'markdown-calculator',
+    title: 'Markdown & Sale Price Calculator — Stacked Discounts Decoded',
+    shortTitle: 'Markdown Calculator',
+    category: 'Everyday Money',
+    description:
+      'Sale price after stacked discounts — 30% off plus an extra 20% is 44%, not 50% — with sales tax applied at the end.',
+    tagline: '$89.99 at 30% off plus an extra 20% off: $50.39 — effective discount 44%, not 50%. The clearance-rack multiplication stores count on you missing.',
+    intro:
+      'Discounts stack by multiplying, not adding — and retailers know most shoppers add. "30% off, plus an extra 20% off" feels like half off but delivers 44%. This calculator applies stacked percents in order, adds sales tax at the end, and shows the effective discount so the real deal is visible before the register.',
+    howItWorks: [
+      'Enter the original price.',
+      'Enter the first discount, then the stacked extra.',
+      'Add your sales tax rate.',
+      'Read sale price, taxed total, savings, and effective discount.',
+      'Compare effective % to the advertised numbers — the gap is the trick.',
+    ],
+    faq: [
+      {
+        q: 'Why isn\'t 30% off plus 20% off equal to 50% off?',
+        a: 'Because the second discount applies to the already-reduced price, not the original: $100 − 30% = $70, then −20% of $70 = $56 — you saved $44, not $50. The math: discounts multiply, 0.70 × 0.80 = 0.56, so you pay 56% and the effective discount is 44%. The gap grows with stack depth: three stacked 20% discounts are 48.8% off, not 60%. Stores design signage around the addition mistake — "extra 40% off clearance" sounds massive on an item already 50% off, but delivers 70% total, not 90%. Reverse trick worth knowing: percent-off followed by dollar-off beats the reverse order ($100 − 30% − $10 = $60 beats $100 − $10 − 30% = $63), so apply fixed coupons AFTER percent discounts when the register allows.',
+      },
+      {
+        q: 'Is the sale price actually a good deal?',
+        a: 'Three checks separate real deals from theater. First, the reference price: FTC rules require the "original" to be a genuine recent selling price, but anchor inflation is rampant — tracking tools (CamelCamelCamel for Amazon, browser price history) reveal that many "sale" prices are the everyday price. Second, the effective discount: a genuine 40%+ off is rare outside clearance and Black Friday doorbusters; typical "sales" run 10–20%. Third, the per-unit comparison: the store brand at full price often beats the name brand at 30% off. The psychological anchors are priced in: "was $199" exists to make $129 feel like winning regardless of value. The disciplined question is never "how much off?" but "is this price good for this item?" — answered by history, not signage.',
+      },
+      {
+        q: 'How does sales tax interact with discounts?',
+        a: 'Tax applies to the discounted price in most states — pay tax on $50.39, not $89.99 — but the exceptions cost money: manufacturer coupons in some states tax the PRE-coupon price, and a few states tax before store discounts too. Cross-border shopping exploits rate differences legally up to use-tax limits: Oregon (0%) vs Washington (10%+). The sneaky math: "tax included" pricing in other countries (VAT in Europe) means the sticker IS the total, which is why US prices look lower until the register. For big purchases the tax line deserves its own calculation: 8% on a $1,200 laptop is $96 — enough that the 10%-off-plus-tax-free-weekend combination (common in August back-to-school events) genuinely beats 15% off on a normal weekend.',
+      },
+    ],
+  },
+  {
+    slug: 'oven-temperature-converter',
+    title: 'Oven Temperature Converter — °F, °C, Gas Mark & Fan Adjustment',
+    shortTitle: 'Oven Temp Converter',
+    category: 'Everyday Money',
+    description:
+      'Convert recipe temperatures between Fahrenheit, Celsius, gas mark, and fan/convection — 350°F = 177°C = gas mark 4, fan at 157°C.',
+    tagline: '350°F = 177°C = gas mark 4. Fan oven? 157°C. The four languages of oven dials, one converter.',
+    intro:
+      'Recipes cross oceans; oven dials don\'t. American recipes speak Fahrenheit, European ones Celsius, British ones gas marks, and convection fans shift everything 20°C. This converter takes any Fahrenheit recipe temperature and returns conventional Celsius, fan-adjusted Celsius, gas mark, and the description — the complete translation.',
+    howItWorks: [
+      'Enter the recipe temperature in °F.',
+      'Read conventional oven °C.',
+      'Fan/convection runs 20°C cooler — shown separately.',
+      'Gas mark for UK ovens.',
+      'The description (moderate, hot…) matches old cookbooks.',
+    ],
+    faq: [
+      {
+        q: 'What is 350°F in Celsius — and why is it the default?',
+        a: 'Exactly 176.7°C, conventionally rounded to 175°C or 180°C depending on the cookbook — gas mark 4 on British ovens. It became the universal baking temperature because it is the sweet spot of the Maillard reaction: hot enough to brown and set structure, gentle enough to cook through before burning. Cookies, cakes, casseroles, and roasted chicken all default to it — a century of recipe writers converged on the same number because it forgives timing errors. The fan adjustment: moving air transfers heat faster, so convection ovens run 20°C (25°F) cooler for the same result — 350°F conventional becomes ~155–160°C fan. When a recipe doesn\'t specify, it assumes conventional.',
+      },
+      {
+        q: 'How do gas marks map to temperatures?',
+        a: 'Gas mark is the British dial system, roughly 25°F per mark starting from mark 1: mark 1 = 140°C/275°F, mark 2 = 150°C/300°F, mark 3 = 165°C/325°F, mark 4 = 180°C/350°F, mark 5 = 190°C/375°F, mark 6 = 200°C/400°F, mark 7 = 220°C/425°F, mark 8 = 230°C/450°F, mark 9 = 240°C/475°F. The descriptions pair with them: marks 1–2 "very slow/slow" (meringues, slow roasts), 3–4 "moderate" (most baking), 5–6 "moderately hot" (roast vegetables, pastry), 7–8 "hot" (pizza, bread crust), 9 "very hot" (initial searing heat). The marks exist because early gas ovens had no thermostats — the dial regulated gas flow, and mark numbers stuck around long after thermostats arrived.',
+      },
+      {
+        q: 'When should I use the fan setting vs conventional?',
+        a: 'Fan (convection) for anything that benefits from even, dry heat: roasted vegetables (crispier edges), multi-rack cookies (no rotating), puff pastry, and dehydrated anything. Conventional for delicate rise: soufflés, custards, cheesecakes, and quick breads — the fan\'s air movement can set the crust before the interior rises, producing lopsided cakes. The conversion rule: drop 20°C/25°F from the conventional temperature, and check 10–15% earlier — fan ovens also cook faster. Never fan a water bath. And the pro trick: start bread and pizza conventional-hot for oven spring, then switch to fan for even browning. If your oven only has fan mode, every American recipe needs the −25°F adjustment or the tops burn while centers stay raw.',
+      },
+    ],
+  },
+  {
+    slug: 'cups-to-grams-converter',
+    title: 'Cups to Grams Converter — Baking Weights by Ingredient',
+    shortTitle: 'Cups to Grams',
+    category: 'Everyday Money',
+    description:
+      'Convert cups to grams by ingredient — flour 120 g, sugar 200 g, butter 227 g per cup — because volume lies and mass doesn\'t.',
+    tagline: '2.5 cups of flour is 300 g. A cup of sugar is 200 g, butter 227 g, honey 340 g — the same cup, four different weights.',
+    intro:
+      'A cup measures volume; baking cares about mass. A cup of flour weighs 120 g while a cup of honey weighs 340 g — and a scooped cup of flour packs 30% heavier than a spooned one. This converter uses the standard spooned-and-leveled values (the King Arthur convention) for the ingredients that matter, in grams and ounces.',
+    howItWorks: [
+      'Pick the ingredient — density is everything.',
+      'Enter cups (fractions welcome: 0.25, 0.33, 0.5).',
+      'Read grams and ounces.',
+      'Per-cup weight shown for your notes.',
+      'Weigh once, write grams on the recipe card — variance ends.',
+    ],
+    faq: [
+      {
+        q: 'Why does a cup of flour weigh different amounts?',
+        a: 'Because flour compresses: dipping the measuring cup into the bag packs it to 140–160 g, spooning-and-leveling gives the standard 120 g, and sifted flour drops to ~100 g — a 50% spread from the same "cup." Humidity and settling compound it. That variance is bigger than most recipe tolerances, which is why professional baking abandoned volume: 300 g of flour is 300 g every time, anywhere on earth. The cup conventions worth knowing: US cup = 236.6 mL, metric cup (Australia) = 250 mL, and old British recipes use imperial cups at 284 mL — a 20% spread before ingredient density even enters. When a recipe fails consistently, measuring technique is the first suspect, not the recipe.',
+      },
+      {
+        q: 'What are the key cup-to-gram conversions?',
+        a: 'The baker\'s core table (spooned-and-leveled, King Arthur standard): all-purpose flour 120 g, bread flour 127 g, granulated sugar 200 g, packed brown sugar 220 g, powdered sugar 120 g, butter 227 g (exactly one US half-pound block = 2 sticks = 1 cup), milk and water 240 g, oil 218 g, honey 340 g, uncooked rice 185 g, oats 90 g, cocoa 100 g, chocolate chips 170 g, table salt 288 g (and kosher salt roughly half by volume — the salt trap that ruins conversions). The liquids anchor the logic: a cup of water weighs 240 g because a US cup is 236.6 mL and water is ~1 g/mL. Butter is the beautiful one: the wrapper markings ARE the measurements — each stick is 113.5 g = ½ cup = 8 tablespoons.',
+      },
+      {
+        q: 'Is weighing really more accurate than measuring cups?',
+        a: 'For dry ingredients, dramatically: studies of home cooks measuring flour by cup show 10–20% variance between scoops — and that is the same person, same bag, same cup. A $15 digital scale is accurate to ±1 g every time. The practical threshold: cookies and pancakes forgive; bread, macarons, and layer cakes do not — a 10% flour error is the difference between chewy and cakey. Speed bonus nobody mentions: weighing is FASTER — one bowl on the scale, tare between ingredients, zero measuring cups to wash. The conversion discipline that works: convert your five most-baked recipes to grams once (this converter + the recipe scaler), write the weights on the cards, and never scoop flour again. Baking is chemistry; chemistry runs on mass.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
