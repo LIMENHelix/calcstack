@@ -63,6 +63,8 @@ export const WHY_USE: Record<string, string> = {
     'Burned-out savers use it to price the middle path: $20k of chosen part-time income cuts the freedom number from $1.375M to $875k and pulls the date forward five years — with the job-loss shortfall shown before anyone quits.',
   'lifestyle-creep-calculator':
     'Anyone holding a raise uses it before absorbing it: $20k invested at 7% becomes $558k in 20 years, and the recurring-spend portion also inflates the FIRE target by 25× — the raise taxed at payroll and again at the finish line.',
+  'commute-cost-calculator':
+    'House hunters and job changers use it to price distance honestly: 25 miles each way is $15,240/yr all-in — the weight of $200,928 of mortgage — so the farther "cheaper" house must beat that gap before it saves anything.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

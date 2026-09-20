@@ -3575,6 +3575,55 @@ export function LifestyleCreepCalc() {
   )
 }
 
+// COMMUTE TRUE COST — distance priced in dollars, hours, and mortgage-equivalent. Node-verified: 25 mi each way, 30 min each way, 240 workdays → 12,000 mi/yr × $0.67 full cost/mi (AAA-style all-in: depreciation, fuel, maintenance, tires, insurance share) = $8,040/yr; 240 hrs/yr of windshield time at $30/hr = $7,200 → $15,240/yr total ≈ $1,270/mo. Mortgage-equivalent at 6.5%/30yr: $200,928 — living closer supports $200k more house for the same monthly outlay. 10-year career cost: $152,400 + 2,400 hours (a full working YEAR at 40-hr weeks). Honest offsets: cheaper housing farther out, WFH days cut linearly (2 WFH days/wk → 40% off), transit shifts the cost mix (fare but hours semi-usable), EV lowers per-mile to ~$0.40s.
+export function CommuteCostCalc() {
+  const [milesEach, setMilesEach] = useNumber(25)
+  const [minEach, setMinEach] = useNumber(30)
+  const [days, setDays] = useNumber(240)
+  const [costPerMi, setCostPerMi] = useNumber(0.67)
+  const [hourly, setHourly] = useNumber(30)
+  const [rate, setRate] = useNumber(6.5)
+
+  const r = useMemo(() => {
+    const miYr = milesEach * 2 * days
+    const carCost = miYr * costPerMi
+    const hrsYr = (minEach * 2 * days) / 60
+    const timeVal = hrsYr * hourly
+    const total = carCost + timeVal
+    const i = rate / 1200
+    const mtgEq = i > 0 ? ((total / 12) * (1 - Math.pow(1 + i, -360))) / i : (total / 12) * 360
+    const workYears = hrsYr / 2080
+    return { miYr, carCost, hrsYr, timeVal, total, mtgEq, workYears }
+  }, [milesEach, minEach, days, costPerMi, hourly, rate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-6">
+          <Field label="Miles each way" value={milesEach} onChange={setMilesEach} step="5" />
+          <Field label="Minutes each way" value={minEach} onChange={setMinEach} step="5" />
+          <Field label="Commute days/yr" value={days} onChange={setDays} step="10" />
+          <Field label="Full cost per mile" value={costPerMi} onChange={setCostPerMi} prefix="$" step="0.05" />
+          <Field label="Your hourly value" value={hourly} onChange={setHourly} prefix="$" />
+          <Field label="Mortgage rate context" value={rate} onChange={setRate} suffix="%" step="0.125" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Driving cost /yr" value={usd(r.carCost)} />
+          <Result label="Time cost /yr" value={`${usd(r.timeVal)} (${num(r.hrsYr, 0)} hrs)`} />
+          <Result big label="True commute cost /yr" value={usd(r.total)} />
+          <Result label="Mortgage-equivalent" value={usd(r.mtgEq)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          This commute costs {usd(r.total / 12, 0)}/month — the same monthly weight as {usd(r.mtgEq)} of additional mortgage at {num(rate, 2)}%. The "cheaper house farther out" only wins if it's more than {usd(r.mtgEq)} cheaper. Over a decade: {usd(r.total * 10)} and {num(r.hrsYr * 10, 0)} hours ({num(r.workYears * 10, 1)} full working-years at the wheel).
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The per-mile figure is the full-cost number (AAA-style): depreciation, fuel, maintenance, tires, and the insurance share — fuel alone understates by half. The 2026 IRS mileage rate (67¢/mi business) is a defensible proxy; EVs run lower (~40–45¢), trucks/SUVs higher (75¢+). Time is priced at YOUR hourly value — defend it as earning rate or the wage you'd accept for an extra hour of work; either way it's not zero. The offsets are real and should be argued honestly: farther-out housing is often cheaper (that's why the mortgage-equivalent matters — compare against the PRICE gap, not the price), transit converts drive time into reading time (worth less per hour but not zero), and every WFH day per week cuts the whole ledger 20%. Also real but unpriced: crash risk scales with miles, and commute time is among the most reliably miserable hours of the day in well-being research — some costs don't fit in a calculator. Estimates — your odometer governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9211,6 +9260,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'term-life-ladder-calculator': LifeLadderCalc,
   'barista-fire-calculator': BaristaFireCalc,
   'lifestyle-creep-calculator': LifestyleCreepCalc,
+  'commute-cost-calculator': CommuteCostCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

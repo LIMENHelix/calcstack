@@ -917,6 +917,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'commute-cost-calculator',
+    title: 'Commute Cost Calculator 2026 — Miles, Hours, and the Mortgage-Equivalent of Living Farther Out',
+    shortTitle: 'Commute True Cost',
+    category: 'Auto & Transport',
+    description:
+      'Price your commute in dollars (full per-mile cost), hours (your time\'s value), and mortgage-equivalent — the number that settles the "cheaper house farther out" debate.',
+    tagline: 'A 25-mile-each-way commute costs $15,240/year — the same monthly weight as $200,928 of mortgage. The cheaper house has to beat that gap.',
+    intro:
+      '"Drive till you qualify" prices the house and ignores the drive. Priced fully, a 25-mile-each-way commute runs 12,000 miles a year — $8,040 at the all-in per-mile cost — plus 240 hours of windshield time worth $7,200 at a $30/hour valuation. That\'s $15,240 annually, $1,270 a month, the same weight as $200,928 of mortgage at 6.5%. So the farther-out house only wins if it\'s more than $200k cheaper — and over a decade the commute costs $152,400 and a full working-year of hours. This calculator prices your exact commute and puts the mortgage-equivalent next to it.',
+    howItWorks: [
+      'Enter miles and minutes each way, and commute days per year (WFH days reduce it linearly).',
+      'Enter full cost per mile — 67¢ (IRS 2026 business rate) is the defensible default; EVs run lower.',
+      'Enter your hourly value and the current mortgage rate.',
+      'Read the annual total, the mortgage-equivalent, and the decade cost.',
+    ],
+    faq: [
+      {
+        q: 'Why 67 cents a mile when gas only costs me 12?',
+        a: 'Because fuel is the smallest share of driving cost. The AAA-style full-cost figure bundles depreciation (the big one — every mile literally shortens the car\'s life and resale), maintenance and tires (roughly 10¢/mi combined), insurance (priced per year but driven by mileage), registration, and finance costs — and lands at 60–70¢/mile for a new sedan, more for trucks and SUVs. The IRS business mileage rate (67¢ for 2026) is built from the same logic, which is why employers reimburse at it. The intuition trap: your brain prices the marginal trip ("just gas") while your bank account pays the average cost. If you genuinely drive an old paid-off EV, your real figure might be 35–45¢ — enter YOUR number, but be honest about depreciation; even EVs die by the mile.',
+      },
+      {
+        q: 'How do I compare this against the cheaper house fairly?',
+        a: 'Convert the commute to mortgage-equivalent (this calculator does it) and compare against the PRICE GAP, not the price. Example: the farther house is $120,000 cheaper, but the commute carries the weight of $200,928 of mortgage — the "cheaper" house costs $81k more in total monthly-weight terms, before counting hours. The fair ledger also adds: second-car risk (long commutes often force a second vehicle sooner), the fatigue tax on evenings (unpriced but real — commute time is among the lowest-rated hours in well-being research), and the crash exposure that scales with miles. In the commute\'s favor: if you\'d use the hours for audiobooks/podcasts anyway, discount the time value; if transit instead of driving, price the fare but cut the time value (those hours are semi-usable). And re-run it when your WFH schedule changes — one extra remote day per week cuts everything 20%.',
+      },
+      {
+        q: 'Does remote work really change the math that much?',
+        a: 'Linearly — the most powerful lever in the whole calculation. Each work-from-home day per week removes 20% of every line: miles, dollars, hours, risk. On the default commute, going from 5 days in-office to 3 saves $6,096/yr and 96 hours. This is also why the "pay cut for remote" question has a real answer: on this commute, a fully remote job is worth $15,240/yr against a fully in-office one — a 5–8% raise in disguise at median incomes, before the time. The reverse negotiation works too: when asked back to the office, the commute cost is the quantified counter. One nuance: occasional commuting costs MORE per mile than daily (the car depreciates on the calendar too), so the true saving of partial WFH is slightly less than linear — but close enough that the linear rule stands.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
