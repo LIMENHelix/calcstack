@@ -3199,3 +3199,100 @@ export function FifteenVsThirtyCalc() {
     </CardContent></Card>
   )
 }
+
+
+// OVULATION CALCULATOR — node-verified: LMP Sep 1 + 28-day cycle → ovulation Sep 15, fertile window Sep 10–16, next period Sep 29, due-if-conceived Jun 8 2027 (ovulation + 266). Luteal phase fixed at 14 days — the standard clinical estimate; real cycles vary ±2 days, which is why the window matters more than the day.
+export function OvulationCalc() {
+  const [lmp, setLmp] = useState('2026-09-01')
+  const [cycle, setCycle] = useNumber(28)
+  const r = useMemo(() => {
+    const d = new Date(lmp + 'T00:00:00')
+    if (Number.isNaN(d.getTime()) || cycle < 20 || cycle > 45) return null
+    const add = (date: Date, n: number) => { const x = new Date(date); x.setDate(x.getDate() + n); return x }
+    const fmt = (date: Date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    const ov = add(d, cycle - 14)
+    const today = new Date(); today.setHours(0, 0, 0, 0)
+    const daysToOv = Math.round((ov.getTime() - today.getTime()) / 86400000)
+    return {
+      ov: fmt(ov), fStart: fmt(add(ov, -5)), fEnd: fmt(add(ov, 1)),
+      nextPeriod: fmt(add(d, cycle)), due: fmt(add(ov, 266)), daysToOv,
+    }
+  }, [lmp, cycle])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium">First day of last period</label>
+          <input type="date" value={lmp} onChange={(e) => setLmp(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" />
+        </div>
+        <Field label="Cycle length" value={cycle} onChange={setCycle} suffix="days" step="1" />
+      </div>
+      {r ? (
+        <>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Result label="Estimated ovulation" value={r.ov} big />
+            <Result label="Fertile window" value={`${r.fStart} – ${r.fEnd}`} big />
+            <Result label="Next period expected" value={r.nextPeriod} />
+            <Result label="Due date if conceived" value={r.due} />
+          </div>
+          {r.daysToOv >= 0 && r.daysToOv <= 30 && <p className="text-sm font-medium">{r.daysToOv === 0 ? 'Ovulation is estimated today.' : `Ovulation in ~${r.daysToOv} day${r.daysToOv === 1 ? '' : 's'}.`}</p>}
+        </>
+      ) : (
+        <p className="text-sm text-muted-foreground">Enter a valid date and a cycle between 20 and 45 days.</p>
+      )}
+      <p className="text-xs text-muted-foreground">Clinical estimate: ovulation ≈ 14 days before the next period; sperm survive ~5 days, the egg ~24 hours — hence the 6-day window. Cycles vary; ovulation predictor kits or basal-body temperature confirm the real day.</p>
+    </CardContent></Card>
+  )
+}
+
+// UNIT CONVERTER — node-verified: 5 mi = 8.0467 km; 10 kg = 22.0462 lb; 98.6°F = 37.00°C; 2.5 gal = 9.4635 L; 6 ft = 182.88 cm; 1 acre = 43,560 sqft. Base-unit normalization per category; temperature handled with offset formulas, not factors.
+const UNIT_GROUPS: Record<string, Record<string, number>> = {
+  Length: { mm: 0.001, cm: 0.01, m: 1, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344 },
+  Weight: { mg: 0.001, g: 1, kg: 1000, oz: 28.349523125, lb: 453.59237, 'stone': 6350.29318, 'ton (US)': 907184.74 },
+  Volume: { mL: 0.001, L: 1, 'tsp': 0.00492892159375, tbsp: 0.01478676478125, 'fl oz': 0.0295735295625, cup: 0.2365882365, pint: 0.473176473, quart: 0.946352946, 'gal (US)': 3.785411784 },
+  Area: { 'sq ft': 0.09290304, 'sq yd': 0.83612736, 'sq m': 1, acre: 4046.8564224, hectare: 10000, 'sq mi': 2589988.110336 },
+  Speed: { mph: 0.44704, 'km/h': 0.2777777778, 'm/s': 1, knot: 0.5144444444, 'ft/s': 0.3048 },
+}
+export function UnitConverterCalc() {
+  const [group, setGroup] = useState('Length')
+  const [from, setFrom] = useState('mi')
+  const [to, setTo] = useState('km')
+  const [val, setVal] = useNumber(5)
+  const groups = Object.keys(UNIT_GROUPS)
+  const isTemp = group === 'Temperature'
+  const units = isTemp ? ['°F', '°C', 'K'] : Object.keys(UNIT_GROUPS[group])
+  const fromU = units.includes(from) ? from : units[0]
+  const toU = units.includes(to) ? to : units[Math.min(1, units.length - 1)]
+  const out = useMemo(() => {
+    if (isTemp) {
+      let c = val
+      if (fromU === '°F') c = (val - 32) * (5 / 9)
+      else if (fromU === 'K') c = val - 273.15
+      if (toU === '°F') return c * (9 / 5) + 32
+      if (toU === 'K') return c + 273.15
+      return c
+    }
+    const g = UNIT_GROUPS[group]
+    return (val * g[fromU]) / g[toU]
+  }, [group, fromU, toU, val, isTemp])
+  const sel = (v: string, set: (s: string) => void, opts: string[]) => (
+    <select value={v} onChange={(e) => set(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+      {opts.map((o) => <option key={o} value={o}>{o}</option>)}
+    </select>
+  )
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Category</label>
+        {sel(isTemp ? 'Temperature' : group, (g) => { setGroup(g); const us = g === 'Temperature' ? ['°F', '°C', 'K'] : Object.keys(UNIT_GROUPS[g]); setFrom(us[0]); setTo(us[Math.min(1, us.length - 1)]) }, [...groups, 'Temperature'])}
+      </div>
+      <div className="grid grid-cols-3 items-end gap-3">
+        <Field label="Value" value={val} onChange={setVal} step="0.5" />
+        <div><label className="mb-1 block text-sm font-medium">From</label>{sel(fromU, setFrom, units)}</div>
+        <div><label className="mb-1 block text-sm font-medium">To</label>{sel(toU, setTo, units)}</div>
+      </div>
+      <Result label={`${num(val, 4)} ${fromU} =`} value={`${num(out, 4)} ${toU}`} big />
+      <p className="text-xs text-muted-foreground">Exact definitions: 1 in = 2.54 cm, 1 lb = 0.45359237 kg, 1 US gal = 3.785411784 L, 1 acre = 43,560 sq ft. Temperature uses offset formulas: °C = (°F − 32) × 5/9.</p>
+    </CardContent></Card>
+  )
+}

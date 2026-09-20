@@ -4518,6 +4518,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ovulation-calculator',
+    title: 'Ovulation Calculator — Fertile Window, Next Period, and Due Date',
+    shortTitle: 'Ovulation Calculator',
+    category: 'Health & Life',
+    description:
+      'Estimate ovulation from your last period and cycle length, see the 6-day fertile window, your next expected period, and the due date if you conceive.',
+    tagline: 'LMP Sep 1 on a 28-day cycle → ovulation around Sep 15, fertile window Sep 10–16, due date if conceived: June 8.',
+    intro:
+      'Conception math runs on one reliable anchor: the luteal phase — the time between ovulation and the next period — is about 14 days in almost everyone, while the follicular phase before it varies. That is why ovulation is estimated backward from cycle length, not forward from the period. This calculator runs that estimate and shows the full 6-day fertile window, because sperm survive up to 5 days while the egg lasts about 24 hours — the days before ovulation matter as much as the day itself.',
+    howItWorks: [
+      'Enter the first day of your last period.',
+      'Enter your average cycle length (20–45 days).',
+      'Read the estimated ovulation day and the fertile window around it.',
+      'See the next expected period — and the due date if this cycle works.',
+      'Confirm with OPK strips or basal-body temperature; the calendar is the estimate.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is an ovulation calculator?',
+        a: 'It is an estimate with a typical error of ±2 days, because the underlying assumption — a fixed 14-day luteal phase — is an average, not a law. In studies of confirmed cycles, ovulation day varies even in women with clockwork 28-day cycles. That is exactly why the fertile window matters more than the predicted day: sperm survive up to 5 days in fertile cervical mucus, so intercourse on the 3–4 days before ovulation is statistically as effective as the day itself. For confirmation, ovulation predictor kits detect the LH surge 24–36 hours before ovulation, and basal-body temperature (a ~0.5°F sustained rise) confirms it happened. If cycles are irregular, the calculator becomes less reliable and the OPK route becomes the primary tool.',
+      },
+      {
+        q: 'What if my cycles are irregular?',
+        a: 'Count backward from the next period, not forward from the last: ovulation ≈ cycle length minus 14 days. A 33-day cycle ovulates around day 19; a 24-day cycle around day 10. With truly irregular cycles (variance over 7 days), calendar math breaks down — track the shortest cycle in the last 6 months and treat its ovulation estimate as the window\'s start, the longest cycle\'s estimate as the end. Persistent irregularity is also diagnostic information: cycles routinely over 35 days or under 21 days are worth discussing with a clinician, since PCOS and thyroid issues commonly announce themselves through cycle length before any other symptom.',
+      },
+      {
+        q: 'When is the best time in the fertile window?',
+        a: 'The 1–2 days before ovulation carry the highest per-day probability — around 25–30% for couples under 35 — because sperm need to already be present when the egg releases; the egg survives only 12–24 hours while sperm wait up to 5 days. Intercourse on ovulation day itself is slightly worse than the day before, and the day after drops sharply. Practical cadence from fertility clinics: every 1–2 days across the fertile window beats daily (which can reduce sperm concentration) and beats once (which risks missing the window entirely). The due-date bonus: if conception happens this cycle, pregnancy dating starts from the LMP — ovulation + 266 days — which is why the calculator shows it alongside.',
+      },
+    ],
+  },
+  {
+    slug: 'unit-converter',
+    title: 'Unit Converter — Length, Weight, Volume, Area, Speed & Temperature',
+    shortTitle: 'Unit Converter',
+    category: 'Everyday Money',
+    description:
+      'Convert between metric and US units instantly: miles to km, kg to pounds, Fahrenheit to Celsius, gallons to liters, acres to square feet, and more.',
+    tagline: '5 miles is 8.0467 km. 10 kg is 22.046 lb. 98.6°F is exactly 37°C. Exact conversion factors, six categories, zero rounding surprises.',
+    intro:
+      'Unit conversion errors sink recipes, workouts, construction orders, and at least one Mars orbiter. The fix is always the same: convert through a base unit with exact definitions — an inch is exactly 2.54 cm, a pound exactly 0.45359237 kg, a US gallon exactly 3.785411784 liters. This converter covers the six categories that come up daily — length, weight, volume, area, speed, and temperature — using exact factors, so 6 feet is 182.88 cm every single time.',
+    howItWorks: [
+      'Pick a category: length, weight, volume, area, speed, or temperature.',
+      'Enter the value and choose the from and to units.',
+      'Read the converted result — factors are exact definitions, not approximations.',
+      'Temperature converts with offset formulas (°C = (°F − 32) × 5/9), not simple ratios.',
+      'Swap direction by switching the from/to dropdowns.',
+    ],
+    faq: [
+      {
+        q: 'Why do my conversions differ slightly from other sites?',
+        a: 'Rounding in the factors. Many converters use shortcuts like 1 mile ≈ 1.6 km or 1 kg ≈ 2.2 lb — fine for conversation, wrong for work. The exact definitions: 1 mile = 1.609344 km exactly, 1 kg = 2.2046226 lb, 1 inch = 2.54 cm exactly (by international agreement since 1959), 1 US gallon = 231 cubic inches = 3.785411784 L. The errors compound: a 100-mile trip converted at 1.6 is 160 km, actually 160.93 km — nearly a kilometer off. The notorious real-world case is the Mars Climate Orbiter, lost in 1999 because one team output pound-force seconds and another expected newton-seconds — a $327 million unit-conversion failure.',
+      },
+      {
+        q: 'How does temperature conversion work?',
+        a: 'Temperature cannot convert by simple multiplication because the scales have different zeros — that is why °C = (°F − 32) × 5/9 has a subtraction first. The anchors worth memorizing: 32°F = 0°C (water freezes), 212°F = 100°C (boils), 98.6°F = 37°C (body), and −40° is the one point where Fahrenheit and Celsius agree. Kelvin shares Celsius\'s degree size but starts at absolute zero: K = °C + 273.15, so room temperature (~22°C) is about 295 K. The quick mental trick for °F→°C weather: subtract 30 and halve (68°F → (68−30)/2 = 19°C, true answer 20°C — close enough for a jacket decision).',
+      },
+      {
+        q: 'What are the most useful conversions to memorize?',
+        a: 'The daily-driver set: 1 inch = 2.54 cm, 1 mile ≈ 1.61 km (a 10k race is 6.2 miles), 1 kg ≈ 2.2 lb (so a 150 lb person is ~68 kg), 1 liter ≈ 1.06 US quarts, 1 US gallon ≈ 3.79 L, 1 acre = 43,560 sq ft (a football field without end zones is ~1.1 acres), and 1 m/s = 2.237 mph (which is why a 100 km/h highway is 62 mph). One warning on gallons: the US gallon (3.785 L) and the imperial gallon (4.546 L) differ by 20% — British fuel economy figures use imperial, which is why UK mpg numbers always look better than US ones for the same car.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

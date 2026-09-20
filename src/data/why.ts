@@ -293,6 +293,10 @@ export const WHY_USE: Record<string, string> = {
     'Anyone with a column of numbers uses it: paste 12, 18, 7, 18, 25, 9, 31, 14 and get mean 16.75, median 16, mode 18 — plus weighted average for grades and share lots.',
   '15-vs-30-year-mortgage-calculator':
     'Buyers use it at the rate sheet: $400k at 6.5%/5.875% — the 15-year costs $820 more a month but saves $307,453 in interest. The exact trade-off, in dollars.',
+  'ovulation-calculator':
+    'Couples use it the week it matters: LMP Sep 1 on a 28-day cycle → ovulation ~Sep 15, fertile window Sep 10–16, and the due date if it works.',
+  'unit-converter':
+    'Everyone uses it mid-task: 5 miles is 8.0467 km, 10 kg is 22.046 lb, 98.6°F is exactly 37°C — length, weight, volume, area, speed, temperature.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':
