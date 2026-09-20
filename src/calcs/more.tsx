@@ -7256,6 +7256,95 @@ export function EstimateContingencyCalc() {
   )
 }
 
+// CHAIR RENTAL VS COMMISSION — node-verified defaults: stylist does $4,800/mo in services. Commission (W-2) at 45% = $2,160 take-home. Booth rental: revenue − $250/wk rent ($1,083/mo) − $150 supplies = $3,567 gross, × 0.9235 for the extra self-employment FICA share (1099 pays both halves) = $3,295 → rental wins by $1,135/mo. Breakeven: $2,404/mo of services — below that the chair rent eats you; above it, every dollar is yours. Tips equal both ways, retail commission slightly favors W-2 shops.
+export function ChairRentalCalc() {
+  const [rev, setRev] = useNumber(4800)
+  const [comm, setComm] = useNumber(45)
+  const [rentWk, setRentWk] = useNumber(250)
+  const [sup, setSup] = useNumber(150)
+
+  const r = useMemo(() => {
+    const commTake = rev * (comm / 100)
+    const rent = rentWk * 4.33
+    const rentGross = rev - rent - sup
+    const rentNet = Math.max(rentGross, 0) * 0.9235
+    const edge = rentNet - commTake
+    const be = comm / 100 < 0.9235 ? ((rent + sup) * 0.9235) / (0.9235 - comm / 100) : Infinity
+    return { commTake, rent, rentNet, edge, be }
+  }, [rev, comm, rentWk, sup])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Monthly service revenue" value={rev} onChange={setRev} prefix="$" step="200" />
+          <Field label="Commission rate" value={comm} onChange={setComm} suffix="%" step="5" />
+          <Field label="Booth rent" value={rentWk} onChange={setRentWk} prefix="$" suffix="/wk" step="25" />
+          <Field label="Backbar & supplies" value={sup} onChange={setSup} prefix="$" suffix="/mo" step="25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Commission take-home" value={usd(Math.round(r.commTake))} />
+          <Result label="Rental take-home" value={usd(Math.round(r.rentNet))} />
+          <Result label="Rental edge" value={`${r.edge >= 0 ? '+' : '−'}${usd(Math.abs(Math.round(r.edge)))}/mo`} big />
+          <Result label="Breakeven revenue" value={isFinite(r.be) ? `${usd(Math.round(r.be))}/mo` : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.edge > 0
+            ? `Renting beats commission by ${usd(Math.round(r.edge))}/mo at ${usd(rev)} of services — the chair pays off above ${usd(Math.round(r.be))}/mo. The catch: the rental path only works if the CLIENTELE is yours — you are buying the difference with your own book.`
+            : `At ${usd(rev)}/mo the chair rent eats you — commission wins by ${usd(Math.abs(Math.round(r.edge)))}/mo. Breakeven is ${usd(Math.round(r.be))}/mo of services: build the book on commission first, rent when the book is yours.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: commission take = revenue × rate (W-2, employer pays half of FICA); rental take = (revenue − rent − supplies) × 0.9235, the 0.9235 accounting for the extra 7.65% self-employment FICA share a 1099 stylist pays. The inputs that decide it: your BOOK (rental is only as good as the clientele that follows you — a stylist whose clients are the salon&apos;s walk-ins is renting a disaster), the rent versus local market ($150–400/wk by metro and salon tier), and what the commission shop actually includes (backbar, towels, booking software, marketing, walk-ins — each has dollar value). Rental path extras to budget: your own liability insurance ($200–400/yr), your own booking software, quarterly estimated taxes (the quarterly-tax calculator sets those), and zero benefits — no PTO, no health, no match; price those before celebrating the edge. Owner&apos;s mirror: for salon owners, rental chairs convert payroll risk into fixed rent income but empty chairs earn nothing and renter turnover is your vacancy problem — the turnover calculator&apos;s logic applies. Classification warning: a &quot;rental&quot; where the owner sets your hours, prices, and clients is a misclassified W-2 in the IRS&apos;s view — the arrangement must be genuinely independent. Estimate — your book, your local rents, and the salon&apos;s actual inclusions govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// NO-SHOW COST — node-verified defaults: 8 appointments/day × $65 ticket × 8% no-show × 5 days/wk = $208/wk = $10,816/yr of empty chair time. A deposits + confirmation policy cutting no-shows to 3% recovers $6,760/yr. The chair time is perishable inventory — an unsold 2 p.m. Tuesday is gone forever, which is why prevention (deposits, reminders) beats rebooking.
+export function NoShowCostCalc() {
+  const [appts, setAppts] = useNumber(8)
+  const [ticket, setTicket] = useNumber(65)
+  const [ns, setNs] = useNumber(8)
+  const [days, setDays] = useNumber(5)
+  const [nsAfter, setNsAfter] = useNumber(3)
+
+  const r = useMemo(() => {
+    const wkLoss = appts * (ns / 100) * days * ticket
+    const yrLoss = wkLoss * 52
+    const yrAfter = appts * (nsAfter / 100) * days * ticket * 52
+    const saved = yrLoss - yrAfter
+    const perClient = ticket * (ns / 100)
+    return { wkLoss, yrLoss, yrAfter, saved, perClient }
+  }, [appts, ticket, ns, days, nsAfter])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Appointments per day" value={appts} onChange={setAppts} step="1" />
+          <Field label="Average ticket" value={ticket} onChange={setTicket} prefix="$" step="5" />
+          <Field label="No-show rate now" value={ns} onChange={setNs} suffix="%" step="1" />
+          <Field label="Days per week" value={days} onChange={setDays} step="1" />
+          <Field label="Rate with policy" value={nsAfter} onChange={setNsAfter} suffix="%" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Lost per week" value={usd(Math.round(r.wkLoss))} />
+          <Result label="Lost per year" value={usd(Math.round(r.yrLoss))} big />
+          <Result label="Policy recovers /yr" value={usd(Math.round(r.saved))} />
+          <Result label="Expected loss per booking" value={usd(Math.round(r.perClient * 100) / 100)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`No-shows cost ${usd(Math.round(r.wkLoss))}/wk — ${usd(Math.round(r.yrLoss))}/yr of perishable chair time. Cutting from ${ns}% to ${nsAfter}% with deposits and confirmations recovers ${usd(Math.round(r.saved))}/yr. A 2 p.m. Tuesday unsold is gone forever — prevention beats rebooking.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: weekly loss = appointments/day × no-show% × days × ticket; annualized ×52. Why prevention is the whole game: appointment inventory is perishable — the empty 2 p.m. cannot be sold at 3 p.m., so the only fix that pays is stopping the no-show before it happens. The policy stack that works, in impact order: automated confirmations with a confirm-or-cancel tap (48-hr + day-of texts cut no-shows by half or more on their own), card-on-file with a posted cancellation policy (the card existing changes behavior even if never charged), deposits on high-value or long services (color corrections, extensions — $25–50 or 50% of service), and a three-strikes rule enforced kindly (chronic no-showers get deposit-only booking). Enforcement tone: the policy works at booking, not at confrontation — state it in the confirmation text, the booking page, and the chair-side sign; the fee charged to a surprised client buys a bad review, the fee disclosed three times buys compliance. The recovery layer for the gaps that remain: a waitlist that auto-offers same-day openings (fills 30–50% of cancellations in busy shops) and standing appointments for your regulars. What NOT to do: overbook like an airline — service businesses cannot bump a haircut, and the client whose slot you double-booked is a one-star review with your name on it. Track the rate monthly by service and day-of-week — no-shows cluster (Saturday mornings, first appointments) and the pattern tells you where the deposits go. Estimate — your booking software&apos;s no-show report governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12967,6 +13056,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'retainage-calculator': RetainageCalc,
   'job-overhead-calculator': JobOverheadCalc,
   'estimate-contingency-calculator': EstimateContingencyCalc,
+  'chair-rental-vs-commission-calculator': ChairRentalCalc,
+  'no-show-cost-calculator': NoShowCostCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

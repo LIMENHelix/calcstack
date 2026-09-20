@@ -3287,6 +3287,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'chair-rental-vs-commission-calculator',
+    title: 'Chair Rental vs Commission Calculator — Booth Rent Math for Stylists, Barbers, and the Breakeven Book',
+    shortTitle: 'Chair Rental vs Commission',
+    category: 'Freelance & Career',
+    description:
+      'Compare salon commission against booth rental with the real costs priced in: weekly rent, backbar supplies, and the extra self-employment FICA a 1099 stylist pays. See the monthly edge and the revenue breakeven where renting starts to win.',
+    tagline: 'At $4,800 a month in services, renting beats a 45% commission by $1,135 — below $2,404, the chair rent eats you.',
+    intro:
+      'The biggest money decision in a stylist or barber career is not the chair — it is the compensation model behind it. Commission pays a percentage of services with the salon carrying supplies, booking, walk-ins, and half your payroll tax; booth rental makes you a 1099 business that keeps everything after rent, supplies, and the full self-employment tax. On $4,800 a month of services with $250 weekly rent, rental nets $3,295 against $2,160 on a 45% commission — but only because the clientele is yours. This calculator prices both paths honestly, including the hidden 7.65% FICA swing, and gives you the breakeven revenue where the chair stops costing and starts paying.',
+    howItWorks: [
+      'Enter your monthly service revenue — the book that actually follows you, not the salon’s walk-ins.',
+      'Enter the commission rate the salon offers.',
+      'Enter the weekly booth rent and monthly backbar/supplies you would carry as a renter.',
+      'Read both take-homes: commission as W-2, rental net of the extra self-employment FICA share.',
+      'Check the breakeven revenue — below it commission wins, above it every dollar is yours.',
+    ],
+    faq: [
+      {
+        q: 'Why does the rental side get multiplied by 0.9235?',
+        a: 'Because a W-2 stylist splits FICA with the employer — you pay 7.65%, the salon pays 7.65%. A booth renter is self-employed and pays both halves, 15.3%, on net earnings (after the small deductible-half adjustment, roughly 14.1% of net — the 0.9235 factor approximates the take-home effect). On $3,567 of net rental income that invisible line costs about $273 a month. Skipping it is the most common way stylists talk themselves into a rental that does not actually pay: the gross edge looks bigger than the after-tax edge. The calculator also leaves out income tax deliberately — you owe it either way, though renters control it better through write-offs (rent, supplies, insurance, software) that a W-2 stylist cannot deduct.',
+      },
+      {
+        q: 'What matters more than the rent number?',
+        a: 'Whether the clientele is yours. Rental math assumes the $4,800 of services walks through the door because of YOU — your Instagram, your referrals, your rebooks. If half your book is the salon’s walk-in traffic and marketing, leaving for a rental chair takes half your revenue with it and the breakeven math inverts overnight. Second: what the commission shop actually includes. Backbar, towels, capes, booking software, credit card fees, a receptionist, walk-ins, and marketing have real dollar value — often $400–800 a month of costs a renter picks up alone. Price those in the supplies field honestly. Third: benefits. Commission shops sometimes carry health insurance, PTO, and a 401(k) match; renters buy all of it retail. The edge has to cover that delta before it is real.',
+      },
+      {
+        q: 'Is there a legal trap in booth rental?',
+        a: 'Yes — misclassification. The IRS and state labor agencies treat a “renter” whose hours, prices, dress code, and clients are controlled by the salon as a W-2 employee, and the salon owes back payroll taxes when caught. A genuine rental means you set your own schedule, your own prices, take your own payment, carry your own liability insurance, and can leave with your client list. If the arrangement fails those tests, the higher take-home is partly borrowed against an audit. On the owner’s side, the mirror matters too: rental chairs convert payroll risk into fixed income, but an empty chair earns nothing and renter turnover is a vacancy problem — owners comparing models should run the same numbers from their seat.',
+      },
+    ],
+  },
+  {
+    slug: 'no-show-cost-calculator',
+    title: 'No-Show Cost Calculator — What Empty Appointments Cost Per Year and What a Policy Recovers',
+    shortTitle: 'No-Show Cost Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Price no-shows honestly: appointments per day, average ticket, and your no-show rate become a weekly and annual loss. Then test a deposits-and-confirmations policy and see what cutting the rate recovers per year.',
+    tagline: 'Eight appointments a day at 8% no-show burns $10,816 a year of chair time that can never be resold.',
+    intro:
+      'A no-show is not a postponed sale — it is a destroyed one. Appointment inventory is perishable: the 2 p.m. Tuesday slot unsold at 2:01 is gone forever, which is why salons, barbers, trainers, therapists, and med spas lose five figures a year to empty chairs without noticing. Eight appointments a day at a $65 ticket with an 8% no-show rate is $208 a week — $10,816 a year. This calculator prices your exact loss, then tests the fix: what a policy stack of automated confirmations, card-on-file, and deposits recovers if it cuts your rate to 3%. The answer — $6,760 a year — is why prevention beats rebooking every time.',
+    howItWorks: [
+      'Enter appointments per day and your average ticket.',
+      'Enter your current no-show rate — your booking software’s report has the real number.',
+      'Enter working days per week to annualize the loss.',
+      'Enter the no-show rate you expect after a deposits-and-confirmations policy.',
+      'Read the weekly loss, the annual loss, and what the policy recovers per year.',
+    ],
+    faq: [
+      {
+        q: 'What policy stack actually cuts no-shows?',
+        a: 'In impact order: automated confirmations first — a 48-hour and day-of text with a confirm-or-cancel tap cuts no-shows by half or more on its own, because most no-shows are forgetfulness, not malice. Second, card-on-file with a posted cancellation policy — the card existing changes behavior even if you never charge it. Third, deposits on high-value or long services: $25–50 or 50% on color corrections, extensions, and multi-hour bookings where one no-show kills the day. Fourth, a three-strikes rule enforced kindly — chronic no-showers move to deposit-only booking. The tone matters as much as the rules: the policy works at booking, not at confrontation. Stated in the confirmation text, the booking page, and a chair-side sign, the fee buys compliance; charged to a surprised client, it buys a one-star review.',
+      },
+      {
+        q: 'Why not just overbook like airlines do?',
+        a: 'Because service businesses cannot bump a haircut. An airline rebooks the displaced passenger on the next flight and compensates; you cannot put the client whose slot you double-booked into a later chair — the chair is occupied. The recovery layer that actually works for remaining gaps: a waitlist that auto-offers same-day openings (fills 30–50% of cancellations in busy shops) and standing appointments for regulars that anchor the schedule. Also watch the pattern, not just the rate — no-shows cluster by service and day-of-week (Saturday mornings and first appointments are classic), and the cluster tells you exactly where deposits pay for themselves. Track the rate monthly in your booking software; a policy you cannot measure is a policy you cannot tune.',
+      },
+      {
+        q: 'Is charging no-show fees legal?',
+        a: 'Generally yes, with disclosure — the fee must be agreed before the service, which is why the policy belongs in the booking flow and confirmation texts, not announced at the empty chair. Card-on-file fees charged under a disclosed cancellation policy are enforceable in most states; what sinks businesses is surprise, not the fee itself. Practical guardrails: cap the fee at something defensible (50–100% of the service for same-day no-shows is standard), waive it gracefully for genuine emergencies — the goodwill is worth more than the fee — and keep the consent record your booking software stores. If you take deposits, check your state’s rules on keeping them; most allow retaining a deposit for a no-show under a disclosed policy, but a few states regulate service deposits more tightly.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
