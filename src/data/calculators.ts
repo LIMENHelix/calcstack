@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'startup-offer-calculator',
+    title: 'Startup Offer Calculator 2026 — Equity Expected Value vs the Salary Cut, Dilution Included',
+    shortTitle: 'Startup Offer Calculator',
+    category: 'Careers & Salary',
+    description:
+      'Price startup equity the way it actually pays out: probability-weighted across fail / modest exit / big exit scenarios, after dilution and exercise cost — then compare the expected value against the salary cut you are signing for.',
+    tagline: '0.1% with a $20k strike at startup-typical odds is $68k of expected value over four years — against a $120k salary cut, the trade is −$52k before dilution.',
+    intro:
+      'A startup offer is a bet, not compensation — but it is a bet you can price. The honest method: give each outcome a probability (most startups return zero to common shareholders), a payout (your slice of the exit, minus your exercise cost, minus the liquidation-preference stack that pays preferred investors first), and multiply. At industry-typical priors, a 0.1% grant with a $20k strike carries roughly $68k of expected value across a four-year vest — $17k a year. If the offer comes with a $30k annual salary cut below market, the expected trade is negative $52k, and future funding rounds dilute the slice further. This calculator runs the full expected-value ledger — ownership after dilution, scenario payouts, EV per year of vest, and the net against the salary you gave up — so you sign for the mission with open eyes, not for equity math you never ran.',
+    howItWorks: [
+      'Enter your ownership percentage TODAY (not share count — shares without the total share count are marketing) and the exercise/strike cost.',
+      'Enter the salary cut per year versus your market rate, and the vesting period.',
+      'Set the three scenarios: probability of failure (~65% is the industry-typical prior), the modest-exit size and its probability, and the big-exit size — the big-exit probability is whatever is left.',
+      'Enter expected dilution from future rounds (20–30% per round to exit is contractual destiny at most startups).',
+      'Read the equity expected value, EV per vest year, and whether the trade beats or loses to the salary cut.',
+    ],
+    faq: [
+      {
+        q: 'Why is the failure probability so high — isn\'t that pessimistic?',
+        a: 'It is the base rate, not pessimism. Across venture-backed startups, a majority return zero to common shareholders: the company dies, or it exits for less than the preference stack and common is wiped out even in a "successful" sale. Industry-typical priors cluster around 60–70% failure-to-common, 20–30% modest outcomes, and single-digit percentages for the outcomes that make equity life-changing. Your company may genuinely be better — the founders, traction, and market are all real signals — but the discipline is to start from base rates and adjust with evidence, not start from the pitch deck. The calculator exposes the probabilities as inputs precisely so you can run your own assessment against the honest default.',
+      },
+      {
+        q: 'What is the liquidation preference, and why can a $100M exit pay me nothing?',
+        a: 'Investors hold preferred stock with a liquidation preference: on exit, they get 1× their invested capital back before common shareholders receive anything. A company that raised $80M at a 1× preference and sells for $100M returns $80M to preferred first — leaving $20M split across ALL common shareholders and option holders. Some stacks carry participating or multiple preferences, which are worse. This is why exit headlines mislead: "startup sells for $100M" can mean employees get nothing. Before signing, ask what the total preference stack is — the amount that must be returned before common eats — and model your modest-exit scenario at exit minus that stack, not the headline price.',
+      },
+      {
+        q: 'What should I actually negotiate, given the EV is often negative?',
+        a: 'Everything that improves the terms rather than the headline percentage. Salary is usually harder to move than equity at startups — but the equity features are where the value hides: an extended post-termination exercise window (the standard 90 days forces you to write a real check or walk from vested options; multi-year windows are worth actual money), early exercise with 83(b) election (starts the capital-gains and QSBS clocks at near-zero spread — the single most valuable feature when available), refresh grants (your slice dilutes; does the company re-grant?), and the percentage stated as a percent of fully-diluted shares outstanding TODAY. And keep the frame honest: take the offer for the mission, the learning, and the 10% tail — the EV math can\'t price those — but don\'t count the equity as deferred salary, because it isn\'t.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

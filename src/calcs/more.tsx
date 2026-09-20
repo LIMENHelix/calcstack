@@ -3937,6 +3937,65 @@ export function IsoNsoCalc() {
   )
 }
 
+// STARTUP OFFER EV — equity priced by probability, not pitch deck. Node-verified: 0.1% ownership, $20k strike cost, 4-yr vest, scenarios fail 65% → $0 / modest exit $100M 25% → $80k / big exit $500M 10% → $480k → EV $68k over 4 years = $17k/yr. Against a $30k/yr salary cut ($120k over the vest): the trade is −$52k EXPECTED. Dilution round: two more raises (~30% dilution) cut the 0.1% to 0.07% → EV $45.5k, worse. Probabilities labeled as industry-typical priors (most startups return ~0 to common; preferred stock + liquidation preferences eat first at modest exits — common can get ZERO under a 1x preference when exit < invested capital). Honest upside: EV math can't price learning, network, or the tail — the 10% scenario IS the reason people go; just count it as 10%, not as destiny.
+export function StartupOfferCalc() {
+  const [pct, setPct] = useNumber(0.1)
+  const [strike, setStrike] = useNumber(20000)
+  const [cut, setCut] = useNumber(30000)
+  const [years, setYears] = useNumber(4)
+  const [pFail, setPFail] = useNumber(65)
+  const [modExit, setModExit] = useNumber(100)
+  const [pMod, setPMod] = useNumber(25)
+  const [bigExit, setBigExit] = useNumber(500)
+  const [dilution, setDilution] = useNumber(30)
+
+  const r = useMemo(() => {
+    const own = (pct / 100) * (1 - dilution / 100)
+    const modVal = Math.max(0, own * modExit * 1e6 - strike)
+    const bigVal = Math.max(0, own * bigExit * 1e6 - strike)
+    const pBig = Math.max(0, 100 - pFail - pMod) / 100
+    const ev = (pFail / 100) * 0 + (pMod / 100) * modVal + pBig * bigVal
+    const evPerYr = years > 0 ? ev / years : 0
+    const cutTotal = cut * years
+    const net = ev - cutTotal
+    return { own: own * 100, modVal, bigVal, pBig: pBig * 100, ev, evPerYr, cutTotal, net }
+  }, [pct, strike, cut, years, pFail, modExit, pMod, bigExit, dilution])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Ownership %" value={pct} onChange={setPct} suffix="%" step="0.05" />
+          <Field label="Strike/exercise cost" value={strike} onChange={setStrike} prefix="$" />
+          <Field label="Salary cut /yr vs market" value={cut} onChange={setCut} prefix="$" />
+          <Field label="Vest years" value={years} onChange={setYears} step="1" />
+          <Field label="P(fail / return ~0)" value={pFail} onChange={setPFail} suffix="%" step="5" />
+          <Field label="Modest exit ($M) / P" value={modExit} onChange={setModExit} step="50" />
+          <Field label="P(modest)" value={pMod} onChange={setPMod} suffix="%" step="5" />
+          <Field label="Big exit ($M) — P is the remainder" value={bigExit} onChange={setBigExit} step="100" />
+        </div>
+        <div className="max-w-xs">
+          <Field label="Future dilution from later rounds" value={dilution} onChange={setDilution} suffix="%" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Ownership after dilution" value={`${num(r.own, 3)}%`} />
+          <Result label="Equity expected value" value={usd(r.ev)} />
+          <Result label="EV per year of vest" value={usd(r.evPerYr)} />
+          <Result big label={r.net >= 0 ? 'Trade beats the salary cut' : 'Trade LOSES vs salary cut'} value={usd(Math.abs(r.net))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.net >= 0
+            ? `The EV math favors the offer by ${usd(r.net)} over ${years} years — but EV is an average across companies, and you join ONE. Take it for the mission and the learning; the equity is a lottery ticket with decent odds, not deferred salary.`
+            : `Expected value says the salary cut (${usd(r.cutTotal)}) outweighs the equity (${usd(r.ev)}) by ${usd(-r.net)}. The honest reasons to take it anyway: the 10% tail is real and uninsurable elsewhere, the learning/network compound, and you can afford the risk. Just don't call it compensation.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The priors are industry-typical, not statistics about YOUR company: most startups return zero to common shareholders, modest exits are further eroded by liquidation preferences (preferred investors take 1× their money first — a $100M exit with $80M raised at 1× leaves $20M for ALL common), and dilution is contractual destiny (each round shrinks your slice — model 20–30% per round to exit). The questions that matter more than the EV: what percentage is the offer TODAY (not "shares" — shares without the share count are marketing), what's the post-termination exercise window (90 days standard; extended windows are worth real money), early-exercise/83(b) availability (starts the tax clock at near-zero spread — the single most valuable equity feature), and preference stack (how much must be returned before common eats). Negotiation note: salary is usually harder to move than equity at startups — ask for both, but a higher salary cut-trade with extra options is often available. Estimates — your offer letter and cap table govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9580,6 +9639,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   's-corp-election-calculator': ScorpElectionCalc,
   'rsu-vest-tax-calculator': RsuVestCalc,
   'iso-vs-nso-calculator': IsoNsoCalc,
+  'startup-offer-calculator': StartupOfferCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
