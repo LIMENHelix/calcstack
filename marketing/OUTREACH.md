@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 410 calculators live (636 indexed pages). Domain live at calcstack.app;
+**Status: 409 calculators live (636 indexed pages). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -687,7 +687,7 @@ wedding-photographer forums), tattoo artist forums and r/tattoo, DJ communities
 
 ## Wave 66 — Route & rate suite (#401–#410, milestone wave)
 
-Milestone wave: 410 calculators live (636 indexed pages). This wave prices the
+Milestone wave: 409 calculators live (636 indexed pages). This wave prices the
 driveway-and-route economy: the businesses where the wage is set by minutes
 between stops and the ticket at the scale house, not the menu price. Audiences:
 pressure-washing and exterior-cleaning communities (r/pressurewashing, Pressure

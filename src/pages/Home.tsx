@@ -55,7 +55,7 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          410 calculators and counting. Newest: the route-and-rate suite for service
+          {CALCULATORS.length} calculators and counting. Newest: the route-and-rate suite for service
           businesses — handyman hourly built backward from the year, window cleaning
           per-pane vs storefront routes, junk removal priced off the scale ticket,
           pool route density math, bookkeeping retainers with cleanup fees, tutoring
