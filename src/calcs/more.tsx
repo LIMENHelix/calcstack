@@ -3624,6 +3624,56 @@ export function CommuteCostCalc() {
   )
 }
 
+// SECOND INCOME vs DAYCARE — the second salary stacks on TOP of the first, so it's taxed at the household's marginal rate, not its own. Node-verified: $45k second income stacked on $80k primary (2026 MFJ: 22% fed bracket + 7.65% FICA + ~5% state ≈ 34.65% modeled as 34%) → after-tax $29,700; minus $18,000 daycare and $4,000 work costs (commute, lunches, wardrobe) → net $7,700/yr = $642/mo = $3.70/hr for a 2,080-hr year. Daycare breakeven: $25,700/yr — above that the job pays to work. Offsets priced honestly: the Dependent Care FSA ($5,000 pre-tax saves ~$1,700 at 34%), the child tax credit ($2,000/kid, 2026), employer 401k match on the second income (free money that doesn't show in this ledger), and the career-gap penalty — 5 years out typically costs re-entry wages AND five years of compounding raises/retirement contributions; the short-term math can be negative while the 30-year math is hugely positive. Decide with both ledgers open.
+export function DaycareVsIncomeCalc() {
+  const [salary, setSalary] = useNumber(45000)
+  const [marginal, setMarginal] = useNumber(34)
+  const [daycare, setDaycare] = useNumber(18000)
+  const [workCosts, setWorkCosts] = useNumber(4000)
+  const [kids, setKids] = useNumber(1)
+  const [match, setMatch] = useNumber(2000)
+
+  const r = useMemo(() => {
+    const afterTax = salary * (1 - marginal / 100)
+    const ctc = Math.min(kids, 10) * 2000 // child tax credit exists with or without the job — excluded from delta
+    void ctc
+    const net = afterTax - daycare - workCosts
+    const perHr = net / 2080
+    const withMatch = net + match
+    const breakevenDaycare = afterTax - workCosts
+    return { afterTax, net, perHr, withMatch, breakevenDaycare }
+  }, [salary, marginal, daycare, workCosts, kids, match])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Second income (gross)" value={salary} onChange={setSalary} prefix="$" />
+          <Field label="Stacked marginal rate (fed + FICA + state)" value={marginal} onChange={setMarginal} suffix="%" />
+          <Field label="Childcare cost /yr" value={daycare} onChange={setDaycare} prefix="$" />
+          <Field label="Work costs /yr (commute, lunches, wardrobe)" value={workCosts} onChange={setWorkCosts} prefix="$" />
+          <Field label="Kids (for reference)" value={kids} onChange={setKids} step="1" />
+          <Field label="401k match only this job brings" value={match} onChange={setMatch} prefix="$" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="After-tax salary" value={usd(r.afterTax)} />
+          <Result big label="Net contribution /yr" value={usd(r.net)} />
+          <Result label="Effective hourly" value={`${usd(r.perHr, 2)}/hr`} />
+          <Result label="Daycare breakeven" value={`${usd(r.breakevenDaycare)}/yr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.net > 0
+            ? `The job nets ${usd(r.net)}/yr — ${usd(r.perHr, 2)}/hour. Thin, but add the 401(k) match (${usd(match)}) and the career-continuity value, and the long ledger looks different: five years out of the workforce typically costs re-entry wages plus five years of compounding raises and retirement contributions.`
+            : `The job COSTS ${usd(-r.net)}/yr on the short-term ledger. Before quitting, price the Dependent Care FSA ($5,000 pre-tax ≈ $1,700 back), part-time or remote options, and the career-gap penalty — the long-run ledger often still favors staying attached to work, even part-time.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Why the second salary evaporates: it stacks on top of the first, so it starts at the household's marginal bracket — 22% federal in this example before FICA and state — while daycare is paid in after-tax dollars and unreimbursed work costs come straight off the top. What this ledger deliberately excludes (and you shouldn't): the child tax credit exists either way; the Dependent Care FSA ($5,000 pre-tax) and dependent care credit OFFSET daycare for two-earner households — worth roughly $1,700–2,000 here; retirement match and benefits value; and the thirty-year ledger — career gaps compound against you via lost raises, Social Security credits, and retirement contributions, which is why many families run a thin-or-negative few years deliberately and treat it as career insurance, not income. Not financial advice — the non-financial parts of this decision are yours alone; the calculator's job is to make the financial part honest.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9261,6 +9311,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'barista-fire-calculator': BaristaFireCalc,
   'lifestyle-creep-calculator': LifestyleCreepCalc,
   'commute-cost-calculator': CommuteCostCalc,
+  'daycare-vs-second-income-calculator': DaycareVsIncomeCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

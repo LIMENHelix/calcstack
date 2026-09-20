@@ -948,6 +948,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'daycare-vs-second-income-calculator',
+    title: 'Daycare vs Second Income Calculator 2026 — The Stacked-Tax Math Deciding Whether the Job Pays',
+    shortTitle: 'Daycare vs Income',
+    category: 'Everyday Money',
+    description:
+      'The second salary stacks on top of the first and is taxed at the household marginal rate. Subtract daycare and work costs to see the real net — and the daycare breakeven point.',
+    tagline: 'A $45,000 second income nets $642/month after stacked taxes, $18k daycare, and work costs — $3.70 an hour. Run YOUR numbers.',
+    intro:
+      'The second-income question gets argued emotionally and answered arithmetically. The arithmetic: the second salary stacks on top of the first, so it\'s taxed at the household\'s marginal rate — 22% federal plus 7.65% FICA plus state, before it buys a single dollar of daycare, which is itself paid in after-tax money. A $45,000 salary becomes $29,700 after stacked taxes, then minus $18,000 of childcare and $4,000 of commute/lunch/wardrobe: $642 a month. But the honest answer needs both ledgers — the Dependent Care FSA, the 401(k) match, and the thirty-year cost of a career gap all push back. This calculator shows the short-term ledger clearly so the long-term one can be weighed honestly.',
+    howItWorks: [
+      'Enter the second income and the household\'s stacked marginal rate.',
+      'Enter real childcare costs and unreimbursed work costs.',
+      'Add the 401(k) match only this job provides.',
+      'Read the net, the effective hourly, and the daycare breakeven.',
+    ],
+    faq: [
+      {
+        q: 'Why is the second income taxed so much harder than the first?',
+        a: 'It isn\'t — but it feels that way because of how brackets stack. The first income fills the standard deduction and the 10/12% brackets; the second arrives on top, where the household\'s marginal rate applies to its very first dollar: 22% federal (in this example) plus 7.65% FICA plus state — ~35% gone before expenses. Economically the household is taxed identically either way (the IRS doesn\'t know whose dollar is whose), but for the DECISION, the marginal framing is correct: if the job didn\'t exist, those dollars wouldn\'t be taxed at all. The childcare side compounds it — daycare is paid from after-tax income, so $18,000 of care requires roughly $27,000 of gross at a 34% stacked rate. That\'s the engine of the whole calculator.',
+      },
+      {
+        q: 'What offsets does the short-term math miss?',
+        a: 'Four, in order of size. The Dependent Care FSA: $5,000 of daycare paid pre-tax — worth ~$1,700/yr at a 34% stacked rate, and it only exists with two earners. The employer 401(k) match on the second salary — free money that never touches this ledger. Benefits value: if the second job carries the family\'s health insurance, that\'s $6,000–20,000/yr of real compensation. And the career-continuity stake: five years fully out of the workforce typically costs re-entry wage penalties plus five lost years of raises, retirement contributions, and Social Security credits — a six-figure long-run number that swamps the short-term ledger. Many families rationally run a break-even few daycare years as career insurance. The honest decision runs both ledgers: this calculator handles the short one; only you can price the long one.',
+      },
+      {
+        q: 'What if the math says the job loses money — quit?',
+        a: 'Not so fast — the negative ledger has more fixes than people try. One: price childcare against NET differently by re-timing — two staggered schedules, a nanny share (typically 30–40% cheaper than center care), grandparent days, or one parent compressing to four tens can cut the daycare line by a third. Two: the years are numbered — daycare ends at kindergarten; a three-year negative stretch against a thirty-year career premium is a financing decision, not a verdict. Three: part-time or remote on the second job often beats both full options — $25k with $8k of part-time care and no commute can net more than $45k full-time. Four: check the dependent care tax credit (on top of the FSA in some configurations). And five, said plainly: this calculator prices money only. What the job means, what staying home means — that\'s not arithmetic, and no tool should pretend otherwise.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

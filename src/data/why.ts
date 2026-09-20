@@ -65,6 +65,8 @@ export const WHY_USE: Record<string, string> = {
     'Anyone holding a raise uses it before absorbing it: $20k invested at 7% becomes $558k in 20 years, and the recurring-spend portion also inflates the FIRE target by 25× — the raise taxed at payroll and again at the finish line.',
   'commute-cost-calculator':
     'House hunters and job changers use it to price distance honestly: 25 miles each way is $15,240/yr all-in — the weight of $200,928 of mortgage — so the farther "cheaper" house must beat that gap before it saves anything.',
+  'daycare-vs-second-income-calculator':
+    'Parents weighing a return to work use it to see the stacked-tax truth: $45k gross becomes $642/mo after marginal taxes, $18k daycare, and work costs — plus the FSA, match, and career-gap offsets the short ledger misses.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
