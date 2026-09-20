@@ -2323,6 +2323,72 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Business vehicle deduction, 2026 — three paths decided by the door-jamb GVWR label, not the price tag. PASSENGER AUTO (≤6,000 lbs GVWR): §280F luxury caps (Rev. Proc. 2026-15) — yr1 $20,300 w/bonus ($12,300 w/o), yr2 $19,800, yr3 $11,900, $7,160/yr after; a $90k sedan takes 9 years. HEAVY SUV (6,001–14,000 lbs GVWR, designed for passengers): escapes §280F; §179 capped $32,000 (2026, Rev. Proc. 2025-32) + 100% bonus on the rest → full year-1 write-off. EXEMPT WORK VEHICLES (pickup w/ 6ft+ bed, van seating 9+ behind driver, enclosed cargo van, >14,000 lbs GVWR, qualified non-personal-use): no SUV cap — full §179/bonus. Rules across all: >50% business use required (prorated below 100%; ≤50% kills 179/bonus AND flips to straight-line ADS, with recapture if use drops later); GVWR is the certification-label max loaded weight, NOT curb weight; placed in service by Dec 31. Node-verified: $90k sedan/100% → yr1 $20,300, 9-yr crawl ($20,300/$19,800/$11,900/$7,160×5/$2,200); $90k heavy SUV → $90,000 yr1 ($32k §179 + $58k bonus), saving $31,500 at 35% vs sedan's $7,105; $70k 6ft-bed pickup → $70,000; 70%-use SUV → $63,000.
+const AUTO_CAPS = [20300, 19800, 11900, 7160]
+export function VehicleWriteoffCalc() {
+  const [price, setPrice] = useNumber(90000)
+  const [busUse, setBusUse] = useNumber(100)
+  const [type, setType] = useState<'auto' | 'suv' | 'exempt'>('suv')
+  const [rate, setRate] = useNumber(35)
+
+  const r = useMemo(() => {
+    const elig = (price * busUse) / 100
+    if (type === 'auto') {
+      const sched: number[] = []
+      let left = elig
+      for (let y = 0; left > 0.5 && y < 30; y++) {
+        const d = Math.min(AUTO_CAPS[Math.min(y, 3)], left)
+        sched.push(d)
+        left -= d
+      }
+      return { elig, yr1: sched[0] ?? 0, years: sched.length, sched, saved: (sched[0] ?? 0) * (rate / 100), full: false }
+    }
+    const cap = type === 'suv' ? 32000 : 2560000
+    const d179 = Math.min(elig, cap)
+    const yr1 = d179 + (elig - d179) // 100% bonus on remainder
+    return { elig, yr1, years: 1, sched: [yr1], saved: yr1 * (rate / 100), full: true, d179, bonus: elig - d179 }
+  }, [price, busUse, type, rate])
+
+  const label = type === 'auto' ? 'passenger car (≤6,000 lbs GVWR)' : type === 'suv' ? 'heavy SUV (6,001–14,000 lbs)' : 'exempt work vehicle'
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Vehicle price" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Business use" value={busUse} onChange={setBusUse} suffix="%" />
+          <Field label="Marginal tax rate" value={rate} onChange={setRate} suffix="%" />
+          <div>
+            <div className="mb-1 text-sm font-medium">Vehicle class (door-jamb GVWR)</div>
+            <select value={type} onChange={(e) => setType(e.target.value as 'auto' | 'suv' | 'exempt')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="auto">Car / light crossover (≤6,000 lbs)</option>
+              <option value="suv">Heavy SUV (6,001–14,000 lbs)</option>
+              <option value="exempt">Pickup 6ft+ bed / cargo van / 9+ seats / &gt;14k lbs</option>
+            </select>
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Year-1 deduction" value={usd(r.yr1, 0)} />
+          <Result label="Tax saved year 1" value={usd(r.saved, 0)} />
+          <Result label="Fully written off in" value={r.years === 1 ? 'Year 1' : `${r.years} years`} />
+          <Result label="Eligible basis" value={usd(r.elig, 0)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {type === 'auto' ? (
+            <>The §280F luxury caps own this vehicle: year one is capped at <span className="font-medium">{usd(r.yr1, 0)}</span> no matter that bonus depreciation is 100% — then $19,800, $11,900, $7,160/yr. Full recovery of {usd(r.elig, 0)} takes <span className="font-medium">{r.years} years</span>. Same money in a 6,001-lb SUV would deduct it all this year. If you haven't signed yet, the GVWR label is worth {usd(Math.max(0, r.elig - r.yr1) * (rate / 100), 0)} in timing.</>
+          ) : (
+            <>This {label} escapes the luxury caps: <span className="font-medium">{usd(r.yr1, 0)} deductible in year one</span>{r.d179 !== undefined && <> — {usd(r.d179, 0)} of §179{type === 'suv' ? ' (the $32,000 SUV cap)' : ''} plus {usd(r.bonus ?? 0, 0)} of 100% bonus depreciation</>} — saving <span className="font-medium">{usd(r.saved, 0)}</span> at {rate}%. A same-price passenger car would deduct $20,300 this year and crawl for a decade.</>
+          )}
+          {busUse < 100 && busUse > 50 && <> Prorated to {busUse}% business use — keep the mileage log; the IRS audits exactly this.</>}
+          {busUse <= 50 && <> <span className="font-medium">Warning: at ≤50% business use, §179 and bonus are both OFF the table</span> — you're on straight-line ADS, and crossing back below 50% in a later year triggers recapture of everything deducted.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 rules: passenger automobiles (GVWR ≤6,000 lbs — the certification label inside the driver's door, not curb weight) are §280F-capped at $20,300 year one with bonus, $12,300 without, $19,800/$11,900/$7,160 after (Rev. Proc. 2026-15). Heavy SUVs 6,001–14,000 lbs escape §280F but get a $32,000 §179 sub-cap with 100% bonus on the remainder. Exempt from the SUV cap entirely: pickups with a 6-foot-plus cargo bed, vans seating 9+ behind the driver, enclosed cargo vans, vehicles over 14,000 lbs GVWR, and qualified non-personal-use vehicles (delivery, permanently modified). All paths require over 50% qualified business use, prorated below 100% — a 70%-business $90,000 SUV deducts $63,000. Dropping to 50% or below in any later year recaptures the excess as income. Leased vehicles deduct the business share of payments with a lease-inclusion add-back over $62,000 FMV. Standard mileage (72.5¢/mile for 2026) is the alternative — compare with the mileage-vs-actual calculator; if you claim §179/bonus you must stay on actual expenses for that vehicle. State conformity varies. Estimates — vehicle tax is heavily audited; document business miles contemporaneously.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // MACRS GDS depreciation schedule (IRS Pub 946 Table A-1, half-year convention, DDB→SL switch): 3-yr 33.33/44.45/14.81/7.41; 5-yr 20/32/19.2/11.52/11.52/5.76; 7-yr 14.29/24.49/17.49/12.49/8.93/8.92/8.93/4.46; 10-yr 10/18/14.4/11.52/9.22/7.37/6.55/6.55/6.56/6.55/3.28 — each sums to 100%. Most equipment is 5- or 7-year property; computers/vehicles 5-yr; office furniture 7-yr. Convention traps: half-year assumed (half deduction year one regardless of in-service month); >40% of the year's basis placed in service in Q4 flips EVERYTHING to mid-quarter convention; ADS (straight-line) is mandatory for ≤50% business use, some farming, and elected for uniformity. With permanent 100% bonus (OBBBA) and $2.56M §179, MACRS matters when: state doesn't conform to bonus, you deliberately want deductions spread (income smoothing, avoiding NOL waste), or property doesn't qualify (used buildings' components via cost seg, etc.). Node-verified: $50k 5-yr → 10,000/16,000/9,600/5,760/5,760/2,880 (yr-1 saves $3,200 at 32% vs §179's $16,000 — the §179 calculator is the companion).
 const MACRS_TABLES: Record<string, number[]> = {
   '3': [33.33, 44.45, 14.81, 7.41],
@@ -7697,6 +7763,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'business-vehicle-writeoff-calculator': VehicleWriteoffCalc,
   'macrs-depreciation-calculator': MacrsCalc,
   'section-179-calculator': Section179Calc,
   'rule-of-55-calculator': RuleOf55Calc,

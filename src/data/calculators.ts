@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'business-vehicle-writeoff-calculator',
+    title: 'Business Vehicle Write-Off Calculator 2026 — Heavy SUV $32,000 Rule, Luxury Caps, and the 6,000-lb Line',
+    shortTitle: 'Vehicle Write-Off',
+    category: 'Freelance & Career',
+    description:
+      'The door-jamb GVWR decides everything: ≤6,000 lbs gets §280F luxury caps ($20,300 year one, decade-long crawl); heavy SUVs get $32,000 of §179 plus 100% bonus; 6-ft-bed pickups and cargo vans expense fully. Compare year-one deductions.',
+    tagline: 'A $90,000 sedan deducts $20,300 this year. A $90,000 heavy SUV deducts $90,000. Same price — the GVWR label is the difference.',
+    intro:
+      'The business vehicle deduction has three radically different answers depending on one number: the GVWR on the certification label inside the driver\'s door. A passenger car at or under 6,000 lbs is crushed by the §280F luxury caps — $20,300 maximum in year one for 2026, no matter that bonus depreciation is 100%, with the rest dribbling out over nine years. A heavy SUV between 6,001 and 14,000 lbs escapes those caps entirely: $32,000 of Section 179 plus 100% bonus depreciation writes off the whole business-use basis in year one. And exempt work vehicles — pickups with a 6-foot-plus bed, cargo vans, 9+ passenger vans, anything over 14,000 lbs — don\'t even face the SUV cap. This calculator prices all three paths at your business-use percentage and tax rate, so the vehicle decision happens before the purchase order, not after.',
+    howItWorks: [
+      'Enter the vehicle price and your honest business-use percentage.',
+      'Pick the class by GVWR — check the federal certification label, not the marketing.',
+      'Enter your marginal tax rate.',
+      'Compare year-one deduction, tax saved, and years to full write-off across classes.',
+    ],
+    faq: [
+      {
+        q: 'Which SUVs and trucks qualify as "over 6,000 lbs"?',
+        a: 'GVWR is the manufacturer\'s maximum loaded weight on the federal certification label inside the driver\'s door — not curb weight, not towing capacity. Common qualifiers: Chevy Tahoe/Suburban, Ford Expedition, GMC Yukon, Cadillac Escalade, Range Rover, BMW X7, Mercedes GLS/G-Class, Tesla Model X, Toyota Sequoia/Land Cruiser, and virtually all full-size pickups. Common FAILURES: most crossovers (RAV4, CR-V, Model Y under some configs), sedans, and smaller SUVs. The same model can straddle the line between trims — verify the specific vehicle\'s label before signing. One line matters: 6,001 lbs qualifies, 6,000 lbs does not.',
+      },
+      {
+        q: 'Is the "write off your G-Wagon" advice real?',
+        a: 'Mostly — with teeth. A $90,000 SUV at 100% business use really does deduct $90,000 in year one under 2026 rules ($32,000 §179 + $58,000 bonus), saving $31,500 at a 35% marginal rate. The parts TikTok leaves out: business use must genuinely exceed 50% with a contemporaneous mileage log — this is among the most-audited deductions in the code; the deduction is prorated (70% business use deducts 70% of basis); dropping to ≤50% in any later year claws back the excess as income (recapture); and many states don\'t conform to bonus depreciation, shrinking the real saving. The deduction should follow a business need, not create one — the truck still costs $58,500 after tax.',
+      },
+      {
+        q: 'Should I use the standard mileage rate instead?',
+        a: 'Run both — the answer flips on vehicle price and miles. Standard mileage (72.5¢/mile in 2026) is simple and unbeatable for cheap, high-mileage vehicles: 20,000 business miles in a $25,000 car deducts $14,500 with zero depreciation math. Actual expenses with §179/bonus wins for expensive vehicles: a $70,000 heavy SUV deducts up to $70,000 in year one regardless of miles (subject to use percentage). The lock-in rule: if you claim §179 or bonus on a vehicle, you must stay on the actual-expense method for that vehicle forever; starting with standard mileage preserves the choice to switch. Commuting is never deductible either way — but a qualifying home office turns trips from home into business miles.',
+      },
+    ],
+  },
+  {
     slug: 'macrs-depreciation-calculator',
     title: 'MACRS Depreciation Calculator 2026 — Year-by-Year Schedule for 3/5/7/10-Year Property',
     shortTitle: 'MACRS Depreciation',
