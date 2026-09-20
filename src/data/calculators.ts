@@ -2658,6 +2658,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'fsbo-vs-agent-calculator',
+    title: 'FSBO vs Agent Calculator — True Net Comparison With the 97.7% Breakeven Price',
+    shortTitle: 'FSBO vs Agent',
+    category: 'Housing & Mortgage',
+    description:
+      'What selling without an agent actually nets — the saved half-commission minus the buyer-agent fee you still pay, flat-fee MLS, attorney, and the price-achievement gap that decides everything.',
+    tagline: 'FSBO at 97% of the agent-achievable price nets $424,288 vs the agent\'s $427,500 — you must beat 97.7% of the pro\'s price just to tie. The saved half-commission is the whole prize.',
+    intro:
+      'FSBO math is usually run as "save 5%": wrong. You still pay the buyer\'s agent (2.5–3% — refusing shrinks the buyer pool), still need MLS exposure ($300–1,000 flat fee), and still need an attorney for contract and disclosures ($500–1,500). The decision is the price-achievement gap: academic estimates put FSBO sales 0–5% below agent-achieved prices, confounded but real. At the defaults — $450,000 agent-achievable, FSBO at 97% — the agent nets $427,500 and FSBO nets $424,288: the pro wins by $3,213, and FSBO must achieve 97.7% of the agent\'s price just to tie. FSBO wins when you already know the buyer or the comp set prices the home for you; this calculator shows exactly where your line is.',
+    howItWorks: [
+      'Enter the price a good agent would achieve (comp-based, not hoped).',
+      'Enter the full commission and what FSBO pays the buyer agent.',
+      'Enter what fraction of the agent price you believe you can achieve (97% is a fair default).',
+      'Enter flat-fee MLS and attorney/transaction costs.',
+      'Read both nets, the winner, and the exact price-achievement breakeven.',
+    ],
+    faq: [
+      {
+        q: 'Did the 2024 commission settlement change FSBO math?',
+        a: 'Around the edges — the core math survived. What changed: buyer-agent commissions are no longer advertised on the MLS, buyers increasingly sign agreements to pay their own agent, and everything is more negotiable in print. What did not change: in practice most sellers still offer buyer-agent compensation (2–3%), because not offering it shrinks the buyer pool — buyer agents steer, and unrepresented buyers often ask for the equivalent concession anyway. For FSBO sellers the settlement cuts both ways: you can now legally refuse buyer-agent compensation more cleanly, but the buyers who come unrepresented expect the savings shared, and the ones with agents need their fee from somewhere — it lands back in your net either way. The durable advice: price the buyer-agent fee into your FSBO net (this calculator does), put any offered compensation in writing, and treat "commissions are negotiable now" as an invitation to negotiate the listing side hard — 4% versus 5% on $450,000 is $4,500, a bigger lever than most FSBO decisions.',
+      },
+      {
+        q: 'When does FSBO actually win?',
+        a: 'Four profiles, all sharing one trait: the price-achievement gap is near zero. The known-buyer sale — neighbor, tenant, coworker — where marketing adds nothing; just hire the attorney and save both commission sides you can. The self-pricing home: a tract house with six identical recent comps where pricing is arithmetic and the buyer pool refreshes weekly — flat-fee MLS plus a transaction coordinator captures most of the agent value at $1,500. The experienced seller: ex-agents, investors, attorneys — people for whom the paperwork is Tuesday. And hot-market sellers with patience: when everything sells, the agent\'s marketing edge compresses — though note the same hot market means agents create bidding wars that exceed the list price, which is price achievement too. Where FSBO reliably loses: unique or luxury homes (pricing is art, buyer pool thin), slow markets (marketing IS the product), emotional sellers (negotiation leaks money), and anyone whose alternative use of 60–100 hours has value. The time ledger belongs in this decision: pricing research, photography coordination, showing management, negotiation, inspection defense, appraisal defense, and closing herding is a part-time job for 2–4 months.',
+      },
+      {
+        q: 'What are the liability traps in FSBO?',
+        a: 'Disclosure law is where unrepresented sellers get sued, and it outlives the closing. Every state mandates seller disclosures — known defects, water history, roof age, lead paint (pre-1978 federal), deaths on the property in some states, HOA status — and "I didn\'t know I had to mention it" is not a defense; the buyer\'s attorney finds the undisclosed foundation repair permit years later. The protections: hire a real-estate attorney or transaction coordinator for the paperwork even in a pure FSBO ($500–1,500, the cheapest liability insurance in the deal), disclose MORE than required (over-disclosure has never lost a lawsuit), keep every receipt and permit, and get a pre-listing inspection ($400–500) — it converts surprises into disclosed-and-priced items before a buyer\'s inspector weaponizes them. The other traps: fair-housing law (what you say in a showing can be illegal discrimination — "perfect for a young family" is a claim), purchase-contract contingencies you mishandle (earnest-money disputes), and wire fraud (FSBO sellers are prime targets — verify every wiring instruction by phone at a known number). None of this is a reason not to FSBO; it is the job description the agent\'s commission was quietly covering.',
+      },
+    ],
+  },
+  {
+    slug: 'escalation-clause-calculator',
+    title: 'Escalation Clause Calculator — Escalated Price, Appraisal Gap Cash, and the Cap Discipline',
+    shortTitle: 'Escalation Clause Math',
+    category: 'Housing & Mortgage',
+    description:
+      'What your escalation clause actually produces — the final escalated price, the appraisal gap due in cash at closing, the monthly cost of every $10k you escalated, and how to set the cap.',
+    tagline: 'Base $440k escalating $2k over competition to a $460k cap lands at $454k — with a $6,000 appraisal gap due in cash and $133/mo more for 30 years. Set the cap before emotions do.',
+    intro:
+      'Escalation clauses win bidding wars and overpay at tops — often both. The mechanics: base $440,000, escalating $2,000 over any competing offer to a $460,000 cap, against a $452,000 competitor you land at $454,000. Then the two bills arrive: the appraisal gap — lenders finance the lesser of price or appraised value, so a $448,000 appraisal means $6,000 cash at closing — and the payment, where every $10,000 escalated costs $66.53/month for 30 years at 7%. This calculator runs your clause: escalated price, gap cash, monthly cost, and the discipline that makes the tool safe — the cap is set before emotions, at the price where losing the house feels fine.',
+    howItWorks: [
+      'Enter your base offer, escalation increment, and absolute cap.',
+      'Enter the best competing offer (or your guess) and the expected appraisal.',
+      'Enter your mortgage rate.',
+      'Read the escalated price, appraisal-gap cash due, and monthly cost per $10k.',
+      'Set the cap at the number where winning would not sting.',
+    ],
+    faq: [
+      {
+        q: 'How do escalation clauses work mechanically?',
+        a: 'The clause says: my offer is $X base, and I will beat any bona fide competing offer by $Y, up to $Z cap. Three mechanical details decide whether it works. Proof: the clause must require the seller to provide the actual competing offer that triggered your escalation — without it, an unscrupulous listing side can claim phantom bids, and "bona fide written offer" language is the standard protection. Increment sizing: $1,000–3,000 beats round psychological gaps ($5,000 increments donate money when the competition stopped $500 above base); odd increments ($2,150) occasionally beat buyers who think in round thousands. And cap treatment: some sellers counter at your cap regardless of competition — the clause disclosed your ceiling, so write caps assuming they become the price. Structure alternatives your agent should price against: a clean high offer with fast close and waived minor contingencies often beats an escalated offer full of strings, because sellers buy certainty as much as price. In some markets and brokerages, escalation clauses are discouraged or banned outright — the listing side prefers highest-and-best rounds — so the first question is whether the seller will even consider one.',
+      },
+      {
+        q: 'What is the appraisal gap and why is it cash?',
+        a: 'Lenders finance the lesser of the purchase price or the appraised value — that single rule creates the gap. Escalate to $454,000 and if the appraisal lands at $448,000, the bank sizes your loan off $448,000; the $6,000 difference is yours, in cash, at closing, on top of your planned down payment. The appraisal risk scales with how far past comps the bidding went — escalation clauses by definition push prices past the most recent sales, which are exactly what appraisers use. The protection menu: an appraisal-gap clause capped at a dollar figure ("buyer covers up to $10,000 of gap") instead of a full waiver; a larger down payment cushion kept liquid; or an appraisal contingency retained (weakest offer in a war, strongest protection for you). If the appraisal comes in low and you have no gap clause: you can renegotiate (sellers sometimes split rather than lose the deal), challenge with better comps through the lender\'s reconsideration process, or walk under the contingency. The discipline: the gap cash must exist BEFORE the offer — discovering a $15,000 cash shortage at week three of a contract is how earnest money gets forfeited.',
+      },
+      {
+        q: 'When should I avoid escalating at all?',
+        a: 'Three situations, and the third is the silent killer. Cooling markets: escalation wars belong to inventory shortages; in a market with rising days-on-market, the "competing offer" may be the only other bid, and escalating against a phantom war is overpaying alone — check months-of-inventory before agreeing to any clause. Thin-comp properties: unique homes, luxury, rural — where the appraisal is guesswork and your escalated price has no comp support, the gap risk multiplies. And emotional ceilings: if you set the cap during the showing, it is too high — the cap belongs to a spreadsheet the night before, at the price where losing genuinely feels fine, because the clause\'s whole job is removing in-the-moment judgment; re-raising your cap mid-negotiation is the auction fever the clause was supposed to prevent. The alternatives in those cases: highest-and-best with a strong clean offer, an offer above ask with an appraisal contingency intact, or — the underrated move — walking away and letting the other buyer overpay; in 12 months the comp data often proves the walk was the win. This calculator\'s monthly-cost line exists to make the walk easier: put the escalation in 30-year dollars and the fever cools.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

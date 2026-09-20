@@ -6331,6 +6331,101 @@ export function StagingRoiCalc() {
   )
 }
 
+// FSBO VS AGENT NET — node-verified defaults: agent sells at $450,000 with 5% total commission → net $427,500. FSBO at 97% of that price ($436,500), still paying the buyer agent 2.5% + $500 flat-fee MLS + $800 attorney → net $424,288. Agent wins by $3,213. Breakeven: FSBO must achieve 97.7% of the agent-achievable price just to tie — before pricing your time, your negotiating, and your liability. Studies are confounded (FSBO skews to cheaper homes and known-buyer sales), but the bar is real: beating a pro's pricing and exposure by enough to cover the saved half-commission is harder than the commission math suggests.
+export function FsboVsAgentCalc() {
+  const [agentPrice, setAgentPrice] = useNumber(450000)
+  const [comm, setComm] = useNumber(5)
+  const [fsboRatio, setFsboRatio] = useNumber(97)
+  const [buyerComm, setBuyerComm] = useNumber(2.5)
+  const [flatFee, setFlatFee] = useNumber(500)
+  const [legal, setLegal] = useNumber(800)
+
+  const r = useMemo(() => {
+    const agentNet = agentPrice * (1 - comm / 100)
+    const fsboPrice = agentPrice * (fsboRatio / 100)
+    const fsboNet = fsboPrice * (1 - buyerComm / 100) - flatFee - legal
+    const diff = agentNet - fsboNet
+    const beRatio = agentPrice > 0 ? (((agentNet + flatFee + legal) / (1 - buyerComm / 100)) / agentPrice) * 100 : 0
+    return { agentNet, fsboPrice, fsboNet, diff, beRatio }
+  }, [agentPrice, comm, fsboRatio, buyerComm, flatFee, legal])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Agent-achievable price" value={agentPrice} onChange={setAgentPrice} prefix="$" step="5000" />
+          <Field label="Full commission" value={comm} onChange={setComm} suffix="%" step="0.5" />
+          <Field label="FSBO price as % of agent's" value={fsboRatio} onChange={setFsboRatio} suffix="%" step="1" />
+          <Field label="Buyer-agent commission" value={buyerComm} onChange={setBuyerComm} suffix="%" step="0.5" />
+          <Field label="Flat-fee MLS" value={flatFee} onChange={setFlatFee} prefix="$" step="100" />
+          <Field label="Attorney / closing help" value={legal} onChange={setLegal} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Agent net" value={usd(Math.round(r.agentNet))} />
+          <Result label="FSBO net" value={usd(Math.round(r.fsboNet))} />
+          <Result label="Winner" value={r.diff > 0 ? `Agent by ${usd(Math.round(r.diff))}` : `FSBO by ${usd(Math.round(-r.diff))}`} big />
+          <Result label="FSBO breakeven price" value={`${num(r.beRatio, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.diff > 0
+            ? `FSBO must achieve ${num(r.beRatio, 1)}% of the agent-achievable price just to tie — at your ${fsboRatio}% setting the agent nets ${usd(Math.round(r.diff))} more. The saved half-commission is the whole prize, and pricing errors eat it fast.`
+            : `At ${fsboRatio}% of the agent price, FSBO nets ${usd(Math.round(-r.diff))} more — achievable when you already know the buyer, the home prices itself (cookie-cutter comp set), or you have sold before. Breakeven is ${num(r.beRatio, 1)}%.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: agent net = price × (1 − commission); FSBO net = FSBO price × (1 − buyer-agent commission) − flat-fee MLS − legal help. The honest inputs: FSBO sellers still pay the buyer&apos;s agent (2.5–3% — post-2024 commission rules made this negotiable, but refusing it shrinks your buyer pool because buyer agents steer), still need MLS exposure ($300–1,000 flat fee — off-MLS listings are invisible to the buyer-agent channel), and still need contract and disclosure help ($500–1,500 attorney/transaction coordinator — disclosure liability is the lawsuit that outlives the sale). The price-achievement gap is the decision: academic estimates put FSBO at 0–5% below agent-achieved prices (studies are confounded — FSBO skews toward cheaper homes, hot markets, and sales to known buyers), so the 97% default is fair and the breakeven line is the number to beat. FSBO wins when: you already have the buyer (neighbor, tenant), the comp set prices the home for you, or you are an ex-agent. Agents win when: pricing is genuinely uncertain, the market needs marketing, or the negotiation has money on the table. Commission negotiation matters more than the FSBO question for most sellers: 5% vs 4% on $450k is $4,500 — negotiate the listing side hard, especially on easy-to-sell homes. Estimate — your market&apos;s norms and your negotiation skills govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// ESCALATION CLAUSE MATH — node-verified defaults: base $440,000, $2,000 increments, cap $460,000; competing offer $452,000 → your price escalates to $454,000. Appraisal at $448,000 → $6,000 appraisal gap due in CASH at close (lenders finance the lesser of price or appraisal). Payment cost: $10,000 of price = $66.53/mo at 7%/30yr. The clause's real risks: the cap reveals your ceiling, and the escalated price must survive the appraisal.
+export function EscalationClauseCalc() {
+  const [base, setBase] = useNumber(440000)
+  const [incr, setIncr] = useNumber(2000)
+  const [cap, setCap] = useNumber(460000)
+  const [competing, setCompeting] = useNumber(452000)
+  const [appraisal, setAppraisal] = useNumber(448000)
+  const [rate, setRate] = useNumber(7)
+
+  const r = useMemo(() => {
+    const esc = Math.min(competing + incr, cap)
+    const capped = competing + incr > cap
+    const gap = Math.max(esc - appraisal, 0)
+    const mr = rate / 100 / 12
+    const per10k = mr > 0 ? (10000 * mr) / (1 - Math.pow(1 + mr, -360)) : 10000 / 360
+    const overBase = esc - base
+    return { esc, capped, gap, per10k, overBase }
+  }, [base, incr, cap, competing, appraisal, rate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Base offer" value={base} onChange={setBase} prefix="$" step="5000" />
+          <Field label="Escalation increment" value={incr} onChange={setIncr} prefix="$" step="1000" />
+          <Field label="Cap (your ceiling)" value={cap} onChange={setCap} prefix="$" step="5000" />
+          <Field label="Best competing offer" value={competing} onChange={setCompeting} prefix="$" step="1000" />
+          <Field label="Expected appraisal" value={appraisal} onChange={setAppraisal} prefix="$" step="2000" />
+          <Field label="Mortgage rate" value={rate} onChange={setRate} suffix="%" step="0.25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Your escalated price" value={usd(Math.round(r.esc))} big />
+          <Result label={r.capped ? 'Capped — competition beat it' : 'Over base'} value={r.capped ? 'Cap hit' : usd(Math.round(r.overBase))} />
+          <Result label="Appraisal gap (cash)" value={usd(Math.round(r.gap))} />
+          <Result label="Each $10k of price" value={`${usd(Math.round(r.per10k))}/mo`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`You escalate to ${usd(Math.round(r.esc))}${r.capped ? ' — the cap was hit, so the competing offer may still win' : ''}. The appraisal gap is ${usd(Math.round(r.gap))} due in cash at closing, and the escalation cost you ${usd(Math.round(r.overBase))} over base — ${usd(Math.round((r.per10k * r.overBase) / 10000))}/mo for 30 years. Set the cap at a price you would pay knowing everything.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: escalated price = min(competing + increment, cap); appraisal gap = max(price − appraisal, 0), due in cash because lenders finance the lesser of price or appraised value. The mechanics that matter: the clause must specify proof — the seller provides the competing offer that triggered your escalation (no proof, some sellers invent bids) — and increments of $1,000–3,000 beat round psychological gaps. The risks are real: the cap discloses your maximum to the listing agent (in some states they may shop it); an escalation past appraisal converts to a cash obligation — cover it with an appraisal-gap clause capped at a dollar amount, not a blank waiver; and escalation wars in cooling markets are how buyers overpay at the exact top. Alternatives worth pricing: a clean high offer with fast close and few contingencies often beats an escalation with strings, and in balanced markets simply offering your cap with no clause avoids the gamesmanship entirely. The discipline: the cap is set BEFORE emotions, at the price where losing the house feels fine — if winning at the cap would sting, the cap is too high. Estimate — your lender&apos;s appraisal-gap rules and your agent&apos;s read of the competition govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12022,6 +12117,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'property-manager-calculator': PropertyManagerCalc,
   'price-reduction-calculator': PriceReductionCalc,
   'staging-roi-calculator': StagingRoiCalc,
+  'fsbo-vs-agent-calculator': FsboVsAgentCalc,
+  'escalation-clause-calculator': EscalationClauseCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

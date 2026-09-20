@@ -173,6 +173,10 @@ export const WHY_USE: Record<string, string> = {
     'Sellers use it before "testing the market": overpricing a $440k home and sitting 8 weeks costs $17,634 — the stale-listing penalty plus carrying burn — because the first two weeks are the listing\'s whole life.',
   'staging-roi-calculator':
     'Sellers use it before the staging quote: $2,500 of staging on a $440k home returns $11,015 at a 2% lift and 3 weeks saved — it breaks even at a 0.06% price bump, and the lift concentrates in vacant and dated homes.',
+  'fsbo-vs-agent-calculator':
+    'Sellers use it before skipping the agent: FSBO at 97% of the agent-achievable price nets $424,288 vs the pro\'s $427,500 — you must beat 97.7% of their price just to tie, and disclosure liability is yours either way.',
+  'escalation-clause-calculator':
+    'Buyers use it before the bidding war: base $440k escalating to a $460k cap lands at $454k with a $6,000 appraisal gap due in cash — set the cap at the price where losing feels fine.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
