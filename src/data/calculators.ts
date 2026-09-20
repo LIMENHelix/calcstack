@@ -3730,6 +3730,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'bootcamp-roi-calculator',
+    title: 'Coding Bootcamp ROI Calculator — True Cost, Payback, and 5-Year Return',
+    shortTitle: 'Bootcamp ROI',
+    category: 'Careers & Salary',
+    description: 'Price a coding bootcamp honestly — tuition plus months of forgone income — against the salary bump graduates actually report. See payback period and 5-year net return.',
+    tagline: 'The shortest payback in education — if the job actually lands.',
+    intro: 'A $15,000 bootcamp with 4 months out of the workforce really costs $31,800 once you count the paychecks you skip — and a $22,000 salary bump pays that back in about 17 months, faster than almost any degree. This calculator totals the true cost and runs the bump forward five years so you can compare programs on the only number that matters.',
+    howItWorks: [
+      'Enter the full tuition including fees and any financing cost.',
+      'Add the months you will study without earning, and the monthly income you give up.',
+      'Enter the salary bump you expect — from the school\'s audited outcomes report, not the landing page.',
+      'The tool totals true cost and divides by the bump for a payback period.',
+      'Read the 5-year net return to compare against degrees and self-study.',
+    ],
+    faq: [
+      {
+        q: 'Are coding bootcamps worth it in the current market?',
+        a: 'The math is unforgiving but fast: at a $22,000 bump the typical program pays back in under 18 months, which beats any degree — but the entire return depends on placement. The honest inputs come from CIRR-audited outcomes reports (the Council on Integrity in Results Reporting): look for on-time graduation rate, in-field placement within 180 days, and median starting salary, all three audited. Programs reporting 70%+ in-field placement at medians $25,000+ above your current pay pencil out; programs that will not show audited numbers are telling you something. The 2023–2025 hiring slowdown hit junior roles hardest, so weight recent cohort data over the school\'s all-time averages.',
+      },
+      {
+        q: 'Bootcamp vs computer science degree — which wins financially?',
+        a: 'On pure payback, the bootcamp wins for career-changers who already hold any bachelor\'s degree: $31,800 true cost and 1.4-year payback versus $100,000+ and 4 years for a second degree. The degree wins on ceiling — some employers (especially big tech and government-adjacent) filter on CS degrees, and the degree compounds better over 20+ years. The practical answer: if you already have a degree in anything and can pass a technical screen, bootcamp; if you are 22 with no degree, the CS degree is the safer lifetime asset. Self-study is the free option but the placement rate without structure and career services is dramatically lower — the bootcamp is really buying placement, not curriculum.',
+      },
+      {
+        q: 'Should I count the income I give up during the bootcamp?',
+        a: 'Yes — it is often half the true cost. Four months earning nothing at a $50,000 salary is $16,700 of forgone income, more than most tuitions. Part-time and self-paced programs exist precisely to eliminate this line: they stretch 6–9 months but let you keep the paycheck, cutting true cost nearly to tuition alone. The tradeoff is slower time-to-bump and higher dropout rates — completion collapses when the program competes with a day job. Run both versions in the calculator: full-time (high cost, fast payback) versus part-time (low cost, slow payback) and pick the one your savings can survive.',
+      },
+    ],
+  },
+  {
+    slug: 'locum-tenens-rate-calculator',
+    title: 'Locum Tenens Rate Calculator — Day Rate vs Employed Salary, Honest Net',
+    shortTitle: 'Locum Tenens Rate',
+    category: 'Careers & Salary',
+    description: 'Convert a locum tenens day rate into an honest annual comparison: gross at your real pace, minus self-paid health insurance and the 401(k) match nobody gives you, against the employed salary it has to beat.',
+    tagline: 'The day rate sounds huge until you count the benefits nobody gives you.',
+    intro: '$1,400 a day sounds like $350,000 a year — but 14 days a month for 10 working months is $196,000, and after self-paid health insurance and the missing 401(k) match, that locum gig trails a $260,000 employed job by over $80,000. This calculator annualizes your real pace, prices the benefits gap, and shows the day rate that actually breaks even.',
+    howItWorks: [
+      'Enter the quoted day rate and your realistic days per month — not the agency\'s best case.',
+      'Add working months per year, netting out gaps between assignments.',
+      'Enter the employed salary the locum work must beat.',
+      'Price the benefits gap: self-paid health insurance plus the employer match you forgo.',
+      'Read annual gross, net advantage, and the break-even day rate for negotiations.',
+    ],
+    faq: [
+      {
+        q: 'What is a good locum tenens day rate?',
+        a: 'Rates vary wildly by specialty and desperation: hospitalist and emergency medicine run $1,200–$2,000/day, anesthesia and radiology can exceed $2,500, and primary care sits $900–$1,400. But the quoted rate is only half the negotiation — the break-even output here is your floor. Against a $260,000 employed package at 14 days a month, break-even is roughly $2,000/day once benefits are priced; anything below that and you are paying for the flexibility. Also confirm what the agency covers separately: housing, travel, and malpractice (with tail coverage — an uncovered tail can cost $15,000–$50,000) should be ON TOP of the day rate, never inside it.',
+      },
+      {
+        q: 'How many months a year do locum physicians actually work?',
+        a: 'Full-speed locum is 10–11 months; the rest gets eaten by credentialing gaps (30–90 days per new facility, state license waits, and hospital privileging). The agencies sell 12-month continuity, but assignments cancel, credentialing stalls, and holidays close clinics — experienced locum physicians budget 10 months and treat month 11 as upside. The calculator\'s default 10 is the honest planning number. Stacking licenses in compact states and staying privileged at 2–3 facilities simultaneously is how full-time locum doctors protect the denominator.',
+      },
+      {
+        q: 'Locum tenens vs permanent employment — which pays more?',
+        a: 'Per worked day, locum usually pays 20–40% more; per year, it depends on pace and benefits. A $260,000 employed job with $18,000 of benefits equals roughly $2,000/day at a 14-day, 10-month locum pace — the exact trade the break-even rate shows. Locum wins for physicians who can sustain high utilization (multiple licenses, flexible geography), who value schedule control, or whose specialty commands premium rates. Employment wins on stability, benefits, retirement match, and not spending unpaid weeks on credentialing paperwork. Many physicians hybrid: employed base plus locum weekends at the premium rate, which captures the day-rate upside without the benefits gap.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

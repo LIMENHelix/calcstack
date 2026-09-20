@@ -27,9 +27,32 @@ function ensureAdsenseScript(client: string) {
   document.head.appendChild(s)
 }
 
+// House ads keep the slots looking occupied until the network is approved.
+// Rotate per slot so a page with two slots shows different businesses.
+const HOUSE_ADS = [
+  {
+    name: 'Kilswitch Websites',
+    blurb: 'Your business online in days, not months — sites that actually bring in customers.',
+    cta: 'Get a site that works',
+  },
+  {
+    name: 'Realty Supply',
+    blurb: 'Everything the modern agent needs — signs, lockboxes, marketing, and more.',
+    cta: 'Shop agent supplies',
+  },
+  {
+    name: 'Your business here',
+    blurb: 'Put your business in front of people actively doing money math. Drive real traffic.',
+    cta: 'Message us to advertise',
+    href: 'mailto:chrishubbel72@gmail.com?subject=Advertise%20on%20CalcStack',
+  },
+]
+let houseAdCounter = 0
+
 export function AdSlot({ label = 'Advertisement' }: { label?: string }) {
   const live = Boolean(ADSENSE_CLIENT && ADSENSE_SLOT)
   const pushed = useRef(false)
+  const houseIdx = useRef(houseAdCounter++ % HOUSE_ADS.length)
 
   useEffect(() => {
     if (!live || pushed.current || !ADSENSE_CLIENT) return
@@ -57,9 +80,24 @@ export function AdSlot({ label = 'Advertisement' }: { label?: string }) {
     )
   }
 
+  const ad = HOUSE_ADS[houseIdx.current]
+  const inner = (
+    <>
+      <p className="text-sm font-semibold">{ad.name}</p>
+      <p className="mt-1 text-xs text-muted-foreground">{ad.blurb}</p>
+      <span className="mt-2 inline-block rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground">
+        {ad.cta} →
+      </span>
+    </>
+  )
   return (
-    <div className="my-8 flex min-h-[90px] items-center justify-center rounded-lg border border-dashed border-muted-foreground/30 bg-muted/40 text-xs uppercase tracking-widest text-muted-foreground">
-      {label} — ad network slot
+    <div className="my-8 rounded-lg border bg-muted/40 p-4 text-center">
+      <p className="mb-2 text-[10px] uppercase tracking-widest text-muted-foreground/60">{label}</p>
+      {ad.href ? (
+        <a href={ad.href} className="block transition-opacity hover:opacity-80">{inner}</a>
+      ) : (
+        <div>{inner}</div>
+      )}
     </div>
   )
 }

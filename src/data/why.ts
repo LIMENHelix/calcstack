@@ -241,6 +241,10 @@ export const WHY_USE: Record<string, string> = {
     'Applicants use it before the deposit: $120k tuition plus $140k forgone pay is the real $280k bill — and a $35k bump needs 8 years to pay it back.',
   'sabbatical-cost-calculator':
     'Planners use it to set the savings target: 6 months off at $3,800/month is a $57,420 decision once forgone pay and the buffer are counted honestly.',
+  'bootcamp-roi-calculator':
+    'Career-changers use it before enrolling: $15k tuition plus $16,800 of skipped paychecks is the real $31,800 — a $22k bump pays it back in 17 months, if placement lands.',
+  'locum-tenens-rate-calculator':
+    'Physicians use it at the negotiating table: $1,400/day at a real pace is $196k — $82k behind a $260k employed job, so the break-even day rate is the floor, not the opener.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

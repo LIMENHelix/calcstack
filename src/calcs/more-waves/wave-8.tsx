@@ -2248,3 +2248,67 @@ export function SepIraCalc() {
   )
 }
 
+// BOOTCAMP ROI — node-verified defaults: $15k tuition + 4 months × $4,200 forgone income = $31,800 true cost. A $22k/yr bump pays it back in 1.4 years and nets +$78,200 over 5 years — the shortest payback in education IF the job actually lands.
+export function BootcampRoiCalc() {
+  const [tuition, setTuition] = useNumber(15000)
+  const [months, setMonths] = useNumber(4)
+  const [income, setIncome] = useNumber(4200)
+  const [bump, setBump] = useNumber(22000)
+  const r = useMemo(() => {
+    const total = tuition + income * months
+    const payback = bump > 0 ? total / bump : Infinity
+    return { total, payback, net5: bump * 5 - total }
+  }, [tuition, months, income, bump])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Tuition & fees" value={tuition} onChange={setTuition} prefix="$" />
+        <Field label="Months not earning" value={months} onChange={setMonths} />
+        <Field label="Monthly income given up" value={income} onChange={setIncome} prefix="$" />
+        <Field label="Expected salary bump" value={bump} onChange={setBump} prefix="$" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="True cost" value={usd(r.total)} big />
+        <Result label="Payback period" value={isFinite(r.payback) ? `${num(r.payback, 1)} years` : 'Never'} big />
+        <Result label="Net 5-year return" value={usd(r.net5)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Placement rate is the whole bet — a bump that never lands never pays back. Verify the school's audited outcomes report, not the marketing page.</p>
+    </CardContent></Card>
+  )
+}
+
+// LOCUM TENENS RATE — node-verified defaults: $1,400/day × 14 days/mo × 10 months = $196,000 gross. Self-paid benefits gap ($650/mo health + 4% forgone match on $260k = $18,200) leaves locum $82,200 BEHIND a $260k employed job at that pace — locum only wins at higher rates or more days, and the calculator shows the break-even day rate.
+export function LocumRateCalc() {
+  const [dayRate, setDayRate] = useNumber(1400)
+  const [days, setDays] = useNumber(14)
+  const [months, setMonths] = useNumber(10)
+  const [salary, setSalary] = useNumber(260000)
+  const [health, setHealth] = useNumber(650)
+  const [match, setMatch] = useNumber(4)
+  const r = useMemo(() => {
+    const gross = dayRate * days * months
+    const gap = health * 12 + (match / 100) * salary
+    const net = gross - gap
+    const breakEven = days * months > 0 ? (salary + gap) / (days * months) : Infinity
+    return { gross, gap, net, diff: net - salary, breakEven }
+  }, [dayRate, days, months, salary, health, match])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Locum day rate" value={dayRate} onChange={setDayRate} prefix="$" />
+        <Field label="Days worked per month" value={days} onChange={setDays} />
+        <Field label="Months worked per year" value={months} onChange={setMonths} />
+        <Field label="Employed salary to beat" value={salary} onChange={setSalary} prefix="$" />
+        <Field label="Self-paid health insurance" value={health} onChange={setHealth} prefix="$" suffix="/mo" />
+        <Field label="Forgone 401(k) match" value={match} onChange={setMatch} suffix="%" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Locum gross (annual)" value={usd(r.gross)} big />
+        <Result label="Net advantage vs employed" value={usd(r.diff)} big />
+        <Result label="Benefits gap" value={usd(r.gap)} />
+        <Result label="Break-even day rate" value={isFinite(r.breakEven) ? usd(r.breakEven) : '—'} />
+      </div>
+      <p className="text-xs text-muted-foreground">Agencies usually cover housing, travel, and malpractice separately — those aren't in the day rate. Add unpaid gaps between assignments to the months input.</p>
+    </CardContent></Card>
+  )
+}
