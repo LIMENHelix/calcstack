@@ -20,15 +20,22 @@ if (dups.length) problems.push(`DUP SLUGS: ${dups.map(([s, n]) => `${s}×${n}`).
 const badCats = [...new Set(cats.filter(c => !VALID_CATS.has(c)))]
 if (badCats.length) problems.push(`BAD CATEGORIES: ${badCats.join(', ')}`)
 
-// component registrations across all map files
+// component registrations across all map files (+ paycheck registered directly in CalculatorPage)
 const mapFiles = readdirSync('src/calcs').filter(f => f.endsWith('.tsx'))
-const compSlugs = []
+const compSlugs = ['paycheck-calculator']
 for (const f of mapFiles) {
   const src = readFileSync(`src/calcs/${f}`, 'utf8')
   for (const m of src.matchAll(/'([a-z0-9-]+)':\s*[A-Z]\w+Calc/g)) compSlugs.push(m[1])
 }
 const compSet = new Set(compSlugs)
 const metaSet = new Set(slugs)
+
+// variant slugs: literal `slug: 'x'` entries + template prefixes `slug: \`prefix-${...}\``
+const varSrcTxt = readFileSync('src/data/variants.ts', 'utf8')
+const validSlugs = new Set(slugs)
+for (const m of varSrcTxt.matchAll(/slug: '([^']+)'/g)) validSlugs.add(m[1])
+const varPrefixes = [...varSrcTxt.matchAll(/slug: `([^`$]+)\$\{/g)].map(m => m[1])
+const isKnownSlug = (s) => validSlugs.has(s) || varPrefixes.some(p => s.startsWith(p))
 const noComp = slugs.filter(s => !compSet.has(s))
 const noMeta = [...compSet].filter(s => !metaSet.has(s))
 if (noComp.length) problems.push(`METADATA WITHOUT COMPONENT (${noComp.length}): ${noComp.join(', ')}`)
@@ -47,12 +54,12 @@ for (const [file, re] of [['src/data/variants.ts', /calcSlug: '([^']+)'/g], ['sr
     if (file.endsWith('personas.ts')) {
       for (const m of src.matchAll(re)) {
         const refs = [...m[1].matchAll(/'([^']+)'/g)].map(x => x[1])
-        const bad = refs.filter(s => !metaSet.has(s))
+        const bad = refs.filter(s => !isKnownSlug(s))
         if (bad.length) problems.push(`${file} BAD REFS: ${bad.join(', ')}`)
       }
     } else {
       const refs = [...src.matchAll(re)].map(m => m[1])
-      const bad = [...new Set(refs.filter(s => !metaSet.has(s)))]
+      const bad = [...new Set(refs.filter(s => !isKnownSlug(s)))]
       if (bad.length) problems.push(`${file} BAD REFS: ${bad.join(', ')}`)
     }
   } catch { /* file may not exist */ }
