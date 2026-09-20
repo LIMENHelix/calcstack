@@ -2323,6 +2323,80 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Roth conversion bracket-filler — convert exactly enough to top out a chosen bracket and not a dollar more. Room = bracket top − taxable income (taxable = AFTER the standard deduction, 2026: $16,100 single / $32,200 MFJ). Conversion capped by the traditional IRA balance. Tax cost = bracketTax(income+conv) − bracketTax(income); effective rate lands just under the target marginal rate when the fill spans two brackets. IRMAA awareness: for anyone 63+, conversion MAGI (≈ taxable + standard deduction + tax-exempt interest) sets Medicare premiums TWO years later — 2026 single first cliff $109,000 MAGI, +$1,148.40/yr per person (Part B $202.90 → $298.60/mo) for crossing by $1. Node-verified: single $45,000 taxable fill 22% → convert $60,700, tax $12,814 (21.11% effective: $5,400 at 12% + $55,300 at 22%); MFJ $90,000 fill 22% → $121,400, tax $25,628; IRA $50,000 caps conversion → tax $10,460; MAGI check: $45,000 + $16,100 + $60,700 = $121,800 → $12,800 over the first IRMAA cliff.
+export function RothBracketFillCalc() {
+  const [status, setStatus] = useState<'single' | 'mfj'>('single')
+  const [taxable, setTaxable] = useNumber(45000)
+  const [ira, setIra] = useNumber(300000)
+  const [target, setTarget] = useState('22')
+  const [medicare, setMedicare] = useState(false)
+
+  const r = useMemo(() => {
+    const f = FEDERAL[status]
+    const b = f.brackets
+    const i = b.findIndex((x) => x[1] === Number(target))
+    const top = i + 1 < b.length ? b[i + 1][0] : Infinity
+    const room = Math.max(0, (top === Infinity ? 0 : top) - taxable)
+    const conv = Math.min(room, ira)
+    const cost = bracketTax(b, taxable + conv) - bracketTax(b, taxable)
+    const eff = conv > 0 ? (cost / conv) * 100 : 0
+    // IRMAA: MAGI ≈ taxable + standard deduction (tax-exempt interest ignored)
+    const magi = taxable + f.ded + conv
+    const cliff = status === 'single' ? 109000 : 218000
+    const irmaaHit = medicare && magi > cliff
+    return { room, conv, cost, eff, top, magi, cliff, irmaaHit }
+  }, [status, taxable, ira, target, medicare])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <div className="mb-1 text-sm font-medium">Filing status</div>
+            <select value={status} onChange={(e) => setStatus(e.target.value as 'single' | 'mfj')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="single">Single</option>
+              <option value="mfj">Married filing jointly</option>
+            </select>
+          </div>
+          <Field label="Taxable income BEFORE conversion" value={taxable} onChange={setTaxable} prefix="$" />
+          <Field label="Traditional IRA balance" value={ira} onChange={setIra} prefix="$" />
+          <div>
+            <div className="mb-1 text-sm font-medium">Fill up to bracket</div>
+            <select value={target} onChange={(e) => setTarget(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {['12', '22', '24', '32', '35'].map((x) => <option key={x} value={x}>{x}%</option>)}
+            </select>
+          </div>
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={medicare} onChange={(e) => setMedicare(e.target.checked)} className="h-4 w-4" />
+            I'm 63+ (show Medicare IRMAA impact)
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Convert this year" value={usd(r.conv, 0)} />
+          <Result label="Tax on the conversion" value={usd(r.cost, 0)} />
+          <Result label="Effective rate on it" value={`${num(r.eff, 1)}%`} />
+          <Result label="Bracket room" value={r.top === Infinity ? 'Top bracket' : usd(r.room, 0)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.conv <= 0 ? (
+            <>Your taxable income already meets or exceeds the top of the {target}% bracket — no room to fill. Pick a higher target bracket above, or skip the conversion this year.</>
+          ) : (
+            <>Convert <span className="font-medium">{usd(r.conv, 0)}</span> — it fills your income to the top of the {target}% bracket{r.conv < r.room ? <> (your IRA balance caps you before the bracket does — {usd(r.room, 0)} of room, {usd(ira, 0)} available)</> : ' exactly'}. Cost: {usd(r.cost, 0)} federal, an effective {num(r.eff, 1)}% on the converted dollars{r.eff < Number(target) ? <> — less than {target}% because the first slice filled a lower bracket</> : ''}. Every dollar past this would be taxed at {r.top === Infinity ? '37' : 'the next bracket'}%.</>
+          )}
+          {medicare && r.conv > 0 && (r.irmaaHit ? (
+            <> <span className="font-medium">IRMAA warning:</span> this conversion puts MAGI at {usd(r.magi, 0)} — {usd(r.magi - r.cliff, 0)} over the first Medicare cliff ({usd(r.cliff, 0)} {status === 'single' ? 'single' : 'joint'}). Two years later, Part B jumps $95.70/mo — $1,148/yr per person — for crossing by even $1. Size to {usd(Math.max(0, r.cliff - taxable - FEDERAL[status].ded), 0)} instead if the premium matters more than the bracket.</>
+          ) : (
+            <> IRMAA check: conversion MAGI lands at {usd(r.magi, 0)}, under the first cliff ({usd(r.cliff, 0)}) — no Medicare surcharge two years out. Headroom: {usd(r.cliff - r.magi, 0)}.</>
+          ))}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The bracket-filler is the systematic version of Roth conversion planning: each year, convert exactly enough traditional IRA to top out your chosen bracket — usually 22% or 24% — so no conversion dollar ever gets taxed at a rate you didn't choose. Taxable income here means AFTER the standard deduction ($16,100 single / $32,200 joint, 2026 brackets). The effective rate on the fill runs below the target rate whenever your income starts in a lower bracket. The two cliffs the bracket math misses: Medicare IRMAA — conversions count fully in MAGI, and income at 63 sets premiums at 65, two years later, as a hard cliff ($1 over costs $1,148/yr per person in 2026) — and the NIIT at $200k/$250k MAGI. Converted amounts are locked five years for penalty purposes if you're under 59½ (see the Roth 5-year rule calculator), and conversions are irreversible since 2018 — you can't recharacterize anymore. Pay the tax from OUTSIDE funds if you can; paying from the conversion itself under 59½ makes the withheld piece an early distribution. State tax not included.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Coast FIRE — the portfolio size at which you can stop saving and let compounding carry you to full retirement. FIRE number = annual spend ÷ safe withdrawal rate ($60k ÷ 4% = $1.5M). Coast number = FIRE ÷ (1+r)^years — what you need invested TODAY so growth alone gets there by your retirement age. Below it, the time-to-coast solves portfolio×(1+r)^t + contributions×((1+r)^t−1)/r = coast → (1+r)^t = (coast + c/r)/(P + c/r). The psychology is the point: once coasting, your paycheck only needs to cover THIS year's spending — career risk, sabbaticals, and downshifts stop threatening retirement. Honest wrinkles: use a REAL return (5% real ≈ 8% nominal − 3% inflation) so today's dollars stay today's dollars; the SWR assumption dominates the result (3.5% vs 4.5% moves the target ~28%); sequence risk still applies after full retirement — coast FIRE assumes average returns, which is fine for a target, not a guarantee. Node-verified: $60k/4%/35→65/5% → FIRE $1.5M, coast $347,066; P=$300k + $10k/yr → coast in 1.84 yrs (86.4% there); P=$400k → 2.9 yrs ahead; 25yo/60/$80k/4.5%/6% → FIRE $1,777,778, coast $231,298.
 export function CoastFireCalc() {
   const [age, setAge] = useNumber(35)
@@ -7210,6 +7284,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'roth-conversion-bracket-filler-calculator': RothBracketFillCalc,
   'coast-fire-calculator': CoastFireCalc,
   'survivor-benefit-calculator': SurvivorSSCalc,
   'spousal-social-security-calculator': SpousalSSCalc,

@@ -54,15 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          280 calculators and counting. Newest: the public-employee retirement
-          set — the 457(b) double-limit stacker, the DROP lump-sum trade,
-          the Social Security Fairness Act restoral math (WEP/GPO gone),
-          the pension-vs-covered-job career fork, and PSLF priced against
-          aggressive payoff.
+          285 calculators and counting. Newest: the Roth mastery set — the
+          bracket-filler that sizes this year's conversion to the exact dollar,
+          the three 5-year clocks kept straight, the early-retirement
+          conversion ladder, the pro-rata trap checker, the mega-backdoor
+          room finder, and Coast FIRE — the day saving becomes optional.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['457b-calculator', 'drop-retirement-calculator', 'social-security-fairness-act-calculator', 'pension-vs-social-security-calculator', 'pslf-calculator', 'tsp-calculator'].includes(c.slug),
+            ['roth-conversion-bracket-filler-calculator', 'roth-5-year-rule-calculator', 'roth-conversion-ladder-calculator', 'backdoor-roth-pro-rata-calculator', 'mega-backdoor-roth-calculator', 'coast-fire-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

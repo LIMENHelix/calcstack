@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'roth-conversion-bracket-filler-calculator':
+    'Retirees in the gap years before RMDs use it each December: convert exactly enough to top out the 22% bracket — $60,700 on $45,000 of income costs $12,814 federal — and the 63+ IRMAA check stops the conversion from tripping a $1,148 Medicare cliff two years later.',
   'coast-fire-calculator':
     'Savers in their 20s–40s use it to find the day saving becomes optional: coast number = FIRE number discounted by real return — $347k invested at 35 carries you to a $1.5M retirement at 65, and after that a paycheck only has to cover the present.',
   'survivor-benefit-calculator':

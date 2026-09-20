@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'roth-conversion-bracket-filler-calculator',
+    title: 'Roth Conversion Bracket Filler 2026 — Convert Exactly to the Top of Your Bracket',
+    shortTitle: 'Roth Bracket Filler',
+    category: 'Retirement',
+    description:
+      'Size this year\'s Roth conversion to top out the 12%, 22%, or 24% bracket — not a dollar more. Computes the exact conversion, the federal tax cost, the effective rate, and whether the conversion trips a Medicare IRMAA cliff two years later.',
+    tagline: 'Fill the 22% bracket to the last dollar — but check the Medicare cliff hiding two years downstream.',
+    intro:
+      'The Roth conversion bracket-filler is the systematic version of conversion planning: each year, convert exactly enough traditional IRA to bring taxable income to the top of your chosen bracket, so no converted dollar ever gets taxed at a rate you didn\'t pick. A single filer with $45,000 of taxable income has $60,700 of room to the top of the 22% bracket in 2026 — converting exactly that costs $12,814 federal, an effective 21.1% because the first slice fills the 12% bracket. But the bracket math has a blind spot: Medicare IRMAA counts every conversion dollar in MAGI and bills it as a premium surcharge two years later, as a cliff — $1 over the line costs $1,148 a year per person. This calculator sizes the conversion, prices the tax, and checks the IRMAA line for anyone 63 or older.',
+    howItWorks: [
+      'Pick your filing status and enter taxable income BEFORE the conversion — that\'s after the standard deduction.',
+      'Enter the traditional IRA balance you could convert from.',
+      'Choose the bracket to fill — 22% and 24% are the classic sweet spots.',
+      'Check the 63+ box to see whether the conversion crosses a Medicare IRMAA cliff two years out.',
+    ],
+    faq: [
+      {
+        q: 'Why fill the bracket instead of converting a fixed amount each year?',
+        a: 'Because brackets are the cheapest tax you\'ll ever buy back. Income below your current bracket\'s top is capacity you lose forever on December 31 — a low-income year (sabbatical, layoff, first retirement year before Social Security and RMDs) is a conversion sale. Filling to exactly the bracket top converts at a rate you chose, instead of letting RMDs at 73+ push the same dollars into a higher bracket later. The filler approach converts the most in the cheapest years and nothing in expensive ones.',
+      },
+      {
+        q: 'Where does Medicare IRMAA fit in the decision?',
+        a: 'It can override the bracket logic entirely once you\'re 63. IRMAA is a cliff, not a bracket: $1 of MAGI over the threshold ($109,000 single / $218,000 joint for 2026 premiums, based on 2024 income) triggers the full surcharge for the year — $1,148 per person at the first tier. A conversion that fills the 22% bracket but crosses the IRMAA line can be the wrong trade: the extra premium is a stealth tax on the last dollars converted. Income at 63 sets premiums at 65, so conversions before 63 carry no IRMAA cost at all — that window is precious.',
+      },
+      {
+        q: 'Should I pay the conversion tax from the IRA or from outside money?',
+        a: 'Outside money, if you have it — the difference compounds for decades. Paying $12,814 of tax from a taxable account moves the full $60,700 into the Roth where it grows tax-free; paying from the conversion itself shrinks the Roth to $47,886, and if you\'re under 59½ the withheld piece counts as an early distribution with a 10% penalty on top. The other disciplines: conversions are irreversible since 2018 (no recharacterization), each conversion starts its own 5-year penalty clock if you\'re under 59½, and December conversions let you size the fill with near-complete knowledge of the year\'s income.',
+      },
+    ],
+  },
+  {
     slug: 'coast-fire-calculator',
     title: 'Coast FIRE Calculator 2026 — The Portfolio Size Where Saving Becomes Optional',
     shortTitle: 'Coast FIRE',
