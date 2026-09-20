@@ -225,3 +225,11 @@ Zero horizontal overflow on homepage, calculator pages, and the 50-state data ta
    labels. Verified in-browser: the four-bill test now totals $1,643.39/mo with
    Rent categorized under Housing. Lesson recorded: parser regexes get a
    node-verified test battery (13 formats) before ship, same as calculator math.
+
+## Engine-family sweep (retirement, restaurant, construction)
+
+- **RMD**: Uniform Lifetime Table spot-checked (73→26.5, 75→24.6, 80→20.2) against IRS Pub 590-B Table III ✓
+- **Social Security breakeven**: reduction formula 5/9% first 36 months + 5/12% beyond, 8%/yr delayed credits — exact SSA formula (62→−30%, 70→+24%) ✓
+- **2026 IRS limits** (verified against IRS Notice 2025-67): 401(k)/TSP $24,500 + $8,000 catch-up + $11,250 super catch-up ✓, IRA $7,500 + $1,100 indexed catch-up = $8,600 ✓, traditional-IRA deduction phase-outs single $81–91k / MFJ contributor $129–149k / spouse-covered $242–252k ✓
+- **Restaurant**: pour cost (750ml→16 full 1.5oz pours, $24 bottle = $1.50/pour = 12.5% at $12) ✓
+- **Construction**: pitch multipliers √(1+r²) exact (4/12=1.054, 6/12=1.118, 8/12=1.202, 10/12=1.302, 12/12=1.414) ✓, roofing 3 bundles/square ✓, concrete 0.6 ft³ per 80-lb bag ✓, drywall openings (door 21 sqft / window 15 sqft) ✓
