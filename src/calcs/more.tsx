@@ -2323,6 +2323,61 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Equipment lease vs buy, business — the after-tax truth. BUY path: down + loan amortization; deductions = FULL purchase price year one via §179/100% bonus (financing doesn't reduce it — borrowed money still expenses) + loan interest as it's paid; residual value comes back at the end. OPERATING LEASE path: every payment deductible as made, no residual, no ownership. CAPITAL/$1-BUYOUT LEASE: treated as a purchase for tax — §179 applies even though you "leased" (the classic equipment-finance play: 100% financing + full §179 write-off year one = the deduction exceeds the cash out). What the math hides: leases price in the lessor's cost of capital (implicit APR often 8–12% when you back it out), end-of-lease buyouts, and mileage/hour overages; ownership carries maintenance after warranty. Node-verified: $100k equipment, 20% down, 7%/5yr → pmt $1,584.10, total out $115,046, interest $15,046, deductions $115,046 → after-tax net $68,231 at 32% w/ $10k residual; operating lease $1,900×60 = $114,000 → net $77,520; buy wins $9,289 — flip the residual to $0 and lease wins by $1,289.
+export function EquipLeaseVsBuyCalc() {
+  const [price, setPrice] = useNumber(100000)
+  const [downPct, setDownPct] = useNumber(20)
+  const [apr, setApr] = useNumber(7)
+  const [years, setYears] = useNumber(5)
+  const [leaseMo, setLeaseMo] = useNumber(1900)
+  const [resid, setResid] = useNumber(10000)
+  const [rate, setRate] = useNumber(32)
+
+  const r = useMemo(() => {
+    const n = Math.max(1, Math.round(years * 12))
+    const loan = price * (1 - downPct / 100)
+    const i = apr / 100 / 12
+    const pmt = i > 0 ? (loan * i) / (1 - Math.pow(1 + i, -n)) : loan / n
+    const buyOut = price * (downPct / 100) + pmt * n
+    const interest = Math.max(0, buyOut - price)
+    const buyDed = price + interest
+    const buyNet = buyOut - buyDed * (rate / 100) - resid
+    const leaseOut = leaseMo * n
+    const leaseNet = leaseOut * (1 - rate / 100)
+    const diff = leaseNet - buyNet
+    const implAPR = price > 0 ? ((leaseMo * n - price) / price / years) * 100 : 0
+    return { pmt, buyOut, interest, buyNet, leaseOut, leaseNet, diff, implAPR, n }
+  }, [price, downPct, apr, years, leaseMo, resid, rate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Equipment price" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Down payment" value={downPct} onChange={setDownPct} suffix="%" />
+          <Field label="Loan APR" value={apr} onChange={setApr} suffix="%" />
+          <Field label="Term (years)" value={years} onChange={setYears} />
+          <Field label="Lease payment (monthly)" value={leaseMo} onChange={setLeaseMo} prefix="$" />
+          <Field label="Resale value at end (buy)" value={resid} onChange={setResid} prefix="$" />
+          <Field label="Marginal tax rate" value={rate} onChange={setRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label={r.diff >= 0 ? 'Buying wins by' : 'Leasing wins by'} value={usd(Math.abs(r.diff), 0)} />
+          <Result label="Buy: after-tax net cost" value={usd(r.buyNet, 0)} />
+          <Result label="Lease: after-tax net cost" value={usd(r.leaseNet, 0)} />
+          <Result label="Buy loan payment" value={`${usd(r.pmt, 0)}/mo`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Buying: {usd(r.buyOut, 0)} total out over {years} years, but deductions of {usd(price, 0)} (full §179/bonus — <span className="font-medium">financing doesn't reduce the write-off</span>) plus {usd(r.interest, 0)} of deductible interest, and {usd(resid, 0)} back at resale → net {usd(r.buyNet, 0)}. Leasing: {usd(r.leaseOut, 0)} of deductible payments → net {usd(r.leaseNet, 0)}. <span className="font-medium">{r.diff >= 0 ? `Buy by ${usd(r.diff, 0)}` : `Lease by ${usd(-r.diff, 0)}`}</span> — and the fulcrum is the residual: at $0 resale, the answer flips{resid > 0 ? ` (try it)` : ' here'}. The lease's implied financing cost is roughly {num(r.implAPR, 1)}% simple — back that out before signing any lease.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The tax code tilts this comparison: buying with a loan still expenses the full price in year one under §179 or 100% bonus depreciation (borrowed money spends the same), plus loan interest is deductible as paid. An operating lease deducts each payment — smaller, spread out, and you own nothing at the end. A $1-buyout or capital lease is treated as a PURCHASE for tax: full §179 with near-zero cash down, which is why equipment finance companies lead with it. What the spreadsheet misses: lease overage charges (hours/miles), mandatory insurance riders, end-of-term buyout prices set above market, and the lessor's profit baked into the payment — always back out the implicit rate. Buying's risks: obsolescence (tech equipment), maintenance after warranty, and the residual assumption — the comparison flips entirely on that number. Leasing wins genuinely when the equipment ages fast, cash flow is tight, or the §179 income limit binds (lease payments deduct against income without the taxable-income cap). Rule of thumb: long-life iron (excavators, lathes) buys; short-life tech leases. Estimates — have the CPA confirm lease classification before signing.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Business vehicle deduction, 2026 — three paths decided by the door-jamb GVWR label, not the price tag. PASSENGER AUTO (≤6,000 lbs GVWR): §280F luxury caps (Rev. Proc. 2026-15) — yr1 $20,300 w/bonus ($12,300 w/o), yr2 $19,800, yr3 $11,900, $7,160/yr after; a $90k sedan takes 9 years. HEAVY SUV (6,001–14,000 lbs GVWR, designed for passengers): escapes §280F; §179 capped $32,000 (2026, Rev. Proc. 2025-32) + 100% bonus on the rest → full year-1 write-off. EXEMPT WORK VEHICLES (pickup w/ 6ft+ bed, van seating 9+ behind driver, enclosed cargo van, >14,000 lbs GVWR, qualified non-personal-use): no SUV cap — full §179/bonus. Rules across all: >50% business use required (prorated below 100%; ≤50% kills 179/bonus AND flips to straight-line ADS, with recapture if use drops later); GVWR is the certification-label max loaded weight, NOT curb weight; placed in service by Dec 31. Node-verified: $90k sedan/100% → yr1 $20,300, 9-yr crawl ($20,300/$19,800/$11,900/$7,160×5/$2,200); $90k heavy SUV → $90,000 yr1 ($32k §179 + $58k bonus), saving $31,500 at 35% vs sedan's $7,105; $70k 6ft-bed pickup → $70,000; 70%-use SUV → $63,000.
 const AUTO_CAPS = [20300, 19800, 11900, 7160]
 export function VehicleWriteoffCalc() {
@@ -7763,6 +7818,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
   'business-vehicle-writeoff-calculator': VehicleWriteoffCalc,
   'macrs-depreciation-calculator': MacrsCalc,
   'section-179-calculator': Section179Calc,

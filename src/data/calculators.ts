@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'equipment-lease-vs-buy-calculator',
+    title: 'Equipment Lease vs Buy Calculator 2026 — After-Tax Truth with §179, Bonus, and the Residual Fulcrum',
+    shortTitle: 'Equipment Lease vs Buy',
+    category: 'Freelance & Career',
+    description:
+      'Buying financed equipment still deducts the FULL price year one via §179/100% bonus — plus the loan interest. Leasing deducts only payments. Compare after-tax net costs, back out the lease\'s implicit APR, and find the residual value where the answer flips.',
+    tagline: 'Borrowed money expenses the same as cash — the $100k machine bought with a loan still deducts $115k of basis and interest.',
+    intro:
+      'The equipment lease-vs-buy decision is a tax problem wearing a cash-flow costume. Buy with financing and the deduction is immediate: §179 or 100% bonus depreciation expenses the full purchase price in year one — borrowed money spends the same as cash — with loan interest deductible on top. An operating lease deducts each payment as made: smaller, slower, and you own nothing at the end. On a $100,000 machine at 20% down and 7% over five years, buying nets $68,231 after tax at a 32% rate against a $1,900/month lease\'s $77,520 — a $9,289 gap that flips entirely on the residual value assumption. This calculator computes both paths after tax, backs out the lease\'s implicit financing rate, and shows exactly where the fulcrum sits.',
+    howItWorks: [
+      'Enter the price, down payment, loan APR, and term for the buy path.',
+      'Enter the lease\'s monthly payment for the same term.',
+      'Set an honest resale value — the whole answer pivots on it.',
+      'Read both after-tax net costs and which side of the fulcrum you\'re on.',
+    ],
+    faq: [
+      {
+        q: 'Can I really deduct equipment I haven\'t paid for yet?',
+        a: 'Yes — and it\'s the least intuitive rule in small-business tax. Section 179 and bonus depreciation apply to the full purchase price of financed equipment in the year it\'s placed in service, regardless of how much cash changed hands. Put 20% down on a $100,000 machine and you deduct $100,000 that year (plus loan interest as you pay it). The equipment-finance industry\'s favorite structure exploits this directly: the $1-buyout capital lease is treated as a purchase, so a business with near-zero cash out still takes the full write-off. The guardrail is §179\'s taxable-income cap — the deduction can\'t exceed business income (bonus depreciation can). A deduction you can\'t use this year carries forward.',
+      },
+      {
+        q: 'How do I tell if a lease quote is actually a good deal?',
+        a: 'Back out the implicit interest rate — lessors rarely quote one. Multiply the payment by the number of months, subtract the equipment\'s cash price (and any buyout), and spread it over the term: a $1,900/month, 60-month lease on $100,000 of equipment carries roughly a 5.6% simple cost — but add an end-of-term buyout priced above market and the real rate climbs fast. Also price the invisible terms: hour/mileage overage charges, mandatory insurance riders, return-condition clauses, and early-termination penalties. A lease whose payment is "only $100 more" than the loan payment is usually 2–4 points of hidden APR. The calculator above shows the implied simple rate on your numbers.',
+      },
+      {
+        q: 'When does leasing genuinely win?',
+        a: 'Four real cases. Short-life technology: if the equipment is obsolete in three years, owning the residual is a liability, not an asset — the buy advantage assumes resale value that may not exist. Tight cash flow: 100% financing with no down payment preserves working capital when that capital earns more in the business than the lease premium costs. The §179 income limit: a business with little taxable income can\'t use a giant year-one deduction (carryforward excepted), while lease payments deduct as incurred. And fleet churn: businesses that rotate vehicles or machines every few years often net out ahead on leases structured around the replacement cycle. Long-life iron — excavators, CNC machines, lifts — almost always buys. Set the residual to zero in the calculator to see the lease\'s best case.',
+      },
+    ],
+  },
+  {
     slug: 'business-vehicle-writeoff-calculator',
     title: 'Business Vehicle Write-Off Calculator 2026 — Heavy SUV $32,000 Rule, Luxury Caps, and the 6,000-lb Line',
     shortTitle: 'Vehicle Write-Off',
