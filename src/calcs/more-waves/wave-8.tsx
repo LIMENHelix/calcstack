@@ -3296,3 +3296,40 @@ export function UnitConverterCalc() {
     </CardContent></Card>
   )
 }
+
+// STANDARD DEVIATION CALCULATOR — node-verified: {2,4,4,4,5,5,7,9} → mean 5, population SD 2.0000 (variance 4), sample SD 2.1381. Both flavors because the n vs n−1 choice is the whole point of the question.
+export function StdDevCalc() {
+  const [raw, setRaw] = useState('2, 4, 4, 4, 5, 5, 7, 9')
+  const r = useMemo(() => {
+    const data = raw.split(/[\s,;]+/).filter(Boolean).map(Number).filter((x) => !Number.isNaN(x))
+    if (data.length < 2) return null
+    const n = data.length
+    const mean = data.reduce((a, b) => a + b, 0) / n
+    const ss = data.reduce((a, x) => a + (x - mean) ** 2, 0)
+    const popVar = ss / n
+    const samVar = ss / (n - 1)
+    const sorted = [...data].sort((a, b) => a - b)
+    return { n, mean, popVar, samVar, popSD: Math.sqrt(popVar), samSD: Math.sqrt(samVar), min: sorted[0], max: sorted[n - 1], cv: (Math.sqrt(samVar) / Math.abs(mean)) * 100 }
+  }, [raw])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Data (comma or space separated)</label>
+        <textarea value={raw} onChange={(e) => setRaw(e.target.value)} rows={2} className="w-full rounded-md border bg-background px-3 py-2 text-sm" />
+      </div>
+      {r ? (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label={`Mean (n = ${r.n})`} value={num(r.mean, 4)} big />
+          <Result label="Sample SD (n−1)" value={num(r.samSD, 4)} big />
+          <Result label="Population SD (n)" value={num(r.popSD, 4)} />
+          <Result label="Sample variance" value={num(r.samVar, 4)} />
+          <Result label="Range" value={`${num(r.min, 2)} – ${num(r.max, 2)}`} />
+          <Result label="Coeff. of variation" value={`${num(r.cv, 1)}%`} />
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">Enter at least two numbers above.</p>
+      )}
+      <p className="text-xs text-muted-foreground">Sample SD divides by n−1 (Bessel's correction) — use it when your data is a sample of a bigger population, which is almost always. Population SD divides by n — only when you have every member. {`{2,4,4,4,5,5,7,9}`} → sample 2.138, population 2.000.</p>
+    </CardContent></Card>
+  )
+}

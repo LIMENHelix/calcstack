@@ -297,6 +297,8 @@ export const WHY_USE: Record<string, string> = {
     'Couples use it the week it matters: LMP Sep 1 on a 28-day cycle → ovulation ~Sep 15, fertile window Sep 10–16, and the due date if it works.',
   'unit-converter':
     'Everyone uses it mid-task: 5 miles is 8.0467 km, 10 kg is 22.046 lb, 98.6°F is exactly 37°C — length, weight, volume, area, speed, temperature.',
+  'standard-deviation-calculator':
+    'Analysts use it on any pasted column: {2,4,4,4,5,5,7,9} → mean 5, sample SD 2.138, population SD 2.000 — with the n vs n−1 choice explained.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

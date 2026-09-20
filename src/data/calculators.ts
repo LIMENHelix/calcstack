@@ -4582,6 +4582,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'standard-deviation-calculator',
+    title: 'Standard Deviation Calculator — Sample & Population, with Variance',
+    shortTitle: 'Standard Deviation',
+    category: 'School & Science',
+    description:
+      'Paste your data and get mean, sample and population standard deviation, variance, range, and coefficient of variation — with the n vs n−1 difference explained.',
+    tagline: '{2, 4, 4, 4, 5, 5, 7, 9} → mean 5, sample SD 2.138, population SD 2.000. Both flavors, because dividing by n or n−1 is the actual question.',
+    intro:
+      'Standard deviation is the single number that answers "how spread out is this data?" — and the sample vs population distinction is where homework and reports go wrong. Paste a column of numbers and get both versions instantly, plus variance, range, and coefficient of variation for comparing spread across datasets with different scales.',
+    howItWorks: [
+      'Paste your data — commas, spaces, or newlines all work.',
+      'Read the mean and both standard deviations side by side.',
+      'Use sample SD (n−1) when your data samples a bigger population — almost always.',
+      'Use population SD (n) only when your data IS the entire population.',
+      'Use coefficient of variation (SD ÷ mean) to compare spread across different units.',
+    ],
+    faq: [
+      {
+        q: 'When do I use sample vs population standard deviation?',
+        a: 'Use sample SD (dividing by n−1, called Bessel\'s correction) whenever your data is a sample drawn from a larger population — which covers nearly every real case: survey responses, product measurements, test scores from one class, 30 days of sales data. Use population SD (dividing by n) only when your data literally is the entire population: every employee\'s salary at a 12-person company, all 30 students\' scores in the class you teach. Why n−1: samples systematically underestimate spread because the sample mean sits closer to the sample data than the true population mean does; dividing by n−1 corrects that bias on average. The practical impact shrinks with size — at n=100 the two differ by 0.5% — but at n=5 the difference is 12%, and graders absolutely check which one you used.',
+      },
+      {
+        q: 'What does a standard deviation actually tell me?',
+        a: 'For roughly bell-shaped data, the 68-95-99.7 rule: about 68% of values fall within 1 SD of the mean, 95% within 2, 99.7% within 3. So exam scores with mean 75 and SD 10 mean most students scored 65–85, and anyone above 95 or below 55 is a genuine outlier. In manufacturing it is the whole quality game: a fill process with mean 500 mL and SD 2 mL almost never under-fills, but SD 8 mL ships underweight bottles regularly. The comparison trap: SD only compares fairly across datasets with similar means — a SD of $10k on $50k salaries (20% CV) is far wilder than $10k on $500k portfolios (2% CV), which is why the coefficient of variation exists.',
+      },
+      {
+        q: 'Why is standard deviation better than the range?',
+        a: 'Range uses only two values — the extremes — so one outlier defines it entirely; standard deviation uses every value, so it reflects the actual shape of the data. Two datasets can share a range of 40 and have completely different spreads: {0, 20, 20, 20, 40} vs {0, 1, 2, 38, 39, 40} — same range, SDs of 14 vs 19. Range still earns its keep as a quick sanity check and in small samples (control charts for tiny samples use range because SD estimates are unstable at n<10). The one rule that matters for reporting: always pair SD with the mean and n — "SD = 8" alone is meaningless, and "mean 75, SD 8, n = 200" tells the complete story in six words.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
