@@ -333,6 +333,10 @@ export const WHY_USE: Record<string, string> = {
     'Science students and metal buyers use ρ = m/V: 500 g in 200 cm³ is 2.5 g/cm³ — sinks — with the float/sink verdict and the gold-fake test built in.',
   'force-calculator':
     'Physics homework starts here: 70 kg at 2 m/s² is 140 N; your weight is a force (70 kg = 686.7 N) — F = ma solved in all three directions.',
+  'kinetic-energy-calculator':
+    'Drivers and physics students learn the same law: ½mv² — a car at 100 km/h carries 463 kJ, at 50 km/h a quarter of that. Speed kills by squaring.',
+  'velocity-calculator':
+    'Bolt averaged 10.44 m/s over 9.58 s; a 4.5-second 0–100 launch is 0.63 g; 3 seconds of free fall is 105.9 km/h — v=d/t, a=Δv/t, and gravity.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

@@ -5158,6 +5158,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'kinetic-energy-calculator',
+    title: 'Kinetic Energy Calculator — ½mv² with Stopping Distances',
+    shortTitle: 'Kinetic Energy',
+    category: 'School & Science',
+    description:
+      'Kinetic energy from mass and speed — with the quarter-energy-at-half-speed demonstration and ideal braking distances on dry and wet pavement.',
+    tagline: 'A car at 100 km/h carries 463 kJ. At 50 km/h — 116 kJ, a quarter. The squared velocity is why small speed differences decide crash outcomes.',
+    intro:
+      'KE = ½mv² looks gentle until you notice the square: energy grows four times faster than speed, which is why 80 vs 100 km/h is 56% more crash energy, not "a bit faster." This calculator shows the energy, the half-speed comparison, and ideal braking distances — the physics that road-safety campaigns are really about.',
+    howItWorks: [
+      'Enter mass in kg and speed in km/h.',
+      'Read kinetic energy in kilojoules, with m/s shown.',
+      'The half-speed result demonstrates the v² law directly.',
+      'Ideal braking distances shown for dry (μ=0.7) and wet (μ=0.4) pavement.',
+      'Try a bullet: 9 g at 400 m/s = 720 J — small mass, huge velocity.',
+    ],
+    faq: [
+      {
+        q: 'Why does kinetic energy scale with the square of velocity?',
+        a: 'Because both the momentum carried AND the distance over which work is done grow with speed. Deriving it: work = force × distance, and stopping from speed v with constant force takes a distance proportional to v² (since d = v²/2a) — multiply the two and energy inherits the square. The road-safety consequences are stark: 100 km/h carries 4× the energy of 50, so doubling speed quadruples both braking distance and crash severity; 130 vs 120 km/h is 17% more energy for 8% more speed. This is why urban 30 km/h zones save pedestrians — struck at 30 km/h a pedestrian survives ~90% of the time; at 50 km/h survival drops below 50%. The numbers are not linear because physics never agreed to be.',
+      },
+      {
+        q: 'How does this relate to car stopping distances?',
+        a: 'Stopping distance divides kinetic energy by braking force: d = v²/(2μg), where μ is tire-road friction. A car at 100 km/h (27.8 m/s) needs ~56 m on dry pavement (μ=0.7) and ~98 m on wet (μ=0.4) — before adding reaction distance (~21 m at 1.5 s), which grows only linearly. Both terms punish speed: at 120 km/h the dry total is ~106 m versus ~77 m at 100 — that extra 29 m is longer than a basketball court, decided in "just 20 over." Motorcycles and loaded trucks sit lower on friction or higher on mass-per-brake; ice (μ≈0.15) stretches 100 km/h stops to ~260 m. The calculator shows the ideal physics floor — real stopping always runs longer.',
+      },
+      {
+        q: 'What are some everyday kinetic energy reference points?',
+        a: 'Scale anchors make joules intuitive. A 145 g baseball at 40 m/s (90 mph pitch): 116 J — hurts, rarely kills. A 9 g bullet at 400 m/s: 720 J — a quarter the baseball\'s momentum but 6× the energy, because velocity is squared; that asymmetry is why projectiles wound. A 70 kg runner at 5 m/s: 875 J. A 1,200 kg car: 116 kJ at 50 km/h, 463 kJ at 100, 720 kJ at 130. A 400 kg motorcycle-plus-rider at 100 km/h: 154 kJ — a third of the car, which is why bikes stop shorter but riders have no crumple zone. Lightning aside, the biggest KE most people meet is the family car at highway speed — roughly the energy of 640 baseball pitches, all in one bumper.',
+      },
+    ],
+  },
+  {
+    slug: 'velocity-calculator',
+    title: 'Velocity & Acceleration Calculator — v=d/t, a=Δv/t, Free Fall',
+    shortTitle: 'Velocity & Acceleration',
+    category: 'School & Science',
+    description:
+      'Velocity from distance and time, acceleration from speed change, and free-fall speed and distance — with km/h, mph, and g-force conversions.',
+    tagline: 'Bolt covered 100 m in 9.58 s — 10.44 m/s, 37.6 km/h. A 4.5-second 0–100 launch is 0.63 g. Three seconds of free fall is 106 km/h.',
+    intro:
+      'The three motion questions of physics class — how fast (v = d/t), how quickly it speeds up (a = Δv/t), and what gravity does (v = 9.81t, d = 4.9t²) — answered with real-unit conversions so the m/s answer also arrives in km/h, mph, and g-force.',
+    howItWorks: [
+      'Pick the mode: velocity, acceleration, or free fall.',
+      'Velocity: enter distance and time.',
+      'Acceleration: enter start speed, end speed, and time.',
+      'Free fall: enter fall seconds — get impact speed and distance.',
+      'All results convert to km/h, mph, or g automatically.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between speed, velocity, and acceleration?',
+        a: 'Speed is how fast; velocity adds direction (60 km/h east); acceleration is how fast the velocity changes — including slowing down and turning. The units cascade: meters, meters-per-second, meters-per-second-per-second. The non-obvious part: acceleration includes direction change — a car circling a roundabout at constant 30 km/h is accelerating continuously (centripetal, toward the center), which is why your body feels pushed outward. And "deceleration" is just negative acceleration, same physics. Real-world feel: elevators accelerate at ~1 m/s² (0.1 g, that stomach lift), sports cars at 6–8 m/s², emergency braking at 8–10 m/s², and a sneeze launches droplets at up to 40 m/s — faster than Bolt by 4×.',
+      },
+      {
+        q: 'How fast do things fall?',
+        a: 'In a vacuum, everything accelerates at 9.81 m/s² regardless of mass — the hammer-and-feather demo Apollo 15 ran on the Moon. After 1 second: 9.8 m/s; 3 seconds: 29.4 m/s (106 km/h) having fallen 44 m; 10 seconds: 98 m/s over 490 m. Air ruins the purity fast: drag scales with speed squared, so objects reach terminal velocity where drag balances weight — skydivers ~53 m/s (190 km/h) belly-down, ~90 m/s head-down, a raindrop ~9 m/s, a penny ~20 m/s (enough to sting, not to kill — the Empire State myth fails because the coin tumbles and drag-caps early). Cats famously survive high falls partly because their terminal velocity (~27 m/s) plus leg-spreading is survivable — physics with whiskers.',
+      },
+      {
+        q: 'How do I use these in sports and driving?',
+        a: 'Sports: sprint coaches time 10 m splits because velocity = distance ÷ split — a 1.80 s flying 10 m is 5.56 m/s, and top-end speed separates positions (elite wide receivers hit 9–10 m/s). Ball exit velocity = distance math inverted: a 120 mph baseball exit is 53.6 m/s. Driving: the two-second rule is velocity applied — at 100 km/h you cover 56 m in 2 s, which is why following distance is measured in time, not car lengths. Reaction distance is v × reaction time: at 100 km/h with a 1.5 s reaction, you travel 42 m before the brake is even touched — more than a third of a football field, which is the entire argument against phone-glancing at speed. Convert any "how fast was that" into m/s with ÷3.6 from km/h or ÷2.237 from mph.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

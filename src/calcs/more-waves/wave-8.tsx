@@ -4141,3 +4141,94 @@ export function ForceCalc() {
     </CardContent></Card>
   )
 }
+
+
+// KINETIC ENERGY — node-verified: 1,200 kg at 100 km/h (27.78 m/s) → 0.463 MJ; at 50 km/h → 0.116 MJ (quarter — the v² is the whole story); 9 g bullet at 400 m/s → 720 J; 145 g baseball at 40 m/s → 116 J. Also shows stopping distance scaling.
+export function KineticEnergyCalc() {
+  const [mass, setMass] = useNumber(1200)
+  const [speed, setSpeed] = useNumber(100)
+  const r = useMemo(() => {
+    if (mass <= 0 || speed < 0) return null
+    const ms = speed / 3.6
+    const ke = 0.5 * mass * ms * ms
+    const half = 0.5 * mass * (ms / 2) ** 2
+    const stopDist = (mu: number) => (ms * ms) / (2 * mu * 9.81)
+    return { ms, ke, half, dry: stopDist(0.7), wet: stopDist(0.4) }
+  }, [mass, speed])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Mass" value={mass} onChange={setMass} suffix="kg" step="50" />
+        <Field label="Speed" value={speed} onChange={setSpeed} suffix="km/h" step="10" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label={`Kinetic energy (${num(r.ms, 2)} m/s)`} value={`${num(r.ke / 1000, 1)} kJ`} big />
+          <Result label="At half the speed" value={`${num(r.half / 1000, 1)} kJ (¼)`} />
+          <Result label="Ideal braking distance (dry, μ=0.7)" value={`${num(r.dry, 1)} m`} />
+          <Result label="Wet (μ=0.4)" value={`${num(r.wet, 1)} m`} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">KE = ½mv² — energy scales with the SQUARE of speed. Double the speed, quadruple the energy and the stopping distance. That is why 80 vs 100 km/h is not "20% faster" — it is 56% more energy to absorb in a crash.</p>
+    </CardContent></Card>
+  )
+}
+
+// VELOCITY & ACCELERATION — node-verified: Bolt 100 m in 9.58 s → 10.44 m/s = 37.6 km/h; 0–100 km/h in 4.5 s → 6.17 m/s² = 0.63 g; free fall 3 s → v = 29.4 m/s, distance 44.1 m. Modes: v=d/t, a=Δv/t, free fall v=gt / d=½gt².
+export function VelocityCalc() {
+  const [mode, setMode] = useState('v')
+  const [dist, setDist] = useNumber(100)
+  const [time, setTime] = useNumber(9.58)
+  const [v1, setV1] = useNumber(0)
+  const [v2, setV2] = useNumber(100)
+  const [fall, setFall] = useNumber(3)
+  const r = useMemo(() => {
+    if (mode === 'v') {
+      if (time <= 0) return null
+      const ms = dist / time
+      return { headline: ms, unit: 'm/s', extra: `${num(ms * 3.6, 1)} km/h · ${num(ms * 2.23694, 1)} mph` }
+    }
+    if (mode === 'a') {
+      if (time <= 0) return null
+      const a = ((v2 - v1) / 3.6) / time
+      return { headline: a, unit: 'm/s²', extra: `${num(a / 9.81, 2)} g` }
+    }
+    if (fall < 0) return null
+    const v = 9.81 * fall
+    const d = 0.5 * 9.81 * fall * fall
+    return { headline: v, unit: 'm/s impact speed', extra: `${num(v * 3.6, 1)} km/h after falling ${num(d, 1)} m` }
+  }, [mode, dist, time, v1, v2, fall])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Compute</label>
+        <select value={mode} onChange={(e) => setMode(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+          <option value="v">Velocity (distance ÷ time)</option>
+          <option value="a">Acceleration (speed change ÷ time)</option>
+          <option value="f">Free fall (seconds of falling)</option>
+        </select>
+      </div>
+      {mode === 'v' && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Field label="Distance" value={dist} onChange={setDist} suffix="m" step="10" />
+          <Field label="Time" value={time} onChange={setTime} suffix="s" step="0.1" />
+        </div>
+      )}
+      {mode === 'a' && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Field label="Start speed" value={v1} onChange={setV1} suffix="km/h" step="10" />
+          <Field label="End speed" value={v2} onChange={setV2} suffix="km/h" step="10" />
+          <Field label="Time" value={time} onChange={setTime} suffix="s" step="0.5" />
+        </div>
+      )}
+      {mode === 'f' && <Field label="Fall time" value={fall} onChange={setFall} suffix="s" step="0.5" />}
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label="Result" value={`${num(r.headline, 3)} ${r.unit}`} big />
+          <Result label="Converted" value={r.extra} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">v = d/t · a = Δv/t · free fall: v = 9.81t, d = 4.9t² (ignoring air resistance — skydivers cap at ~53 m/s terminal). Bolt averaged 10.44 m/s; a 4.5 s 0–100 launch is 0.63 g.</p>
+    </CardContent></Card>
+  )
+}
