@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'heloc-calculator',
+    title: 'HELOC Payment Calculator 2026 — Draw Period, Repayment Shock, and the Interest Bill',
+    shortTitle: 'HELOC Calculator',
+    category: 'Housing & Mortgage',
+    description:
+      'A HELOC is two loans stitched together: ten years of interest-only, then twenty years of full amortization. Compute both payments, the repayment shock, total interest, and whether the interest is actually deductible.',
+    tagline: '$50,000 at 8.5% costs $354/month for ten years — then jumps to $434 and keeps you there for twenty more.',
+    intro:
+      'The draw period is the friendly phase: pay interest only on what you\'ve pulled — $50,000 at 8.5% runs $354.17 a month. Then the line freezes and the second loan starts: the balance amortizes over 15–20 years, pushing the payment to $433.91 — a 22.5% shock that hits exactly when the equity is already spent. Over the full life of that draw you\'ll pay $96,639 in interest, nearly double the amount you borrowed. And the tax break everyone assumes exists has fine print: since 2018 (made permanent in 2025), HELOC interest is deductible only when the money buys, builds, or substantially improves the home securing it — debt consolidation and car purchases don\'t count. This calculator prices both phases, the shock, the rate-float risk, and the honest after-tax cost.',
+    howItWorks: [
+      'Enter your drawn balance and the variable rate — most HELOCs float at prime plus a margin.',
+      'Set the draw period and repayment term (10/20 is the standard pair).',
+      'Toggle whether the funds improve the home — that decides deductibility.',
+      'Read both payments, the shock percentage, total interest, and the after-tax cost.',
+    ],
+    faq: [
+      {
+        q: 'Why does the payment jump when the draw period ends?',
+        a: 'Because the two phases are structurally different loans. During the draw, you pay interest only — $50,000 at 8.5% is $354.17/month and the principal never moves. When repayment begins, the same balance must fully amortize over 20 years, which requires $433.91/month. That\'s a 22.5% jump, and it\'s worse at lower rates: $25,000 at 7.5% goes from $156.25 to $201.40, a 28.9% shock — the interest-only floor falls faster than the amortization payment does. Lenders are required to disclose this, but the disclosure is a number on page 14 of a document signed a decade earlier. Budget for the second payment, not the first.',
+      },
+      {
+        q: 'Is HELOC interest tax deductible in 2026?',
+        a: 'Only under three conditions, all at once. First, the funds must buy, build, or substantially improve the home that secures the line — a kitchen remodel qualifies; paying off credit cards or buying a car does not, regardless of what the loan officer implied. Second, your total mortgage debt (first mortgage plus the HELOC used for improvement) must stay under the $750,000 cap. Third, you must itemize — with the 2026 standard deduction at $16,100 single / $32,200 married, most borrowers don\'t. When all three hold, the deduction is real: on $96,639 of lifetime interest, a 24% bracket saves $23,194. When they don\'t, the HELOC is just expensive unsecured-flavored debt with your house as collateral.',
+      },
+      {
+        q: 'What does the variable rate actually do to me?',
+        a: 'Most HELOCs price at prime plus a fixed margin and adjust monthly. A 2-point prime move adds $83/month on a $50,000 draw during the interest-only phase — and since the payment is pure interest, every basis point passes straight through with no amortization to dilute it. Two protections to check in your agreement: the floor (some lines can\'t fall below an opening rate, so you never benefit from cuts) and the lifetime cap (often 18% — legal, and catastrophic). If rate risk keeps you up, the fixed-rate home equity loan is the structural alternative: slightly higher starting rate, but the payment never moves.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

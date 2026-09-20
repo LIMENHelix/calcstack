@@ -2323,6 +2323,59 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// HELOC payment & shock — the two-phase machine nobody prices honestly. DRAW PERIOD (typically 10 yrs): interest-only on the drawn balance — $50k at 8.5% = $354.17/mo, zero principal. REPAYMENT (typically 20 yrs): the balance amortizes — $433.91/mo, a 22.5% payment shock (25k at 7.5%: $156.25 → $201.40, +28.9%; the shock grows as rates fall because IO floors lower while amortization barely moves). Total interest on the example: $42,500 draw + $54,139 repay = $96,639 — nearly double the draw. Tax: post-TCJA/OBBBA, HELOC interest is deductible ONLY when the money buys/builds/substantially improves the home securing it (debt-consolidation or car HELOCs: NOT deductible), subject to the $750k total acquisition+improvement debt cap, and only if you itemize. Variable rate: most HELOCs float at prime + margin — the floor rate and rate cap matter; a +2% prime move adds $83/mo per $50k. Node-verified: $50k @8.5% → IO $354.17, repay $433.91 (+22.5%), total interest $96,639; deductible-after-tax @24% → $73,445; $25k @7.5% → $156.25 → $201.40 (+28.9%).
+export function HelocCalc() {
+  const [drawn, setDrawn] = useNumber(50000)
+  const [rate, setRate] = useNumber(8.5)
+  const [drawYrs, setDrawYrs] = useNumber(10)
+  const [repayYrs, setRepayYrs] = useNumber(20)
+  const [improve, setImprove] = useState(true)
+  const [bracket, setBracket] = useNumber(24)
+
+  const r = useMemo(() => {
+    const i = rate / 100 / 12
+    const io = (drawn * rate) / 100 / 12
+    const n = Math.max(1, repayYrs * 12)
+    const amort = i > 0 ? (drawn * i) / (1 - Math.pow(1 + i, -n)) : drawn / n
+    const drawInt = io * drawYrs * 12
+    const repayInt = amort * n - drawn
+    const totalInt = drawInt + repayInt
+    const shock = io > 0 ? (amort / io - 1) * 100 : 0
+    const afterTax = improve ? totalInt * (1 - bracket / 100) : totalInt
+    return { io, amort, drawInt, repayInt, totalInt, shock, afterTax }
+  }, [drawn, rate, drawYrs, repayYrs, improve, bracket])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Amount drawn (not the limit)" value={drawn} onChange={setDrawn} prefix="$" />
+          <Field label="Rate (prime + margin)" value={rate} onChange={setRate} suffix="%" />
+          <Field label="Marginal tax bracket" value={bracket} onChange={setBracket} suffix="%" />
+          <Field label="Draw period (years)" value={drawYrs} onChange={setDrawYrs} />
+          <Field label="Repayment period (years)" value={repayYrs} onChange={setRepayYrs} />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={improve} onChange={(e) => setImprove(e.target.checked)} className="h-4 w-4" />
+            Funds improve this home (interest deductible)
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Draw-period payment" value={`${usd(r.io, 2)}/mo`} />
+          <Result label="Repayment payment" value={`${usd(r.amort, 2)}/mo`} />
+          <Result label="Payment shock" value={`+${num(r.shock, 1)}%`} />
+          <Result label="Total interest" value={usd(r.totalInt, 0)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          For {drawYrs} years you pay <span className="font-medium">{usd(r.io, 2)}/mo — pure interest, the balance never moves</span>. Then the line freezes and amortizes over {repayYrs} years: <span className="font-medium">{usd(r.amort, 2)}/mo, a {num(r.shock, 1)}% jump</span>. Total interest across both phases: {usd(r.totalInt, 0)}{improve ? <> — deductible because the funds improve this home, so {usd(r.afterTax, 0)} after tax at {bracket}% (only if you itemize)</> : <> — and NOT deductible: HELOC interest only deducts when the money buys, builds, or substantially improves the home securing it</>}. The quiet risks: the rate floats (prime +2% adds {usd((drawn * 0.02) / 12, 0)}/mo on this balance), lenders can freeze undrawn credit when home values fall, and every draw restarts the clock on some contracts.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          A HELOC is two loans wearing one name. The draw period (usually 10 years) takes interest-only payments at a variable rate — prime plus a margin, with a floor and a lifetime cap buried in the agreement; some lenders offer fixed-rate locks on slices of the balance, worth asking for. The repayment period (usually 15–20 years) amortizes whatever you owe — the payment jump is the shock shown above, and it arrives precisely at age 60-something for borrowers who drew in their 50s. The interest math is stark: paying interest-only for a decade on $50,000 costs $42,500 without reducing the debt by a dollar. Tax rule (made permanent by OBBBA): interest is deductible only when proceeds buy, build, or substantially improve the securing home, within the $750,000 total mortgage-debt cap, and only for itemizers — using the line for debt consolidation or a car kills the deduction. Compare before drawing: a fixed home-equity loan (rate certainty, lump sum), a cash-out refinance (only if your first-mortgage rate is low enough to keep), and for smaller amounts a 0% intro-APR card with a hard payoff plan. Estimates — your agreement's margin, floor, and draw rules govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -7938,6 +7991,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'heloc-calculator': HelocCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
