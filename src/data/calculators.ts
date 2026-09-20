@@ -2404,6 +2404,69 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'tenant-turnover-cost-calculator',
+    title: 'Tenant Turnover Cost Calculator — The $2,947 Line Item Landlords Underprice, Raise Breakeven Math',
+    shortTitle: 'Tenant Turnover Cost',
+    category: 'Housing & Mortgage',
+    description:
+      'What one turnover actually costs — lost rent, turnover work, listing and screening — as a share of annual rent, plus the raise-vs-turnover breakeven that decides how aggressive renewal pricing can be.',
+    tagline: 'One turnover at $1,800 rent costs $2,947 — 13.6% of the year. A $50/mo raise that pushes turnover odds past 20% LOSES money. Retention is the cheapest revenue.',
+    intro:
+      'Landlords track rent to the dollar and turnover to the vague. The honest ledger: at $1,800/month with a 3-week vacancy, lost rent alone is $1,247; add $1,500 of paint-clean-locks and $200 of listing and screening, and one turnover burns $2,947 — 13.6% of the year\'s rent, more than most landlords budget for maintenance. The number changes pricing behavior: a $50/month renewal raise gains $600/yr but forfeits $2,947 if it triggers a move, so the raise only wins if turnover odds stay under 20%. This calculator prices your turnover and gives the breakeven odds for any raise you are considering.',
+    howItWorks: [
+      'Enter the monthly rent and realistic vacant weeks between tenants (2–4 even in hot markets).',
+      'Enter turnover work cost — paint, cleaning, locks, minor repairs.',
+      'Enter listing and screening costs.',
+      'Enter the renewal raise you are considering.',
+      'Read total turnover cost, its share of annual rent, and the raise breakeven odds.',
+    ],
+    faq: [
+      {
+        q: 'What does turnover really cost line by line?',
+        a: 'Four buckets, and rent loss is usually the biggest. Vacancy: rent × vacant weeks ÷ 4.33 — at $1,800, every vacant week is $416; even efficient turnovers need 2 weeks for cleaning, showing, and application processing. Make-ready work: $500 for a DIY clean-and-touch-up on a good tenant\'s unit, $1,500–2,500 for paint-plus-professional-clean on a lived-in one, $4,000+ when flooring or an appliance dies with the tenancy. Leasing: listing fees, background and credit checks you eat on rejected applicants, and signage — $100–300 DIY, or 50–100% of one month\'s rent if a property manager places the tenant. The invisible bucket: your time — self-managers report 20–40 hours per turnover across showings, applications, and coordination; value it honestly and the total roughly doubles. Long-tenancy discount: tenants past 3 years need less make-ready (paint lasts) but their departure usually means a fuller refresh — the work cost rises with tenure while the frequency falls.',
+      },
+      {
+        q: 'How aggressive should renewal raises be, given this math?',
+        a: 'The breakeven odds are the discipline: annual raise gain ÷ turnover cost. At the defaults, a $50/mo raise tolerates only a 20% turnover probability — so the question is never "can I get market rent" but "what does this raise do to THIS tenant\'s odds of leaving." A good tenant at 2–3% annual raises is usually worth more than market rent with churn; a below-market tenant who never calls, pays on the first, and stays six years is a better asset than a topped-out rent roll. Push harder when: the unit is genuinely underpriced (10%+ below comps), turnover costs are LOW (easy market, fast make-ready, strong applicant pool), or the tenant has signaled staying regardless (just renewed willingly, bought furniture, kids in the school). The move that captures both: offer the modest raise paired with a visible upgrade — a $200 ceiling fan or a dishwasher swap at renewal converts the raise from a tax into a trade, and trades do not trigger moving math the way taxes do.',
+      },
+      {
+        q: 'What actually reduces turnover?',
+        a: 'The research and the landlord forums agree on the ranking, and it is not rent price. First: repair response time — the single strongest predictor of non-renewal is how the last maintenance request went; same-day acknowledgment with a real timeline beats a cheap rent number. Second: proactive renewal timing — send the renewal 90 days out with a modest raise and a small upgrade offer; tenants forced to think about moving early start browsing, tenants offered a fair deal early sign. Third: professional but human management — enforce rules consistently, fix common areas, return deposits promptly with itemization (word travels in tenant networks). Fourth: price honestly at listing — overpriced units attract applicants nobody else approved, who churn and damage more. What does NOT move retention much: amenity race upgrades mid-tenancy, gift cards, and personal rapport without operational competence behind it. Run the turnover number, then fund retention from what it saves.',
+      },
+    ],
+  },
+  {
+    slug: 'rent-vacancy-pricing-calculator',
+    title: 'Rent vs Vacancy Calculator — Effective Annual Rent, Why the Higher Asking Price Can Lose Money',
+    shortTitle: 'Rent vs Vacancy Pricing',
+    category: 'Housing & Mortgage',
+    description:
+      'Compare two asking rents by effective annual income — every vacant week costs 23% of a month\'s rent, so the last $100 of ask is often the most expensive money in landlording.',
+    tagline: '$1,800 that sits 4 weeks earns LESS than $1,700 that fills in 1 — $19,937 vs $20,007 effective. Price to fill, not to dream.',
+    intro:
+      'The classic landlord mistake is pricing for the best month instead of the best year. Effective annual income is rent × 12 minus vacancy loss, and each vacant week costs about 23% of a month\'s rent — so a $1,800 ask that sits 4 weeks ($19,937 effective) loses to a $1,700 ask that fills in one ($20,007). The higher price has to fill within 3.8 weeks just to tie. This calculator compares any two asks honestly, shows the cost of each vacant week, and gives the exact fill deadline where the higher rent stops winning. Price to fill, not to dream — and re-price fast when the market votes no.',
+    howItWorks: [
+      'Enter the lower asking rent and its expected weeks-to-fill from comparable listings.',
+      'Enter the higher ask and its expected weeks-to-fill.',
+      'Read effective annual income for both.',
+      'The winner is decided; the fill deadline shows when the higher ask stops paying.',
+    ],
+    faq: [
+      {
+        q: 'How do I estimate weeks-to-fill honestly?',
+        a: 'From the market, not from hope. Days-on-market is visible on Zillow and Apartments.com listings — pull 5–8 true comps (same beds, same neighborhood, similar condition) and note how long the ones priced AT market sat versus the ones priced above; the delta between the two groups is your vacancy slope. Adjust for season: winter listings in most markets run 1.5–2× longer than peak season (May–August, when families move between school years), so a December pricing decision should be more aggressive than a June one. Adjust for unit friction: no parking, no laundry, third-floor walk-up, or a no-pets policy each add days. The tell that you overpriced: quiet first week — serious renters scan new listings within days, and a listing with no inquiries in 7 days has been voted down. One more honest input: your vacancy estimate should include the gap between "application approved" and "lease signed and moved in," which adds a week landlords forget to count.',
+      },
+      {
+        q: 'Is there a case for pricing ABOVE market anyway?',
+        a: 'Yes, but narrower than landlords hope. It works when the unit has a genuine, visible differentiator that comps lack — dedicated parking in a street-parking neighborhood, in-unit laundry, a fenced yard with pets allowed, a renovated kitchen in a dated building — and even then, the premium that clears fast is typically 5–8%, not 15%. It also works with time on your side: a current tenant paying below market on a month-to-month while you test higher asks for a future vacancy costs nothing to experiment with. Where premium pricing reliably fails: cosmetic-only differentiation (new paint is not a differentiator), soft markets with rising inventory, and any listing past day 10 — at that point the listing is stale, the algorithm buries it, and price cuts attract worse applicants than correct initial pricing. The applicant-pool effect is the hidden cost: overpriced listings select for applicants rejected elsewhere. Run both asks here with honest weeks-to-fill, and if the premium case wins, set the fill deadline as a hard re-price date before listing.',
+      },
+      {
+        q: 'Should I ever price BELOW market?',
+        a: 'Strategically, yes — and the math here shows why it is cheaper than it looks. Pricing $25–50 under comp median buys three things: speed (vacancy is the most expensive line item — one week saved at $1,700 rent is $392), applicant depth (10 qualified applicants instead of 2 means choosing the best tenant, not the only tenant — and tenant quality drives turnover cost, damage, and late payments for years), and goodwill (a tenant who knows they have a deal renews more and complains less — feeding directly into the turnover-cost math). The below-market move that backfires: pricing so low it signals a problem unit — stay within 3–5% of comps. The annual-review alternative some landlords prefer: price at market, offer a concession (one week free) instead of a lower rent — it fills fast while keeping the lease number high for future comp-setting and rent-raise percentages. Both beat sitting vacant. The one rule that dominates all of it: a vacant week costs 23% of a month — every pricing decision is really a vacancy decision.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

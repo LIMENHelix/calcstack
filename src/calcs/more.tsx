@@ -5949,6 +5949,95 @@ export function GutterGuardRoiCalc() {
   )
 }
 
+// TENANT TURNOVER COST — node-verified defaults: $1,800 rent × 3 vacant weeks ÷ 4.33 = $1,247 lost rent + $1,500 turnover work (paint/clean/locks) + $200 listing & screening = $2,947 per turnover = 13.6% of annual rent. Retention math: a $50/mo raise gains $600/yr but if it triggers turnover you lose $2,947 → breakeven turnover probability 20.4% — if a raise pushes turnover odds past 1-in-5, the raise LOSES money. The landlord's most underpriced line item.
+export function TenantTurnoverCostCalc() {
+  const [rent, setRent] = useNumber(1800)
+  const [vacWks, setVacWks] = useNumber(3)
+  const [work, setWork] = useNumber(1500)
+  const [list, setList] = useNumber(200)
+  const [raise, setRaise] = useNumber(50)
+
+  const r = useMemo(() => {
+    const lostRent = (rent * vacWks) / 4.33
+    const total = lostRent + work + list
+    const pct = rent > 0 ? (total / (rent * 12)) * 100 : 0
+    const gain = raise * 12
+    const beProb = total > 0 ? (gain / total) * 100 : 0
+    return { lostRent, total, pct, gain, beProb }
+  }, [rent, vacWks, work, list, raise])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Monthly rent" value={rent} onChange={setRent} prefix="$" step="50" />
+          <Field label="Vacant weeks per turnover" value={vacWks} onChange={setVacWks} suffix="wks" step="1" />
+          <Field label="Turnover work" value={work} onChange={setWork} prefix="$" step="100" />
+          <Field label="Listing & screening" value={list} onChange={setList} prefix="$" step="50" />
+          <Field label="Planned rent raise" value={raise} onChange={setRaise} prefix="$" suffix="/mo" step="10" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Lost rent" value={usd(Math.round(r.lostRent))} />
+          <Result label="Total turnover cost" value={usd(Math.round(r.total))} big />
+          <Result label="% of annual rent" value={`${num(r.pct, 1)}%`} />
+          <Result label="Raise breakeven odds" value={`${num(r.beProb, 0)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Each turnover burns ${usd(Math.round(r.total))} — ${num(r.pct, 1)}% of the year's rent. The ${usd(raise)}/mo raise gains ${usd(Math.round(r.gain))}/yr but loses ${usd(Math.round(r.total))} if it triggers a move: if the raise pushes turnover odds past ${num(r.beProb, 0)}%, it costs money. Good tenants are the cheapest revenue you have.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: lost rent = monthly rent × vacant weeks ÷ 4.33; total = lost rent + turnover work + listing/screening; breakeven odds = annual raise gain ÷ turnover cost. The vacancy assumption is where landlords lie to themselves — budget 2–4 weeks even in hot markets (cleaning, showing, application processing), and 6–8 in soft ones. Turnover work ranges: $500 DIY clean-and-touch-up, $1,500–2,500 for paint-plus-clean on a lived-in unit, $4,000+ if flooring or an appliance goes. The retention playbook this math justifies: renewal raises 2–3% instead of market-max 5–8%, same-day repair response (the #1 reason good tenants leave), and small upgrades at renewal ($200 ceiling fan beats $2,947 turnover). Also invisible here but real: your time — a self-managing landlord spends 20–40 hours per turnover; at any honest hourly rate that doubles the number. Property managers charge 50–100% of one month&apos;s rent as a leasing fee ON TOP of these costs — add it to listing/screening if you use one. Estimate — your market&apos;s days-on-market and contractor quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// RENT VS VACANCY PRICING — node-verified defaults: ask A $1,700 fills in 1 wk → effective $20,007/yr; ask B $1,800 sits 4 wks → $19,937/yr. The higher ask LOSES $70/yr. Breakeven: B must fill within 3.8 weeks to match A. Method: effective annual = rent×12 − rent×vacantWeeks/4.33. Every vacant week costs ~23% of a month's rent, so the last $100 of ask is the most expensive money in landlording.
+export function RentVacancyPricingCalc() {
+  const [rentA, setRentA] = useNumber(1700)
+  const [wksA, setWksA] = useNumber(1)
+  const [rentB, setRentB] = useNumber(1800)
+  const [wksB, setWksB] = useNumber(4)
+
+  const r = useMemo(() => {
+    const eff = (rent: number, wks: number) => rent * 12 - (rent * wks) / 4.33
+    const effA = eff(rentA, wksA)
+    const effB = eff(rentB, wksB)
+    const winner = effA >= effB ? 'A' : 'B'
+    const wkCost = rentB / 4.33
+    const beWksB = rentB > 0 ? Math.max((rentB * 12 - effA) / wkCost, 0) : 0
+    return { effA, effB, winner, wkCost, beWksB }
+  }, [rentA, wksA, rentB, wksB])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Ask A (lower)" value={rentA} onChange={setRentA} prefix="$" suffix="/mo" step="25" />
+          <Field label="Weeks to fill A" value={wksA} onChange={setWksA} suffix="wks" step="1" />
+          <Field label="Ask B (higher)" value={rentB} onChange={setRentB} prefix="$" suffix="/mo" step="25" />
+          <Field label="Weeks to fill B" value={wksB} onChange={setWksB} suffix="wks" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Effective A /yr" value={usd(Math.round(r.effA))} />
+          <Result label="Effective B /yr" value={usd(Math.round(r.effB))} />
+          <Result label="Winner" value={`Ask ${r.winner}`} big />
+          <Result label="Each vacant wk costs (B)" value={usd(Math.round(r.wkCost))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.winner === 'A'
+            ? `Ask A wins: ${usd(Math.round(r.effA))} vs ${usd(Math.round(r.effB))} effective. The extra ${usd(Math.max(rentB - rentA, 0))}/mo never survives the vacancy — B would need to fill within ${num(r.beWksB, 1)} weeks just to tie. Price to fill, not to dream.`
+            : `Ask B wins: ${usd(Math.round(r.effB))} vs ${usd(Math.round(r.effA))} — the market absorbed the higher price fast enough. The test to run: if B sits past ${num(r.beWksB, 1)} weeks, cut to A immediately; every week beyond costs ${usd(Math.round(r.wkCost))}.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: effective annual income = rent × 12 − rent × vacant weeks ÷ 4.33. That is the whole formula, and it exposes the classic landlord mistake: each vacant week costs ~23% of a month&apos;s rent, so a $100 higher ask that adds 3 vacant weeks loses money — the last $100 of ask is the most expensive money in landlording. Pricing discipline that uses this: check days-on-market for comparable listings (Zillow/Apartments.com show it), price at the comp median minus $25 when you need speed, and above median only when the unit has a genuine differentiator (parking, in-unit laundry, pets). Seasonal reality: winter vacancies run 1.5–2× longer in most markets — a December listing should price more aggressively than a June one. Tenant-quality angle: the applicants who apply to overpriced listings are often the ones nobody else approved — aggressive pricing buys a better applicant pool, which lowers turnover and damage risk downstream. Re-price fast: if showings are quiet after 7 days, the market has voted. Estimate — your local comps and days-on-market govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11632,6 +11721,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'radon-mitigation-calculator': RadonMitigationCalc,
   'sewer-line-cost-calculator': SewerLineCostCalc,
   'gutter-guard-roi-calculator': GutterGuardRoiCalc,
+  'tenant-turnover-cost-calculator': TenantTurnoverCostCalc,
+  'rent-vacancy-pricing-calculator': RentVacancyPricingCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
