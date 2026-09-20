@@ -6038,6 +6038,112 @@ export function RentVacancyPricingCalc() {
   )
 }
 
+// MAINTENANCE & CAPEX RESERVE — node-verified defaults: roof $12,000/25yr + HVAC $7,000/15 + water heater $1,400/12 + appliances $2,500/10 + interior paint/floor $4,000/10 + ext paint $5,000/10 = $2,213/yr CapEx ($184/mo); plus routine maintenance at 5% of $1,800 rent = $90/mo → $274/mo total = 15.2% of rent. The 1%-of-value rule of thumb exists because these six items never announce themselves together — but they ALWAYS arrive. Reserve monthly per item, not in one vague bucket.
+export function MaintenanceReserveCalc() {
+  const [roofC, setRoofC] = useNumber(12000)
+  const [roofL, setRoofL] = useNumber(25)
+  const [hvacC, setHvacC] = useNumber(7000)
+  const [hvacL, setHvacL] = useNumber(15)
+  const [whC, setWhC] = useNumber(1400)
+  const [whL, setWhL] = useNumber(12)
+  const [appC, setAppC] = useNumber(2500)
+  const [appL, setAppL] = useNumber(10)
+  const [rent, setRent] = useNumber(1800)
+  const [routinePct, setRoutinePct] = useNumber(5)
+
+  const r = useMemo(() => {
+    const capexYr =
+      (roofL > 0 ? roofC / roofL : 0) +
+      (hvacL > 0 ? hvacC / hvacL : 0) +
+      (whL > 0 ? whC / whL : 0) +
+      (appL > 0 ? appC / appL : 0) +
+      4000 / 10 +
+      5000 / 10
+    const routineMo = rent * (routinePct / 100)
+    const totalMo = capexYr / 12 + routineMo
+    const pctRent = rent > 0 ? (totalMo / rent) * 100 : 0
+    return { capexYr, routineMo, totalMo, pctRent }
+  }, [roofC, roofL, hvacC, hvacL, whC, whL, appC, appL, rent, routinePct])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Roof cost" value={roofC} onChange={setRoofC} prefix="$" step="1000" />
+          <Field label="Roof life left" value={roofL} onChange={setRoofL} suffix="yrs" step="1" />
+          <Field label="HVAC cost" value={hvacC} onChange={setHvacC} prefix="$" step="500" />
+          <Field label="HVAC life left" value={hvacL} onChange={setHvacL} suffix="yrs" step="1" />
+          <Field label="Water heater cost" value={whC} onChange={setWhC} prefix="$" step="100" />
+          <Field label="WH life left" value={whL} onChange={setWhL} suffix="yrs" step="1" />
+          <Field label="Appliance set cost" value={appC} onChange={setAppC} prefix="$" step="250" />
+          <Field label="Appliance life left" value={appL} onChange={setAppL} suffix="yrs" step="1" />
+          <Field label="Monthly rent" value={rent} onChange={setRent} prefix="$" step="50" />
+          <Field label="Routine maintenance" value={routinePct} onChange={setRoutinePct} suffix="% of rent" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="CapEx reserve /mo" value={usd(Math.round(r.capexYr / 12))} />
+          <Result label="Routine /mo" value={usd(Math.round(r.routineMo))} />
+          <Result label="Total reserve /mo" value={usd(Math.round(r.totalMo))} big />
+          <Result label="As % of rent" value={`${num(r.pctRent, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Your true maintenance number is ${usd(Math.round(r.totalMo))}/mo — ${num(r.pctRent, 1)}% of rent, not the $0 it feels like in the good months. Fund it monthly into a separate account; the roof does not care about your cash flow timing.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: each capital item reserves its replacement cost ÷ years of life left, summed monthly; routine maintenance adds a percent of rent (5–10% depending on age and tenant wear). Paint/flooring ($4,000 per decade) and exterior paint ($5,000 per decade) are pre-loaded as fixed defaults — edit the big four to your quotes. Why itemized beats rules of thumb: 1%-of-value and $1/sqft rules average across ages — a 2005 roof and a 2024 roof need wildly different reserves, and the itemized schedule prices YOUR equipment&apos;s remaining life. The discipline that makes it work: reserve goes to a separate account the day rent clears, before mortgage, before anything — landlords who skip this are one HVAC death (July, naturally) away from a credit-card emergency at 24% APR. The tax note: repairs deduct immediately, replacements depreciate (27.5-yr schedule for the structure, 5–7 yr for appliances) — same cash, different Schedule E line, and the reserve math does not care which. Lifespan anchors: asphalt roof 20–30 yrs, HVAC 12–18, water heater 8–12, appliances 8–12, carpet 5–8 (LVP 15–25 — the turnover-math favorite). Estimate — your equipment ages and local contractor quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// MAKE-READY SCOPE ESTIMATOR — node-verified defaults: paint 3 rooms × $450 + LVP flooring 400 sqft × $6 + cleaning $300 + locks/misc $150 = $4,200 of work; 14 days of make-ready vacancy at $1,800 rent = $829 lost rent → $5,029 true turnover cost. The scope decision rule: renovate to durable-rental grade (LVP not carpet, satin paint, mid-tier fixtures) — the upgrade that survives tenants beats the upgrade that impresses them.
+export function MakeReadyCalc() {
+  const [rooms, setRooms] = useNumber(3)
+  const [perRoom, setPerRoom] = useNumber(450)
+  const [floorSqft, setFloorSqft] = useNumber(400)
+  const [floorRate, setFloorRate] = useNumber(6)
+  const [clean, setClean] = useNumber(300)
+  const [misc, setMisc] = useNumber(150)
+  const [days, setDays] = useNumber(14)
+  const [rent, setRent] = useNumber(1800)
+
+  const r = useMemo(() => {
+    const work = rooms * perRoom + floorSqft * floorRate + clean + misc
+    const lostRent = (rent * days) / 30.4
+    const total = work + lostRent
+    return { work, lostRent, total }
+  }, [rooms, perRoom, floorSqft, floorRate, clean, misc, days, rent])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Rooms to paint" value={rooms} onChange={setRooms} step="1" />
+          <Field label="Paint per room" value={perRoom} onChange={setPerRoom} prefix="$" step="50" />
+          <Field label="Flooring" value={floorSqft} onChange={setFloorSqft} suffix="sqft" step="50" />
+          <Field label="Flooring rate" value={floorRate} onChange={setFloorRate} prefix="$" suffix="/sqft" step="1" />
+          <Field label="Cleaning" value={clean} onChange={setClean} prefix="$" step="50" />
+          <Field label="Locks, blinds, misc" value={misc} onChange={setMisc} prefix="$" step="25" />
+          <Field label="Make-ready days" value={days} onChange={setDays} suffix="days" step="2" />
+          <Field label="Monthly rent" value={rent} onChange={setRent} prefix="$" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Work cost" value={usd(Math.round(r.work))} />
+          <Result label="Lost rent during work" value={usd(Math.round(r.lostRent))} />
+          <Result label="True make-ready cost" value={usd(Math.round(r.total))} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The scope prices at ${usd(Math.round(r.work))}, but ${days} days of vacancy adds ${usd(Math.round(r.lostRent))} — true cost ${usd(Math.round(r.total))}. Every day shaved off the make-ready is worth ${usd(Math.round(rent / 30.4))}. Sequence contractors tightly; idle days are the silent line item.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: work = rooms × paint-per-room + flooring sqft × rate + cleaning + misc; lost rent = days × rent ÷ 30.4. Rate anchors: pro interior paint $350–600/room (walls only; ceilings and trim add), LVP installed $4–8/sqft (carpet $3–5 but lasts 5–8 years vs LVP 15–25 — LVP wins the turnover math despite the sticker), professional clean $250–450, rekey $75–150 (do it EVERY turnover, no exceptions). The durable-grade rule: renovate to survive tenants, not to impress them — satin or eggshell paint (flat cannot be cleaned), LVP over carpet in any unit with pets allowed, mid-tier fixtures with standard parts (the $90 faucet with $8 cartridges beats the $300 designer one with a 6-week part wait). Timeline discipline: paint before flooring install, cleaning last, and schedule contractors during the notice period when possible — a tenant giving 30 days means half the make-ready can be pre-staged. What to skip: anything the next tenant does not pay more for — crown molding and accent walls rent for $0 extra; clean, functional, and bright rents for everything. Pair with the turnover calculator for the retention side of this same ledger. Estimate — your contractors&apos; quotes and unit condition govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11723,6 +11829,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'gutter-guard-roi-calculator': GutterGuardRoiCalc,
   'tenant-turnover-cost-calculator': TenantTurnoverCostCalc,
   'rent-vacancy-pricing-calculator': RentVacancyPricingCalc,
+  'maintenance-reserve-calculator': MaintenanceReserveCalc,
+  'make-ready-calculator': MakeReadyCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

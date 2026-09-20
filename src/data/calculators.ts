@@ -2467,6 +2467,69 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'maintenance-reserve-calculator',
+    title: 'Rental Maintenance Reserve Calculator — Itemized CapEx Schedule, What to Actually Save Per Month',
+    shortTitle: 'Maintenance Reserve',
+    category: 'Housing & Mortgage',
+    description:
+      'The monthly reserve your rental actually needs — roof, HVAC, water heater, and appliances reserved by remaining life, plus routine maintenance — itemized instead of a rule of thumb that lies about your specific equipment.',
+    tagline: 'The real number is $274/mo — 15.2% of rent — not the $0 the good months suggest. The roof does not care about your cash flow timing.',
+    intro:
+      'Every landlord learns the reserve lesson once, in July, when the HVAC dies. The rules of thumb (1% of value, $1/sqft, 10% of rent) average across every house; the itemized schedule prices yours: roof $12,000 with 25 years left, HVAC $7,000 with 15, water heater $1,400 with 12, appliances $2,500 with 10 — $184/month of CapEx, plus $90 of routine maintenance at 5% of rent, $274 total, 15.2% of the rent check. Funded monthly into a separate account, capital expenses stop being emergencies and start being scheduled events. This calculator builds your itemized schedule from your equipment\'s actual remaining life.',
+    howItWorks: [
+      'Enter replacement cost and years of life left for roof, HVAC, water heater, and appliances.',
+      'Enter monthly rent and a routine maintenance percentage (5% newer, 10% older or rough wear).',
+      'Read the CapEx reserve, routine reserve, total monthly, and share of rent.',
+      'Move that amount to a separate account the day rent clears — automation beats discipline.',
+    ],
+    faq: [
+      {
+        q: 'Why itemize instead of using the 1% rule?',
+        a: 'Because the 1% rule describes an average house and you own a specific one. A rental with a 3-year-old roof and a 14-year-old HVAC has a completely different reserve need than the reverse — the rule gives both the same number, and one of them gets surprised. Itemizing also exposes the near-term cliff: the roof with 25 years left reserves $40/month; the same roof with 5 years left reserves $200. The method: walk the property and list every capital item with a replacement cost and remaining life — roof, HVAC, water heater, appliances, flooring, exterior paint, water softener, garage door opener — then reserve cost ÷ years for each. The items that ambush landlords most: water heaters (8–12 years, they fail by leaking, and the leak is the expensive part), HVAC (12–18 years, always dies in peak season at emergency rates), and sewer lines on pre-1980 homes. Update the schedule annually — remaining life shrinks every year, which is exactly the point of the exercise.',
+      },
+      {
+        q: 'How much should routine maintenance add on top of CapEx?',
+        a: 'Five to ten percent of rent, scaling with age and wear. The 5% end: newer construction, long-term careful tenants, and systems all mid-life. The 10% end: older homes (pre-1980), high tenant turnover (every make-ready is maintenance), and deferred maintenance you are catching up on. What routine covers: the $150–400 service calls — plumbing clogs, garbage disposals, outlet replacements, HVAC filters and tune-ups, pest control, gutter cleaning — plus the annual items like HVAC servicing ($150–250) that extend the life of the CapEx items and are cheaper than the replacements they delay. What it does not cover: anything with a serial number that gets replaced whole — that is CapEx. The behavioral trick that matters more than the percentage: separate account, automatic transfer, no exceptions in profitable months. Landlords who commingle reserves with operating cash discover, empirically, that reserves evaporate. At the defaults this is $274/month; the landlord who banks it for 5 years has $16,440 and capital expenses become scheduling decisions instead of financing emergencies.',
+      },
+      {
+        q: 'Do reserves change the buy decision on a rental?',
+        a: 'They should — under-reserved cash flow is fake cash flow. A deal that cash-flows $300/month with a $274 reserve actually cash-flows $26, and one with $200 of apparent flow is losing money honestly accounted. Run every purchase proforma with the itemized reserve from this calculator, not the seller\'s maintenance number — sellers selling a rental have spent the last two years NOT maintaining it, which is frequently why it is for sale. The inspection-informed adjustment: whatever the inspection says about remaining life on roof and HVAC goes directly into this calculator before you close, and if the reserve eats the deal, the deal was never there. The flip side: a property with fresh roof, HVAC, and water heater has years of low reserve needs — part of why light-rehab deals beat heavy-rehab ones for buy-and-hold cash flow. Depreciation interacts here too: capital replacements depreciate over 5–27.5 years while repairs deduct now, so the tax profile of a heavy-CapEx property differs from a light one — worth a conversation with your CPA at purchase, not at the first replacement.',
+      },
+    ],
+  },
+  {
+    slug: 'make-ready-calculator',
+    title: 'Rental Make-Ready Cost Calculator — Turnover Scope Priced: Paint, Flooring, Cleaning, Lost Rent',
+    shortTitle: 'Make-Ready Estimator',
+    category: 'Housing & Mortgage',
+    description:
+      'Price a rental turnover scope honestly — paint by room, flooring by square foot, cleaning, locks and misc — plus the lost rent during make-ready days that doubles as the urgency meter.',
+    tagline: 'Three rooms of paint, 400 sqft of LVP, cleaning, and locks: $4,200 — plus $829 of lost rent over 14 days. Every idle day costs $59; sequence contractors tightly.',
+    intro:
+      'Turnover scopes grow in the telling. Priced honestly: three rooms of paint at $450, 400 sqft of LVP at $6, a $300 professional clean, and $150 of locks and misc — $4,200 of work, plus $829 of rent lost over 14 make-ready days: $5,029 true cost. Two levers decide the number: scope discipline (renovate to durable-rental grade — LVP not carpet, satin paint, mid-tier fixtures with standard parts) and timeline discipline (every idle day between contractors costs a day of rent). This calculator prices the scope and puts a dollar figure on the schedule, so "the painter can start in three weeks" gets the reaction it deserves.',
+    howItWorks: [
+      'Enter rooms to paint and the per-room pro rate ($350–600 walls-only typical).',
+      'Enter flooring square footage and rate ($4–8 LVP installed).',
+      'Enter cleaning and the locks/blinds/misc allowance.',
+      'Enter make-ready days and the monthly rent.',
+      'Read work cost, lost rent, and true make-ready cost.',
+    ],
+    faq: [
+      {
+        q: 'What is durable-rental grade, exactly?',
+        a: 'The specification that minimizes lifetime cost, not upfront cost. Paint: satin or eggshell in one neutral throughout the entire property — flat paint cannot be cleaned and forces full repaints; a single standardized color means touch-ups instead of repaints, and buying 5-gallon buckets of YOUR color cuts paint cost 30%. Flooring: LVP over carpet wherever tenants or pets go — carpet lasts 5–8 years under tenants and needs replacement every other turnover ($3–5/sqft each time), while LVP runs 15–25 years at $4–8/sqft installed and cleans with a mop. Fixtures: mid-tier with standard parts — a $90 Moen with $8 cartridges available at any hardware store beats a $300 designer faucet whose cartridge ships in six weeks. Blinds: faux-wood standard sizes you can replace per-window for $25 instead of custom orders. The test for every scope item: will the next tenant pay more rent for it? Clean, functional, and bright rents for everything; crown molding and accent walls rent for nothing. Save the design instincts for your own house.',
+      },
+      {
+        q: 'How do I compress the make-ready timeline?',
+        a: 'The vacancy number in this calculator is the argument — at $1,800 rent, every make-ready day costs $59, so a 14-day turn versus a 21-day turn is a $413 decision. The compression playbook: pre-stage during the notice period — a tenant giving 30 days means you can measure flooring, order materials, and schedule contractors before the keys are returned; the day-after-moveout start is worth a week. Sequence the trades in the only order that works: repairs and paint FIRST (flooring installers do not cut around wet paint), flooring second, cleaning LAST — a cleaning crew before the floor layer is money burned. Parallel where possible: locksmith, blind install, and appliance swap can all run during paint. Use contractors who work vacant-unit timelines — the painter who can start in three weeks costs you $1,239 in vacancy to save $200 on the bid. DIY selectively: cleaning and blinds are landlord-friendly; paint and flooring done slowly by an amateur cost more in vacancy than the pro premium. Target benchmarks: 7 days for a paint-and-clean turn, 14 for a full refresh — longer means a scheduling failure, not a bigger scope.',
+      },
+      {
+        q: 'What can I charge back to the departing tenant?',
+        a: 'Damage beyond normal wear and tear — and the distinction is where deposits are lost in court. Wear and tear (NOT chargeable): minor scuffs, worn carpet traffic patterns, faded paint, small nail holes, loose hinges — the legal theory is that living causes these and rent already prices them. Damage (chargeable): holes in doors, burns or stains in carpet, broken windows, unauthorized paint colors, pet urine damage, missing fixtures, filth beyond cleanable. The documentation that wins disputes: a move-in checklist with photos signed by the tenant, a move-out inspection with the same photos, and receipts for every deduction — judges itemize, and landlords with albums win while landlords with vibes lose. Timing is statutory: most states require itemized deposit returns within 14–30 days, and missing the deadline can forfeit the ENTIRE deposit plus penalties regardless of damage. Price deductions at actual cost, not retail revenge. And the strategic note: a tenant who did $300 of damage and left on good terms is often worth releasing cleanly — the $300 is cheaper than the dispute, and your review scores survive. This is general practice, not legal advice — your state\'s landlord-tenant act owns the details.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

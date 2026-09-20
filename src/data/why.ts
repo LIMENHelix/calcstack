@@ -161,6 +161,10 @@ export const WHY_USE: Record<string, string> = {
     'Landlords use it before setting renewal raises: one turnover at $1,800 rent costs $2,947 — 13.6% of the year — so a $50/mo raise that pushes turnover odds past 20% loses money.',
   'rent-vacancy-pricing-calculator':
     'Landlords use it before listing: $1,800 that sits 4 weeks earns less than $1,700 that fills in 1 — every vacant week costs 23% of a month, so the last $100 of ask is the most expensive money in landlording.',
+  'maintenance-reserve-calculator':
+    'Landlords use it before trusting cash flow: itemized reserves price out at $274/mo (15.2% of rent) — the 1% rule averages across houses, but your HVAC dies on YOUR schedule, in July.',
+  'make-ready-calculator':
+    'Landlords use it at move-out: paint, LVP, cleaning, and locks price at $4,200 — plus $59/day of lost rent during make-ready, which turns contractor lead times into the most expensive line item.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
