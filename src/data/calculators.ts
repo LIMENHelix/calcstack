@@ -3415,6 +3415,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'cleaning-business-pricing-calculator',
+    title: 'Cleaning Business Pricing Calculator — Per-SqFt Quotes With Labor, Drive Time, and the Margin That Survives',
+    shortTitle: 'Cleaning Business Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price residential cleaning jobs honestly: square footage times rate gives the quote, then subtract crew wages including drive time, supplies, and overhead to see the real profit per visit — and what one weekly client is worth per year.',
+    tagline: 'A $216 quote on a 1,800 sqft home nets $50.64 after $100 labor, $20 drive time, and overhead — and one weekly client is $11,232 a year.',
+    intro:
+      'Cleaning looks like the simplest business to price — until the drive time eats the margin. This calculator prices a job the way a profitable cleaning company does: square footage times your rate sets the quote, then the true cost comes out — crew wages for hours on site AND behind the windshield, supplies, and a real overhead line for insurance, bonding, software, and marketing. On a 1,800 sqft home at $0.12/sqft, the $216 quote leaves $50.64 of profit at a 23.4% margin. The numbers that actually decide this business — route density, frequency mix, and crew effective rate — are all here, annualized so retention math stops being a guess.',
+    howItWorks: [
+      'Enter home size and your per-square-foot rate — $0.10–0.15 recurring, $0.15–0.25 deep clean.',
+      'Enter crew size, hours on site, and wage.',
+      'Enter drive time — unpaid windshield time is where cleaning margins die.',
+      'Pick visit frequency to see annual client value.',
+      'Read the quote, profit per visit, margin, and crew effective hourly.',
+    ],
+    faq: [
+      {
+        q: 'Flat rate or hourly — which wins more clients?',
+        a: 'Flat rate, and it is not close. Clients hear hourly pricing as “you will stretch the job,” and hourly punishes your efficiency — the faster your crew gets, the less you earn. Flat per-square-foot pricing flips both: the client gets certainty, you get paid for speed. But flat rates only work if your time-per-sqft data is honest, so time every job for your first 90 days and recalibrate the rate. The levers inside the flat price: first-clean surcharges (1.5–2× recurring is standard — the first visit resets the home to your baseline), deep-clean and move-out pricing at 40–80% above recurring, and frequency discounts that are worth every point — a weekly client at $216 is $11,232 a year, 4.3× a monthly client at the same rate, so discounting weekly to win it pays for itself.',
+      },
+      {
+        q: 'Why do you count drive time as a cost?',
+        a: 'Because it is one — a two-person crew spending 30 minutes between jobs burns $20 of wages with zero revenue attached, and two such gaps a day costs $5,200 a year in windshield payroll. Most failed cleaning companies were profitable on site and bankrupt in the car. The fix is route density: cluster bookings by neighborhood on the same days, quote out-of-cluster jobs higher to cover the drive, and treat any job more than 20 minutes away as a premium booking or a decline. The same logic sets your growth path: adding a second crew only pays when the route map is dense enough that the new crew is not driving the same total miles to serve the same total homes.',
+      },
+      {
+        q: 'Which jobs should I refuse or reprice?',
+        a: 'Three red flags: homes that take one person over three hours — fatigue destroys quality and your reviews; clients who negotiate hard on the first price — they negotiate every price and leave the bad review anyway; and any job you cannot reach in 20 minutes without premium pricing. Also watch the margin line on this calculator per job TYPE: recurring weekly homes are the annuity, one-time deep cleans are the cash spikes that fill schedule gaps, and move-outs are premium work but seasonal. A book of 25 weekly clients at these numbers is $280,000 a year of revenue — the entire game is winning weekly clients and never losing them, because replacing a lost $11,232 client costs months of marketing while keeping one costs a reminder text.',
+      },
+    ],
+  },
+  {
+    slug: 'photographer-session-pricing-calculator',
+    title: 'Photographer Session Pricing Calculator — CODB, the 4.5-Hour "One-Hour Shoot," and the Price That Pays You',
+    shortTitle: 'Photographer Session Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price photography sessions from cost of doing business: annual costs plus income target divided by billable sessions gives what every shoot must carry, then add direct costs. Compare against your current price and see your true effective hourly.',
+    tagline: '100 sessions a year carrying $64,400 means every shoot must bring $644 — a $350 portrait session is $329 of unpaid you.',
+    intro:
+      'The most expensive sentence in photography is “it is just a one-hour shoot.” One hour behind the camera is 4.5 hours of shoot, cull, edit, admin, and client email — and every session must also carry a share of gear, insurance, software, and the income you need to live. This calculator prices it honestly: annual business costs plus your income target, divided by the sessions you can actually book, gives your cost of doing business per session. Add direct costs like gallery hosting and travel, and the $679 answer is what a portrait session must cost — at $350 you are donating $329 a shoot. See your real effective hourly and the annual gap before you book another season at the wrong price.',
+    howItWorks: [
+      'Enter annual business costs — gear depreciation, insurance, software, marketing, education.',
+      'Enter your income target and realistic billable sessions per year (2/week × 50 = a full book).',
+      'Enter the true hours: shoot, edit, and admin per session.',
+      'Enter per-session direct costs (gallery hosting, travel) and your current price.',
+      'Read the CODB per session, the cost-based price, effective hourly, and the gap.',
+    ],
+    faq: [
+      {
+        q: 'What counts as a billable session, honestly?',
+        a: 'Fewer than you think. Two sessions a week for 50 weeks is 100 — a genuinely full book for a solo portrait photographer, because the other 25+ hours of your week are marketing, editing backlog, client management, and bookkeeping. Most solo photographers shoot 60–120 paid sessions a year. The failure mode is pricing off a fantasy book: dividing annual costs by 200 imagined sessions halves the CODB per session and sets a price that guarantees a loss on the 90 you actually shoot. Count only sessions a client pays for — model calls, portfolio builders, and freebies are marketing expenses, not sessions, and they belong in the annual costs line instead.',
+      },
+      {
+        q: 'If the session fee just covers costs, where is the profit?',
+        a: 'In products — that is the model, not an accident. Industry standard: the session fee covers CODB, and 60–75% of total revenue comes from product sales — prints, albums, wall art, and digital collections sold after the gallery reveal. A $679 session that sells a $900 collection is a $1,579 booking with the costs already paid. This is why in-person sales (IPS) photographers out-earn shoot-and-burn digitals by multiples: the digitals-only photographer caps revenue at the session fee and hands over the product margin with the files. If you hate selling, the alternative is honest packages — bundle the collection INTO the booking price at this calculator’s numbers plus margin, and let the client choose between priced tiers instead of whether to buy at all.',
+      },
+      {
+        q: 'Do mini sessions make money?',
+        a: 'Only in batches, and this calculator shows why. A 30-minute mini still carries edit and admin time — about 2.25 total hours — so at these numbers it needs $357 to hold the effective rate. Sold as a standing offer, minis cannibalize your full sessions at a worse hourly. Sold as an EVENT — ten slots, one day, one location, setup amortized across all ten — the per-session overhead collapses and a $357 mini day is $3,570 for one setup. The rules that keep minis profitable: limited dates (scarcity is the marketing), smaller galleries (fewer edits per client), product upsells at the same margins as full sessions, and a price within one notch of your full session — if a mini is half the price of a full session, clients correctly wait for minis and your annual book collapses into the cheapest format you offer.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

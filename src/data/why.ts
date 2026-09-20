@@ -221,6 +221,10 @@ export const WHY_USE: Record<string, string> = {
     'Stylists use it before printing the menu: $5,913 of overhead and income spread over 97 bookable hours sets a $60.69/hr floor — a 90-minute color priced under $110 is a donation.',
   'retail-vs-service-time-calculator':
     'Stylists use it to time the pitch: $220/wk of retail at 15% pays $33/hr of selling time — half the $68 service rate, so sell in the processing gaps, never instead of a booking.',
+  'cleaning-business-pricing-calculator':
+    'Cleaning owners use it before quoting: a $216 flat rate on 1,800 sqft nets $50.64 after labor, drive time, and overhead — and one weekly client is $11,232/yr of annuity.',
+  'photographer-session-pricing-calculator':
+    'Photographers use it before booking season: 100 sessions carrying $64,400 of costs and income need $679 each — the "one-hour shoot" is 4.5 hours, and $350 is a $329 donation.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

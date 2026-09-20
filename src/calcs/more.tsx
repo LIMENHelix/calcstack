@@ -7445,6 +7445,123 @@ export function RetailVsServiceCalc() {
   )
 }
 
+// CLEANING BUSINESS PRICING — node-verified defaults: 1,800 sqft home × $0.12/sqft = $216 flat weekly. Crew 2 × 2.5 hrs × $20/hr = $100 labor + $20 drive time + 6% supplies ($12.96) + 15% overhead ($32.40) = $165.36 cost → profit $50.64, margin 23.4%. Weekly client = $11,232/yr revenue; crew generates $72/hr on site+drive.
+export function CleaningPriceCalc() {
+  const [sqft, setSqft] = useNumber(1800)
+  const [rate, setRate] = useNumber(0.12)
+  const [crew, setCrew] = useNumber(2)
+  const [hrs, setHrs] = useNumber(2.5)
+  const [wage, setWage] = useNumber(20)
+  const [drive, setDrive] = useNumber(30)
+  const [freq, setFreq] = useState('52')
+
+  const r = useMemo(() => {
+    const price = sqft * rate
+    const labor = crew * hrs * wage
+    const driveCost = crew * (drive / 60) * wage
+    const sup = price * 0.06
+    const ov = price * 0.15
+    const cost = labor + driveCost + sup + ov
+    const profit = price - cost
+    const margin = price > 0 ? (profit / price) * 100 : 0
+    const effHr = hrs + drive / 60 > 0 ? price / (hrs + drive / 60) : 0
+    const annual = price * Number(freq)
+    return { price, labor, driveCost, sup, ov, profit, margin, effHr, annual }
+  }, [sqft, rate, crew, hrs, wage, drive, freq])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Home size" value={sqft} onChange={setSqft} suffix="sqft" step="100" />
+          <Field label="Rate per sqft" value={rate} onChange={setRate} prefix="$" step="0.01" />
+          <Field label="Crew size" value={crew} onChange={setCrew} step="1" />
+          <Field label="Hours on site" value={hrs} onChange={setHrs} step="0.5" />
+          <Field label="Wage" value={wage} onChange={setWage} prefix="$" suffix="/hr" step="1" />
+          <Field label="Drive time" value={drive} onChange={setDrive} suffix="min" step="5" />
+        </div>
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Visit frequency</label>
+          <select value={freq} onChange={(e) => setFreq(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="52">Weekly (52/yr)</option>
+            <option value="26">Biweekly (26/yr)</option>
+            <option value="12">Monthly (12/yr)</option>
+            <option value="1">One-time / deep clean</option>
+          </select>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Quote" value={usd(Math.round(r.price))} big />
+          <Result label="Profit per visit" value={usd(Math.round(r.profit))} />
+          <Result label="Margin" value={`${num(r.margin, 1)}%`} />
+          <Result label="Revenue /yr this client" value={usd(Math.round(r.annual))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.profit > 0
+            ? `${usd(Math.round(r.price))} quote → ${usd(Math.round(r.profit))} profit (${num(r.margin, 1)}% margin) after labor, drive, supplies, and overhead. Crew generates ${usd(Math.round(r.effHr))}/hr against ${usd(wage)}/hr wages. A weekly client is worth ${usd(Math.round(r.annual))}/yr — retention IS the business.`
+            : `At ${usd(Math.round(r.price))} this job LOSES ${usd(Math.abs(Math.round(r.profit)))} per visit — raise the rate or cut the drive time before you take it.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: quote = sqft × rate ($0.10–0.15/sqft standard recurring, $0.15–0.25 deep/move-out); true cost = crew wages (site + DRIVE time — unpaid drive is where cleaning margins die), 6% supplies, 15% overhead (insurance, bonding, scheduling software, marketing, vehicle). The numbers that decide this business: drive time between jobs (cluster your route by neighborhood — two 30-minute gaps a day cost a 2-person crew $5,200/yr in windshield wages), frequency mix (weekly clients are 4.3× the lifetime value of monthly at the same rate — discount weekly to win it, it is worth it), and crew effective rate ($72/hr generated vs $20/hr paid is the spread everything lives in). Pricing psychology: flat rates outsell hourly — clients hear hourly as &quot;you will stretch the job&quot; — but flat rates only work if your time-per-sqft is honest, so time every job for the first 90 days and recalibrate. Move-out and deep cleans price 40–80% higher than recurring and fill the gaps between regulars. Red flags to walk from: homes over 3 hours solo (fatigue kills quality), clients who negotiate the first price (they negotiate every price), and any job you cannot reach in 20 minutes. First-clean surcharge is standard (1.5–2× recurring price) — the first visit resets the home to your baseline. Estimate — your own timed jobs and route map govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// PHOTOGRAPHER SESSION PRICING — node-verified defaults: CODB = ($12,400 annual costs + $52,000 income target) ÷ 100 billable sessions (2/wk × 50 wks) = $644/session. Portrait session: + $35 direct costs (gallery hosting, travel) = $679 price; total time 1h shoot + 3h edit + 0.5h admin = 4.5 hrs → $150.89/hr effective. Mini session (0.5h+1.5h+0.25h) = $357.
+export function PhotoSessionCalc() {
+  const [costs, setCosts] = useNumber(12400)
+  const [income, setIncome] = useNumber(52000)
+  const [sessions, setSessions] = useNumber(100)
+  const [shoot, setShoot] = useNumber(1)
+  const [edit, setEdit] = useNumber(3)
+  const [admin, setAdmin] = useNumber(0.5)
+  const [direct, setDirect] = useNumber(35)
+  const [current, setCurrent] = useNumber(350)
+
+  const r = useMemo(() => {
+    const codb = sessions > 0 ? (costs + income) / sessions : 0
+    const price = codb + direct
+    const hrs = shoot + edit + admin
+    const effHr = hrs > 0 ? price / hrs : 0
+    const gap = price - current
+    return { codb, price, hrs, effHr, gap }
+  }, [costs, income, sessions, shoot, edit, admin, direct, current])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Annual business costs" value={costs} onChange={setCosts} prefix="$" step="500" />
+          <Field label="Income target" value={income} onChange={setIncome} prefix="$" suffix="/yr" step="2000" />
+          <Field label="Billable sessions /yr" value={sessions} onChange={setSessions} step="10" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <Field label="Shoot hours" value={shoot} onChange={setShoot} step="0.5" />
+          <Field label="Edit hours" value={edit} onChange={setEdit} step="0.5" />
+          <Field label="Admin hours" value={admin} onChange={setAdmin} step="0.25" />
+          <Field label="Direct costs" value={direct} onChange={setDirect} prefix="$" step="5" />
+          <Field label="Current price" value={current} onChange={setCurrent} prefix="$" step="25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="CODB per session" value={usd(Math.round(r.codb))} />
+          <Result label="Cost-based price" value={usd(Math.round(r.price))} big />
+          <Result label="Effective rate" value={`${usd(Math.round(r.effHr))}/hr`} />
+          <Result label="Vs current" value={`${r.gap >= 0 ? '+' : '−'}${usd(Math.abs(Math.round(r.gap)))}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.gap > 0
+            ? `Each session must carry ${usd(Math.round(r.codb))} of costs-plus-income — the honest price is ${usd(Math.round(r.price))}, and you charge ${usd(current)}. The ${usd(Math.round(r.gap))} gap × ${sessions} sessions = ${usd(Math.abs(Math.round(r.gap * sessions)))}/yr of unpaid you.`
+            : `At ${usd(current)} you clear the ${usd(Math.round(r.price))} cost-based price — the margin is real. Guard the edit hours: they are where session prices quietly become $40/hr jobs.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: CODB (cost of doing business) per session = (annual business costs + income target) ÷ billable sessions; session price = CODB + direct costs (gallery hosting, travel, prints at cost). Annual costs mean EVERYTHING: gear depreciation (a $6k kit on a 4-year cycle is $1,500/yr), insurance, software subscriptions, website, marketing, education, studio share. The two numbers photographers lie to themselves about: billable sessions (2/week × 50 weeks = 100 is a FULL book — most solo portrait photographers shoot 60–120) and total hours (a &quot;1-hour shoot&quot; is 4.5 hours with edit, cull, admin, and client email — at $350 that is $78/hr before costs, not $350/hr). Where the model breaks into profit: products and packages — the session fee should cover CODB, and prints/albums/collections carry the margin (industry standard: session fee at cost, 60–75% of revenue from product sales); minis work ONLY in volume batches (10 × 30-min slots in one day, one location — amortized setup, $357 each here = $3,570 day) and never as a standing offer that cannibalizes full sessions. Weddings are a different calculator&apos;s cousin — same CODB logic, 40–60 total hours per event. Second-shooter and off-season months belong in the annual costs and session count respectively, or the busy season subsidizes a lie. Estimate — your booking history and actual per-session hours tracked for 90 days govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -13160,6 +13277,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'no-show-cost-calculator': NoShowCostCalc,
   'salon-service-pricing-calculator': SalonPricingCalc,
   'retail-vs-service-time-calculator': RetailVsServiceCalc,
+  'cleaning-business-pricing-calculator': CleaningPriceCalc,
+  'photographer-session-pricing-calculator': PhotoSessionCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
