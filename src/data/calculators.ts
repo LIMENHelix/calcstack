@@ -5094,6 +5094,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'density-calculator',
+    title: 'Density Calculator — ρ = m/V, Float or Sink, All Three Solve Modes',
+    shortTitle: 'Density Calculator',
+    category: 'School & Science',
+    description:
+      'Density, mass, or volume from the other two — with float/sink verdict against water and a reference table from ice to gold.',
+    tagline: '500 g in 200 cm³ is 2.5 g/cm³ — sinks. Oak at 0.6 floats. Gold is 19.3, which is why the fake-gold test is pure density.',
+    intro:
+      'Density is the identity card of materials — ice floats at 0.917, steel sinks at 7.85, and gold at 19.3 is so dense that fakes give themselves away on a scale. This calculator solves ρ = m/V in all three directions and gives the verdict everyone actually wants: does it float?',
+    howItWorks: [
+      'Pick what to solve for: density, mass, or volume.',
+      'Enter the two known values (grams and cm³).',
+      'Read the result with SI conversion (kg/m³) included.',
+      'Density mode adds the float-or-sink verdict against water (1.0 g/cm³).',
+      'Check the reference table to identify mystery materials.',
+    ],
+    faq: [
+      {
+        q: 'Why does ice float on water?',
+        a: 'Because ice is less dense than liquid water — 0.917 g/cm³ versus 1.000 — and anything less dense than its surrounding fluid floats. Water is the weird exception: nearly every other substance is denser as a solid, but water\'s crystal lattice forces molecules into an open hexagonal arrangement that takes more space. The consequences run deep: ice floats, so lakes freeze top-down and fish survive winter under an insulating ice sheet; if ice sank, lakes would freeze solid from the bottom and temperate aquatic life would not exist. The same density logic runs your kitchen: oil floats on water (0.91–0.93), cream rises on milk, and a hydrometer tells a brewer the sugar content by how high the float sits.',
+      },
+      {
+        q: 'How is density used to test if gold is real?',
+        a: 'Gold\'s density — 19.3 g/cm³ — is nearly impossible to fake cheaply. The test: weigh the piece, then measure volume by water displacement (submerge in a graduated cylinder, the rise in mL equals cm³), and divide. Real gold reads ~19.3; brass (8.5), copper (8.96), and gold-plated tungsten are the tells — only tungsten (19.25) is close enough to pass a density test, which is why high-value bars get ultrasonic or XRF testing too. Archimedes allegedly invented this method to catch a goldsmith who alloyed a crown with silver (density 10.5) — same weight, bigger volume, exposed by displacement. For jewelry: 24k is 19.3, but 18k (75% gold) reads ~15.5 and 14k ~13.5 depending on the alloy, so know your karat before judging.',
+      },
+      {
+        q: 'What are the most useful density values to know?',
+        a: 'Water 1.0 g/cm³ is the anchor — everything is judged against it. Below it (floats): ice 0.917, most woods 0.4–0.8, gasoline 0.74, olive oil 0.92. Above it (sinks): aluminum 2.7, titanium 4.5, steel 7.85, copper 8.96, lead 11.34, mercury 13.6 (a liquid denser than lead — cannonballs float on it), gold 19.3, tungsten 19.25, platinum 21.4, osmium 22.6 (densest element). The practical applications: concrete ships at ~2.4 g/cm³ which prices freight by the pallet; aluminum at one-third of steel\'s density is why aircraft exist; and lead\'s 11.34 makes it the cheap radiation shield and fishing sinker. One conversion to memorize: 1 g/cm³ = 1,000 kg/m³ = 62.4 lb/ft³.',
+      },
+    ],
+  },
+  {
+    slug: 'force-calculator',
+    title: 'Force Calculator — F = ma, Weight in Newtons, g-Force',
+    shortTitle: 'Force Calculator',
+    category: 'School & Science',
+    description:
+      'Newton\'s second law solved all three ways — force, mass, or acceleration — with pound-force conversion and g-equivalents.',
+    tagline: '70 kg at 2 m/s² = 140 N. Your weight is a force: 70 kg × 9.81 = 686.7 N. A car launching 0–60 in 8 s pushes ~4,167 N.',
+    intro:
+      'F = ma is the equation that built the modern world — bridges, rockets, airbags, and roller coasters all answer to it. This calculator solves Newton\'s second law in all three directions, converts to pound-force for American shop talk, and expresses acceleration in g\'s so the numbers connect to what a body actually feels.',
+    howItWorks: [
+      'Pick what to solve for: force, mass, or acceleration.',
+      'Enter the two known values (kg, m/s², N).',
+      'Read the result with lbf conversion.',
+      'Force mode adds the bodyweight-equivalent (g) reference.',
+      'Weight is a force: multiply any mass by 9.81 to get its Newton weight on Earth.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between mass and weight?',
+        a: 'Mass is the amount of stuff (kilograms — same everywhere); weight is the force gravity exerts on it (Newtons — varies by location). A 70 kg person has mass 70 kg on Earth, the Moon, and the ISS — but weight 686.7 N on Earth, 113 N on the Moon (1.62 m/s²), and effectively zero in orbit (where gravity is still ~90% of surface strength; astronauts float because they are falling, not because gravity is absent). The confusion persists because scales report "kilograms" while actually measuring force and dividing by 9.81 — a scale calibrated in New York reads slightly different in Denver (lower gravity at altitude). In everyday trade this is pedantry; in engineering it is the difference between a structure that stands and one that fails.',
+      },
+      {
+        q: 'What does g-force actually measure?',
+        a: 'Acceleration expressed in Earth-gravity units: 1 g = 9.81 m/s². Standing still, you feel exactly 1 g — the floor pushing up against gravity. A sports car launching 0–100 km/h in 3 seconds averages 0.94 g; a roller coaster peak hits 3–4 g; fighter pilots train to 9 g with G-suits; and a crash test dummy in a 30 mph barrier stop experiences 30–50 g for milliseconds. Duration is everything: humans survive 100+ g in millisecond impacts (race-car crashes with HANS devices and crumple zones) but lose consciousness at sustained 5–6 g as blood drains from the brain. The engineering connection: crumple zones work by extending impact TIME — same momentum change, but spread over 0.15 s instead of 0.01 s, so force drops by 15×. F = ma means t = time is your survival variable.',
+      },
+      {
+        q: 'How is F = ma used in real engineering?',
+        a: 'Everywhere force matters. Automotive: braking force = mass × deceleration — a 1,500 kg car stopping from 100 km/h in 40 m needs ~14,000 N, which sizes the brakes, tires, and road friction requirement. Aerospace: a rocket lifting 100,000 kg at 20 m/s² needs 2 million N of thrust PLUS the 981,000 N just to hover against gravity — thrust-to-weight ratio above 1 or you never leave the pad. Structural: seismic design multiplies building mass by expected ground acceleration to size lateral bracing. Sports science: a sprinter\'s blocks measure force directly — elite athletes apply ~2,000+ N horizontally at start. And the gym: a 100 kg barbell accelerates at 1 m/s² with 98.1 N of lifting force beyond its 981 N weight — which is why slow controlled reps and explosive lifts with the same weight are genuinely different loads on your joints.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

@@ -4046,3 +4046,98 @@ export function NumberBaseCalc() {
     </CardContent></Card>
   )
 }
+
+
+// DENSITY — node-verified: 500 g in 200 cm³ → 2.5 g/cm³ (sinks); oak 600 kg/m³ = 0.6 g/cm³ (floats); 2 kg of steel (7.85) → 254.78 cm³. Three solve modes (ρ=m/V, m=ρV, V=m/ρ) plus the float/sink verdict against water.
+export function DensityCalc() {
+  const [mode, setMode] = useState('d')
+  const [mass, setMass] = useNumber(500)
+  const [vol, setVol] = useNumber(200)
+  const [dens, setDens] = useNumber(7.85)
+  const r = useMemo(() => {
+    if (mode === 'd') {
+      if (mass <= 0 || vol <= 0) return null
+      const d = mass / vol
+      return { headline: d, unit: 'g/cm³', sink: d > 1 ? 'Sinks in water' : d < 1 ? 'Floats in water' : 'Neutral buoyancy', kg: d * 1000 }
+    }
+    if (mode === 'm') {
+      if (dens <= 0 || vol <= 0) return null
+      return { headline: dens * vol, unit: 'g', sink: null, kg: null }
+    }
+    if (mass <= 0 || dens <= 0) return null
+    return { headline: mass / dens, unit: 'cm³', sink: null, kg: null }
+  }, [mode, mass, vol, dens])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Solve for</label>
+        <select value={mode} onChange={(e) => setMode(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+          <option value="d">Density (know mass + volume)</option>
+          <option value="m">Mass (know density + volume)</option>
+          <option value="v">Volume (know mass + density)</option>
+        </select>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {mode !== 'd' && <Field label="Density" value={dens} onChange={setDens} suffix="g/cm³" step="0.1" />}
+        {mode !== 'm' && <Field label="Mass" value={mass} onChange={setMass} suffix="g" step="10" />}
+        {mode !== 'v' && <Field label="Volume" value={vol} onChange={setVol} suffix="cm³" step="10" />}
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label="Result" value={`${num(r.headline, 4)} ${r.unit}`} big />
+          {r.sink && <Result label="In water" value={r.sink} />}
+          {r.kg !== null && <Result label="In SI units" value={`${num(r.kg, 0)} kg/m³`} />}
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">ρ = m/V. Reference densities: water 1.0 g/cm³, ice 0.917 (why it floats), oak ~0.7, aluminum 2.7, steel 7.85, lead 11.34, gold 19.3. The fake-gold test is pure density: gold-plated tungsten (19.25) fools it; everything else fails.</p>
+    </CardContent></Card>
+  )
+}
+
+// FORCE (F = ma) — node-verified: 70 kg × 2 m/s² = 140 N; weight of 70 kg = 686.7 N (×9.81); 1 lbf = 4.44822 N; 1,200 kg car 0–100 km/h in 8 s → a = 3.47 m/s², F ≈ 4,167 N. Three solve modes plus weight conversion — Newton's second law, the first equation of physics class and crash engineering.
+export function ForceCalc() {
+  const [mode, setMode] = useState('f')
+  const [mass, setMass] = useNumber(70)
+  const [accel, setAccel] = useNumber(2)
+  const [force, setForce] = useNumber(140)
+  const r = useMemo(() => {
+    if (mode === 'f') {
+      if (mass <= 0) return null
+      const f = mass * accel
+      return { headline: f, unit: 'N', extra: `${num(f / 4.44822, 2)} lbf`, g: f / (mass * 9.81) }
+    }
+    if (mode === 'm') {
+      if (accel === 0) return null
+      const m = force / accel
+      return { headline: m, unit: 'kg', extra: `${num(m * 2.20462, 1)} lb`, g: null }
+    }
+    if (mass <= 0) return null
+    const a = force / mass
+    return { headline: a, unit: 'm/s²', extra: `${num(a / 9.81, 2)} g`, g: null }
+  }, [mode, mass, accel, force])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Solve for</label>
+        <select value={mode} onChange={(e) => setMode(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+          <option value="f">Force (know mass + acceleration)</option>
+          <option value="m">Mass (know force + acceleration)</option>
+          <option value="a">Acceleration (know force + mass)</option>
+        </select>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {mode !== 'f' && <Field label="Force" value={force} onChange={setForce} suffix="N" step="10" />}
+        {mode !== 'm' && <Field label="Mass" value={mass} onChange={setMass} suffix="kg" step="1" />}
+        {mode !== 'a' && <Field label="Acceleration" value={accel} onChange={setAccel} suffix="m/s²" step="0.5" />}
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label="Result" value={`${num(r.headline, 4)} ${r.unit}`} big />
+          <Result label="Also" value={r.extra} />
+          {r.g !== null && r.g > 0 && <Result label="Equivalent" value={`${num(r.g, 2)} × bodyweight force`} />}
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">F = ma. Your weight IS a force: 70 kg × 9.81 = 686.7 N. A 1,200 kg car hitting 100 km/h in 8 s averages 3.47 m/s² ≈ 4,167 N at the wheels. 1 lbf = 4.448 N; 1 g = 9.81 m/s².</p>
+    </CardContent></Card>
+  )
+}

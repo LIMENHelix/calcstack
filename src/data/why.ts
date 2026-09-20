@@ -329,6 +329,10 @@ export const WHY_USE: Record<string, string> = {
     'Students and Super Bowl viewers use it: 2026 = MMXXVI, 1994 = MCMXCIV — both directions, with strict validation so VIIII doesn\'t pass for 9.',
   'number-base-converter':
     'Programmers use it daily: 255 = 0xFF = 1111 1111₂ = 377₈ — decimal, hex, binary, octal with bit-width shown and 0x/0b prefixes auto-detected.',
+  'density-calculator':
+    'Science students and metal buyers use ρ = m/V: 500 g in 200 cm³ is 2.5 g/cm³ — sinks — with the float/sink verdict and the gold-fake test built in.',
+  'force-calculator':
+    'Physics homework starts here: 70 kg at 2 m/s² is 140 N; your weight is a force (70 kg = 686.7 N) — F = ma solved in all three directions.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':
