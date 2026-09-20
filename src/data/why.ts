@@ -47,6 +47,8 @@ export const WHY_USE: Record<string, string> = {
     'Sellers use it before picking a list price: a $450k sale with a $280k payoff nets $133,500 after commission, closing, and concessions — and the post-2024 buyer-agent concession field keeps the sheet honest in the new commission landscape.',
   'mortgage-buydown-calculator':
     'Buyers negotiating seller concessions use it to pick the right structure: the 2-1 buydown\'s $7,625 evaporates after year two while the same dollars as permanent points pay $130/mo for the life of the loan — hold period decides.',
+  'home-sale-capital-gains-calculator':
+    'Sellers use it before listing: the 2-of-5-years rule turns a $350k gain into $0 or $15k+ of federal tax, job-move partial exclusions prorate the cap, and rental-period depreciation recaptures at 25% no matter what.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

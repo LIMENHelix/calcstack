@@ -3145,6 +3145,79 @@ export function BuydownCalc() {
   )
 }
 
+// HOME SALE CAPITAL GAINS (IRC §121) — the exclusion, the partial exclusion, and the depreciation-recapture trap. Node-verified: single filer, basis $250k ($200k price + $50k improvements), net sale $600k → gain $350k; full §121 exclusion $250k (owned+lived 2 of last 5 yrs) → taxable $100k @15% = $15,000. Partial exclusion (job move/health/unforeseen at 18 of 24 months): 18/24 × $250k = $187,500. MFJ exclusion $500k (14/24 partial → $291,667). Depreciation recapture on rental-period depreciation is NOT excludable: $40k claimed → $10,000 at the 25% unrecaptured-§1250 rate. Basis boosters sellers forget: improvements (not repairs), closing costs at purchase, special assessment levies for local improvements. LTCG rates 2026: 0% to ~$49k taxable single, 15% to ~$545k, 20% above; +3.8% NIIT at $200k/$250k MAGI.
+export function HomeSaleGainsCalc() {
+  const [netSale, setNetSale] = useNumber(600000)
+  const [price, setPrice] = useNumber(200000)
+  const [improvements, setImprovements] = useNumber(50000)
+  const [married, setMarried] = useState(false)
+  const [monthsOwned, setMonthsOwned] = useNumber(60)
+  const [qualReason, setQualReason] = useState(true) // job move/health/unforeseen if short
+  const [depreciation, setDepreciation] = useNumber(0)
+  const [ltcgRate, setLtcgRate] = useNumber(15)
+
+  const r = useMemo(() => {
+    const basis = price + improvements
+    const gain = Math.max(0, netSale - basis)
+    const full = married ? 500000 : 250000
+    const eligible24 = monthsOwned >= 24
+    const exclusion = eligible24
+      ? full
+      : qualReason
+        ? Math.min(full, full * (monthsOwned / 24))
+        : 0
+    const taxableBeforeRecap = Math.max(0, gain - exclusion)
+    const recapture = Math.min(depreciation, gain) * 0.25
+    const ltcgPart = Math.max(0, taxableBeforeRecap - Math.min(depreciation, gain))
+    const tax = recapture + ltcgPart * (ltcgRate / 100)
+    return { basis, gain, exclusion, eligible24, taxableBeforeRecap, recapture, ltcgPart, tax }
+  }, [netSale, price, improvements, married, monthsOwned, qualReason, depreciation, ltcgRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Net sale proceeds (after selling costs)" value={netSale} onChange={setNetSale} prefix="$" />
+          <Field label="Original purchase price" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Improvements (not repairs)" value={improvements} onChange={setImprovements} prefix="$" />
+          <Field label="Months owned AND lived in (of last 5 yrs)" value={monthsOwned} onChange={setMonthsOwned} step="1" />
+          <Field label="Depreciation claimed (rental years)" value={depreciation} onChange={setDepreciation} prefix="$" />
+          <Field label="Your LTCG rate" value={ltcgRate} onChange={setLtcgRate} suffix="%" step="5" />
+        </div>
+        <div className="flex flex-wrap gap-4">
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={married} onChange={(e) => setMarried(e.target.checked)} className="h-4 w-4" />
+            Married filing jointly ($500k exclusion)
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={qualReason} onChange={(e) => setQualReason(e.target.checked)} className="h-4 w-4" />
+            If under 24 months: sale is due to job move, health, or unforeseen circumstances
+          </label>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Adjusted basis" value={usd(r.basis)} />
+          <Result label="Total gain" value={usd(r.gain)} />
+          <Result label="§121 exclusion" value={usd(r.exclusion)} />
+          <Result label="Taxable gain" value={usd(r.taxableBeforeRecap)} />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Depreciation recapture (25%)" value={usd(r.recapture)} />
+          <Result label="Tax on remaining gain" value={usd(r.ltcgPart * (ltcgRate / 100))} />
+          <Result big label="Federal tax on the sale" value={usd(r.tax)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.tax === 0
+            ? `Fully sheltered: your ${usd(r.gain)} gain fits inside the ${usd(r.exclusion)} exclusion${r.recapture > 0 ? ' (after recapture)' : ''} — no federal tax on the sale. ${depreciation > 0 ? 'Watch it: recapture above would still apply if rental-period depreciation existed.' : ''}`
+            : `Tax bill: ${usd(r.tax)} federal — ${r.recapture > 0 ? `${usd(r.recapture)} is depreciation recapture at the flat 25% rate (never excludable), plus ` : ''}${usd(r.ltcgPart * (ltcgRate / 100))} at your ${num(ltcgRate, 0)}% LTCG rate. State tax stacks on top in most states.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The §121 exclusion requires owning AND using the home as your primary residence for 2 of the 5 years before sale — the months can be broken up. Short of 24 months, a partial exclusion (months/24 × the cap) applies ONLY for job relocation (50+ miles), health, or unforeseen circumstances (divorce, death, multiple births, disaster per IRS regs) — "I wanted a bigger house" gets nothing. Basis improvements sellers forget: additions, systems, kitchens, landscaping, purchase closing costs, and special-assessment levies — repairs and maintenance don't count, and improvement receipts from 20 years ago still count. Rental history cuts both ways: depreciation you claimed (or SHOULD have claimed — "allowed or allowable") is recaptured at 25% even inside the exclusion, and nonqualified-use periods after 2008 can trim the exclusion for converted rentals. Above the exclusion, LTCG rates are 0/15/20% plus the 3.8% net investment income tax at $200k/$250k MAGI — this tool's single LTCG rate field approximates; stack state tax (0–13.3%) on top. Estimates — IRS Pub 523 and your CPA govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8773,6 +8846,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'hoa-true-cost-calculator': HoaTrueCostCalc,
   'seller-net-sheet-calculator': SellerNetSheetCalc,
   'mortgage-buydown-calculator': BuydownCalc,
+  'home-sale-capital-gains-calculator': HomeSaleGainsCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

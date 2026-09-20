@@ -669,6 +669,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'home-sale-capital-gains-calculator',
+    title: 'Home Sale Capital Gains Calculator 2026 — The §121 Exclusion, Partial Exclusion, and Depreciation Recapture',
+    shortTitle: 'Home Sale Tax',
+    category: 'Housing & Mortgage',
+    description:
+      'Will you owe tax on your home sale? Compute adjusted basis, the $250k/$500k §121 exclusion, the partial exclusion for early sales, and the 25% depreciation recapture that survives everything.',
+    tagline: 'A $350,000 gain on your home costs $0 if you clear §121 — and $15,000+ if you don\'t. The 2-of-5-years rule decides.',
+    intro:
+      'Most home sales are federally tax-free, but the margin between "nothing owed" and a five-figure bill is a calendar rule: own and live in the home 2 of the last 5 years and $250,000 of gain ($500,000 married) vanishes from taxation. Sell at 23 months for a bigger house and the exclusion is zero; sell for a job move and you get a prorated share. And one line never gets excluded: depreciation claimed during rental years comes back at a flat 25%, even inside the exclusion. This calculator runs basis, exclusion, partial exclusion, and recapture on your numbers — the five minutes before listing that prevents the April surprise.',
+    howItWorks: [
+      'Enter net sale proceeds (after selling costs) and your purchase price plus improvements.',
+      'Enter months owned-and-occupied in the last 5 years, and your filing status.',
+      'Add any depreciation claimed during rental years — that part is always recaptured.',
+      'Read the exclusion, the taxable gain, and the federal bill.',
+    ],
+    faq: [
+      {
+        q: 'How does the 2-out-of-5-years rule actually work?',
+        a: 'Both tests, within the 5 years ending on the sale date: ownership (you owned it 24 months) and use (it was your primary residence 24 months). The months don\'t need to be consecutive or recent — 24 scattered months within the window count. Married filing jointly gets $500,000 if either spouse owned it and both used it. You can use §121 once every 2 years. The military/extension wrinkle: service members on qualified extended duty can suspend the 5-year window up to 10 years. And the exclusion is per sale of a PRIMARY residence only — vacation homes and pure rentals get nothing unless you convert them (move back in 2+ years, with nonqualified-use limits for post-2008 rental periods).',
+      },
+      {
+        q: 'I have to sell at 18 months. Is the exclusion gone?',
+        a: 'Not if the reason qualifies — the partial exclusion prorates the cap by months/24 for sales driven by work (new job 50+ miles away), health (moving for diagnosis/treatment, or to care for family), or unforeseen circumstances as the IRS defines them (divorce, death of a spouse, job loss, multiple birth, disaster, condemnation). At 18 months: 18/24 × $250,000 = $187,500 of exclusion. The failed-reason list matters as much: wanting a bigger house, a nicer neighborhood, or lower taxes qualifies for nothing — full gain is taxable. Document the qualifying reason contemporaneously (relocation letter, physician recommendation); the IRS can ask years later.',
+      },
+      {
+        q: 'Why do I owe recapture tax if the sale was tax-free?',
+        a: 'Because depreciation was never exempted — only deferred, and §121 doesn\'t cover it. Every dollar of depreciation claimed (or claimable — "allowed or allowable," meaning skipping it doesn\'t dodge it) during rental or home-office periods is recaptured at up to 25% at sale. $40,000 of rental-period depreciation = $10,000 of tax even when the rest of the gain is fully excluded. The lessons: home-office depreciation claims trade a small annual deduction for 25% recapture later (the simplified $5/sqft method avoids it entirely), converted rentals should model recapture before deciding to sell vs 1031 (investment property can defer EVERYTHING via exchange, but §121 and 1031 don\'t stack cleanly), and inherited property escapes both — the stepped-up basis wipes gain and recapture alike.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
