@@ -3543,6 +3543,69 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pressure-washing-pricing-calculator',
+    title: 'Pressure Washing Pricing Calculator — Per-SqFt Quotes With Rig Amortization, Chemicals, and Drive Time',
+    shortTitle: 'Pressure Washing Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Quote pressure washing jobs by the square foot and see the real profit: chemicals, rig amortization over a 3-year life, fuel, and labor for site AND drive time. Effective hourly, margin, and the minimum-fee logic included.',
+    tagline: 'An 800 sqft driveway at $0.20 quotes $160 and clears $88 — but only because the drive, the chemicals, and the $5,000 rig are all in the cost.',
+    intro:
+      'Pressure washing is the classic “high margin” side business — until the drive time, chemicals, and a $5,000 rig get priced in honestly. This calculator does it right: square footage times your rate sets the quote, then the true cost comes out — chemicals, machine amortization, fuel, and labor for the hours on site AND behind the wheel. An 800 sqft driveway at $0.20/sqft quotes $160 and clears $88 at an effective $80/hr; a 2,400 sqft house soft-wash at $0.14 is a $336 ticket. See the margin before you say yes, and learn why the $99 minimum service fee is the rule that keeps small jobs from being charity.',
+    howItWorks: [
+      'Enter job size and rate per sqft — $0.15–0.25 flatwork, $0.10–0.16 house soft-wash.',
+      'Enter hours on site and drive hours — both cost labor.',
+      'Enter labor rate, rig value, and jobs per year — the rig amortizes over 3 seasons.',
+      'Read the quote, true cost, profit with margin, and effective hourly.',
+    ],
+    faq: [
+      {
+        q: 'Why is a minimum service fee non-negotiable?',
+        a: 'Because small jobs carry the same fixed trip cost as big ones. Any job under about 45 minutes of work still costs the drive, the setup, the fuel, and the rig line — at this calculator’s defaults that fixed floor is about $55 before a square foot is washed. A $99–125 minimum means the smallest job still pays; without it, “quick little jobs” are the fastest route to a busy, broke season. The same logic drives route density: three driveways on one street share the drive three ways and beat three scattered jobs at higher rates. Market your minimum as a feature — “our $125 visit covers your driveway AND walkways” — and the upsells that share a trip (house wash plus driveway plus patio) are pure margin because the fixed cost is already paid.',
+      },
+      {
+        q: 'Pressure or soft wash — does it change the price?',
+        a: 'The method changes the cost structure, so yes. Flatwork (driveways, sidewalks) is pressure work — fast, chemical-light, priced at $0.15–0.25/sqft. Roofs, siding, and painted surfaces want soft wash — low pressure where the chemical does the work — priced $0.10–0.16/sqft for area but carrying a heavier chemical line (batch mixing SH is cheap per gallon but the dwell time is real labor). Pricing soft wash like flatwork undercharges the chemistry and overworks the machine; pricing flatwork like soft wash leaves money on the table. Decks and fences sit between at $0.20–0.35 by condition. Know your actual sqft-per-hour by surface from your job log — that number, more than any rate table, is what this calculator sharpens.',
+      },
+      {
+        q: 'How do the seasons change the math?',
+        a: 'Brutally, in most markets: pressure washing compresses into 8–9 working months, so the jobs-per-year input should reflect the REAL season — 300 jobs is a full solo year — and the rig amortization keeps ticking through winter whether you do. Two honest responses: price the season into the rate (the quote carries 12 months of rig in 9 months of work) and build the off-season revenue — holiday light installs, gutter cleaning, and fleet washing contracts are the classic winter bridges because they use the same truck, rig, and customer list. The operators who survive year two are the ones who ran these numbers in month one: 300 jobs at $160 average and 55% margin is $26,400 of profit on a $5,000 rig — a real business, but only if the jobs-per-year is honest.',
+      },
+    ],
+  },
+  {
+    slug: 'catering-price-per-person-calculator',
+    title: 'Catering Price Per Person Calculator — Food-Cost Targets, Staffing, and the Breakeven Guest Count',
+    shortTitle: 'Catering Price Per Person',
+    category: 'Freelance & Career',
+    description:
+      'Price catering by the guest: food cost divided by your food-cost target sets the per-person price, then subtract staffing, rentals, travel, and overhead to see event profit, margin, and the minimum guest count that keeps small parties profitable.',
+    tagline: '100 guests at $12 food cost and a 32% target prices at $37.50 a head — $1,350 profit, and below 38 guests the fixed costs eat the event.',
+    intro:
+      'Catering pricing looks simple — cost the food, multiply, quote — until staffing ratios, rentals, travel, and the overhead of running a kitchen get priced honestly. This calculator builds the quote the way profitable caterers do: food cost per person divided by your food-cost target (28–35% is the band) sets the per-person price, then every event cost comes out — staff at real ratios, rentals, travel, and 10% overhead. On a 100-guest event at $12 food cost, the $37.50-per-person price clears $1,350. And the breakeven guest count explains the industry’s least-loved line: why every caterer quotes a minimum instead of discounting small parties.',
+    howItWorks: [
+      'Enter guest count and food cost per person — costed from actual recipes, not vibes.',
+      'Enter your food-cost target — 28–35%, standard full-service is 32%.',
+      'Enter staff count, hours, and wage — buffet 1:25, plated 1:10–12.',
+      'Enter rentals and travel for the event.',
+      'Read price per person, event profit with margin, and breakeven guests.',
+    ],
+    faq: [
+      {
+        q: 'Why does every caterer enforce a minimum?',
+        a: 'Because fixed costs do not shrink with the guest list. Staff, rentals, travel, and prep exist whether 38 guests or 100 show up — at this calculator’s numbers the fixed wall is $825 per event, and each guest contributes $21.75 after food and overhead, so below 38 guests the event loses money at ANY viable per-person price. The minimum is not greed; it is the breakeven. The professional move is quoting it as a flat event minimum (“our events start at $1,500”) rather than a high per-person price for small parties — clients accept minimums far better than they accept $45 a head for a 20-person lunch. Small events you want anyway get priced as drop-off service, where labor collapses and the economics work at lower counts.',
+      },
+      {
+        q: 'Is the profit line really profit?',
+        a: 'Read it as event margin before owner pay — and that distinction matters. If you cook and run the event, your wage lives inside the profit number: a $1,350 margin on a 100-guest wedding is usually a 12-hour day plus a day of prep, so the honest owner hourly is part of interpreting the margin. The numbers that keep the margin real: food cost must come from actual recipe costing per plate (the plate-cost calculator does this line by line — a “$12” that is really $14.50 flips this event to $1,100), staff ratios by service style (buffet 1:25, plated 1:10–12, passed apps add a body), and the 5–10% overage buffer cooked into food cost for the guarantee count. Service style moves the whole structure: drop-off carries 25% food cost, buffet is the standard, plated adds 30–50% over buffet, and stations price like plated with more theater.',
+      },
+      {
+        q: 'How do deposits and final counts protect the margin?',
+        a: 'The contract prices the count guarantee, not attendance: 50% deposit to book, final headcount due 7 days out, and the client pays for the guaranteed number whether or not every seat fills — your food and staff are already bought by then. Build the cancellation ladder into the contract too (90+ days full refund less admin, 30–90 days half, inside 30 days the deposit is earned), because a canceled date in wedding season is inventory that cannot be resold. The last margin leak is scope creep in planning: tastings, extra planning meetings, and menu revisions are labor — two tastings included, then a line item, is the standard that keeps “just one more change” from eating the event’s profit before the first plate is fired.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

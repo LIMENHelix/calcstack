@@ -7662,6 +7662,117 @@ export function DjPricingCalc() {
   )
 }
 
+// PRESSURE WASHING PRICING — node-verified defaults: 800 sqft driveway × $0.20/sqft = $160 quote. Costs: 5% chemicals ($8) + rig amortization $5,000÷(3yr×300 jobs)=$5.56 + $8 fuel + 1.5h labor ($37.50 at $25/hr) + 0.5h drive ($12.50) = $71.56 → profit $88.44, margin 55.3%, effective $80/hr. House wash 2,400 sqft × $0.14 = $336.
+export function PressureWashCalc() {
+  const [sqft, setSqft] = useNumber(800)
+  const [rate, setRate] = useNumber(0.20)
+  const [onHrs, setOnHrs] = useNumber(1.5)
+  const [driveHrs, setDriveHrs] = useNumber(0.5)
+  const [wage, setWage] = useNumber(25)
+  const [rig, setRig] = useNumber(5000)
+  const [jobsYr, setJobsYr] = useNumber(300)
+
+  const r = useMemo(() => {
+    const quote = sqft * rate
+    const chem = quote * 0.05
+    const rigJob = jobsYr > 0 ? rig / (3 * jobsYr) : 0
+    const fuel = 8
+    const labor = onHrs * wage
+    const driveCost = driveHrs * wage
+    const cost = chem + rigJob + fuel + labor + driveCost
+    const profit = quote - cost
+    const margin = quote > 0 ? (profit / quote) * 100 : 0
+    const effHr = onHrs + driveHrs > 0 ? quote / (onHrs + driveHrs) : 0
+    return { quote, cost, profit, margin, effHr, rigJob }
+  }, [sqft, rate, onHrs, driveHrs, wage, rig, jobsYr])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Job size" value={sqft} onChange={setSqft} suffix="sqft" step="100" />
+          <Field label="Rate per sqft" value={rate} onChange={setRate} prefix="$" step="0.02" />
+          <Field label="Hours on site" value={onHrs} onChange={setOnHrs} step="0.25" />
+          <Field label="Drive hours" value={driveHrs} onChange={setDriveHrs} step="0.25" />
+          <Field label="Labor rate" value={wage} onChange={setWage} prefix="$" suffix="/hr" step="1" />
+          <Field label="Rig value" value={rig} onChange={setRig} prefix="$" step="500" />
+          <Field label="Jobs per year" value={jobsYr} onChange={setJobsYr} step="25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Quote" value={usd(Math.round(r.quote))} big />
+          <Result label="True cost" value={usd(Math.round(r.cost))} />
+          <Result label="Profit" value={`${usd(Math.round(r.profit))} (${num(r.margin, 0)}%)`} />
+          <Result label="Effective rate" value={`${usd(Math.round(r.effHr))}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.profit > 0
+            ? `${usd(Math.round(r.quote))} quote → ${usd(Math.round(r.profit))} profit at ${num(r.margin, 0)}% margin — ${usd(Math.round(r.effHr))}/hr effective including the drive. The rig carries ${usd(Math.round(r.rigJob * 100) / 100)} of every job whether you charge for it or not.`
+            : `At ${usd(Math.round(r.quote))} this job loses ${usd(Math.abs(Math.round(r.profit)))} — raise the rate or this is a busy day going backward.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: quote = sqft × rate (driveways $0.15–0.25, house soft-wash $0.10–0.16, decks $0.20–0.35 by region and grime); true cost = 5% chemicals + rig amortization (rig ÷ 3-year life ÷ jobs/yr) + fuel + labor for site AND drive time. The rates that decide this business: minimum service fee — any job under ~45 minutes of work still costs the drive and setup, so a $99–125 minimum is standard and small jobs below it are charity; route density (three driveways on one street amortize the drive three ways); and upsells on site (house wash + driveway + patio as one ticket beats three trips). Soft wash vs pressure: roofs and siding want soft wash (low pressure, chemical does the work) — pricing it like flatwork undercharges the chemical cost and overworks the machine. Seasonal reality: most markets compress into 8-9 working months, so the jobs/yr input should reflect that — 300 jobs is a FULL season for a solo operator, and winter is when the rig amortization keeps ticking. Add-ons with real margin: gutter brightening, rust removal, post-wash sealant (sealant is 15 minutes and $100+). Insurance note: one etched window or striped deck costs more than a month of premiums — GL is not optional at these margins. Estimate — your job log of actual sqft/hr and drive times governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// CATERING PER-PERSON — node-verified defaults: 100 guests × $12 food cost at a 32% food-cost target = $37.50/person price. Revenue $3,750; costs: food $1,200 + staff 4×5h×$20=$400 + rentals $350 + travel $75 + 10% overhead $375 = $2,400 → profit $1,350, margin 36%. Breakeven: fixed $825 ÷ contribution $21.75/guest = 38 guests.
+export function CateringCalc() {
+  const [guests, setGuests] = useNumber(100)
+  const [foodPP, setFoodPP] = useNumber(12)
+  const [fcPct, setFcPct] = useNumber(32)
+  const [staff, setStaff] = useNumber(4)
+  const [staffHrs, setStaffHrs] = useNumber(5)
+  const [wage, setWage] = useNumber(20)
+  const [rentals, setRentals] = useNumber(350)
+  const [travel, setTravel] = useNumber(75)
+
+  const r = useMemo(() => {
+    const pricePP = fcPct > 0 ? foodPP / (fcPct / 100) : 0
+    const revenue = guests * pricePP
+    const food = guests * foodPP
+    const labor = staff * staffHrs * wage
+    const overhead = revenue * 0.10
+    const cost = food + labor + rentals + travel + overhead
+    const profit = revenue - cost
+    const margin = revenue > 0 ? (profit / revenue) * 100 : 0
+    const contrib = pricePP - foodPP - pricePP * 0.10
+    const fixed = labor + rentals + travel
+    const be = contrib > 0 ? fixed / contrib : Infinity
+    return { pricePP, revenue, cost, profit, margin, be }
+  }, [guests, foodPP, fcPct, staff, staffHrs, wage, rentals, travel])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Guests" value={guests} onChange={setGuests} step="10" />
+          <Field label="Food cost per person" value={foodPP} onChange={setFoodPP} prefix="$" step="1" />
+          <Field label="Food-cost target" value={fcPct} onChange={setFcPct} suffix="%" step="1" />
+          <Field label="Staff count" value={staff} onChange={setStaff} step="1" />
+          <Field label="Staff hours" value={staffHrs} onChange={setStaffHrs} step="1" />
+          <Field label="Staff wage" value={wage} onChange={setWage} prefix="$" suffix="/hr" step="1" />
+          <Field label="Rentals" value={rentals} onChange={setRentals} prefix="$" step="25" />
+          <Field label="Travel" value={travel} onChange={setTravel} prefix="$" step="25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Price per person" value={usd(Math.round(r.pricePP * 100) / 100)} big />
+          <Result label="Event revenue" value={usd(Math.round(r.revenue))} />
+          <Result label="Event profit" value={`${usd(Math.round(r.profit))} (${num(r.margin, 0)}%)`} />
+          <Result label="Breakeven guests" value={isFinite(r.be) ? num(Math.ceil(r.be), 0) : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Price at ${usd(Math.round(r.pricePP * 100) / 100)}/person: ${guests} guests = ${usd(Math.round(r.revenue))} revenue, ${usd(Math.round(r.profit))} profit after food, staff, rentals, travel, and 10% overhead. Below ${isFinite(r.be) ? Math.ceil(r.be) : '—'} guests the fixed costs eat the event — small parties need a minimum, not a discount.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: price per person = food cost ÷ food-cost target (28–35% is the catering band; 32% is standard full-service); profit = revenue − food − staff − rentals − travel − 10% overhead (kitchen rent, insurance, licenses, marketing, admin). This margin is BEFORE owner pay — if you cook and manage, your wage is inside the profit line, so a 36% event margin on $3,750 is $1,350 for what is usually a 12-hour day plus prep: honest hourly is part of reading this number. The structural rules: food cost is the anchor and must be costed per plate from actual recipes (the plate-cost calculator does this line by line), staff ratios decide labor (buffet 1:25, plated 1:10–12, passed apps add a body), and breakeven guests is why every caterer has a minimum — below 38 guests here the event loses money at any per-person price under the fixed-cost wall, so charge a flat event minimum instead of discounting. Pricing tiers by service style: drop-off (lowest labor, 25% food-cost workable), buffet (standard), plated (premium, +30–50% over buffet), stations (highest theater, price like plated). Deposits and final counts: 50% to book, final headcount 7 days out, and the contract prices the COUNT GUARANTEE — the client pays for the final number given, not the number who show. Waste buffer: order for 5–10% over the guarantee and price it into the food cost. Estimate — your recipe costing sheets and staff logs from actual events govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -13381,6 +13492,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'photographer-session-pricing-calculator': PhotoSessionCalc,
   'tattoo-split-vs-booth-rental-calculator': TattooSplitCalc,
   'event-dj-pricing-calculator': DjPricingCalc,
+  'pressure-washing-pricing-calculator': PressureWashCalc,
+  'catering-price-per-person-calculator': CateringCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
