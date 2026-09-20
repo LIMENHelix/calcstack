@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'tank-vs-tankless-calculator',
+    title: 'Tank vs Tankless Water Heater Calculator 2026 — Annualized Cost, the Descaling Bill Nobody Quotes',
+    shortTitle: 'Tank vs Tankless',
+    category: 'Home & Yard',
+    description:
+      'Settle the debate with annualized cost: installed price over lifespan plus energy plus mandatory descaling. At moderate use the tank quietly wins; high hot-water volume is what flips it to tankless.',
+    tagline: 'Annualized honestly — $590/yr tank vs $635/yr tankless at moderate use: the tank wins, and tankless is a lifestyle upgrade, not a savings plan.',
+    intro:
+      'The tankless pitch is efficiency; the math says usage decides. Annualized at a 4% discount rate — installed cost over lifespan, plus energy, plus the $100/yr descaling that hard water makes mandatory — a $1,600 tank at $35/mo costs $590 a year while a $3,200 tankless at $25/mo costs $635. The tank wins at moderate use, and only a high-volume household ($45 vs $30/mo) flips it to $710 vs $695. Electric tankless collapses the case entirely when the panel upgrade lands ($1,500–3,000 for 100+ amp service). What tankless genuinely sells is endless hot water, a 20-year life, no 40-gallon flood risk, and floor space — legitimate, but they\'re lifestyle, not savings. This calculator prices both honestly so you buy the right reason.',
+    howItWorks: [
+      'Enter installed costs for both — get real quotes; electric tankless must include panel work.',
+      'Enter expected lifespans (tank 10–12 yrs, tankless ~20 with maintenance).',
+      'Enter monthly energy for each — your current bill and the DOE-based estimate for the tankless.',
+      'Add tankless maintenance (descaling, ~$100/yr in hard water) and a discount rate.',
+      'Read annualized cost for both and which wins at YOUR usage.',
+    ],
+    faq: [
+      {
+        q: 'Why does the tank often win on cost?',
+        a: 'Because the efficiency gap is smaller than advertised and the price gap is bigger. The DOE\'s 24–34% tankless savings figure assumes ~41 gallons/day of use — modest households see less because the tank\'s standby losses are a smaller slice of a small bill, and modern tanks are far better insulated than the 2005 units in the comparisons. Against that modest saving, tankless charges double upfront, plus descaling, plus (often) gas-line upsizing. The annuity math then does its quiet work: $1,600 over 12 years costs less per year than $3,200 over 20, even before energy. High-usage households flip it — showers for six, a soaking tub, simultaneous laundry — which is exactly who tankless marketing features. Know which household you are.',
+      },
+      {
+        q: 'What kills a tankless unit early?',
+        a: 'Scale — which is why the maintenance line in this calculator isn\'t optional. Hard water deposits calcium on the heat exchanger; efficiency drops, then the exchanger overheats and fails, and the 20-year lifespan becomes 8. Manufacturers\' warranties require annual descaling (a $100–150 service call or a DIY flush kit) and hard-water homes need it religiously — some need a softener upstream, which is its own cost line. Gas units also need combustion air and proper venting; a tankless retrofit into a closet that barely fit the tank creates venting costs that don\'t appear in the mail-order price. The honest tankless owner\'s manual: descale annually, size for peak simultaneous flow (showers + dishwasher), and never buy electric tankless for a whole house without pricing the panel upgrade first.',
+      },
+      {
+        q: 'What maintenance does a tank actually need?',
+        a: 'Two things, both cheap, and they double its life. The anode rod — the sacrificial magnesium rod that corrodes INSTEAD of the tank — should be checked every 3–5 years ($20 part, $150 installed); a replaced rod is the single highest-ROI maintenance in homeownership, routinely pushing tanks from 10 years to 15+. And the age check: know your tank\'s manufacture date (encoded in the serial number), because a 12-year-old tank is a 40-gallon flood on a timer — the failure mode isn\'t "stops heating," it\'s "floods the floor at 3am." A drain pan with a $15 water alarm is the cheapest insurance in the house. Annual flushing (sediment out of the bottom) keeps efficiency up and rumbling down. Do those three and the boring tank beats the flashy tankless on cost for most households — which is exactly what the calculator shows.',
+      },
+    ],
+  },
+  {
     slug: 'repair-vs-replace-calculator',
     title: 'Repair vs Replace Calculator 2026 — The $5,000 Rule Plus the Real Ledger (HVAC, Water Heaters, Appliances)',
     shortTitle: 'Repair vs Replace',

@@ -4819,6 +4819,58 @@ export function RepairReplaceCalc() {
   )
 }
 
+// TANK VS TANKLESS — annualized cost settles the argument, and the honest answer is usage-dependent. Node-verified @4% discount: tank $1,600 installed / 12-yr life / $35/mo energy → $590/yr annualized; tankless $3,200 / 20-yr / $25/mo + $100/yr descaling → $635/yr — TANK WINS at moderate use. High-use household ($45 vs $30/mo): $710 vs $695 — tankless edges it. The flip point is hot-water VOLUME and gas vs electric (electric tankless needs 100+ amp service upgrades — add $1,500-3,000 panel work and it's never close; gas tankless needs bigger gas line often). Honest edges: tankless real advantages are NOT efficiency (endless hot water, 20-yr life, no flood risk, space — price those as lifestyle, not savings), standby losses on tanks are shrinking (modern tanks are well-insulated; the 24-34% DOE tankless savings figure assumes 41 gal/day and shrinks at high use), descaling is mandatory in hard water (skip it and the heat exchanger dies early — that's the $100/yr), and tank FAILURE risk (a 12-yr-old tank is a 40-gallon flood waiting — the pan and the age-check are the real tank maintenance).
+export function TankVsTanklessCalc() {
+  const [tankCost, setTankCost] = useNumber(1600)
+  const [tlCost, setTlCost] = useNumber(3200)
+  const [tankLife, setTankLife] = useNumber(12)
+  const [tlLife, setTlLife] = useNumber(20)
+  const [tankMo, setTankMo] = useNumber(35)
+  const [tlMo, setTlMo] = useNumber(25)
+  const [maint, setMaint] = useNumber(100)
+  const [disc, setDisc] = useNumber(4)
+
+  const r = useMemo(() => {
+    const r0 = disc / 100
+    const ann = (n: number) => (r0 === 0 ? n : (1 - Math.pow(1 + r0, -n)) / r0)
+    const tankAnn = tankCost / ann(Math.max(1, tankLife)) + tankMo * 12
+    const tlAnn = tlCost / ann(Math.max(1, tlLife)) + tlMo * 12 + maint
+    const diff = tankAnn - tlAnn
+    // usage flip point: tankMo where tl wins → solve tankMo*12 - tlMo*12*(tankMo/... approximate linear
+    return { tankAnn, tlAnn, diff }
+  }, [tankCost, tlCost, tankLife, tlLife, tankMo, tlMo, maint, disc])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Tank installed cost" value={tankCost} onChange={setTankCost} prefix="$" step="100" />
+          <Field label="Tankless installed cost" value={tlCost} onChange={setTlCost} prefix="$" step="100" />
+          <Field label="Tank lifespan" value={tankLife} onChange={setTankLife} step="1" />
+          <Field label="Tankless lifespan" value={tlLife} onChange={setTlLife} step="1" />
+          <Field label="Tank energy /mo" value={tankMo} onChange={setTankMo} prefix="$" step="5" />
+          <Field label="Tankless energy /mo" value={tlMo} onChange={setTlMo} prefix="$" step="5" />
+          <Field label="Tankless maint /yr" value={maint} onChange={setMaint} prefix="$" step="25" />
+          <Field label="Discount rate" value={disc} onChange={setDisc} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Tank — annualized cost" value={usd(r.tankAnn)} />
+          <Result label="Tankless — annualized cost" value={usd(r.tlAnn)} />
+          <Result big label={r.diff > 0 ? 'Tankless saves' : 'Tank saves'} value={`${usd(Math.abs(r.diff))}/yr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.diff > 0
+            ? `Tankless wins by ${usd(Math.abs(Math.round(r.diff)))}/yr at your usage — high hot-water volume is what flips it. Add the lifestyle wins (endless showers, no 40-gallon flood risk, closet space back) and it's a clean call.`
+            : `At your usage the TANK wins by ${usd(Math.abs(Math.round(r.diff)))}/yr — the tankless premium never pays back on energy alone. Buy tankless for endless hot water and the 20-year life, not for savings; or take the tank and bank the ${usd(tlCost - tankCost)} difference.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: annualized cost = installed cost ÷ present-value annuity over lifespan + annual energy + maintenance (tankless descaling, ~$100/yr, mandatory in hard water — skip it and the heat exchanger dies young). The honest surprises: the DOE's 24–34% tankless efficiency figure assumes ~41 gal/day and SHRINKS at high use; electric tankless usually needs 100+ amp service and panel work ($1,500–3,000 — add it to installed cost and the case collapses); gas tankless often needs an upsized gas line. Tankless's real advantages aren't efficiency: endless hot water, 20-year life, no tank-burst flood risk, and floor space — legitimate, but they're lifestyle, not savings. Tank owners: the maintenance that matters is the anode rod (5-yr check, doubles tank life) and the age check — a 12-year-old tank is a 40-gallon flood on a timer, and a drain pan with a $15 alarm is the cheapest insurance in the house. Estimates — installer quotes and your gas/electric rates govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10479,6 +10531,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'service-call-fee-calculator': ServiceCallFeeCalc,
   'customer-ltv-cac-calculator': LtvCacCalc,
   'repair-vs-replace-calculator': RepairReplaceCalc,
+  'tank-vs-tankless-calculator': TankVsTanklessCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
