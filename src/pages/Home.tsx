@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { CALCULATORS, CATEGORIES } from '@/data/calculators'
+import { VARIANTS } from '@/data/variants'
 import { PERSONAS } from '@/data/personas'
 import { Seo } from '@/components/Seo'
 import { SearchBar } from '@/components/SearchBar'
@@ -10,17 +11,17 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="CalcStack — Free Calculators for Your Job & Your Money"
-        description="Free, instant calculators organized by the job you do: contractor bid sheets and markup math, agent commission splits, trainer rates, gig-driver mileage deductions, paychecks by state, mortgages, and everyday money. No signup — runs in your browser."
+        title="CalcStack — 530 Free Calculators for Work, Money & Life"
+        description="Free, instant calculators for every job and every money question: contractor bids, salon and studio pricing, paychecks by state, mortgages, training and nutrition math, retirement, and everyday life. No signup — runs in your browser."
       />
       <section className="mb-10 mt-4 text-center">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Money questions, <span className="text-primary">answered in seconds.</span>
+          The math behind your work, <span className="text-primary">answered in seconds.</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          {CALCULATORS.length} free calculators — business math for contractors, agents, trainers, drivers, and
-          restaurant owners, plus paychecks by state and everyday money. Results update as you type, and every
-          calculation runs in your browser — no accounts, no uploads, no email gates.
+          {CALCULATORS.length + VARIANTS.length} free calculators — by profession, by state, by goal. Bid sheets and
+          salon pricing, paychecks and mortgages, training cycles and retirement math. Results update as you type,
+          and every calculation runs in your browser — no accounts, no uploads, no email gates.
         </p>
         <SearchBar />
         <p className="mt-3 text-sm text-muted-foreground">
