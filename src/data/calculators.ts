@@ -1134,6 +1134,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'bid-win-rate-calculator',
+    title: 'Bid Win Rate Calculator 2026 — Estimating Costs vs Job Margin: the Pipeline Breakeven',
+    shortTitle: 'Bid Win Rate',
+    category: 'Trades & Engineering',
+    description:
+      'Price your estimating pipeline: bids per month × cost per estimate versus wins × job margin. See net after estimating, net per bid, and the breakeven win rate and margin your pipeline must clear.',
+    tagline: 'Twelve $400 estimates a month is $4,800 — at 25% wins and 20% margins the pipeline nets $1,800, and breakeven is 18.2% or the estimating loses money.',
+    intro:
+      'Every bid costs money whether you win or not — and "free estimates" are the biggest hidden cost in contracting. A shop submitting 12 bids a month at $400 each (site visit, takeoff, proposal, owner time at the burdened rate) spends $4,800 monthly on estimating. At a 25% win rate on $11,000 jobs at 20% margin, the wins return $6,600 — net $1,800 a month, $150 per bid submitted. The breakevens frame every pipeline decision: win rate must clear 18.2% at that margin, or margin must clear 14.5% at that win rate, or estimating itself loses money. This calculator prices the pipeline so the bid/no-bid decision — where contracting profit actually lives — runs on numbers instead of calendar panic.',
+    howItWorks: [
+      'Enter bids submitted per month and the true cost per estimate — site visit, takeoff, proposal, YOUR time burdened.',
+      'Enter your win rate from your pipeline log (not from memory).',
+      'Enter average job value and job margin.',
+      'Read estimating spend, job profit, net after estimating, and the breakeven win rate and margin.',
+    ],
+    faq: [
+      {
+        q: 'How do I figure my real cost per estimate?',
+        a: 'Time × burdened rate, honestly counted. A residential estimate commonly runs: 45-minute site visit plus drive time (1.5 hrs), an hour of takeoff and pricing, thirty minutes writing the proposal, fifteen of follow-up — call it 3.5 hours. At a burdened owner/sales rate of $75/hr that\'s $263 before vehicle cost; commercial takeoffs run days, not hours, and four figures per bid is normal. The trap is zeroing your own evenings — owner-time spent estimating is the most expensive time in the company because it displaces selling, supervision, and rest. Track it for one month: bids submitted, hours each, wins. That log becomes the most valuable management data in the business, and it powers every lever this calculator exposes.',
+      },
+      {
+        q: 'My win rate is below breakeven — what do I fix first?',
+        a: 'Qualification, then close rate, then speed — in that order. Qualification: most low win rates are a bidding-the-wrong-jobs problem, not a pricing problem. A two-minute budget conversation before the site visit ("projects like this typically run $X–$Y — is that in the range you\'re planning?") eliminates the bids you were never winning; disciplined shops decline 40% of invitations and win more of what they bid. Close rate: same spend, more wins — a 48-hour follow-up cadence and a proposal that reads like a plan rather than a number routinely move close rates five points. Speed last: templates and unit pricing cut cost per bid, which lowers the breakeven — valuable, but it makes you efficiently wrong if the first two leaks are open. Raise prices only after the pipeline is clean — a clean pipeline tells you within a month whether the market pays your margin.',
+      },
+      {
+        q: 'Should I charge for estimates?',
+        a: 'Sometimes — and the calculator shows you when the question matters. Free estimates are a marketing expense: legitimate when win rates are healthy and ticket sizes carry the spend, corrosive when they don\'t. Charging (or crediting the fee to the signed job) works when: your estimate includes real design or diagnostic value, your market position supports it, or tire-kicker volume is destroying the pipeline economics — the fee is a qualification filter that raises win rate more than it cuts bid count. It fails in price-shopped commodity work where three free bids are the norm. The honest middle: free for qualified leads who pass the budget conversation, paid for anything involving drawings, engineering, or diagnostics. Run this calculator with and without the fee\'s effect on bids and win rate — the fee often IMPROVES net even with fewer bids, which is the whole argument.',
+      },
+    ],
+  },
+  {
     slug: 'warranty-reserve-calculator',
     title: 'Warranty Reserve Calculator 2026 — Callback Cost as a % of Revenue, With a Statistical Buffer',
     shortTitle: 'Warranty Reserve',

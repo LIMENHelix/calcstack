@@ -4516,6 +4516,55 @@ export function WarrantyReserveCalc() {
   )
 }
 
+// BID WIN-RATE ECONOMICS — the estimating pipeline priced: every bid costs money whether you win or not. Node-verified: 12 bids/mo × $400 estimating cost (site visit + takeoff + proposal, your time at burdened rate) = $4,800/mo estimating spend; 25% win rate → 3 jobs × $11k avg × 20% margin = $6,600 gross profit → NET $1,800/mo, $150 net per bid submitted. Breakevens: win rate must exceed 18.2% at this margin, or margin must exceed 14.5% at this win rate — below either, estimating loses money. Honest edges: estimating cost is real even when it's your own evenings (price your time at the burdened rate — "free" estimates are the biggest hidden cost in contracting), win rate is a PIPELINE metric (low win rate = bidding wrong jobs or wrong prices; the fix is qualifying harder BEFORE the site visit, not bidding more), the bid/no-bid decision is where profit lives (a disciplined shop bids 60% of invitations; chasing everything guarantees a bad win rate AND estimating burnout), and margin vs win rate trade: raising margin lowers win rate — the optimum is where net/mo peaks, not where the calendar is fullest.
+export function BidWinRateCalc() {
+  const [bids, setBids] = useNumber(12)
+  const [estCost, setEstCost] = useNumber(400)
+  const [win, setWin] = useNumber(25)
+  const [job, setJob] = useNumber(11000)
+  const [margin, setMargin] = useNumber(20)
+
+  const r = useMemo(() => {
+    const wins = (bids * win) / 100
+    const rev = wins * job
+    const profit = (rev * margin) / 100
+    const estSpend = bids * estCost
+    const net = profit - estSpend
+    const perBid = bids > 0 ? net / bids : 0
+    const beWin = job * margin > 0 ? (estCost / (job * (margin / 100))) * 100 : Infinity
+    const beMargin = wins > 0 ? (estSpend / rev) * 100 : Infinity
+    return { wins, rev, profit, estSpend, net, perBid, beWin, beMargin }
+  }, [bids, estCost, win, job, margin])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <Field label="Bids per month" value={bids} onChange={setBids} step="1" />
+          <Field label="Cost per estimate" value={estCost} onChange={setEstCost} prefix="$" step="50" />
+          <Field label="Win rate" value={win} onChange={setWin} suffix="%" step="1" />
+          <Field label="Avg job value" value={job} onChange={setJob} prefix="$" step="500" />
+          <Field label="Job margin" value={margin} onChange={setMargin} suffix="%" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Estimating spend /mo" value={usd(r.estSpend)} />
+          <Result label="Job profit /mo" value={usd(r.profit)} />
+          <Result label="Net after estimating" value={usd(r.net)} big />
+          <Result label="Breakeven win rate" value={`${num(r.beWin, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.net >= 0
+            ? `The pipeline clears: ${usd(Math.round(r.net))}/mo net of estimating, ${usd(Math.round(r.perBid))} net per bid submitted. Breakeven win rate is ${num(r.beWin, 1)}% — you're at ${win}%. ${win < 30 ? 'The lever with the most travel: qualify harder before the site visit, not more bids.' : 'Healthy hit rate — protect it by staying picky.'}`
+            : `The pipeline loses ${usd(Math.round(-r.net))}/mo: at a ${win}% win rate and ${margin}% margin, estimating costs more than the jobs return. Breakeven needs ${num(r.beWin, 1)}% wins or ${num(r.beMargin, 1)}% margins — qualify harder, raise prices, or shrink the estimate process.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: estimating spend = bids × cost per estimate (site visit + takeoff + proposal, YOUR time at the burdened rate — "free estimates" are the biggest hidden cost in contracting; a half-day on a bid at $75/hr burdened owner time is $300 before gas); job profit = wins × job value × margin; net = profit − estimating. Breakeven win rate = est cost ÷ (job value × margin) — at $400/bid, $11k jobs, 20% margin, you must win 1 in 5.5 just to pay for the estimating. The levers ranked: qualify harder BEFORE the visit (budget-question scripts cut wasted bids in half — the bid/no-bid decision is where profit lives; disciplined shops decline 40% of invitations), raise the close rate (same spend, more wins — follow-up cadence alone moves it), then estimate faster (templates, unit pricing). The margin/win-rate trade is real: raising margin lowers win rate — optimize NET per month, not calendar fullness. Estimates — your pipeline log governs; if you don't track bids submitted vs won, start today.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10170,6 +10219,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'equipment-hourly-cost-calculator': EquipmentHourlyCalc,
   'overtime-vs-hire-calculator': OvertimeVsHireCalc,
   'warranty-reserve-calculator': WarrantyReserveCalc,
+  'bid-win-rate-calculator': BidWinRateCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
