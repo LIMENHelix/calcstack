@@ -44,7 +44,7 @@ const HOUSE_ADS = [
     name: 'Your business here',
     blurb: 'Put your business in front of people actively doing money math. Drive real traffic.',
     cta: 'Message us to advertise',
-    href: 'mailto:chrishubbel72@gmail.com?subject=Advertise%20on%20CalcStack',
+    href: '/advertise',
   },
 ]
 let houseAdCounter = 0

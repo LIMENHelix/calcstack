@@ -36,6 +36,7 @@ const TaxSeason = lazy(() => import('./pages/TaxSeason'))
 const OpenEnrollment = lazy(() => import('./pages/OpenEnrollment'))
 const HomeBuying = lazy(() => import('./pages/HomeBuying'))
 const AuditAll = lazy(() => import('./pages/AuditAll'))
+const Advertise = lazy(() => import('./pages/Advertise'))
 
 const PageFallback = (
   <div className="py-20 text-center text-sm text-muted-foreground">Loading…</div>
@@ -68,6 +69,7 @@ export default function App() {
               <Route path="/tax-season" element={<TaxSeason />} />
               <Route path="/open-enrollment" element={<OpenEnrollment />} />
               <Route path="/home-buying" element={<HomeBuying />} />
+              <Route path="/advertise" element={<Advertise />} />
               <Route path="/for" element={<PersonaIndex />} />
               <Route path="/for/:slug" element={<PersonaPage />} />
               <Route path="*" element={<CalculatorPage />} />
