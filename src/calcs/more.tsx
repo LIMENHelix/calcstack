@@ -7875,6 +7875,110 @@ export function MobileMechanicCalc() {
   )
 }
 
+// TAX PREP PRICING — node-verified defaults: 120 individual returns × $350 + 15 business returns × $1,200 = $60,000 season revenue over 770 hours (55h/wk × 14wks) = $77.92/hr — effective $500/revenue-hour when you count only return-hours is a lie; the season includes admin, questions, and amended returns. The fee schedule is the business: per-form pricing punishes complexity honestly, hourly billing punishes your speed.
+export function TaxPrepCalc() {
+  const [ind, setInd] = useNumber(120)
+  const [indFee, setIndFee] = useNumber(350)
+  const [biz, setBiz] = useNumber(15)
+  const [bizFee, setBizFee] = useNumber(1200)
+  const [hrsWk, setHrsWk] = useNumber(55)
+  const [wks, setWks] = useNumber(14)
+  const [extPct, setExtPct] = useNumber(25)
+
+  const r = useMemo(() => {
+    const season = ind * indFee + biz * bizFee
+    const hrs = hrsWk * wks
+    const perHr = hrs > 0 ? season / hrs : 0
+    const extRev = ((ind * extPct) / 100) * indFee * 0.6 // extensions bill 60% in fall
+    const advisory = ind * 0.15 * 400 // 15% buy planning
+    const yrRev = season + extRev + advisory
+    return { season, hrs, perHr, extRev, advisory, yrRev }
+  }, [ind, indFee, biz, bizFee, hrsWk, wks, extPct])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Individual returns" value={ind} onChange={setInd} step="10" />
+          <Field label="Avg 1040 fee" value={indFee} onChange={setIndFee} prefix="$" step="25" />
+          <Field label="Business returns" value={biz} onChange={setBiz} step="1" />
+          <Field label="Avg business fee" value={bizFee} onChange={setBizFee} prefix="$" step="100" />
+          <Field label="Hours/week (season)" value={hrsWk} onChange={setHrsWk} step="1" />
+          <Field label="Season weeks" value={wks} onChange={setWks} step="1" />
+          <Field label="Extension rate" value={extPct} onChange={setExtPct} suffix="%" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Season revenue" value={usd(Math.round(r.season))} />
+          <Result label="True $/season hour" value={`${usd(Math.round(r.perHr))}/hr`} big />
+          <Result label="+ Extensions" value={usd(Math.round(r.extRev))} />
+          <Result label="Year w/ advisory" value={usd(Math.round(r.yrRev))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${ind} individuals at ${usd(indFee)} plus ${biz} business returns is a ${usd(Math.round(r.season))} season — ${usd(Math.round(r.perHr))}/hr across ${num(r.hrs, 0)} season hours. Extensions add ${usd(Math.round(r.extRev))} in fall revenue, and advisory work turns the seasonal shop into a ${usd(Math.round(r.yrRev))} year.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: season = returns × fees; true hourly = season ÷ ALL season hours (prep + admin + questions + corrections); extensions bill ~60% of the return fee in fall; advisory = 15% of clients × $400 planning engagement. The tax-prep economics that decide the practice: per-form/per-schedule fee schedules beat hourly — a Schedule C with rental adds $150–300 over the base 1040 because the WORK scales, and hourly billing pays you less every year you get faster; publish the fee schedule (base 1040 + per-form lines) and the price conversation disappears. The client-mix pyramid: individual returns are volume ($250–450, 1–2 hrs), business returns are margin ($800–2,500 for 1120-S/1065 with books cleanup potential), and monthly accounting clients are the annuity that converts a seasonal practice into a firm — the bookkeeping-pricing calculator runs that math. Season survival: the 55-hour weeks are real but bounded — 14 weeks, January through April 15 — and the pros protect throughput with intake discipline (organizer required, documents complete or the return waits), a drop-dead date for on-time filing (March 25), and extension pricing that makes April procrastinators profitable instead of exhausting. The advisory pivot: 15% of return clients will pay $300–600 for year-end planning (entity election timing, retirement contributions, estimated-tax calibration) — scheduled May through December, it doubles the practice's hourly and smooths the year. Staff leverage: a seasonal preparer at $25–35/hr preparing the returns you review at $350 each is the classic firm model — the reviewer's hour sells 3–4 prepared hours. Credential ladder: EA (enrolled agent) or CPA justifies the top of every fee band and unlocks representation work (audits, notices, offers-in-compromise at $150–400/hr — the highest-rate work in tax). Software is COGS: professional tax software runs $2,000–8,000/yr — priced into the fee schedule. Estimate — your prior-season time reports and fee realization govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// INSURANCE AGENT COMMISSIONS — node-verified defaults: 800-policy book, $1,800 avg premium, 20% new this year at 15% first-year commission, 80% renewals at 12% = $181,440/yr → $15,120/mo. One $1,200 life policy pays $960 first-year (80% FYC). The book is the annuity: renewals pay forever, which is why agencies sell at 1.5–2.5× annual commission.
+export function InsuranceAgentCalc() {
+  const [policies, setPolicies] = useNumber(800)
+  const [avgPrem, setAvgPrem] = useNumber(1800)
+  const [newPct, setNewPct] = useNumber(20)
+  const [newComm, setNewComm] = useNumber(15)
+  const [renComm, setRenComm] = useState('12')
+  const [lifePol, setLifePol] = useNumber(10)
+
+  const rc = parseFloat(renComm) || 0
+  const r = useMemo(() => {
+    const newPol = (policies * newPct) / 100
+    const ren = policies - newPol
+    const comm = newPol * avgPrem * (newComm / 100) + ren * avgPrem * (rc / 100)
+    const life = lifePol * 1200 * 0.8
+    const total = comm + life
+    const bookVal = comm * 2
+    return { newPol, ren, comm, life, total, bookVal }
+  }, [policies, avgPrem, newPct, newComm, rc, lifePol])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Policies in book" value={policies} onChange={setPolicies} step="50" />
+          <Field label="Avg premium" value={avgPrem} onChange={setAvgPrem} prefix="$" step="100" />
+          <Field label="New business mix" value={newPct} onChange={setNewPct} suffix="%" step="5" />
+          <Field label="New comm." value={newComm} onChange={setNewComm} suffix="%" step="1" />
+          <label className="space-y-1">
+            <span className="text-sm text-muted-foreground">Renewal comm.</span>
+            <select value={renComm} onChange={(e) => setRenComm(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="10">10%</option>
+              <option value="12">12%</option>
+              <option value="15">15%</option>
+            </select>
+          </label>
+          <Field label="Life policies/yr" value={lifePol} onChange={setLifePol} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="P&C commissions" value={usd(Math.round(r.comm))} />
+          <Result label="Life first-year" value={usd(Math.round(r.life))} />
+          <Result label="Total year" value={usd(Math.round(r.total))} big />
+          <Result label="Book value (2×)" value={usd(Math.round(r.bookVal))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${policies} policies at ${usd(avgPrem)} avg pays ${usd(Math.round(r.comm))}/yr in P&C commission — ${num(r.newPol, 0)} new at ${newComm}%, ${num(r.ren, 0)} renewals at ${rc}%. Add ${lifePol} life policies and the year hits ${usd(Math.round(r.total))}. The renewals are why the book sells at 2×.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: P&C commission = new policies × premium × first-year rate + renewal policies × premium × renewal rate; life = policies × premium × 80% first-year commission; book value ≈ 2× annual P&C commission (1.5–2.5× market range). The agency economics: the book IS the asset — renewal commissions pay every year a policy stays, so an 800-policy book throws off $170k+ whether you write anything new or not, and retention (90%+ for good service books) is the metric that prices the agency at sale. Commission structures by line: P&C new business pays 12–18% first year, renewals 10–15%; life insurance is front-loaded (60–100%+ of first-year premium, then 2–5% renewals) — the product mix shapes the cash curve; commercial lines pay lower percentages on much bigger premiums and stick harder. Captive vs independent: captive agents (State Farm, Farmers) get lower commission rates but carrier-provided leads and brand; independents own the book outright, shop carriers, and keep higher rates — the ownership question decides what your book is worth at exit. Growth math: the book compounds — 20% new business annually at 90% retention grows the book ~10%/yr and the commissions with it; the producers who grind are buying future renewal annuities with today's prospecting. The license stack: P&C license, life & health license, appointments per carrier, E&O insurance, and CE hours — the compliance is light relative to the income ceiling. Cross-sell is the multiplier: the auto client without home/umbrella/life is unharvested margin — account rounding raises retention AND commission per household. Staff leverage: licensed CSRs ($18–25/hr) handle service while producers sell — the agency scales when your hours stop touching service work. Estimate — your commission statements by carrier and line govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // REMODELING CONTRACTOR MARKUP — node-verified defaults: kitchen remodel — subs+materials $38k + own crew labor $12k = $50k direct; 1.5× markup = $75,000 price → $25,000 gross profit (33.3% GM). Overhead share $8k → net $17,000 (22.7%). The markup-vs-margin confusion is where contractors go broke busy: a 50% markup is only a 33% margin, and overhead eats the difference.
 export function RemodelMarkupCalc() {
   const [subsMats, setSubsMats] = useNumber(38000)
@@ -15261,6 +15365,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'tax-prep-pricing-calculator': TaxPrepCalc,
+  'insurance-agent-commission-calculator': InsuranceAgentCalc,
   'remodeling-contractor-markup-calculator': RemodelMarkupCalc,
   'dumpster-rental-pricing-calculator': DumpsterRentalCalc,
   'welding-fabrication-pricing-calculator': WeldingPricingCalc,

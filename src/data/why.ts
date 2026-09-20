@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'tax-prep-pricing-calculator':
+    'Preparers use it before setting the fee schedule: 120 returns at $350 is a $60k season at $78/hr true — and extensions plus advisory work are what turn the sprint into a firm.',
+  'insurance-agent-commission-calculator':
+    'Agents use it to see the annuity they are building: an 800-policy book pays $181k/yr with renewals compounding — and sells for 2× commission at exit.',
   'remodeling-contractor-markup-calculator':
     'Remodelers use it before signing the contract: 1.5× on $50k direct is a 33% margin — $17k net after overhead — and the markup-vs-margin confusion is where busy contractors go broke.',
   'dumpster-rental-pricing-calculator':

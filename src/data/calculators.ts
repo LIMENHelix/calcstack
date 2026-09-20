@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'tax-prep-pricing-calculator',
+    title: 'Tax Preparation Pricing Calculator — Season Revenue, True Hourly, and the Advisory Pivot',
+    shortTitle: 'Tax Prep Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price a tax season honestly: individual and business return fees into season revenue, the true hourly across all season hours, extension income, and the advisory work that makes it a year-round firm.',
+    tagline: '120 returns at $350 plus 15 business returns is a $60,000 season — $78/hr across all 770 season hours, before the fall extensions.',
+    intro:
+      'Tax prep is a sprint business with an annuity hidden inside it. The sprint: 120 individual returns at $350 plus 15 business returns at $1,200 is a $60,000 season — $78/hr across 770 season hours when you count admin, questions, and corrections, not just prep time. The annuity: extension revenue in the fall, advisory engagements May through December, and monthly accounting clients that convert a seasonal shop into a firm. This calculator runs your season, prices the follow-on work, and shows the true hourly.',
+    howItWorks: [
+      'Enter individual return count and average fee, then business returns and fee.',
+      'Enter season hours per week and weeks — read the true hourly.',
+      'Enter the extension rate — read fall extension revenue.',
+      'Read the year total with advisory engagements layered on.',
+      'Compare against the fee schedule changes you are considering.',
+    ],
+    faq: [
+      {
+        q: 'How should tax preparers price returns?',
+        a: 'Per-form fee schedules beat hourly billing for one mechanical reason: the work scales with complexity while the clock punishes your speed. Base 1040 at $250–450, then per-form lines — Schedule C adds $150–300, rentals $75–150 per property, K-1s $50–100 each, business returns $800–2,500 depending on books condition. Publish the schedule and the price conversation disappears; hide it and every return starts with negotiation. The disciplines that protect the season: organizers required (incomplete documents mean the return waits, not your evenings), a drop-dead date for on-time filing (March 25 — later arrivals file on extension at premium pricing, which converts April chaos into October revenue), and annual fee increases of $15–25 per return — below inflation since 2020 means a real pay cut. The capacity math: one preparer with good intake discipline handles 150–250 returns per season; past that you hire seasonal prep staff ($25–35/hr) whose returns you review — the reviewer\'s hour sells 3–4 prepared hours.',
+      },
+      {
+        q: 'How do tax preparers make money year-round?',
+        a: 'The seasonal shop becomes a firm through three levers. Extensions first: 20–30% of clients file on extension — billed at ~60% of the return fee in September/October, that is found fall revenue from work the season already acquired. Advisory second: 15% of return clients will pay $300–600 for year-end planning — entity election timing, retirement contribution calibration, estimated-tax setup — scheduled May through December, it roughly doubles the practice\'s effective hourly because it is knowledge work, not throughput work. Monthly accounting third: bookkeeping, payroll, and sales tax for your business-return clients converts the seasonal relationship into a monthly retainer — 20 bookkeeping clients at $350/mo is $84,000/yr that shows up every month regardless of April. Representation work is the premium layer for EAs and CPAs: audits, notices, penalty abatements, and offers-in-compromise at $150–400/hr — the highest-rate work in tax, marketing itself through every scary IRS letter your clients receive. The credential ladder funds all of it: EA or CPA status justifies the top of every fee band.',
+      },
+      {
+        q: 'What does it cost to start a tax preparation business?',
+        a: 'Lean: $3,000–12,000 first year. The stack: credential (EA exam ~$700 total, or work under an established firm first), professional tax software ($2,000–8,000/yr — the big fixed cost, priced per-return or unlimited), E&O insurance ($500–1,500/yr), PTIN registration (free), EFIN application for e-filing (free but background-checked — apply early, it takes weeks), office (home office works; a storefront is a marketing decision), and intake infrastructure (organizer templates, engagement letters, secure client portal — $30–80/mo). The revenue ramp reality: year one is 40–80 returns from friends, referrals, and local visibility — $15–25k season; the book compounds by retention (clients return at 85–95% rates) plus referral, so year three typically doubles year one. The non-obvious costs: continuing education (required for credentials, worth it for the rate justification), the security plan (IRS WISP requirement — written data-security plan is legally required for preparers), and your January–April personal life. The franchise alternative (Liberty, H&R Block seasonal) pays a wage instead of building equity — fine for learning, expensive for staying. Start lean, price from the schedule, and let retention compound.',
+      },
+    ],
+  },
+  {
+    slug: 'insurance-agent-commission-calculator',
+    title: 'Insurance Agent Commission Calculator — Book Income, Life FYC, and What the Book Sells For',
+    shortTitle: 'Insurance Agent Income',
+    category: 'Freelance & Career',
+    description:
+      'Model an insurance book honestly: P&C new and renewal commissions by policy count and premium, life first-year commissions, total annual income, and the 2× book valuation at sale.',
+    tagline: 'An 800-policy book pays $181,440/yr in commission — renewals are the annuity, which is why agencies sell at 1.5–2.5×.',
+    intro:
+      'Insurance is the rare business where yesterday\'s work pays you forever: an 800-policy book at $1,800 average premium throws off $181,440 a year — 20% new business at 15%, 80% renewals at 12% — whether or not you write anything new today. Ten life policies add $9,600 in first-year commissions. And the exit is real: books sell at 1.5–2.5× annual commission. This calculator models your book, your mix, and what it is worth.',
+    howItWorks: [
+      'Enter policies in force and average premium.',
+      'Enter new-business mix and the new vs renewal commission rates.',
+      'Read P&C commission income.',
+      'Enter life policies per year — first-year commissions stack on.',
+      'Read total income and the book\'s sale value at 2×.',
+    ],
+    faq: [
+      {
+        q: 'How much do insurance agents make?',
+        a: 'The range spans $40k strugglers to $500k agency owners, and the difference is the book: commission income = policies × premium × rate, and since renewals pay every year, the book compounds. The example — 800 policies, $1,800 average premium, 20% new business — produces $181,440/yr. Rates by line: P&C new business pays 12–18% first year, renewals 10–15%; commercial lines pay lower percentages on much larger premiums and stick harder; life insurance front-loads massively (60–100%+ of first-year premium, then 2–5% renewals). The growth arithmetic: 20% new business annually at 90% retention compounds the book ~10%/yr — every year of grinding prospecting buys a permanent renewal annuity. The realistic ramp: years 1–3 are prospecting-heavy and lean ($40–70k), years 4–7 cross six figures as renewals stack, and mature books throw off income semi-passively with service staff. The license stack is light: P&C and L&H licenses, carrier appointments, E&O, CE hours.',
+      },
+      {
+        q: 'Captive agent vs independent — which is better?',
+        a: 'It is the book-ownership question wearing a compensation costume. Captive (State Farm, Farmers, Allstate): lower commission rates, but carrier-provided brand, leads, training, and office economics — you sell one carrier\'s products, and the book ownership terms vary (some captives let you sell your book back to the carrier or an approved buyer at a formula; read the contract, because that formula IS your exit). Independent: you own the book outright, shop multiple carriers for each client (better retention when rates rise — you re-shop instead of losing), keep higher commission rates, and sell the book at market (1.5–2.5× commission) to anyone. The trade: independence means no carrier leads — you build your own pipeline from day one, which is why the standard arc is captive-first (learn the products on someone else\'s leads) then independent once your referral engine runs. Hybrid middle: IMO/FMO arrangements for life and health let independents access carriers without direct appointments. What both share: retention is the metric that prices everything — a 90% retention book is worth a third more than an 80% book at the same size, because the buyer is purchasing future renewals.',
+      },
+      {
+        q: 'How do insurance agencies grow profitably?',
+        a: 'Cross-sell, retention, and staff leverage — in that order. Account rounding is the cheapest growth: the auto-only client without home, umbrella, or life is unharvested margin already paying you — multi-line households renew at materially higher rates AND produce more commission per household, so the cross-sell raises both this year\'s income and the book\'s sale value. Retention is the compounding: every point of retention is worth roughly a point of growth without prospecting — the service disciplines (annual reviews, re-shopping at renewal spikes, claims advocacy) are revenue activities, not niceties. Staff leverage: licensed CSRs at $18–25/hr handle service and renewals while producers sell — the agency scales when the owner\'s hours stop touching service work; the rule of thumb is one CSR per $200–300k of commission income. Life and financial services are the margin layer: the P&C book is a warm list for life insurance (the front-loaded commissions on 10–20 policies/yr add $10–20k), and agencies that add financial planning or Medicare lines (for the aging book) diversify the commission base. Acquisition growth: buying retiring agents\' books at 1.5–2.5× commission is the fast path — the math works when your service operation can hold the acquired retention.',
+      },
+    ],
+  },
+  {
     slug: 'remodeling-contractor-markup-calculator',
     title: 'Remodeling Contractor Markup Calculator — Gross Margin, Overhead, and the Net That Survives',
     shortTitle: 'Remodeling Markup',
