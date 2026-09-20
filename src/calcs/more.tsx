@@ -5271,6 +5271,59 @@ export function TouSwitchCalc() {
   )
 }
 
+// HOME BATTERY ROI — arbitrage + outage value, and the answer depends on your rate REGIME. Node-verified: 13.5 kWh battery, $11,500 installed, 30% federal credit → $8,050 net; daily cycle 10 kWh at 90% round-trip: plain TOU arbitrage (buy $0.11, displace $0.24) = $1.06/day = $387/yr; +$350/yr outage value → 10.9-yr payback (MARGINAL — inside the 10-yr warranty but barely). The regime that flips it: NEM-3.0-style net billing (midday solar export worth $0.05, evening import $0.45) → $1,296/yr arbitrage → 4.9-yr payback (STRONG). Honest edges: degradation (warranted 70% capacity at 10 yrs — year-10 arbitrage is ~85% of year-1; the constant-rate math overstates slightly), outage "value" is personal (medical devices/freeze risk = real money; mild-climate convenience = $0 — set it honestly or the calculator flatters), round-trip losses (10% is real — brochure "efficiency" quotes AC-out vs DC-in selectively), cycling wears against warranty throughput limits, and the stacking rule (battery on top of solar under net billing is where the 4-5 yr paybacks live; battery for plain TOU arbitrage alone rarely pencils — say so).
+export function BatteryRoiCalc() {
+  const [cost, setCost] = useNumber(11500)
+  const [credit, setCredit] = useNumber(30)
+  const [kwh, setKwh] = useNumber(10)
+  const [buyR, setBuyR] = useNumber(0.11)
+  const [displaceR, setDisplaceR] = useNumber(0.24)
+  const [outageVal, setOutageVal] = useNumber(350)
+  const [round, setRound] = useNumber(90)
+
+  const r = useMemo(() => {
+    const net = cost * (1 - credit / 100)
+    const arbDay = kwh * (round / 100) * displaceR - kwh * buyR
+    const arbYr = arbDay * 365
+    const totalYr = arbYr + outageVal
+    const payback = totalYr > 0 ? net / totalYr : Infinity
+    const tenYr = totalYr * 10 * 0.92 - net // ~8% degradation drag over decade
+    return { net, arbYr, totalYr, payback, tenYr }
+  }, [cost, credit, kwh, buyR, displaceR, outageVal, round])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Installed cost" value={cost} onChange={setCost} prefix="$" step="500" />
+          <Field label="Federal credit" value={credit} onChange={setCredit} suffix="%" step="5" />
+          <Field label="Daily cycled kWh" value={kwh} onChange={setKwh} step="1" />
+          <Field label="Buy/charge rate" value={buyR} onChange={setBuyR} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="Displaced rate" value={displaceR} onChange={setDisplaceR} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="Round-trip efficiency" value={round} onChange={setRound} suffix="%" step="1" />
+          <Field label="Outage value /yr (honest)" value={outageVal} onChange={setOutageVal} prefix="$" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Net cost after credit" value={usd(r.net)} />
+          <Result label="Arbitrage /yr" value={usd(r.arbYr)} />
+          <Result label="Payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} big />
+          <Result label="10-yr net (degraded)" value={usd(r.tenYr)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {isFinite(r.payback) && r.payback <= 7
+            ? `${num(r.payback, 1)}-year payback — the rate spread (${usd(buyR)} → ${usd(displaceR)}) is wide enough that the battery earns. Net-billing solar territories (NEM 3.0-style) are where this number lives.`
+            : isFinite(r.payback) && r.payback <= 12
+              ? `${num(r.payback, 1)} years — marginal: inside the warranty but barely. This is the plain-TOU regime; the battery is buying resilience more than savings. Set your honest outage value and decide with open eyes.`
+              : `The spread can't carry it: ${isFinite(r.payback) ? num(r.payback, 1) + '-year payback on a 10-year warranty' : 'no payback'}. Without net-billing exports or a fat peak spread, wait for prices or buy the generator instead.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: daily profit = cycled kWh × (round-trip efficiency × displaced rate − charge rate) × 365, plus your honest annual outage value, against installed cost net of the 30% federal credit. The regime decides everything: plain TOU arbitrage ($0.11 → $0.24) returns ~$387/yr on a 13.5 kWh unit cycled 10 kWh/day — a 10.9-year payback that's marginal on a 10-year warranty; net-billing solar territories where midday exports earn $0.05 but evening imports cost $0.45 return ~$1,296/yr — a 4.9-year payback, and THE reason batteries pencil in post-NEM-3.0 California and nowhere else yet. Honest drags the brochure skips: degradation (warranted ~70% capacity at year 10 — the 10-yr net applies an 8% drag), round-trip losses (10% is real; marketing efficiency quotes selectively), and warranty throughput limits on daily cycling. Outage value discipline: medical devices, freeze risk, and sump pumps are real money (pair with the generator calculator — a standby can beat the battery on pure resilience); mild-climate convenience is $0, and entering more is flattering yourself. Estimates — installer quotes and your rate schedule govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10940,6 +10993,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'attic-insulation-roi-calculator': AtticInsulationRoiCalc,
   'variable-speed-pump-roi-calculator': VsPoolPumpCalc,
   'tou-rate-switch-calculator': TouSwitchCalc,
+  'home-battery-roi-calculator': BatteryRoiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

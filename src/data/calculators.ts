@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'home-battery-roi-calculator',
+    title: 'Home Battery ROI Calculator 2026 — TOU Arbitrage, NEM 3.0 Export Math & Honest Outage Value',
+    shortTitle: 'Home Battery ROI',
+    category: 'Home & Yard',
+    description:
+      'Does a Powerwall-style battery pay? Daily arbitrage (charge cheap, displace expensive) plus honest outage value against installed cost after the 30% credit — with degradation and the rate-regime verdict.',
+    tagline: 'Plain TOU arbitrage pays $387/yr — a 10.9-yr payback on a 10-yr warranty. Under NEM 3.0 export rules the same battery earns $1,296/yr and pays back in 4.9.',
+    intro:
+      'Home batteries are sold on resilience and paid for by arbitrage — and whether they pencil depends on your rate regime, not the brochure. A 13.5 kWh unit at $11,500 installed nets $8,050 after the 30% federal credit. Cycling 10 kWh daily at 90% round-trip under plain TOU rates ($0.11 off-peak, $0.24 peak) earns $387/yr — plus honest outage value, a 10.9-year payback against a 10-year warranty: marginal. Under NEM 3.0-style net billing, where midday solar exports earn $0.05 but evening imports cost $0.45, the same battery earns $1,296/yr and pays back in 4.9 years — which is exactly why batteries sell in California and sit in showrooms elsewhere. This calculator prices both regimes with degradation included, so you buy with open eyes.',
+    howItWorks: [
+      'Enter installed cost and the federal credit (30% through the clean-energy credit).',
+      'Enter daily cycled kWh — realistic daily cycling, not nameplate capacity.',
+      'Enter your charge rate (off-peak or export value) and the rate the battery displaces (peak).',
+      'Set round-trip efficiency (90% is honest) and your TRUE annual outage value.',
+      'Read yearly arbitrage, payback, and 10-year net with degradation.',
+    ],
+    faq: [
+      {
+        q: 'Why does the rate plan matter more than the battery?',
+        a: 'Because the battery is just a bucket — the rate spread is the water. Plain TOU arbitrage buys kWh at $0.11 and displaces $0.24: after the 10% round-trip loss, a 10 kWh daily cycle nets $1.06. That\'s $387/yr against $8,050 — a decade to break even. Net-billing solar changes the physics: midday exports earn only $0.05 (the grid is flooded with solar at noon), while evening imports cost $0.45 — the battery converts worthless noon electrons into peak-hour gold, $3.55 a day. Same hardware, 3.3× the return, entirely from the tariff. The buyer\'s rule: pull YOUR export compensation rate and evening import rate before signing; if exports still earn retail (classic net metering), the battery\'s arbitrage value is small and you\'re buying resilience — fine, but price it as resilience against the generator alternative, not as savings.',
+      },
+      {
+        q: 'What should I enter for outage value?',
+        a: 'What outages actually cost you per year — measured, not feared. Real money: spoiled food ($300–500 per long outage), hotel nights, lost work income for remote workers, sump-pump flood risk (a 4%/yr chance of a $15k basement is $600/yr all by itself), medical devices where backup is non-negotiable, and freeze risk in cold climates (burst pipes are five figures). Not real money: the discomfort of a mild-climate evening without Netflix — that\'s $0, and entering $500 for it makes the calculator flatter the purchase. Compare honestly against the alternative: a standby generator annualizes to ~$1,149/yr (its own calculator here) and runs indefinitely on gas; the battery covers short outages seamlessly but drains in hours under whole-house load. Many homes\' honest answer is battery for arbitrage + portable generator for the rare long outage.',
+      },
+      {
+        q: 'What do degradation and the warranty do to the math?',
+        a: 'They shorten the runway and shrink the later years — price both. Cells degrade: the standard warranty guarantees ~70% capacity at year 10 with unlimited cycles (some cap throughput — read it), so year-10 arbitrage is roughly 85% of year-1 even before you notice. The calculator\'s 10-year net applies an 8% cumulative drag for that reason. Warranty structure matters more than capacity: cycle limits and throughput caps (MWh total) can bite heavy daily cyclers before the calendar does. The planning frame: a battery that pays back in year 9 of a 10-year warranty is a wash on paper and a loss after hassle — demand a payback under 7 years from the arbitrage math alone, treat outage resilience as the bonus that closes the gap, and if the numbers only work with zero degradation and maximum outage value, the honest answer is wait — battery prices have fallen every year for a decade.',
+      },
+    ],
+  },
+  {
     slug: 'tou-rate-switch-calculator',
     title: 'Time-of-Use Rate Switch Calculator 2026 — Flat vs TOU: Breakeven Peak Share & What Shifting Actually Pays',
     shortTitle: 'TOU Rate Switch',

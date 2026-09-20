@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'home-battery-roi-calculator':
+    'Solar homeowners use it before adding storage: plain TOU arbitrage pays $387/yr (10.9-yr payback — marginal), but NEM 3.0 export math pays $1,296/yr and returns in 4.9 — the tariff decides, not the battery.',
   'tou-rate-switch-calculator':
     'Households use it before switching plans: at 35% peak usage TOU saves just $47/yr as-is but $252 with real shifting — and above 38.5% peak share it loses unless the EV and the delay-start buttons do their job.',
   'variable-speed-pump-roi-calculator':
