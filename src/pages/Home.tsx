@@ -120,17 +120,20 @@ export default function Home() {
 
       <AdSlot />
 
-      {CATEGORIES.map((cat, i) => (
+      {CATEGORIES.map((cat, i) => {
+        const catCalcs = CALCULATORS.filter((c) => c.category === cat)
+        const catAnchor = cat.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+        return (
         <details key={cat} className="group mb-6" open={i === 0}>
           <summary className="mb-4 flex cursor-pointer list-none items-center gap-2 text-xl font-semibold [&::-webkit-details-marker]:hidden">
             <span className="inline-block text-muted-foreground transition-transform group-open:rotate-90">▸</span>
             {cat}
             <span className="text-sm font-normal text-muted-foreground">
-              ({CALCULATORS.filter((c) => c.category === cat).length})
+              ({catCalcs.length})
             </span>
           </summary>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {CALCULATORS.filter((c) => c.category === cat).map((c) => (
+            {catCalcs.slice(0, 9).map((c) => (
               <Link key={c.slug} to={`/calculators/${c.slug}`}>
                 <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
                   <CardContent className="p-5">
@@ -141,8 +144,17 @@ export default function Home() {
               </Link>
             ))}
           </div>
+          {catCalcs.length > 9 && (
+            <Link
+              to={`/directory#${catAnchor}`}
+              className="mt-4 inline-block rounded-lg border border-primary/30 bg-primary/5 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+            >
+              View all {catCalcs.length} in {cat} →
+            </Link>
+          )}
         </details>
-      ))}
+        )
+      })}
 
       <section className="mb-10">
         <div className="mb-4 flex items-baseline justify-between">

@@ -41,8 +41,9 @@ export default function Directory() {
       {CATEGORIES.map((cat) => {
         const core = CALCULATORS.filter((c) => c.category === cat)
         if (core.length === 0) return null
+        const anchor = cat.toLowerCase().replace(/[^a-z0-9]+/g, '-')
         return (
-          <details key={cat} className="group mt-8" open>
+          <details key={cat} id={anchor} className="group mt-8 scroll-mt-20" open>
             <summary className="mb-3 flex cursor-pointer list-none items-center gap-2 text-xl font-semibold [&::-webkit-details-marker]:hidden">
               <span className="inline-block text-muted-foreground transition-transform group-open:rotate-90">▸</span>
               {cat}
