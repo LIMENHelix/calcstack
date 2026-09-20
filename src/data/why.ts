@@ -39,6 +39,8 @@ export const WHY_USE: Record<string, string> = {
     'Investors use it before writing the offer: the 70% rule sets a $220k ceiling on a $400k-ARV/$60k-rehab deal, and the full P&L shows $71.2k profit on $50.8k cash — plus the amber flag when your offer crosses the ceiling.',
   'rental-cash-flow-calculator':
     'Investors use it before offering: the lender-grade model prices vacancy, management, and CapEx honestly, so a $300k/$2,400-rent deal at 7% shows its real face — −$152/mo, 0.90 DSCR — instead of the seller\'s proforma fiction.',
+  'property-tax-appeal-calculator':
+    'Owners holding an assessment notice use it before the deadline: implied market value vs comp-supported value × the tax rate shows a $35k over-assessment is $630/yr — $6,898 over a decade — for a filing most counties charge nothing for.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

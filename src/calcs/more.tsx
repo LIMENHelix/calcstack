@@ -2932,6 +2932,55 @@ export function RentalCashFlowCalc() {
   )
 }
 
+// PROPERTY TAX APPEAL — assessed value vs comp-supported value, equalization ratio, savings horizon. Node-verified: assessed $350k, comps support $315k, rate 1.8% → overpaying $630/yr, $3,150/5yr, $6,898/10yr at 2% levy growth. Equalization: county assessing at 90% of market → $350k assessed implies $388,889 market opinion; your case is (assessed/ratio) vs comp median. Homestead exemptions cut ASSESSED value first (owner-occupants only, must file). Appeals cost $0–$500 DIY, deadlines are 30–90 days after the notice, and the evidence hierarchy is: recent arm's-length comps (same subdivision, ±20% sqft, sold within a year) > appraisal > condition photos/repair estimates. Don't appeal the levy — appeal the VALUE.
+export function PropertyTaxAppealCalc() {
+  const [assessed, setAssessed] = useNumber(350000)
+  const [compValue, setCompValue] = useNumber(315000)
+  const [rate, setRate] = useNumber(1.8)
+  const [ratio, setRatio] = useNumber(100)
+  const [growth, setGrowth] = useNumber(2)
+  const [yrs, setYrs] = useNumber(5)
+
+  const r = useMemo(() => {
+    const impliedMarket = ratio > 0 ? assessed / (ratio / 100) : assessed
+    const overAssessed = Math.max(0, compValue > 0 ? impliedMarket - compValue : 0)
+    const annual = overAssessed * (rate / 100) * (ratio / 100) // savings apply to assessed value
+    let horizon = 0
+    for (let y = 0; y < yrs; y++) horizon += annual * Math.pow(1 + growth / 100, y)
+    const overpayPct = compValue > 0 ? ((impliedMarket / compValue) - 1) * 100 : 0
+    return { impliedMarket, overAssessed, annual, horizon, overpayPct, worth: annual >= 200 }
+  }, [assessed, compValue, rate, ratio, growth, yrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Assessed value (from your notice)" value={assessed} onChange={setAssessed} prefix="$" />
+          <Field label="Comp-supported value (median of 3–5 comps)" value={compValue} onChange={setCompValue} prefix="$" />
+          <Field label="Effective tax rate" value={rate} onChange={setRate} suffix="%" step="0.05" />
+          <Field label="Assessment ratio (% of market)" value={ratio} onChange={setRatio} suffix="%" step="5" />
+          <Field label="Annual levy growth" value={growth} onChange={setGrowth} suffix="%" step="0.5" />
+          <Field label="Horizon" value={yrs} onChange={setYrs} suffix="yrs" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Assessor's implied market value" value={usd(r.impliedMarket)} />
+          <Result label="Over-assessment" value={usd(r.overAssessed)} />
+          <Result big label="Savings per year if you win" value={usd(r.annual)} />
+          <Result label={`Savings over ${yrs} years`} value={usd(r.horizon)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.overAssessed > 0
+            ? `The assessor's implied market value (${usd(r.impliedMarket)}) runs ${num(r.overpayPct, 1)}% above your comp-supported ${usd(compValue)} — a win is worth ${usd(r.annual)}/yr and ${usd(r.horizon)} over ${yrs} years. ${r.worth ? 'Worth the afternoon it takes to file.' : 'Small dollars — but filing is free in most counties, and the reduction compounds as levies grow.'}`
+            : 'Your assessment is at or below comp-supported value — an appeal would argue against yourself. Recheck after the next reassessment notice.'}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Mechanics that matter: you're appealing the VALUE, not the tax — the levy is set by budgets, the value decides your share. Assessment ratio matters: many jurisdictions assess at a fraction of market (the ratio field), so compare implied market value against comps, not the raw assessed number. Evidence that wins: 3–5 recent arm's-length sales in your subdivision, within ±20% of your square footage, sold within the past year; condition documentation (dated photos + repair estimates) for anything the comps don't share; or an independent appraisal (~$400–600, worth it above ~$1,000/yr of savings). Deadlines are strict — typically 30–90 days from the assessment notice, and missing it waits a full year. Free wins to check first: homestead exemption (owner-occupants, must file), senior/veteran/disabled exemptions, and plain data errors (wrong square footage or bedroom count on the property card — the cheapest appeal there is). Success compounds: the lower base carries into every future levy. Estimates — your county's rules govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8556,6 +8605,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'diy-vs-hire-calculator': DiyVsHireCalc,
   'house-flip-calculator': HouseFlipCalc,
   'rental-cash-flow-calculator': RentalCashFlowCalc,
+  'property-tax-appeal-calculator': PropertyTaxAppealCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

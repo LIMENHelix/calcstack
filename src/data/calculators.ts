@@ -545,6 +545,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'property-tax-appeal-calculator',
+    title: 'Property Tax Appeal Calculator 2026 — What Winning Your Assessment Fight Is Actually Worth',
+    shortTitle: 'Tax Appeal Value',
+    category: 'Housing & Mortgage',
+    description:
+      'Compare your assessed value against comp-supported value through the equalization ratio, and see the annual savings and multi-year value of a winning appeal before you file.',
+    tagline: 'Assessed at $350k when comps say $315k? That\'s $630 a year, every year, compounding with the levy — $6,898 over a decade.',
+    intro:
+      'Property tax appeals are the rare fight where the math decides before anyone argues: if the assessor\'s implied market value sits above what comparable sales support, the over-assessment converts to dollars at your tax rate, every year, compounding as levies grow. A $35,000 over-assessment at a 1.8% rate is $630 a year — nearly $6,900 over ten years at 2% levy growth — for a filing that\'s free in most counties and takes an afternoon. This calculator handles the wrinkle that trips most owners: the assessment ratio. Many jurisdictions assess at a fraction of market value, so the raw numbers aren\'t comparable until you divide through — then it prices your evidence-based case over your chosen horizon.',
+    howItWorks: [
+      'Enter the assessed value from your notice and your county\'s assessment ratio (100% if unknown).',
+      'Enter the median value your comps support — 3–5 similar homes, sold within a year.',
+      'Set your effective tax rate and an annual levy growth estimate.',
+      'Read the annual savings, the horizon total, and whether the fight is worth filing.',
+    ],
+    faq: [
+      {
+        q: 'What evidence actually wins a property tax appeal?',
+        a: 'Comparable sales, in a strict hierarchy. Best: 3–5 arm\'s-length sales in your subdivision or immediate area, within ±20% of your home\'s square footage, closed within the past 12 months — adjusted for differences (a comp with a finished basement and without yours needs an adjustment). Second: an independent appraisal, $400–600, worth commissioning when the annual savings exceed ~$1,000. Third: condition evidence — dated photos plus contractor repair estimates for anything the comps don\'t share (foundation cracks, ancient roof, functional obsolescence). What doesn\'t win: your Zestimate, your purchase price from three years ago, "my taxes are too high," and comparisons to a neighbor\'s TAX BILL (different exemptions, different bases). You\'re arguing value, not burden.',
+      },
+      {
+        q: 'What\'s an assessment ratio and why does it change everything?',
+        a: 'Many jurisdictions deliberately assess below market — at 90%, 80%, or some legislated fraction — and the millage rate is set against that reduced base. If your county assesses at 90% of market, a $350,000 assessment means the assessor thinks your home is worth $388,889. Comparing the raw $350,000 against $315,000 comps would wrongly suggest over-assessment when the assessor actually thinks the house is worth MORE than your comps show. Divide the assessment by the ratio first, then compare against comps. Your notice or county website states the ratio; if you can\'t find it, call the assessor\'s office — they answer this question daily. Some states equalize at 100% with different names (full value, FMV); others (notably Texas) have no uniform ratio and appeal rights pivot on "equal and uniform" comparisons to neighbors\' assessments instead.',
+      },
+      {
+        q: 'What are the free wins before filing a formal appeal?',
+        a: 'Check the property card first — the county\'s own record of your home. Wrong square footage, phantom bathrooms, a "finished basement" you don\'t have: data errors are the cheapest appeal that exists, often fixed with one phone call and a photo. Then exemptions: homestead (owner-occupied primary residence — hundreds of dollars a year in most states, and a surprising share of eligible owners never file), senior, veteran, disability, and agricultural exemptions all reduce assessed value and merely require applying. Also confirm the assessment INCREASE limits: several states cap annual assessment growth for homesteads (California\'s Prop 13 at 2%, Florida\'s Save Our Homes at 3%), and if your notice jumped beyond the cap, that\'s a mechanical win. Only after those come the formal value appeal — usually free to file, deadline typically 30–90 days from the notice.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
