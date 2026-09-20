@@ -33,6 +33,8 @@ export const WHY_USE: Record<string, string> = {
     'Owners weighing a remodel use it before signing the contract: 2025 Cost vs Value data says the garage door returns 268% and the upscale suite addition 18% — so the tool reframes big interior projects as a per-year cost of enjoyment, not an investment.',
   'contractor-bid-comparison-calculator':
     'Owners with three quotes use it before signing: exclusions and schedule get priced back in, and the $46.5k bid with $4k of gaps exposes itself as a $50.5k project — while a bid 15% under the middle triggers the change-order warning.',
+  'diy-vs-hire-calculator':
+    'Weekend warriors use it to settle the debate with arithmetic: a $600 pro-DIY gap is $50/hr of untaxed wages (the $800 pro bill takes $1,143 of gross salary at 30%) — with the 15% botch chance priced in before the verdict.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

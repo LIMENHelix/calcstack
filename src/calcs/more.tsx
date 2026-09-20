@@ -2739,6 +2739,56 @@ export function ContractorBidCalc() {
   )
 }
 
+// DIY vs HIRE — the pro's price is paid with AFTER-tax money; your labor is tax-free. Node-verified: $800 paint job, DIY $200 materials + 12 hrs → savings $600 = $50.00/hr earned tax-free (at a 30% marginal rate the pro job requires EARNING $1,142.86 gross). Redo-risk EV: 15% botch probability × ($800 pro rescue + $100 wasted materials) = $135 expected cost → EV DIY $335 vs $800 pro, EV savings $465. Deck example: pro $15,000, DIY $6,000 materials + 40 hrs → $225/hr. Decision frame: DIY wins when effective wage > your market wage AND botch risk low; hire when permits/licensed trades (electrical panel, gas, structural) — insurance and code make those non-negotiable, not a math question.
+export function DiyVsHireCalc() {
+  const [pro, setPro] = useNumber(800)
+  const [mats, setMats] = useNumber(200)
+  const [hours, setHours] = useNumber(12)
+  const [bracket, setBracket] = useNumber(30)
+  const [botch, setBotch] = useNumber(15)
+  const [fixCost, setFixCost] = useNumber(900)
+
+  const r = useMemo(() => {
+    const savings = pro - mats
+    const wage = hours > 0 ? savings / hours : 0
+    const earnNeeded = bracket < 100 ? pro / (1 - bracket / 100) : pro
+    const riskEV = (botch / 100) * fixCost
+    const diyEV = mats + riskEV
+    const evSavings = pro - diyEV
+    const evWage = hours > 0 ? evSavings / hours : 0
+    return { savings, wage, earnNeeded, riskEV, diyEV, evSavings, evWage }
+  }, [pro, mats, hours, bracket, botch, fixCost])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Pro quote (all-in)" value={pro} onChange={setPro} prefix="$" />
+          <Field label="DIY materials + tool rental" value={mats} onChange={setMats} prefix="$" />
+          <Field label="Your hours (honest — incl. cleanup)" value={hours} onChange={setHours} suffix="hrs" step="1" />
+          <Field label="Your marginal tax rate" value={bracket} onChange={setBracket} suffix="%" />
+          <Field label="Chance you botch it" value={botch} onChange={setBotch} suffix="%" step="5" />
+          <Field label="Cost to fix a botch" value={fixCost} onChange={setFixCost} prefix="$" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Cash saved doing it yourself" value={usd(r.savings)} />
+          <Result big label="Your effective tax-free wage" value={`${usd(r.wage, 2)}/hr`} />
+          <Result label="Gross you'd need to earn to pay the pro" value={usd(r.earnNeeded)} />
+          <Result label="Expected redo cost" value={usd(r.riskEV)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.evSavings > 0
+            ? `DIY wins the expected-value math: ${usd(r.evSavings)} ahead after pricing a ${num(botch, 0)}% botch chance — an honest ${usd(r.evWage, 2)}/hr, tax-free, for your ${hours} hours.`
+            : `Hire the pro: after pricing the botch risk, DIY is ${usd(-r.evSavings)} UNDERWATER on expected value — before counting your weekend.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The tax asymmetry is the hidden multiplier: paying a pro {usd(pro)} takes {usd(r.earnNeeded)} of gross earnings at your marginal rate, while the same dollars of DIY savings arrive untaxed. Honest counters: your hours have value even unpaid (a weekend is a weekend), pros finish in days what takes amateurs weeks, and a good job lasts longer than a learning-curve one. The non-negotiables aren't math: anything permitted or life-safety (electrical panels, gas lines, structural, roofing in some states) goes to licensed trades — homeowner insurance can deny claims on unpermitted DIY work, and code violations surface brutally at resale inspection. Botch cost should include BOTH the rescue pro AND your wasted materials. Best DIY candidates: painting, landscaping, demo, flooring click-systems, fixtures. Worst: anything where the redo costs more than the original quote. Estimates — your skills govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8360,6 +8410,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'cost-of-waiting-calculator': CostOfWaitingCalc,
   'renovation-roi-calculator': RenovationRoiCalc,
   'contractor-bid-comparison-calculator': ContractorBidCalc,
+  'diy-vs-hire-calculator': DiyVsHireCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

@@ -452,6 +452,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'diy-vs-hire-calculator',
+    title: 'DIY vs Hire Calculator 2026 — Your Real Tax-Free Hourly Wage, With Botch Risk Priced In',
+    shortTitle: 'DIY vs Hire',
+    category: 'Housing & Mortgage',
+    description:
+      'A pro\'s price is paid with after-tax money; your own labor is untaxed. Compute your effective DIY hourly wage, price the chance you botch it, and get the expected-value verdict.',
+    tagline: 'Saving $600 on a paint job is $50/hour earned tax-free — but only if the 15% botch risk doesn\'t eat it.',
+    intro:
+      'The DIY-vs-hire debate is usually argued in vibes; it\'s actually arithmetic with one hidden multiplier. When you pay a contractor $800, you spend after-tax dollars — at a 30% marginal rate you had to earn $1,143 gross. When you paint it yourself for $200 of materials and 12 hours, the $600 you saved arrives untaxed: a $50/hour wage the IRS never touches. The honest model has one more term: the chance you botch it. A 15% probability of an $900 rescue costs $135 in expectation — price it in before celebrating. This calculator computes your effective tax-free wage, the expected value after botch risk, and the verdict on your actual numbers.',
+    howItWorks: [
+      'Enter the pro\'s all-in quote and your honest materials cost (include tool rental).',
+      'Enter your hours — honestly, including shopping, prep, and cleanup.',
+      'Set your marginal tax rate and your realistic botch probability with rescue cost.',
+      'Read the effective wage and the risk-adjusted verdict.',
+    ],
+    faq: [
+      {
+        q: 'Why does DIY savings count as "tax-free income"?',
+        a: 'Because of the asymmetry of the tax code: paying a pro requires gross earnings that get taxed before you spend them — an $800 bill costs $1,143 of salary at a 30% marginal rate. Money you DON\'T spend by doing the work yourself never enters the tax system at all. Economists call it imputed income, and it\'s untaxed. The practical effect: DIY at $40/hr effective wage beats a $55/hr side job that\'s taxed. The counterweights are real — your weekend has value, a pro\'s finish often lasts longer, and tool purchases eat first-project savings — which is why the calculator wants your honest hour count, including the three trips to the hardware store.',
+      },
+      {
+        q: 'What should I never DIY, regardless of the math?',
+        a: 'Anything permitted or life-safety: electrical panel work, gas lines, structural changes, and (in many states) roofing. The math breaks because the downside isn\'t a redo — it\'s a fire, a denied insurance claim, or a failed inspection at resale that forces disclosure. Homeowner policies can deny claims traced to unpermitted DIY work, and most states require disclosing known unpermitted work at sale. Also skip DIY when the botch cost exceeds the original pro quote — asbestos popcorn removal, lead paint, tree work near power lines. The calculator\'s botch-cost field assumes a redo is possible at all; for these categories it isn\'t, and no effective wage justifies them.',
+      },
+      {
+        q: 'Which projects have the best DIY economics?',
+        a: 'High-labor-share, low-skill-ceiling work: interior painting ($50+/hr effective wages are common), demolition (you pay pro rates for a sledgehammer), landscaping and mulch, click-lock flooring, cabinet hardware and fixture swaps, and deck staining. The pattern: labor is 60–80% of the pro quote and errors are cheap to fix. The worst DIY economics: tile (slow learning curve, visible errors), drywall finishing (an art disguised as a task), and anything where your mistake costs more than the original quote. The deck example runs $225/hr effective — high-skill high-reward — but assume your first one takes triple the hours you estimated. It always does.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
