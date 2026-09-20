@@ -4049,6 +4049,61 @@ export function GradSchoolRoiCalc() {
   )
 }
 
+// CERTIFICATION ROI — the credential priced as an investment: fees + expected retakes + study hours at your time value, vs the annual raise discounted over the career window. Node-verified (PMP-style): $1,500 fees+materials, 150 study hrs at $45/hr ($6,750 opportunity cost), 60% first-attempt pass → expected retake cost $1,000 → expected total $9,250; $10k/yr raise over 10 yrs @4% → PV $81,109 → NPV +$71,859, payback 11.1 months, $479 per study hour. Model: expected cost = fees/pass-rate adjustment (each expected extra attempt costs the exam fee again — honest simplification that slightly overstates when materials don't rebuy). Honest edges: certification raises are REAL only where the credential gates roles (PMP for federal/defense PM, CPA for audit sign-off, PE, RN specialties, AWS for cloud roles where job posts literally list it) — in fields where nobody filters on it, the raise is ~0 and the honest NPV is negative; pass rates are published (CFA L1 ~40%, PMP ~60-70%, AWS SA ~70% range); study hours are the giant hidden cost (CFA: ~300 hrs × 3 levels — at $45/hr that's $40k of time).
+export function CertRoiCalc() {
+  const [fees, setFees] = useNumber(1500)
+  const [hours, setHours] = useNumber(150)
+  const [wage, setWage] = useNumber(45)
+  const [pass, setPass] = useNumber(60)
+  const [raise, setRaise] = useNumber(10000)
+  const [years, setYears] = useNumber(10)
+  const [disc, setDisc] = useNumber(4)
+
+  const r = useMemo(() => {
+    const r0 = disc / 100
+    const ann = (n: number) => (r0 === 0 ? n : (1 - Math.pow(1 + r0, -n)) / r0)
+    const p = Math.max(5, Math.min(100, pass)) / 100
+    const opp = hours * wage
+    const retakes = (1 / p - 1) * fees
+    const cost = fees + opp + retakes
+    const pv = raise * ann(years)
+    const npv = pv - cost
+    const payback = raise > 0 ? cost / (raise / 12) : Infinity
+    const perHour = hours > 0 ? npv / hours : 0
+    return { opp, retakes, cost, pv, npv, payback, perHour }
+  }, [fees, hours, wage, pass, raise, years, disc])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Exam fee + materials" value={fees} onChange={setFees} prefix="$" step="100" />
+          <Field label="Study hours" value={hours} onChange={setHours} step="25" />
+          <Field label="Value of your time" value={wage} onChange={setWage} prefix="$" suffix="/hr" step="5" />
+          <Field label="First-attempt pass rate" value={pass} onChange={setPass} suffix="%" step="5" />
+          <Field label="Expected raise /yr" value={raise} onChange={setRaise} prefix="$" step="1000" />
+          <Field label="Years the raise lasts" value={years} onChange={setYears} step="5" />
+          <Field label="Discount rate (real)" value={disc} onChange={setDisc} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Study time cost" value={usd(r.opp)} />
+          <Result label="Expected total cost" value={usd(r.cost)} />
+          <Result label="Certification NPV" value={usd(r.npv)} big />
+          <Result label="Payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} months` : 'Never'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.npv >= 0
+            ? `The credential clears the bar: ${usd(r.npv)} net in today's dollars — ${usd(Math.round(r.perHour))} per study hour. But the whole case rests on the raise being REAL: check current job posts in your field for the cert by name before counting it.`
+            : `The math says no: the raise never recovers ${usd(Math.round(r.cost))} of fees, retakes, and study time. If the credential gates a role you want (licenses, federal contract requirements), that's a different decision — the cert is the entry ticket, not the raise.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: expected cost = fees + study hours × your time value + expected retake fees (at a 60% pass rate you should EXPECT 0.67 extra attempts — hope is not a study plan); the raise is discounted over the years it realistically lasts. Where certification raises are real: credentials that gate roles or filter resumes — CPA (audit sign-off), PE (stamp drawings), PMP (federal/defense PM postings), RN specialties, AWS/Azure where job posts name them. Where they're decoration: fields that hire on portfolios and experience. The honest check takes ten minutes: search live job posts for the certification by name and note the salary band difference on roles that require it versus those that don't. Published first-attempt pass rates are sobering on purpose (CFA Level I historically ~40%, PMP roughly 60–70%) — build the retake into your plan. Estimates — your field's postings and the cert body's fee schedule govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9694,6 +9749,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'iso-vs-nso-calculator': IsoNsoCalc,
   'startup-offer-calculator': StartupOfferCalc,
   'grad-school-roi-calculator': GradSchoolRoiCalc,
+  'certification-roi-calculator': CertRoiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

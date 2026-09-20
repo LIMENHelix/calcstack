@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'certification-roi-calculator':
+    'Professionals use it before enrolling: a $1,500 cert with 150 study hours really costs $9,250 with expected retakes — a $10k/yr raise pays it back in 11 months, but only where job posts actually filter on the credential.',
   'grad-school-roi-calculator':
     'Professionals use it before applying: a $60k master\'s plus two years out of a $70k job really costs $192k in present value — a $25k/yr premium wins by $193k (breakeven year 13), a $10k premium never pays back.',
   'startup-offer-calculator':

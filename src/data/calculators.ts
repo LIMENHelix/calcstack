@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'certification-roi-calculator',
+    title: 'Certification ROI Calculator 2026 — PMP, CFA, AWS & CPA Priced: Fees, Study Hours, Retakes vs the Raise',
+    shortTitle: 'Certification ROI',
+    category: 'Careers & Salary',
+    description:
+      'Price a professional certification as an investment: exam fees, expected retakes at real pass rates, and study hours at your time value — against the annual raise discounted over the years it lasts.',
+    tagline: 'A $1,500 cert with 150 study hours really costs $9,250 — a $10k/yr raise pays that back in 11 months, but only where job posts actually filter on the credential.',
+    intro:
+      'The exam fee is the smallest cost of a certification. A PMP-style credential at $1,500 in fees plus 150 study hours valued at $45/hr is already $8,250 — and at a 60% first-attempt pass rate, expected retakes add $1,000, for an expected $9,250 all-in. The payback side is just as concrete: a $10,000 annual raise over ten years at a 4% real discount rate is worth $81,109 today — NPV +$71,859, payback in 11 months, $479 per study hour. But the entire case rests on one check: whether job posts in YOUR field filter on the credential. Where it gates roles (CPA, PE, PMP on federal work, RN specialties, cloud certs named in postings) the raise is real; where it\'s decoration, the honest NPV is negative. This calculator prices both sides.',
+    howItWorks: [
+      'Enter the exam fee plus study materials — check the certifying body\'s current fee schedule.',
+      'Enter realistic study hours and the value of your time per hour.',
+      'Enter the published first-attempt pass rate — retakes are expected, not shameful.',
+      'Enter the expected annual raise from roles that REQUIRE the cert (verify in live job posts), and how many years it lasts.',
+      'Read the expected total cost, NPV, payback months, and return per study hour.',
+    ],
+    faq: [
+      {
+        q: 'How do I know if the raise is real for my certification?',
+        a: 'Ten minutes of job-board research settles it. Search current postings in your field for the certification BY NAME, and compare salary bands on roles that require it versus equivalent roles that don\'t. Credentials that gate work produce visible premiums: CPA is required to sign audit opinions, PE to stamp engineering drawings, PMP appears in federal and defense PM postings with band differences, and cloud certs (AWS Solutions Architect, Azure) are named filters in thousands of listings. If your search returns few postings naming the cert, the market isn\'t paying for it — the honest raise input is near zero, and the calculator will tell you the truth.',
+      },
+      {
+        q: 'Why count study hours as a cost?',
+        a: 'Because 150 evenings are real even though no invoice arrives. Valued at a conservative $45/hr, PMP-level prep is $6,750 of time — over four times the exam fee — and multi-exam credentials like the CFA (~300 hours per level across three levels) carry $40k of time cost at the same rate. Counting hours changes which certs are worth it: short, targeted credentials with named demand crush long prestigious ones on ROI even when the latter carry more status. If studying is genuinely leisure for you, set the hourly value lower — but not zero, because the hours are still unavailable for billable work, family, or rest.',
+      },
+      {
+        q: 'How do pass rates factor in?',
+        a: 'As expected retake cost, because you should plan on the base rate rather than hope. At a 60% first-attempt pass rate you should EXPECT 0.67 additional attempts — each costing the exam fee again (and often new prep). Published rates are sobering on purpose: CFA Level I has historically passed around 40% of candidates, PMP roughly 60–70%, most AWS associate exams somewhere in the 60–75% range. The calculator multiplies your fee by the expected number of attempts, so a $1,500 exam at 60% pass prices at $2,500 expected, not $1,500 hopeful. Candidates who budget for the retake pass more often — the psychology of a funded second attempt removes the all-or-nothing pressure that sinks first tries.',
+      },
+    ],
+  },
+  {
     slug: 'grad-school-roi-calculator',
     title: 'Grad School ROI Calculator 2026 — Is a Master\'s Degree Worth It? True Cost vs the Raise, in Present Value',
     shortTitle: 'Grad School ROI',
