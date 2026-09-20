@@ -638,6 +638,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'mortgage-buydown-calculator',
+    title: '2-1 & 3-2-1 Buydown Calculator 2026 — Temporary Buydown vs Permanent Points, Priced Head-to-Head',
+    shortTitle: 'Buydown vs Points',
+    category: 'Housing & Mortgage',
+    description:
+      'Compute the year-by-year payments and seller-funded cost of a 2-1 or 3-2-1 buydown, then compare the same dollars as permanent discount points over your hold period.',
+    tagline: 'A 2-1 buydown on $320k costs the seller $7,625 and vanishes in year 3 — the same money as points keeps paying for decades.',
+    intro:
+      'The buydown is the hottest concession in a high-rate market: the seller funds an escrow that cuts your rate 2 points in year one and 1 in year two — on a $320,000 loan at 7.5%, that\'s $1,817 instead of $2,237 to start, at a seller cost of $7,625. What the marketing omits: the savings expire, while the same dollars spent as permanent discount points keep cutting the payment every month you hold the loan. This calculator prices both structures on your exact loan, shows the year-by-year payments, and gives the verdict by hold period — short hold or expected refi, take the buydown; long hold, points win.',
+    howItWorks: [
+      'Enter the loan amount and note rate.',
+      'Pick the buydown structure — 2-1 or 3-2-1.',
+      'Enter how long you realistically expect to hold the loan before selling or refinancing.',
+      'Read the year-by-year payments, the seller\'s escrow cost, and the buydown-vs-points verdict.',
+    ],
+    faq: [
+      {
+        q: 'Does a buydown help me qualify for a bigger loan?',
+        a: 'No — and this is the most common misunderstanding. Lenders qualify you at the full note rate, not the bought-down rate, because your payment WILL rise to it. A 2-1 buydown improves your early cash flow but not your buying power. (Some niche programs and ARMs differ, but for standard conventional loans the note rate governs qualification.) Where the buydown genuinely helps: buyers with income ramping up (finishing residency, new business, return from leave), buyers expecting to refinance within 2–3 years, and buyers stretching on early-years cash flow after draining reserves for the down payment. If none of those fit, the same seller dollars usually serve you better as permanent points or a price cut.',
+      },
+      {
+        q: 'Buydown, points, or price cut — which seller concession is best?',
+        a: 'It depends on your hold period, which is exactly what this calculator prices. On the $320k example: $7,625 funds a 2-1 buydown (saves exactly $7,625, all within 2 years), about 2.4 permanent points (saves ~$130/month forever — $10,900 over 7 years), or a $7,625 price cut (saves ~$50/month but lowers your loan, taxes, and LTV permanently). Short hold or refi expected → buydown. Long hold → points, once past the breakeven (typically 4–6 years per point). Tight on cash to close → price cut or closing-cost credit. The seller is usually indifferent on dollars — negotiate the structure that serves YOUR timeline, and note that builders often prefer buydowns because "payments from $1,817" markets better than a price cut that resets the comps.',
+      },
+      {
+        q: 'What happens to the buydown escrow if I refinance early?',
+        a: 'The unused portion typically comes back to you — it\'s your subsidy, funded into an escrow at closing and drawn monthly. If you refinance or sell after year one of a 2-1, the remaining year-two funds generally credit against your payoff or refund at closing. Generally is doing work in that sentence: the handling depends on the lender\'s buydown agreement, so confirm the refund mechanics in writing BEFORE closing. This feature makes the buydown nearly free money when the seller funds it and rates fall fast: you collect the year-one subsidy, refi out, and recover the rest. The one thing you can\'t do is transfer it — the buydown dies with the loan.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

@@ -3077,6 +3077,74 @@ export function SellerNetSheetCalc() {
   )
 }
 
+// TEMPORARY BUYDOWN (2-1 / 3-2-1) vs PERMANENT POINTS — the seller-funded subsidy compared honestly. Node-verified on $320k @7.5%/30yr: 2-1 buydown → yr1 $1,816.92 (5.5%), yr2 $2,022.62 (6.5%), yr3+ $2,237.49; seller's escrowed cost $7,625. 3-2-1 → $15,018. Same $7,625 as permanent points (≈2.4 pts → ~0.6% cut per typical 4pts=1% pricing… modeled as 0.25pt per point): permanent 0.25pt cut = $54.52/mo saved, 1pt costs $3,200, breakeven 59 months. The honest comparison: buydown savings VANISH after year 2–3; points keep paying for the life you hold the loan. Buydown wins when: seller pays (free money), you'll refi within 2–3 yrs (rate expectations), or cash flow early is tight (new job ramp). Points win when: you'll hold 5+ yrs. Qualifying note: lenders qualify you at the NOTE rate (7.5%), not the bought-down rate — the buydown doesn't get you into a bigger loan.
+export function BuydownCalc() {
+  const [loan, setLoan] = useNumber(320000)
+  const [note, setNote] = useNumber(7.5)
+  const [type, setType] = useState<'2-1' | '3-2-1'>('2-1')
+  const [holdYrs, setHoldYrs] = useNumber(7)
+
+  const r = useMemo(() => {
+    const pmt = (P: number, i: number, n: number) => (i > 0 ? (P * i) / (1 - Math.pow(1 + i, -n)) : P / n)
+    const n = 360
+    const pFull = pmt(loan, note / 1200, n)
+    const cuts = type === '2-1' ? [2, 1] : [3, 2, 1]
+    const yearPmts = cuts.map((c) => pmt(loan, (note - c) / 1200, n))
+    const cost = yearPmts.reduce((a, p) => a + (pFull - p) * 12, 0)
+    // same dollars as permanent points: 1 point = 1% of loan ≈ 0.25pt rate cut (typical, varies by lender)
+    const pts = cost / (loan * 0.01)
+    const permCut = pts * 0.25
+    const pPerm = pmt(loan, (note - permCut) / 1200, n)
+    const permMonthly = pFull - pPerm
+    const hold = Math.min(holdYrs, 30) * 12
+    const permTotal = permMonthly * hold
+    const buyTotal = cost // buydown saves exactly its cost, in years 1..cuts.length
+    const breakEvenMonths = permMonthly > 0 ? cost / permMonthly : Infinity
+    const pointsWin = hold > cuts.length * 12 && permTotal > buyTotal
+    return { pFull, yearPmts, cuts, cost, pts, permCut, permMonthly, permTotal, buyTotal, breakEvenMonths, pointsWin, hold }
+  }, [loan, note, type, holdYrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Loan amount" value={loan} onChange={setLoan} prefix="$" />
+          <Field label="Note rate" value={note} onChange={setNote} suffix="%" step="0.125" />
+          <Field label="Years you'll hold the loan" value={holdYrs} onChange={setHoldYrs} step="1" />
+        </div>
+        <div className="flex gap-2">
+          {(['2-1', '3-2-1'] as const).map((t) => (
+            <button key={t} onClick={() => setType(t)}
+              className={`rounded-md border px-3 py-1.5 text-sm ${type === t ? 'border-primary bg-primary text-primary-foreground' : 'text-muted-foreground'}`}>
+              {t} buydown
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {r.yearPmts.map((p, i) => (
+            <Result key={i} label={`Year ${i + 1} payment (${num(note - r.cuts[i], 1)}%)`} value={usd(p, 2)} />
+          ))}
+          <Result label={`Payment after year ${r.cuts.length} (${num(note, 2)}%)`} value={usd(r.pFull, 2)} />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result big label="Buydown cost (seller-funded escrow)" value={usd(r.cost)} />
+          <Result label="Same $ as points" value={`${num(r.pts, 2)} pts → ${num(r.permCut, 2)}% cut`} />
+          <Result label="Permanent saving" value={`${usd(r.permMonthly, 2)}/mo`} />
+          <Result label="Points breakeven" value={`${num(r.breakEvenMonths, 0)} months`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.pointsWin
+            ? `If you hold ${num(r.hold / 12, 0)} years, permanent points win: ${usd(r.permTotal)} saved vs the buydown's ${usd(r.buyTotal)}. The buydown's savings stop after year ${r.cuts.length}; points keep paying every month you keep the loan.`
+            : `At a ${num(r.hold / 12, 0)}-year hold the buydown wins — it front-loads ${usd(r.buyTotal)} of savings while points would need ${num(r.breakEvenMonths / 12, 1)} years to recoup. If you expect to refi when rates fall, take the buydown (especially since the seller funds it).`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          How it works: the seller (or builder) deposits the payment difference into an escrowed buydown account at closing — on this loan, {usd(r.cost)} — and the lender draws from it monthly to subsidize years {r.cuts.length === 2 ? '1–2' : '1–3'}. You still qualify at the FULL note rate, so a buydown improves cash flow but not buying power. The negotiation frame: in a buyer's market, a 2-1 buydown costs the seller {usd(r.cost)} but markets as "payments from {usd(r.yearPmts[0], 0)}/mo" — often moves a listing better than an equivalent price cut, while a permanent rate buydown with the same money serves you longer if you're staying. If you refi before the buydown funds run out, the leftover escrow typically credits against your payoff — ask the lender to confirm in writing. Points pricing varies by lender (modeled at 1 point = 0.25% rate cut); get both quotes. Estimates — your loan estimate governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8704,6 +8772,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'property-tax-appeal-calculator': PropertyTaxAppealCalc,
   'hoa-true-cost-calculator': HoaTrueCostCalc,
   'seller-net-sheet-calculator': SellerNetSheetCalc,
+  'mortgage-buydown-calculator': BuydownCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
