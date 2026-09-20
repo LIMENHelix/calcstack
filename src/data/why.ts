@@ -317,6 +317,10 @@ export const WHY_USE: Record<string, string> = {
     'Dieters use it before any plan: Mifflin-St Jeor says a 30-year-old at 80 kg / 180 cm burns 1,780 kcal at rest, 2,448 lightly active — cut from that number, not a guess.',
   'sleep-cycle-calculator':
     'People who wake up groggy use it: sleep runs in 90-minute cycles — bed at 11 PM means waking at 6:45 AM lands between cycles, not inside deep sleep.',
+  'water-intake-calculator':
+    'Anyone past the 8-glasses myth uses it: 35 mL/kg says 80 kg needs 2.8 L — plus 350 mL per 30 minutes of exercise and more in heat.',
+  'bac-calculator':
+    'The Widmark estimate, honest about its limits: 80 kg male, 4 drinks, 2 hours → 0.073% — and fully sober only after ~7 hours. Time is the only cure.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

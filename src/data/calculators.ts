@@ -4902,6 +4902,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'water-intake-calculator',
+    title: 'Water Intake Calculator — Daily Hydration by Weight, Exercise & Climate',
+    shortTitle: 'Water Intake',
+    category: 'Health & Life',
+    description:
+      'Daily water target from body weight (35 mL/kg), exercise duration, and heat — in liters, ounces, and cups. More precise than the 8-glasses rule.',
+    tagline: 'At 80 kg you need about 2.8 L — plus 350 mL per 30 minutes of exercise and three-quarters of a liter more in heat. The 8-glasses rule was never based on you.',
+    intro:
+      'The "8 glasses a day" rule fits nobody — a 55 kg office worker and a 100 kg landscaper have wildly different needs. The weight-based formula (35 mL per kilogram) tracks actual physiology, then adjusts for the two big dehydrators: exercise and heat. This calculator gives the target in liters, ounces, and cups so it maps to whatever bottle you actually carry.',
+    howItWorks: [
+      'Enter body weight in kilograms (pounds ÷ 2.205).',
+      'Add today\'s exercise minutes — sweat replaces at ~350 mL per 30 min.',
+      'Check the heat box in hot weather or heavy sweating.',
+      'Read the daily target in liters, ounces, and 8-oz cups.',
+      'Remember ~20% of intake comes from food — the bottle doesn\'t carry it all.',
+    ],
+    faq: [
+      {
+        q: 'How much water should I drink a day?',
+        a: 'The weight-based answer: 35 mL per kilogram — 2.1 L at 60 kg, 2.8 L at 80 kg, 3.5 L at 100 kg. Official references land in the same neighborhood: EFSA adequate intake is 2.0 L (women) and 2.5 L (men) from all sources including food, and since food supplies roughly 20%, drinking targets run slightly below the formula total. Exercise adds ~350 mL per 30 minutes of moderate sweating, doubled in heat or heavy gear. The honest fine-tuning signal is urine color: pale straw is hydrated, dark yellow says drink, and completely clear all day says ease off. Thirst is a decent guide for healthy adults at rest — it lags during exercise and in older adults, where scheduled drinking works better.',
+      },
+      {
+        q: 'Can you drink too much water?',
+        a: 'Yes — hyponatremia is the rare but real danger: blood sodium diluted below safe levels by extreme intake, typically several liters in a few hours. The cases that make news are endurance events and drinking challenges — marathoners who force-drink beyond thirst, hazing rituals, ecstasy-related cases. Symptoms start as nausea and headache and escalate to confusion and seizures. The safe ceiling for most adults is roughly 0.8–1.0 L per hour, the kidney\'s processing rate — daily totals under about 5–6 L spread across the day are fine for healthy kidneys. The paradox worth knowing: endurance athletes collapse from overhydration more often than dehydration, which is why current sports-medicine guidance is "drink to thirst, not to a schedule" during events.',
+      },
+      {
+        q: 'Do coffee, tea, and soda count toward hydration?',
+        a: 'Yes — the dehydration reputation is mostly myth. Caffeine is a mild diuretic, but studies show regular coffee and tea drinkers net-hydrate from those drinks almost as well as from water; the fluid volume outweighs the diuretic effect at normal doses (under ~400 mg caffeine/day). Alcohol is different — it suppresses vasopressin and dehydrates net-net, roughly 100 mL extra urine per standard drink. Sugary sodas hydrate but at a caloric price. What food contributes is underrated: watermelon, cucumber, and lettuce are 90%+ water; even oatmeal and rice carry meaningful water. Total it up and the glass-counting matters less than the habit of having water within reach — intake tracks availability more than intention.',
+      },
+    ],
+  },
+  {
+    slug: 'bac-calculator',
+    title: 'BAC Calculator — Widmark Blood Alcohol Estimate & Sober Time',
+    shortTitle: 'BAC Calculator',
+    category: 'Health & Life',
+    description:
+      'Estimate blood alcohol content with the Widmark formula — drinks, weight, sex, and time — plus hours to legal limit and hours to fully sober.',
+    tagline: '80 kg male, 4 drinks, 2 hours: BAC ≈ 0.073% — under the limit but impaired, and fully sober only after ~7 hours. Time is the only thing that works.',
+    intro:
+      'BAC math is brutal and simple: your liver eliminates about 0.015% per hour regardless of coffee, showers, or willpower. The Widmark formula estimates blood alcohol from drinks consumed, body weight, sex, and elapsed time — an estimate with ±20% individual variation, useful for understanding the timeline, never for deciding to drive. One US standard drink is 14 grams of alcohol: 12 oz of beer, 5 oz of wine, 1.5 oz of spirits.',
+    howItWorks: [
+      'Enter weight, sex (body-water constant), drinks, and hours elapsed.',
+      'Read estimated current BAC and the evening\'s peak.',
+      'See hours until under 0.08% — and the much longer road to 0.00%.',
+      'Remember impairment starts at 0.02–0.05%, far below the legal limit.',
+      'Only time lowers BAC — food slows absorption but never reverses it.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is the Widmark formula?',
+        a: '±20% or worse in individuals — it is the standard forensic estimate, but it cannot see your meal timing, medications, liver function, drinking pace, or genetic metabolism differences. The formula assumes average body composition (the r constant — 0.68 male, 0.55 female — is really about body water, so muscular and lean bodies run lower BAC than the estimate, higher body fat runs higher). Food in the stomach can halve peak BAC by slowing absorption, but the same total alcohol still arrives. The responsible use: understand timelines and how badly "I feel fine" correlates with legal sobriety — feeling fine at 0.08% is common precisely because alcohol impairs self-assessment first. For any driving decision, the estimate is not a defense; the only honest threshold is zero drinks.',
+      },
+      {
+        q: 'How long does it take to sober up?',
+        a: 'About 0.015% BAC per hour — one standard drink per hour, roughly — and nothing accelerates it. Four drinks peaking at 0.10% needs ~7 hours to reach zero and 1.5 hours just to cross under 0.08%. This is the morning-after trap: 6 drinks ending at 1 AM can leave you at 0.05–0.06% at 8 AM — legal in some states by number, impaired by any measure, and over the limit in Utah (0.05%) and everywhere for commercial drivers (0.04%). Coffee, cold showers, exercise, and food do not speed elimination — they produce a wide-awake person with the same BAC. The liver metabolizes on its own clock, which is why the only plan that works is made before the first drink.',
+      },
+      {
+        q: 'Why does the same amount affect people differently?',
+        a: 'Three main variables. Body water: alcohol distributes into water, not fat — so at equal weight, a leaner person shows lower BAC than a higher-body-fat person, and the sex constant (0.68 vs 0.55) mostly reflects average body-water differences. Enzymes: ADH and ALDH variants change metabolism speed — the "Asian flush" ALDH2 variant causes acetaldehyde buildup, and fast metabolizers clear measurably quicker. And stomach ADH: women have less gastric alcohol dehydrogenase, so more alcohol reaches the blood unprocessed — one reason equal drinks per pound still hit harder. Tolerance is the dangerous illusion: experienced drinkers FEEL less impaired at the same BAC, but reaction time and judgment are just as compromised — tolerance masks impairment without reducing it.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

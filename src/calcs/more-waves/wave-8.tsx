@@ -3743,3 +3743,82 @@ export function SleepCycleCalc() {
     </CardContent></Card>
   )
 }
+
+
+// WATER INTAKE — node-verified: 35 mL/kg baseline → 80 kg = 2.80 L/day; +0.35 L per 30 min of exercise (45 min → 3.32 L); +0.5–1.0 L in heat. The "8 glasses" rule is folklore; the weight-based formula tracks actual physiology (EFSA adequate intake ≈ 2.0–2.5 L from all sources).
+export function WaterIntakeCalc() {
+  const [weight, setWeight] = useNumber(80)
+  const [exercise, setExercise] = useNumber(45)
+  const [hot, setHot] = useState(false)
+  const r = useMemo(() => {
+    if (weight <= 0) return null
+    const base = (weight * 35) / 1000
+    const ex = (exercise / 30) * 0.35
+    const heat = hot ? 0.75 : 0
+    const total = base + ex + heat
+    return { base, ex, heat, total, oz: total * 33.814, cups: (total * 33.814) / 8 }
+  }, [weight, exercise, hot])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Body weight" value={weight} onChange={setWeight} suffix="kg" step="1" />
+        <Field label="Exercise today" value={exercise} onChange={setExercise} suffix="min" step="15" />
+      </div>
+      <label className="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked={hot} onChange={(e) => setHot(e.target.checked)} className="h-4 w-4" />
+        Hot climate or heavy sweating today
+      </label>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label="Daily target" value={`${num(r.total, 2)} L`} big />
+          <Result label="In ounces" value={`${num(r.oz, 0)} oz`} />
+          <Result label="In 8-oz cups" value={num(r.cups, 1)} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">Formula: 35 mL per kg + 350 mL per 30 min of exercise + 750 mL in heat. ~20% of intake normally comes from food. Overhydration is real too — forcing 6+ L can dilute sodium (hyponatremia); let thirst fine-tune the target. Pounds: kg = lb ÷ 2.205.</p>
+    </CardContent></Card>
+  )
+}
+
+// BAC (WIDMARK) — node-verified: 80 kg male, 4 US standard drinks (14 g each), 2 h → peak 0.103%, current 0.073%, back under 0.08% in 1.53 h, fully sober in 6.86 h. Female 65 kg, 3 drinks, 1.5 h → 0.095%. r = 0.68 M / 0.55 F, elimination 0.015%/h. Educational estimate — individual variation ±20%+; never use to decide driving.
+export function BacCalc() {
+  const [sex, setSex] = useState('m')
+  const [weight, setWeight] = useNumber(80)
+  const [drinks, setDrinks] = useNumber(4)
+  const [hours, setHours] = useNumber(2)
+  const r = useMemo(() => {
+    if (weight <= 0 || drinks < 0 || hours < 0) return null
+    const grams = drinks * 14
+    const rw = weight * 1000 * (sex === 'm' ? 0.68 : 0.55)
+    const peak = (grams / rw) * 100
+    const current = Math.max(0, peak - 0.015 * hours)
+    const toLegal = peak > 0.08 ? Math.max(0, (peak - 0.08) / 0.015 - hours) : 0
+    const toZero = Math.max(0, peak / 0.015 - hours)
+    return { peak, current, toLegal, toZero }
+  }, [sex, weight, drinks, hours])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Body water constant</label>
+          <select value={sex} onChange={(e) => setSex(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="m">Male (r = 0.68)</option>
+            <option value="f">Female (r = 0.55)</option>
+          </select>
+        </div>
+        <Field label="Weight" value={weight} onChange={setWeight} suffix="kg" step="1" />
+        <Field label="Standard drinks" value={drinks} onChange={setDrinks} step="0.5" />
+        <Field label="Hours since first drink" value={hours} onChange={setHours} suffix="h" step="0.5" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label="Estimated BAC now" value={`${num(r.current, 3)}%`} big />
+          <Result label="Peak BAC" value={`${num(r.peak, 3)}%`} />
+          <Result label="Under 0.08% in" value={r.toLegal === 0 ? (r.current < 0.08 ? 'Under the limit' : 'Now') : `${num(r.toLegal, 1)} h`} />
+          <Result label="Fully sober in" value={`${num(r.toZero, 1)} h`} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">Widmark estimate — real BAC varies ±20%+ with food, meds, and metabolism. One standard US drink = 14 g alcohol: 12 oz beer (5%), 5 oz wine (12%), 1.5 oz spirits (40%). Coffee, cold showers, and time claims aside, only hours lower BAC. Never drive on a calculator estimate.</p>
+    </CardContent></Card>
+  )
+}
