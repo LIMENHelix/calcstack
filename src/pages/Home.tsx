@@ -54,15 +54,14 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          360 calculators and counting. Newest: the solar ownership suite —
-          quote checking at $/W against benchmarks, lease vs buy with escalators,
-          25-year degradation priced, removal-and-reinstall roof math — plus the
-          heat pump water heater, duct sealing, and the honest induction-vs-gas
-          verdict.
+          370 calculators and counting. Newest: the landlord operations suite —
+          tenant turnover priced honestly, rent-vs-vacancy effective pricing,
+          itemized CapEx reserves, make-ready scopes with the vacancy meter,
+          pet policy math, and the property-manager breakeven hourly.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['solar-quote-checker-calculator', 'solar-lease-vs-buy-calculator', 'solar-degradation-calculator', 'heat-pump-water-heater-calculator', 'duct-sealing-roi-calculator', 'induction-vs-gas-calculator'].includes(c.slug),
+            ['tenant-turnover-cost-calculator', 'rent-vacancy-pricing-calculator', 'maintenance-reserve-calculator', 'make-ready-calculator', 'pet-policy-calculator', 'property-manager-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

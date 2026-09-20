@@ -2530,6 +2530,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pet-policy-calculator',
+    title: 'Pet Rent vs Pet Deposit Calculator — Landlord Policy Math: Expected Damage, Vacancy Edge, Legal Limits',
+    shortTitle: 'Pet Rent vs Deposit',
+    category: 'Housing & Mortgage',
+    description:
+      'Structure your pet policy with expected-value math — pet rent vs refundable deposit vs both, expected damage pricing, the vacancy cost of banning pets, and the Fair Housing lines you cannot cross.',
+    tagline: '$40/mo pet rent nets $760 over a 2-year tenancy; a $500 refundable deposit alone nets −$75. And banning pets adds a week of vacancy — half of renters have them.',
+    intro:
+      'Pet policies are usually set by fear; set one by arithmetic. Expected damage at the defaults is $200 over a tenancy (25% chance of $800) — but a $40/month pet rent collects $960 over the same period, netting $760. A refundable $500 deposit alone nets minus $75 because it only pays when damage actually happens, and caps at the deposit. The vacancy edge finishes the case: over half of renters own pets, so a no-pets policy narrows the applicant pool and adds roughly a week of vacancy per turnover — $416 at $1,800 rent. This calculator prices your policy, including the legal limits (deposit caps, and the Fair Housing rule that service and support animals are not pets at all).',
+    howItWorks: [
+      'Enter the monthly pet rent you are considering and a typical tenancy length.',
+      'Enter the refundable deposit alternative.',
+      'Enter damage probability and average damage cost when it happens.',
+      'Enter the unit rent to price the vacancy edge.',
+      'Read pet-rent net versus deposit-only net — and structure accordingly.',
+    ],
+    faq: [
+      {
+        q: 'Pet rent, pet deposit, or pet fee — what is the right structure?',
+        a: 'The math favors monthly pet rent as the base, with a refundable deposit on top if your state allows it. Pet rent prices expected damage continuously — $25–75/month collects whether or not this particular pet destroys anything, which is exactly how insurance works. Deposits only pay in the tail: they must be refundable in most states, which means they return to the 75% of tenants whose pets do no damage, and they cap recovery at the deposit amount when a pet does $1,500 of flooring damage. Non-refundable pet FEES ($200–500 once) sit in legal gray zones — some states treat them as disguised security deposits subject to deposit caps and return rules; check your statute before using one. The combination that usually clears legal review: modest pet rent + refundable deposit, both spelled out in a pet addendum with the animal named. Whatever you charge: it never applies to service animals or ESAs — those are not pets under Fair Housing law, and charging pet rent on one is a discrimination claim.',
+      },
+      {
+        q: 'How do I keep the damage probability down?',
+        a: 'Screening beats pricing — the 25% default is an average across all pets, and screening selects the good half. The process that works: require vet records (current vaccinations signal an owner who maintains things), a prior-landlord reference asked specifically about the animal (not just the tenant), and a meet-the-pet clause for dogs — a dog that is calm in a strange room with you is the single best predictor available. Write behavioral terms into the addendum: crating when alone for puppies, litter-box maintenance, immediate flea treatment, and liability for damage regardless of deposit. Breed and size restrictions are common but crude — a screened 70-lb lab from a responsible owner outperforms an unscreened 15-lb terrier; some insurers mandate breed lists for liability coverage, so check your policy before dropping restrictions entirely. Weight the applicant-pool math from this calculator: every week of extra vacancy costs 23% of a month\'s rent, so a pet policy that is too strict to fill the unit quickly is expensive in a way no deposit covers.',
+      },
+      {
+        q: 'What does pet damage actually cost when it happens?',
+        a: 'The distribution is bimodal: most incidents are $200–600 (carpet spot treatment, door scratching, blind replacement, odor treatment), and the tail is $1,500–4,000 (pet urine into subfloor requiring carpet AND pad AND seal-and-replace, chewed cabinets, scratched hardwood refinishing). Urine is the expensive one because it penetrates — surface cleaning does not remove it, and the next tenant\'s nose finds it at the showing. This is why expected-value pricing (pet rent) beats tail-insurance pricing (deposit): the $800 average hides the fact that you either collect nothing or eat a floor. The recovery hierarchy when damage occurs: deposit first with itemized receipts and before/after photos, then small-claims for the excess if the tenancy ended badly — though collections from departed tenants are theoretical money. Prevention pricing: a $200 annual pet inspection walkthrough catches litter-box and scratching problems at $200-stage instead of $2,000-stage, and tenants who know you look behave differently. Set the damage inputs to your market — hardwood-heavy units carry worse tails than LVP units, which is itself an argument for the make-ready calculator\'s durable-grade spec.',
+      },
+    ],
+  },
+  {
+    slug: 'property-manager-calculator',
+    title: 'Property Manager vs Self-Manage Calculator — The Breakeven Hourly Rate on Your Time',
+    shortTitle: 'PM vs Self-Manage',
+    category: 'Housing & Mortgage',
+    description:
+      'What a property manager really costs net of the vacancy edge — monthly fee, leasing fees amortized per turnover — versus your hours at an honest hourly rate, with the breakeven that settles it.',
+    tagline: 'A PM nets $2,419/yr on an $1,800 rental after the vacancy edge. Self-managing at 4 hrs/mo breaks even at $50/hr — value your time above that and the manager is cheaper than you.',
+    intro:
+      'The property-management question is not "is 10% a lot" — it is "what is my hour worth, honestly." Full-cost the PM: 10% of $1,800 monthly ($180) plus a 75%-of-a-month leasing fee per turnover every two years — $2,835/yr gross, minus the vacancy a professional leasing operation saves (2 weeks per turnover, $416/yr equivalent) — $2,419 net. Self-managing at 4 quiet hours a month and a $50 honest hourly is $2,400. Breakeven: $50/hr. Below it, self-managing is a part-time job that pays decently; above it, you are paying yourself a below-market wage in the most interruptible hours of your week. This calculator runs your numbers — including the hours input where owners lie to themselves.',
+    howItWorks: [
+      'Enter monthly rent and the PM percentage fee (8–12% typical).',
+      'Enter the leasing fee as a percent of one month and your turnover frequency.',
+      'Enter your honest self-management hours per month — quiet-unit average, not best month.',
+      'Enter your hourly value and the vacancy weeks a PM saves per turnover.',
+      'Read net PM cost, self-manage time cost, the verdict, and the breakeven hourly.',
+    ],
+    faq: [
+      {
+        q: 'What does the management fee actually buy?',
+        a: 'Four things, worth pricing separately. Labor: tenant communication, rent collection, maintenance coordination, inspections — the hours this calculator prices. Legal compliance: deposit deadlines (miss the 14–30 day itemization window and forfeit the deposit plus penalties in many states), notice forms, eviction process — a single botched eviction costs more than years of fees, and PMs do them weekly. Vendor economics: established PMs get plumber and HVAC rates 10–30% below retail and priority scheduling — though watch the maintenance markup (10% on YOUR repairs is standard; negotiate or cap it). And vacancy speed: professional photos, syndicated listings, and same-day showing response compress days-to-lease — the vacancy-edge input in this calculator. What it does NOT buy: aligned incentives — the PM earns the same 10% whether your rent is market or 10% under, collects the leasing fee BECAUSE of turnover, and marks up maintenance they authorize. You are hiring an agent whose economics differ from yours; the contract terms (fee, markup, termination clause) are where that gets managed.',
+      },
+      {
+        q: 'When does self-managing clearly win?',
+        a: 'Four profiles. The local single-unit owner with a stable long-term tenant — the actual workload is a few hours a month plus rare events, and the PM fee taxes a relationship that is already working. The handy owner: if you can diagnose the water heater, snake the drain, and swap the disposal yourself, you are removing the PM\'s vendor margin along with the fee. The landlord-by-disposition: some owners enjoy the business — tenant screening, make-ready project management, the occasional small-claims filing — and for them the hourly is not a cost, it is the hobby. And the margin-thin deal: a rental cash-flowing $250/month cannot donate $200 of it to management and remain a deal — self-management is sometimes what makes the proforma real, though run the reserve calculator first to confirm the flow is real at all. The honest test regardless of profile: could you handle a 2 a.m. burst-pipe call, a nonpayment eviction, and a fair-housing-sensitive rejection in the same month? The PM question is really a question about that month, not the average one.',
+      },
+      {
+        q: 'How do I hire a good property manager?',
+        a: 'Interview like an employer checking references, because you are. The questions that separate pros from rent-collectors: What is your average days-to-lease, and can I verify it against your current listings? (Cross-check on Zillow — the listing dates are public.) What percentage of your placements are still in place at 18 months? (That is the turnover-incentive test.) What is your eviction rate and walk me through your last one? What exactly is the maintenance markup, and can I cap approvals above $300? Who covers leasing-fee clawbacks if a placed tenant leaves in 90 days? Then the contract: management fee on COLLECTED rent only (never on vacant months), leasing fee 50–75% of one month (negotiate at scale), markup disclosed, and a 30-day termination clause without penalty — a PM who will not let you leave is telling you something. Verify license (most states require a real-estate broker license for PMs), insurance (E&O), and trust-account handling for deposits. Get three proposals and plug each fee structure into this calculator — the cheapest monthly fee with a 100% leasing fee and 15% maintenance markup is often the most expensive option.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

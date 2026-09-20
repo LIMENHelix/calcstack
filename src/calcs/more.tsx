@@ -6144,6 +6144,101 @@ export function MakeReadyCalc() {
   )
 }
 
+// PET POLICY: PET RENT VS DEPOSIT — node-verified defaults (landlord view): pet rent $40/mo × 24-mo tenancy = $960 income vs expected pet damage 25% × $800 = $200 → net +$760. Refundable $500 deposit alone nets −$75 (covers only damage that occurs AND exceeds normal wear, capped at deposit). Plus vacancy edge: ~50%+ of renters own pets — allowing them cuts ~1 week of vacancy ($416 at $1,800 rent). Pet rent beats deposits because it prices the EXPECTED damage every month instead of hoping the deposit covers the tail risk.
+export function PetPolicyCalc() {
+  const [petRent, setPetRent] = useNumber(40)
+  const [months, setMonths] = useNumber(24)
+  const [dep, setDep] = useNumber(500)
+  const [dmgProb, setDmgProb] = useNumber(25)
+  const [dmg, setDmg] = useNumber(800)
+  const [rent, setRent] = useNumber(1800)
+
+  const r = useMemo(() => {
+    const rentIncome = petRent * months
+    const expDmg = (dmgProb / 100) * dmg
+    const rentNet = rentIncome - expDmg
+    const depNet = (dmgProb / 100) * Math.min(dep, dmg) - expDmg
+    const vacEdge = rent / 4.33
+    return { rentIncome, expDmg, rentNet, depNet, vacEdge }
+  }, [petRent, months, dep, dmgProb, dmg, rent])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Pet rent" value={petRent} onChange={setPetRent} prefix="$" suffix="/mo" step="5" />
+          <Field label="Tenancy length" value={months} onChange={setMonths} suffix="mo" step="6" />
+          <Field label="Pet deposit (refundable)" value={dep} onChange={setDep} prefix="$" step="100" />
+          <Field label="Damage probability" value={dmgProb} onChange={setDmgProb} suffix="%" step="5" />
+          <Field label="Damage if it happens" value={dmg} onChange={setDmg} prefix="$" step="100" />
+          <Field label="Unit rent" value={rent} onChange={setRent} prefix="$" suffix="/mo" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Pet rent income" value={usd(Math.round(r.rentIncome))} />
+          <Result label="Expected damage" value={usd(Math.round(r.expDmg))} />
+          <Result label="Pet rent net" value={usd(Math.round(r.rentNet))} big />
+          <Result label="Deposit-only net" value={usd(Math.round(r.depNet))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Pet rent nets ${usd(Math.round(r.rentNet))} over the tenancy; the refundable deposit alone nets ${usd(Math.round(r.depNet))}. Add the vacancy edge — half of renters have pets, and banning them can add a week of vacancy (${usd(Math.round(r.vacEdge))} here) at every turnover.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: pet rent net = monthly pet rent × months − expected damage (probability × cost); deposit-only net = expected covered damage − expected damage (the deposit only helps when damage actually occurs and exceeds wear-and-tear, and it caps at the deposit). Legal ground rules vary by state and they matter: several states CAP total deposits (pet deposits included), some treat non-refundable pet fees as illegal, and a few cap pet rent or ban breed restrictions — check your statute before structuring. The structure that usually clears: monthly pet rent ($25–75) plus a refundable deposit, both disclosed in the lease addendum. Two things never chargeable to a pet policy: service animals and emotional support animals are NOT pets under Fair Housing — no pet rent, no deposit, no breed rules — and mischarging there is a discrimination claim, not a revenue line. Screening beats pricing: vet records, prior-landlord pet reference, and a meet-the-dog clause filter the 25% damage probability down better than any fee. Tenant-side view: pet rent of $40/mo is $960 over two years — non-refundable — so renters should compare it against the refundable deposit alternative at each apartment, not just the sticker rent. Estimate — your state statute and damage history govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// PROPERTY MANAGER VS SELF-MANAGE — node-verified defaults: PM 10% of $1,800 = $180/mo + leasing fee 75% of a month ($1,350) per turnover every 24 mo = $2,835/yr gross; PM professional leasing cuts vacancy ~2 wks per turnover ($416/yr equivalent) → net PM cost $2,419/yr. Self-manage at 4 hrs/mo × $50/hr = $2,400/yr → breakeven hourly ≈ $50. Below that, self-managing pays; above it, the PM is cheaper than you.
+export function PropertyManagerCalc() {
+  const [rent, setRent] = useNumber(1800)
+  const [pmPct, setPmPct] = useNumber(10)
+  const [leasePct, setLeasePct] = useNumber(75)
+  const [turnMo, setTurnMo] = useNumber(24)
+  const [hrsMo, setHrsMo] = useNumber(4)
+  const [hourly, setHourly] = useNumber(50)
+  const [vacSaveWks, setVacSaveWks] = useNumber(2)
+
+  const r = useMemo(() => {
+    const pmYr = rent * (pmPct / 100) * 12 + rent * (leasePct / 100) * (12 / turnMo)
+    const vacSave = (rent / 4.33) * vacSaveWks * (12 / turnMo)
+    const netPm = pmYr - vacSave
+    const selfYr = hrsMo * hourly * 12
+    const beHourly = hrsMo > 0 ? netPm / (hrsMo * 12) : Infinity
+    const winner = selfYr <= netPm ? 'Self-manage' : 'Hire the PM'
+    return { pmYr, vacSave, netPm, selfYr, beHourly, winner }
+  }, [rent, pmPct, leasePct, turnMo, hrsMo, hourly, vacSaveWks])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Monthly rent" value={rent} onChange={setRent} prefix="$" step="50" />
+          <Field label="PM fee" value={pmPct} onChange={setPmPct} suffix="% of rent" step="1" />
+          <Field label="Leasing fee" value={leasePct} onChange={setLeasePct} suffix="% of month" step="25" />
+          <Field label="Turnover every" value={turnMo} onChange={setTurnMo} suffix="mo" step="6" />
+          <Field label="Your hours per month" value={hrsMo} onChange={setHrsMo} suffix="hrs" step="1" />
+          <Field label="Your hourly value" value={hourly} onChange={setHourly} prefix="$" step="10" />
+          <Field label="PM vacancy edge" value={vacSaveWks} onChange={setVacSaveWks} suffix="wks" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="PM net cost /yr" value={usd(Math.round(r.netPm))} />
+          <Result label="Self-manage time /yr" value={usd(Math.round(r.selfYr))} />
+          <Result label="Verdict" value={r.winner} big />
+          <Result label="Breakeven hourly" value={isFinite(r.beHourly) ? `${usd(Math.round(r.beHourly))}/hr` : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The PM costs ${usd(Math.round(r.netPm))}/yr net of the vacancy edge; your ${hrsMo} hrs/mo at ${usd(hourly)}/hr costs ${usd(Math.round(r.selfYr))}. Breakeven: ${usd(Math.round(r.beHourly))}/hr — value your time above that and the manager is cheaper than you; below it, self-managing is a part-time job that pays ${usd(Math.round(r.beHourly))}/hr tax-efficiently.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: PM cost = monthly fee (8–12% of rent) + leasing fee (50–100% of one month, per turnover) − vacancy saved by professional leasing; self-manage cost = your hours × honest hourly value. The hours input is where owners lie: 4 hrs/mo is a QUIET unit — turnovers, maintenance coordination, and disputes spike it to 15+ some months, and 2 a.m. is still 2 a.m. What the fee buys beyond labor: legal-compliance muscle (deposit deadlines, notice forms, eviction process — mistakes cost more than years of fees), vendor networks at below-retail rates, and distance-proofing — a rental 45 minutes away doubles every hour estimate. Where PMs earn it: out-of-state owners, 3+ units (their economics improve with scale while yours worsen), eviction-prone markets, and owners whose day-job hourly dwarfs the breakeven. Where self-managing wins: one local unit, a handy owner, a stable long-term tenant, and anyone who treats landlording as a business rather than an investment. Interview like an employer: ask their average days-to-lease (verify against listings), eviction rate, maintenance markup policy (10% markups on YOUR repairs are standard — negotiate), and get the termination clause before signing. Estimate — your market&apos;s PM quotes and your honest calendar govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11831,6 +11926,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'rent-vacancy-pricing-calculator': RentVacancyPricingCalc,
   'maintenance-reserve-calculator': MaintenanceReserveCalc,
   'make-ready-calculator': MakeReadyCalc,
+  'pet-policy-calculator': PetPolicyCalc,
+  'property-manager-calculator': PropertyManagerCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

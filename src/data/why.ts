@@ -165,6 +165,10 @@ export const WHY_USE: Record<string, string> = {
     'Landlords use it before trusting cash flow: itemized reserves price out at $274/mo (15.2% of rent) — the 1% rule averages across houses, but your HVAC dies on YOUR schedule, in July.',
   'make-ready-calculator':
     'Landlords use it at move-out: paint, LVP, cleaning, and locks price at $4,200 — plus $59/day of lost rent during make-ready, which turns contractor lead times into the most expensive line item.',
+  'pet-policy-calculator':
+    'Landlords use it before writing the pet addendum: $40/mo pet rent nets $760 over a tenancy while a refundable deposit alone nets −$75 — and banning pets costs a week of vacancy since half of renters have them.',
+  'property-manager-calculator':
+    'Landlords use it before signing a management contract: the PM nets $2,419/yr after the vacancy edge — self-managing breaks even at $50/hr, so the question is what your 2 a.m. hours are worth.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

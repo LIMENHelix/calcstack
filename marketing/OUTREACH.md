@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 360 calculators live (586 indexed pages). See LAUNCH.md for the domain-day
+**Status: 370 calculators live (596 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -551,3 +551,36 @@ audience), utility consumer-education pages, home-inspector content.
 - **Backlist ride-alongs** — solar payback, heat pump vs furnace, TOU switch,
   smart thermostat, LED, attic insulation. The energy cluster now covers the
   full sequence: audit → envelope → ducts → equipment → rates → solar → battery.
+
+## Wave 62 — Home-risk & landlord operations (#361–#370, milestone wave)
+
+Milestone wave: 370 calculators live. Two mini-suites: home-risk decisions
+(waterproofing, radon, sewer, gutters) and landlord operations (turnover,
+pricing, reserves, make-ready, pets, management). Audiences: BiggerPockets and
+landlord forums, r/Landlord and r/realestateinvesting wikis, property-management
+blogs, home-inspector content sites, radon/waterproofing contractor blogs
+(the honest-math angle flatters the good ones), basement-health newsletters.
+
+- **Waterproofing ROI (#361)** — expected-value framing with the insurance
+  exclusion front and center; home-inspector and foundation-repair crossover.
+- **Radon mitigation (#362)** — the smoking-multiplier math is the shareable
+  ("radon math is smoking math"); EPA/WHO-citable content for health blogs.
+- **Sewer line cost (#363)** — "what sits above the pipe decides the job";
+  trenchless-vs-trench correction content for plumbing blogs.
+- **Gutter guard ROI (#364)** — the honest "guards halve cleaning, never zero
+  it" verdict; seasonal (fall) timing for home-maintenance newsletters.
+- **Tenant turnover cost (#365)** — the raise-breakeven framing is catnip for
+  landlord podcasts and BiggerPockets; "retention is the cheapest revenue."
+- **Rent vs vacancy pricing (#366)** — "the last $100 of ask is the most
+  expensive money in landlording"; pricing-discipline content for PM blogs.
+- **Maintenance reserve (#367)** — itemized CapEx beats the 1% rule; the
+  "HVAC dies in July" hook. Rental-proforma and buy-box content crossover.
+- **Make-ready estimator (#368)** — the $59/day vacancy meter; durable-grade
+  spec (LVP over carpet) content for rehab audiences.
+- **Pet policy (#369)** — pet-rent-vs-deposit expected value + Fair Housing
+  ESA line; strong engagement topic, heavy comment-section bait.
+- **PM vs self-manage (#370)** — the breakeven hourly ($50/hr at defaults);
+  pitch landlord-software blogs and real-estate newsletters.
+- **Backlist ride-alongs** — rental cash flow, cap rate, BRRRR, depreciation,
+  cost segregation, STR loophole. The landlord cluster now runs acquisition →
+  operations → tax in one interlinked set.
