@@ -7773,6 +7773,108 @@ export function CateringCalc() {
   )
 }
 
+// AUTO DETAILING PRICING — node-verified defaults: $175 full detail on a sedan, 3.5 hrs. Costs: chemicals $9 + fixed per job $27.01 (DA polisher/steamer $6,500 ÷ 3yr ÷ 400 jobs = $5.42, van payment $380/mo ÷ 22 workdays = $17.27, insurance $95/mo ÷ 22 = $4.32) + labor 3.5 × $25 = $87.50 → total $123.51. Profit $51.49, margin 29.4%. The $50/hr billed rate is $14.71/hr true after costs — the gap is why detailers who don't cost the van go broke busy.
+export function DetailingCalc() {
+  const [price, setPrice] = useNumber(175)
+  const [hrs, setHrs] = useNumber(3.5)
+  const [chem, setChem] = useNumber(9)
+  const [laborRate, setLaborRate] = useNumber(25)
+  const [equip, setEquip] = useNumber(6500)
+  const [jobsYr, setJobsYr] = useNumber(400)
+  const [vanMo, setVanMo] = useNumber(475)
+
+  const r = useMemo(() => {
+    const fixed = (jobsYr > 0 ? equip / (3 * jobsYr) : 0) + vanMo / 22
+    const labor = hrs * laborRate
+    const cost = chem + fixed + labor
+    const profit = price - cost
+    const margin = price > 0 ? (profit / price) * 100 : 0
+    const billed = hrs > 0 ? price / hrs : 0
+    const trueHr = hrs > 0 ? profit / hrs : 0
+    return { fixed, labor, cost, profit, margin, billed, trueHr }
+  }, [price, hrs, chem, laborRate, equip, jobsYr, vanMo])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Package price" value={price} onChange={setPrice} prefix="$" step="10" />
+          <Field label="Hours per job" value={hrs} onChange={setHrs} step="0.5" />
+          <Field label="Chemicals per job" value={chem} onChange={setChem} prefix="$" step="1" />
+          <Field label="Labor rate" value={laborRate} onChange={setLaborRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Equipment value" value={equip} onChange={setEquip} prefix="$" step="500" />
+          <Field label="Jobs per year" value={jobsYr} onChange={setJobsYr} step="25" />
+          <Field label="Van + insurance" value={vanMo} onChange={setVanMo} prefix="$" suffix="/mo" step="25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="True job cost" value={usd(Math.round(r.cost))} />
+          <Result label="Profit per job" value={`${usd(Math.round(r.profit))} (${num(r.margin, 0)}%)`} big />
+          <Result label="Billed rate" value={`${usd(Math.round(r.billed))}/hr`} />
+          <Result label="True rate after costs" value={`${usd(Math.round(r.trueHr))}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.profit > 0
+            ? `${usd(price)} for ${hrs} hours bills at ${usd(Math.round(r.billed))}/hr — but after chemicals, the van, equipment, and labor you keep ${usd(Math.round(r.trueHr))}/hr. The gap between those two numbers is the whole detailing business.`
+            : `At ${usd(price)} this package loses ${usd(Math.abs(Math.round(r.profit)))} per job — raise the price or cut the hours before the schedule fills up with losing work.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: true cost = chemicals + equipment amortization (equipment ÷ 3-year life ÷ jobs/yr) + daily van/insurance share + labor at your rate; true hourly = profit ÷ hours. The structuring rules that make detailing pay: package tiers, not hourly quotes — Basic ($75–100 maintenance), Full ($150–225), Premium/Show ($300+) — because customers compare packages, not hours, and the tier jump is mostly margin; vehicle-size and condition modifiers are mandatory (SUV/truck +$30–50, pet hair +$25–40, heavy soil +$40–75) since the hours scale and the price must follow; and minimums for mobile work — driving 25 minutes for a $60 wash is losing math before the first panel. Mobile vs shop: mobile wins on convenience pricing (charge 15–25% MORE, not less — you are selling the driveway) but pays in windshield time, so cluster bookings by neighborhood like the cleaning-route logic. Upsells with real margin: engine bay ($45, 20 min), headlight restoration ($75–125, high perceived value), ceramic spray topper ($50–150, minutes of labor), odor treatment ($75–150). The chemistry cost is small — the time is everything: a polisher pass that takes 45 minutes is a $60–100 add-on, and tracking minutes-per-panel across your first 50 jobs calibrates package pricing better than any competitor survey. Water access, mats, and power are the mobile logistics to confirm at booking. Estimate — your job log of actual hours by vehicle class governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// MOBILE MECHANIC VS SHOP — node-verified defaults: brake job (pads+rotors) at 2.0 book-hours. Shop at $145/hr + $140 parts at 25% markup = $465. Mobile at $95/hr = $365 → customer saves $100. Mobile day: 3 jobs × 2.2 book-hrs × $95 + 3 × $25 call fee = $702 over 8.1 hrs (incl. 1.5h drive) = $86.67/hr true — beats the shop wage only with a full route.
+export function MobileMechanicCalc() {
+  const [bookHrs, setBookHrs] = useNumber(2.0)
+  const [shopRate, setShopRate] = useNumber(145)
+  const [mobileRate, setMobileRate] = useNumber(95)
+  const [parts, setParts] = useNumber(140)
+  const [markup, setMarkup] = useNumber(25)
+  const [jobs, setJobs] = useNumber(3)
+  const [driveHrs, setDriveHrs] = useNumber(1.5)
+
+  const r = useMemo(() => {
+    const partsBill = parts * (1 + markup / 100)
+    const shopBill = bookHrs * shopRate + partsBill
+    const mobileBill = bookHrs * mobileRate + partsBill
+    const save = shopBill - mobileBill
+    const dayRev = jobs * bookHrs * mobileRate + jobs * 25
+    const dayHrs = jobs * bookHrs + driveHrs
+    const trueHr = dayHrs > 0 ? dayRev / dayHrs : 0
+    return { shopBill, mobileBill, save, dayRev, dayHrs, trueHr }
+  }, [bookHrs, shopRate, mobileRate, parts, markup, jobs, driveHrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Book hours (job)" value={bookHrs} onChange={setBookHrs} step="0.5" />
+          <Field label="Shop labor rate" value={shopRate} onChange={setShopRate} prefix="$" suffix="/hr" step="5" />
+          <Field label="Your mobile rate" value={mobileRate} onChange={setMobileRate} prefix="$" suffix="/hr" step="5" />
+          <Field label="Parts cost" value={parts} onChange={setParts} prefix="$" step="10" />
+          <Field label="Parts markup" value={markup} onChange={setMarkup} suffix="%" step="5" />
+          <Field label="Jobs per day" value={jobs} onChange={setJobs} step="1" />
+          <Field label="Drive hours/day" value={driveHrs} onChange={setDriveHrs} step="0.25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Customer pays at shop" value={usd(Math.round(r.shopBill))} />
+          <Result label="Customer pays you" value={usd(Math.round(r.mobileBill))} big />
+          <Result label="Customer saves" value={usd(Math.round(r.save))} />
+          <Result label="Your true day rate" value={`${usd(Math.round(r.trueHr))}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Same brake job: ${usd(Math.round(r.shopBill))} at the shop, ${usd(Math.round(r.mobileBill))} in the customer's driveway — they save ${usd(Math.round(r.save))}, and your day of ${jobs} jobs pays ${usd(Math.round(r.dayRev))} at ${usd(Math.round(r.trueHr))}/hr true. The pitch writes itself; the route decides the wage.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: customer bill = book hours × labor rate + parts × (1 + markup); your true rate = (jobs × book hrs × mobile rate + call fees) ÷ (worked hrs + drive hrs). The economics that decide mobile work: flat-rate book time is your friend — charge the BOOK hours (published flat-rate guides) even when you beat them, because efficiency is your margin, and quote book time honestly when the job fights back. Overhead is the moat: no bay rent, no lift, no front desk — your $95/hr against the shop&apos;s $145/hr undercuts by a third while clearing more per hour, BUT only with a full route: 3 jobs and 1.5 hours of driving is $86.67/hr true; one job across town is $40/hr and a bad day. The route is everything — cluster by ZIP, set a service-call minimum ($25–50 fee or 1-hour minimum), and price out-of-territory calls with the drive included. What to turn away: engine/trans swaps, alignments, anything needing a lift or machine shop work, and diag rabbit holes without a cap — quote diag as a flat 1-hour fee credited to the repair. Parts policy: customer-paid parts ordered to the VIN in advance (no-shows don&apos;t strand YOUR money), or your stock with the markup shown — markup on parts is standard and funds the warranty risk. Warranty without a shop: 12 months/12k miles parts-and-labor in writing is the trust unlock that replaces the waiting room. Insurance: garage liability + garagekeepers if a customer&apos;s car is ever in your custody — one driveway fire without it ends the business. Estimate — your booking log and local shop rates govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -13494,6 +13596,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'event-dj-pricing-calculator': DjPricingCalc,
   'pressure-washing-pricing-calculator': PressureWashCalc,
   'catering-price-per-person-calculator': CateringCalc,
+  'auto-detailing-pricing-calculator': DetailingCalc,
+  'mobile-mechanic-rate-calculator': MobileMechanicCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

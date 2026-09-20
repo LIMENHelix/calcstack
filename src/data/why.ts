@@ -233,6 +233,10 @@ export const WHY_USE: Record<string, string> = {
     'Wash operators use it before quoting: an 800 sqft driveway at $0.20 clears $88 at $80/hr effective — because the rig, chemicals, and drive time are all priced in.',
   'catering-price-per-person-calculator':
     'Caterers use it before the proposal: 100 guests at $12 food cost and a 32% target prices at $37.50/head for $1,350 profit — and the breakeven math explains the event minimum.',
+  'auto-detailing-pricing-calculator':
+    'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
+  'mobile-mechanic-rate-calculator':
+    'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

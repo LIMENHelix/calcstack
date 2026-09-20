@@ -3606,6 +3606,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'auto-detailing-pricing-calculator',
+    title: 'Auto Detailing Pricing Calculator — Package Tiers, True Job Cost, and the Billed vs Real Hourly Gap',
+    shortTitle: 'Auto Detailing Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price detailing packages with the van, equipment, chemicals, and labor all in: see the true cost per job, profit margin, and the gap between your billed hourly and what you actually keep per hour.',
+    tagline: 'A $175 detail bills at $50/hr — after the van, the polisher, and labor you keep $14.71/hr. The gap is the whole business.',
+    intro:
+      'Detailing looks like a high-rate trade — $175 for 3.5 hours is $50 an hour — until the costs show up: chemicals, the polisher and steamer amortized over their lives, the van payment and insurance divided across workdays, and labor. Priced honestly, that $175 job costs $123.51 and pays $14.71 an hour of true margin. This calculator prices any package with every cost line in, so tiers, size modifiers, and mobile minimums get set by math instead of guesswork — and you can see exactly what an upsell or a tighter route does to the real hourly.',
+    howItWorks: [
+      'Enter the package price and actual hours per job — from your job log, not hope.',
+      'Enter chemicals per job and your labor rate.',
+      'Enter equipment value and jobs per year — gear amortizes over a 3-year life.',
+      'Enter monthly van + insurance, spread over 22 workdays.',
+      'Read the true job cost, profit margin, billed hourly, and true hourly you keep.',
+    ],
+    faq: [
+      {
+        q: 'Why is the gap between billed and true hourly so large?',
+        a: 'Because detailing carries hidden fixed costs that scale with nothing: the van and insurance run about $21 per workday whether you do one job or four, and a $6,500 equipment setup (polisher, steamer, extractor, compressor) costs $5–6 per job over its three-year life before a drop of chemical is poured. On a $175 job those fixed lines plus chemicals and labor consume $123.51 — 71% of the ticket. The levers that close the gap, in order: jobs per day (fixed costs divide across more tickets — the single biggest lever), package tiers that add time-efficient services (an engine bay is 20 minutes for $45), and route discipline for mobile work. The detailers who fail are rarely bad at detailing — they price off the $50/hr illusion and discover the $14.71 reality at tax time.',
+      },
+      {
+        q: 'How should I structure packages?',
+        a: 'Three tiers, priced off time: Basic/maintenance at 1.5–2 hours ($75–100), Full at 3–4 hours ($150–225), and Premium/Show at 6+ hours ($300+) — customers compare packages, not hours, and the tier jump is mostly margin because setup cost is shared. Two non-negotiable modifiers: vehicle SIZE (SUV/truck +$30–50 — the square footage of paint and glass is simply bigger) and CONDITION (pet hair +$25–40, heavy soil/staining +$40–75) — skip these and the worst jobs pay the least per hour. Mobile work adds a minimum: a service-call floor ($75+) or a two-service minimum, because 25 minutes of driving for a $60 wash loses money before the first panel. Condition-quote honesty matters too: photograph the car at booking, quote the range, and let the modifier be the customer’s choice rather than your surprise.',
+      },
+      {
+        q: 'Which add-ons actually carry margin?',
+        a: 'The ones where minutes beat materials: headlight restoration ($75–125 for under an hour and $10 of supplies — perceived value is transformation), ceramic spray toppers ($50–150 for minutes of labor on an already-clean car), engine bay ($45 for 20 minutes), odor treatment ($75–150 with an ozone unit doing the work unattended), and pet hair (priced as a modifier, not a favor). The pattern: add-ons sell at the point of maximum desire — when the customer sees the clean car — so build the upsell into the delivery walkthrough, not the booking call. Track minutes-per-panel on your first 50 jobs: your own time log calibrates package prices better than any competitor’s website, and it tells you which add-ons are worth printing on the menu.',
+      },
+    ],
+  },
+  {
+    slug: 'mobile-mechanic-rate-calculator',
+    title: 'Mobile Mechanic Rate Calculator — Book Hours vs Shop Rates, and the Route That Decides Your Wage',
+    shortTitle: 'Mobile Mechanic Rate',
+    category: 'Freelance & Career',
+    description:
+      'Compare any repair at shop rates versus your mobile rate, show the customer their savings, and compute your true day rate with drive time included. Book-time discipline and route density do the heavy lifting.',
+    tagline: 'The same brake job is $465 at the shop and $365 in the driveway — the customer saves $100 and you still clear $86/hr on a full route.',
+    intro:
+      'Mobile mechanics win on a structural advantage: no bay rent, no lift lease, no front desk — so $95 an hour undercuts the shop’s $145 while paying you more than the shop wage. But the model lives or dies on the route: three jobs with an hour and a half of driving pays $86.67 per true hour; one job across town pays $40. This calculator prices any job both ways (book hours times rate plus marked-up parts), shows the customer their savings — the pitch that writes itself — and computes your honest day rate with windshield time included.',
+    howItWorks: [
+      'Enter the job’s flat-rate book hours — charge the book, not your stopwatch.',
+      'Enter the local shop labor rate and your mobile rate.',
+      'Enter parts cost and your markup — standard is 20–30%.',
+      'Enter jobs per day and total drive hours.',
+      'Read both customer prices, their savings, and your true hourly for the day.',
+    ],
+    faq: [
+      {
+        q: 'Should I really charge book time when I finish faster?',
+        a: 'Yes — flat-rate is the industry standard for a reason: it prices the JOB, not your Tuesday. Published flat-rate guides exist precisely so a brake job costs the same whether the tech is a rookie or a master. When you beat book time, that efficiency is your earned margin — the same efficiency the shop pockets when its techs run fast. The honesty boundary: charge book time, quote book time, and when a job fights back (rusted bolts, wrong parts, hidden damage), document and bill the real time or the revised book figure with the customer’s approval. Never stretch a job description to cover a slow day — flat-rate works because it is a published, checkable standard, and customers can verify it. The calculator prices in book hours for exactly this reason.',
+      },
+      {
+        q: 'What jobs should a mobile mechanic turn away?',
+        a: 'Anything needing a lift (engine and transmission swaps, exhaust systems, subframe work), alignments and machine-shop work, and diagnostics without a cap — quote diagnostics as a flat one-hour fee credited to the repair, or the rabbit hole eats your day at $0/hr. Also turn away the geography trap: a single job 40 minutes from anything else pays your rate for the wrenching and nothing for the drive — the route is the wage, so cluster bookings by ZIP code, set a service-call minimum ($25–50 or a one-hour minimum), and quote out-of-territory calls with the drive priced in. The sweet spot: brakes, batteries, alternators, starters, sensors, belts, hoses, plugs, coils, and pre-purchase inspections — high book-time jobs with driveways as the venue.',
+      },
+      {
+        q: 'How do I handle parts and warranty without a shop?',
+        a: 'Parts: order customer-paid parts to the VIN in advance — a no-show then strands THEIR money, not yours — or sell from your stock with the 20–30% markup shown openly; the markup is standard industry practice and it funds the warranty risk you carry. Warranty: offer 12 months / 12,000 miles parts-and-labor in writing — it is the trust unlock that replaces the shop’s waiting room and coffee machine, and on quality parts the actual callback rate is low enough that the markup covers it. Insurance is the non-negotiable: garage liability for damage you cause, and garagekeepers coverage any time a customer’s vehicle is in your care, custody, or control — one driveway incident without it ends the business. The last piece is the paper trail: invoice with book hours, parts numbers, and the warranty terms printed — professional documentation is what separates a mobile mechanic from a guy with tools.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
