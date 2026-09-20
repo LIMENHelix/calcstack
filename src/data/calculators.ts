@@ -483,6 +483,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'house-flip-calculator',
+    title: 'House Flip Calculator 2026 — The 70% Rule, Full P&L, and the Offer Ceiling You Don\'t Cross',
+    shortTitle: 'House Flip Analyzer',
+    category: 'Housing & Mortgage',
+    description:
+      'Compute the max offer under the 70% rule, then run the full flip P&L: purchase, closing, rehab, hard-money holding costs, selling costs, profit, and cash-on-cash return.',
+    tagline: 'ARV $400k and $60k rehab means $220k is the ceiling — every dollar above it comes straight out of the $71k profit.',
+    intro:
+      'The 70% rule exists because flips die from forgotten costs, not bad intentions. Pay at most 70% of the after-repair value minus repairs — on a $400,000 ARV with $60,000 of rehab, that\'s a $220,000 ceiling — and the 30% haircut quietly absorbs purchase closing, six months of hard-money interest, selling costs, and the overrun hiding in every wall. At that ceiling this deal returns $71,200 profit on $50,800 of cash: 140% cash-on-cash. The tool runs both sides: the rule-based max offer, and the full P&L on your actual numbers — including the pessimistic case, because a $10k overrun plus a 5% ARV miss is the scenario that separates flippers from cautionary tales.',
+    howItWorks: [
+      'Enter the ARV — comped from SOLD homes within a mile and six months, never list prices.',
+      'Enter the padded rehab budget and the rule % (70 standard, 75 hot markets, 65 expensive).',
+      'Set your offer, holding months, and hard-money terms.',
+      'Read the ceiling, the all-in cost, the profit, and whether your offer crosses the line.',
+    ],
+    faq: [
+      {
+        q: 'Why 70% — and when do you break it?',
+        a: 'The 30% gap isn\'t profit — it\'s the budget for everything between purchase and sale. On a $400k ARV flip, purchase closing (~2%), six months of 11% hard money on $280k (~$15,400), selling costs (~6.5% = $26,000), and misc holding ($3,000) total roughly $49,000 before profit. The rule leaves about $71,000 of gross margin in the example — most of which IS spoken for. Experienced flippers flex it: 75–80% in fast, low-margin markets (dangerous for beginners), 65% in expensive or slow ones. The invariant: the rule is a ceiling, not a target. Paying under it is how you survive the overrun you haven\'t met yet.',
+      },
+      {
+        q: 'What\'s the number-one way flips lose money?',
+        a: 'ARV optimism, and it\'s not close. The entire model keys off what the renovated house will actually sell for, and beginners comp from active listings (asking prices are wishes) or Zestimates instead of sold comps within a mile and six months. A 5% ARV miss on a $400k target is $20,000 — against a $71,000 profit, that\'s 28% gone before rehab starts. Second place: rehab underestimation, typically 20–30% on the first few projects, which is why the budget field says "padded." Third: holding time — every extra month at 11% on $280k adds $2,567, and extension fees on hard money are punitive. All three failure modes are optimism, which is why the pessimistic-case line in the verdict matters more than the headline profit.',
+      },
+      {
+        q: 'How is flip profit taxed?',
+        a: 'Harshly, and it belongs in your offer math. Frequent flips make you a "dealer" in the IRS\'s view: profit is ordinary income (your marginal rate, up to 37%), plus self-employment tax (15.3% on most of it) if you\'re operating as an individual/LLC — no capital-gains treatment, no 121 exclusion, and holding a year doesn\'t fix dealer status if flipping is your business. On the $71,200 example, a 32% bracket plus SE tax can take $25,000–30,000. State tax stacks on top. Strategies exist (S-corp salary splitting, holding select properties as rentals first, opportunity-zone structures) but they require a CPA who works with investors — get one before your second flip, not after your fifth.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

@@ -2789,6 +2789,78 @@ export function DiyVsHireCalc() {
   )
 }
 
+// HOUSE FLIP (70% rule + full P&L) — the investor's offer ceiling and the honest ledger. Node-verified: ARV $400k, rehab $60k → max offer = $400k×0.70 − $60k = $220,000. Full P&L at that offer: purchase $220k + closing-in 2% ($4,400) + rehab $60k + holding 6 mo ($280k hard money @11% IO = $15,400 + $3,000 tax/ins/utils) = $302,800 all-in; sale nets $400k − 6.5% selling costs ($26,000) = $374,000 → profit $71,200; on 90%-financed purchase+rehab ($50,800 cash in) = 140.2% cash-on-cash. The 70% rule's hidden assumptions: the 30% haircut must absorb rehab profit margin, holding, BOTH closings, and surprises — in low-margin markets flippers use 75%+, in expensive markets 65%. Underestimated rehab is the classic failure: every $10k of overrun comes straight out of the $71k.
+export function HouseFlipCalc() {
+  const [arv, setArv] = useNumber(400000)
+  const [rehab, setRehab] = useNumber(60000)
+  const [rulePct, setRulePct] = useNumber(70)
+  const [offer, setOffer] = useNumber(220000)
+  const [months, setMonths] = useNumber(6)
+  const [loanRate, setLoanRate] = useNumber(11)
+  const [ltv, setLtv] = useNumber(90)
+  const [sellPct, setSellPct] = useNumber(6.5)
+  const [holdMisc, setHoldMisc] = useNumber(3000)
+
+  const r = useMemo(() => {
+    const maxOffer = arv * (rulePct / 100) - rehab
+    const closeIn = offer * 0.02
+    const loanBase = (offer + rehab) * (ltv / 100)
+    const interest = loanBase * (loanRate / 100) * (months / 12)
+    const holding = interest + holdMisc
+    const allIn = offer + closeIn + rehab + holding
+    const netSale = arv * (1 - sellPct / 100)
+    const profit = netSale - allIn
+    const cashIn = (offer + rehab) * (1 - ltv / 100) + closeIn + holding
+    const coc = cashIn > 0 ? (profit / cashIn) * 100 : 0
+    const margin = arv > 0 ? (profit / arv) * 100 : 0
+    const overBudget = offer > maxOffer
+    return { maxOffer, closeIn, loanBase, interest, holding, allIn, netSale, profit, cashIn, coc, margin, overBudget }
+  }, [arv, rehab, rulePct, offer, months, loanRate, ltv, sellPct, holdMisc])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="After-repair value (ARV)" value={arv} onChange={setArv} prefix="$" />
+          <Field label="Rehab budget (padded!)" value={rehab} onChange={setRehab} prefix="$" />
+          <Field label="Rule %" value={rulePct} onChange={setRulePct} suffix="%" step="5" />
+          <Field label="Your offer / purchase" value={offer} onChange={setOffer} prefix="$" />
+          <Field label="Holding months" value={months} onChange={setMonths} step="1" />
+          <Field label="Loan rate (hard money)" value={loanRate} onChange={setLoanRate} suffix="%" step="0.5" />
+          <Field label="Loan LTV on purchase+rehab" value={ltv} onChange={setLtv} suffix="%" step="5" />
+          <Field label="Selling costs (agent + closing)" value={sellPct} onChange={setSellPct} suffix="%" step="0.5" />
+          <Field label="Holding misc (tax/ins/utils)" value={holdMisc} onChange={setHoldMisc} prefix="$" step="500" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result big label={`Max offer (${num(rulePct, 0)}% rule)`} value={usd(r.maxOffer)} />
+          <Result label="All-in cost" value={usd(r.allIn)} />
+          <Result label="Net sale proceeds" value={usd(r.netSale)} />
+          <Result label={r.profit >= 0 ? 'Profit' : 'LOSS'} value={usd(r.profit)} />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Cash you need" value={usd(r.cashIn)} />
+          <Result label="Cash-on-cash return" value={`${num(r.coc, 1)}%`} />
+          <Result label="Holding cost (interest + misc)" value={usd(r.holding)} />
+          <Result label="Profit margin on ARV" value={`${num(r.margin, 1)}%`} />
+        </div>
+        {r.overBudget && (
+          <p className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">
+            Your offer is {usd(offer - r.maxOffer)} ABOVE the {num(rulePct, 0)}% rule ceiling — the rule exists because rehab overruns and soft comps eat exactly that slack. Experienced flippers walk away at this number; the deal you don't do is the cheapest one.
+          </p>
+        )}
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.profit >= 0
+            ? `At ${usd(offer)}, the deal clears: ${usd(r.profit)} profit on ${usd(r.cashIn)} cash = ${num(r.coc, 1)}% in ${months} months. The fragility: a $10,000 rehab overrun and a 5% ARV miss turn this into ${usd(r.profit - 10000 - arv * 0.05)} — run the pessimistic case before offering.`
+            : `This deal loses ${usd(-r.profit)} as structured. The levers, in order of honesty: lower offer (${usd(r.maxOffer)} is the ${num(rulePct, 0)}% ceiling), real ARV re-check, shorter hold, cheaper money. "I'll rehab cheaper" is how flippers go broke.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The 70% rule (pay ≤ 70% of ARV minus repairs) survives because the 30% haircut has to absorb everything sellers forget: purchase closing (modeled at 2%), holding interest at hard-money rates (11% modeled; points at origination add 1–2% more, not modeled), selling costs (modeled at 6.5% — agent commission plus seller closing), and the rehab overrun that arrives in every wall you open. Rule adjustments by market: hot low-margin markets push 75–80% (thin, dangerous), slow or expensive markets 65%. The ARV is the whole ballgame — comp it from SOLD homes within a mile and six months, never list prices, never Zillow zestimates, and never the seller's Zestimate either. Not modeled: capital gains treatment (flips are ordinary income for dealers, not capital gains — budget your marginal rate on the profit), hard-money points, and extension fees if the hold runs long. Estimates — your comps and contractor govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8411,6 +8483,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'renovation-roi-calculator': RenovationRoiCalc,
   'contractor-bid-comparison-calculator': ContractorBidCalc,
   'diy-vs-hire-calculator': DiyVsHireCalc,
+  'house-flip-calculator': HouseFlipCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

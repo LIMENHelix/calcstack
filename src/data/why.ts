@@ -35,6 +35,8 @@ export const WHY_USE: Record<string, string> = {
     'Owners with three quotes use it before signing: exclusions and schedule get priced back in, and the $46.5k bid with $4k of gaps exposes itself as a $50.5k project — while a bid 15% under the middle triggers the change-order warning.',
   'diy-vs-hire-calculator':
     'Weekend warriors use it to settle the debate with arithmetic: a $600 pro-DIY gap is $50/hr of untaxed wages (the $800 pro bill takes $1,143 of gross salary at 30%) — with the 15% botch chance priced in before the verdict.',
+  'house-flip-calculator':
+    'Investors use it before writing the offer: the 70% rule sets a $220k ceiling on a $400k-ARV/$60k-rehab deal, and the full P&L shows $71.2k profit on $50.8k cash — plus the amber flag when your offer crosses the ceiling.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
