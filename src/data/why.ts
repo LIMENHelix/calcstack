@@ -301,6 +301,10 @@ export const WHY_USE: Record<string, string> = {
     'Students and carpenters use the same theorem: legs 3 and 4 → hypotenuse exactly 5. Solves for hypotenuse or missing leg, and flags the perfect triples.',
   'quadratic-formula-calculator':
     'Algebra students use it nightly: x² − 5x + 6 → x = 3 and x = 2, discriminant 1, vertex (2.5, −0.25) — all three discriminant cases handled, complex roots included.',
+  'square-root-calculator':
+    'Students use it for exact answers: √50 = 5√2 = 7.0711 — simplified radical and decimal together, plus cube and nth roots (³√27 = 3, ⁴√625 = 5).',
+  'slope-calculator':
+    'Geometry students and builders use the same math: (2,3) to (8,11) → slope 4/3, y = 1.333x + 0.333, angle 53.13°, grade 133% — slope, distance, midpoint in one shot.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

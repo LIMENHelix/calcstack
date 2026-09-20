@@ -3394,3 +3394,85 @@ export function QuadraticCalc() {
     </CardContent></Card>
   )
 }
+
+
+// SQUARE ROOT — node-verified: √2 = 1.41421356, √144 = 12, √50 = 5√2 = 7.0711, √72 = 6√2, √200 = 10√2; ³√27 = 3, ⁴√625 = 5. Simplified-radical extraction via largest square factor; nth roots via exponentiation.
+function simplifyRadical(n: number): { out: number; rest: number } | null {
+  if (!Number.isInteger(n) || n <= 0) return null
+  for (let i = Math.floor(Math.sqrt(n)); i > 1; i--) {
+    if (n % (i * i) === 0) return { out: i, rest: n / (i * i) }
+  }
+  return null
+}
+export function SquareRootCalc() {
+  const [val, setVal] = useNumber(50)
+  const [nth, setNth] = useNumber(2)
+  const r = useMemo(() => {
+    if (val < 0 || nth < 2) return null
+    const root = Math.pow(val, 1 / nth)
+    const exact = Math.abs(Math.round(root) ** nth - val) < 1e-9 ? Math.round(root) : null
+    const simp = nth === 2 ? simplifyRadical(val) : null
+    return { root, exact, simp, squared: root * root }
+  }, [val, nth])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Number" value={val} onChange={setVal} step="1" />
+        <Field label="Root (2 = square, 3 = cube…)" value={nth} onChange={setNth} step="1" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label={`${nth === 2 ? 'Square' : nth === 3 ? 'Cube' : `${nth}th`} root of ${num(val, 4)}`} value={r.exact !== null ? String(r.exact) : num(r.root, 8)} big />
+          {r.simp && r.simp.rest > 1 && <Result label="Simplified radical" value={`${r.simp.out}√${r.simp.rest}`} big />}
+          {r.simp && r.simp.rest === 1 && <Result label="Simplified radical" value={String(r.simp.out)} big />}
+          {r.exact === null && <Result label="Check (root squared)" value={num(r.squared, 6)} />}
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">√50 = √(25×2) = 5√2 ≈ 7.0711. Perfect squares to know: 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144. Estimation trick: √50 sits between √49 = 7 and √64 = 8 — closer to 7.</p>
+    </CardContent></Card>
+  )
+}
+
+// SLOPE CALCULATOR — node-verified: (2,3)–(8,11): m = 4/3 = 1.3333, distance 10, midpoint (5,7), y = 1.3333x + 0.3333, angle 53.13°. Grade % = m×100. Vertical lines flagged as undefined slope.
+export function SlopeCalc() {
+  const [x1, setX1] = useNumber(2)
+  const [y1, setY1] = useNumber(3)
+  const [x2, setX2] = useNumber(8)
+  const [y2, setY2] = useNumber(11)
+  const r = useMemo(() => {
+    const dx = x2 - x1
+    const dy = y2 - y1
+    const dist = Math.hypot(dx, dy)
+    const mid = { x: (x1 + x2) / 2, y: (y1 + y2) / 2 }
+    if (dx === 0) return { vertical: true as const, dist, mid }
+    const m = dy / dx
+    const b = y1 - m * x1
+    const angle = (Math.atan(m) * 180) / Math.PI
+    const perp = m !== 0 ? -1 / m : Infinity
+    return { vertical: false as const, m, b, dist, mid, angle, grade: m * 100, perp }
+  }, [x1, y1, x2, y2])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Field label="x₁" value={x1} onChange={setX1} step="1" />
+        <Field label="y₁" value={y1} onChange={setY1} step="1" />
+        <Field label="x₂" value={x2} onChange={setX2} step="1" />
+        <Field label="y₂" value={y2} onChange={setY2} step="1" />
+      </div>
+      {r.vertical ? (
+        <p className="text-sm font-medium">Vertical line (x = {num(x1, 2)}) — slope is undefined: the run is zero. Distance {num(r.dist, 4)}, midpoint ({num(r.mid.x, 2)}, {num(r.mid.y, 2)}).</p>
+      ) : (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label="Slope (rise ÷ run)" value={num(r.m, 4)} big />
+          <Result label="Equation" value={`y = ${num(r.m, 4)}x ${r.b >= 0 ? '+' : '−'} ${num(Math.abs(r.b), 4)}`} big />
+          <Result label="Distance between points" value={num(r.dist, 4)} />
+          <Result label="Midpoint" value={`(${num(r.mid.x, 4)}, ${num(r.mid.y, 4)})`} />
+          <Result label="Angle" value={`${num(r.angle, 2)}°`} />
+          <Result label="Grade" value={`${num(r.grade, 1)}%`} />
+          <Result label="Perpendicular slope" value={Number.isFinite(r.perp) ? num(r.perp, 4) : '0 (horizontal)'} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">m = (y₂ − y₁) ÷ (x₂ − x₁). Roads: a 6% grade rises 6 ft per 100 ft of run. Roofs: a 6/12 pitch is slope 0.5 — 26.57°. Perpendicular lines have negative-reciprocal slopes.</p>
+    </CardContent></Card>
+  )
+}

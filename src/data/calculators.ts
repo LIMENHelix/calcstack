@@ -4646,6 +4646,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'square-root-calculator',
+    title: 'Square Root Calculator — Simplified Radicals & Nth Roots',
+    shortTitle: 'Square Root',
+    category: 'School & Science',
+    description:
+      'Square roots with the simplified radical form (√50 = 5√2) alongside the decimal, plus cube and nth roots — perfect squares flagged instantly.',
+    tagline: '√50 = 5√2 ≈ 7.0711. √144 = 12 exactly. ³√27 = 3, ⁴√625 = 5. Decimal and simplified radical, every time.',
+    intro:
+      'Math homework wants the exact answer (5√2) and real life wants the decimal (7.0711) — this calculator gives both. It extracts the largest perfect-square factor to simplify radicals automatically, flags perfect squares, and handles cube and nth roots for the full range from geometry homework to engineering quick checks.',
+    howItWorks: [
+      'Enter the number and the root (2 for square, 3 for cube, any n).',
+      'Read the decimal answer to 8 places.',
+      'For square roots, see the simplified radical: √200 → 10√2.',
+      'Perfect squares and cubes are flagged as exact.',
+      'The check field squares the answer back so you can verify.',
+    ],
+    faq: [
+      {
+        q: 'How do you simplify a square root?',
+        a: 'Factor out the largest perfect square: √50 = √(25 × 2) = √25 × √2 = 5√2. The method: find the biggest perfect square (4, 9, 16, 25, 36, 49, 64, 81, 100…) that divides your number, pull its root outside, leave the remainder inside. √72 = √(36 × 2) = 6√2; √200 = √(100 × 2) = 10√2. A radical is fully simplified when nothing inside has a perfect-square factor — √2, √3, √10 are done; √12 is not (it is 2√3). Why teachers insist: simplified radicals are exact, while 7.0710678… is always a rounding. When the answer feeds another calculation, the radical form keeps the precision; when it feeds a tape measure, the decimal wins.',
+      },
+      {
+        q: 'How can I estimate a square root without a calculator?',
+        a: 'Bracket it between perfect squares and refine: √50 sits between √49 = 7 and √64 = 8, and since 50 is much closer to 49, estimate just above 7 — say 7.1 (true: 7.0711). The one-step Newton refinement makes it scary accurate: average your guess with number ÷ guess. For √50 with guess 7: (7 + 50/7)/2 = (7 + 7.143)/2 = 7.071 — one step lands within 0.001. Another round nails it to six digits. Worth memorizing: √2 ≈ 1.414, √3 ≈ 1.732, √5 ≈ 2.236, √10 ≈ 3.162 — these four cover most estimation needs, and √2 in particular appears constantly (the diagonal of a square, A4 paper ratios, RMS voltage).',
+      },
+      {
+        q: 'What are cube roots and nth roots used for?',
+        a: 'Cube roots reverse volume: a 27 ft³ cube has 3 ft edges, and doubling a cube\'s volume means edges grow by ³√2 ≈ 1.26, not 2 — the classic scaling insight. Nth roots are everywhere in finance and science: annual growth rates ARE nth roots — an investment that doubles in 5 years grew by ⁵√2 − 1 = 14.87% per year (that is CAGR). Photography f-stops step by √2, music octaves divide into 12 semitones of ¹²√2 ≈ 1.0595 each, and any "average multiplier over n periods" is an nth root. The sign rules: even roots of negatives are not real numbers (no real √−4); odd roots of negatives are fine (³√−27 = −3). This calculator handles positive inputs and flags the rest.',
+      },
+    ],
+  },
+  {
+    slug: 'slope-calculator',
+    title: 'Slope Calculator — Rise over Run, Equation, Angle & Grade',
+    shortTitle: 'Slope Calculator',
+    category: 'School & Science',
+    description:
+      'Slope between two points with the full package: line equation, distance, midpoint, angle of inclination, percent grade, and perpendicular slope.',
+    tagline: 'From (2,3) to (8,11): slope 4/3, y = 1.333x + 0.333, angle 53.13°. Roofers call a 0.5 slope a 6/12 pitch; roads call it a 50% grade.',
+    intro:
+      'Slope is one concept wearing four costumes: algebra\'s rise-over-run, the roofer\'s pitch, the highway\'s percent grade, and the engineer\'s angle of inclination. Enter two points and this calculator returns all of them at once — slope, line equation, distance, midpoint, angle, grade, and the perpendicular slope for the next problem in the set.',
+    howItWorks: [
+      'Enter the two points (x₁, y₁) and (x₂, y₂).',
+      'Read the slope — rise ÷ run.',
+      'Get the full line equation in y = mx + b form.',
+      'See distance, midpoint, angle in degrees, and percent grade.',
+      'Vertical lines (zero run) are flagged — their slope is undefined, not zero.',
+    ],
+    faq: [
+      {
+        q: 'How do I find the slope between two points?',
+        a: 'Subtract the y\'s, subtract the x\'s, divide: m = (y₂ − y₁) ÷ (x₂ − x₁). From (2,3) to (8,11): rise = 11−3 = 8, run = 8−2 = 6, slope = 8/6 = 4/3 ≈ 1.333. Order does not matter as long as you stay consistent — (3−11)/(2−8) gives the same 4/3. The sign tells direction: positive slopes climb left-to-right, negative fall, zero is horizontal, and undefined (zero run) is vertical. From slope to equation is one more step: plug either point into b = y − mx. Here b = 3 − 1.333×2 = 0.333, giving y = 1.333x + 0.333. Verify with the other point: 1.333×8 + 0.333 = 11. Checks out.',
+      },
+      {
+        q: 'How does slope relate to percent grade and roof pitch?',
+        a: 'They are the same ratio in different dialects. Percent grade = slope × 100: a 6% highway grade rises 6 feet per 100 feet of horizontal run — slope 0.06, angle 3.43°. Roof pitch states rise per 12 of run: a 6/12 pitch is slope 0.5, a 50% grade, 26.57°. Wheelchair ramps are federally capped at slope 1/12 (8.33% grade, 4.76°) — that is the ADA\'s 1:12 rule. The conversion trap: grade percentages feel small while angles feel big — a 100% grade is only 45°, and the steepest signed highway grades (~10%) look terrifying but are just 5.7°. San Francisco\'s steepest streets hit 31.5% grade = 17.5° = roughly a 4/12 roof pitch, which reframes both numbers.',
+      },
+      {
+        q: 'Why is the slope of a vertical line undefined?',
+        a: 'Because slope = rise ÷ run and a vertical line has zero run — division by zero has no defined value. This is not a technicality: as a line steepens toward vertical, its slope explodes (1, 10, 1000, a million) with no ceiling, so no number can be assigned. Contrast with horizontal lines, which have slope exactly 0 — a perfectly fine number. The perpendicular-slope rule ties it together: perpendicular lines have negative-reciprocal slopes (m and −1/m), so a line perpendicular to slope 2 has slope −0.5. The vertical line\'s perpendicular is horizontal (slope 0), which is exactly what the rule produces in the limit. In equations: vertical lines are x = constant, horizontal are y = constant — neither fits y = mx + b in the vertical case.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
