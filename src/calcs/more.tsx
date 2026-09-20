@@ -7875,6 +7875,106 @@ export function MobileMechanicCalc() {
   )
 }
 
+// FOOD TRUCK ECONOMICS — node-verified defaults: $14 ticket × 90/day × 24 days = $30,240/mo gross. Costs: food 32% ($9,677) + 1 paid helper ($15/hr × 8h × 24 = $2,880) + truck payment $850 + commissary $600 + permits $150 + fuel/propane $500 = $14,657 → net $15,583/mo (51.5%) BEFORE the owner's own wage — the owner working the window draws their salary from that number. Prime cost discipline (food + labor ≤ 60–65%) is the line between a truck and a job.
+export function FoodTruckCalc() {
+  const [ticket, setTicket] = useNumber(14)
+  const [vol, setVol] = useNumber(90)
+  const [days, setDays] = useNumber(24)
+  const [foodPct, setFoodPct] = useNumber(32)
+  const [helpers, setHelpers] = useNumber(1)
+  const [wage, setWage] = useNumber(15)
+  const [hrsDay, setHrsDay] = useNumber(8)
+
+  const r = useMemo(() => {
+    const gross = ticket * vol * days
+    const food = (foodPct / 100) * gross
+    const labor = helpers * wage * hrsDay * days
+    const fixed = 850 + 600 + 150 + 500
+    const cost = food + labor + fixed
+    const net = gross - cost
+    const margin = gross > 0 ? (net / gross) * 100 : 0
+    const prime = gross > 0 ? ((food + labor) / gross) * 100 : 0
+    const beTickets = ticket > 0 && ticket * (1 - foodPct / 100) > 0 ? Math.ceil((labor + fixed) / (ticket * (1 - foodPct / 100)) / Math.max(days, 1)) : 0
+    return { gross, food, labor, fixed, net, margin, prime, beTickets }
+  }, [ticket, vol, days, foodPct, helpers, wage, hrsDay])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Avg ticket" value={ticket} onChange={setTicket} prefix="$" step="1" />
+          <Field label="Tickets per day" value={vol} onChange={setVol} step="5" />
+          <Field label="Days per month" value={days} onChange={setDays} step="1" />
+          <Field label="Food cost" value={foodPct} onChange={setFoodPct} suffix="%" step="1" />
+          <Field label="Paid helpers" value={helpers} onChange={setHelpers} step="1" />
+          <Field label="Helper wage" value={wage} onChange={setWage} prefix="$" suffix="/hr" step="1" />
+          <Field label="Hours per day" value={hrsDay} onChange={setHrsDay} step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Monthly gross" value={usd(Math.round(r.gross))} />
+          <Result label="Net (before your wage)" value={`${usd(Math.round(r.net))} (${num(r.margin, 0)}%)`} big />
+          <Result label="Prime cost" value={`${num(r.prime, 0)}%`} />
+          <Result label="Breakeven tickets/day" value={num(r.beTickets, 0)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${vol} tickets at ${usd(ticket)} is ${usd(Math.round(r.gross))}/mo gross — net ${usd(Math.round(r.net))} before your own wage, at a ${num(r.prime, 0)}% prime cost. ${r.prime <= 65 ? 'Prime cost is in the safe band.' : 'Prime cost is over 65% — the menu or the wages need work.'} Breakeven is ${r.beTickets} tickets/day; everything above it is yours.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: gross = ticket × volume × days; net = gross − food cost − helper labor − fixed (truck payment, commissary kitchen, permits, fuel/propane); prime cost = (food + labor) ÷ gross; breakeven tickets = (labor + fixed) ÷ per-ticket contribution ÷ days. The food-truck rules that separate earners from Instagram props: prime cost (food + labor) under 60–65% is the survival line — over that, you are buying yourself a hot, stressful job; the example's 51.5% net is BEFORE the owner's wage, which is where most truck pro formas lie to themselves. Location arbitrage is the business: the same truck grosses $400 at a weak lunch spot and $1,400 at a brewery with no kitchen — recurring spots (breweries, office parks, farmers markets) beat event chasing, and the booking fee for a good recurring spot is cheaper than the revenue volatility of random rallies. Menu engineering for speed: 5–7 items max, everything under 6 minutes of ticket time, because lunch-rush throughput (tickets per hour through the window) is the real capacity constraint — a 90-ticket day in a 3-hour rush is a ticket every 2 minutes. The fixed-cost floor: commissary kitchen (required in most states for prep/storage), permits and health licenses ($1,000–2,500/yr stacked), and truck payment + insurance run $1,500–2,500/mo before the first taco — breakeven volume is the number to know cold. Catering and private events are the margin: a booked 2-hour private at $1,200 guaranteed beats hoping for 90 tickets, and the event calendar smooths the season. The used-truck math: $40–80k used vs $100–175k new build — the payment difference is $600–900/mo, which at the example margins is 60+ tickets/mo of breakeven difference. Estimate — your POS sales mix and actual plate costs govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// DOG WALKING / PET SITTING — node-verified defaults: $22 per 30-min walk × 8/day × 21 days = $3,696/mo gross. Platform (Rover/Wag ~20% fee) nets $2,902 after insurance/supplies; independent with 5% no-show nets $3,456 — $554/mo for running your own book. True hours: 45 min per walk incl. travel → 126h/mo → $23.03/hr platform vs $27.43/hr independent.
+export function DogWalkingCalc() {
+  const [rate, setRate] = useNumber(22)
+  const [walks, setWalks] = useNumber(8)
+  const [days, setDays] = useNumber(21)
+  const [platFee, setPlatFee] = useNumber(20)
+  const [travelMin, setTravelMin] = useNumber(15)
+  const [walkMin, setWalkMin] = useNumber(30)
+
+  const r = useMemo(() => {
+    const gross = rate * walks * days
+    const platNet = gross * (1 - platFee / 100) - 55
+    const indepNet = gross * 0.95 - 55
+    const hrs = (walks * (walkMin + travelMin) * days) / 60
+    const hrP = hrs > 0 ? platNet / hrs : 0
+    const hrI = hrs > 0 ? indepNet / hrs : 0
+    const sitting = 60 * 10
+    return { gross, platNet, indepNet, hrs, hrP, hrI, sitting }
+  }, [rate, walks, days, platFee, travelMin, walkMin])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Rate per walk" value={rate} onChange={setRate} prefix="$" step="1" />
+          <Field label="Walks per day" value={walks} onChange={setWalks} step="1" />
+          <Field label="Days per month" value={days} onChange={setDays} step="1" />
+          <Field label="Platform fee" value={platFee} onChange={setPlatFee} suffix="%" step="1" />
+          <Field label="Walk minutes" value={walkMin} onChange={setWalkMin} step="5" />
+          <Field label="Travel min between" value={travelMin} onChange={setTravelMin} step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Monthly gross" value={usd(Math.round(r.gross))} />
+          <Result label="Net via platform" value={`${usd(Math.round(r.platNet))} (${usd(Math.round(r.hrP))}/hr)`} />
+          <Result label="Net independent" value={`${usd(Math.round(r.indepNet))} (${usd(Math.round(r.hrI))}/hr)`} big />
+          <Result label="+ 10 overnights" value={`+${usd(Math.round(r.sitting))}/mo`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${walks} walks at ${usd(rate)} grosses ${usd(Math.round(r.gross))}/mo — the platform's ${platFee}% leaves ${usd(Math.round(r.platNet))}, your own book keeps ${usd(Math.round(r.indepNet))}. Real hours (travel counts): ${num(r.hrs, 0)}/mo. Add ten overnight sittings and the month grows ${usd(Math.round(r.sitting))} without a single extra walk.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: platform net = gross × (1 − fee) − insurance/supplies; independent net = gross × 0.95 (no-shows) − insurance/supplies; true hourly counts walk + travel minutes. The pet-care economics that make it a business: the recurring midday-walk book is the annuity — 10–15 weekly-recurring clients at M-F midday slots is a stable base worth $2,000–3,000/mo before any boarding; boarding and house-sitting are the margin ($50–85/night, and overnights stack ON TOP of the walk book — 10 overnights/mo adds $600–850 with no extra daylight hours). Platform reality: Rover/Wag take 15–20% but solve cold-start — build the review base there, then move recurring clients to direct booking (most platforms prohibit poaching ACTIVE clients; transition via referrals and new clients instead). Route density applies: walks clustered in one neighborhood let 8 walks fit in 5 hours; scattered walks cap you at 5–6 — the map, not the leash count, sets capacity. Group walks are the leverage: 2–3 compatible dogs from different households at $18–20 each is $36–60 for the same 30 minutes — the platform rate structure hides this, your own rate card exploits it. Insurance and bonding ($25–50/mo) are mandatory credibility — the certificate wins the first client and protects the hundredth; Pet First Aid certification is the cheap credential that justifies top-of-market rates. Seasonality: holiday boarding books out 4–8 weeks ahead at 1.5× rates — the Thanksgiving-through-New-Year window is the year's margin. The physical ceiling is gentler than grooming but real: 25,000+ steps/day is the job; price so 6–8 walks is enough. Estimate — your platform payout history and route map govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // BOUNCE HOUSE RENTAL — node-verified defaults: $2,800 combo unit, $185/day rate, 6 rentals/mo (weekend-heavy reality) = $1,110/mo gross; costs $20/rental (fuel + wear) + $90/mo liability share = $210 → net $900/mo, payback 3.1 months. 6-unit fleet: $8,880 gross / $7,380 net per month in season. Party rental has the fastest payback in the rental world — and a winter that doesn't care.
 export function BounceRentalCalc() {
   const [unit, setUnit] = useNumber(2800)
@@ -14960,6 +15060,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'food-truck-economics-calculator': FoodTruckCalc,
+  'dog-walking-income-calculator': DogWalkingCalc,
   'bounce-house-rental-calculator': BounceRentalCalc,
   'vending-machine-route-calculator': VendingRouteCalc,
   'laundromat-roi-calculator': LaundromatCalc,

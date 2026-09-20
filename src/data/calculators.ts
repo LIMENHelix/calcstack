@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'food-truck-economics-calculator',
+    title: 'Food Truck Profit Calculator — Prime Cost, Breakeven Tickets, and Net Before Your Wage',
+    shortTitle: 'Food Truck Economics',
+    category: 'Freelance & Career',
+    description:
+      'Run the food truck numbers honestly: ticket × volume into gross, food and labor into prime cost, and the breakeven tickets per day that decide whether the truck pays you or owns you.',
+    tagline: '90 tickets at $14 grosses $30,240/mo — but the net is before your own wage, and breakeven is the number to know cold.',
+    intro:
+      'Food trucks fail on prime cost, not food quality. The math: a $14 ticket across 90 tickets a day, 24 days a month, grosses $30,240 — and after 32% food cost, one paid helper, the truck payment, commissary, permits, and fuel, $15,583 remains BEFORE the owner\'s own wage. This calculator runs your menu economics, shows the prime-cost percentage that separates trucks from expensive jobs, and names the breakeven tickets per day you must beat every single service.',
+    howItWorks: [
+      'Enter your average ticket and realistic tickets per day.',
+      'Enter days per month and your food-cost percentage.',
+      'Enter paid help, wage, and service hours.',
+      'Read monthly gross, net before your wage, and prime cost %.',
+      'Read breakeven tickets/day — the floor every service must clear.',
+    ],
+    faq: [
+      {
+        q: 'How profitable is a food truck really?',
+        a: 'The range is enormous because the inputs are: well-run trucks net 10–20% after EVERYTHING including a market wage for the owner; the median struggling truck nets the owner a stressful below-market wage. The discipline numbers: prime cost (food + labor) must stay under 60–65% — over that line you are buying yourself a job with a fryer. The example\'s $15,583/mo net is BEFORE the owner\'s wage — the single most common pro-forma lie in the industry is presenting that number as profit. What separates earners: location arbitrage (the same truck grosses $400 at a weak lunch spot and $1,400 at a brewery with no kitchen — recurring spots beat event chasing), menu speed (5–7 items, under 6 minutes of ticket time — rush throughput is the capacity constraint), and catering/private events (a booked 2-hour private at $1,200 guaranteed beats hoping for 90 walk-ups). The used-truck decision matters more than most first-timers think: $40–80k used versus $100–175k new build is $600–900/mo of payment difference — 60+ tickets a month of breakeven, every month, for years.',
+      },
+      {
+        q: 'What does it cost to start a food truck?',
+        a: 'The honest stack: the truck itself ($40–80k for a solid used build, $100–175k new), commissary kitchen fees ($400–800/mo — required in most states for prep and storage), permits and licenses ($1,000–2,500/yr stacked: health permit, fire inspection, business license, mobile vendor permits per city), insurance ($2,000–4,000/yr — vehicle plus liability), initial inventory and smallwares ($3,000–5,000), and a POS system. Total realistic launch: $60,000–120,000 used-truck path. The costs that ambush first-year operators: generator and propane (fuel plus maintenance), event fees ($50–500 per rally), the truck\'s mechanical life (it is a commercial vehicle AND a kitchen — budget both), and the slow-season cash trough — winter weeks at 40% of summer volume while fixed costs run at 100%. The pre-launch discipline: know your breakeven tickets/day cold (this calculator) and validate the number with a popup or tent operation BEFORE signing the truck note — a $500 market-booth weekend proves the menu and the demand for 1% of the truck\'s price.',
+      },
+      {
+        q: 'How do food trucks find good locations?',
+        a: 'The hierarchy: recurring anchor spots first — breweries and taprooms without kitchens (the classic symbiosis: they sell more beer when food exists, you get a built-in crowd), office parks at lunch, farmers markets, and industrial areas at shift change. Event chasing (festivals, rallies) is the sugar high — big days, big fees, no reliability; build the week around anchors and treat events as upside. The pitch to venues is mutual revenue: walk in with photos, your health permit, insurance certificate, and the offer — "I bring dinner traffic to your taproom every Thursday" is an easy yes. Booking platforms (Roaming Hunger, local food-truck associations) fill gaps but take fees; direct venue relationships are the asset. The location math that matters: tickets per service is the metric — track it per spot for a month, rank your spots, and ruthlessly drop the bottom quartile for new tests; a spot doing 40 tickets when your breakeven is 62 is a hobby location, however friendly the owner. Seasonality defense: the event calendar (weddings, corporate catering, holiday markets) and brewery anchors with indoor seating carry winter — model your year in the calculator at both volumes before believing the summer months.',
+      },
+    ],
+  },
+  {
+    slug: 'dog-walking-income-calculator',
+    title: 'Dog Walking Income Calculator — Platform vs Independent, True Hourly, and the Overnight Stack',
+    shortTitle: 'Dog Walking Income',
+    category: 'Freelance & Career',
+    description:
+      'Price a dog walking business honestly: walks per day with travel time counted, Rover/Wag fees vs your own book, and the boarding stack that adds $600+/mo without extra daylight.',
+    tagline: '8 walks at $22 grosses $3,696/mo — platform keeps $554 more than your own book, and 10 overnights add $600 with zero extra walks.',
+    intro:
+      'Dog walking is a route business on a leash: the money is the recurring midday book, the capacity is set by geography not effort, and the platforms take 20% for solving your first six months. Eight walks a day at $22 grosses $3,696 a month — $2,902 net through a platform, $3,456 on your own book — and ten overnight sittings stack $600 on top without touching the walking calendar. This calculator runs the honest day: travel time counted, fees priced, hourly revealed.',
+    howItWorks: [
+      'Enter your rate per walk, walks per day, and days per month.',
+      'Enter the platform fee if you book through Rover/Wag.',
+      'Enter walk length and travel minutes between clients.',
+      'Read monthly gross, platform net, and independent net — and the true hourly of each.',
+      'Read the overnight-sitting stack: revenue with no extra daylight.',
+    ],
+    faq: [
+      {
+        q: 'Can you make a living dog walking?',
+        a: 'Yes, with structure — the example nets $2,900–3,450/mo on 8 walks a day, and the levers are known: the recurring midday book is the annuity (10–15 weekly M-F clients = $2,000–3,000/mo stable base), boarding/overnights stack $600–850/mo at 10 nights without consuming daylight hours, and group walks are the leverage — 2–3 compatible dogs from different households at $18–20 each turns one 30-minute slot into $36–60, which the platform rate structure hides and your own rate card exploits. Geography caps capacity: clustered clients let 8 walks fit in 5 hours, scattered ones cap you at 5–6 — build the book by neighborhood, not by whoever signs up. The platforms (Rover, Wag) earn their 15–20% in the cold-start phase — reviews and trust transfer — then recurring clients belong on your own book (transition via new clients and referrals; poaching active platform clients violates the terms). Insurance and bonding ($25–50/mo) plus Pet First Aid certification are the credibility stack that justifies top-of-market rates.',
+      },
+      {
+        q: 'Rover vs your own clients — which pays better?',
+        a: 'Your own book, by $554/mo on the example calendar — but the platform is how most walkers survive the first six months. The platform buys: client acquisition (pet owners search Rover first), payment processing, trust infrastructure (reviews, verification), and booking flow. What it costs: 15–20% forever, plus rate pressure from the marketplace and terms that prohibit taking active clients off-platform. The working transition: build to 30–50 reviews on-platform, then let NEW clients come through referrals, vet offices, groomers, and Nextdoor at your direct rate; keep the platform for gap-filling. Direct-booking infrastructure is cheap: a simple booking page, Venmo/Zelle/auto-pay for recurring clients, and a clear cancellation policy (24 hours, 50% inside it). The tax note both paths share: platform or not, this is self-employment income — 15.3% SE tax plus income tax, quarterly estimates, and mileage is your biggest deduction; the walk-to-walk drives and pet-supply runs all count.',
+      },
+      {
+        q: 'How do I add boarding and pet sitting to a walking business?',
+        a: 'Overnights are the margin layer that needs no extra daylight: $50–85/night for boarding in your home or house-sitting in theirs, and 10 nights a month adds $600–850 on top of the walk book. The sequencing that works: boarding clients come from the walking book — the dog already knows you, the owner already trusts you, and the walk client asking "do you board?" is the signal to add the service. The operational rules: capacity caps (2–3 guest dogs maximum, compatible temperaments, your own pets counted), meet-and-greets before any first booking (non-negotiable — 30 minutes that prevents the nightmare booking), vet-info and emergency-authorization forms on file, and medication/special-needs premiums (+$5–15/night). Holiday dynamics: Thanksgiving through New Year books out 4–8 weeks ahead at 1.5–2× rates — the holiday window is the year\'s margin, so protect those dates for premium bookings, not favors. Drop-in visits ($20–28 per 30 min) and cat sitting round out the book for clients whose pets don\'t board. The whole stack — walks, drop-ins, boarding — on recurring clients is how a dog walker becomes a $60–75k business instead of a $30k job.',
+      },
+    ],
+  },
+  {
     slug: 'bounce-house-rental-calculator',
     title: 'Bounce House Rental Calculator — Payback per Unit, Fleet Income, and the Season Reality',
     shortTitle: 'Bounce House Rental',
