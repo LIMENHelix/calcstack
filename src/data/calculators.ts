@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'macrs-depreciation-calculator',
+    title: 'MACRS Depreciation Calculator 2026 — Year-by-Year Schedule for 3/5/7/10-Year Property',
+    shortTitle: 'MACRS Depreciation',
+    category: 'Freelance & Career',
+    description:
+      'Full IRS Pub 946 Table A-1 schedules for 3, 5, 7, and 10-year property under the half-year convention — deduction, cumulative, and remaining basis per year, with the mid-quarter trap and when MACRS beats §179 and 100% bonus.',
+    tagline: 'A $50,000 machine deducts $10,000 in year one on MACRS — or all $50,000 under §179. When spreading wins, here\'s the exact schedule.',
+    intro:
+      'MACRS is still the backbone of business depreciation — and with permanent 100% bonus depreciation and a $2.56M Section 179 cap in 2026, choosing it is now a deliberate strategy rather than the default. The reasons to spread deductions: your state decouples from bonus depreciation (the federal write-off vanishes at the state level), you want deductions matched against future higher-bracket income, or the asset doesn\'t qualify for first-year expensing. This calculator produces the complete year-by-year IRS schedule for 3, 5, 7, and 10-year property under the half-year convention — deduction, cumulative write-off, and remaining basis — plus the tax saved each year at your marginal rate, and flags the mid-quarter convention trap that shrinks fourth-quarter buying sprees.',
+    howItWorks: [
+      'Enter the asset cost and business-use percentage — over 50% keeps you in MACRS.',
+      'Pick the recovery class: computers/vehicles/most equipment are 5-year, office furniture 7-year.',
+      'Enter your marginal tax rate for the savings column.',
+      'Read the full schedule — and compare year one against the §179 calculator.',
+    ],
+    faq: [
+      {
+        q: 'What MACRS class is my asset?',
+        a: 'The common ones: computers, peripherals, vehicles, copiers, and most machinery are 5-year property. Office furniture, desks, and fixtures — plus any business asset without an assigned class — are 7-year. Three-year covers a few specific items (some breeding livestock, certain software-era tools); 10-year covers vessels, barges, and some single-purpose agricultural structures. Buildings are never in these tables: residential rental is 27.5-year straight-line, commercial 39-year. When in doubt, the asset\'s IRS "class life" in Pub 946 governs — misclassing 7-year property as 5-year front-loads deductions you\'re not entitled to.',
+      },
+      {
+        q: 'What is the mid-quarter convention trap?',
+        a: 'If more than 40% of your total depreciable basis for the year is placed in service in the fourth quarter, EVERY asset placed in service that year switches to mid-quarter convention — each treated as placed in service at the midpoint of its quarter. A December equipment binge can cut first-year deductions on assets bought in March. The planning fix: shift purchases into Q1–Q3, or elect §179/bonus on the Q4 assets (both conventions allow the full write-off on expensed property, which is excluded from the 40% test). The calculator above assumes the standard half-year convention — if you tripped mid-quarter, the schedule differs.',
+      },
+      {
+        q: 'Why would anyone choose MACRS over 100% bonus in 2026?',
+        a: 'Three real reasons. State conformity: California and several others decouple from bonus depreciation — taking 100% federally can leave a surprise state bill, while MACRS keeps federal and state aligned-ish. Income matching: a deduction is worth your marginal rate; expensing everything in a 22% year wastes deductions that would offset 35% income next year. And NOL waste: bonus depreciation can create a loss that basis or passive-activity rules then suspend — deductions you can\'t use. Deliberately electing OUT of bonus (per asset class) and running MACRS smooths the deduction into years where it\'s worth more. It\'s the rare case where slower is smarter.',
+      },
+    ],
+  },
+  {
     slug: 'section-179-calculator',
     title: 'Section 179 Calculator 2026 — $2,560,000 Expensing + 100% Bonus Depreciation, Layered Correctly',
     shortTitle: 'Section 179',

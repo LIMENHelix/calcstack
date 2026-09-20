@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'macrs-depreciation-calculator':
+    'Bookkeepers and owners use it when spreading beats expensing: full Pub 946 schedules for 3/5/7/10-year property, the 40% Q4 mid-quarter trap flagged, and the honest comparison against §179 — MACRS wins in non-conforming states and higher-bracket future years.',
   'section-179-calculator':
     'Business owners use it before a December equipment buy: 2026 layers $2.56M of §179 (income-capped) with permanent 100% bonus depreciation (not) — a $75,000 machine nets to $48,750 after tax, and the $32,000 SUV cap and income limit are the traps.',
   'rule-of-55-calculator':

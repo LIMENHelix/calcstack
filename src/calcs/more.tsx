@@ -2323,6 +2323,81 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// MACRS GDS depreciation schedule (IRS Pub 946 Table A-1, half-year convention, DDB→SL switch): 3-yr 33.33/44.45/14.81/7.41; 5-yr 20/32/19.2/11.52/11.52/5.76; 7-yr 14.29/24.49/17.49/12.49/8.93/8.92/8.93/4.46; 10-yr 10/18/14.4/11.52/9.22/7.37/6.55/6.55/6.56/6.55/3.28 — each sums to 100%. Most equipment is 5- or 7-year property; computers/vehicles 5-yr; office furniture 7-yr. Convention traps: half-year assumed (half deduction year one regardless of in-service month); >40% of the year's basis placed in service in Q4 flips EVERYTHING to mid-quarter convention; ADS (straight-line) is mandatory for ≤50% business use, some farming, and elected for uniformity. With permanent 100% bonus (OBBBA) and $2.56M §179, MACRS matters when: state doesn't conform to bonus, you deliberately want deductions spread (income smoothing, avoiding NOL waste), or property doesn't qualify (used buildings' components via cost seg, etc.). Node-verified: $50k 5-yr → 10,000/16,000/9,600/5,760/5,760/2,880 (yr-1 saves $3,200 at 32% vs §179's $16,000 — the §179 calculator is the companion).
+const MACRS_TABLES: Record<string, number[]> = {
+  '3': [33.33, 44.45, 14.81, 7.41],
+  '5': [20.0, 32.0, 19.2, 11.52, 11.52, 5.76],
+  '7': [14.29, 24.49, 17.49, 12.49, 8.93, 8.92, 8.93, 4.46],
+  '10': [10.0, 18.0, 14.4, 11.52, 9.22, 7.37, 6.55, 6.55, 6.56, 6.55, 3.28],
+}
+export function MacrsCalc() {
+  const [cost, setCost] = useNumber(50000)
+  const [busUse, setBusUse] = useNumber(100)
+  const [cls, setCls] = useState('5')
+  const [rate, setRate] = useNumber(32)
+
+  const r = useMemo(() => {
+    const basis = (cost * busUse) / 100
+    const sched = MACRS_TABLES[cls].map((p, i) => ({ yr: i + 1, pct: p, ded: (basis * p) / 100 }))
+    const cum: number[] = []
+    sched.reduce((a, s, i) => (cum[i] = a + s.ded, cum[i]), 0)
+    return { basis, sched, cum, saved1: sched[0].ded * (rate / 100) }
+  }, [cost, busUse, cls, rate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Asset cost" value={cost} onChange={setCost} prefix="$" />
+          <Field label="Business use" value={busUse} onChange={setBusUse} suffix="%" />
+          <div>
+            <div className="mb-1 text-sm font-medium">MACRS class</div>
+            <select value={cls} onChange={(e) => setCls(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="3">3-year (some tools, breeding animals)</option>
+              <option value="5">5-year (computers, vehicles, most equipment)</option>
+              <option value="7">7-year (office furniture, unclassed)</option>
+              <option value="10">10-year (boats, some structures)</option>
+            </select>
+          </div>
+          <Field label="Marginal tax rate" value={rate} onChange={setRate} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Year-1 deduction" value={usd(r.sched[0].ded, 0)} />
+          <Result label="Depreciable basis" value={usd(r.basis, 0)} />
+          <Result label="Year-1 tax saved" value={usd(r.saved1, 0)} />
+          <Result label="Full write-off by" value={`Year ${r.sched.length}`} />
+        </div>
+        <div className="overflow-x-auto rounded-md border">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b bg-muted/40 text-left text-xs text-muted-foreground">
+                <th className="p-2">Year</th><th className="p-2">Rate</th><th className="p-2">Deduction</th><th className="p-2">Cumulative</th><th className="p-2">Basis left</th>
+              </tr>
+            </thead>
+            <tbody>
+              {r.sched.map((s, i) => (
+                <tr key={s.yr} className="border-b last:border-0">
+                  <td className="p-2">{s.yr}</td>
+                  <td className="p-2">{num(s.pct, 2)}%</td>
+                  <td className="p-2 font-medium">{usd(s.ded, 0)}</td>
+                  <td className="p-2">{usd(r.cum[i], 0)}</td>
+                  <td className="p-2 text-muted-foreground">{usd(r.basis - r.cum[i], 0)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {usd(r.basis, 0)} of {cls}-year property writes off over {r.sched.length} tax years (half-year convention — year one gets the half rate no matter when in the year it's placed in service). Year one: <span className="font-medium">{usd(r.sched[0].ded, 0)}, saving {usd(r.saved1, 0)} at {rate}%</span> — versus {usd(r.basis, 0)} immediately under §179 or 100% bonus. MACRS wins when you WANT deductions spread: non-conforming states (bonus decoupled → the federal bonus vanishes at state level), income-smoothing years, or assets that don't qualify.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Rates are IRS Publication 946 Table A-1, general depreciation system, half-year convention with the 200%-declining-balance-to-straight-line switch — the default for most business property. Class guide: computers, peripherals, vehicles, and most machines are 5-year; office furniture and fixtures (and anything without an assigned class) are 7-year; 3-year covers some software-era tools and breeding livestock; 10-year covers vessels and certain structures. The mid-quarter trap: place more than 40% of the year's depreciable basis in service in the fourth quarter and EVERY asset that year switches to mid-quarter convention — the Q4-binge write-off shrinks. Business use at 50% or below forces ADS straight-line (and kills §179/bonus). Residential rental buildings use 27.5-year straight-line, commercial 39-year — different tables, see the rental depreciation calculator. With permanent 100% bonus depreciation and a $2.56M §179 cap in 2026, straight MACRS is now the deliberate-choice path, not the default: run the Section 179 calculator first, use this when spreading is the strategy. Estimates — convention elections and listed-property rules deserve a CPA's eyes.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Section 179 + bonus depreciation, 2026 (OBBBA / Rev. Proc. 2025-32): §179 max $2,560,000, dollar-for-dollar phaseout above $4,090,000 placed-in-service, gone at $6,650,000; heavy SUVs (6,000–14,000 lb GVWR) capped at $32,000 of §179; 100% bonus depreciation PERMANENT for property acquired after Jan 19, 2025. The layer order: §179 first (asset-by-asset control, but capped by business TAXABLE income — excess carries forward, can't create a loss), then 100% bonus on remaining basis (no income limit, CAN create a loss). Both need >50% business use (deduction prorated). New AND used qualify. Node-verified: $75k equipment/100%/income $200k → $75,000 179 → $26,250 saved at 35% (matches section179.org); $80k SUV/80% → eligible $64,000, 179 capped $32,000 + bonus $32,000; $700k with only $50k income → 179 $50,000 (capped), bonus $650,000 (loss ok); $5.09M placed → cap falls to $1,560,000, bonus clears the remaining $3,530,000.
 export function Section179Calc() {
   const [cost, setCost] = useNumber(75000)
@@ -7622,6 +7697,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'macrs-depreciation-calculator': MacrsCalc,
   'section-179-calculator': Section179Calc,
   'rule-of-55-calculator': RuleOf55Calc,
   'social-security-bridge-calculator': SSBridgeCalc,
