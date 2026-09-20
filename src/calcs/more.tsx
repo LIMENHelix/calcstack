@@ -5676,6 +5676,100 @@ export function HeatPumpWaterHeaterCalc() {
   )
 }
 
+// DUCT SEALING ROI — node-verified defaults: HVAC $1,800/yr × 25% duct leakage × 90% recovery = $405/yr saved. Pro aerosol seal $1,500 − 30% credit (25C capped $600; ended after 2025 — input adjustable) = $1,050 net → 2.6-yr payback, $3,000 10-yr net. DIY mastic $300 → 0.74 yr. Typical ducts leak 20–30% of conditioned air into attics/crawlspaces (DOE); sealing is the cheapest HVAC efficiency win because it fixes the delivery system, not the equipment.
+export function DuctSealingRoiCalc() {
+  const [hvac, setHvac] = useNumber(1800)
+  const [leak, setLeak] = useNumber(25)
+  const [rec, setRec] = useNumber(90)
+  const [cost, setCost] = useNumber(1500)
+  const [creditPct, setCreditPct] = useNumber(30)
+
+  const r = useMemo(() => {
+    const save = hvac * (leak / 100) * (rec / 100)
+    const credit = Math.min(cost * (creditPct / 100), 600)
+    const net = cost - credit
+    const payback = save > 0 ? net / save : Infinity
+    const tenYr = save * 10 - net
+    return { save, credit, net, payback, tenYr }
+  }, [hvac, leak, rec, cost, creditPct])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Annual heating + cooling" value={hvac} onChange={setHvac} prefix="$" step="100" />
+          <Field label="Duct leakage" value={leak} onChange={setLeak} suffix="%" step="5" />
+          <Field label="Leakage sealed" value={rec} onChange={setRec} suffix="%" step="5" />
+          <Field label="Sealing quote" value={cost} onChange={setCost} prefix="$" step="100" />
+          <Field label="Tax credit" value={creditPct} onChange={setCreditPct} suffix="%" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Savings per year" value={usd(Math.round(r.save))} big />
+          <Result label="Net cost after credit" value={usd(Math.round(r.net))} />
+          <Result label="Payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} />
+          <Result label="10-yr net gain" value={usd(Math.round(r.tenYr))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Ducts leaking ${leak}% of conditioned air into the attic cost you ${usd(Math.round(r.save))}/yr — sealing pays back in ${num(r.payback, 1)} years and returns ${usd(Math.round(r.tenYr))} over ten. DIY mastic on accessible joints ($200–400 of materials) does most of the same job if the ducts are reachable.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: savings = annual HVAC cost × leakage % × share sealed. DOE estimates typical duct systems lose 20–30% of conditioned air to attics, crawlspaces, and garages — you pay to heat the outdoors. Know your leakage before paying: a duct blaster test ($100–200, often bundled with an energy audit) measures it exactly, and many utilities subsidize the audit. Two routes: pro aerosol sealing ($1,200–2,000, seals from the inside, reaches everything, usually guaranteed to a measured leakage number) versus DIY mastic and foil tape on accessible joints ($200–400 of materials, a weekend, reaches maybe 60–70% of leaks — set the sealed slider accordingly). The efficiency-equipment trap: a new high-SEER heat pump on leaky ducts delivers old-SEER results — seal first, then size equipment, because tighter ducts can drop the required tonnage. Tax-credit note: the federal 25C credit (30%, $600 cap for sealing/insulation) applied through 2025 purchases — set the credit to what applies to your tax year; utility rebates for sealing ($100–400) are separate and stack. Estimate — duct blaster numbers and your quote govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// INDUCTION VS GAS RANGE — node-verified defaults: 2 burner-hr/day × 1.2 kW avg input × coil 72% eff = 1.728 kWh/day useful heat. Annual cost: induction (85% eff) $126, coil $149, gas (38% eff, $1.40/therm, 29.3 kWh/therm) $79 at $0.17/kWh. Induction premium vs gas ≈ $47/yr; saves $23/yr vs coil. Switch cost $2,500 (range $1,800 + 240V outlet $500 + cookware $200) − $840 rebate = $1,660 → energy-only payback vs coil 73 yrs, vs gas never. HONEST verdict: the case for induction is speed, safety, and indoor air quality (gas stoves emit NO2) — not energy savings.
+export function InductionVsGasCalc() {
+  const [bhrs, setBhrs] = useNumber(2)
+  const [kwIn, setKwIn] = useNumber(1.2)
+  const [erate, setErate] = useNumber(0.17)
+  const [grate, setGrate] = useNumber(1.4)
+  const [switchCost, setSwitchCost] = useNumber(2500)
+  const [rebate, setRebate] = useNumber(840)
+
+  const r = useMemo(() => {
+    const useful = bhrs * kwIn * 0.72
+    const indYr = (useful / 0.85) * 365 * erate
+    const coilYr = (useful / 0.72) * 365 * erate
+    const gasYr = (useful / 0.38 / 29.3001) * 365 * grate
+    const net = switchCost - rebate
+    const paybackVsCoil = coilYr - indYr > 0 ? net / (coilYr - indYr) : Infinity
+    const vsGas = indYr - gasYr
+    return { indYr, coilYr, gasYr, net, paybackVsCoil, vsGas }
+  }, [bhrs, kwIn, erate, grate, switchCost, rebate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Burner-hours per day" value={bhrs} onChange={setBhrs} suffix="hrs" step="0.5" />
+          <Field label="Avg burner draw" value={kwIn} onChange={setKwIn} suffix="kW" step="0.1" />
+          <Field label="Electricity rate" value={erate} onChange={setErate} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="Gas rate" value={grate} onChange={setGrate} prefix="$" suffix="/therm" step="0.1" />
+          <Field label="Total switch cost" value={switchCost} onChange={setSwitchCost} prefix="$" step="100" />
+          <Field label="Rebate" value={rebate} onChange={setRebate} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Induction /yr" value={usd(Math.round(r.indYr))} />
+          <Result label="Electric coil /yr" value={usd(Math.round(r.coilYr))} />
+          <Result label="Gas /yr" value={usd(Math.round(r.gasYr))} />
+          <Result label="Switch payback vs coil" value={isFinite(r.paybackVsCoil) ? `${num(r.paybackVsCoil, 0)} yrs` : 'Never'} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.vsGas > 0
+            ? `Honest answer: induction costs ${usd(Math.round(r.vsGas))}/yr MORE than gas at these rates — the energy math never pays back the ${usd(Math.round(r.net))} switch. The case is speed (water boils in half the time), safety, and indoor air quality — gas burners emit NO2 linked to childhood asthma. Switch for those reasons, or when the gas range dies anyway.`
+            : `Induction actually beats gas by ${usd(Math.round(-r.vsGas))}/yr at these rates — expensive electricity markets and cheap-gas markets flip this answer, so your rates are the whole question. Add speed and air quality and the switch starts to pencil.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: useful heat to the pan is held constant (burner-hours × draw × 72% coil efficiency), then each fuel is priced at its real efficiency — induction ~85%, electric coil ~72%, gas ~38% (most of a gas flame heats your kitchen, not the food). That efficiency gap is why gas wastes two-thirds of its energy yet still usually wins on cost: gas per-BTU is that cheap in most of the US. Where induction wins on energy alone: electric rates under ~$0.13 with gas above ~$1.60/therm, or replacing propane. The honest accounting: energy is the smallest reason to switch. The real ones — boil time cut in half, instant response, a cooktop you can wipe flat, no open flame, and indoor air: gas stoves emit nitrogen dioxide and benzene at levels linked to respiratory issues (vent the hood outside regardless of what you cook with). Switch-cost reality: the range ($1,100–2,500), a 240V 50A circuit if you lack one ($300–800), and magnetic cookware ($150–300). Rebates: IRA-funded state programs offer up to $840 for induction in qualifying households — availability varies by state; check before buying. Estimate — your utility rates and quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11353,6 +11447,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'solar-degradation-calculator': SolarDegradationCalc,
   'solar-removal-reinstall-calculator': SolarRemovalReinstallCalc,
   'heat-pump-water-heater-calculator': HeatPumpWaterHeaterCalc,
+  'duct-sealing-roi-calculator': DuctSealingRoiCalc,
+  'induction-vs-gas-calculator': InductionVsGasCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

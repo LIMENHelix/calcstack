@@ -2212,6 +2212,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'duct-sealing-roi-calculator',
+    title: 'Duct Sealing ROI Calculator — What Leaky Ducts Cost, Aerosol vs DIY Mastic, Real Payback',
+    shortTitle: 'Duct Sealing ROI',
+    category: 'Home & Yard',
+    description:
+      'Price the 20–30% of conditioned air your ducts leak into the attic — savings from your actual HVAC spend, aerosol vs DIY mastic cost, credits and rebates, and why sealing beats new equipment.',
+    tagline: 'Leaky ducts waste 20–30% of every HVAC dollar — $405/yr at typical spend. Sealing pays back in 2.6 years; DIY mastic in under one.',
+    intro:
+      'The least glamorous efficiency upgrade is often the best one: DOE estimates typical duct systems lose 20–30% of conditioned air to attics, crawlspaces, and garages — you are paying to heat the outdoors. At $1,800/yr of heating and cooling with 25% leakage, that is $405/yr recoverable by sealing. A pro aerosol seal runs $1,200–2,000 (pays back in ~2.6 years); DIY mastic and foil tape on accessible joints costs $200–400 of materials and can pay back inside a year. Sealing also comes BEFORE equipment: a new high-efficiency heat pump on leaky ducts delivers old efficiency, and tighter ducts can drop the tonnage you need to buy. This calculator prices your leakage and both routes.',
+    howItWorks: [
+      'Enter your annual heating plus cooling spend.',
+      'Enter duct leakage — 20–30% typical; a duct blaster test ($100–200) measures yours exactly.',
+      'Set how much of the leakage the sealing method actually fixes (aerosol ~90%, DIY ~60–70%).',
+      'Enter the sealing quote and any tax credit that applies to your purchase year.',
+      'Read annual savings, net cost, payback, and the 10-year gain.',
+    ],
+    faq: [
+      {
+        q: 'How do I know if my ducts actually leak?',
+        a: 'Three signals before any test: rooms far from the air handler that never reach setpoint, dusty air right after the system kicks on (return leaks pull attic dust in), and an attic or crawlspace that feels oddly comfortable in extreme weather — that is your conditioned air. The cheap check: with the system running, hold a tissue at visible joints — movement means leakage; look for tape that has dried and peeled, disconnected runs, and flex duct kinks. The exact answer is a duct blaster test, $100–200 standalone or often free to cheap inside a utility-subsidized home energy audit — it pressurizes the duct system and gives leakage in CFM25, the number contractors quote against. If your ducts run entirely inside conditioned space (some newer homes), leakage matters little; if they run through an unconditioned attic or crawlspace — most American homes — assume 20–30% until tested.',
+      },
+      {
+        q: 'Aerosol sealing vs mastic — which route?',
+        a: 'It depends on access. Pro aerosol sealing (AeroSeal and similar) pressurizes the ducts and blows sealant particles that deposit exactly at the leaks — it seals joints you cannot physically reach, works the whole system, and typically finishes with a measured before-and-after leakage number, often guaranteed. Cost: $1,200–2,000 for a typical home. DIY mastic — brushed-on paste plus foil (never cloth) tape — is the right call when the ducts are accessible in an open attic or basement: $200–400 of materials and a weekend reaches most leaks; set the sealed slider to 60–70% for honesty. The mastic mistakes to avoid: cloth duct tape fails in years (it is literally not for ducts), and sealing only the visible joints while ignoring the air-handler cabinet connections misses the biggest leakers. Many homes do both: DIY the accessible runs now, aerosol later if bills stay high.',
+      },
+      {
+        q: 'Why seal ducts before buying a new heat pump or furnace?',
+        a: 'Because equipment efficiency ratings assume the air arrives. A 18-SEER2 heat pump pushing through 25% leakage delivers roughly 13.5-SEER2 results at the register — you paid for efficiency that leaks into the attic. The compounding win: after sealing, the home needs less capacity, so a Manual J load calculation on the tightened house often drops the required system size by half a ton or more — smaller equipment costs less upfront and runs more efficiently with longer cycles. Contractors quoting equipment replacement rarely volunteer this because duct work is a different, dirtier job. The right sequence: test ducts, seal, then run the load calculation and size equipment to the sealed house. If a quote for new equipment never mentions your ducts, that tells you which job the contractor is selling. Run the sealing numbers here first — at a 2–3 year payback, it usually outranks the equipment upgrade entirely.',
+      },
+    ],
+  },
+  {
+    slug: 'induction-vs-gas-calculator',
+    title: 'Induction vs Gas Range Calculator 2026 — Real Cooking Costs, Switch Payback & the Honest Verdict',
+    shortTitle: 'Induction vs Gas',
+    category: 'Home & Yard',
+    description:
+      'The honest induction-vs-gas math: real efficiency-adjusted cooking costs for induction, coil, and gas, total switch cost with rebates, and why the case for induction is speed and air quality — not energy savings.',
+    tagline: 'Honest math: induction costs ~$47/yr MORE than gas at typical rates — the energy never pays back the switch. The real case is boil time, safety, and indoor air quality.',
+    intro:
+      'Most induction-vs-gas comparisons lie by omission, so here is the real arithmetic. Gas burners waste about 62% of their energy heating your kitchen instead of the pan (38% efficiency versus 85% for induction, 72% for coil) — but gas is so cheap per BTU that it usually still wins: at 2 burner-hours a day, induction runs ~$126/yr, coil $149, gas $79. The $1,660 net switch cost (range, 240V circuit, cookware, minus rebates) never pays back on energy against gas and takes decades against coil. The honest reasons to switch: water boils twice as fast, response is instant, there is no open flame, and gas combustion emits NO2 and benzene into your kitchen air. This calculator runs your rates and your rebate and gives the verdict without the marketing.',
+    howItWorks: [
+      'Enter daily burner-hours and average burner draw (1.2 kW is a medium setting).',
+      'Enter your electricity rate and gas rate per therm.',
+      'Enter total switch cost: range + 240V circuit + cookware.',
+      'Enter any rebate that applies (state IRA programs offer up to $840 for qualifying households).',
+      'Read annual cost for all three fuels and the energy-only payback — then weigh the non-energy case honestly.',
+    ],
+    faq: [
+      {
+        q: 'If gas is cheaper to run, why is everyone switching to induction?',
+        a: 'Because cooking cost is the smallest line item in the decision — it is roughly $40–60/yr either way, noise in a household budget. The drivers are elsewhere. Performance: induction boils water in about half the time of gas, responds instantly, holds exact temperatures, and the flat glass wipes clean in seconds. Safety: no open flame, no gas leaks, the surface stays near-room-temperature around the pan. Indoor air quality: gas combustion emits nitrogen dioxide — studies link gas-stove NO2 to childhood asthma — plus trace benzene; a vented hood mitigates but most hoods recirculate or go unused. Climate: no on-site combustion. And the kitchen itself: induction dumps 62%-less waste heat into the room, which matters in summer and in small apartments. Price the switch honestly — this calculator does — then decide on the reasons that actually matter to you.',
+      },
+      {
+        q: 'What does switching actually cost all-in?',
+        a: 'Three line items, and the range is only one. The range itself: $1,100–2,500 for mainstream induction (Samsung, GE, LG), $3,000+ for premium. The electrical: induction needs a 240V/40–50A circuit — if your stove location has one (homes with electric ranges do), cost is $0; if not, an electrician runs $300–800 depending on panel distance and capacity, and a panel upgrade on top adds $1,500–3,000. Cookware: induction needs magnetic pans — test yours with a magnet; a decent replacement set runs $150–300, though many existing stainless and cast-iron pieces already work. Rebates offset the total: IRA-funded state programs offer up to $840 for induction ranges in qualifying households, and some utilities add $100–500 — availability varies by state and income, so check before purchase. Portable single-burner induction units ($60–120) are the zero-commitment trial: cook on one for a month before committing $2,000.',
+      },
+      {
+        q: 'When does induction actually win on energy cost?',
+        a: 'Two situations flip the math. First, rate geography: where electricity is cheap and gas is not — parts of the Pacific Northwest on hydro power, or anywhere gas exceeds ~$1.60–1.80/therm while electric stays under ~$0.13/kWh — induction\'s efficiency edge overcomes the per-BTU price gap. Second, replacing propane or an electric coil: propane per-BTU costs 2–3× natural gas, so induction beats it soundly, and versus an existing coil range induction is both cheaper to run (85% vs 72% efficiency) and strictly better to cook on — though even then the payback on a premature replacement is decades, so the honest trigger is when the old range dies. Also worth noting for high electric-rate states: if you are in $0.30+/kWh territory with cheap gas, the energy math argues for KEEPING gas — ventilate well instead. Run your actual rates; the answer is genuinely regional.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

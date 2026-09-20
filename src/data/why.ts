@@ -145,6 +145,10 @@ export const WHY_USE: Record<string, string> = {
     'Homeowners with aging roofs use it before signing a solar contract: removing and reinstalling 20 panels costs $5,500 today ($6,959 by year 6) — with under 10 years of roof left, re-roof first and the bill never exists.',
   'heat-pump-water-heater-calculator':
     'Homeowners replacing an electric tank use it before the plumber visit: a heat pump unit cuts water heating by two-thirds — $386/yr back — and the incremental cost after rebates often pays back inside a year.',
+  'duct-sealing-roi-calculator':
+    'Homeowners use it before buying new HVAC equipment: ducts leak 20–30% of conditioned air — $405/yr at typical spend — and sealing pays back in 2.6 years while new equipment on leaky ducts delivers old efficiency.',
+  'induction-vs-gas-calculator':
+    'Homeowners use it before replacing a range: induction costs ~$47/yr more than gas at typical rates, so the switch never pays back on energy — the honest case is boil time, safety, and kitchen air quality.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

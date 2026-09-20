@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 350 calculators live (576 indexed pages). See LAUNCH.md for the domain-day
+**Status: 360 calculators live (586 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -517,3 +517,37 @@ blogs (generator).
 - **Backlist ride-alongs** — solar payback, heat pump vs furnace, EV vs gas,
   pool volume/chemical suite. The energy cluster now interlinks audit → envelope
   → devices → rates.
+
+## Wave 61 — Solar ownership & home fuel decisions (#351–#360, milestone wave)
+
+Milestone wave: 360 calculators live. Solar through the full ownership lifecycle —
+sizing, quote checking, lease vs buy, degradation, removal/reinstall — plus the
+electrification paybacks (HPWH, duct sealing, induction). Audiences: solar
+consumer-advocate blogs, r/solar wiki and SolarReviews-style communities,
+green-building newsletters, electrification advocates (Rewiring America
+audience), utility consumer-education pages, home-inspector content.
+
+- **Home battery ROI (#351)** — the "backup math, not bill math" correction;
+  NEM 3.0 California angle is the traffic hook.
+- **Solar lease vs buy (#352)** — the escalator-clause exposé; homeowner
+  advocacy blogs. Strong shareable: "the 2.9% escalator eats the savings."
+- **Solar quote checker (#353)** — $/W against benchmark with the dealer-fee
+  financed-price trap. The single most linkable anti-scam tool in the suite.
+- **Solar sizing (#354)** — bills-to-panels arithmetic with EV/heat-pump future
+  loads sized in NOW. Pre-quote homework tool.
+- **EV home charging (#355)** — public-charging dependence tax + install-payback;
+  EV forums and workplace-charging content.
+- **Solar degradation (#356)** — converts warranty fine print into a panel-tier
+  price decision. Data-nerd crossover (NREL study citations).
+- **Solar removal & reinstall (#357)** — the roof-age trap; roofing + solar
+  coordination content. Home inspectors will cite this one.
+- **Heat pump water heater (#358)** — the cheapest big win in an electric home;
+  electrification newsletters and utility rebate pages (rebate-stack content).
+- **Duct sealing ROI (#359)** — "seal ducts before buying equipment" sequencing
+  correction; HVAC-trade crossover and energy-auditor content.
+- **Induction vs gas (#360)** — the honest verdict ("induction costs MORE on
+  energy — switch for speed and air quality") is the credibility play; indoor-
+  air-quality and healthy-home audiences.
+- **Backlist ride-alongs** — solar payback, heat pump vs furnace, TOU switch,
+  smart thermostat, LED, attic insulation. The energy cluster now covers the
+  full sequence: audit → envelope → ducts → equipment → rates → solar → battery.
