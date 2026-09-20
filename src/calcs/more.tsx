@@ -5864,6 +5864,91 @@ export function RadonMitigationCalc() {
   )
 }
 
+// SEWER LINE TRENCH VS TRENCHLESS — node-verified defaults: 60 ft line. Trenchless $120/ft + $500 surface restoration = $7,700; open trench $70/ft + $4,000 restoration (driveway/landscape) = $8,200 → trenchless wins by $500 once restoration is priced in. Per-ft ranges: open cut $50–120 (plus whatever is ON TOP of the pipe), pipe bursting/CIPP lining $90–150 all-in. Avoided root maintenance $350/yr × 20-yr liner life = $7,000 of recurring cost gone. The decision variable is never the pipe — it is what sits above it.
+export function SewerLineCostCalc() {
+  const [ft, setFt] = useNumber(60)
+  const [tlRate, setTlRate] = useNumber(120)
+  const [otRate, setOtRate] = useNumber(70)
+  const [restore, setRestore] = useNumber(4000)
+  const [rootMaint, setRootMaint] = useNumber(350)
+
+  const r = useMemo(() => {
+    const tlCost = ft * tlRate + 500
+    const otCost = ft * otRate + restore
+    const cheaper = tlCost <= otCost ? 'Trenchless' : 'Open trench'
+    const diff = Math.abs(tlCost - otCost)
+    const maintSaved = rootMaint * 20
+    return { tlCost, otCost, cheaper, diff, maintSaved }
+  }, [ft, tlRate, otRate, restore, rootMaint])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Line length" value={ft} onChange={setFt} suffix="ft" step="10" />
+          <Field label="Trenchless rate" value={tlRate} onChange={setTlRate} prefix="$" suffix="/ft" step="10" />
+          <Field label="Open-trench rate" value={otRate} onChange={setOtRate} prefix="$" suffix="/ft" step="10" />
+          <Field label="Surface restoration (trench)" value={restore} onChange={setRestore} prefix="$" step="500" />
+          <Field label="Annual root cleaning now" value={rootMaint} onChange={setRootMaint} prefix="$" suffix="/yr" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Trenchless total" value={usd(Math.round(r.tlCost))} />
+          <Result label="Open trench total" value={usd(Math.round(r.otCost))} />
+          <Result label="Winner" value={`${r.cheaper} by ${usd(Math.round(r.diff))}`} big />
+          <Result label="Root maint saved (20 yr)" value={usd(Math.round(r.maintSaved))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Trenchless prices at ${usd(Math.round(r.tlCost))} all-in versus ${usd(Math.round(r.otCost))} for the trench once the surface is priced in — ${r.cheaper.toLowerCase()} wins by ${usd(Math.round(r.diff))}. The per-foot rate comparison alone (${usd(tlRate)} vs ${usd(otRate)}) lies: what sits above the pipe decides the job.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: trenchless = length × per-ft rate + two small access pits; open trench = length × lower per-ft rate + full restoration of whatever the trench crosses. That last line is the whole decision: under lawn, restoration is seed and patience ($200–800); under a driveway, stamped patio, or mature landscaping, it is $3,000–8,000 and the cheaper per-foot rate loses. Trenchless comes in two flavors — pipe bursting (new pipe pulled through, destroys the old) and CIPP lining (epoxy sleeve cured inside the old pipe, slightly reduces diameter, needs a structurally present host pipe); collapsed or bellied lines cannot be lined, so the camera inspection ($250–500, ALWAYS first) decides eligibility. Red flags that change scope: Orangeburg pipe (1945–72 fiber pipe, must be replaced), shared laterals with neighbors, and city tap requirements. Permits run $100–400 and many cities require inspection at the tap. Warranty reality: liners and burst pipe carry 20–50 yr warranties — transferable ones add resale value the way a waterproofing warranty does. Estimate — camera footage and two written quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// GUTTER GUARD ROI — node-verified defaults: 200 ft × $7.50/ft pro micro-mesh = $1,500. Cleaning now 2×/yr × $175 = $350/yr; guards cut to once per 2 yrs ($87.50/yr — honest: guards reduce cleaning, never eliminate it) → save $262.50/yr → 5.7-yr payback. DIY screens $400 → 1.5-yr payback. If guards fully eliminated cleaning: 4.3 yrs. Non-cash factors: ladder falls (~164k ER visits/yr from ladders) are the real risk being retired; guards also prevent the overflow damage that drives the waterproofing calculator.
+export function GutterGuardRoiCalc() {
+  const [ft, setFt] = useNumber(200)
+  const [perFt, setPerFt] = useNumber(7.5)
+  const [cleanYr, setCleanYr] = useNumber(350)
+  const [stillClean, setStillClean] = useNumber(88)
+
+  const r = useMemo(() => {
+    const cost = ft * perFt
+    const save = cleanYr - stillClean
+    const payback = save > 0 ? cost / save : Infinity
+    const tenYr = save * 10 - cost
+    return { cost, save, payback, tenYr }
+  }, [ft, perFt, cleanYr, stillClean])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Gutter length" value={ft} onChange={setFt} suffix="ft" step="20" />
+          <Field label="Guard cost" value={perFt} onChange={setPerFt} prefix="$" suffix="/ft" step="0.5" />
+          <Field label="Cleaning cost now" value={cleanYr} onChange={setCleanYr} prefix="$" suffix="/yr" step="25" />
+          <Field label="Cleaning after guards" value={stillClean} onChange={setStillClean} prefix="$" suffix="/yr" step="25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Installed cost" value={usd(Math.round(r.cost))} />
+          <Result label="Savings per year" value={usd(Math.round(r.save))} big />
+          <Result label="Payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} />
+          <Result label="10-yr net" value={usd(Math.round(r.tenYr))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Guards on ${num(ft, 0)} ft cost ${usd(Math.round(r.cost))} and save ${usd(Math.round(r.save))}/yr of cleaning — ${num(r.payback, 1)}-year payback. The brochure says never clean again; the honest setting is ~once per 2 years, because debris still sits on TOP of the mesh.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: savings = current cleaning spend minus post-guard cleaning spend; payback = installed cost ÷ savings. The honest variable is the second input — guards reduce cleaning, they do not eliminate it: micro-mesh sheds leaves well but pine needles, shingle grit, and pollen still accumulate on top, and somebody still goes up there, just half as often. Cost tiers: DIY snap-in screens $1–2/ft (they mostly fail — debris enters and then the screen blocks the cleaning), DIY micro-mesh $2–4/ft (decent), pro-installed micro-mesh $6–12/ft with a clog warranty. Where the ROI math understates: ladder risk — ERs see ~164,000 ladder injuries a year, and every cleaning you do not take is risk retired, which never shows in the dollars; and overflow damage — clogged gutters are the leading driver of the basement water the waterproofing calculator prices, so guards double as cheap insurance against a $12,000 problem. Where guards lose: no overhanging trees (clean once a year for $175 and skip guards entirely), heavy pine needles (most mesh clogs at the surface), and roofs where the guard install voids the shingle edge warranty — check before screwing anything under the first course. Estimate — your tree cover and local cleaning quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11545,6 +11630,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'induction-vs-gas-calculator': InductionVsGasCalc,
   'waterproofing-roi-calculator': WaterproofingRoiCalc,
   'radon-mitigation-calculator': RadonMitigationCalc,
+  'sewer-line-cost-calculator': SewerLineCostCalc,
+  'gutter-guard-roi-calculator': GutterGuardRoiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

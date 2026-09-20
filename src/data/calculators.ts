@@ -2340,6 +2340,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'sewer-line-cost-calculator',
+    title: 'Sewer Line Replacement Cost Calculator — Trenchless vs Open Trench, Restoration Priced Honestly',
+    shortTitle: 'Sewer Line Cost',
+    category: 'Home & Yard',
+    description:
+      'Trenchless vs open-trench sewer replacement with the number that decides it — surface restoration. Per-foot rates, camera-inspection reality, root-maintenance savings, and liner warranties.',
+    tagline: 'Trenchless at $120/ft beats open trench at $70/ft the moment the line runs under a driveway — $7,700 vs $8,200 all-in. What sits above the pipe decides the job.',
+    intro:
+      'Sewer quotes compare per-foot rates; the decision lives in restoration. Trenchless replacement on a 60-ft line runs $120/ft plus two access pits — $7,700 all-in. Open trench costs less per foot ($70) but adds full restoration of whatever the trench crosses: $500 in lawn, $4,000+ under a driveway or stamped patio — $8,200 all-in and the cheaper rate loses. The recurring savings close the loop: a new line or liner ends the $350/yr root-cleaning treadmill, worth $7,000 over a 20-year warranty. Eligibility comes first: a camera inspection ($250–500) determines whether the pipe can be lined at all — collapsed or bellied sections cannot. This calculator prices both methods with restoration honestly included.',
+    howItWorks: [
+      'Enter the line length from the camera inspection report.',
+      'Enter the trenchless per-ft quote (bursting or CIPP lining, $90–150 typical).',
+      'Enter the open-trench per-ft quote ($50–120).',
+      'Enter what restoring the surface above the trench would actually cost.',
+      'Enter what you spend annually on root cleaning now — then read both totals and the winner.',
+    ],
+    faq: [
+      {
+        q: 'Pipe bursting or CIPP lining — what is the difference?',
+        a: 'Both are trenchless, but they solve different problems. Pipe bursting pulls a new HDPE pipe through the old one, fracturing it outward — you get a brand-new full-diameter pipe with 50+ year life, and it works even when the old pipe is damaged, as long as a path exists. CIPP lining cures an epoxy sleeve inside the existing pipe — faster and often slightly cheaper, but it needs a structurally present host pipe (no collapsed or missing sections), reduces diameter by ~6mm, and cannot fix a belly (a sag holding water) because the liner follows the existing grade. The camera inspection decides: lining fails exactly where the pipe is worst, so a quote for lining without camera footage is a guess. Watch the price structure: liners are sometimes quoted per foot with high minimums, bursting with mobilization fees. Get both quoted against the same footage and plug the real numbers in here.',
+      },
+      {
+        q: 'How do I know the line actually needs replacement?',
+        a: 'The camera settles it — $250–500 for a scoped inspection with footage you keep, and it should be step one before ANY quote conversation. Symptoms that justify the camera: recurring backups (especially after rain, which means infiltration), slow drains across multiple fixtures at once, sewage odor in the yard, or a lush green stripe over the line path. What the footage shows decides the scope: root intrusion at joints on an otherwise sound pipe can be managed with cutting and foaming ($300–500/yr) for years; offset joints, cracks, Orangeburg (fiber pipe, 1945–72, a replacement no-brainer), or a collapsed section means replacement. The maintenance-forever alternative pencils in one case only: an elderly but intact pipe where roots return slowly — $350/yr of cleaning beats $8,000 if the line has decades left. Run that comparison here: maintenance × years versus replacement cost minus maintenance saved.',
+      },
+      {
+        q: 'Who owns the line, and does insurance or the city cover any of this?',
+        a: 'Usually you own it to the property line — and often to the city main itself, which surprises people when the break is under the street: many municipalities make the homeowner responsible for the entire lateral including the tap, plus street-cut permits and repaving. Call the city FIRST; some cover from the property line, a few cover the whole lateral, and the answer changes the quote by thousands. Insurance: standard homeowners policies exclude sewer lines as wear-and-tear. The products that exist: service-line endorsements on your HO policy ($30–50/yr, $10k coverage — genuinely worth it on 50+ year-old lines), and third-party warranty programs of widely varying value — read exclusions hard, many exclude pre-existing conditions and roots. Also check: some cities offer cost-sharing or low-interest loan programs for lateral replacement, and a few mandate replacement at sale (point-of-sale ordinances) — which turns this calculator from a planning tool into a budget deadline.',
+      },
+    ],
+  },
+  {
+    slug: 'gutter-guard-roi-calculator',
+    title: 'Gutter Guard ROI Calculator — Real Cleaning Savings, Payback by Guard Type, the Honest Version',
+    shortTitle: 'Gutter Guard ROI',
+    category: 'Home & Yard',
+    description:
+      'What gutter guards actually save — honest post-guard cleaning frequency (never zero), payback by guard tier, the ladder-risk retirement nobody prices, and when guards flat-out lose.',
+    tagline: 'Pro micro-mesh on 200 ft costs $1,500 and saves $263/yr — a 5.7-year payback. DIY mesh pays back in 1.5. The honest setting: guards cut cleaning in half, never to zero.',
+    intro:
+      'Gutter guard brochures promise you never clean again; the honest number is half as often. Professional micro-mesh on 200 feet runs $1,500; cutting cleaning from twice a year ($350) to once every two years ($88) saves $263/yr — a 5.7-year payback, or 1.5 years for DIY mesh at $400. Two factors never in the brochure: ladder risk — ERs see ~164,000 ladder injuries a year, and every cleaning retired is real risk removed — and overflow damage, since clogged gutters are the leading driver of the basement water that costs $12,000 to fix. Where guards lose outright: no overhanging trees, pine needles that clog mesh from above, and installs that void the shingle-edge warranty. This calculator runs the honest version.',
+    howItWorks: [
+      'Enter gutter length in feet.',
+      'Enter the guard cost per foot ($2–4 DIY mesh, $6–12 pro micro-mesh with warranty).',
+      'Enter what you spend on gutter cleaning per year now ($150–200 per visit typical).',
+      'Enter the honest post-guard cleaning cost — half is a fair default, zero is a fantasy.',
+      'Read installed cost, annual savings, payback, and the 10-year net.',
+    ],
+    faq: [
+      {
+        q: 'Which guard type is actually worth it?',
+        a: 'Match the guard to the debris. Micro-mesh (stainless screen over aluminum frame, $6–12/ft installed) is the only type that handles small debris — shingle grit, seed pods, pine pollen — and the only one pros warranty against clogs; it is the default right answer under mixed trees. Reverse-curve/surface-tension guards ($4–8/ft) shed leaves well in heavy fall but can overshoot in downpours — water rides the curve right past the gutter — and ice dams complicate them in cold climates. Foam inserts and brush fillers ($1–3/ft DIY) clog internally and become the debris — skip. Snap-in plastic screens ($1–2/ft) fail the same way. The DIY tier that works: aluminum micro-mesh panels ($2–4/ft at home centers) on a single-story ranch with a comfortable ladder setup — 1.5-year payback at the defaults. Whatever the type: demand the clog warranty in writing, and confirm the install method does not lift or screw through the first shingle course, which can void the roof warranty.',
+      },
+      {
+        q: 'When should I skip gutter guards entirely?',
+        a: 'Three clean cases. No overhanging trees: if nothing drops debris over your roof, an annual $175 cleaning beats any guard system on cost forever — guards solve a debris problem, and without debris they are decoration. Pine-heavy lots: needles are the nemesis of every mesh — they lodge in the screen surface itself, so you trade gutter cleaning for guard cleaning on a ladder at the same height; some needle-specific products exist but verify with references, not brochures. And new construction under warranty review: if the install voids the shingle warranty and your roof is young, the risk trade is wrong. The alternative that pencils for many homes: a $300 gutter-cleaning service contract twice a year plus $50 downspout strainers, keeping the $1,500 in the index fund. Run your actual tree cover and cleaning quotes here — the 5.7-year default payback assumes real debris pressure.',
+      },
+      {
+        q: 'Do guards really protect the house, or just the gutters?',
+        a: 'The house is the point — gutters exist to move water away from the foundation, and a clogged gutter is a waterfall aimed at your basement wall. The damage chain: overflow saturates soil at the footing, hydrostatic pressure pushes water through the wall, and you are shopping for the waterproofing this site prices at $5,000+ — FEMA puts even minor basement water damage at $10,000–25,000. Overflow also rots fascia and soffit ($1,000–3,000 to repair), stains siding, and in winter feeds ice dams that push water under shingles. So guards carry a hidden option value beyond cleaning savings: they are cheap insurance on the most common water-intrusion path. That said, guards do not replace the fundamentals — downspouts still need to discharge 6–10 feet from the foundation, and grade still slopes away. Think of it as a system: guards keep the gutters flowing, extensions move the water, grading sheds it. Price each layer separately and the cheap ones first.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
