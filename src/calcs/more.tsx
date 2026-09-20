@@ -7875,6 +7875,112 @@ export function MobileMechanicCalc() {
   )
 }
 
+// LANDSCAPE INSTALL JOB COSTING — node-verified defaults: 12 yds mulch @ $38 + plants $380 + edging $120 = $956 materials; 2 crew × 6h × $22 = $264 labor; equipment $60; 15% overhead on direct = $192 → $1,472 true cost. Sell at materials × 1.2 + 12 man-hrs × $60 = $1,867 → $395 profit (21.2%). Installs run half the margin of maintenance — the book must know which it's selling.
+export function LandscapeInstallCalc() {
+  const [mats, setMats] = useNumber(956)
+  const [crew, setCrew] = useNumber(2)
+  const [hrs, setHrs] = useNumber(6)
+  const [crewRate, setCrewRate] = useNumber(22)
+  const [equip, setEquip] = useNumber(60)
+  const [ohPct, setOhPct] = useNumber(15)
+  const [markup, setMarkup] = useNumber(1.2)
+  const [billRate, setBillRate] = useNumber(60)
+
+  const r = useMemo(() => {
+    const labor = crew * hrs * crewRate
+    const direct = mats + labor + equip
+    const oh = (direct * ohPct) / 100
+    const cost = direct + oh
+    const sell = mats * markup + crew * hrs * billRate
+    const profit = sell - cost
+    const margin = sell > 0 ? (profit / sell) * 100 : 0
+    const manHrRate = crew * hrs > 0 ? profit / (crew * hrs) : 0
+    return { labor, direct, oh, cost, sell, profit, margin, manHrRate }
+  }, [mats, crew, hrs, crewRate, equip, ohPct, markup, billRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Materials cost" value={mats} onChange={setMats} prefix="$" step="25" />
+          <Field label="Crew size" value={crew} onChange={setCrew} step="1" />
+          <Field label="Hours on site" value={hrs} onChange={setHrs} step="0.5" />
+          <Field label="Crew cost" value={crewRate} onChange={setCrewRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Equipment" value={equip} onChange={setEquip} prefix="$" step="10" />
+          <Field label="Overhead" value={ohPct} onChange={setOhPct} suffix="%" step="1" />
+          <Field label="Materials markup" value={markup} onChange={setMarkup} suffix="×" step="0.05" />
+          <Field label="Billed man-hr rate" value={billRate} onChange={setBillRate} prefix="$" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="True job cost" value={usd(Math.round(r.cost))} />
+          <Result label="Sell price" value={usd(Math.round(r.sell))} />
+          <Result label="Profit" value={`${usd(Math.round(r.profit))} (${num(r.margin, 0)}%)`} big />
+          <Result label="Profit per man-hr" value={usd(Math.round(r.manHrRate))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.profit > 0
+            ? `Materials at ${num(markup, 2)}× plus ${usd(billRate)}/man-hr prices this at ${usd(Math.round(r.sell))} against ${usd(Math.round(r.cost))} true cost — ${usd(Math.round(r.profit))} profit, ${num(r.margin, 1)}%. Install margins run thin; the maintenance contract you attach is where the account pays for years.`
+            : `At ${usd(Math.round(r.sell))} this job loses ${usd(Math.abs(Math.round(r.profit)))} — raise the markup, raise the man-hour rate, or walk. Busy and broke is the landscaper's classic failure mode.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: true cost = materials + crew hours × cost rate + equipment + overhead share; sell = materials × markup + man-hours × billed rate. The landscape-pricing rules that hold: dual-rate pricing (markup on materials AND a billed man-hour rate) is the industry standard because it self-adjusts — plant-heavy jobs earn on materials, labor-heavy jobs (pavers, walls, drainage) earn on hours; a flat materials-only markup underprices the hardscape jobs where labor dominates. The install-vs-maintenance truth: installs run 15–25% net while weekly maintenance runs 40–50% — smart operators price installs to WIN the maintenance contract (the annuity), not to get rich on the job itself; every install quote should end with the maintenance agreement attached. The estimating traps: underestimated hours (multiply your guess by 1.25 for soil surprises, access problems, and "while you're here" scope creep — or track actuals per task type for a season and stop guessing), disposal and delivery fees forgotten at quote time, and plant warranty risk (1-year replacement guarantees cost 3–5% of plant revenue — price it in or stop offering it). Hardscape jobs (pavers, retaining walls) need sub-markups too: base material, geotextile, and the mini-ex rental are real lines, and engineer-stamped walls over 4 feet are a permit job, not a handshake. Season scheduling: spring demand lets the book price at full rate; late-fall is when install crews go hungry — price September work to keep the crew, not to match March. Estimates vs quotes: fixed quotes only after a site visit — ballpark-by-photo quotes on installs are how you buy yourself a retaining-wall problem. Estimate — your supplier price lists, crew actuals, and disposal-ticket history govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// TREE SERVICE PRICING — node-verified defaults: 60-ft oak removal $1,800 + stump grinding $300 = $2,100 ticket. Cost: 3-person crew × 7h × $25 = $525 + chipper/truck day $400 + insurance/overhead day $350 + disposal $80 = $1,355 → $745 profit (35.5%). Crew day-cost runs $182/hr — tree work is priced by risk and access, not by inches.
+export function TreeServiceCalc() {
+  const [price, setPrice] = useNumber(1800)
+  const [stump, setStump] = useNumber(300)
+  const [crewSize, setCrewSize] = useNumber(3)
+  const [hrs, setHrs] = useNumber(7)
+  const [crewRate, setCrewRate] = useNumber(25)
+  const [chipperDay, setChipperDay] = useNumber(400)
+  const [ohDay, setOhDay] = useNumber(350)
+  const [disposal, setDisposal] = useNumber(80)
+
+  const r = useMemo(() => {
+    const labor = crewSize * hrs * crewRate
+    const cost = labor + chipperDay + ohDay + disposal
+    const rev = price + stump
+    const profit = rev - cost
+    const margin = rev > 0 ? (profit / rev) * 100 : 0
+    const dayCost = hrs > 0 ? (labor + chipperDay + ohDay) / hrs : 0
+    return { labor, cost, rev, profit, margin, dayCost }
+  }, [price, stump, crewSize, hrs, crewRate, chipperDay, ohDay, disposal])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Removal price" value={price} onChange={setPrice} prefix="$" step="100" />
+          <Field label="Stump grind add-on" value={stump} onChange={setStump} prefix="$" step="25" />
+          <Field label="Crew size" value={crewSize} onChange={setCrewSize} step="1" />
+          <Field label="Hours on job" value={hrs} onChange={setHrs} step="0.5" />
+          <Field label="Crew rate" value={crewRate} onChange={setCrewRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Chipper/truck day" value={chipperDay} onChange={setChipperDay} prefix="$" step="25" />
+          <Field label="Insurance/OH day" value={ohDay} onChange={setOhDay} prefix="$" step="25" />
+          <Field label="Disposal" value={disposal} onChange={setDisposal} prefix="$" step="10" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Ticket total" value={usd(Math.round(r.rev))} />
+          <Result label="True cost" value={usd(Math.round(r.cost))} />
+          <Result label="Profit" value={`${usd(Math.round(r.profit))} (${num(r.margin, 0)}%)`} big />
+          <Result label="Crew day-cost" value={`${usd(Math.round(r.dayCost))}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The ${usd(price)} removal plus ${usd(stump)} stump grind is a ${usd(Math.round(r.rev))} ticket against ${usd(Math.round(r.cost))} of crew, chipper, insurance, and tipping fees — ${usd(Math.round(r.profit))} profit. The crew day burns ${usd(Math.round(r.dayCost))}/hr whether the saw runs or not; the quote must be right before the rope goes up.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: cost = crew hours × rate + chipper/truck day rate + insurance/overhead day rate + disposal tipping fees; profit = removal price + stump add-on − cost. The tree-pricing rules the canopy teaches: price by RISK AND ACCESS, not height — a 60-ft oak in an open field is a half-day fell-and-chip; the same tree leaning over a roof with power lines is a technical rigging job at 2–3× the price, and the quote must name why (customers compare your $2,400 rigging quote against a neighbor's $800 open-field price and need the difference explained in one sentence). Stump grinding is the add-on that prints: $3–5 per inch of diameter, 15–30 minutes of machine time — always quote it as a visible line item, never free, and the attachment rate runs high because nobody wants the stump. The insurance line is not overhead decoration: tree service carries some of the highest workers-comp rates in any trade (falls, struck-by, chainsaw), and an uninsured "tree guy" undercutting you by 40% is one accident from bankruptcy — bid against him by SHOWING your certificate, and teach customers to ask for it. Equipment math: the chipper and truck run $350–500/day all-in (payment, fuel, knives, maintenance) whether they chip or idle — schedule jobs to fill the day, and two half-day removals beat one full-day at the same ticket. Crane-assisted removals ($3,000–10,000+) are a different business: sub the crane, mark it up 10–15%, and your crew's hours drop by half. Emergency storm work: after-hours and storm-response rates at 1.5–2× are earned (the risk is real and the demand is now), but publish the policy BEFORE the storm or the reviews will call it gouging. Cleanup is the silent margin-eater: "haul everything" vs "leave the firewood" vs "chip on site and leave mulch" are three different prices — name the cleanup level in the quote. Estimate — your comp premium, equipment payments, and tipping-fee receipts govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // HVAC FLAT-RATE PRICING — node-verified defaults: capacitor repair: $15 part, 0.75h × $32 tech + $18 van + $25 overhead = $82 cost against the $285 book price → $203 profit (71.2%), $271/hr effective. 3-ton changeout: $2,800 equipment + $400 materials + 12 tech-hrs ($384) + $600 overhead = $4,184 against $5,800 → $1,616 (27.9%). Repairs carry the margin; installs carry the revenue; the flat-rate book is what keeps the two honest.
 export function HvacFlatRateCalc() {
   const [part, setPart] = useNumber(15)
@@ -14507,6 +14613,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'landscape-install-costing-calculator': LandscapeInstallCalc,
+  'tree-service-pricing-calculator': TreeServiceCalc,
   'hvac-flat-rate-pricing-calculator': HvacFlatRateCalc,
   'plumbing-flat-rate-pricing-calculator': PlumbingFlatRateCalc,
   'electrician-apprentice-vs-college-calculator': ElectricianPathCalc,

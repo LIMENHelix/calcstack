@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'landscape-install-costing-calculator',
+    title: 'Landscape Install Job Costing Calculator — Materials Markup, Man-Hour Rate, True Margin',
+    shortTitle: 'Landscape Install Costing',
+    category: 'Trades & Engineering',
+    description:
+      'Cost landscaping install jobs honestly: materials markup plus billed man-hour rate against crew cost, equipment, and overhead — see true margin and profit per man-hour before you quote.',
+    tagline: 'Materials × 1.2 plus $60/man-hr prices the job at $1,867 against $1,472 true cost — 21% is honest; busy-and-broke is the failure mode.',
+    intro:
+      'Landscape installs are where good maintenance companies go broke: the job looks big, the materials look marked up, and the crew hours run long until the margin is gone. The honest structure is dual-rate — materials at 1.15–1.25× plus a billed man-hour rate of $55–65 — because plant-heavy jobs earn on materials and labor-heavy jobs earn on hours. This calculator costs any install against your real crew rates and overhead, then shows the margin and the per-man-hour truth before the quote goes out.',
+    howItWorks: [
+      'Enter total materials cost from your supplier quote — plants, mulch, stone, edging.',
+      'Enter crew size, hours on site, and your loaded crew cost per hour.',
+      'Enter equipment day cost and your overhead percentage.',
+      'Read the true job cost — then set markup and billed man-hour rate.',
+      'Read sell price, margin, and profit per man-hour. Below 15%, walk or re-price.',
+    ],
+    faq: [
+      {
+        q: 'How do you price landscaping jobs?',
+        a: 'Dual-rate pricing is the industry standard for good reason: materials carry a markup (1.15–1.25× covers sourcing, delivery handling, and warranty risk) AND labor bills at a man-hour rate ($55–65 depending on region and work type). The structure self-adjusts — a plant-heavy job earns on materials, a paver or drainage job earns on hours, and a flat materials-only markup systematically underprices labor-dominated hardscape work. The estimating traps that eat the margin: underestimated hours (multiply your gut by 1.25 for soil surprises and access problems, or track actuals per task type for a season and quote from data), forgotten disposal and delivery fees, and unpriced plant warranty (a 1-year replacement guarantee costs 3–5% of plant revenue — price it in or stop offering it). Fixed quotes only after a site visit: ballpark-by-photo pricing on installs is how you buy yourself a retaining-wall problem.',
+      },
+      {
+        q: 'What margin should landscaping jobs make?',
+        a: 'Installs net 15–25% when priced honestly — the example job lands at 21% — while weekly maintenance contracts net 40–50%. That gap is the strategic insight: installs are the acquisition cost for the maintenance annuity, not the profit center. Smart operators price installs to WIN the multi-year maintenance relationship (every install quote should end with the maintenance agreement attached) rather than to maximize the single job. The portfolio view: maintenance is the annuity, installs are the growth engine and cash-flow spikes, snow/seasonal work fills the trough. The walk-away rule: below 15% projected margin on an install, re-price or pass — volume at thin margin is just faster burnout with more liability. Season pricing: spring demand lets the book run at full rate; late-fall install work can price tighter to keep the crew intact through winter, because rehiring in March costs more than a thin October.',
+      },
+      {
+        q: 'Should landscapers charge for estimates?',
+        a: 'For design-build and hardscape work, yes — a consultation fee ($75–150, credited toward the job) filters the quote-collectors and pays for the site visit that a real estimate requires. For straightforward maintenance quotes and simple installs, free quotes remain the market norm. The deeper protection is quote discipline: every quote names the scope line by line (plant list with sizes, mulch depth, edging type, disposal level), states the exclusions (rocky soil, irrigation rerouting, unmarked utilities), and expires in 30 days because supplier prices move. "While you\'re here" scope creep is where install margins die — the change order is a normal document, not an awkward conversation: "Happy to add that — here\'s the $240 change order, sign and we\'ll fold it in Thursday." The companies that stay profitable treat the quote as a contract draft; the ones that treat it as a vibe end the season busy and broke, which is the classic landscaper failure mode this calculator exists to prevent.',
+      },
+    ],
+  },
+  {
+    slug: 'tree-service-pricing-calculator',
+    title: 'Tree Service Pricing Calculator — Removal Cost, Crew Day-Rate, Stump Add-Ons, True Margin',
+    shortTitle: 'Tree Service Pricing',
+    category: 'Trades & Engineering',
+    description:
+      'Price tree removals against real costs: crew hours, chipper day-rate, insurance, and tipping fees — with the stump-grinding add-on and the risk-and-access logic that sets the quote.',
+    tagline: 'The $2,100 removal-and-grind ticket costs $1,355 to deliver — the crew day burns $182/hr whether the saw runs or not.',
+    intro:
+      'Tree work is priced by risk and access, not inches — a 60-foot oak in an open field is a half-day fell-and-chip, and the same tree over a roofline is a technical rigging job at triple the price. Behind every quote, the meter never stops: a three-person crew with chipper and truck burns $182 an hour all-in before disposal. This calculator costs the job against crew time, equipment day-rates, insurance, and tipping fees, so the $2,100 ticket\'s $745 profit is verified before the rope goes up.',
+    howItWorks: [
+      'Enter the removal price and stump-grinding add-on you plan to quote.',
+      'Enter crew size, hours on job, and loaded crew rate.',
+      'Enter chipper/truck day cost, insurance-overhead day rate, and disposal fees.',
+      'Read true cost, profit, and margin on the ticket.',
+      'Read the crew day-cost per hour — the meter your quote must beat.',
+    ],
+    faq: [
+      {
+        q: 'How do tree services price removals?',
+        a: 'By risk and access, not by height — the open-field 60-footer is a half-day fell-and-chip at one price; the same tree leaning over a roof with service lines is a technical rigging job at 2–3×, and the quote should say why in one sentence because customers WILL compare your rigging price against a neighbor\'s open-field price. The cost stack behind every quote: crew hours at loaded rate, chipper and truck day-rate ($350–500 all-in whether running or idling), insurance and overhead day-rate (tree service carries some of the highest workers-comp rates in any trade), and disposal tipping fees. Stump grinding is the add-on that prints: $3–5 per inch of diameter for 15–30 minutes of machine time — quote it as a visible line item, never free. Cleanup level is a pricing variable: haul-everything, leave-the-firewood, and chip-on-site-leave-mulch are three different prices, and the quote must name which one it is.',
+      },
+      {
+        q: 'How do I compete against uninsured tree guys?',
+        a: 'By making insurance the customer\'s question, not your problem. The uninsured operator undercuts you 40% because he is not carrying workers-comp (tree service rates are among the highest in any trade — falls, struck-by, chainsaw) or liability coverage — and when his climber falls through the customer\'s roof, the customer\'s homeowner policy and lawyers discover the homeowner can be treated as the employer. Your move: lead with the certificate — "I\'ll email our liability and workers-comp certificates before we start; any tree company you consider should do the same" — which reframes the price gap as a risk gap without trash-talking anyone. Teach the two-line verification: certificates come from the insurer, not the contractor\'s printer, and the customer can call to confirm the policy is active. Then let the math finish the argument: your overhead day-rate includes the premium, and this calculator shows exactly why legitimate operations cannot match a $400 quote on a $1,355-cost job — and why the customer does not want the guy who can.',
+      },
+      {
+        q: 'When do crane removals and storm premiums make sense?',
+        a: 'Crane-assisted removal is a different business model on the same license: for large technical removals ($3,000–10,000+), subcontracting the crane ($1,500–3,000/day with operator) cuts your crew hours by half or more while removing the highest-risk climbing — mark the crane up 10–15%, and the job often nets MORE profit at lower risk than the rigging version. Quote both ways on borderline trees and let the calculator decide. Storm work: after-hours and storm-response premiums of 1.5–2× are earned — the risk is real, the demand is now, and the mobilization is immediate — but publish the policy BEFORE the storm or the reviews will call it gouging regardless of the math. The storm-chasing discipline: work your existing customer list first (they become referral engines), get signed work authorizations with pricing on every emergency job (verbal storm agreements end in disputes), and never leave a paying local base for a distant storm longer than the backlog lasts — the customers you abandon in October are the competitor\'s maintenance accounts in spring.',
+      },
+    ],
+  },
+  {
     slug: 'hvac-flat-rate-pricing-calculator',
     title: 'HVAC Flat-Rate Pricing Calculator — Repair Margins, Install Margins, and the Book',
     shortTitle: 'HVAC Flat-Rate Pricing',
