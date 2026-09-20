@@ -54,15 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          330 calculators and counting. Newest: the career money suite — startup
-          equity priced by probability, grad school and certification ROI with the
-          hidden costs counted, the job-hop premium vs the loyalty tax, your
-          walk-away number before you negotiate, and the true cost of an unpaid
-          internship.
+          340 calculators and counting. Newest: the trade business suite — labor
+          burden per billable hour, bottom-up job costing, equipment own-vs-rent
+          breakeven, overtime vs hiring, warranty reserves, bid win-rate economics,
+          maintenance agreement pricing, seasonal cash reserves, and service-call
+          fees priced from real dispatch cost.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['startup-offer-calculator', 'grad-school-roi-calculator', 'certification-roi-calculator', 'job-hop-calculator', 'walk-away-number-calculator', 'unpaid-internship-calculator'].includes(c.slug),
+            ['labor-burden-calculator', 'job-costing-calculator', 'overtime-vs-hire-calculator', 'bid-win-rate-calculator', 'seasonal-cash-reserve-calculator', 'customer-ltv-cac-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

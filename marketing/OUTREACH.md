@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 330 calculators live (556 indexed pages). See LAUNCH.md for the domain-day
+**Status: 340 calculators live (566 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -447,3 +447,40 @@ its own audience, or the whole set as "the decisions nobody prices."
 - **Backlist ride-alongs** — salary-offer comparison, RSU vest tax, bonus
   tax, 1099-vs-W2, freelance rate for the same career audiences. The careers
   cluster now interlinks offer → negotiate → equity → switch → educate.
+
+## Wave 59 — Trade business operations suite (#331–#340, milestone wave)
+
+Milestone wave: 340 calculators live. Ten calculators that run a trade business
+end to end — pitch as "the back office nobody teaches" to contractor audiences.
+Audiences: contractor podcasts and YouTube (trade-business coaches), HVAC /
+plumbing / electrical trade associations' newsletters, r/Construction and
+r/HVAC professionals threads, ServiceTitan/Housecall Pro user communities,
+trade-school instructor resource pages, equipment-dealer content marketing.
+
+- **Labor burden (#331)** — the foundation pitch: "$25/hr tech costs $37.32 per
+  billable hour" plus the margin-vs-markup trap ($46.65 vs $44.79). Every
+  trade-business coach teaches this; nobody's calculator prices it line by line.
+- **Job costing (#332)** — the full bid stack with overhead allocation. Pair
+  with #331 as the two-part series pitch.
+- **Equipment hourly cost (#333)** — own vs rent by utilization; the 516-hr
+  breakeven frame is instantly quotable. Pitch equipment-dealer blogs.
+- **Overtime vs hire (#334)** — chronic OT priced as the loan it is; 5.4-week
+  hire payback. Staffing-agency content and trade-hiring newsletters.
+- **Warranty reserve (#335)** — callbacks as % of revenue with a 2σ buffer;
+  "the callback rate is a quality metric with a dollar sign."
+- **Bid win rate (#336)** — the pipeline breakeven: 18.2% win rate or the
+  estimating loses money. The qualification-first fix is the correction content.
+- **Maintenance agreement (#337)** — the $199 agreement nets 7.5%; floor $230.
+  HVAC business coaches will cite this one.
+- **Seasonal cash reserve (#338)** — winter deficit sized and funded in season;
+  "banks lend umbrellas in sunshine."
+- **Service call fee (#339)** — dispatch true cost $61 → publish $89 credited;
+  the fee-as-filter argument. High engagement in trade communities.
+- **LTV vs CAC (#340)** — margin-dollar LTV and the lost-bid CAC correction;
+  the 3:1 floor and max sustainable CAC. Crossover to marketing newsletters.
+- **Backlist ride-alongs** — markup-margin, bid sheet, snow-removal bid, lawn
+  pricing, prime cost for the same audiences. The trades category now covers
+  materials, estimating, staffing, equipment, cash flow, and growth.
+
+Timing: spring hiring season (Mar–Apr) for #334/#331; pre-winter (Oct–Nov) for
+#338; #337 pitches during shoulder seasons when agreements are sold.

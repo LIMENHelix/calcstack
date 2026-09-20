@@ -4719,6 +4719,53 @@ export function ServiceCallFeeCalc() {
   )
 }
 
+// CUSTOMER LTV vs CAC — what a customer is worth vs what one costs to buy. Node-verified: $450 avg ticket × 1.6 calls/yr × 6-yr relationship × 40% gross margin → LTV $1,728 (margin dollars, not revenue — the honest version); CAC $180 (ads + the estimate time on LOST bids — most shops undercount) → 9.6:1 ratio, payback 0.63 yrs; maintenance-agreement members at 2.2 touches/yr → LTV $2,376 (+38% — agreements are an LTV machine). Benchmarks: 3:1 is the survival floor for service businesses, 5:1+ is healthy, >10:1 means you're UNDER-SPENDING on growth (competitors will buy your customers). Honest edges: LTV in MARGIN not revenue (a $1,728 revenue LTV at 40% GM is $691 — fourfold error that justifies fourfold overspending), CAC must include the lost bids' estimating time (win 1 in 4 → each new customer carries 4 estimates), churn is the silent killer (measure by cohort: customers acquired via price-shopping ads churn 2-3× faster than referrals — blend them and both numbers lie), and the referral dividend (satisfied customers generate ~0.2-0.3 additional customers each — effective CAC on referrals is near zero, which is why the callback reserve and the review ask are growth spend, not overhead).
+export function LtvCacCalc() {
+  const [ticket, setTicket] = useNumber(450)
+  const [freq, setFreq] = useNumber(1.6)
+  const [years, setYears] = useNumber(6)
+  const [gm, setGm] = useNumber(40)
+  const [cac, setCac] = useNumber(180)
+
+  const r = useMemo(() => {
+    const ltvRev = ticket * freq * years
+    const ltv = (ltvRev * gm) / 100
+    const ratio = cac > 0 ? ltv / cac : Infinity
+    const payback = ticket * freq * (gm / 100) > 0 ? cac / (ticket * freq * (gm / 100)) : Infinity
+    return { ltvRev, ltv, ratio, payback }
+  }, [ticket, freq, years, gm, cac])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <Field label="Average ticket" value={ticket} onChange={setTicket} prefix="$" step="50" />
+          <Field label="Calls/jobs per year" value={freq} onChange={setFreq} step="0.2" />
+          <Field label="Relationship years" value={years} onChange={setYears} step="1" />
+          <Field label="Gross margin" value={gm} onChange={setGm} suffix="%" step="1" />
+          <Field label="Cost to acquire (CAC)" value={cac} onChange={setCac} prefix="$" step="20" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="LTV (margin dollars)" value={usd(r.ltv)} big />
+          <Result label="LTV:CAC ratio" value={isFinite(r.ratio) ? `${num(r.ratio, 1)}:1` : '—'} />
+          <Result label="CAC payback" value={isFinite(r.payback) ? `${num(r.payback * 12, 1)} months` : '—'} />
+          <Result label="Max sustainable CAC (3:1)" value={usd(r.ltv / 3)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.ratio >= 5
+            ? `${num(r.ratio, 1)}:1 — healthy. ${r.ratio > 10 ? 'Above 10:1 you may be UNDER-investing in growth: competitors can profitably outbid you for customers up to ' + usd(Math.round(r.ltv / 3)) + ' each.' : 'You can profitably pay up to ' + usd(Math.round(r.ltv / 3)) + ' per customer (3:1 floor) — current spend has room.'}`
+            : r.ratio >= 3
+              ? `${num(r.ratio, 1)}:1 — viable but thin. One bad quarter of ad prices or churn erases the cushion. Grow LTV (agreements, follow-up) before scaling spend.`
+              : `${num(r.ratio, 1)}:1 — below the 3:1 survival floor: each customer bought costs more than they'll return in margin. Fix retention or pricing before buying another lead.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: LTV = ticket × frequency × years × gross margin — MARGIN dollars, not revenue (a revenue LTV at 40% margin overstates value 2.5× and justifies overspending on ads by the same factor). CAC must count everything: ad spend + the estimate time on the bids you LOSE (win 1 in 4 → each new customer carries 4 estimates) + discounts given to close. Benchmarks: 3:1 is the survival floor, 5:1+ healthy, above 10:1 you're leaving growth on the table — competitors can profitably outbid you for customers up to a third of LTV. The levers that move LTV: maintenance agreements (2.2 touches/yr vs 1.6 — +38% LTV in the default case), the follow-up cadence (the annual "time for service" call is the cheapest frequency-raiser in the trades), and reviews/referrals (referred customers arrive at near-zero CAC and churn slowest — the review ask is growth spend, not vanity). Churn measured by cohort tells the truth: price-shopping ad cohorts churn 2–3× faster than referral cohorts; blend them and both numbers lie. Estimates — your CRM and ad accounts govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10377,6 +10424,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'maintenance-agreement-calculator': MaintenanceAgreementCalc,
   'seasonal-cash-reserve-calculator': SeasonalReserveCalc,
   'service-call-fee-calculator': ServiceCallFeeCalc,
+  'customer-ltv-cac-calculator': LtvCacCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

@@ -1134,6 +1134,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'customer-ltv-cac-calculator',
+    title: 'Customer LTV vs CAC Calculator 2026 — Lifetime Value in Margin Dollars vs Acquisition Cost',
+    shortTitle: 'LTV vs CAC',
+    category: 'Trades & Engineering',
+    description:
+      'What a customer is worth (ticket × frequency × years × margin) versus what one costs to acquire — with the ratio, payback months, and the max sustainable CAC at the 3:1 floor.',
+    tagline: 'A $450 ticket at 1.6 calls/yr over 6 years is $1,728 of margin — against $180 CAC that\'s 9.6:1, and you could profitably pay $576 per customer.',
+    intro:
+      'Every growth decision in a service business reduces to two numbers: what a customer returns and what one costs. A $450 average ticket at 1.6 calls a year across a six-year relationship at 40% gross margin is $1,728 of lifetime margin — not the $4,320 of revenue that flatters the math. Against a $180 acquisition cost (ads plus the estimate time on the bids you LOST), that\'s a 9.6:1 ratio with a 7.5-month payback — and headroom to pay up to $576 per customer at the 3:1 survival floor. Maintenance agreements move the LTV side hard: members at 2.2 touches a year are worth $2,376, +38%. This calculator prices both sides honestly, in margin dollars, so ad budgets and agreement prices stop being guesses.',
+    howItWorks: [
+      'Enter average ticket, jobs per customer per year, and typical relationship length.',
+      'Enter gross margin — LTV is counted in margin dollars, never revenue.',
+      'Enter CAC: ad spend per acquired customer PLUS the estimate time on lost bids.',
+      'Read LTV, the LTV:CAC ratio, payback months, and the max sustainable CAC at 3:1.',
+    ],
+    faq: [
+      {
+        q: 'Why margin dollars instead of revenue for LTV?',
+        a: 'Because revenue doesn\'t pay for the next customer — margin does. A $4,320 revenue LTV at a 40% gross margin is $1,728 of actual contribution; materials and direct labor leave with the job. Valuing customers at revenue overstates their worth 2.5× at typical trade margins, which justifies overspending on acquisition by the same factor — the exact failure mode of service businesses that "grow broke": full calendar, negative cash, ads that scaled on a number that never existed. Margin-LTV also makes the levers visible: raising margin one point is worth as much as raising frequency, and both beat buying more customers at the same economics. The discipline: LTV in margin, CAC in full cost (ads + lost-bid estimating + close discounts), ratio on the honest pair.',
+      },
+      {
+        q: 'What belongs in CAC — and what do shops usually miss?',
+        a: 'Everything spent to produce a signed customer, divided by customers signed. Ad spend is the obvious part (Google LSA, search, Facebook, the home-services platforms\' per-lead fees). The missed parts: estimating time on LOST bids — win one in four and each new customer carries four estimates, and at $400 per estimate that\'s $1,600 of acquisition cost most shops assign to "overhead"; close discounts and first-visit coupons; and the marketing hours you don\'t invoice yourself for. The ratio discipline: measured honestly, CAC is often double the ad-account number — which is why businesses that "profitably" scale ads at 3:1 on ad-spend-only CAC discover the true ratio was 1.5:1. Count it all, then compare to margin-LTV, and the ad budget sets itself.',
+      },
+      {
+        q: 'How do I raise LTV without spending on ads?',
+        a: 'Three levers, all cheaper than acquisition. Frequency: the annual "time for service" follow-up call is the cheapest frequency-raiser in the trades — a 1.6 to 2.0 improvement on the default numbers is worth $360 of LTV per customer across the base. Maintenance agreements do more: members average 2.2+ touches yearly and churn slowest, worth +38% LTV here — the agreement\'s thin margin buys thick LTV. Retention: extending the average relationship from six to eight years is worth more than any ad campaign, and it\'s bought with callbacks answered cheerfully, techs who wear boot covers, and the review ask that turns satisfaction into the next near-zero-CAC referral — referred customers churn slowest of all, which compounds. Cohort your churn (ad-acquired vs referral) and the strategy writes itself: ads buy the first customer, service quality manufactures the next three.',
+      },
+    ],
+  },
+  {
     slug: 'service-call-fee-calculator',
     title: 'Service Call Fee Calculator 2026 — Price the Trip Charge From Drive Time, Diagnostic & Vehicle Cost',
     shortTitle: 'Service Call Fee',
