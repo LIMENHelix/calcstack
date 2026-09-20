@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 448 calculators live (676 indexed pages). Domain live at calcstack.app;
+**Status: 470 calculators live (698 indexed pages). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -858,3 +858,20 @@ Unite), staffing-industry operators (ASA, r/recruiting), strength and
 endurance athletes (r/powerlifting, r/weightlifting, r/running,
 r/triathlon), and landscapers/home-service operators entering holiday installs
 (r/landscaping, r/smallbusiness, Christmas-light installer Facebook groups).
+
+## Wave 71 — The search-classics sweep (#449–#470, milestone wave)
+
+Milestone wave: 470 calculators live (698 indexed pages). Twenty-two tools in
+three clusters: seasonal & e-commerce seller economics (photo booths, FBA
+holiday fees, Etsy/eBay/Shopify fee truth), the money classics (amortization
+schedule, square footage, DTI, down payment, CAGR, due date, timesheet,
+biweekly mortgage), and the keyword gap sweep — fraction, simple interest,
+average/mean, 15-vs-30 mortgage, ovulation, and unit converter. The classics
+suite closes every major high-volume calculator query that had zero coverage.
+Audiences: e-commerce sellers (r/Etsy, r/FulfillmentByAmazon, r/eBaySeller),
+students and teachers (r/HomeworkHelp, r/Teachers — fraction + average are
+homework staples), homebuyers (r/FirstTimeHomeBuyer, r/Mortgages),
+trying-to-conceive communities (r/TryingForABaby, r/ovulation), and general
+"how do I convert X" search traffic. The unit converter and average calculator
+are the most linkable assets in this wave — pitch to homework-help blogs and
+teacher resource pages.

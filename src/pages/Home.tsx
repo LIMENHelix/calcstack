@@ -55,15 +55,14 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          {CALCULATORS.length} calculators and counting. Newest: the career-moves and
-          peak-performance suite — MBA and bootcamp ROI, sabbatical runway, locum tenens
-          break-even day rates, open-house expected value, online coaching economics,
-          staffing-agency markup vs margin, Bompa taper planning, RPE-to-load conversions,
-          and Christmas-light season pricing.
+          {CALCULATORS.length} calculators and counting. Newest: the search-classics suite —
+          fraction arithmetic with mixed numbers, simple vs compound interest, mean / median /
+          mode with weighted averages, 15-vs-30-year mortgage trade-offs, ovulation and fertile
+          windows, and a six-category unit converter with exact factors.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['mba-roi-calculator', 'bootcamp-roi-calculator', 'locum-tenens-rate-calculator', 'open-house-roi-calculator', 'online-coaching-pricing-calculator', 'staffing-agency-markup-calculator'].includes(c.slug),
+            ['fraction-calculator', 'simple-interest-calculator', 'average-calculator', '15-vs-30-year-mortgage-calculator', 'ovulation-calculator', 'unit-converter'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
