@@ -54,15 +54,14 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          290 calculators and counting. Newest: the Social Security claiming
-          suite — the delay-as-annuity bridge math, the earnings test with the
-          FRA recalculation that pays you back, survivor benefits with the last
-          legal claim-switch, the spousal deemed-filing trap, the Fairness Act
-          restoral, and your PIA from raw earnings.
+          295 calculators and counting. Newest: the business equipment write-off
+          suite — §179 + 100% bonus layered right, the MACRS year-by-year
+          schedules, the vehicle GVWR three-path split, lease-vs-buy after tax,
+          the Q4 mid-quarter trap, and the 14-day Augusta Rule.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['social-security-bridge-calculator', 'social-security-earnings-test-calculator', 'survivor-benefit-calculator', 'spousal-social-security-calculator', 'social-security-fairness-act-calculator', 'social-security-pia-calculator'].includes(c.slug),
+            ['section-179-calculator', 'macrs-depreciation-calculator', 'business-vehicle-writeoff-calculator', 'equipment-lease-vs-buy-calculator', 'q4-equipment-timing-calculator', 'augusta-rule-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

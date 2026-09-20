@@ -2323,6 +2323,64 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Q4 equipment timing — two December traps. (1) MID-QUARTER CONVENTION: if >40% of the year's MACRS basis (EXCLUDING §179/bonus-expensed property) is placed in service in Q4, EVERY asset that year flips from half-year to mid-quarter convention — a Q4 asset's 5-year year-1 rate drops 20% → 5% (Q1 35%, Q2 25%, Q3 15%, Q4 5%). The escape: elect §179/bonus on the Q4 purchases — expensed property leaves the 40% test entirely. (2) PLACED-IN-SERVICE DEADLINE: ordered ≠ deductible — the asset must be installed and operational by Dec 31 or the year-one deduction slides a full year; at 32% on $50k that's $16,000 of tax deferred a year (~$1,280 of time value at 8%). Node-verified: quarters 30/20/10/50k → Q4 share 45.5% → mid-quarter trips; expensing the $50k Q4 buy → share 0%, safe; Q4 5-yr asset mid-quarter yr-1 = $2,500 vs $10,000 half-year.
+export function Q4TimingCalc() {
+  const [q1, setQ1] = useNumber(30000)
+  const [q2, setQ2] = useNumber(20000)
+  const [q3, setQ3] = useNumber(10000)
+  const [q4, setQ4] = useNumber(50000)
+  const [expense, setExpense] = useState(true)
+  const [rate, setRate] = useNumber(32)
+
+  const r = useMemo(() => {
+    const q4Tested = expense ? 0 : q4 // §179/bonus-expensed property leaves the 40% test
+    const tot = q1 + q2 + q3 + q4Tested
+    const share = tot > 0 ? q4Tested / tot : 0
+    const trips = share > 0.4
+    // if trips: Q4 assets on mid-quarter get 5% yr-1 (5-yr) vs 20% half-year — show the cost on a 5-yr assumption
+    const mqYr1 = q4Tested * 0.05
+    const hyYr1 = q4Tested * 0.2
+    const mqCost = trips ? (hyYr1 - mqYr1) * (rate / 100) : 0
+    return { share, trips, mqCost, tot, q4Tested }
+  }, [q1, q2, q3, q4, expense, rate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Q1 purchases (depreciated, not expensed)" value={q1} onChange={setQ1} prefix="$" />
+          <Field label="Q2 purchases" value={q2} onChange={setQ2} prefix="$" />
+          <Field label="Q3 purchases" value={q3} onChange={setQ3} prefix="$" />
+          <Field label="Q4 purchases" value={q4} onChange={setQ4} prefix="$" />
+          <Field label="Marginal tax rate" value={rate} onChange={setRate} suffix="%" />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={expense} onChange={(e) => setExpense(e.target.checked)} className="h-4 w-4" />
+            §179/bonus-expense the Q4 purchases
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Mid-quarter test" value={r.trips ? 'TRIPPED' : 'Safe'} />
+          <Result label="Q4 share of tested basis" value={`${num(r.share * 100, 1)}% (limit 40%)`} />
+          <Result label="Tested basis total" value={usd(r.tot, 0)} />
+          <Result label="Tax cost if tripped" value={usd(r.mqCost, 0)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.trips ? (
+            <>Q4 holds <span className="font-medium">{num(r.share * 100, 1)}% of this year's depreciated basis — over the 40% line, so EVERY asset flips to mid-quarter convention</span>. Your Q4 {usd(r.q4Tested, 0)} (5-yr property) drops from a 20% to a 5% year-1 rate: that costs <span className="font-medium">{usd(r.mqCost, 0)}</span> in delayed tax savings at {rate}%. The fix is one checkbox: <span className="font-medium">§179 or bonus-expense the Q4 purchases</span> — expensed property leaves the 40% test entirely and the rest of the year keeps half-year convention.</>
+          ) : expense && q4 > 0 ? (
+            <>Smart sequencing: expensing the {usd(q4, 0)} of Q4 purchases pulls them out of the 40% test — remaining Q4 share is <span className="font-medium">{num(r.share * 100, 1)}%, safely under the line</span>. Without the election, the share would be {num((q4 / (q1 + q2 + q3 + q4)) * 100, 1)}%{(q4 / (q1 + q2 + q3 + q4)) > 0.4 ? ' — tripped' : ''}.</>
+          ) : (
+            <>Q4 share is {num(r.share * 100, 1)}% — under the 40% line, half-year convention holds for everything. Remember the harder deadline: assets must be <span className="font-medium">placed in service — installed and operational — by December 31</span>. Ordered and paid isn't enough; a $50,000 machine that slips to January 2 slides the entire deduction a year — {usd(50000 * rate / 100, 0)} of tax savings deferred at your rate.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The 40% mid-quarter test runs on MACRS basis AFTER subtracting anything you expense under §179 or bonus — which is why the year-end play is to expense Q4 purchases specifically, not just "as much as possible." Mid-quarter year-one rates on 5-year property by quarter: 35% / 25% / 15% / 5%, versus 20% flat under half-year — tripping the test punishes Q4 assets hardest while slightly helping Q1 buys, but the net is almost always negative for December-heavy years. The placed-in-service rule is the other December killer: the equipment must be delivered, installed, and operational by the 31st — a signed contract, a deposit, or a delivery date in January all fail. Non-calendar-year businesses test against their own fiscal Q4. Listed property (vehicles) follows the same conventions with the §280F caps on top. Estimates for planning — the election details (which assets to expense, state conformity) deserve a CPA's eyes before December 30.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Equipment lease vs buy, business — the after-tax truth. BUY path: down + loan amortization; deductions = FULL purchase price year one via §179/100% bonus (financing doesn't reduce it — borrowed money still expenses) + loan interest as it's paid; residual value comes back at the end. OPERATING LEASE path: every payment deductible as made, no residual, no ownership. CAPITAL/$1-BUYOUT LEASE: treated as a purchase for tax — §179 applies even though you "leased" (the classic equipment-finance play: 100% financing + full §179 write-off year one = the deduction exceeds the cash out). What the math hides: leases price in the lessor's cost of capital (implicit APR often 8–12% when you back it out), end-of-lease buyouts, and mileage/hour overages; ownership carries maintenance after warranty. Node-verified: $100k equipment, 20% down, 7%/5yr → pmt $1,584.10, total out $115,046, interest $15,046, deductions $115,046 → after-tax net $68,231 at 32% w/ $10k residual; operating lease $1,900×60 = $114,000 → net $77,520; buy wins $9,289 — flip the residual to $0 and lease wins by $1,289.
 export function EquipLeaseVsBuyCalc() {
   const [price, setPrice] = useNumber(100000)
@@ -7818,6 +7876,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
   'business-vehicle-writeoff-calculator': VehicleWriteoffCalc,
   'macrs-depreciation-calculator': MacrsCalc,

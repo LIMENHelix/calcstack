@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'q4-equipment-timing-calculator',
+    title: 'Q4 Equipment Timing Calculator 2026 — The 40% Mid-Quarter Trap and the December 31 Deadline',
+    shortTitle: 'Q4 Equipment Timing',
+    category: 'Freelance & Career',
+    description:
+      'If over 40% of the year\'s depreciated basis lands in Q4, every asset flips to mid-quarter convention and year-one deductions shrink. Test your quarters, see the fix (expense the Q4 buys), and price the December 31 placed-in-service slip.',
+    tagline: 'One Q4-heavy year can cut your first-year write-off 75% — and the fix is a checkbox on Form 4562.',
+    intro:
+      'December equipment buying season hides two traps that cost real money. The mid-quarter convention: if more than 40% of the year\'s depreciable basis (excluding anything you expense under §179 or bonus) is placed in service in the fourth quarter, EVERY asset that year flips to mid-quarter convention — and a Q4 asset\'s first-year rate on 5-year property collapses from 20% to 5%. The escape is one election: expense the Q4 purchases and they leave the 40% test entirely. The second trap is cruder: placed in service means installed and operational by December 31 — ordered, paid, or in-transit doesn\'t count, and a one-day slip moves the entire deduction into next year. This calculator runs the 40% test on your quarterly purchases, prices the trip, and shows the expensing fix.',
+    howItWorks: [
+      'Enter each quarter\'s purchases that you plan to DEPRECIATE (not expense).',
+      'Toggle whether you\'ll §179/bonus-expense the Q4 buys — watch the test change.',
+      'Enter your marginal rate to price the convention flip.',
+      'Read the verdict, the cost if tripped, and the deadline warning.',
+    ],
+    faq: [
+      {
+        q: 'How exactly does the 40% mid-quarter test work?',
+        a: 'Total up the basis of all MACRS property placed in service during the year — after removing anything you expense under §179 or take bonus on. If the Q4 slice exceeds 40%, mid-quarter convention applies to every asset for the year: each is treated as placed in service at the midpoint of its quarter. First-year rates on 5-year property become 35%/25%/15%/5% by quarter instead of a flat 20%. Note the asymmetry: tripping the test HELPS Q1 purchases (35% vs 20%) while crushing Q4 ones — but December-heavy years always lose on net. The test runs on your tax year, so fiscal-year filers use their own fourth quarter.',
+      },
+      {
+        q: 'What counts as "placed in service" by December 31?',
+        a: 'The asset must be ready and available for its intended use — delivered, installed, and operational. A signed purchase order, a paid invoice, a truck in transit, or equipment sitting in crates all fail. Courts have split on edge cases (a machine that ran one test cycle before midnight generally counts; one awaiting parts does not), but the safe line is operational use before year-end. The 2026 stakes are unusually high because 100% bonus depreciation applies to property both acquired AND placed in service after January 19, 2025 — a January slip doesn\'t just defer the deduction, it can change which rulebook applies to the acquisition date.',
+      },
+      {
+        q: 'Should I bunch purchases into one year or spread them?',
+        a: 'Bunch — but strategically. The §179 cap is $2,560,000 and bonus is a permanent 100%, so a single big year expenses everything at once at your current marginal rate. Spreading only wins when income is lumpy in the other direction (a low-income year wastes deductions) or when the $4,090,000 phaseout is in reach. If you bunch, watch the calendar: Q1–Q3 placement keeps half-year convention clean, and any Q4 remainder gets expensed out of the test. The classic December mistake is the reverse — depreciating Q4 purchases while expensing January ones, which maximizes exactly the basis that trips the 40% line.',
+      },
+    ],
+  },
+  {
     slug: 'equipment-lease-vs-buy-calculator',
     title: 'Equipment Lease vs Buy Calculator 2026 — After-Tax Truth with §179, Bonus, and the Residual Fulcrum',
     shortTitle: 'Equipment Lease vs Buy',

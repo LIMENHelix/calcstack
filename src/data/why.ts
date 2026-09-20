@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'q4-equipment-timing-calculator':
+    'Owners use it before December buying: over 40% of depreciated basis in Q4 flips everything to mid-quarter convention (20% → 5% first-year on 5-year property) — expensing the Q4 buys exits the test, and a one-day placed-in-service slip defers the whole deduction a year.',
   'equipment-lease-vs-buy-calculator':
     'Owners use it when the dealer offers both options: financed purchases still expense the full price year one (§179/bonus) plus interest — $100k at 7%/5yr nets $68,231 after tax vs a $1,900/mo lease at $77,520 — and the residual value is the fulcrum that flips it.',
   'business-vehicle-writeoff-calculator':
