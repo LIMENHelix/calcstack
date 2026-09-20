@@ -285,6 +285,10 @@ export const WHY_USE: Record<string, string> = {
     'Workers use it on Sunday night: 8:30–5:00 minus the lunch is exactly 8.0 hrs — 40.0 a week, $980 at $24.50, and the OT line is where the money hides.',
   'biweekly-mortgage-calculator':
     'Homeowners use it to find the free money: 26 half-payments is a 13th payment a year — $94k saved and 6 years gone on $320k at 6.5%.',
+  'fraction-calculator':
+    'Students use it mid-homework: 3/4 + 2/3 = 17/12 (1 5/12), 1 2/3 × 2 1/4 = 3 3/4 — improper, mixed, reduced, and decimal, every form at once.',
+  'simple-interest-calculator':
+    'Borrowers use it before signing the short-term note: $5,000 at 7% for 3 years is $1,050 simple — and the calculator shows what compound would have cost for comparison.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

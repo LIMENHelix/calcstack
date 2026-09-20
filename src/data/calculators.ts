@@ -4390,6 +4390,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'fraction-calculator',
+    title: 'Fraction Calculator — Add, Subtract, Multiply, Divide with Mixed Numbers',
+    shortTitle: 'Fraction Calculator',
+    category: 'School & Science',
+    description:
+      'Add, subtract, multiply, or divide fractions and mixed numbers with every form shown at once: improper, mixed number, fully reduced, and decimal.',
+    tagline: '3/4 + 2/3 = 17/12, which is 1 5/12 — and 1 2/3 × 2 1/4 is exactly 3 3/4. Every form, every time, reduced automatically.',
+    intro:
+      'Fraction arithmetic is where homework goes wrong: finding common denominators, flipping divisors, converting mixed numbers back and forth, and remembering to reduce at the end. This calculator takes two fractions or mixed numbers, applies any of the four operations, and shows the result as an improper fraction, a mixed number, a reduced fraction, and a decimal — the exact answer and the practical answer side by side.',
+    howItWorks: [
+      'Enter the first number as a fraction (3/4) or mixed number (1 2/3).',
+      'Pick the operation: add, subtract, multiply, or divide.',
+      'Enter the second number the same way.',
+      'Read the result in all four forms: improper, mixed, reduced, and decimal.',
+      'For division, the second fraction is inverted automatically — no flipping by hand.',
+    ],
+    faq: [
+      {
+        q: 'How do you add fractions with different denominators?',
+        a: 'Find a common denominator — the least common multiple of the two denominators — convert both fractions to that denominator, then add the numerators and reduce. Example: 3/4 + 2/3. The LCM of 4 and 3 is 12, so 3/4 becomes 9/12 and 2/3 becomes 8/12; the sum is 17/12, which is the mixed number 1 5/12. Multiplication and division are actually easier: multiply straight across (numerator × numerator, denominator × denominator), and for division, invert the second fraction and multiply. The step everyone forgets is reducing — always divide numerator and denominator by their greatest common divisor at the end: 15/20 is not done until it is 3/4.',
+      },
+      {
+        q: 'What is a mixed number and when should I use one?',
+        a: 'A mixed number combines a whole number and a proper fraction — 3 3/4 means 3 + 3/4. Improper fractions (numerator ≥ denominator, like 15/4) are better for calculating; mixed numbers are better for communicating, because "3 3/4 cups of flour" is instantly readable while "15/4 cups" makes most people pause. The professional convention: calculate in improper form, present in mixed form. Converting is mechanical: multiply the whole number by the denominator and add the numerator to go improper (1 2/3 → 5/3), and divide to go back (15/4 → 3 remainder 3 → 3 3/4). This calculator shows both forms so you never have to convert by hand.',
+      },
+      {
+        q: 'How do I convert a fraction to a decimal?',
+        a: 'Divide the numerator by the denominator: 3/4 = 0.75, 5/8 = 0.625. Some fractions never terminate — 1/3 is 0.333... forever — so decimals are sometimes approximations while fractions are always exact. That is why recipes and carpentry stay fractional: 1/3 cup is exact, 0.33 cups is not. The worth-memorizing conversions: 1/2 = 0.5, 1/4 = 0.25, 1/8 = 0.125, 1/16 = 0.0625 — the binary fractions that dominate US measurement (tape measures, drill bits, stock quotes before 2001). Going the other way, 0.375 as a fraction: put it over 1000 (375/1000) and reduce by 125 to get 3/8.',
+      },
+    ],
+  },
+  {
+    slug: 'simple-interest-calculator',
+    title: 'Simple Interest Calculator — I = Prt, with the Compound Comparison',
+    shortTitle: 'Simple Interest',
+    category: 'Loans & Debt',
+    description:
+      'Compute simple interest on a loan or deposit — principal × rate × time — and see what the same money would do under compound interest for comparison.',
+    tagline: '$5,000 at 7% for 3 years costs $1,050 in simple interest — $6,050 total. The compound version would be $1,125. The gap grows with time.',
+    intro:
+      'Simple interest charges only on the original principal — no interest on interest — which makes it the borrower-friendly math behind many auto loans, short-term notes, and some personal loans. The formula is one line: I = P × r × t. This calculator runs it instantly and shows the compound-interest counterpart alongside, because the difference between the two is the entire story of long-term debt and savings.',
+    howItWorks: [
+      'Enter the principal — the amount borrowed or deposited.',
+      'Enter the annual rate as a percentage.',
+      'Enter the time in years (decimals allowed — 1.5 for 18 months).',
+      'Read the interest, the total, and the compound-interest comparison.',
+      'Watch how the gap between simple and compound widens as time stretches.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between simple and compound interest?',
+        a: 'Simple interest accrues only on the original principal; compound interest accrues on principal plus all previously earned interest. On $5,000 at 7% for 3 years: simple earns $1,050 ($350 every year, identical); compound earns $1,125 — the gap is small early and explodes later. At 30 years the same money earns $10,500 simple but $38,061 compounded — 3.6× more. Which one applies to you depends on the contract: most auto loans and short-term personal notes use simple interest (good for borrowers who pay early), while savings accounts, credit cards, and mortgages compound. The rule to remember: simple favors the borrower, compound favors the lender — and time is the multiplier that decides how much.',
+      },
+      {
+        q: 'Which loans use simple interest?',
+        a: 'Most auto loans, many personal loans, some student loans during certain periods, and most short-term business notes. The practical consequence of a simple-interest loan: paying early genuinely saves money, because interest accrues daily on the outstanding balance only — an extra $100 toward principal permanently removes that $100 from the interest base. Contrast with precomputed loans (Rule of 78s), where interest is front-loaded and early payoff saves much less — always check the contract for "precomputed" or "Rule of 78" language. Credit cards and mortgages are NOT simple interest: cards compound daily, mortgages amortize monthly. The fastest test: if the paperwork states a per-diem (daily interest) figure, you have a simple-interest loan and early payment is your lever.',
+      },
+      {
+        q: 'How do I calculate interest for part of a year?',
+        a: 'Convert the time to years and multiply: 6 months = 0.5 years, 90 days ≈ 0.246 years (90/365). Banks use two day-count conventions — ordinary interest (360-day year, "banker\'s year") versus exact interest (365 days) — and the 360 convention quietly earns the lender about 1.4% more on the same nominal rate. Example: $10,000 at 8% for 90 days is $197.26 using 365 days but $200.00 using 360. For a sanity check, remember that the monthly interest on a simple loan is roughly principal × rate ÷ 12: $10,000 at 8% ≈ $66.67 per month. If a quote comes in dramatically above that line, the loan is not actually simple interest — it has fees or compounding hiding inside.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

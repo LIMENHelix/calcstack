@@ -3025,3 +3025,83 @@ export function BiweeklyCalc() {
     </CardContent></Card>
   )
 }
+// FRACTION CALCULATOR — node-verified defaults: 3/4 + 2/3 = 17/12 = 1 5/12; 1 2/3 × 2 1/4 = 15/4 = 3 3/4. Lowest-terms reduction via GCD, mixed-number display, decimal alongside. The kitchen, the workshop, and fifth grade all run on this.
+function gcdCalc(a: number, b: number): number { return b ? gcdCalc(b, a % b) : Math.abs(a) }
+export function FractionCalc() {
+  const [n1, setN1] = useNumber(3)
+  const [d1, setD1] = useNumber(4)
+  const [n2, setN2] = useNumber(2)
+  const [d2, setD2] = useNumber(3)
+  const [op, setOp] = useState('+')
+  const r = useMemo(() => {
+    if (d1 === 0 || d2 === 0) return null
+    let n = 0, d = 1
+    if (op === '+') { n = n1 * d2 + n2 * d1; d = d1 * d2 }
+    else if (op === '−') { n = n1 * d2 - n2 * d1; d = d1 * d2 }
+    else if (op === '×') { n = n1 * n2; d = d1 * d2 }
+    else { if (n2 === 0) return null; n = n1 * d2; d = d1 * n2 }
+    if (d < 0) { n = -n; d = -d }
+    const g = gcdCalc(n, d) || 1
+    const rn = n / g, rd = d / g
+    const whole = Math.trunc(rn / rd)
+    const rem = Math.abs(rn % rd)
+    const mixed = Math.abs(rn) >= rd && rem !== 0 ? `${whole} ${rem}/${rd}` : null
+    return { text: `${rn}/${rd}`, mixed, decimal: rn / rd }
+  }, [n1, d1, n2, d2, op])
+  const inp = (v: number, set: (s: string) => void, label: string) => <Field label={label} value={v} onChange={set} />
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid grid-cols-3 items-end gap-3">
+        <div className="space-y-2">{inp(n1, setN1, 'Numerator')}{inp(d1, setD1, 'Denominator')}</div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">Operation</label>
+          <select value={op} onChange={(e) => setOp(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="+">+ add</option>
+            <option value="−">− subtract</option>
+            <option value="×">× multiply</option>
+            <option value="÷">÷ divide</option>
+          </select>
+        </div>
+        <div className="space-y-2">{inp(n2, setN2, 'Numerator')}{inp(d2, setD2, 'Denominator')}</div>
+      </div>
+      {r ? (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label="Result (lowest terms)" value={r.text} big />
+          <Result label="As mixed number" value={r.mixed ?? r.text} big />
+          <Result label="As decimal" value={num(r.decimal, 4)} />
+        </div>
+      ) : (
+        <p className="text-sm text-destructive">Denominators can\'t be zero — and you can\'t divide by zero.</p>
+      )}
+      <p className="text-xs text-muted-foreground">Reduced by greatest common divisor. For mixed-number inputs, convert first: 1 2/3 = 5/3 (whole × denominator + numerator).</p>
+    </CardContent></Card>
+  )
+}
+
+// SIMPLE INTEREST — node-verified defaults: $5,000 at 7% for 3 years = $1,050 interest, $6,050 total. I = Prt — no compounding, which is exactly why car notes and payday loans quote it: it sounds small next to APR.
+export function SimpleInterestCalc() {
+  const [principal, setPrincipal] = useNumber(5000)
+  const [rate, setRate] = useNumber(7)
+  const [years, setYears] = useNumber(3)
+  const r = useMemo(() => {
+    const interest = principal * (rate / 100) * years
+    const cmp = principal * Math.pow(1 + rate / 100, years) - principal
+    return { interest, total: principal + interest, cmp, diff: cmp - interest }
+  }, [principal, rate, years])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Principal" value={principal} onChange={setPrincipal} prefix="$" />
+        <Field label="Annual rate" value={rate} onChange={setRate} suffix="%" step="0.25" />
+        <Field label="Time" value={years} onChange={setYears} suffix="years" step="0.5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Simple interest" value={usd(r.interest)} big />
+        <Result label="Total to repay" value={usd(r.total)} big />
+        <Result label="Same loan compounded yearly" value={usd(r.cmp)} />
+        <Result label="Compounding difference" value={usd(r.diff)} />
+      </div>
+      <p className="text-xs text-muted-foreground">I = P × r × t — interest never earns interest. Auto loans and some personal loans quote simple interest; savings accounts and credit cards compound. Compare the two columns before signing either way.</p>
+    </CardContent></Card>
+  )
+}
