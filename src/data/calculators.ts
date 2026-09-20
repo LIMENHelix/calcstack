@@ -4838,6 +4838,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'bmr-tdee-calculator',
+    title: 'BMR & TDEE Calculator — Mifflin-St Jeor, Maintenance Calories, Cut & Bulk',
+    shortTitle: 'BMR / TDEE',
+    category: 'Health & Life',
+    description:
+      'Basal metabolic rate and total daily energy expenditure via the Mifflin-St Jeor equation — maintenance calories, fat-loss target, muscle-gain target, and protein floor.',
+    tagline: 'A 30-year-old at 80 kg and 180 cm burns 1,780 kcal doing absolutely nothing — and 2,448 lightly active. Every diet starts from these two numbers.',
+    intro:
+      'Every diet succeeds or fails on energy balance, and energy balance starts with two numbers: BMR (what you burn at complete rest) and TDEE (what you actually burn living your life). This calculator uses the Mifflin-St Jeor equation — the one the Academy of Nutrition and Dietetics rates most accurate — then layers your activity level to produce maintenance calories plus honest cut and bulk targets.',
+    howItWorks: [
+      'Enter sex, age, weight (kg), and height (cm).',
+      'Read your BMR — the calories you burn at total rest.',
+      'Pick the activity level that honestly matches your week.',
+      'TDEE is your maintenance: eat this, stay the same weight.',
+      'Cut at −500 for ~0.5 kg/week loss; bulk at +300 for lean gains.',
+    ],
+    faq: [
+      {
+        q: 'How accurate is the Mifflin-St Jeor equation?',
+        a: 'Within about ±10% for most adults — the best of the prediction equations, which is why dietetics associations prefer it over the older Harris-Benedict. The 10% band matters: a calculated 2,448 TDEE could really be 2,200 or 2,700, and no equation can see your individual NEAT (fidgeting, walking, standing — which varies by up to 2,000 kcal/day between people). The professional protocol: eat at the calculated target for 2–3 weeks, track morning weight weekly, then adjust by the observed trend — losing faster than 0.75% of body weight per week means the estimate ran low; not losing on a "500 deficit" means it ran high. The equation gives the starting hypothesis; your scale is the measuring instrument.',
+      },
+      {
+        q: 'Why am I not losing weight eating below my TDEE?',
+        a: 'Usually one of four causes, in order of likelihood. First, tracking error: studies consistently show people underreport intake by 20–40% — cooking oil, condiments, bites, weekend drift. Second, activity overestimation: three gym sessions a week is "light" (×1.375), not "moderate," and exercise machines overstate burn by 15–30%. Third, metabolic adaptation: after weeks of dieting, TDEE drops 5–15% beyond what weight loss alone predicts — your body defends its weight. Fourth, water masking fat loss: cortisol, sodium, and new exercise inflammation can hide 2–3 weeks of real fat loss on the scale. The fix sequence: weigh everything for one week (yes, the oil), drop the activity multiplier one notch, and if the trend still fails after three honest weeks, cut another 100–200 kcal.',
+      },
+      {
+        q: 'Should I eat back exercise calories?',
+        a: 'Only half of them, at most — and only if your activity multiplier didn\'t already count them. The double-counting trap: choosing "moderate — 3–5 days/week" already prices in those workouts, so eating back the 400 kcal your watch reported spends the same calories twice. Wearables compound it: studies on fitness trackers find calorie-burn errors of 20–90%, with cardio machines at the gym nearly as optimistic. The clean systems: either pick a sedentary/light multiplier and deliberately eat back half of tracked exercise, or pick the honest activity multiplier and eat back nothing. For muscle gain, protein is the lever that matters more than the surplus size — ~2 g per kg of body weight on a cut, ~1.6 g/kg on a bulk, spread across 3–5 meals to maximize muscle protein synthesis.',
+      },
+    ],
+  },
+  {
+    slug: 'sleep-cycle-calculator',
+    title: 'Sleep Cycle Calculator — Wake Up Between Cycles, Not Groggy',
+    shortTitle: 'Sleep Cycle',
+    category: 'Health & Life',
+    description:
+      'Time bedtime or wake time around 90-minute sleep cycles — wake at 4, 5, or 6 cycle boundaries and skip the mid-deep-sleep grogginess (sleep inertia).',
+    tagline: 'Bed at 11:00 PM? Wake at 6:45 AM — five full 90-minute cycles — instead of 7:00, which rips you out of deep sleep mid-cycle.',
+    intro:
+      'The groggy morning is usually a timing problem, not a sleep-quantity problem: you woke mid-deep-sleep. Sleep runs in ~90-minute cycles — light, deep, REM — and waking at a cycle boundary feels dramatically easier than waking 20 minutes into deep sleep. This calculator times both directions: given a bedtime, it shows the wake times; given an alarm, it shows the bedtimes — with your fall-asleep buffer built in.',
+    howItWorks: [
+      'Choose direction: known bedtime or known wake time.',
+      'Enter the time and how long you take to fall asleep (15 min is average).',
+      'Read the 4, 5, and 6-cycle options — 6h, 7.5h, 9h of sleep.',
+      'Pick the one that fits; 5 cycles (7.5h) suits most adults.',
+      'Consistency beats optimization: same times daily outperforms perfect cycles.',
+    ],
+    faq: [
+      {
+        q: 'Do 90-minute sleep cycles actually work?',
+        a: 'The cycle is real — sleep architecture genuinely alternates light, deep, and REM roughly every 90 minutes — but the honest caveat is that your personal cycle runs 80–120 minutes and varies across the night, so the calculator is a useful heuristic, not a precision instrument. What the science firmly supports: waking during deep (slow-wave) sleep causes sleep inertia — measurable cognitive impairment lasting 30–60 minutes — while waking from light sleep or REM feels easy. Deep sleep concentrates in the first half of the night, REM in the second. So use the cycle times as targets with a 15-minute grace window, not exact alarms. If you consistently wake groggy at 7:00, shifting to 6:45 is a free experiment worth running for a week.',
+      },
+      {
+        q: 'How much sleep do I actually need?',
+        a: 'The adult consensus is 7–9 hours (teens 8–10, older adults 7–8) — in cycle terms, 5–6 cycles. But the more useful signal is daytime function: needing an alarm plus snooze, weekend oversleep beyond an hour, and afternoon crashes all indicate chronic shortfall regardless of the number. Sleep debt is real and compounds: six-hour nights for two weeks produce cognitive impairment equivalent to one all-nighter — while the sleeper stops noticing, which is the dangerous part. The one-week experiment: pick a fixed wake time, count back 7.5 hours plus your fall-asleep time, hold it for seven days including the weekend, and see if you start waking before the alarm. That spontaneous wake is your true need, measured.',
+      },
+      {
+        q: 'Why do I wake up tired even after 8 hours?',
+        a: 'Four usual suspects. Timing: 8 hours from 11 PM ends at 7:00 AM, which is mid-cycle — the calculator\'s 6:45 AM answer often feels better despite 15 fewer minutes. Consistency: a weekend sleep schedule shifted by 2+ hours is social jet lag, and Monday grogginess is your body crossing time zones it never left. Quality disruptors: alcohol fragments REM (8 hours after drinks ≠ 8 sober hours), late screens delay melatonin, and a warm bedroom raises wake frequency. And the medical flag: if 8 consistent hours still leaves you exhausted, loud snoring, or morning headaches, that pattern warrants a sleep-apnea screening — an estimated 80% of moderate-to-severe cases are undiagnosed, and no calculator can out-math a breathing problem.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

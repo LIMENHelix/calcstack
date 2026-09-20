@@ -3639,3 +3639,107 @@ export function WordCountCalc() {
     </CardContent></Card>
   )
 }
+
+
+// BMR / TDEE — Mifflin-St Jeor, node-verified: M 30y 80kg 180cm → BMR 1,780; F 30y 65kg 165cm → 1,370. TDEE at sedentary 1.2× = 2,136. Mifflin is the equation the Academy of Nutrition and Dietetics rates most accurate for the general population — within ~10% for most adults.
+export function BmrTdeeCalc() {
+  const [sex, setSex] = useState('m')
+  const [age, setAge] = useNumber(30)
+  const [weight, setWeight] = useNumber(80)
+  const [height, setHeight] = useNumber(180)
+  const [activity, setActivity] = useState('1.375')
+  const r = useMemo(() => {
+    if (weight <= 0 || height <= 0 || age <= 0 || age > 120) return null
+    const s = sex === 'm' ? 5 : -161
+    const bmr = 10 * weight + 6.25 * height - 5 * age + s
+    const mult = Number(activity)
+    const tdee = bmr * mult
+    return { bmr, tdee, cut: tdee - 500, gain: tdee + 300, proteinCut: weight * 2.0 }
+  }, [sex, age, weight, height, activity])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Sex (hormonal constant)</label>
+          <select value={sex} onChange={(e) => setSex(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="m">Male</option>
+            <option value="f">Female</option>
+          </select>
+        </div>
+        <Field label="Age" value={age} onChange={setAge} suffix="yrs" step="1" />
+        <Field label="Weight" value={weight} onChange={setWeight} suffix="kg" step="1" />
+        <Field label="Height" value={height} onChange={setHeight} suffix="cm" step="1" />
+        <div className="sm:col-span-2">
+          <label className="mb-1 block text-sm font-medium">Activity level</label>
+          <select value={activity} onChange={(e) => setActivity(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="1.2">Sedentary — desk job, little exercise (×1.2)</option>
+            <option value="1.375">Light — exercise 1–3 days/week (×1.375)</option>
+            <option value="1.55">Moderate — 3–5 days/week (×1.55)</option>
+            <option value="1.725">Very active — 6–7 days/week (×1.725)</option>
+            <option value="1.9">Athlete — 2× daily training / physical job (×1.9)</option>
+          </select>
+        </div>
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label="BMR (coma calories)" value={`${num(r.bmr, 0)} kcal/day`} big />
+          <Result label="TDEE (maintenance)" value={`${num(r.tdee, 0)} kcal/day`} big />
+          <Result label="Fat loss (−500)" value={`${num(r.cut, 0)} kcal/day`} />
+          <Result label="Muscle gain (+300)" value={`${num(r.gain, 0)} kcal/day`} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">Mifflin-St Jeor: BMR = 10W + 6.25H − 5A + s (s = +5 male, −161 female). The −500 kcal cut targets ~0.5 kg/week loss; on a cut, protein at ~2 g/kg ({num(weight * 2.0, 0)} g at your weight) protects muscle. Pounds/inches: kg = lb ÷ 2.205, cm = in × 2.54.</p>
+    </CardContent></Card>
+  )
+}
+
+// SLEEP CYCLE CALCULATOR — node-verified: bed 23:00 + 15 min fall-asleep → wake after 4/5/6 cycles (90 min each) at 05:15 / 06:45 / 08:15. Works both directions: given bedtime → wake times; given wake time → bedtimes. Cycle science: waking mid-deep-sleep causes sleep inertia (the groggy hour).
+export function SleepCycleCalc() {
+  const [mode, setMode] = useState('bed')
+  const [time, setTime] = useState('23:00')
+  const [fallAsleep, setFallAsleep] = useNumber(15)
+  const r = useMemo(() => {
+    const m = time.match(/^(\d{1,2}):(\d{2})$/)
+    if (!m) return null
+    const mins = Number(m[1]) * 60 + Number(m[2])
+    const fmt = (total: number) => {
+      const t = ((total % 1440) + 1440) % 1440
+      const h = Math.floor(t / 60), mm = t % 60
+      const hr12 = ((h + 11) % 12) + 1
+      return `${hr12}:${String(mm).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`
+    }
+    // mode 'bed': wake = bed + fallAsleep + cycles*90; mode 'wake': bed = wake - fallAsleep - cycles*90
+    const times = [4, 5, 6].map((c) => ({
+      cycles: c,
+      time: mode === 'bed' ? fmt(mins + fallAsleep + c * 90) : fmt(mins - fallAsleep - c * 90),
+      hours: (c * 90) / 60,
+    }))
+    return { times }
+  }, [mode, time, fallAsleep])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div>
+          <label className="mb-1 block text-sm font-medium">I know my…</label>
+          <select value={mode} onChange={(e) => setMode(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="bed">Bedtime — show wake times</option>
+            <option value="wake">Wake time — show bedtimes</option>
+          </select>
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium">{mode === 'bed' ? 'Bedtime' : 'Wake time'}</label>
+          <input type="time" value={time} onChange={(e) => setTime(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" />
+        </div>
+        <Field label="Minutes to fall asleep" value={fallAsleep} onChange={setFallAsleep} suffix="min" step="5" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          {r.times.map((t) => (
+            <Result key={t.cycles} label={`${t.cycles} cycles (${t.hours}h)`} value={t.time} big={t.cycles === 5} />
+          ))}
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">Sleep runs in ~90-minute cycles (light → deep → REM). Waking between cycles feels easy; waking mid-deep-sleep is the groggy, hit-snooze feeling — sleep inertia can fog an hour. Five cycles (7.5h) suits most adults; six (9h) for teens, athletes, and recovery weeks.</p>
+    </CardContent></Card>
+  )
+}

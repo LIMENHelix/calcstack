@@ -313,6 +313,10 @@ export const WHY_USE: Record<string, string> = {
     'Teachers raffling prizes and DMs rolling damage use it: crypto-grade randomness, no-repeat mode, any range — with dice odds baked in (2d6 sums to 7 on 16.7% of rolls).',
   'word-counter':
     'Writers and students use it against limits: live words, characters, sentences, reading time at 200 wpm and speaking at 130 — a 10-minute talk is ~1,300 words.',
+  'bmr-tdee-calculator':
+    'Dieters use it before any plan: Mifflin-St Jeor says a 30-year-old at 80 kg / 180 cm burns 1,780 kcal at rest, 2,448 lightly active — cut from that number, not a guess.',
+  'sleep-cycle-calculator':
+    'People who wake up groggy use it: sleep runs in 90-minute cycles — bed at 11 PM means waking at 6:45 AM lands between cycles, not inside deep sleep.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':
