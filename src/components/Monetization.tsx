@@ -29,16 +29,21 @@ function ensureAdsenseScript(client: string) {
 
 // House ads keep the slots looking occupied until the network is approved.
 // Rotate per slot so a page with two slots shows different businesses.
+const BASE = import.meta.env.BASE_URL
 const HOUSE_ADS = [
   {
     name: 'Kilswitch Websites',
-    blurb: 'Your business online in days, not months — sites that actually bring in customers.',
-    cta: 'Get a site that works',
+    blurb: "We'll build your business website free — yours to keep, usually live the same day.",
+    cta: 'Get your free site',
+    href: 'https://www.killswitchwebsites.com',
+    img: `${BASE}ads/killswitch-og.svg`,
   },
   {
-    name: 'Relay Supply',
-    blurb: 'Everything the modern agent needs — signs, lockboxes, marketing, and more.',
-    cta: 'Shop agent supplies',
+    name: 'Relay — The Everyday Edit',
+    blurb: 'Coffee ritual gear, everyday clothing, comfort finds, and home goods — thoughtfully selected.',
+    cta: 'Shop the edit',
+    href: 'https://limenhelix.com/relay',
+    img: `${BASE}ads/relay-coffee.jpg`,
   },
   {
     name: 'Your business here',
@@ -83,6 +88,14 @@ export function AdSlot({ label = 'Advertisement' }: { label?: string }) {
   const ad = HOUSE_ADS[houseIdx.current]
   const inner = (
     <>
+      {'img' in ad && ad.img && (
+        <img
+          src={ad.img}
+          alt={ad.name}
+          loading="lazy"
+          className="mx-auto mb-3 h-28 w-full max-w-xs rounded-md border bg-white object-contain p-1"
+        />
+      )}
       <p className="text-sm font-semibold">{ad.name}</p>
       <p className="mt-1 text-xs text-muted-foreground">{ad.blurb}</p>
       <span className="mt-2 inline-block rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground">
@@ -94,7 +107,13 @@ export function AdSlot({ label = 'Advertisement' }: { label?: string }) {
     <div className="my-8 rounded-lg border bg-muted/40 p-4 text-center">
       <p className="mb-2 text-[10px] uppercase tracking-widest text-muted-foreground/60">{label}</p>
       {ad.href ? (
-        <a href={ad.href} className="block transition-opacity hover:opacity-80">{inner}</a>
+        <a
+          href={ad.href}
+          {...(ad.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          className="block transition-opacity hover:opacity-80"
+        >
+          {inner}
+        </a>
       ) : (
         <div>{inner}</div>
       )}
