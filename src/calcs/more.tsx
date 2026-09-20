@@ -6706,6 +6706,95 @@ export function TuitionReimbursementCalc() {
   )
 }
 
+// DISCOUNT PROFIT LEVERAGE — node-verified defaults: 30% gross margin, 10% price cut → volume must rise 30/(30−10) = 1.50× (+50%) just to keep profit flat. At 20% margin the same cut needs 2.0× (+100%); at 15% margin a 5% cut needs 1.5×. The asymmetry nobody prices: discounts come 100% out of margin, not revenue — the sales team celebrates revenue while profit dies. Formula: required volume multiplier = margin% ÷ (margin% − cut%).
+export function DiscountLeverageCalc() {
+  const [rev, setRev] = useNumber(500000)
+  const [margin, setMargin] = useNumber(30)
+  const [cut, setCut] = useNumber(10)
+  const [volGain, setVolGain] = useNumber(20)
+
+  const r = useMemo(() => {
+    const mult = margin > cut ? margin / (margin - cut) : Infinity
+    const needed = (mult - 1) * 100
+    const oldProfit = rev * (margin / 100)
+    const newRev = rev * (1 - cut / 100) * (1 + volGain / 100)
+    const newProfit = newRev * ((margin - cut) / 100)
+    const delta = newProfit - oldProfit
+    return { mult, needed, oldProfit, newProfit, delta }
+  }, [rev, margin, cut, volGain])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Annual revenue" value={rev} onChange={setRev} prefix="$" step="25000" />
+          <Field label="Gross margin" value={margin} onChange={setMargin} suffix="%" step="5" />
+          <Field label="Proposed discount" value={cut} onChange={setCut} suffix="%" step="1" />
+          <Field label="Volume gain you expect" value={volGain} onChange={setVolGain} suffix="%" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Volume needed to break even" value={isFinite(r.mult) ? `+${num(r.needed, 0)}%` : 'Impossible'} big />
+          <Result label="Profit before" value={usd(Math.round(r.oldProfit))} />
+          <Result label="Profit after (your guess)" value={usd(Math.round(r.newProfit))} />
+          <Result label="Profit delta" value={`${r.delta >= 0 ? '+' : '−'}${usd(Math.abs(Math.round(r.delta)))}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {isFinite(r.mult)
+            ? `A ${cut}% discount at ${margin}% margin needs +${num(r.needed, 0)}% volume just to break even — your expected +${volGain}% ${r.delta >= 0 ? `clears it, adding ${usd(Math.round(r.delta))} of profit` : `misses badly: profit drops ${usd(Math.abs(Math.round(r.delta)))} while revenue GROWS — the classic discount trap`}.`
+            : `A ${cut}% discount at ${margin}% margin wipes the margin entirely — no volume saves it. The discount exceeds the margin; every sale loses money and volume just loses it faster.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: breakeven volume = margin ÷ (margin − discount); profit delta = new revenue × new margin − old profit. The mechanism: discounts come 100% out of margin, never out of costs — a 10% price cut at 30% margin is a 33% margin cut, and volume must surge 50% to refill it. Discounts that actually pay: capacity-fill discounts (empty seats, idle crews, expiring inventory — where the marginal cost is near zero, the margin assumption changes), loss-leader pricing with a measured attachment rate, and volume-commitment deals where the +50% is CONTRACTED, not hoped. Discounts that reliably destroy: competitive panic matching, end-of-quarter revenue rescue (the customer learns to wait), and friendship pricing. Alternatives that preserve the margin story: add value instead of cutting price (priority scheduling, extended warranty, free consumables — cost you 30 cents on the dollar of a discount), unbundle to a cheaper tier, or offer payment terms instead of price — the payment-terms calculator prices 2/10-net-30 swaps that often beat a straight cut. The one discipline: any discount over 5% at thin margins deserves this arithmetic in writing before the quote leaves. Estimate — your true gross margin (fully loaded, not wishful) governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// PAYMENT TERMS APR — node-verified defaults: 2/10 net 30 = pay 20 days early to save 2% → simple APR 2%×365/20 = 36.5%; effective compounding (1.02)^(365/20)−1 = 43.5%. Buyer side: TAKE the discount unless cash costs more than 36%. Seller side: a $50,000 invoice floating to 60 days on an 8% line of credit costs $658 of interest — price terms into the quote.
+export function PaymentTermsCalc() {
+  const [disc, setDisc] = useNumber(2)
+  const [early, setEarly] = useNumber(10)
+  const [net, setNet] = useNumber(30)
+  const [invoice, setInvoice] = useNumber(50000)
+  const [locRate, setLocRate] = useNumber(8)
+
+  const r = useMemo(() => {
+    const days = Math.max(net - early, 1)
+    const simpleApr = (disc / days) * 365
+    const effApr = (Math.pow(1 + disc / 100, 365 / days) - 1) * 100
+    const floatCost = invoice * (locRate / 100) * (net / 365)
+    const discCost = invoice * (disc / 100)
+    return { days, simpleApr, effApr, floatCost, discCost }
+  }, [disc, early, net, invoice, locRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Early-pay discount" value={disc} onChange={setDisc} suffix="%" step="0.5" />
+          <Field label="Pay within" value={early} onChange={setEarly} suffix="days" step="5" />
+          <Field label="Net due" value={net} onChange={setNet} suffix="days" step="15" />
+          <Field label="Invoice size" value={invoice} onChange={setInvoice} prefix="$" step="5000" />
+          <Field label="Your cash cost (LOC)" value={locRate} onChange={setLocRate} suffix="%" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Discount APR (simple)" value={`${num(r.simpleApr, 1)}%`} big />
+          <Result label="Effective (compounded)" value={`${num(r.effApr, 1)}%`} />
+          <Result label="Float cost to net terms" value={usd(Math.round(r.floatCost))} />
+          <Result label="Discount costs seller" value={usd(Math.round(r.discCost))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${disc}/${early} net ${net} is a ${num(r.simpleApr, 1)}% APR decision: paying ${r.days} days early earns ${disc}%. Buyers: take it unless your cash costs more than ${num(r.simpleApr, 0)}%. Sellers: the discount costs ${usd(Math.round(r.discCost))} on this invoice versus ${usd(Math.round(r.floatCost))} of float if they ride the full terms.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: days saved = net − discount window; simple APR = discount% ÷ days × 365; effective APR compounds it. The 2/10-net-30 standard hides a shocking number — 36.5% simple, 43.5% effective — which is why CFOs treat early-pay discounts as the best guaranteed return on cash in the building, and why sellers offer them only when their own cash costs more than the discount. Buyer playbook: always take the discount when the APR beats your line of credit (almost always); if cash is tight, borrow ON the line to pay early — borrowing at 8% to earn 36% is the trade. Seller playbook: price terms into the quote — net-60 to a slow payer at your 8% cash cost is a hidden 0.8–1.3% price cut per invoice (shown above); offer early-pay discounts selectively to customers whose float actually costs you, and consider deposits or progress billing on custom work instead of post-hoc discounts. The late-payment flip side: a 1.5%/month late fee is 18% APR — enforceable in most states if disclosed on the invoice UP FRONT (the invoice-late-fee calculator prices it), and chronically late customers are a pricing problem, not a collections problem. Estimate — your actual cash cost and customer payment history govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12405,6 +12494,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'career-break-calculator': CareerBreakCalc,
   'signing-bonus-vs-salary-calculator': SigningBonusVsSalaryCalc,
   'tuition-reimbursement-calculator': TuitionReimbursementCalc,
+  'discount-leverage-calculator': DiscountLeverageCalc,
+  'payment-terms-calculator': PaymentTermsCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

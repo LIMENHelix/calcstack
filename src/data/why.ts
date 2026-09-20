@@ -189,6 +189,10 @@ export const WHY_USE: Record<string, string> = {
     'Candidates use it before accepting the "generous" bonus: a $5,000 raise compounds to $27,608 over 5 years — beating a $15,000 bonus by $12,608 — because raises are seeds and bonuses are flowers.',
   'tuition-reimbursement-calculator':
     'Employees use it before enrolling: the $5,250 tax-free benefit covers $21,000 of a $30,000 degree with a 1.6-yr payback — but the 2-year stay clause can cost $20,000 in forgone raises.',
+  'discount-leverage-calculator':
+    'Business owners use it before quoting a discount: a 10% cut at 30% margin needs +50% volume to break even — discounts come 100% out of margin, and "make it up on volume" is the most expensive sentence in small business.',
+  'payment-terms-calculator':
+    'Business owners use it before setting invoice terms: 2/10 net 30 is a 36.5% APR decision, and a $50k invoice floating to 60 days on an 8% credit line is a hidden $658 price cut.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

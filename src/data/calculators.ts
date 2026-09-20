@@ -2911,6 +2911,68 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'discount-leverage-calculator',
+    title: 'Discount Profit Calculator — What a Price Cut Does to Margin: the Volume You Need to Break Even',
+    shortTitle: 'Discount Profit Leverage',
+    category: 'Freelance & Career',
+    description:
+      'Before you discount: the volume a price cut requires just to keep profit flat — margin ÷ (margin − discount) — with the profit delta of your actual volume guess and the discounts that genuinely pay.',
+    tagline: 'A 10% discount at 30% margin needs +50% volume just to break even. Discounts come 100% out of margin, never out of costs — revenue grows while profit dies.',
+    intro:
+      'The most dangerous sentence in small business is "we will make it up on volume." The arithmetic: at a 30% gross margin, a 10% price cut requires FIFTY percent more volume to produce the same profit — because discounts come entirely out of margin, not out of costs. At 20% margin the same cut needs double the volume. Sales teams celebrate the revenue line while the profit line dies quietly. This calculator prices any discount against your real margin and your actual volume expectation — including the cases where discounting genuinely wins: idle capacity, expiring inventory, and contracted volume.',
+    howItWorks: [
+      'Enter annual revenue and your true gross margin (fully loaded, not wishful).',
+      'Enter the discount being proposed.',
+      'Enter the volume increase you honestly expect.',
+      'Read the breakeven volume and the profit delta of your plan.',
+    ],
+    faq: [
+      {
+        q: 'Why does a small discount need such a huge volume increase?',
+        a: 'Because of where the discount lands. Revenue is not profit: on a $100 sale at 30% margin, $70 is costs and $30 is profit. A 10% discount takes $10 off the price — but the $70 of costs does not change, so the $10 comes entirely out of the $30: profit per unit drops a third. To hold total profit, you must sell half again as many units. The formula is margin ÷ (margin − discount): at 30% margin and 10% off, 30/20 = 1.5×. The asymmetry gets brutal at thin margins — a 10% cut at 15% margin needs 3× volume, and a discount equal to your margin means infinite volume: you lose money on every sale and make it up on nothing. The same math runs in reverse and is the case for price INCREASES: a 5% price rise at 30% margin can lose 14% of volume and still grow profit. Most small businesses have the lever backwards — terrified of a 5% increase their customers would barely notice, casual about a 10% discount that halves their margin.',
+      },
+      {
+        q: 'When does discounting actually make sense?',
+        a: 'When the margin assumption changes — which is specific, not vibes. Idle capacity: the empty hotel room, the unbooked Tuesday crew, the flight seat at the gate — when marginal cost is near zero, ANY price above it adds profit, and the breakeven formula collapses. That is why hotels discount same-day and manufacturers run third shifts cheap. Expiring inventory: perishables, seasonal goods, last-year models — the alternative to the discount is zero, so the margin comparison is against salvage value, not full price. Contracted volume: a customer signing for the +50% in writing converts hope into arithmetic — the discount earns its volume instead of wishing for it. And strategic loss-leaders WITH a measured attachment rate: the discounted item whose buyers reliably buy full-margin items too — measure the attachment honestly, because unmeasured loss-leaders are just losses. What never qualifies: competitive panic matching (the competitor\'s price may be their mistake, not your mandate), end-of-quarter revenue rescue (customers learn the calendar and wait), and discounting to customers who would have paid full price — the unmeasurable leak that margins die from.',
+      },
+      {
+        q: 'What can I offer instead of cutting the price?',
+        a: 'Anything that costs you less than the discount while feeling like value to them — the margin-preserving menu. Add value: priority scheduling, extended warranties, free consumables, training, white-glove delivery — perks that cost 20–40 cents per dollar of perceived value beat a dollar-for-dollar price cut. Unbundle: strip the offer to a cheaper tier (less service, slower delivery, self-serve) — the customer who wanted a lower price gets one, and your full-margin offer stays intact for everyone else; this also flushes out whether they wanted cheap or wanted the deal. Change terms instead of price: faster payment for a small discount (the payment-terms calculator prices 2/10-net-30 at a 36% APR — buyers love it, and it costs you less than a straight cut when cash is cheap), deposits and progress billing, or longer commitments for a lower rate (annual contracts at 10% off with LOCKED volume pass the breakeven test by contract). And the discipline that protects all of it: a written discount authority ladder — salespeople discount what they are allowed to, so make anything past 5% require the arithmetic this calculator does, in writing, before the quote leaves.',
+      },
+    ],
+  },
+  {
+    slug: 'payment-terms-calculator',
+    title: 'Payment Terms Calculator — Early-Pay Discount APR (2/10 Net 30 = 36.5%) and Float Cost Priced',
+    shortTitle: 'Payment Terms APR',
+    category: 'Freelance & Career',
+    description:
+      'What payment terms actually cost — the APR hidden in early-pay discounts (2/10 net 30 is 36.5% simple, 43.5% effective) and the float cost of net terms on your line of credit.',
+    tagline: '2/10 net 30 is a 36.5% APR decision. Buyers should almost always take it; sellers should price terms into the quote — a $50k invoice floating 60 days costs $658.',
+    intro:
+      'Payment terms are loans in disguise, priced in a language nobody translates. "2/10 net 30" — 2% off to pay 20 days early — is a 36.5% APR decision (43.5% compounded): the best guaranteed return on cash most businesses will ever see, which is why CFOs grab it and why sellers offer it only when their own cash costs more. The flip side prices the same way: a $50,000 invoice a customer floats to 60 days costs you $658 on an 8% credit line — a hidden 1.3% price cut that never appears in the quote. This calculator translates any terms structure into APR and dollars, from both sides of the invoice.',
+    howItWorks: [
+      'Enter the early-pay discount percentage and its window (2% within 10 days).',
+      'Enter the full net terms (30, 60, 90 days).',
+      'Enter a typical invoice size and your cost of cash (credit line rate).',
+      'Read the discount APR — then compare float cost versus discount cost as a seller.',
+    ],
+    faq: [
+      {
+        q: 'As a buyer, should I always take the early-pay discount?',
+        a: 'Almost always — the APR math is that lopsided. Taking 2/10 net 30 earns 2% for paying 20 days early: 36.5% annualized. Unless your cash costs more than that — and if your working capital is on credit cards or merchant cash advances, it might — take the discount every time. Even borrowing to take it usually wins: drawing your 8% line of credit to capture a 36% return is the cleanest arbitrage in business finance. The exceptions: when cash preservation outranks returns (a genuine liquidity crunch where the cash itself is survival), when the supplier relationship matters more than 2% and they are signaling cash stress (your early payment might buy goodwill worth more than the discount — ask), and when the discount is not actually offered on the invoice — never assume; terms are per-vendor and sometimes per-contract. Systematize it: AP automation that flags discount deadlines converts this from a decision into a capture rate, and the capture rate is a KPI — most companies leave half their available discounts unclaimed through pure process failure.',
+      },
+      {
+        q: 'As a seller, how should I structure terms?',
+        a: 'Price terms like the financing they are, then buy behavior with them. First, know your float cost: your cash cost × days outstanding ÷ 365 × invoice — at 8% on net-60, every $50,000 invoice carries $658 of financing you are giving away. Second, terms are pricing: net-60 to a slow payer versus net-30 to a fast one is a 1.3% price difference that belongs in the quote, not in collections. Third, use early-pay discounts surgically: 2/10 net 30 to customers whose float costs you more than the discount, not blanket — and note the discount is only worth offering if your cash cost exceeds theirs, or their payment behavior genuinely improves. Fourth, structure beats discount on custom or project work: deposits (30–50% on order), progress billing (milestone-tied), and retainers eliminate float instead of pricing it. Fifth, the late side: a disclosed 1.5%/month late fee (18% APR) on the original invoice is enforceable in most states and changes behavior more than collection calls — the invoice-late-fee calculator prices it. And the collections reality: a chronically late customer is not a collections problem, they are a pricing problem — their effective rate should rise until the float is paid for.',
+      },
+      {
+        q: 'How do big companies abuse payment terms, and what can a small supplier do?',
+        a: 'The pattern is called supply-chain squeeze: large buyers unilaterally extend to net-90 or net-120 (their procurement gets a bonus on working capital), then offer "early payment" through supply-chain finance programs — where a bank pays you on day 10 minus a discount, converting your receivable into their profit center. The small-supplier defenses, in leverage order: diversify the customer base (the customer who is 40% of your revenue owns your terms; the one who is 10% negotiates), price the terms into the quote from day one (net-90 quoted 2% higher than net-30, in writing, reframes extensions as purchases), use the early-pay discount in reverse — your 2% for day-10 payment is cheaper than factoring, invoice factoring itself at 1–3% per month when cash flow justifies it, and deposits on any custom work where you carry materials. Know the legal floor: some states and the federal Prompt Payment Act (government contracts) mandate payment timelines and interest on late payment — federal contractors must pay within 30 days of proper invoice, and state equivalents exist; an invoice citing the statute gets routed differently. And the nuclear option that is sometimes right: firing the customer — a $500,000 account at net-120 with a 5% margin can be worth less than a $200,000 account at net-30 with discipline. Run both through this calculator before the renewal.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
