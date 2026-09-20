@@ -1010,6 +1010,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'retainer-pricing-calculator',
+    title: 'Consulting Retainer Pricing Calculator 2026 — Why the Discounted Retainer Beats the Full-Rate Hour',
+    shortTitle: 'Retainer Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price a monthly retainer against your realistic hourly utilization. See why guaranteed hours at a discount beat available hours at full rate, and the client\'s effective rate.',
+    tagline: '20 guaranteed hours at 10% off pays $1,710/mo — the same hours hourly at realistic 60% utilization expect $1,140. The discount buys the guarantee.',
+    intro:
+      'Freelance income risk is utilization risk: an available hour unsold is worth zero, and pipelines are lumpy. The retainer is the trade that fixes it — the client gets priority access and a discount, you get guaranteed hours. Priced honestly, 20 committed hours at a $95 floor with a 10% volume discount returns $1,710/month guaranteed, while the same hours billed hourly at a realistic 60% utilization expect $1,140. The discount isn\'t a concession; it\'s the price of certainty, and this calculator shows whether it\'s paying for YOUR utilization pattern. Includes the availability premium for priority SLAs and the client\'s effective rate when they under-use the hours.',
+    howItWorks: [
+      'Enter committed monthly hours and your hourly floor.',
+      'Set the volume discount and whether a priority SLA applies.',
+      'Enter your realistic utilization if you stayed hourly — be honest.',
+      'Read the retainer price, annual guarantee, and the edge over hourly.',
+    ],
+    faq: [
+      {
+        q: 'How much discount should a retainer carry?',
+        a: 'Price it against your utilization, not against the client\'s negotiating face. The math: hourly work at 60% utilization turns 20 available hours into 12 paid ones — so even a 15% retainer discount on 20 guaranteed hours pays more. If your pipeline runs hot (75%+ utilization sustained), the retainer discount should shrink toward 5% or vanish — your certainty is worth less because you rarely sit idle. The classic mistake is discounting for SIZE ("20 hours is a big commitment") rather than for CERTAINTY; the client\'s commitment only compensates you for risk it actually removes. Also worth pricing: the relationship value (repeat clients have lower sales/admin cost per hour — that saving is real, share some of it) and the SLA premium (same-day response is a separate product, typically +10–15%).',
+      },
+      {
+        q: 'Use-it-or-lose-it or rollover hours?',
+        a: 'Use-it-or-lose-it, monthly, nearly always. Rollovers feel generous and behave like debt: unused hours accumulate as obligations you owe the client, then detonate in your busiest month — you\'ve sold the same calendar twice. The client\'s under-use is their insurance premium for your availability, and it\'s legitimate: you held the hours; you get paid for holding them. The softening that keeps relationships healthy without creating debt: allow a one-week grace into the following month, or let unused hours convert to a bounded list of small tasks (audit, review, advisory call) rather than production hours. What never works: unlimited rollover, hour "banks," or deliverable-based retainers (scope drifts to infinite). Hours in, hours out, monthly reset.',
+      },
+      {
+        q: 'How many retainers make a stable practice?',
+        a: 'The classic stable independent structure is two mid-size retainers plus overflow hourly: two clients at 15–25 hours/month each covers the base (rent, insurance, minimum income) while leaving half the month for project work at full rate — the retainers carry certainty, the projects carry margin. Concentration is the risk to watch: one retainer above ~50% of your income is an employment relationship with no severance — if it ends, you\'re unemployed with a stale pipeline, and the IRS may even see misclassification risk (single-client, controlled-schedule arrangements can look like disguised employment). Diversify at two-to-three clients, stagger renewal dates so they never lapse together, and keep marketing even when full — the pipeline you build at capacity is the one that saves you at the next non-renewal.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

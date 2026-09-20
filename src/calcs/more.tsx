@@ -3732,6 +3732,58 @@ export function FixedBidCalc() {
   )
 }
 
+// CONSULTING RETAINER PRICING — the discount buys guaranteed utilization, and utilization is the freelancer's real wage. Node-verified: 20 hrs/mo committed at $95 floor with a 10% volume discount → $1,710/mo = $20,520/yr guaranteed. Hourly equivalent at a realistic 60% utilization: 12 hrs × $95 = $1,140/mo — the retainer beats hourly by $570/mo ($6,840/yr) DESPITE the discount, because unused-but-paid beats available-but-unbooked. Client's unused-hour risk: uses 15 of 20 → effective rate $114/hr (the client's insurance premium for priority access). Availability/SLA premium: same-day response +10% → $1,881/mo. Structural rules: use-it-or-lose-it monthly (rollovers convert the retainer into debt you owe), 3-month minimum term, rate lock 12 months, scope defined by HOURS not deliverables.
+export function RetainerCalc() {
+  const [hours, setHours] = useNumber(20)
+  const [floor, setFloor] = useNumber(95)
+  const [discount, setDiscount] = useNumber(10)
+  const [sla, setSla] = useState(false)
+  const [util, setUtil] = useNumber(60)
+  const [used, setUsed] = useNumber(15)
+
+  const r = useMemo(() => {
+    const base = hours * floor * (1 - discount / 100)
+    const price = sla ? base * 1.1 : base
+    const hourlyExpected = hours * (util / 100) * floor
+    const edge = price - hourlyExpected
+    const clientEffRate = used > 0 ? price / used : 0
+    const annual = price * 12
+    return { price, hourlyExpected, edge, clientEffRate, annual }
+  }, [hours, floor, discount, sla, util, used])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Committed hours /month" value={hours} onChange={setHours} suffix="hrs" step="5" />
+          <Field label="Your hourly floor" value={floor} onChange={setFloor} prefix="$" />
+          <Field label="Volume discount" value={discount} onChange={setDiscount} suffix="%" step="5" />
+          <Field label="Your realistic utilization if hourly" value={util} onChange={setUtil} suffix="%" step="5" />
+          <Field label="Hours client likely uses" value={used} onChange={setUsed} suffix="hrs" step="1" />
+        </div>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={sla} onChange={(e) => setSla(e.target.checked)} className="h-4 w-4" />
+          Priority SLA (same-day response) — +10% availability premium
+        </label>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result big label="Monthly retainer" value={usd(r.price)} />
+          <Result label="Annual guaranteed" value={usd(r.annual)} />
+          <Result label="Hourly work would expect" value={`${usd(r.hourlyExpected)}/mo`} />
+          <Result label="Client's effective rate" value={`${usd(r.clientEffRate, 2)}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.edge > 0
+            ? `The retainer beats hourly by ${usd(r.edge)}/mo despite the ${num(discount, 0)}% discount — because guaranteed ${hours} hours outpay ${num(util, 0)}%-utilized ones. If the client uses only ${used} hours, their effective rate is ${usd(r.clientEffRate, 2)}/hr — that's their insurance premium for your availability, and it's fair.`
+            : `At ${num(util, 0)}% utilization your hourly expectation already beats this retainer — either your pipeline is unusually strong (keep hourly) or the discount is too deep (cut it to ${num(Math.max(0, discount - 5), 0)}%).`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Why the discount is worth it: freelance income risk is utilization risk — an available hour unsold is worth zero, and pipelines are lumpy. The retainer converts stochastic hours into a base you can build a life on; price the discount against YOUR utilization history, not your best month. The structural rules that keep retainers healthy: use-it-or-lose-it monthly (rollovers become debt you owe the client at your busiest), a 3-month minimum term (the first month is onboarding, the value starts month two), hours-based scope (deliverable-based retainers drift into unlimited scope), a 12-month rate lock with renewal repricing, and overage billed at full floor rate — the discount applies to committed hours only. Two retainers at this size plus overflow hourly work is the classic stable independent practice. Estimates — your contract governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9371,6 +9423,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'commute-cost-calculator': CommuteCostCalc,
   'daycare-vs-second-income-calculator': DaycareVsIncomeCalc,
   'fixed-bid-pricing-calculator': FixedBidCalc,
+  'retainer-pricing-calculator': RetainerCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
