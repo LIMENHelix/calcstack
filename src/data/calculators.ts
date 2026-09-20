@@ -4081,7 +4081,7 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
       {
         q: 'How do I price handmade items on Etsy profitably?',
-        a: 'The formula that keeps shops alive: (materials + labor at a real hourly wage + packaging) × 2 minimum for the base price, THEN verify fees still leave 30%+ margin — which this calculator checks. The labor omission is the classic failure: a $20 item with $6 of materials looks profitable until you admit it took 90 minutes. Price shipping honestly too — because Etsy fees the shipping charge, "free shipping" with the postage folded into the item price actually SAVES you the 6.5% on that portion and Etsy's search algorithm rewards free-shipping listings over $35. Run both structures in the calculator: the item-plus-shipping split versus the folded-in price, and list whichever nets more.',
+        a: 'The formula that keeps shops alive: (materials + labor at a real hourly wage + packaging) × 2 minimum for the base price, THEN verify fees still leave 30%+ margin — which this calculator checks. The labor omission is the classic failure: a $20 item with $6 of materials looks profitable until you admit it took 90 minutes. Price shipping honestly too — because Etsy fees the shipping charge, "free shipping" with the postage folded into the item price actually SAVES you the 6.5% on that portion and Etsy\'s search algorithm rewards free-shipping listings over $35. Run both structures in the calculator: the item-plus-shipping split versus the folded-in price, and list whichever nets more.',
       },
       {
         q: 'Is Etsy still worth it versus Shopify?',
