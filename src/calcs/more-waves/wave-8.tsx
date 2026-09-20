@@ -3071,7 +3071,7 @@ export function FractionCalc() {
           <Result label="As decimal" value={num(r.decimal, 4)} />
         </div>
       ) : (
-        <p className="text-sm text-destructive">Denominators can\'t be zero — and you can\'t divide by zero.</p>
+        <p className="text-sm text-destructive">Denominators can’t be zero — and you can’t divide by zero.</p>
       )}
       <p className="text-xs text-muted-foreground">Reduced by greatest common divisor. For mixed-number inputs, convert first: 1 2/3 = 5/3 (whole × denominator + numerator).</p>
     </CardContent></Card>
@@ -3102,6 +3102,100 @@ export function SimpleInterestCalc() {
         <Result label="Compounding difference" value={usd(r.diff)} />
       </div>
       <p className="text-xs text-muted-foreground">I = P × r × t — interest never earns interest. Auto loans and some personal loans quote simple interest; savings accounts and credit cards compound. Compare the two columns before signing either way.</p>
+    </CardContent></Card>
+  )
+}
+
+
+// AVERAGE CALCULATOR — node-verified defaults: {12,18,7,18,25,9,31,14} → n=8, sum=134, mean=16.75, median=16, mode=18, range=24. Weighted mode: 88(w3),92(w2),79(w4) → 84.8889. Mean, median, mode, range in one paste — the calculator Google never built.
+export function AverageCalc() {
+  const [raw, setRaw] = useState('12, 18, 7, 18, 25, 9, 31, 14')
+  const [weights, setWeights] = useState('')
+  const r = useMemo(() => {
+    const data = raw.split(/[\s,;]+/).filter(Boolean).map(Number).filter((x) => !Number.isNaN(x))
+    if (data.length === 0) return null
+    const n = data.length
+    const sum = data.reduce((a, b) => a + b, 0)
+    const mean = sum / n
+    const sorted = [...data].sort((a, b) => a - b)
+    const median = n % 2 === 1 ? sorted[(n - 1) / 2] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2
+    const freq = new Map<number, number>()
+    data.forEach((x) => freq.set(x, (freq.get(x) ?? 0) + 1))
+    const maxF = Math.max(...freq.values())
+    const modes = [...freq.entries()].filter(([, f]) => f === maxF).map(([x]) => x)
+    const mode = maxF > 1 ? modes.join(', ') : 'none'
+    const range = sorted[n - 1] - sorted[0]
+    const variance = data.reduce((a, x) => a + (x - mean) ** 2, 0) / n
+    let weighted: number | null = null
+    const w = weights.split(/[\s,;]+/).filter(Boolean).map(Number).filter((x) => !Number.isNaN(x))
+    if (w.length === n && w.some((x) => x !== 0)) {
+      const wsum = w.reduce((a, b) => a + b, 0)
+      if (wsum !== 0) weighted = data.reduce((a, x, i) => a + x * w[i], 0) / wsum
+    }
+    return { n, sum, mean, median, mode, range, sd: Math.sqrt(variance), weighted }
+  }, [raw, weights])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div>
+        <label className="mb-1 block text-sm font-medium">Numbers (comma or space separated)</label>
+        <textarea value={raw} onChange={(e) => setRaw(e.target.value)} rows={2} className="w-full rounded-md border bg-background px-3 py-2 text-sm" />
+      </div>
+      <div>
+        <label className="mb-1 block text-sm font-medium">Weights (optional — same count, for weighted average)</label>
+        <input value={weights} onChange={(e) => setWeights(e.target.value)} placeholder="e.g. 3, 2, 4 — credit hours, shares, hours worked" className="flex h-9 w-full rounded-md border bg-background px-3 text-sm" />
+      </div>
+      {r ? (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label={`Mean (average of ${r.n})`} value={num(r.mean, 4)} big />
+          <Result label="Median" value={num(r.median, 4)} big />
+          <Result label="Mode" value={r.mode} />
+          <Result label="Sum" value={num(r.sum, 4)} />
+          <Result label="Range" value={num(r.range, 4)} />
+          <Result label="Std deviation" value={num(r.sd, 4)} />
+          {r.weighted !== null && <Result label="Weighted average" value={num(r.weighted, 4)} big />}
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">Enter at least one number above.</p>
+      )}
+      <p className="text-xs text-muted-foreground">Mean = sum ÷ count. Median = the middle value (robust to outliers — use it for house prices and salaries). Mode = most frequent. Weighted: grades 88, 92, 79 with credits 3, 2, 4 → 84.89.</p>
+    </CardContent></Card>
+  )
+}
+
+// 15 VS 30 YEAR MORTGAGE — node-verified defaults: $400k, 30yr 6.5% → $2,528.27/mo, $510,178 interest; 15yr 5.875% → $3,348.47/mo, $202,725 interest. Saved: $307,453 for +$820/mo. The rate discount on 15s (~0.625%) stacks with the shorter amortization.
+export function FifteenVsThirtyCalc() {
+  const [loan, setLoan] = useNumber(400000)
+  const [r30, setR30] = useNumber(6.5)
+  const [r15, setR15] = useNumber(5.875)
+  const r = useMemo(() => {
+    const pmt = (P: number, rate: number, n: number) => { const i = rate / 100 / 12; return i === 0 ? P / n : (P * i) / (1 - Math.pow(1 + i, -n)) }
+    const p30 = pmt(loan, r30, 360)
+    const p15 = pmt(loan, r15, 180)
+    const i30 = p30 * 360 - loan
+    const i15 = p15 * 180 - loan
+    // Break-even: years until 15yr's extra monthly cost is "repaid" by interest saved — instant, but show equity gap at year 5
+    const bal = (P: number, rate: number, n: number, paid: number) => { const i = rate / 100 / 12; const p = pmt(P, rate, n); return i === 0 ? P - p * paid : P * Math.pow(1 + i, paid) - p * ((Math.pow(1 + i, paid) - 1) / i) }
+    const b30_5 = bal(loan, r30, 360, 60)
+    const b15_5 = bal(loan, r15, 180, 60)
+    return { p30, p15, i30, i15, saved: i30 - i15, diff: p15 - p30, eq5: b30_5 - b15_5 }
+  }, [loan, r30, r15])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="Loan amount" value={loan} onChange={setLoan} prefix="$" step="10000" />
+        <Field label="30-year rate" value={r30} onChange={setR30} suffix="%" step="0.125" />
+        <Field label="15-year rate" value={r15} onChange={setR15} suffix="%" step="0.125" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="30-year payment" value={usd(r.p30) + '/mo'} />
+        <Result label="15-year payment" value={usd(r.p15) + '/mo'} />
+        <Result label="30-year total interest" value={usd(r.i30)} />
+        <Result label="15-year total interest" value={usd(r.i15)} />
+        <Result label="Interest saved with 15" value={usd(r.saved)} big />
+        <Result label="Extra monthly cost" value={usd(r.diff) + '/mo'} big />
+        <Result label="Extra equity after 5 years" value={usd(r.eq5)} />
+      </div>
+      <p className="text-xs text-muted-foreground">The 15-year wins on math; the 30-year wins on flexibility. Common compromise: take the 30, pay it like a 15 — you keep the safety valve and capture most of the savings.</p>
     </CardContent></Card>
   )
 }

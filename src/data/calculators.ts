@@ -4454,6 +4454,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'average-calculator',
+    title: 'Average Calculator — Mean, Median, Mode, Range & Weighted Average',
+    shortTitle: 'Average Calculator',
+    category: 'School & Science',
+    description:
+      'Paste a list of numbers and get the mean, median, mode, range, sum, and standard deviation — plus a weighted average for grades, share lots, and billable hours.',
+    tagline: 'Paste 12, 18, 7, 18, 25, 9, 31, 14 → mean 16.75, median 16, mode 18. Weighted mode handles grades: 88, 92, 79 at 3/2/4 credits = 84.89.',
+    intro:
+      'The average question looks simple until the data fights back: an outlier drags the mean, the list has an even count so the median splits two values, or every number carries a different weight. This calculator takes a pasted list — commas, spaces, or newlines — and returns every flavor of "average" at once: mean, median, mode, range, standard deviation, and a weighted average when your numbers don\'t all count equally.',
+    howItWorks: [
+      'Paste or type your numbers, separated by commas, spaces, or newlines.',
+      'Read the mean, median, mode, sum, range, and standard deviation instantly.',
+      'Optionally enter matching weights (credit hours, shares, hours) for a weighted average.',
+      'Compare mean vs median — a big gap means outliers are steering the mean.',
+      'Use weighted for grades, cost basis, and any average where items count differently.',
+    ],
+    faq: [
+      {
+        q: 'What is the difference between mean, median, and mode?',
+        a: 'The mean is the arithmetic average — sum divided by count — and it is the right choice for evenly distributed data like test scores or temperatures. The median is the middle value when sorted, and it is the right choice whenever outliers exist: house prices, salaries, and net worth are always reported as medians because one mansion or billionaire drags the mean far from typical. The mode is the most frequent value, useful for categories and inventory (the most-ordered size, the most-common defect). The diagnostic trick: when mean and median disagree significantly, the data is skewed and the median is usually the honest summary. A mean of $95k with a median of $62k in a salary dataset means a few high earners are inflating the "average."',
+      },
+      {
+        q: 'How do I calculate a weighted average?',
+        a: 'Multiply each value by its weight, sum those products, and divide by the sum of the weights. Grades are the classic case: scores of 88, 92, and 79 in courses worth 3, 2, and 4 credits give (88×3 + 92×2 + 79×4) ÷ 9 = 84.89 — the 4-credit 79 pulls harder than the 2-credit 92. Investors use the identical math for cost basis: 100 shares at $40 and 50 at $55 is an average cost of $45, not $47.50. The common mistake is averaging percentages directly — a portfolio up 20% on $10k and down 10% on $50k is not "up 5%"; weight by dollars and it is down 5%. This calculator runs the weighted mean the moment your weights list matches the count of your numbers.',
+      },
+      {
+        q: 'Why is my average different from what the median suggests?',
+        a: 'Because averages hide distribution. The mean is a balance point — every value pulls it — while the median only cares about position, so extreme values move the mean but leave the median untouched. Real estate illustrates it perfectly: five homes sell at $300k, $320k, $340k, $350k, and $1.2M. The mean is $502k; the median is $340k — and $340k is what a typical buyer actually faces. Standard deviation quantifies the spread: a small SD means the mean represents the data well, a large one means it does not. Rule of thumb for reporting: symmetric data → mean; skewed data → median; categories → mode. When in doubt, report both the mean and median — their gap is itself information.',
+      },
+    ],
+  },
+  {
+    slug: '15-vs-30-year-mortgage-calculator',
+    title: '15 vs 30 Year Mortgage Calculator — The Real Cost of the Shorter Loan',
+    shortTitle: '15 vs 30 Year Mortgage',
+    category: 'Housing & Mortgage',
+    description:
+      'Compare a 15-year and 30-year mortgage side by side: monthly payments, total interest, interest saved, and equity after 5 years — with the rate discount priced in.',
+    tagline: '$400k at 6.5% vs 5.875%: the 15-year costs $820 more per month but saves $307,453 in interest and builds $71k more equity in 5 years.',
+    intro:
+      'Every lender quote comes as a fork: 30 years at a higher rate or 15 at a lower one. The 15-year always wins the math — less time AND a lower rate, typically a 0.5–0.75% discount — but costs $800+ more per month on a typical loan, which is real cash-flow risk. This calculator prices both paths on your actual numbers and shows the 5-year equity gap, because that is where the 15-year quietly builds wealth even if you sell early.',
+    howItWorks: [
+      'Enter the loan amount (price minus down payment).',
+      'Enter your quoted 30-year and 15-year rates.',
+      'Compare the two payments and the extra monthly cost of the 15.',
+      'Read total interest for each — the savings figure is usually six digits.',
+      'Check the 5-year equity gap: what the shorter loan builds even if you move.',
+    ],
+    faq: [
+      {
+        q: 'How much cheaper is a 15-year mortgage rate?',
+        a: 'Typically 0.5% to 0.75% below the 30-year rate — on $400,000 that is 6.5% versus about 5.875%. The savings then stack two ways: the lower rate itself, and amortization that is twice as fast, which means interest has half the time to accrue. Result on the example loan: $510,178 of interest over 30 years versus $202,725 over 15 — a difference of $307,453, roughly 77 cents saved for every dollar borrowed. The catch is cash flow: the 15-year payment is $3,348 versus $2,528, and that $820 monthly difference is mandatory. Lenders qualify you on the higher payment, so the 15-year can also shrink the house you are approved for.',
+      },
+      {
+        q: 'Is it smarter to take the 30-year and pay extra?',
+        a: 'For most buyers, yes — and the numbers are surprisingly close. Paying the 15-year amount on a 30-year loan captures roughly 85% of the interest savings while keeping the lower required payment as an emergency valve. Using the example: a $400k 30-year at 6.5% paid at $3,348/month retires in about 16.5 years with about $272k of interest — more than the 15-year\'s $203k because the rate is higher, but with total flexibility. The honest question is behavioral: will you actually send the extra $820 every month for 15 years? If yes, take the 30 and invest the option value. If the discipline is doubtful, the 15-year\'s forced savings is a feature, not a bug.',
+      },
+      {
+        q: 'What if I might move before the loan is paid off?',
+        a: 'The 15-year still wins if you can carry the payment — because amortization speed, not loan length, is what builds equity. After 5 years on $400k at these rates, the 30-year balance is about $374k while the 15-year balance is about $303k: roughly $71,000 more equity to take to the next house. But the payment differential deserves a stress test: if $820/month of forced savings would leave you with no emergency fund, the 30-year is the correct choice regardless of math — a missed payment costs more than decades of interest optimization. The third path: take the 30, autopay the 15-year equivalent, and drop to the required payment in any month life happens. You get 90% of the benefit with none of the fragility.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

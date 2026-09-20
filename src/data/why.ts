@@ -289,6 +289,10 @@ export const WHY_USE: Record<string, string> = {
     'Students use it mid-homework: 3/4 + 2/3 = 17/12 (1 5/12), 1 2/3 × 2 1/4 = 3 3/4 — improper, mixed, reduced, and decimal, every form at once.',
   'simple-interest-calculator':
     'Borrowers use it before signing the short-term note: $5,000 at 7% for 3 years is $1,050 simple — and the calculator shows what compound would have cost for comparison.',
+  'average-calculator':
+    'Anyone with a column of numbers uses it: paste 12, 18, 7, 18, 25, 9, 31, 14 and get mean 16.75, median 16, mode 18 — plus weighted average for grades and share lots.',
+  '15-vs-30-year-mortgage-calculator':
+    'Buyers use it at the rate sheet: $400k at 6.5%/5.875% — the 15-year costs $820 more a month but saves $307,453 in interest. The exact trade-off, in dollars.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':
