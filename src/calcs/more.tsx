@@ -2323,6 +2323,55 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Rule of 55 (IRC §72(t)(2)(A)(v)) — separate from service in or after the calendar year you turn 55 (50 for qualified public-safety employees) and distributions from THAT employer's 401(k)/403(b) skip the 10% early-withdrawal penalty — no 72(t) schedule, no five-year lock, any amounts. The traps that void it: it applies ONLY to the plan of the employer you separated from (old employers' plans don't qualify unless you merge them INTO the current plan BEFORE separating); rolling to an IRA destroys the exception instantly (IRA = back to 59½); the plan must actually allow partial/periodic withdrawals (some only allow lump sums — check the SPD); and ordinary income tax still applies, with 20% mandatory withholding on cash distributions. Node-verified: separate at 56, draw $40k/yr → 3.5 penalty-free years, $140,000 accessible, $14,000 penalty avoided; public-safety at 50 → 9.5 years, $475,000, $47,500; separate at 53 → NOT eligible (rule is the year you turn 55, not "after 55"); at 59 → 0.5 years of coverage.
+export function RuleOf55Calc() {
+  const [sepAge, setSepAge] = useNumber(56)
+  const [balance, setBalance] = useNumber(400000)
+  const [draw, setDraw] = useNumber(40000)
+  const [pub, setPub] = useState(false)
+
+  const r = useMemo(() => {
+    const minAge = pub ? 50 : 55
+    const ok = sepAge >= minAge
+    const yrs = Math.max(0, 59.5 - sepAge)
+    const accessible = Math.min(balance, draw * yrs)
+    const saved = draw * yrs * 0.1
+    return { ok, yrs, accessible, saved, minAge }
+  }, [sepAge, balance, draw, pub])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Age at separation (leaving the job)" value={sepAge} onChange={setSepAge} />
+          <Field label="This employer's 401(k)/403(b) balance" value={balance} onChange={setBalance} prefix="$" />
+          <Field label="Annual draw you'd need" value={draw} onChange={setDraw} prefix="$" />
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={pub} onChange={(e) => setPub(e.target.checked)} className="h-4 w-4" />
+            Public-safety employee (police/fire/EMS — age 50)
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Penalty-free?" value={r.ok ? 'Yes' : 'No'} />
+          <Result label="Years of penalty-free access" value={num(r.yrs, 1)} />
+          <Result label="Accessible over the window" value={usd(r.accessible, 0)} />
+          <Result label="10% penalty avoided" value={usd(r.saved, 0)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.ok ? (
+            <>Separating at {sepAge} qualifies — distributions from THIS employer's plan skip the 10% penalty until 59½: <span className="font-medium">{num(r.yrs, 1)} years, up to {usd(r.accessible, 0)} of draws, avoiding {usd(r.saved, 0)} in penalties</span>. No schedule to follow, no lock-in — take what you need. The kill-shot to avoid: <span className="font-medium">do NOT roll this plan into an IRA</span> — the exception dies the moment the money moves, and you're back to 59½ or a rigid 72(t). If you have older 401(k)s at prior employers, roll those INTO this plan before you separate — they inherit the exception.</>
+          ) : (
+            <>Separating at {sepAge} is too early — the rule requires separation in or after the calendar year you turn {r.minAge}{pub ? ' (public safety)' : ''}. The trap people spring on themselves: "I retired at {sepAge}, I'll just wait till {r.minAge} to touch it" — <span className="font-medium">doesn't work</span>; the separation year is what counts. Working {Math.max(1, Math.ceil(r.minAge - sepAge))} more year{Math.ceil(r.minAge - sepAge) === 1 ? '' : 's'} changes everything: {usd(draw, 0)}/yr penalty-free from then to 59½. Too early to qualify? A 72(t) SEPP on an IRA is the fallback — flexible amounts it is not, but it dodges the same penalty.</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The rule of 55 is the cleanest early-access break in the code: separate from your employer in or after the calendar year you turn 55 — quit, laid off, fired, doesn't matter — and distributions from that employer's 401(k) or 403(b) carry no 10% penalty, in any amounts, on any schedule. Public-safety employees (federal and state/local police, fire, EMS, corrections — and private-sector firefighters under the SECURE 2.0 expansion) qualify at 50. What still applies: ordinary income tax on every dollar, and 20% mandatory federal withholding on distributions paid to you (have taxes settled at filing instead). What voids it: rolling the balance to an IRA (the exception is plan-only), separating even one year too early (it's the separation year, not your age when you withdraw), and plans that don't permit partial withdrawals — read the summary plan description before giving notice. IRAs never qualify. Compare before choosing: the rule of 55 beats 72(t) on flexibility (any amount, stop anytime) but requires leaving the job; a Roth conversion ladder beats both if you have five years of runway. Money left in the plan past 59½ stays penalty-free forever after.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Social Security bridge — what delaying actually COSTS in portfolio terms, and what it buys. Claim early (62): PIA × 70% (FRA 67). Delay to 70: PIA × 124%. The bridge = the checks you skip: early-monthly × months delayed, pulled from your portfolio instead ($1,540 × 96 months = $147,840). The gain: (delayed − early) × 12 = the annuity you bought with that bridge money ($14,256/yr for life, COLA-adjusted, inflation-protected — compare: a $147,840 single-premium annuity at 70 pays roughly $11–13k/yr WITHOUT full COLA). Payback age = delay age + forgone ÷ annual gain — the classic ~80.4 for 62→70 at FRA 67. Implicit payout rate of the bridge "annuity": gain ÷ bridge ≈ 9.6% — far above any safe withdrawal rate, which is why delay is the cheapest longevity insurance available. Node-verified: PIA $2,200/FRA 67 → 62 = $1,540, 70 = $2,728, bridge $147,840, gain $14,256/yr, payback 10.37 yrs (age 80.4); 62→67 → bridge $92,400, gain $7,920/yr, payback 11.7 yrs.
 export function SSBridgeCalc() {
   const [pia, setPia] = useNumber(2200)
@@ -7521,6 +7570,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'rule-of-55-calculator': RuleOf55Calc,
   'social-security-bridge-calculator': SSBridgeCalc,
   'social-security-earnings-test-calculator': SSEarningsTestCalc,
   'hsa-medicare-trap-calculator': HsaMedicareTrapCalc,

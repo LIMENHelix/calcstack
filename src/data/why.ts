@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'rule-of-55-calculator':
+    'Workers eyeing retirement at 55–59 use it before giving notice: separate in the year you turn 55 and that 401(k) opens penalty-free until 59½ — but retiring at 53 never qualifies and rolling to an IRA locks it again, so the sequence is everything.',
   'social-security-bridge-calculator':
     'Pre-retirees use it when "should I delay" gets abstract: delaying 62→70 is a $147,840 portfolio bridge that buys a 9.6% COLA-protected payout for life — breakeven 80.4, and no commercial annuity at 70 matches it.',
   'social-security-earnings-test-calculator':

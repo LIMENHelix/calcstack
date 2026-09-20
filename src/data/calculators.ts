@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'rule-of-55-calculator',
+    title: 'Rule of 55 Calculator 2026 — Penalty-Free 401(k) Access at 55 (and the IRA Rollover That Kills It)',
+    shortTitle: 'Rule of 55',
+    category: 'Retirement',
+    description:
+      'Separate from your job in or after the year you turn 55 (50 for public safety) and that employer\'s 401(k) is penalty-free — any amounts, no schedule. Check eligibility, size the penalty-free window, and see why the IRA rollover destroys it.',
+    tagline: 'Retire at 56 and your 401(k) is open, penalty-free. Roll it to an IRA and it locks until 59½. The order matters.',
+    intro:
+      'The rule of 55 is the cleanest early-access break in the tax code: leave your employer in or after the calendar year you turn 55 — quit, laid off, fired, it doesn\'t matter — and distributions from that employer\'s 401(k) or 403(b) carry no 10% early-withdrawal penalty, in any amounts, on any schedule. Public-safety employees qualify at 50. Yet the rule is surrounded by traps that void it completely: it covers only the plan of the employer you just left, it\'s the separation year that counts (not your age at withdrawal), and rolling the money to an IRA destroys the exception instantly. This calculator checks your eligibility, sizes the penalty-free window to 59½, prices the penalty you avoid, and walks through the merge-old-plans-first move that maximizes the exception.',
+    howItWorks: [
+      'Enter your age in the year you separate from the employer — the year you turn 55 counts in full.',
+      'Enter this employer\'s 401(k)/403(b) balance and the annual draw you\'d need.',
+      'Check public-safety if you\'re police, fire, EMS, or corrections — your threshold is 50.',
+      'Read eligibility, the years of penalty-free access, and the penalty dollars avoided.',
+    ],
+    faq: [
+      {
+        q: 'I retired at 53. Can I use the rule of 55 when I turn 55?',
+        a: 'No — this is the trap that springs most often. The statute keys on when you SEPARATED from service, not when you take the money. Separate at 53 and the plan stays locked under normal rules (59½, or a 72(t) program) no matter how long you wait. It\'s "separation in or after the year you turn 55." This creates real planning leverage in the other direction: if you\'re 54 and miserable, working one more year converts your entire 401(k) into a penalty-free account — sometimes worth negotiating a later exit date specifically for.',
+      },
+      {
+        q: 'Why can\'t I just roll it to an IRA first?',
+        a: 'Because the exception belongs to the employer plan, not to you. IRC 72(t)(2)(A)(v) covers "distributions from a qualified plan" after qualifying separation — IRAs are a different code section with no equivalent. The rollover itself is tax-free, but every distribution from the IRA before 59½ is back to the 10% penalty. The correct sequence if you want to consolidate: roll OLD employers\' plans INTO your current 401(k) before separating (they inherit the rule of 55), separate, then draw. Only roll to an IRA the portion you won\'t need until 59½. Also verify your plan allows partial withdrawals — some plans force an all-or-nothing lump sum, which changes the tax planning entirely.',
+      },
+      {
+        q: 'Does the 20% withholding mean I owe a penalty anyway?',
+        a: 'No — two different things. The 10% early-withdrawal penalty is waived by the rule; the 20% federal withholding on distributions paid to you is just a prepayment of the ordinary income tax you\'d owe anyway, settled at filing. You still owe income tax on every dollar — penalty-free is not tax-free. The planning move for big draws: estimate the year\'s actual tax (a $40,000 draw with no other income is mostly in the 10–12% brackets), and remember withholding is fixed at 20% on plan distributions — you may get a refund, or you may owe more if your bracket is higher. Either way it reconciles on the 1040; the penalty never reappears as long as the separation qualified.',
+      },
+    ],
+  },
+  {
     slug: 'social-security-bridge-calculator',
     title: 'Social Security Bridge Calculator 2026 — What Delaying Costs Your Portfolio vs What It Buys',
     shortTitle: 'SS Bridge Calculator',

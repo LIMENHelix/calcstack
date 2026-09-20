@@ -54,15 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          285 calculators and counting. Newest: the Roth mastery set — the
-          bracket-filler that sizes this year's conversion to the exact dollar,
-          the three 5-year clocks kept straight, the early-retirement
-          conversion ladder, the pro-rata trap checker, the mega-backdoor
-          room finder, and Coast FIRE — the day saving becomes optional.
+          290 calculators and counting. Newest: the Social Security claiming
+          suite — the delay-as-annuity bridge math, the earnings test with the
+          FRA recalculation that pays you back, survivor benefits with the last
+          legal claim-switch, the spousal deemed-filing trap, the Fairness Act
+          restoral, and your PIA from raw earnings.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['roth-conversion-bracket-filler-calculator', 'roth-5-year-rule-calculator', 'roth-conversion-ladder-calculator', 'backdoor-roth-pro-rata-calculator', 'mega-backdoor-roth-calculator', 'coast-fire-calculator'].includes(c.slug),
+            ['social-security-bridge-calculator', 'social-security-earnings-test-calculator', 'survivor-benefit-calculator', 'spousal-social-security-calculator', 'social-security-fairness-act-calculator', 'social-security-pia-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
