@@ -3850,6 +3850,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'taper-calculator',
+    title: 'Taper Calculator — Bompa-Style Volume Descent for Race Week',
+    shortTitle: 'Taper Calculator',
+    category: 'Sports & Fitness',
+    description: 'Plan a proper taper: cut training volume 40–60% over 1–3 weeks while holding intensity. Works in hours, miles, tonnage, or sets — race day lands at the bottom of the descent.',
+    tagline: 'Cut the volume, keep the intensity. The fitness stays, the fatigue leaves.',
+    intro: 'Tudor Bompa\'s taper rule is simple and constantly violated: reduce volume 40–60% in the final weeks while keeping intensity near race pace. A 10-hour training week becomes 6 hours, then 4 — not slower, just shorter. This calculator descends your volume week by week in whatever unit you train in.',
+    howItWorks: [
+      'Enter your normal weekly training volume.',
+      'Pick the unit — hours, miles, tonnage, or sets; the math is identical.',
+      'Set taper length: 1 week for short events, 2–3 for marathons and peak lifts.',
+      'Set final-week volume as a percentage — 40–50% is the classic Bompa target.',
+      'Follow the per-week targets, keeping pace and load heavy while the volume shrinks.',
+    ],
+    faq: [
+      {
+        q: 'How long should a taper be?',
+        a: 'It scales with the event and the training age of the athlete. Bompa\'s periodization calls for 1 week for 5K–10K runners and single-lift meets, 2 weeks for marathons and most strength peaks, and up to 3 weeks for ultramarathons, Ironman-distance triathlons, and athletes coming off very high volume blocks. The most common mistake is tapering too long at too low volume — a 3-week taper with a soft final week bleeds sharpness. The descent should be steep enough that you arrive restless, not stale: if race week feels easy, the taper is right.',
+      },
+      {
+        q: 'Should intensity drop during a taper?',
+        a: 'No — this is the entire point and the most-misunderstood variable in peaking. Intensity (pace, load on the bar, heart rate zones) stays at 90%+ of training norms while volume falls 40–60%. Research on tapering consistently shows that volume-reduced, intensity-maintained tapers outperform both intensity-reduced tapers and full rest, because intensity is the stimulus that preserves neuromuscular readiness and VO2max adaptations. What drops: total reps, total miles, and frequency (roughly one fewer session per week). What never drops: how fast and how heavy the remaining work is.',
+      },
+      {
+        q: 'Can I taper too much?',
+        a: 'Yes, and it usually looks like one of two errors. The first is cutting volume below about 30–35% of normal for more than a few days — detraining begins measurably within about two weeks of very low stimulus, so a deep cut only works in the final days. The second is adding a hard "test" workout inside the taper to check fitness — that workout costs glycogen and fatigue without adaptation time, exactly what the taper exists to eliminate. Trust the descent: the fitness was built in the months before; the taper only reveals it. If you feel flat early in taper week 1, that is normal fatigue leaving, not fitness going.',
+      },
+    ],
+  },
+  {
+    slug: 'christmas-light-install-pricing-calculator',
+    title: 'Christmas Light Installer Pricing Calculator — Per-Foot Rates and Season Revenue',
+    shortTitle: 'Christmas Light Pricing',
+    category: 'Trades & Engineering',
+    description: 'Price holiday light installs by the linear foot with material included, add wreaths and timers, then scale to season revenue from crew capacity and working days. First-year vs rehang pricing shown side by side.',
+    tagline: 'The first install pays for the lights. The rehang is nearly pure margin.',
+    intro: 'A 120-foot roofline at $5.50 a foot with a wreath and timer is a $760 job — and a two-person crew running 3 jobs a day for 45 working days turns that into a $102,600 season. This calculator prices the job, then prices the season, and shows why year-two rehangs are the business.',
+    howItWorks: [
+      'Measure the roofline in linear feet — the pricing unit of the whole industry.',
+      'Set your first-year per-foot rate with commercial-grade lights included ($5–$8/ft typical).',
+      'Add extras: wreaths, timers, tree wraps, ridge-line upgrades.',
+      'Enter crew capacity — jobs per day — and the working days between Thanksgiving and Christmas.',
+      'Read job price, season revenue, and the year-two rehang price that carries the margin.',
+    ],
+    faq: [
+      {
+        q: 'How much should I charge per foot for Christmas light installation?',
+        a: 'The national band for professional install with commercial-grade LED, custom-cut cord, timers, and takedown included runs $5–$8 per linear foot for first-year installs, with $4–$5 for rehangs once you own the customer\'s stored lights. The first-year premium is not margin-grabbing — it covers the material (a 120-ft job carries $150–$250 of lights and cord) and the custom cutting. Never price against the big-box DIY kit; you are selling commercial C9s, exact-fit cord, a timer, takedown in January, and storage — a completely different product that happens to also be lights. Quote per foot, present as a flat job price.',
+      },
+      {
+        q: 'Is a Christmas light installation business profitable?',
+        a: 'The economics are extreme because the season is short and the product is leased: a single 2-person crew at 3 jobs a day grosses roughly $100,000 in 45 days at a $760 average ticket, with labor, insurance, and material as the only real costs. The killer feature is the rehang book — every customer you install this year is a $480–$600 nearly-pure-margin job next November, so year two doubles revenue without doubling marketing. The risks are real though: it is ladder work on frozen roofs (insurance is not optional), the season dies if weather closes December, and cash flow is back-loaded into 6 weeks. The operators who win book rehangs in October before the previous season\'s lights are even down.',
+      },
+      {
+        q: 'How do I get customers for holiday light installation?',
+        a: 'The channel that outperforms everything else is your existing customer base if you run any other home-service business — landscapers, pool services, and pressure washers dominate this niche because the truck, the ladders, the insurance, and the customer list already exist, and the season fills their dead quarter. From zero: yard signs on completed jobs (every install is a billboard in a neighborhood of identical rooflines), Nextdoor and local Facebook groups in September–October, and HOA boards — one HOA approval can be 40 identical jobs. Google Ads works but the CPC spikes in November; the operators printing money stopped buying leads by year three because the rehang book refills the calendar itself.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

@@ -249,6 +249,10 @@ export const WHY_USE: Record<string, string> = {
     'Agents use it to budget Sundays: 6 sign-ins at an 8% funnel is $2,160 of expected commission — $540/hr against $150 of signs, if the sign-in sheet actually gets signed.',
   'online-coaching-pricing-calculator':
     'Trainers use it to escape the calendar: 25 online clients at $200 is $5,000/mo on 18 hours — $277/hr versus the $75/hr ceiling that 30 sessions a month cannot break.',
+  'taper-calculator':
+    'Athletes use it the week it matters: Bompa\'s descent turns a 10-hour week into 6, then 4 — intensity held, fatigue gone, race day at the bottom.',
+  'christmas-light-install-pricing-calculator':
+    'Installers use it to price the season: 120 ft at $5.50 is a $760 job, and 3 jobs a day for 45 days is a $102,600 six-week sprint.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

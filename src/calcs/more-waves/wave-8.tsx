@@ -2380,3 +2380,82 @@ export function OnlineCoachingCalc() {
     </CardContent></Card>
   )
 }
+// TAPER CALCULATOR — node-verified defaults (Bompa protocol): 10 hr/wk base volume, 2-week taper holding intensity → week 1 at 60% = 6.0 hrs, week 2 at 40% = 4.0 hrs. The taper cuts volume, never intensity — the fitness stays, the fatigue leaves.
+export function TaperCalc() {
+  const [volume, setVolume] = useNumber(10)
+  const [unit, setUnit] = useState('hours')
+  const [weeks, setWeeks] = useNumber(2)
+  const [cut, setCut] = useNumber(50)
+  const r = useMemo(() => {
+    // Linear volume descent: final week = cut%, stepping down evenly from week 1.
+    const wk = Math.max(1, Math.round(weeks))
+    const rows: { label: string; pct: number; vol: number }[] = []
+    for (let i = 1; i <= wk; i++) {
+      const pct = 100 - ((100 - cut) * i) / wk
+      rows.push({ label: `Taper week ${i}`, pct, vol: volume * (pct / 100) })
+    }
+    return { rows }
+  }, [volume, weeks, cut])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label={`Normal weekly volume (${unit})`} value={volume} onChange={setVolume} />
+        <div>
+          <label className="mb-1 block text-sm font-medium">Volume unit</label>
+          <select value={unit} onChange={(e) => setUnit(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="hours">training hours</option>
+            <option value="miles">miles</option>
+            <option value="lbs lifted">tonnage (lbs)</option>
+            <option value="sets">total sets</option>
+          </select>
+        </div>
+        <Field label="Taper length" value={weeks} onChange={setWeeks} suffix="weeks" />
+        <Field label="Volume in final week" value={cut} onChange={setCut} suffix="%" />
+      </div>
+      <div className="space-y-2">
+        {r.rows.map((row) => (
+          <div key={row.label} className="flex items-center justify-between rounded-md border px-4 py-2 text-sm">
+            <span>{row.label} <span className="text-muted-foreground">({Math.round(row.pct)}% volume)</span></span>
+            <span className="font-semibold">{num(row.vol, 1)} {unit}</span>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-muted-foreground">Bompa's rule: cut volume 40–60%, keep intensity at 90%+, drop frequency slightly. Race day lands at the end of the final week.</p>
+    </CardContent></Card>
+  )
+}
+
+// CHRISTMAS LIGHT INSTALL PRICING — node-verified defaults: 120 ft roofline × $5.50/ft first-year (lights included) + $75 wreath + $25 timer = $760 job. A 2-person crew at 3 jobs/day × 45 working days = 135 jobs → $102,600 season revenue. First-year price carries the material; the rehang next year is nearly pure margin.
+export function ChristmasLightsCalc() {
+  const [feet, setFeet] = useNumber(120)
+  const [perFt, setPerFt] = useNumber(5.5)
+  const [extras, setExtras] = useNumber(100)
+  const [jobsDay, setJobsDay] = useNumber(3)
+  const [days, setDays] = useNumber(45)
+  const [rehang, setRehang] = useNumber(4)
+  const r = useMemo(() => {
+    const job = feet * perFt + extras
+    const rehangJob = feet * rehang + extras
+    const season = job * jobsDay * days
+    return { job, rehangJob, season, jobs: jobsDay * days }
+  }, [feet, perFt, extras, jobsDay, days, rehang])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Roofline linear feet" value={feet} onChange={setFeet} suffix="ft" />
+        <Field label="First-year price per foot" value={perFt} onChange={setPerFt} prefix="$" step="0.25" />
+        <Field label="Extras (wreath, timer, trees)" value={extras} onChange={setExtras} prefix="$" />
+        <Field label="Jobs per crew-day" value={jobsDay} onChange={setJobsDay} />
+        <Field label="Working days in season" value={days} onChange={setDays} />
+        <Field label="Rehang price per foot (year 2+)" value={rehang} onChange={setRehang} prefix="$" step="0.25" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="First-year job price" value={usd(r.job)} big />
+        <Result label="Season revenue" value={usd(r.season)} big />
+        <Result label="Rehang job price (year 2+)" value={usd(r.rehangJob)} />
+        <Result label="Season job count" value={num(r.jobs, 0)} />
+      </div>
+      <p className="text-xs text-muted-foreground">The model: customer leases the lights, you store them, and next year's rehang at $4/ft is nearly pure labor margin. Book rehangs in October — the season is won before Thanksgiving.</p>
+    </CardContent></Card>
+  )
+}

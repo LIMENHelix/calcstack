@@ -46,6 +46,20 @@ const HOUSE_ADS = [
     img: `${BASE}ads/relay-coffee.jpg`,
   },
   {
+    name: 'Relay — Coffee & Custard',
+    blurb: 'International roasters, espresso makers, and the details that make your morning ritual yours.',
+    cta: 'Start your morning',
+    href: 'https://limenhelix.com/relay',
+    img: `${BASE}ads/relay-mug.jpg`,
+  },
+  {
+    name: 'Relay — Everyday Style',
+    blurb: 'Basics and easy layers that earn their place — wear it your way.',
+    cta: 'Find your layer',
+    href: 'https://limenhelix.com/relay',
+    img: `${BASE}ads/relay-crewneck.jpg`,
+  },
+  {
     name: 'Your business here',
     blurb: 'Put your business in front of people actively doing money math. Drive real traffic.',
     cta: 'Message us to advertise',
