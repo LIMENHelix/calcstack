@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'pest-control-route-calculator':
+    'Pest pros use it before buying or selling a book: 400 quarterly accounts is $16k/mo on a half-full route, $200/hr on route time — and the route itself sells for 15× monthly.',
+  'mobile-grooming-pricing-calculator':
+    'Groomers use it before leaving the salon: 6 dogs at $95 nets $443/day ($68/hr) against the salon\'s $285 commission day — the driveway premium is the whole business.',
   'landscape-install-costing-calculator':
     'Landscapers use it before the quote: materials × 1.2 plus $60/man-hr prices the job at $1,867 against $1,472 true cost — and the maintenance contract attached is the real prize.',
   'tree-service-pricing-calculator':

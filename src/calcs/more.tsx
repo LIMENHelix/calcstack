@@ -7875,6 +7875,107 @@ export function MobileMechanicCalc() {
   )
 }
 
+// PEST CONTROL ROUTE — node-verified defaults: 400 quarterly accounts × $120 = $16,000/mo recurring revenue. 133 stops/mo ÷ 14/day = 9.5 route days = 45% route fill. Gross per route hour: $16,000 ÷ 77.8 route hrs = $205.7/hr; after chem ($400/mo) = $200.5/hr. Pest routes print because one quarterly visit anchors 3 months of revenue — density decides how much of the calendar is profit.
+export function PestRouteCalc() {
+  const [accts, setAccts] = useNumber(400)
+  const [qPrice, setQPrice] = useNumber(120)
+  const [chem, setChem] = useNumber(3)
+  const [stopsDay, setStopsDay] = useNumber(14)
+  const [stopMin, setStopMin] = useNumber(25)
+  const [driveMin, setDriveMin] = useNumber(10)
+
+  const r = useMemo(() => {
+    const moRev = (accts * qPrice) / 3
+    const moStops = accts / 3
+    const routeDays = stopsDay > 0 ? moStops / stopsDay : 0
+    const fill = (routeDays / 21) * 100
+    const dayHrs = (stopsDay * (stopMin + driveMin)) / 60
+    const routeHrs = routeDays * dayHrs
+    const grossHr = routeHrs > 0 ? moRev / routeHrs : 0
+    const chemMo = moStops * chem
+    const netHr = routeHrs > 0 ? (moRev - chemMo) / routeHrs : 0
+    const routeValue = moRev * 15 // 1.25x annual = 15× monthly
+    return { moRev, moStops, routeDays, fill, grossHr, chemMo, netHr, routeValue }
+  }, [accts, qPrice, chem, stopsDay, stopMin, driveMin])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Quarterly accounts" value={accts} onChange={setAccts} step="25" />
+          <Field label="Quarterly price" value={qPrice} onChange={setQPrice} prefix="$" step="10" />
+          <Field label="Chem per stop" value={chem} onChange={setChem} prefix="$" step="0.5" />
+          <Field label="Stops per day" value={stopsDay} onChange={setStopsDay} step="1" />
+          <Field label="Minutes per stop" value={stopMin} onChange={setStopMin} step="5" />
+          <Field label="Drive min between" value={driveMin} onChange={setDriveMin} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Monthly recurring" value={usd(Math.round(r.moRev))} />
+          <Result label="Route fill" value={`${num(r.fill, 0)}% of capacity`} />
+          <Result label="Net per route hour" value={`${usd(Math.round(r.netHr))}/hr`} big />
+          <Result label="Route sale value" value={usd(Math.round(r.routeValue))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${accts} quarterly accounts at ${usd(qPrice)} is ${usd(Math.round(r.moRev))}/mo of recurring revenue on just ${num(r.routeDays, 1)} route days — ${num(r.fill, 0)}% full. Every route hour nets ${usd(Math.round(r.netHr))}, and the book itself sells for ~15× monthly revenue. The stops between the stops are the only cost that matters.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: monthly recurring = accounts × quarterly price ÷ 3; route days = monthly stops ÷ stops-per-day; route fill = route days ÷ 21 working days; route value ≈ 15× monthly recurring (1.25× annual, the common broker multiple for tight routes). The pest-route economics that make this the quiet money in service businesses: the quarterly contract is an annuity — one 25-minute visit anchors three months of revenue, retention runs 85–90% annually with auto-pay, and the chemical cost is trivial ($2–4/stop), so nearly every dollar above the route-hour cost is margin. Density is everything, same law as pool routes: a stop added between two existing stops costs 10 minutes of drive; one across town costs 40 — at $205/hr of gross route value, the far stop literally pays less than half. Route-fill discipline: below ~60% fill you have a part-time job subsidizing a truck; the growth levers are the neighbor pitch (every service call ends with the three adjacent homes), referral credits ($25–50 per signed quarterly), and buying small routes from retiring operators (15× monthly sounds steep until the density math prices what those accounts do to YOUR route fill). Add-on revenue per stop: mosquito/tick seasonal programs ($80–120/mo in season), termite monitoring stations ($250–400/yr), rodent exclusion work ($500–2,500 project), and bed bug jobs ($1,000–3,000) — the quarterly route is the distribution channel for all of it. The tech wage math: a $20/hr tech running a $16k/mo route leaves ~$12k/mo after wages, chem, and vehicle — the step from tech to owner is one truck and a route book. Compliance note: pesticide applicator licensing is state-gated (certified applicator per location) — the license is cheap, the violations are not. Estimate — your state rules, route GPS log, and retention numbers govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// MOBILE PET GROOMING — node-verified defaults: 6 dogs × $95 = $570/day over 6.5 route hrs (45 min groom + 20 min drive). Costs: fuel $25 + supplies $8/dog ($48) + van day $40 + insurance $14 = $127 → net $443/day = $68.15/hr. Salon groomers earn $20–25/hr wage or 50% commission on the same grooms — the van premium is the business.
+export function MobileGroomingCalc() {
+  const [avg, setAvg] = useNumber(95)
+  const [dogs, setDogs] = useNumber(6)
+  const [groomMin, setGroomMin] = useNumber(45)
+  const [driveMin, setDriveMin] = useNumber(20)
+  const [supplies, setSupplies] = useNumber(8)
+  const [vanDay, setVanDay] = useNumber(40)
+  const [days, setDays] = useNumber(21)
+
+  const r = useMemo(() => {
+    const revDay = avg * dogs
+    const hrsDay = (dogs * (groomMin + driveMin)) / 60
+    const costDay = 25 + supplies * dogs + vanDay + 14
+    const netDay = revDay - costDay
+    const hr = hrsDay > 0 ? netDay / hrsDay : 0
+    const moNet = netDay * days
+    const salonSame = avg * 0.5 * dogs // 50% commission model
+    return { revDay, hrsDay, costDay, netDay, hr, moNet, salonSame }
+  }, [avg, dogs, groomMin, driveMin, supplies, vanDay, days])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Avg groom price" value={avg} onChange={setAvg} prefix="$" step="5" />
+          <Field label="Dogs per day" value={dogs} onChange={setDogs} step="1" />
+          <Field label="Minutes per groom" value={groomMin} onChange={setGroomMin} step="5" />
+          <Field label="Drive min between" value={driveMin} onChange={setDriveMin} step="5" />
+          <Field label="Supplies per dog" value={supplies} onChange={setSupplies} prefix="$" step="1" />
+          <Field label="Van cost/day" value={vanDay} onChange={setVanDay} prefix="$" step="5" />
+          <Field label="Days per month" value={days} onChange={setDays} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Day revenue" value={usd(Math.round(r.revDay))} />
+          <Result label="Net per day" value={usd(Math.round(r.netDay))} />
+          <Result label="Net per hour" value={`${usd(Math.round(r.hr))}/hr`} big />
+          <Result label="Month net" value={usd(Math.round(r.moNet))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${dogs} grooms at ${usd(avg)} is ${usd(Math.round(r.revDay))}/day — net ${usd(Math.round(r.netDay))} after the van, fuel, and supplies, ${usd(Math.round(r.hr))}/hr over ${num(r.hrsDay, 1)} route hours. A salon pays a commission groomer ${usd(Math.round(r.salonSame))} for the same dogs. The driveway is the whole difference.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: day net = dogs × price − (fuel + supplies × dogs + van payment/insurance day share); hourly = day net ÷ (groom + drive minutes). The mobile-grooming economics: the convenience premium is real and large — mobile grooms price 30–60% ABOVE salon prices ($95 vs $60–70) because you are selling the driveway: no drop-off, no cage drying, no anxious dog in a lobby, one-on-one attention; price like the premium service you are, not like a salon on wheels. Capacity is the constraint: 5–7 dogs/day is the honest ceiling (the bath-dry-trim cycle plus drive time), which is why the pricing must carry the day — 6 dogs at $95 nets ${'$'}443/day, but 6 dogs at $65 salon pricing nets $263, and the van costs the same either way. The route law applies: cluster bookings by neighborhood on set days (Tuesday is Oak Hill day), enforce a service radius with a travel surcharge beyond it, and the 20-minute gaps shrink to 8 — the difference between 5 dogs and 7 dogs at the same price is the year's profit. Retention is the moat: rebook the next appointment before the dog leaves the van (6–8 week cycles), and a full book of 120–150 recurring households is a sellable business, not a job. Upsell lines with margin: de-shedding treatments (+$20–40), nail trims between grooms ($20, 10 minutes), teeth and ears add-ons, and senior/anxious-dog premium slots (booked double-time, priced accordingly). The costs that bite: van conversion ($30–70k new, less used — amortize over 5 years into the day rate), generator/inverter maintenance, water logistics, and grooming insurance (the dog in your care is someone's family member — liability is not optional). Physical note: grooming wrecks backs and wrists — the ceiling on dogs/day is also a career-length decision; price so the ceiling is enough. Estimate — your booking log and van payment book govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // LANDSCAPE INSTALL JOB COSTING — node-verified defaults: 12 yds mulch @ $38 + plants $380 + edging $120 = $956 materials; 2 crew × 6h × $22 = $264 labor; equipment $60; 15% overhead on direct = $192 → $1,472 true cost. Sell at materials × 1.2 + 12 man-hrs × $60 = $1,867 → $395 profit (21.2%). Installs run half the margin of maintenance — the book must know which it's selling.
 export function LandscapeInstallCalc() {
   const [mats, setMats] = useNumber(956)
@@ -14613,6 +14714,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'pest-control-route-calculator': PestRouteCalc,
+  'mobile-grooming-pricing-calculator': MobileGroomingCalc,
   'landscape-install-costing-calculator': LandscapeInstallCalc,
   'tree-service-pricing-calculator': TreeServiceCalc,
   'hvac-flat-rate-pricing-calculator': HvacFlatRateCalc,

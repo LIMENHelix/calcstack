@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'pest-control-route-calculator',
+    title: 'Pest Control Route Calculator — Recurring Revenue, Route Fill, and the Sale Value of the Book',
+    shortTitle: 'Pest Control Route',
+    category: 'Freelance & Career',
+    description:
+      'Model a pest control route honestly: quarterly accounts into monthly recurring revenue, route fill percentage, net per route hour, and what the book sells for at broker multiples.',
+    tagline: '400 quarterly accounts is $16,000/mo on a half-full route — every route hour nets $200, and the book itself sells for 15× monthly.',
+    intro:
+      'Pest control is the quiet annuity of service businesses: one 25-minute quarterly visit anchors three months of revenue, chemicals cost $3 a stop, and retention runs near 90% with auto-pay. Four hundred quarterly accounts at $120 is $16,000 a month of recurring revenue on a route that is only 45% full — and route books trade at roughly 15× monthly revenue. This calculator models your accounts, pricing, and stop times into monthly recurring, route fill, net per route hour, and what the book is worth.',
+    howItWorks: [
+      'Enter quarterly account count and price — monthly recurring revenue appears.',
+      'Enter stops per day and minutes per stop plus drive time.',
+      'Read route days used and the fill percentage of a 21-day month.',
+      'Enter chemical cost per stop — read net per route hour.',
+      'Read the route\'s sale value at the broker multiple (~15× monthly).',
+    ],
+    faq: [
+      {
+        q: 'What is a pest control route worth when selling?',
+        a: 'Tight residential routes trade at roughly 1.25–1.75× annual recurring revenue — about 15–21× the monthly number, $240,000 for the example book — with the multiple driven by density, retention, and contract quality rather than raw account count. What raises the multiple: accounts clustered so a tech services 14+ per day, auto-pay penetration above 80%, written agreements with annual terms, low cancellation history you can document, and service notes that transfer. What cuts it: scattered geography, verbal agreements, one-time-heavy revenue mixed into the "recurring" claim, and accounts priced below market that the buyer must re-price (and lose a slice of) post-sale. Selling process: brokers and the big nationals both buy routes — the nationals pay for strategic density in their map; brokers reach the independent buyers who pay more for a full route with the seller\'s transition help. The buy-side version: buying a retiring operator\'s book at 15× monthly is cheap when those accounts slot between your existing stops — the density math prices what they do to YOUR route fill, which is worth more than the revenue alone.',
+      },
+      {
+        q: 'How do I grow a pest control route profitably?',
+        a: 'Density first, then add-ons, never discount sprawl. The neighbor pitch is the highest-ROI move: every service call ends with the three adjacent homes — a stop added between two existing stops costs 10 minutes of drive, while one across town costs 40, and at $200+/hr of route value the far stop pays less than half. Referral credits ($25–50 per signed quarterly) outperform ads because they arrive pre-sold and pre-located next to existing stops. Route-fill discipline: below roughly 60% fill you have a part-time job subsidizing a truck — focus marketing inside the existing map until the route tightens. Then the add-on ladder per stop: mosquito and tick seasonal programs ($80–120/mo in season), termite monitoring ($250–400/yr), rodent exclusion projects ($500–2,500), and bed bug work ($1,000–3,000) — the quarterly route is the distribution channel for all of it, and add-ons raise revenue per stop without adding stops. Buying routes from retiring operators beats organic growth when the geography overlaps — the calculator\'s sale-value line prices what you should pay.',
+      },
+      {
+        q: 'What does it take for a pest tech to go independent?',
+        a: 'One truck, the license, and a route book — the math is unusually kind. A $20/hr tech running a $16k/mo route leaves roughly $12k/mo after wages, chemicals, and vehicle costs, which is why technicians eventually notice. The legal gate: pesticide applicator licensing is state-controlled — you need the certified applicator credential (and in most states a licensed qualifier attached to the business) before the first paying spray; the exams are passable, the violations are not. The startup path that works: work a route for 2–3 years (learn the chemistry, the calendar, and the customer conversations), get licensed, buy a used truck and the core equipment ($15–25k all-in), and seed the book with a purchased partial route plus the neighbor-pitch engine — NOT by discounting below market, because cheap accounts churn and stay cheap. Insurance: general liability plus pollution/chemical coverage — the drift claim is the industry\'s lawsuit. The retention spine: auto-pay, annual agreements, and a service-guarantee callback policy — free re-service between visits is cheap insurance that keeps cancellations under 10%.',
+      },
+    ],
+  },
+  {
+    slug: 'mobile-grooming-pricing-calculator',
+    title: 'Mobile Pet Grooming Pricing Calculator — Day Rate, True Hourly, and the Van Premium',
+    shortTitle: 'Mobile Grooming Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price mobile grooming against the real day: grooms per day, drive time, van costs — net per hour versus what a salon commission would pay for the same dogs.',
+    tagline: 'Six dogs at $95 nets $443 a day — $68/hr — while the salon pays a commission groomer $285 for the same dogs. The driveway is the difference.',
+    intro:
+      'Mobile grooming is a pricing lesson wrapped in a van: the same groom that bills $65 in a salon bills $95 in the driveway, because you are selling one-on-one attention, no cage drying, and no drop-off logistics. Six dogs a day nets $443 after the van, fuel, and supplies — $68 an hour across 6.5 route hours — while a salon commission groomer takes home $285 for the identical work. This calculator runs your prices, route density, and van costs into the real day.',
+    howItWorks: [
+      'Enter your average groom price and dogs per day.',
+      'Enter groom minutes and drive minutes between stops.',
+      'Enter supplies per dog, van cost per day, and working days per month.',
+      'Read day revenue, day net, and net per route hour.',
+      'Compare against the salon-commission line — the premium you keep.',
+    ],
+    faq: [
+      {
+        q: 'How much should mobile grooming cost?',
+        a: '30–60% above salon pricing, and do not apologize for it — you are not a salon on wheels, you are a premium service that eliminates drop-off logistics, cage drying, lobby anxiety, and multi-dog wait times. Market rates run $85–150+ depending on region, breed size, and coat condition, with doodle coats and de-matting priced as the labor they are. The pricing architecture: base by weight class, coat-condition surcharges quoted from photos at booking (a matted doodle is a two-hour job — price it or dread it), de-shedding treatments at +$20–40, and senior/anxious-dog premium slots booked at double time. The capacity math is why the price must carry the day: 5–7 dogs is the honest daily ceiling (bath-dry-trim cycle plus drive time), so six dogs at $95 nets $443 while the same six at salon pricing nets $263 — the van payment does not care which you charged. Membership-style standing appointments (every 6–8 weeks, auto-booked) fill the book and kill the re-marketing cost.',
+      },
+      {
+        q: 'Mobile grooming vs working at a salon — which pays more?',
+        a: 'Mobile, decisively, once the book fills — the example nets $443/day ($68/hr, ~$9,300/mo) against $285/day on 50% commission for the same grooms. The trade is the van and the book-building year: a grooming van runs $30–70k new (less used), conversion maintenance and generator care are real, and the first 6–12 months of route-building pay below the salon wage while the recurring book fills. The salon path has its own ceiling: commission groomers top out around 50–60% of service revenue, house grooming at a salon is capped by table count and the owner\'s pricing, and the wage floor states are pushing employed grooming toward hourly-plus-commission hybrids. The hybrid many groomers run: keep 2 salon days for stability while the mobile book fills — the salon days also feed the mobile waitlist. Physical economics matter more here than anywhere: grooming wrecks backs and wrists, so the dogs-per-day ceiling is also a career-length decision — price so the ceiling is enough, and the premium pricing is what makes fewer dogs sustainable.',
+      },
+      {
+        q: 'How do I fill a mobile grooming route efficiently?',
+        a: 'Route density is the entire game — the 20-minute gap between stops is where profit leaks. Cluster bookings by neighborhood on fixed days (Tuesday is Oak Hill day), publish a service radius with a travel surcharge beyond it, and watch 5 dogs become 7 at the same price — that difference is the year\'s profit. The rebooking discipline: book the next appointment before the dog leaves the van — 6–8 week cycles on standing appointments — because a full book of 120–150 recurring households is a sellable business, not a job. Acquisition that works: vet offices and boarding facilities (referral partnerships), breed-specific Facebook groups and Nextdoor (doodle owners find each other), and the van itself as a billboard — wrap it. Between-groom nail trims ($20, 10 minutes) fit the gaps between full grooms and keep dogs on the books. Cancellation policy: 48-hour notice with a fee — a missed mobile slot cannot be backfilled that day, unlike a salon walk-in. Insurance note: the dog in your van is someone\'s family member — grooming liability coverage (including animal bailee) is not optional, and it is priced into the day rate here.',
+      },
+    ],
+  },
+  {
     slug: 'landscape-install-costing-calculator',
     title: 'Landscape Install Job Costing Calculator — Materials Markup, Man-Hour Rate, True Margin',
     shortTitle: 'Landscape Install Costing',
