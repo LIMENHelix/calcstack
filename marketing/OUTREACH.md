@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 470 calculators live (698 indexed pages). Domain live at calcstack.app;
+**Status: 500 calculators live (~730 indexed pages incl. state variants). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -875,3 +875,9 @@ trying-to-conceive communities (r/TryingForABaby, r/ovulation), and general
 "how do I convert X" search traffic. The unit converter and average calculator
 are the most linkable assets in this wave — pitch to homework-help blogs and
 teacher resource pages.
+
+Milestone wave: **500 calculators live**. Closed out with the kitchen & time suite
+(recipe scaler, countdown, time duration, markdown, oven temp, cups-to-grams).
+All public-facing count displays unified to one derived number (CALCULATORS.length
+= 500) — title, hero, search bar, directory, advertise page, and index.html meta
+all read from the same source, so the count can never drift again.
