@@ -4321,7 +4321,7 @@ export const CALCULATORS: CalculatorMeta[] = [
       },
       {
         q: 'Why do doctors count pregnancy from the last period?',
-        a: 'Historical practicality: the LMP is a date most people know, while conception almost always happens later (about day 14 of a 28-day cycle) and is rarely known exactly. So "40 weeks of pregnancy" includes roughly two weeks before conception occurred — at "4 weeks pregnant," the embryo is barely implanted. This is why the conception-date option in this calculator adds 266 days (280 − 14) instead. IVF pregnancies count from embryo transfer with the embryo's age added — a day-5 blastocyst transfer uses transfer + 261 days. Same 40-week math, better-known starting line.',
+        a: 'Historical practicality: the LMP is a date most people know, while conception almost always happens later (about day 14 of a 28-day cycle) and is rarely known exactly. So "40 weeks of pregnancy" includes roughly two weeks before conception occurred — at "4 weeks pregnant," the embryo is barely implanted. This is why the conception-date option in this calculator adds 266 days (280 − 14) instead. IVF pregnancies count from embryo transfer with the embryo\'s age added — a day-5 blastocyst transfer uses transfer + 261 days. Same 40-week math, better-known starting line.',
       },
       {
         q: 'What are the trimester milestones?',
