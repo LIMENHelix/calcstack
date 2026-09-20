@@ -193,6 +193,10 @@ export const WHY_USE: Record<string, string> = {
     'Business owners use it before quoting a discount: a 10% cut at 30% margin needs +50% volume to break even — discounts come 100% out of margin, and "make it up on volume" is the most expensive sentence in small business.',
   'payment-terms-calculator':
     'Business owners use it before setting invoice terms: 2/10 net 30 is a 36.5% APR decision, and a $50k invoice floating to 60 days on an 8% credit line is a hidden $658 price cut.',
+  'price-raise-calculator':
+    'Business owners use it before the price-increase letter: a 10% raise with 5% churn adds $29,700/yr and tolerates 28.6% churn before losing — the clients who leave over $15/mo were your most expensive revenue.',
+  'saas-creep-calculator':
+    'Business owners use it quarterly: a $2,400/mo stack at 8% vendor creep costs $93,496 over 3 years, and the surveyed 30–45% shelfware share means the audit hour is the best-paid hour of the quarter.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

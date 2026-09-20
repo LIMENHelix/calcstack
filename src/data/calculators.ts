@@ -2973,6 +2973,68 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'price-raise-calculator',
+    title: 'Price Raise Calculator — Churn-vs-Price Math: How Many Clients You Can Lose and Still Win',
+    shortTitle: 'Price Raise Churn Math',
+    category: 'Freelance & Career',
+    description:
+      'Should you raise prices? The breakeven churn — how many clients a raise can lose before it stops paying — with profit deltas, handling tactics, and why the churn you get is the churn you wanted.',
+    tagline: 'A 10% raise with 5% churn adds $29,700/yr of profit — and tolerates losing 28.6% of clients before it stops winning. Your churn fear is not priced correctly.',
+    intro:
+      'The raise-your-prices decision is mirror-image of the discount trap: price increases flow almost entirely to margin because cost per client does not rise. The math at the defaults — 200 clients at $150/mo, 25% margin, a 10% raise with 5% churn — profit climbs $29,700 a year WHILE serving 10 fewer clients, and the raise keeps winning until churn passes 28.6%. Real churn on a well-handled raise runs 2–8%, not the 20% owners imagine. And the clients who do leave are disproportionately the slow-paying, high-support ones — the churn you get is the churn you wanted. This calculator prices your raise, your churn, and your breakeven.',
+    howItWorks: [
+      'Enter client count, average price, and gross margin.',
+      'Enter the raise percentage you are considering.',
+      'Enter the churn you honestly expect (2–8% is the well-handled range).',
+      'Read the profit delta and the breakeven churn — the number your fear should be compared against.',
+    ],
+    faq: [
+      {
+        q: 'How do I raise prices without triggering an exodus?',
+        a: 'Handling beats timing, and both beat silence. Notice: 60–90 days minimum — same-month raises read as ambushes and convert grumbling into shopping. Reason with substance: pair the letter with something concrete — a service improvement, faster turnaround, added report — not "costs have gone up" (your costs are not their problem), but what they GET. Grandfather strategically: your best 10–20% of clients by profit get 6 months at the old rate or a smaller bump — retention where it pays, and the gesture generates loyalty worth more than the concession. Confidence is the multiplier: the letter states the new price and the date, full stop — apologetic hedging ("unfortunately," "we hope you understand") invites negotiation, while a matter-of-fact raise with a reason converts. What never works: sneaking it into a renewal without notice (that is how you become the villain in their retelling) and raising during their crisis. Frequency discipline: 5% every year beats 20% every four years — predictable small raises normalize the motion, while the big catch-up raise is the one that triggers the real exodus. The clients lost to a well-handled raise were leaving at the next raise anyway.',
+      },
+      {
+        q: 'Why is the breakeven churn so high?',
+        a: 'Because of where the money flows — the same asymmetry that makes discounts deadly, running in your favor. A price raise adds revenue with zero added cost: on a $150 client costing you $112.50 to serve, the 10% raise turns $37.50 of margin into $52.50 — a 40% jump per retained client. Churned clients, meanwhile, take their revenue AND their costs with them: losing a client costs you only the $37.50 margin, not the $150 revenue. So each retained client funds the loss of nearly half a churned one — the breakeven lands at 28.6% in the default case, and higher at thinner margins (a 10% raise at 40% margin tolerates 40%+ churn). The practical read: if your honest churn estimate is single digits — and for well-handled raises to sticky B2B services, it is — the raise is not a risk decision, it is a collection decision: you are already earning the money, you are just not invoicing it. The sensitivity table to run in this calculator: your raise at 5%, 10%, and 15% churn. If it wins at 15%, send the letter.',
+      },
+      {
+        q: 'Which clients should get the raise and which should not?',
+        a: 'Segment before you send — a flat raise to a mixed base is leaving money and loyalty on the table. Tier by profitability, not revenue: your per-client margin varies wildly, and the raise should concentrate where the relationship is healthy. Full raise: profitable clients with low service intensity and market-rate alternatives — they stay. Grandfathered or phased: your top-decile relationships — the strategic accounts where 6 extra months at the old price buys goodwill that outvalues the delta. Higher-than-average raise: the below-market legacy clients — the ones priced at 2019 rates who consume 2026 support; either they reprice to reality or they churn, and both outcomes are wins (this is the segment where the breakeven churn math is most forgiving). Deliberate churn pricing: the genuinely unprofitable — slow payers, scope-creepers, support hogs — get the aggressive number; if they leave, profit rises, and if they stay, they finally pay for themselves. The analysis to run first: revenue and true cost-to-serve per client (support tickets, payment slowness, revision cycles) — most owners can name their top ten revenue clients and not their top ten profit clients, and the lists rarely match. The make-ready principle applies here: know your numbers per client before the letter, and the letter writes itself.',
+      },
+    ],
+  },
+  {
+    slug: 'saas-creep-calculator',
+    title: 'SaaS Subscription Creep Calculator — Shelfware Waste, Vendor Price Creep, and the Audit Payback',
+    shortTitle: 'SaaS Creep Audit',
+    category: 'Freelance & Career',
+    description:
+      'What your software stack really costs over time — vendor price creep compounding, the 30–45% shelfware share industry surveys keep finding, and the quarterly audit that reclaims it.',
+    tagline: 'A $2,400/mo stack at 8% vendor creep becomes $2,799/mo by year 3 — $93,496 total, and $37,399 of it is shelfware. The quarterly audit is the highest-ROI hour in your quarter.',
+    intro:
+      'SaaS spend grows in silence: vendors raise list prices 5–10% a year, forced tier upgrades add features nobody uses, and seat counts drift up with hiring and never drift down. A $2,400/month stack at 8% creep costs $93,496 over three years — and industry surveys (Flexera, Gartner) keep finding 30–45% of it is shelfware: unused logins, duplicated tools, zombie trials that converted. That is $37,399 of waste hiding in the card statements. The fix is boring and brutal: a quarterly audit with last-login data, three buckets (kill, downgrade, negotiate), and a renewal calendar that ends auto-renewal as a business model. This calculator sizes your creep and your reclaim.',
+    howItWorks: [
+      'Enter total monthly SaaS spend from the card statements.',
+      'Enter the annual creep rate (8% is the observed average; check your renewal notices).',
+      'Enter the shelfware share — 30–45% is the surveyed range; run last-login data for yours.',
+      'Set the horizon and read total spend, waste, and what the audit reclaims monthly.',
+    ],
+    faq: [
+      {
+        q: 'How do I actually run the audit?',
+        a: 'Ninety minutes, quarterly, with statements and login data. Step one — the export: pull every recurring software charge from the card and bank statements (search for the vendors AND the payment processors — plenty of tools bill through Paddle, Stripe, or app stores under unrecognizable names); every mystery charge is investigated, not assumed. Step two — the inventory: for each tool, name the owner (a person, not a department), the purpose, the seat count versus actual logins (admin consoles or your identity provider show last-login; 90 days idle is the kill threshold), and the renewal date. Step three — three buckets: KILL (no logins, duplicated function — you do not need two project trackers or three e-sign tools), DOWNGRADE (seats set at hire-date peaks, tiers bought for one feature, annual plans on zombies — monthly is cheaper for anything you might cancel), and NEGOTIATE (everything else: at renewal, 60 days out, with a credible cancellation threat — vendors staff retention desks with real discount authority, and 10–30% concessions are routine). Step four — the calendar: every renewal date in a shared calendar with a 60-day alert, because auto-renewal is the creep delivery mechanism and the alert is the kill switch. The first audit routinely finds 20–40% of spend; later audits hold the line.',
+      },
+      {
+        q: 'Why does the stack keep growing in the first place?',
+        a: 'Because buying is easy and owning is invisible — the failure is structural, not personal. The acquisition pattern: someone hits a 2-hour problem, finds a tool, and puts $40/seat × 15 seats on a card — $7,200/yr for a problem a spreadsheet solved free; multiplied by every team lead with a card, the stack doubles annually. The visibility failure: SaaS lands on cards, not POs, so nobody owns the total — finance sees charges, IT sees logins, owners see their tool, and nobody sees the stack. The seat drift: seats get added at onboarding and removed at nobody\'s offboarding — ex-employee licenses are the purest shelfware, and identity-provider reports make them findable in minutes. The bundling miss: Microsoft 365 and Google Workspace tiers quietly include half the point tools you pay for separately — Teams versus Slack, Planner versus Trello, Forms versus SurveyMonkey; the bundle you already own is the first place to cut. And the tier trap: vendors design feature gates so the ONE feature you need lives in the tier above — sometimes the fix is a workaround, sometimes a competitor, sometimes just paying it knowingly. The structural fix: one owner per tool, one card for software, a 60-day renewal alert, and procurement-lite approval past $50/mo — not bureaucracy, just a second pair of eyes asking "does something we own already do this?"',
+      },
+      {
+        q: 'When is paying for the tool the right call?',
+        a: 'When it prices against labor honestly — the comparison this calculator quietly implies. A $50/mo tool that saves an employee 2 hours a month at a $40 loaded hourly is a 60% ROI before counting errors avoided; the tools that survive audit do that math out loud. The keep-test, applied per tool: name the workflow it owns, measure the hours it saves or the revenue it touches, and divide — cost per hour saved under $20 is usually a keep, over $100 needs a story. Consolidation candidates that survive scrutiny: the CRM (migration cost exceeds most savings — switching CRMs is surgery), the accounting stack, and anything holding historical data with compliance value. The opposite failure to avoid: cutting a $200/mo tool that quietly carries a workflow, then paying $8,000 of consultant time to rebuild it — the audit kills zombies, not load-bearing walls. And the forward discipline: every new tool enters with an owner, a renewal date, and a success metric written down — "we bought it to cut proposal time from 4 hours to 1" — so next quarter\'s audit has something to measure. The stack that survives four quarterly audits is usually half the size, a third cheaper, and better loved, because the tools that remain are the ones people actually open.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

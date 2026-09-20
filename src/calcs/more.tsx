@@ -6795,6 +6795,101 @@ export function PaymentTermsCalc() {
   )
 }
 
+// PRICE RAISE CHURN MATH — node-verified defaults: 200 clients at $150/mo, cost $112.50/client (25% margin). Raise 10% to $165 with 5% churn (10 clients): profit goes 200×$37.50 = $7,500/mo → 190×$52.50 = $9,975/mo → +$29,700/yr WITH fewer clients to serve. Breakeven churn: 28.6% — the raise tolerates losing more than a quarter of the client base and still wins. The mirror of the discount calculator: price rises flow ~100% to margin too.
+export function PriceRaiseCalc() {
+  const [n, setN] = useNumber(200)
+  const [price, setPrice] = useNumber(150)
+  const [margin, setMargin] = useNumber(25)
+  const [raise, setRaise] = useNumber(10)
+  const [churn, setChurn] = useNumber(5)
+
+  const r = useMemo(() => {
+    const cost = price * (1 - margin / 100)
+    const oldP = n * (price - cost)
+    const newPrice = price * (1 + raise / 100)
+    const newN = n * (1 - churn / 100)
+    const newP = newN * (newPrice - cost)
+    const delta = (newP - oldP) * 12
+    const beN = newPrice > cost ? oldP / (newPrice - cost) : Infinity
+    const beChurn = isFinite(beN) ? Math.max(0, (1 - beN / n) * 100) : 100
+    return { newPrice, newN: Math.round(newN), oldP, newP, delta, beChurn }
+  }, [n, price, margin, raise, churn])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Clients" value={n} onChange={setN} step="10" />
+          <Field label="Avg price" value={price} onChange={setPrice} prefix="$" suffix="/mo" step="10" />
+          <Field label="Gross margin" value={margin} onChange={setMargin} suffix="%" step="5" />
+          <Field label="Raise" value={raise} onChange={setRaise} suffix="%" step="1" />
+          <Field label="Expected churn" value={churn} onChange={setChurn} suffix="%" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Profit delta /yr" value={`${r.delta >= 0 ? '+' : '−'}${usd(Math.abs(Math.round(r.delta)))}`} big />
+          <Result label="Clients after churn" value={`${r.newN}`} />
+          <Result label="New price" value={usd(Math.round(r.newPrice))} />
+          <Result label="Breakeven churn" value={`${num(r.beChurn, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.delta >= 0
+            ? `The ${raise}% raise with ${churn}% churn adds ${usd(Math.round(r.delta))}/yr of profit — and you could lose up to ${num(r.beChurn, 0)}% of clients before it stops winning. The clients who leave over ${usd(Math.round(r.newPrice - price))}/mo were your most expensive revenue anyway.`
+            : `At ${churn}% churn the raise destroys ${usd(Math.abs(Math.round(r.delta)))}/yr — either the churn estimate is pessimistic or the margin is too thin for this raise. Run the churn sensitivity before sending the letter.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: profit = clients × (price − cost per client) before and after; breakeven churn = how many clients you can lose while keeping profit flat. The asymmetry that makes raises safe: price increases flow almost entirely to margin (cost per client does not rise), so a 10% raise at 25% margin adds 40% to per-client profit — while churn removes the revenue AND its costs. Real-world churn on a well-handled raise is 2–8%, not the 20% owners fear — clients weigh switching costs, and $15/mo rarely justifies a move. Handling is everything: 60–90 days notice, grandfather the best clients 6 months, pair the letter with a concrete improvement, and never apologize — a confident raise with reasons converts better than a timid one. The churn you get is the churn you wanted: price-sensitive clients are disproportionately the slow-paying, high-support ones — losing the bottom 5% at full margin while keeping 95% at +10% is the double win this math formalizes. Raise annually, small and predictable — 5%/yr every year beats 20% every four years, because the big catch-up raise is what triggers the real exodus. Estimate — your client concentration and switching costs govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// SAAS SUBSCRIPTION CREEP — node-verified defaults: $2,400/mo stack, 8%/yr vendor creep (seat price rises, tier upsells), 40% shelfware (Gartner/Flexera put unused-or-underused SaaS at ~30–45% of spend). 3-year spend $93,496; shelfware waste $37,399; year-3 monthly $2,799 without adding a single tool. The audit pays for itself: cancel the zombies, downgrade the seats, and the 8% creep fights the remaining stack alone.
+export function SaasCreepCalc() {
+  const [mo, setMo] = useNumber(2400)
+  const [creep, setCreep] = useNumber(8)
+  const [shelf, setShelf] = useNumber(40)
+  const [yrs, setYrs] = useNumber(3)
+
+  const r = useMemo(() => {
+    let tot = 0
+    let p = mo * 12
+    for (let y = 0; y < yrs; y++) {
+      tot += p
+      p *= 1 + creep / 100
+    }
+    const waste = tot * (shelf / 100)
+    const lastMo = mo * Math.pow(1 + creep / 100, yrs - 1)
+    const saveMo = mo * (shelf / 100)
+    return { tot, waste, lastMo, saveMo }
+  }, [mo, creep, shelf, yrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Monthly SaaS spend" value={mo} onChange={setMo} prefix="$" step="100" />
+          <Field label="Annual vendor creep" value={creep} onChange={setCreep} suffix="%/yr" step="1" />
+          <Field label="Shelfware share" value={shelf} onChange={setShelf} suffix="%" step="5" />
+          <Field label="Horizon" value={yrs} onChange={setYrs} suffix="yrs" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label={`${yrs}-yr total spend`} value={usd(Math.round(r.tot))} />
+          <Result label="Shelfware waste" value={usd(Math.round(r.waste))} big />
+          <Result label={`Monthly in year ${yrs}`} value={usd(Math.round(r.lastMo))} />
+          <Result label="Audit saves /mo" value={usd(Math.round(r.saveMo))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Without touching a single tool, your ${usd(mo)}/mo stack becomes ${usd(Math.round(r.lastMo))}/mo by year ${yrs} — ${usd(Math.round(r.tot))} total, of which ${usd(Math.round(r.waste))} is shelfware. The quarterly audit that kills the unused 40% is the highest-ROI hour in your quarter.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: spend compounds at the vendor creep rate (list-price rises, forced tier upgrades, seat count drift); shelfware share is the unused/underused fraction — industry surveys (Flexera, Gartner) consistently find 30–45% of SaaS spend unused. The audit that works: export the card statements, list every subscription with owner and last-login (SaaS management tools or a spreadsheet), then three buckets — kill (no logins in 90 days, duplicated function), downgrade (annual-vs-monthly is backwards for zombies; seat counts set at hire-date peaks), and negotiate (everything else, at renewal, with a cancellation threat — vendors have retention desks with real authority). The structural fixes: one owner per tool with a renewal date in a shared calendar 60 days out (auto-renewal is the creep delivery mechanism), procurement-lite approval for anything over $50/mo, and a per-seat chargeback mentality — departments feel costs they see. Watch the acquisition math: every tool bought to solve a 2-hour problem at $40/seat × 15 seats is $7,200/yr — the spreadsheet it replaces was free. Bundle check: Microsoft/Google workspace tiers already include half the point tools you are paying for separately. Estimate — your actual statements and login data govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12496,6 +12591,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'tuition-reimbursement-calculator': TuitionReimbursementCalc,
   'discount-leverage-calculator': DiscountLeverageCalc,
   'payment-terms-calculator': PaymentTermsCalc,
+  'price-raise-calculator': PriceRaiseCalc,
+  'saas-creep-calculator': SaasCreepCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
