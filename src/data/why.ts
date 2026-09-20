@@ -149,6 +149,10 @@ export const WHY_USE: Record<string, string> = {
     'Homeowners use it before buying new HVAC equipment: ducts leak 20–30% of conditioned air — $405/yr at typical spend — and sealing pays back in 2.6 years while new equipment on leaky ducts delivers old efficiency.',
   'induction-vs-gas-calculator':
     'Homeowners use it before replacing a range: induction costs ~$47/yr more than gas at typical rates, so the switch never pays back on energy — the honest case is boil time, safety, and kitchen air quality.',
+  'waterproofing-roi-calculator':
+    'Homeowners with wet basements use it before signing a waterproofing contract: 5%/yr flood risk on $12,000 damage is $600/yr of expected loss — and the standard homeowners policy covers none of it, so expected value is the whole story.',
+  'radon-mitigation-calculator':
+    'Homeowners use it after a radon test: mitigating 6→2 pCi/L removes 16.5 per 1,000 of lung-cancer risk for a smoker ($73 per point) versus 1.9 for a never-smoker ($643 per point) — radon math is smoking math.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

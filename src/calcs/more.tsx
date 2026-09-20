@@ -5770,6 +5770,100 @@ export function InductionVsGasCalc() {
   )
 }
 
+// BASEMENT WATERPROOFING ROI — node-verified defaults: interior drain + sump $5,000; flood probability 5%/yr × $12,000 avg damage = $600/yr expected loss → 8.3-yr payback; breakeven probability 4.2%/yr over a 10-yr horizon. Finished basement ($30,000 damage) → $1,500/yr expected, 3.3-yr payback. KEY honest point: standard homeowners insurance does NOT cover groundwater seepage/flooding — that loss is 100% yours absent a flood policy, which is why expected-value math applies cleanly here.
+export function WaterproofingRoiCalc() {
+  const [cost, setCost] = useNumber(5000)
+  const [prob, setProb] = useNumber(5)
+  const [dmg, setDmg] = useNumber(12000)
+  const [yrs, setYrs] = useNumber(10)
+
+  const r = useMemo(() => {
+    const expYr = (prob / 100) * dmg
+    const payback = expYr > 0 ? cost / expYr : Infinity
+    const breakevenProb = dmg > 0 ? (cost / yrs / dmg) * 100 : 0
+    const horizonEV = expYr * yrs - cost
+    return { expYr, payback, breakevenProb, horizonEV }
+  }, [cost, prob, dmg, yrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Waterproofing quote" value={cost} onChange={setCost} prefix="$" step="500" />
+          <Field label="Flood probability" value={prob} onChange={setProb} suffix="%/yr" step="1" />
+          <Field label="Damage per flood" value={dmg} onChange={setDmg} prefix="$" step="1000" />
+          <Field label="Ownership horizon" value={yrs} onChange={setYrs} suffix="yrs" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Expected loss /yr" value={usd(Math.round(r.expYr))} />
+          <Result label="Payback" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} big />
+          <Result label={`${yrs}-yr net value`} value={usd(Math.round(r.horizonEV))} />
+          <Result label="Breakeven risk" value={`${num(r.breakevenProb, 1)}%/yr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {prob >= r.breakevenProb
+            ? `At ${prob}%/yr flood risk the math says do it: ${usd(Math.round(r.expYr))}/yr of expected loss against a ${usd(cost)} fix — payback in ${num(r.payback, 1)} years, and remember your standard policy covers NONE of a groundwater flood.`
+            : `At ${prob}%/yr the pure expected-value math (${usd(Math.round(r.expYr))}/yr) does not justify ${usd(cost)} over ${yrs} years — unless the basement is finished, you store valuables there, or one flood would wreck you financially. Expected value ignores ruin; your savings account cannot.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: expected annual loss = flood probability × damage per event; payback = cost ÷ expected loss; breakeven risk = the probability where the fix pencils over your horizon. The insurance trap to know BEFORE the water rises: standard homeowners policies exclude groundwater seepage and flooding entirely — a sump rider ($50–100/yr) covers sump failure only, and flood insurance (NFIP ~$700–1,400/yr) is a separate policy with a 30-day wait. Damage-per-flood ranges wildly: $3,000–5,000 for an unfinished basement cleanup, $10,000–15,000 with flooring and drywall, $25,000+ for a finished basement with contents — FEMA says one inch of water causes ~$25,000 of damage. Cheapest-first sequencing: gutters and grading ($200–2,000) solve a surprising share of basement water before any interior drain is cut — run the gutter and downspout numbers first, then the french drain sizing, then this ROI on whatever risk remains. Resale angle: a warranted waterproofing system with transferable warranty often returns its cost at sale by removing the #1 inspection scare. Estimate — a waterproofing inspection and your local flood history govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// RADON MITIGATION — node-verified defaults: EPA lifetime lung-cancer risk at 4 pCi/L ≈ 7/1000 (never-smokers) and 62/1000 (smokers) → 1.75 and 15.5 per 1000 per pCi/L-lifetime. Home at 6 pCi/L mitigated to 2 over 20 of 75 years of exposure: reduction = (6−2)×(20/75) = 1.067 pCi-lifetime-equivalents → 1.87/1000 (never) and 16.5/1000 (smoker). $1,200 mitigation → $643 per 1/1000 of risk removed (never) vs $73 (smoker). EPA action level 4 pCi/L; WHO recommends 2.7. Mitigation (sub-slab depressurization) typically $800–1,500 and also removes a sale-blocking inspection flag.
+export function RadonMitigationCalc() {
+  const [level, setLevel] = useNumber(6)
+  const [post, setPost] = useNumber(2)
+  const [yrs, setYrs] = useNumber(20)
+  const [smoker, setSmoker] = useState('never')
+  const [cost, setCost] = useNumber(1200)
+
+  const r = useMemo(() => {
+    const perPci = smoker === 'smoker' ? 62 / 4 : smoker === 'former' ? 30 / 4 : 7 / 4
+    const reduction = Math.max(level - post, 0) * (yrs / 75) * perPci // per 1000
+    const costPerPoint = reduction > 0 ? cost / reduction : Infinity
+    const aboveAction = level >= 4
+    return { reduction, costPerPoint, aboveAction }
+  }, [level, post, yrs, smoker, cost])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Measured radon" value={level} onChange={setLevel} suffix="pCi/L" step="0.5" />
+          <Field label="Post-mitigation level" value={post} onChange={setPost} suffix="pCi/L" step="0.5" />
+          <Field label="Years in the home" value={yrs} onChange={setYrs} suffix="yrs" step="5" />
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Smoking history</label>
+            <select value={smoker} onChange={(e) => setSmoker(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="never">Never smoked</option>
+              <option value="former">Former smoker</option>
+              <option value="smoker">Current smoker</option>
+            </select>
+          </div>
+          <Field label="Mitigation quote" value={cost} onChange={setCost} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Risk reduction" value={`${num(r.reduction, 2)} per 1,000`} big />
+          <Result label="Cost per 1/1000 removed" value={isFinite(r.costPerPoint) ? usd(Math.round(r.costPerPoint)) : '—'} />
+          <Result label="EPA action level" value={r.aboveAction ? 'At / above 4 — act' : 'Below 4'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {smoker === 'never'
+            ? `Mitigating from ${level} to ${post} pCi/L removes ${num(r.reduction, 2)} in 1,000 lifetime lung-cancer risk — ${usd(Math.round(r.costPerPoint))} per point for a never-smoker. Below the EPA action level it is a judgment call; above 4, mitigation is the standard advice.`
+            : `For a ${smoker === 'smoker' ? 'smoker' : 'former smoker'}, radon is a multiplier, not an addition — the same mitigation removes ${num(r.reduction, 2)} per 1,000 of risk at ${usd(Math.round(r.costPerPoint))} per point. Radon-plus-smoking is the worst combination in residential health; mitigation here is close to mandatory math.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: EPA risk estimates scale roughly linearly with pCi/L and exposure duration — lifetime risk at 4 pCi/L is ~7 per 1,000 for never-smokers and ~62 per 1,000 for smokers; this tool prorates your level, years, and smoking status against those anchors. Radon is the #2 cause of lung cancer in the US (~21,000 deaths/yr per EPA) and the #1 cause among never-smokers — an odorless soil gas that enters through slab cracks and sump pits. Testing first, always: a $15–25 charcoal kit (or $150 pro test) over 48–96 hours with closed-house conditions; test the lowest lived-in level, in winter when the stack effect peaks. Mitigation is sub-slab depressurization — a fan-piped vent under the slab, $800–1,500 typical, one day of work, usually cutting levels 50–99%; retest after. The resale reality: radon above 4 surfaces on inspection and buyers demand mitigation or credit anyway — mitigating before listing converts a negotiation panic into a receipt. New construction: radon-resistant rough-in costs ~$350 during the build versus $1,200+ retrofit. Estimate — EPA risk models and your measured levels govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11449,6 +11543,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'heat-pump-water-heater-calculator': HeatPumpWaterHeaterCalc,
   'duct-sealing-roi-calculator': DuctSealingRoiCalc,
   'induction-vs-gas-calculator': InductionVsGasCalc,
+  'waterproofing-roi-calculator': WaterproofingRoiCalc,
+  'radon-mitigation-calculator': RadonMitigationCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

@@ -2276,6 +2276,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'waterproofing-roi-calculator',
+    title: 'Basement Waterproofing ROI Calculator — Expected Flood Loss vs the Quote, Insurance Reality Included',
+    shortTitle: 'Waterproofing ROI',
+    category: 'Home & Yard',
+    description:
+      'Should you waterproof the basement? Expected annual flood loss (probability × damage) against the contractor quote — payback, breakeven risk level, and why your homeowners policy covers none of it.',
+    tagline: 'A 5%-per-year flood risk on $12,000 of damage is $600/yr of expected loss — a $5,000 waterproofing job pays back in 8.3 years. Your standard policy covers zero of it.',
+    intro:
+      'Waterproofing quotes arrive with fear attached; the honest evaluation is expected value. A basement with a 5%-per-year flood risk and $12,000 of damage per event carries $600/yr of expected loss — a $5,000 interior-drain-and-sump job pays back in 8.3 years, and a finished basement at $30,000 of damage cuts that to 3.3. The detail that changes the math: standard homeowners insurance excludes groundwater seepage and flooding entirely, so the loss is 100% yours without a separate flood policy or sump rider. Sequence it cheapest-first — gutters and grading fix a surprising share of basement water before anyone cuts concrete — then run the remaining risk here. This calculator gives payback, the breakeven risk level, and the honest verdict.',
+    howItWorks: [
+      'Enter the waterproofing quote (interior drain + sump typically $3,000–8,000).',
+      'Estimate annual flood probability from your history, neighbors, and flood maps.',
+      'Enter damage per flood: $3–5k unfinished cleanup, $10–15k with finishes, $25k+ finished basement.',
+      'Set your ownership horizon.',
+      'Read expected annual loss, payback, net horizon value, and the breakeven risk level.',
+    ],
+    faq: [
+      {
+        q: 'Will insurance cover basement flooding?',
+        a: 'Assume no until verified in writing. Standard HO-3 homeowners policies exclude flood and groundwater seepage — the two ways basements actually flood. What MIGHT be covered: sudden internal events (burst pipe, water-heater rupture) and, only with a specific rider, sump-pump failure or sewer backup ($50–100/yr for $10–25k of coverage — buy this if you have a sump). True flood coverage is a separate policy: NFIP runs $700–1,400/yr for most zones with a 30-day waiting period, and private flood insurers now compete in many markets. The claims reality that stings: even covered water events come with deductibles, content exclusions below grade, and rate consequences. This is why waterproofing ROI math is cleaner than most home projects — there is usually no insurer standing between you and the loss, so expected value is the whole story. Check your declarations page for the water-damage exclusions before assuming anything.',
+      },
+      {
+        q: 'What is the right order of operations for a wet basement?',
+        a: 'Cheapest and most likely first, because most basement water is a roof-and-grade problem in disguise. Step one ($0–50): extend every downspout 6–10 feet from the foundation and clean gutters — overflowing gutters dump hundreds of gallons directly at the footing in a single storm. Step two ($200–2,000): regrade soil to slope 6 inches over the first 10 feet away from the house, and window-well covers below grade. Step three ($500–1,500): crack injection for specific foundation cracks leaking at identifiable points. Only then step four ($3,000–8,000): interior perimeter drain with sump pump — the fix that manages water rather than blocking it, and the standard professional answer. Exterior excavation waterproofing ($15,000+) is rarely the first move despite being the most thorough. A waterproofing company quoting step four before asking about gutters is selling, not diagnosing. Run whatever risk remains after the cheap fixes through this calculator.',
+      },
+      {
+        q: 'Does waterproofing pay back at resale?',
+        a: 'Often better than the expected-value math suggests, for a behavioral reason: water history is the #1 inspection panic trigger, and buyers price unknown water risk far above its expected cost. A disclosed past leak without a fix can cost $10,000–20,000 in negotiation or kill deals entirely, while a documented waterproofing system with a transferable warranty converts the same history into a solved problem — some markets treat the warranty as a selling point. The resale math: if the system costs $5,000 and removes a $10,000+ negotiation haircut, it returns over 100% at sale regardless of whether a flood ever occurs. The documentation discipline that makes this work: keep the contract, the warranty transfer paperwork, and before/after photos, and disclose properly — undisclosed water history discovered later is a lawsuit, not a negotiation. If you are within 2–3 years of selling, weight the resale angle heavily; if you are staying 10+, the expected-value math in this calculator is the cleaner guide.',
+      },
+    ],
+  },
+  {
+    slug: 'radon-mitigation-calculator',
+    title: 'Radon Mitigation Cost Calculator — Risk Reduction Per Dollar, EPA Levels, Smoking Multiplier',
+    shortTitle: 'Radon Mitigation ROI',
+    category: 'Home & Yard',
+    description:
+      'What a radon mitigation system buys in risk reduction — EPA lifetime-risk anchors prorated to your level and years, the smoking multiplier, cost per point of risk removed, and the resale angle.',
+    tagline: 'Mitigating 6→2 pCi/L removes 16.5 per 1,000 of lung-cancer risk for a smoker — $73 per point. For a never-smoker the same system is $643 per point. Radon math is smoking math.',
+    intro:
+      'Radon is the #2 cause of lung cancer in the US and the #1 cause among never-smokers — an odorless soil gas entering through slab cracks, fixable for $800–1,500 with sub-slab depressurization. Whether it pencils depends on arithmetic most contractors skip: EPA lifetime risk at the 4 pCi/L action level is ~7 per 1,000 for never-smokers but ~62 per 1,000 for smokers — the same mitigation from 6 to 2 pCi/L removes 16.5 per 1,000 of risk for a smoker (about $73 per point at $1,200) versus 1.9 per 1,000 for a never-smoker ($643 per point). This calculator prices your level, your years in the home, and your smoking status honestly — plus the resale reality that radon above 4 surfaces on every inspection.',
+    howItWorks: [
+      'Enter your measured radon level — from a real test, not a guess ($15–25 charcoal kit, 48–96 hours).',
+      'Enter the expected post-mitigation level (2 pCi/L is a fair planning number).',
+      'Enter how many years the household has lived / will live there.',
+      'Select smoking status — the EPA risk multiplier depends on it.',
+      'Enter the mitigation quote; read risk removed and cost per point.',
+    ],
+    faq: [
+      {
+        q: 'How do I test correctly?',
+        a: 'Cheaply and carefully, because test conditions change the number. A $15–25 charcoal short-term kit from any hardware store, placed in the lowest lived-in level of the home (the basement you use, or the first floor if the basement is storage), for 48–96 hours with windows and exterior doors closed except normal entry — the closed-house condition matters because ventilation dilutes the reading. Test in winter if you can: the stack effect (warm house pulling soil gas upward) peaks in heating season, giving the conservative number. Avoid testing in storms or high wind, which skew results. If the short-term test reads 4–10, confirm with a long-term alpha-track kit (90+ days, $25–30) before spending $1,200 — radon fluctuates seasonally and a single short test can over- or under-read. Readings above 10 justify faster action: a pro continuous-monitor test ($150) and a mitigation quote in parallel. And retest after mitigation — the installer should guarantee a post-mitigation number in writing.',
+      },
+      {
+        q: 'What does mitigation actually involve?',
+        a: 'Sub-slab depressurization, and it is less invasive than it sounds: a 4-inch PVC pipe core-drilled through the slab (or into the sump pit), run to an inline fan, and vented above the roofline — the fan creates negative pressure under the slab so soil gas goes up the pipe instead of into the house. One day of work, $800–1,500 in most markets (higher for large footprints, crawlspace encapsulation add-ons, or finished basements where pipe routing is harder), and typically a 50–99% reduction in levels. Operating cost is trivial — the fan draws 40–90 watts, roughly $50–110/yr of electricity. Maintenance: check the manometer (the little U-tube gauge) occasionally to confirm the fan runs; fans last 10–15 years and cost $150–250 to replace. What NOT to do: sealing cracks alone does not fix radon (the house just pulls harder elsewhere), and ventilation-only approaches work inconsistently. Get 2–3 quotes from certified mitigators (state radon offices maintain lists) — the technique is standardized enough that price shopping is legitimate.',
+      },
+      {
+        q: 'Should I mitigate below the 4 pCi/L action level?',
+        a: 'The honest answer is that 4 is a policy line, not a safety cliff — EPA itself says consider fixing between 2 and 4, and WHO recommends action at 2.7. The risk is roughly linear, so 4 pCi/L is not twice as dangerous as 2; it is twice the risk, period, with no threshold where it becomes zero. That makes the below-4 decision personal: this calculator exists for exactly that call. The inputs that argue for mitigating below 4: smokers or former smokers in the house (the multiplier), children (long exposure runway), a basement used as living space (levels are usually highest there), and a long ownership horizon. The inputs that argue against: never-smokers, a rarely-used basement, and a level barely above 2. The resale wildcard: buyers increasingly test, and while 4 is the negotiation trigger, a documented low number with an installed system is a listing asset. At $800–1,200 against decades of exposure, many families treat it as cheap insurance — that is a legitimate use of expected-value math with anxiety priced in.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
