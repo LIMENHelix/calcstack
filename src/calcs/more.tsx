@@ -5372,6 +5372,50 @@ export function SolarLeaseBuyCalc() {
   )
 }
 
+// SOLAR QUOTE CHECKER — $/W against benchmarks, the only number that matters. Node-verified: 8 kW quoted at $28k = $3.50/W gross ($2.45/W after the 30% credit) — national benchmark $2.50–3.00/W pre-credit for standard residential → HIGH; overpay vs $2.75 = $6,000. Benchmarks: standard roof-mount residential $2.50–3.00/W pre-credit (2025–26, EnergySage marketplace data territory); premium (microinverters + difficult roof) $3.00–3.25; above $3.25/W the answer is more quotes, not yes. Honest edges: compare GROSS $/W, not "net payment" (dealer-fee financing hides 20-30% in the loan — a "$24k cash-equivalent" at 1.99% is $30k financed; ALWAYS get the cash price — the cash-vs-financed delta IS the dealer fee), get 3+ quotes (marketplace data: shoppers who compare 3+ save 15-20%), system size drives $/W (small systems price higher per watt — fixed costs spread thin), adders priced separately (main-panel upgrade $1.5-3k, roof work, trenching — legitimate but quote them as line items), and the negotiate lever (solar is negotiable like cars: counter at $2.60-2.75/W and watch).
+export function SolarQuoteCalc() {
+  const [watts, setWatts] = useNumber(8000)
+  const [quote, setQuote] = useNumber(28000)
+  const [addOns, setAddOns] = useNumber(0)
+
+  const r = useMemo(() => {
+    const total = quote + addOns
+    const perW = watts > 0 ? total / watts : 0
+    const afterCredit = perW * 0.7
+    const overpay = Math.max(0, (perW - 2.75) * watts)
+    const verdict = perW <= 2.75 ? 'strong' : perW <= 3.25 ? 'fair' : 'high'
+    return { total, perW, afterCredit, overpay, verdict }
+  }, [watts, quote, addOns])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="System size (watts DC)" value={watts} onChange={setWatts} suffix="W" step="500" />
+          <Field label="CASH quote (not financed)" value={quote} onChange={setQuote} prefix="$" step="500" />
+          <Field label="Adders (panel upgrade, roof)" value={addOns} onChange={setAddOns} prefix="$" step="500" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="$/W (gross)" value={`$${num(r.perW, 2)}`} big />
+          <Result label="$/W after 30% credit" value={`$${num(r.afterCredit, 2)}`} />
+          <Result label="Benchmark" value="$2.50–3.00/W" />
+          <Result label="Overpay vs $2.75" value={usd(r.overpay)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.verdict === 'strong'
+            ? `$${num(r.perW, 2)}/W is a strong quote — at or under benchmark. Verify equipment (panel + inverter models) and workmanship warranty, then sign.`
+            : r.verdict === 'fair'
+              ? `$${num(r.perW, 2)}/W is fair but not sharp — counter at $2.60–2.75/W, and get two more quotes first; comparing 3+ saves shoppers 15–20%.`
+              : `$${num(r.perW, 2)}/W is HIGH — ${usd(Math.round(r.overpay))} over the $2.75 benchmark. Get three competing quotes before anything is signed; solar is negotiable like cars.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: total cash price (including adders — panel upgrades $1.5–3k and roof work are legitimate but belong as line items) ÷ DC watts. Benchmarks: standard residential roof-mount $2.50–3.00/W pre-credit (marketplace data territory), premium equipment/difficult roofs $3.00–3.25/W; above $3.25 the answer is more quotes, not yes. THE critical discipline: compare CASH prices — dealer-fee financing hides 20–30% in the loan (a "$24,000 cash-equivalent" at 1.99% APR is often $30,000 financed; the cash-vs-financed delta IS the dealer fee, and it dwarfs any rate advantage). Small systems price higher per watt (fixed costs spread thin — $/W comparisons work best between same-size quotes). Negotiate: counter at $2.60–2.75/W and let the rep call the manager; solar margins absorb it. Verify before signing: exact panel and inverter models (not "tier 1"), 25-yr workmanship warranty (not just equipment), production guarantee in writing, and who services the warranty if the installer vanishes (a real risk in this industry). Estimates — marketplace data and your actual quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11043,6 +11087,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'tou-rate-switch-calculator': TouSwitchCalc,
   'home-battery-roi-calculator': BatteryRoiCalc,
   'solar-lease-vs-buy-calculator': SolarLeaseBuyCalc,
+  'solar-quote-checker-calculator': SolarQuoteCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

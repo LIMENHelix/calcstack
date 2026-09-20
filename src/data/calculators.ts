@@ -1134,6 +1134,36 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'solar-quote-checker-calculator',
+    title: 'Solar Quote Checker 2026 — Is My Quote Fair? $/W Benchmarks, Dealer-Fee Trap & Negotiation Floor',
+    shortTitle: 'Solar Quote Checker',
+    category: 'Home & Yard',
+    description:
+      'Grade a solar quote in seconds: cash price per watt against current benchmarks, the dealer-fee financing trap exposed, and the counter-offer that solar margins actually absorb.',
+    tagline: 'An 8 kW system at $28k is $3.50/W — $6,000 over benchmark. Compare cash prices only: the financed number hides a 20–30% dealer fee.',
+    intro:
+      'Solar quotes hide in monthly payments; the only honest unit is cash dollars per watt. An 8 kW system quoted at $28,000 is $3.50/W — against the $2.50–3.00/W benchmark for standard residential installs (2025–26 marketplace data), that\'s $6,000 of overpay. The financing trap compounds it: dealer fees fold 20–30% into "low-APR" loans, so the financed monthly looks friendly while the real price is $30k on a $24k system — the cash-vs-financed delta IS the dealer fee. The fixes are mechanical: demand the cash price, get three quotes (comparing shoppers save 15–20%), and counter at $2.60–2.75/W — solar margins absorb negotiation like car dealers. This calculator grades your quote in seconds.',
+    howItWorks: [
+      'Enter system size in DC watts from the proposal (not "estimated offset").',
+      'Enter the CASH price — never the financed payment; add panel-upgrade or roof adders.',
+      'Read $/W gross and after the 30% credit, the benchmark verdict, and overpay vs $2.75/W.',
+    ],
+    faq: [
+      {
+        q: 'Why must I compare cash prices, not payments?',
+        a: 'Because dealer-fee financing is where solar margins hide. The mechanism: the installer offers 1.99–3.99% APR, but the LENDER charges a dealer fee of 20–30% of the loan, which the installer folds into the financed price. The $24,000 cash quote becomes $30,000 financed — your "low payment" is a $6,000 price increase wearing a low rate. It also corrupts comparison shopping: two quotes at identical monthly payments can differ by thousands in real price. The discipline: always request the cash price, compare quotes on cash $/W only, then arrange financing separately if needed (credit-union home improvement loans and HELOCs usually beat dealer paper on total cost). Any rep who won\'t state a cash price has answered the question — get the next quote.',
+      },
+      {
+        q: 'What\'s a fair $/W right now?',
+        a: 'For standard residential roof-mount, $2.50–3.00/W pre-credit is the fair band in 2025–26 marketplace data — that\'s the price BEFORE the 30% federal credit, so your net lands at $1.75–2.10/W. Premium configurations (microinverters on every panel, difficult roof planes, ground-mount trenching) justify $3.00–3.25/W. Above $3.25/W, the answer is more quotes, not yes. Two honest adjustments: small systems price higher per watt (permit, design, and mobilization are fixed — a 4 kW quote at $3.30/W can be fairer than it looks), and adders (main-panel upgrade $1,500–3,000, roof repair, long conduit runs) belong as explicit line items, not blended into $/W. And size isn\'t negotiated away: a fair $/W on an oversized system is still overpaying — run your usage first.',
+      },
+      {
+        q: 'How hard can I negotiate?',
+        a: 'Like a car dealership, because the economics rhyme: quotes carry margin specifically for negotiation, and reps have manager-call authority bands. Marketplace data shows shoppers comparing 3+ quotes save 15–20% — the comparison itself is the leverage, since the rep who knows you have competing bids prices to win. The script that works: "I have two other quotes. Your equipment is fine. Match $2.65/W cash and I sign this week." Beyond price, negotiate the terms that cost them less but matter more: 25-year WORKMANSHIP warranty (not just equipment), a production guarantee in writing, and clarity on who services the warranty if the installer disappears (installer failure is a real industry risk — manufacturer warranties survive, labor warranties don\'t). The one thing not to negotiate away: quality equipment and a real workmanship warranty — a cheap quote with 1-year labor coverage is a future leak, not a deal.',
+      },
+    ],
+  },
+  {
     slug: 'solar-lease-vs-buy-calculator',
     title: 'Solar Lease vs Buy Calculator 2026 — The 20-Year Ledger With the Escalator Trap Exposed',
     shortTitle: 'Solar Lease vs Buy',
