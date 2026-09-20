@@ -7875,6 +7875,105 @@ export function MobileMechanicCalc() {
   )
 }
 
+// NURSE AGENCY VS STAFF — node-verified defaults: staff $42/hr × 36h × 52wk = $78,624 base + $6,500 health + 4% match $3,145 = $88,269 total comp ($47.15/hr on paid hours). Agency $62/hr × 36h × 46wk (4wk unpaid + 2wk booking gaps) = $102,672 gross − $5,400 ACA premium = $97,272. Agency wins $9,003 — but ONLY if the calendar stays booked and you fund your own retirement. The $20/hr premium is real; the benefits gap eats a third of it.
+export function NurseAgencyCalc() {
+  const [staffRate, setStaffRate] = useNumber(42)
+  const [agRate, setAgRate] = useNumber(62)
+  const [hrs, setHrs] = useNumber(36)
+  const [agWeeks, setAgWeeks] = useNumber(46)
+  const [health, setHealth] = useNumber(6500)
+  const [matchPct, setMatchPct] = useNumber(4)
+  const [aca, setAca] = useNumber(5400)
+
+  const r = useMemo(() => {
+    const staffBase = staffRate * hrs * 52
+    const match = (staffBase * matchPct) / 100
+    const staffTC = staffBase + health + match
+    const staffHr = hrs * 52 > 0 ? staffTC / (hrs * 52) : 0
+    const agGross = agRate * hrs * agWeeks
+    const agNet = agGross - aca
+    const diff = agNet - staffTC
+    return { staffBase, match, staffTC, staffHr, agGross, agNet, diff }
+  }, [staffRate, agRate, hrs, agWeeks, health, matchPct, aca])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Staff base rate" value={staffRate} onChange={setStaffRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Agency rate" value={agRate} onChange={setAgRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Hours per week" value={hrs} onChange={setHrs} step="2" />
+          <Field label="Booked weeks (agency)" value={agWeeks} onChange={setAgWeeks} step="1" />
+          <Field label="Employer health value" value={health} onChange={setHealth} prefix="$" suffix="/yr" step="500" />
+          <Field label="401(k) match" value={matchPct} onChange={setMatchPct} suffix="%" step="1" />
+          <Field label="Your ACA premium" value={aca} onChange={setAca} prefix="$" suffix="/yr" step="250" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Staff total comp" value={`${usd(Math.round(r.staffTC))} (${usd(Math.round(r.staffHr))}/hr)`} />
+          <Result label="Agency net" value={usd(Math.round(r.agNet))} />
+          <Result label="Agency advantage" value={`${usd(Math.round(r.diff))}/yr`} big />
+          <Result label="Per unbooked week" value={`−${usd(Math.round(agRate * hrs))}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.diff > 0
+            ? `Agency wins by ${usd(Math.round(r.diff))}/yr at ${agWeeks} booked weeks — but the staff job's health plan and match are worth ${usd(Math.round(health + r.match))}, and every unbooked week costs ${usd(Math.round(agRate * hrs))}. The premium is real; so is the gap risk.`
+            : `Staff wins by ${usd(Math.abs(Math.round(r.diff)))}/yr once benefits are priced — the agency premium isn't covering the health plan, the match, and the unbooked weeks at these rates.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: staff total comp = base × hrs × 52 + employer health value + match; agency net = rate × hrs × booked weeks − your ACA premium. What the comparison must include: PTO is hidden money — staff nurses are paid 52 weeks including vacation and sick time; agency pays only booked weeks, so 46 booked weeks is a GOOD agency year (holidays, census drops, between-contract gaps). Retirement: staff match is free money priced here at face value; agency nurses must self-fund an IRA/Solo 401(k) to stay even. Insurance math: ACA premiums after subsidy vary wildly by income and state — run your real quote, and price COBRA or a spouse's plan if available. The agency edge compounds with flexibility (pick up premium shifts, block scheduling, no committee meetings) and erodes with census cancellations — a canceled shift pays $0 where staff gets low-census PTO. Tax note: local agency work (unlike travel contracts) is all taxable W-2 or 1099 — no stipends, no tax-home games — which makes this comparison cleaner than the travel math. When agency clearly wins: you're young and healthy on a spouse's plan, the unit pays big differentials, or you're stacking per-diem on top of a part-time staff job that carries the benefits (the classic hybrid: 2 staff shifts for insurance + agency premium shifts on top). When staff wins: chronic conditions, pension systems, tuition benefits for the NP bridge, and seniority-protected schedules. Estimate — your facility's benefits statement and the agency's real booking history govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// NURSING CERTIFICATION ROI — node-verified defaults: CCRN exam $365 + review course $300 = $665 cost; $2.25/hr cert premium × 1,872 paid hrs = $4,212/yr → payback 1.9 months; 5-year net (one $250 recert) = $20,145. Certification is the highest-ROI money move in bedside nursing — nothing else pays 6× per year on a $665 stake.
+export function NurseCertCalc() {
+  const [exam, setExam] = useNumber(365)
+  const [course, setCourse] = useNumber(300)
+  const [premium, setPremium] = useNumber(2.25)
+  const [hrs, setHrs] = useNumber(36)
+  const [recert, setRecert] = useNumber(250)
+  const [years, setYears] = useNumber(5)
+
+  const r = useMemo(() => {
+    const paidHrs = hrs * 52
+    const upYr = premium * paidHrs
+    const cost = exam + course
+    const paybackMo = upYr > 0 ? (cost / upYr) * 12 : 0
+    const recerts = Math.max(0, Math.floor((years - 1) / 3))
+    const net = upYr * years - cost - recerts * recert
+    return { paidHrs, upYr, cost, paybackMo, net }
+  }, [exam, course, premium, hrs, recert, years])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Exam fee" value={exam} onChange={setExam} prefix="$" step="5" />
+          <Field label="Review course" value={course} onChange={setCourse} prefix="$" step="25" />
+          <Field label="Cert premium" value={premium} onChange={setPremium} prefix="$" suffix="/hr" step="0.25" />
+          <Field label="Hours per week" value={hrs} onChange={setHrs} step="2" />
+          <Field label="Recert fee (3yr)" value={recert} onChange={setRecert} prefix="$" step="25" />
+          <Field label="Years held" value={years} onChange={setYears} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Upfront cost" value={usd(Math.round(r.cost))} />
+          <Result label="Premium per year" value={usd(Math.round(r.upYr))} big />
+          <Result label="Payback" value={`${num(r.paybackMo, 1)} months`} />
+          <Result label={`Net over ${years} yrs`} value={usd(Math.round(r.net))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${usd(Math.round(r.cost))} buys a ${usd(premium)}/hr premium worth ${usd(Math.round(r.upYr))}/yr — paid back in ${num(r.paybackMo, 1)} months, worth ${usd(Math.round(r.net))} over ${years} years. No index fund does this. The only risk is not passing, and the review course is the insurance.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: upfront = exam + review course; annual premium = cert differential × paid hours; payback = cost ÷ annual premium; multi-year net subtracts one recertification per 3 years held. The certification economics bedside nurses miss: differential pay is only the first dividend — certification is also the tiebreaker for ICU/ER/cath-lab transfers, charge-nurse tracks, and magnet-hospital hiring, and those moves are where the compounding happens. The big board certs: CCRN (critical care, AACN, ~$365 exam), CEN (emergency), CNRN (neuro), RNC-OB (OB), CPN (peds), OCN (oncology, ~$420) — each carries a facility differential of $1–3.50/hr where differentials exist. Before paying anything: check your facility's policy — many magnet hospitals reimburse the exam fee on passing, pay for the review course, or both; union contracts often mandate the differential. Eligibility gates the timeline: CCRN requires 1,750 hours of direct bedside care (about a year at full-time ICU), so the optimal move is starting the clock on day one and testing at eligibility. The study math: 80–120 hours over 8–12 weeks, pass rates run 65–80% depending on the cert — a structured review course is the difference between one attempt and two, and a failed attempt costs the fee plus 90 days of premium. Stacking: cert premium + shift differential + charge differential all stack at most facilities — the nurse who stacks all three out-earns the base rate by $6–9/hr, which is $11k–17k/yr on the same license. Estimate — your facility's differential schedule and HR policy govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // BOOKKEEPING SERVICE PRICING — node-verified defaults: 150-txn client at $325/mo taking 3h = $108.33/hr effective ($2.17/txn). Practice of 25 clients × $350 avg = $8,750/mo ($105k/yr) over 80h/mo work = $109.38/hr. Cleanup: 6-month backlog × 2h/mo × $75 = $900 project. Retainers beat hourly when you get faster — hourly pays you less for being good.
 export function BookkeepingPricingCalc() {
   const [retainer, setRetainer] = useNumber(325)
@@ -13902,6 +14001,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'nurse-agency-vs-staff-calculator': NurseAgencyCalc,
+  'nurse-certification-roi-calculator': NurseCertCalc,
   'bookkeeping-pricing-calculator': BookkeepingPricingCalc,
   'tutoring-rate-calculator': TutoringRateCalc,
   'handyman-hourly-rate-calculator': HandymanRateCalc,

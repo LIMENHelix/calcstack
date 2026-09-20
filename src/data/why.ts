@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'nurse-agency-vs-staff-calculator':
+    'Nurses use it before jumping to agency: the $20/hr premium is real but shrinks to $9,003/yr after the health plan, the match, and unbooked weeks — and each gap week costs $2,232.',
+  'nurse-certification-roi-calculator':
+    'Nurses use it before scheduling the exam: $665 for the CCRN pays a $2.25/hr differential — $4,212/yr, payback in 1.9 months, $20k net over five years.',
   'bookkeeping-pricing-calculator':
     'Bookkeepers use it before the proposal: the $325/mo client pays $108/hr effective at 3 hours — and the 6-month backlog is a $900 cleanup project, not a free month one.',
   'tutoring-rate-calculator':

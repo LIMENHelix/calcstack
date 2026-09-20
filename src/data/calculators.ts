@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'nurse-agency-vs-staff-calculator',
+    title: 'Nurse Agency vs Staff Calculator — Per-Diem Premium vs Total Compensation',
+    shortTitle: 'Agency vs Staff Nurse Pay',
+    category: 'Careers & Salary',
+    description:
+      'Compare agency per-diem nursing against a staff position the honest way: benefits priced in dollars, unbooked weeks priced in lost shifts, and the real annual difference.',
+    tagline: 'The $20/hr agency premium shrinks to $9,003/yr once the health plan, the match, and unbooked weeks are priced — still wins, barely.',
+    intro:
+      'Agency recruiters quote the hourly premium; staff jobs hide their value in benefits. A $42/hr staff position with health insurance and a 4% match is really $47.15/hr of total compensation — and a $62/hr agency rate at 46 booked weeks nets $97,272 after buying your own ACA plan. The agency still wins by $9,003 a year, but every unbooked week costs $2,232 and the gap closes fast. This calculator prices both sides completely so the decision is arithmetic, not recruiter talk.',
+    howItWorks: [
+      'Enter your staff base rate and weekly hours — the base is paid 52 weeks.',
+      'Enter the employer health plan value and 401(k) match — staff total comp appears.',
+      'Enter the agency rate and realistic booked weeks (holidays and gaps included).',
+      'Enter your own ACA premium — agency net appears.',
+      'Read the annual difference and the cost of each unbooked week.',
+    ],
+    faq: [
+      {
+        q: 'Is agency nursing really worth it over a staff job?',
+        a: 'At typical spreads, yes but narrowly — the example $20/hr premium compresses to $9,003/yr after the health plan ($6,500 employer value vs your $5,400 ACA premium), the 4% match ($3,145), and the unbooked weeks baked into 46-week years. Agency clearly wins when: you carry insurance through a spouse, the local premium spread is wide (some markets run $25–35/hr), or you run the classic hybrid — part-time staff for benefits plus premium agency shifts on top. Staff clearly wins with chronic conditions (group plans beat ACA pricing), pension systems, tuition benefits for an NP bridge, and seniority-protected schedules. The swing variable is booked weeks: at 44 weeks instead of 46, the agency advantage in the example drops by $4,464.',
+      },
+      {
+        q: 'How many weeks a year do agency nurses actually work?',
+        a: 'Budget 44–48 booked weeks, not 52. Holidays cancel shifts, census drops cancel shifts, and between-contract gaps are unpaid — a canceled agency shift pays $0 where a staff nurse burns low-census PTO and still gets paid. The disciplined approach: track your agency\'s actual cancellation rate for a quarter before leaving staff, and hold 4–6 weeks of expenses in cash as the gap buffer. The upside of the same flexibility: you can stack premium-rate shifts (weekends, nights, hard-to-fill units), block your schedule around life instead of a posted grid, and skip the committee meetings and mandatory education days that pad a staff FTE\'s unpaid time.',
+      },
+      {
+        q: 'What benefits am I actually giving up going agency?',
+        a: 'Price each one in dollars before deciding: employer health insurance (typically $6,000–8,000/yr of employer contribution for employee-only coverage, far more for family plans), the 401(k)/403(b) match (3–6% of base — $2,400–4,700/yr on a staff nurse salary), PTO (staff nurses are paid 52 weeks; agency pays booked weeks only), plus the soft benefits: tuition reimbursement, certification reimbursement, disability and life insurance, and seniority protections. The agency nurse replaces retirement with an IRA or Solo 401(k) — same tax shelter, no match — and health insurance with an ACA plan, where subsidies vary sharply by income and state. Run your real ACA quote, not an average: the subsidy cliff makes some agency nurses\' coverage cheap and others\' ruinous. Local agency work is plain taxable W-2 or 1099 income — no stipends, no tax-home strategy — which keeps this comparison clean, unlike the travel-contract math.',
+      },
+    ],
+  },
+  {
+    slug: 'nurse-certification-roi-calculator',
+    title: 'Nursing Certification ROI Calculator — CCRN, CEN, OCN: Payback in Months, Not Years',
+    shortTitle: 'Nursing Cert ROI',
+    category: 'Careers & Salary',
+    description:
+      'Compute the payback on a nursing board certification: exam and review course cost against the hourly differential, with recert fees and multi-year net.',
+    tagline: 'A $665 CCRN stake pays a $2.25/hr premium — $4,212 a year, paid back in 1.9 months, $20k over five years.',
+    intro:
+      'Board certification is the highest-return money move in bedside nursing: a CCRN costs about $665 all-in (exam plus review course) and pays a $2.25/hr differential at facilities that offer one — $4,212 a year on a 36-hour week, paid back in under two months, worth $20,145 net over five years after recertification. And the differential is only the first dividend: certification is the tiebreaker for ICU transfers, charge tracks, and magnet-hospital hiring. This calculator runs your cert, your premium, and your hours.',
+    howItWorks: [
+      'Enter the exam fee and review course cost for your certification.',
+      'Enter your facility\'s cert differential per hour and your weekly hours.',
+      'Read the annual premium and the payback period in months.',
+      'Enter the recertification fee and years held — read the multi-year net.',
+      'Check HR first: many facilities reimburse the exam on passing.',
+    ],
+    faq: [
+      {
+        q: 'Which nursing certifications pay a differential?',
+        a: 'The major board certs each carry differentials where facilities offer them: CCRN (critical care, AACN, ~$365 exam), CEN (emergency), CNRN (neuroscience), RNC-OB (obstetrics), CPN (pediatrics), and OCN (oncology, ~$420 exam). Differentials typically run $1–3.50/hr and — critically — stack with shift and charge differentials at most facilities: a certified night-charge nurse can out-earn base by $6–9/hr, which is $11,000–17,000 a year on the same license. The differential is policy, not law: magnet hospitals and union contracts are most likely to mandate it, so read your facility\'s differential schedule before assuming the premium. Where no differential exists, certification still pays through the transfer and promotion tiebreakers — ICU, cath lab, and charge positions screen for it.',
+      },
+      {
+        q: 'Does my hospital pay for the exam?',
+        a: 'Often, yes — check before spending. Many magnet hospitals reimburse the exam fee on passing, some pay for the review course, and union contracts frequently mandate both. The typical policy requires pre-approval: file the education-reimbursement form BEFORE registering, pass, submit the score report and receipt, and the fee comes back in a paycheck or two. Some employers instead pay a one-time certification bonus ($500–1,500) or an annual recognition payment. The stack that costs you nothing: employer reimburses the exam, the differential pays $4,000+/yr, and the only real investment left is the 80–120 study hours. If your facility offers neither differential nor reimbursement, the certification still prices well against a job change — it is the portable credential that travels to the employer who does pay for it.',
+      },
+      {
+        q: 'When should I take the CCRN or CEN exam?',
+        a: 'At eligibility, not when you feel ready — eligibility itself is the timeline. CCRN requires 1,750 hours of direct bedside care of acutely ill patients (about a year at full-time ICU), so the optimal strategy is starting that clock deliberately from day one in the unit, then testing at eligibility while the clinical material is daily life. Study investment runs 80–120 hours over 8–12 weeks; first-attempt pass rates run roughly 65–80% depending on the cert, and a structured review course is the difference between one attempt and two — a failed attempt costs the fee, 90 days of differential, and momentum. Recertification runs every 3 years by CE credits or retest (~$250), priced into the multi-year math here. The career compounding: cert holders get the transfer interviews, the charge-nurse consideration, and the resume line that survives every reorganization — the differential is the annuity, the mobility is the option value.',
+      },
+    ],
+  },
+  {
     slug: 'bookkeeping-pricing-calculator',
     title: 'Bookkeeping Pricing Calculator — Retainers, Effective Hourly, and Cleanup Fees',
     shortTitle: 'Bookkeeping Pricing',

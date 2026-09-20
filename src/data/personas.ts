@@ -207,14 +207,15 @@ export const PERSONAS: Persona[] = [
       'How fast can I kill my nursing school loans?',
     ],
     calcSlugs: [
-      'nurse-shift-pay-calculator',
+      'nurse-agency-vs-staff-calculator',
+      'nurse-certification-roi-calculator',
       'travel-nurse-pay-calculator',
+      'nurse-shift-pay-calculator',
+      'pslf-calculator',
+      'benefits-value-calculator',
       'overtime-calculator',
-      'salary-to-hourly-calculator',
       'paycheck-calculator',
-      'paycheck-withholding-calculator',
       'w4-withholding-calculator',
-      'bonus-tax-calculator',
       'pto-accrual-calculator',
       '401k-contribution-calculator',
       'hsa-vs-fsa-calculator',
@@ -222,8 +223,6 @@ export const PERSONAS: Persona[] = [
       'loan-payoff-calculator',
       'debt-avalanche-snowball-calculator',
       'savings-goal-calculator',
-      'compound-interest-calculator',
-      'percentage-calculator',
     ],
     faq: [
       {
