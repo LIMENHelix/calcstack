@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'roth-5-year-rule-calculator',
+    title: 'Roth 5-Year Rule Calculator 2026 — Conversions, Contributions, Earnings: Three Clocks',
+    shortTitle: 'Roth 5-Year Rule',
+    category: 'Retirement',
+    description:
+      'There are three separate Roth 5-year clocks: contributions are always free, each conversion seasons individually (10% penalty if under 59½), and earnings are qualified only after 59½ AND five tax years from your first Roth ever. Find your exact penalty-free date.',
+    tagline: 'A 2022 conversion clears on Jan 1, 2027 — regardless of when in 2022 you made it. Know your dates before you touch the money.',
+    intro:
+      'The "Roth 5-year rule" is actually three different clocks running at once, and confusing them costs real money. Contributions come out first and are always tax- and penalty-free at any age. Each Roth conversion carries its OWN 5-year clock — under 59½, withdrawing converted principal within five tax years of the conversion triggers a 10% penalty, and because the clock starts January 1 of the conversion year, a December 2022 conversion is "five years old" on January 1, 2027. Earnings are the strictest: they\'re tax-free only when you\'re 59½ AND at least five tax years have passed since your FIRST Roth account of any kind. Withdrawals follow IRS ordering rules — contributions first, then conversions oldest-first, then earnings — which means the earnings clock rarely bites if you have basis. This calculator computes all three clocks for your situation and shows the exact penalty on any planned withdrawal.',
+    howItWorks: [
+      'Enter the year and amount of the conversion (or contribution) you want to withdraw.',
+      'Enter your age at withdrawal and the year of your first-ever Roth account.',
+      'The calculator walks the IRS ordering rules: contributions, then conversions, then earnings.',
+      'Read the penalty amount and the exact date each pool becomes penalty-free.',
+    ],
+    faq: [
+      {
+        q: 'When exactly does a conversion\'s 5-year clock start?',
+        a: 'January 1 of the tax year you converted — not the conversion date. A conversion executed December 15, 2022 starts its clock on January 1, 2022 and seasons fully on January 1, 2027. This is why the backdoor-Roth crowd converts early in the year and why December conversions are nearly as good. The penalty for breaking the clock is 10% on the converted principal withdrawn, and it applies only if you\'re under 59½ at the withdrawal — a 60-year-old never owes the conversion penalty regardless of clock status.',
+      },
+      {
+        q: 'Is the earnings 5-year rule per-account or per-conversion?',
+        a: 'Neither — it\'s per-PERSON, and it runs from your first Roth IRA ever. Open any Roth IRA with $100 in 2020 and the earnings clock for every Roth you own is done January 1, 2025. This is the strongest argument for opening a Roth IRA early even with a token amount. Note Roth 401(k)s have their own separate 5-year rule per plan, though rolling a Roth 401(k) into a Roth IRA replaces it with the IRA\'s clock — which can be shorter or longer depending on when you first opened an IRA.',
+      },
+      {
+        q: 'How does this relate to the Roth conversion ladder for early retirement?',
+        a: 'The ladder IS this rule, weaponized. An early retiree converts one year of spending each year; each rung seasons five years later. Convert $50,000 a year starting at 45 and from 50 onward a seasoned rung unlocks every January — penalty-free living expenses a decade before 59½. The gaps are covered by taxable savings or the ladder\'s own contributions. The two mistakes that break ladders: withdrawing a rung early (10% on the whole rung) and forgetting that conversions withdrawn count against the FIFO ordering — you can\'t cherry-pick which conversion you\'re tapping.',
+      },
+    ],
+  },
+  {
     slug: '457b-calculator',
     title: '457(b) Calculator 2026 — The Double-Limit Account Public Employees Miss',
     shortTitle: '457(b) Calculator',

@@ -2323,6 +2323,58 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Roth 5-year rules — three separate clocks people conflate: (1) CONTRIBUTIONS come out anytime, tax- and penalty-free, no clock. (2) CONVERSIONS each get their own 5-year clock (Jan 1 of conversion year counts as start) — but the 10% penalty on early-withdrawn converted principal only applies UNDER 59½; over 59½ conversions are accessible immediately, penalty-wise. (3) EARNINGS are qualified (tax-free) only after 59½ AND five tax years from your FIRST Roth ever — one clock, earliest dollar. Ordering rules: withdrawals come from contributions first, then conversions oldest-first, earnings last (§408A ordering) — most partial withdrawals never touch earnings at all. Node-verified: 2022 $50k conversion, age 50, withdraw $50k in 2026 → $5,000 penalty (clears Jan 1, 2027); same at age 60 → $0; 2024 $30k, age 55, withdraw $10k → $1,000; age 50 in 2027 → $0 penalty but earnings still not qualified until 59½.
+export function Roth5YearCalc() {
+  const [convYear, setConvYear] = useNumber(2022)
+  const [convAmt, setConvAmt] = useNumber(50000)
+  const [age, setAge] = useNumber(50)
+  const [rothOpened, setRothOpened] = useNumber(2022)
+  const [withdraw, setWithdraw] = useNumber(50000)
+
+  const NOW = 2026
+  const r = useMemo(() => {
+    const clearYear = convYear + 5
+    const under = age < 59.5
+    const convPenalty = under && NOW < clearYear ? Math.min(withdraw, convAmt) * 0.1 : 0
+    const account5 = NOW - rothOpened >= 5
+    const earningsQualified = age >= 59.5 && account5
+    const earningsOkYear = Math.max(rothOpened + 5, under ? NOW + Math.ceil(59.5 - age) : NOW)
+    return { clearYear, convPenalty, earningsQualified, account5, under, earningsOkYear }
+  }, [convYear, convAmt, age, rothOpened, withdraw])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Conversion year" value={convYear} onChange={setConvYear} />
+          <Field label="Amount converted" value={convAmt} onChange={setConvAmt} prefix="$" />
+          <Field label="Your current age" value={age} onChange={setAge} />
+          <Field label="Year you FIRST opened any Roth" value={rothOpened} onChange={setRothOpened} />
+          <Field label="Amount you want to withdraw now" value={withdraw} onChange={setWithdraw} prefix="$" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Penalty if withdrawn now" value={usd(r.convPenalty, 2)} />
+          <Result label="Conversion clears" value={`Jan 1, ${r.clearYear}`} />
+          <Result label="Earnings tax-free?" value={r.earningsQualified ? 'Yes — qualified' : `Not until ${r.earningsOkYear}`} />
+          <Result label="5-yr account clock" value={r.account5 ? 'Done' : `${r.account5 ? '' : `done ${rothOpened + 5}`}`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.convPenalty > 0 ? (
+            <>Withdrawing {usd(Math.min(withdraw, convAmt))} of the {r.clearYear - NOW > 0 ? 'not-yet-seasoned' : ''} conversion at {age} costs a <span className="font-medium">10% penalty: {usd(r.convPenalty, 2)}</span>. Wait until January 1, {r.clearYear} and it's $0 — the conversion clock runs by TAX year, so a December 2022 conversion clears January 2027, barely four years later.</>
+          ) : r.under ? (
+            <>No penalty on the converted principal{NOW >= r.clearYear ? <> — this conversion seasoned on January 1, {r.clearYear}</> : <> (conversions only carry penalty risk before 59½, and this withdrawal fits the ordering rules)</>}. Earnings are still locked until 59½{r.account5 ? '' : ` AND the account's 5-year clock (opens ${rothOpened + 5})`} — but withdrawals come from contributions and conversions FIRST, so most people never touch earnings early.</>
+          ) : (
+            <>Over 59½, conversion clocks don't matter for penalties — principal is accessible anytime. {r.earningsQualified ? <>And with your first Roth opened in {rothOpened}, <span className="font-medium">earnings are fully qualified — everything comes out tax-free</span>.</> : <>Earnings become tax-free in {rothOpened + 5} — the account's 5-year clock is the only one still running.</>}</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The three clocks, kept straight: contributions (what you put in directly) — always accessible, no clock. Conversions — each has its own 5-year clock starting January 1 of the conversion tax year, and the 10% early-withdrawal penalty on converted principal applies only under age 59½ (this is why the Roth conversion ladder works for early retirees: convert, wait 5 years, spend penalty-free). Earnings — qualified (tax-free) only after BOTH 59½ and 5 tax years from your first Roth dollar ever, any Roth, anywhere. Withdrawal ordering (§408A): contributions out first, then conversions oldest-first (taxable portion before nontaxable within each), earnings last — which is why partial withdrawals rarely hit the earnings clock. Note: the penalty applies to the TAXABLE portion of the conversion — converting after-tax traditional IRA money carries no penalty exposure. Inherited Roths follow the beneficiary rules instead. State taxes may differ.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // 457(b) — the public-sector superpower, 2026 (IRS Notice 2025-67/Newsroom IR-2025-111): elective deferral $24,500 — SEPARATE limit from 403(b)/401(k) (different code section), so a teacher/hospital worker maxes BOTH: $49,000 pre-tax. Catch-ups: 50+ $8,000, 60–63 super catch-up $11,250 (SECURE 2.0); governmental 457's special 3-year pre-retirement catch-up = 2× base = $49,000 (needs unused prior room; CANNOT stack with age catch-up — take the larger). Governmental 457(b): NO 10% penalty after separation at ANY age — the early-retirement account. SECURE 2.0 2026 wrinkle: prior-year wages >$145k → age-50 catch-ups must be ROTH. 403(b) extra: 15-year service catch-up $3,000/yr ($15k lifetime). Node-verified: 45yo both plans → $49,000 ($15,680 saved at 32%); 52yo → $65,000; 61yo → $71,500; 55yo final-3 window → $49,000+$32,500 = $81,500; 61yo in window → $84,750.
 export function Plan457Calc() {
   const [age, setAge] = useNumber(52)
@@ -6941,6 +6993,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'roth-5-year-rule-calculator': Roth5YearCalc,
   '457b-calculator': Plan457Calc,
   'drop-retirement-calculator': DropCalc,
   'pension-vs-social-security-calculator': PensionVsSsCalc,
