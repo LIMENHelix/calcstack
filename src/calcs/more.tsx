@@ -5221,6 +5221,56 @@ export function VsPoolPumpCalc() {
   )
 }
 
+// TIME-OF-USE RATE SWITCH — flat vs TOU, with load shifting priced separately. Node-verified: 10,500 kWh/yr at flat $0.16 = $1,680; TOU ($0.24 peak / $0.11 off-peak) at 35% peak share = $1,633 → saves $47/yr WITHOUT behavior change; shifting 15 points of usage off-peak (20% peak) → $1,428 → saves $252/yr. Breakeven peak share: (flat − offR)/(peakR − offR) = 38.5% — above that, TOU loses unless you shift. Honest edges: TOU rewards SCHEDULABLE loads (EV charging overnight is the giant — 3,000 kWh/yr at off-peak vs peak is a $390/yr swing on its own; pool pumps, dishwasher/laundry delay-start, pre-cooling before peak), punishes unmovable ones (4-7pm AC in a hot climate with everyone home — a west-facing house in August can't schedule its way out), measure your actual peak share first (smart-meter apps show hourly usage; 3pm-8pm weekdays / total is the number), rate plans change (utilities reprice TOU windows annually — recheck each year), and solar flips the logic (TOU punishes midday export in some territories — run the solar payback on YOUR rate plan).
+export function TouSwitchCalc() {
+  const [kwh, setKwh] = useNumber(10500)
+  const [flat, setFlat] = useNumber(0.16)
+  const [peakR, setPeakR] = useNumber(0.24)
+  const [offR, setOffR] = useNumber(0.11)
+  const [peakShare, setPeakShare] = useNumber(35)
+  const [shift, setShift] = useNumber(15)
+
+  const r = useMemo(() => {
+    const flatCost = kwh * flat
+    const tou = (s: number) => kwh * (s / 100) * peakR + kwh * (1 - s / 100) * offR
+    const base = tou(peakShare)
+    const shifted = tou(Math.max(0, peakShare - shift))
+    const beShare = peakR > offR ? ((flat - offR) / (peakR - offR)) * 100 : 0
+    return { flatCost, base, shifted, baseDiff: flatCost - base, shiftSaves: flatCost - shifted, beShare }
+  }, [kwh, flat, peakR, offR, peakShare, shift])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Annual usage" value={kwh} onChange={setKwh} suffix="kWh" step="500" />
+          <Field label="Flat rate" value={flat} onChange={setFlat} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="TOU peak rate" value={peakR} onChange={setPeakR} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="TOU off-peak rate" value={offR} onChange={setOffR} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="Your peak-window usage share" value={peakShare} onChange={setPeakShare} suffix="%" step="1" />
+          <Field label="Share you can shift off-peak" value={shift} onChange={setShift} suffix="pts" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Flat-rate cost /yr" value={usd(r.flatCost)} />
+          <Result label="TOU as-is" value={`${r.baseDiff >= 0 ? 'saves' : 'costs'} ${usd(Math.abs(r.baseDiff))}`} />
+          <Result label="TOU with shifting" value={`${r.shiftSaves >= 0 ? 'saves' : 'costs'} ${usd(Math.abs(r.shiftSaves))}`} big />
+          <Result label="Breakeven peak share" value={`${num(r.beShare, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.baseDiff < 0 && r.shiftSaves > 0
+            ? `Honest answer: TOU as-is COSTS you ${usd(Math.abs(Math.round(r.baseDiff)))}/yr — your peak share (${peakShare}%) is above the ${num(r.beShare, 1)}% breakeven. It only wins if you actually shift ${shift} points of usage (then it saves ${usd(Math.round(r.shiftSaves))}). Switch only with a shift plan.`
+            : r.shiftSaves > 0
+              ? `TOU wins${r.baseDiff > 0 ? ` even as-is (${usd(Math.round(r.baseDiff))}/yr)` : ''} — with your shift plan it saves ${usd(Math.round(r.shiftSaves))}/yr. The EV overnight charge and the delay-start buttons are the whole game.`
+              : `TOU loses at these rates and shares — stay flat, revisit if the utility reprices (they adjust windows annually) or an EV/pool changes your shape.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: flat cost = usage × flat rate; TOU = usage × peak share × peak rate + rest × off-peak rate; the breakeven peak share ((flat − off-peak)/(peak − off-peak)) is the number to know BEFORE switching — above it, TOU only wins with real load shifting. What shifts easily: EV charging (the giant — 3,000 kWh/yr moved off-peak is a $390/yr swing alone), pool pumps (pair with the VS pump calculator), dishwasher/laundry delay-start, and pre-cooling the house before the peak window. What doesn't shift: 4–7pm air conditioning in a hot climate with everyone home — a west-facing August house can't schedule its way out, and that's exactly the household TOU punishes. Measure first: your smart-meter app shows hourly usage — peak-window kWh ÷ total is your share. Two cautions: utilities reprice TOU windows annually (recheck every year), and rooftop solar flips the logic in territories where midday export is valued low — run solar numbers on YOUR rate plan. Estimates — your utility's published rate schedule governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10889,6 +10939,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'phantom-load-calculator': PhantomLoadCalc,
   'attic-insulation-roi-calculator': AtticInsulationRoiCalc,
   'variable-speed-pump-roi-calculator': VsPoolPumpCalc,
+  'tou-rate-switch-calculator': TouSwitchCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

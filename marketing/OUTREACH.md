@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 340 calculators live (566 indexed pages). See LAUNCH.md for the domain-day
+**Status: 350 calculators live (576 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -484,3 +484,36 @@ trade-school instructor resource pages, equipment-dealer content marketing.
 
 Timing: spring hiring season (Mar–Apr) for #334/#331; pre-winter (Oct–Nov) for
 #338; #337 pitches during shoulder seasons when agreements are sold.
+
+## Wave 60 — Home energy & replacement decisions (#341–#350, milestone wave)
+
+Milestone wave: 350 calculators live. The homeowner decision suite — repair vs
+replace, efficiency paybacks ranked honestly, and the utility-bill calculators.
+Audiences: home-improvement blogs, energy-efficiency and green-home newsletters,
+utility consumer-education pages, r/HomeImprovement and r/hvacadvice wikis,
+pool-owner forums, EV-owner communities (TOU content), homesteading/preparedness
+blogs (generator).
+
+- **Repair vs replace (#341)** — the $5,000 rule done properly with the future-
+  failures ledger. HVAC-content crossover; the refrigerant phase-out angle is
+  timely correction content.
+- **Tank vs tankless (#342)** — "the tank wins at moderate use" is the
+  counter-brochure headline; plumbing blogs and water-heater buyer guides.
+- **Generator vs outage (#343)** — the sump-flood risk line dominating the math;
+  storm-season timing (May–Jun hurricane prep, Oct–Nov winter storm prep).
+- **Smart thermostat (#344)** + **LED conversion (#346)** — the positive-ROI pair:
+  months-level paybacks. Utility consumer-education pages love these.
+- **Window ROI (#345)** — the correction flagship: "43.6-year payback" headline
+  with the 5× alternatives. Energy auditors and honest window contractors will
+  cite it; pitch green-building blogs hard.
+- **Phantom load (#347)** — charger-myth correction ("45 cents of theater") is
+  the shareable detail. Tech and home-efficiency crossover.
+- **Attic insulation ROI (#348)** — 1/R diminishing returns with the 30% federal
+  credit; DIY blown-insulation angle for weekend-project audiences.
+- **VS pool pump (#349)** — cube-law savings; pool forums and sunbelt utility
+  pages. Peak pool season (Apr–Jun) timing.
+- **TOU rate switch (#350)** — the breakeven peak share; EV-owner communities
+  and solar-adjacent newsletters (NEM 3.0 angle for CA audiences).
+- **Backlist ride-alongs** — solar payback, heat pump vs furnace, EV vs gas,
+  pool volume/chemical suite. The energy cluster now interlinks audit → envelope
+  → devices → rates.

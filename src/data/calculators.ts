@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'tou-rate-switch-calculator',
+    title: 'Time-of-Use Rate Switch Calculator 2026 — Flat vs TOU: Breakeven Peak Share & What Shifting Actually Pays',
+    shortTitle: 'TOU Rate Switch',
+    category: 'Home & Yard',
+    description:
+      'Should you switch to time-of-use billing? Your peak-window usage share vs the breakeven share, with savings priced both as-is and with realistic load shifting (EV overnight, delay-start, pre-cooling).',
+    tagline: 'At 35% peak usage, TOU saves just $47/yr as-is — but shifting 15 points off-peak saves $252. Above 38.5% peak share, TOU loses unless you shift.',
+    intro:
+      'Time-of-use billing is a bet on your schedule, and the breakeven is computable before you switch. At 10,500 kWh/yr with a $0.16 flat rate against a $0.24/$0.11 TOU plan, a household at 35% peak-window usage saves only $47/yr as-is — but shifting 15 points of usage off-peak turns it into $252. The line to know: the breakeven peak share is 38.5% — above it, TOU loses money unless you genuinely move load. What moves easily: EV charging overnight (a $390/yr swing alone), pool pumps, delay-start appliances, pre-cooling. What doesn\'t: 4–7pm air conditioning with everyone home in August. This calculator prices your shape against your utility\'s actual rate schedule, so the switch is arithmetic, not a flyer\'s promise.',
+    howItWorks: [
+      'Enter annual kWh and your flat rate from the bill.',
+      'Enter the TOU peak and off-peak rates from the utility\'s schedule.',
+      'Enter your peak-window usage share — from your smart-meter app\'s hourly view, not a guess.',
+      'Enter how much you can realistically shift (EV overnight, delay-start, pre-cooling).',
+      'Read as-is savings, with-shifting savings, and the breakeven peak share.',
+    ],
+    faq: [
+      {
+        q: 'How do I find my real peak-window usage share?',
+        a: 'From your meter, not from vibes. Most utilities with smart meters expose hourly usage in their app or web portal — pull a typical month, sum kWh inside the peak window (commonly 3–8pm or 4–9pm weekdays), and divide by total. That share is the input that decides everything, and it\'s routinely surprising: households that "never run anything during the day" discover the AC alone puts them at 40%+, while work-from-home households with heavy midday loads can sit under 25% if their peak window is evening-priced. Check both summer and winter months if the utility offers seasonal windows — some plans have different peak hours by season. Five minutes in the app replaces every estimate, including this calculator\'s default.',
+      },
+      {
+        q: 'What load shifting actually works?',
+        a: 'The schedulable loads, in order of prize size. EV charging is the giant: 3,000 kWh/yr moved from peak to off-peak is a $390/yr swing on the default rates — set the car or charger to midnight and it\'s done forever. Pool pumps: pair the variable-speed schedule with off-peak hours and the two calculators stack. Dishwasher and laundry delay-start buttons exist exactly for this — the 4-hour delay moves dinner dishes to off-peak with zero lifestyle cost. Pre-cooling: run the AC to 72° by 3pm, let it coast to 76° through the peak — thermal mass is a battery, and in dry climates this alone shifts the biggest summer load. What DOESN\'t shift: cooling a full house during a heat dome with everyone home — the honest limit of TOU is the household whose peak usage is survival, not schedule.',
+      },
+      {
+        q: 'I have solar — does TOU help or hurt?',
+        a: 'It depends entirely on how YOUR plan values exports, and it can flip the answer. Under net metering at retail rates, TOU and solar coexist fine — your midday generation offsets peak-priced usage. Under net-billing or export-compensation plans (increasingly common — California\'s NEM 3.0 is the template), midday exports earn a fraction of retail while evening imports cost peak rates: the duck curve priced into your bill. There, the winning move is storage or load-shifting INTO midday (run the pool pump and dishwasher at noon off your own panels, not at midnight off the grid) — the opposite schedule from the no-solar TOU playbook. The rule: run both this calculator and the solar payback calculator on the SAME rate plan you\'ll actually be on, because utilities reprice TOU windows annually and a plan that won in 2025 can lose in 2027.',
+      },
+    ],
+  },
+  {
     slug: 'variable-speed-pump-roi-calculator',
     title: 'Variable Speed Pool Pump Savings Calculator 2026 — The Cube Law Payback, Rebates Included',
     shortTitle: 'VS Pool Pump ROI',
