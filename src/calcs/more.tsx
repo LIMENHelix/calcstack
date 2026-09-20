@@ -5324,6 +5324,54 @@ export function BatteryRoiCalc() {
   )
 }
 
+// SOLAR LEASE VS BUY — the 20-year ledger that sales decks skip. Node-verified: lease $150/mo with 2.9% escalator → $47,878 over 20 yrs; buying the same system $28k − 30% federal credit = $19,600 net, saving $1,900/yr escalating 3% with utility rates → $51,054 total savings → BUY nets +$31,454, LEASE nets +$3,176 — a $28,278 gap that the escalator quietly eats. Honest edges: the escalator is the trap (2.9%/yr doubles the payment by year 25 — while your SAVINGS only grow if utility rates keep pace; in flat-rate years the lease margin inverts), home-sale friction (leases/PPAs must be transferred or bought out at sale — buyers' lenders balk, and a lease buyout at year 7 can exceed remaining value; owned systems ADD ~4% to sale price per Berkeley Lab), the credit goes to the OWNER (lease = the leasing company claims the 30% — you're financing their tax benefit), no-escalator leases exist (demand one or walk), roof reality (replace the roof BEFORE panels — remove/reinstall runs $1,500-3,000), and when leases ARE right (can't use the tax credit — low tax liability, retirees; genuinely cash-constrained with high rates; then negotiate zero escalator and a capped buyout).
+export function SolarLeaseBuyCalc() {
+  const [leaseMo, setLeaseMo] = useNumber(150)
+  const [esc, setEsc] = useNumber(2.9)
+  const [yrs, setYrs] = useNumber(20)
+  const [buyCost, setBuyCost] = useNumber(19600)
+  const [save1, setSave1] = useNumber(1900)
+  const [utilEsc, setUtilEsc] = useNumber(3)
+
+  const r = useMemo(() => {
+    let leaseTot = 0, saveTot = 0
+    for (let y = 0; y < yrs; y++) {
+      leaseTot += leaseMo * 12 * Math.pow(1 + esc / 100, y)
+      saveTot += save1 * Math.pow(1 + utilEsc / 100, y)
+    }
+    const buyNet = saveTot - buyCost
+    const leaseNet = saveTot - leaseTot
+    return { leaseTot, saveTot, buyNet, leaseNet, gap: leaseTot - buyCost }
+  }, [leaseMo, esc, yrs, buyCost, save1, utilEsc])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Lease payment /mo" value={leaseMo} onChange={setLeaseMo} prefix="$" step="10" />
+          <Field label="Lease escalator" value={esc} onChange={setEsc} suffix="%/yr" step="0.1" />
+          <Field label="Term (years)" value={yrs} onChange={setYrs} step="5" />
+          <Field label="Buy cost (after 30% credit)" value={buyCost} onChange={setBuyCost} prefix="$" step="500" />
+          <Field label="Year-1 utility savings" value={save1} onChange={setSave1} prefix="$" step="100" />
+          <Field label="Utility rate escalation" value={utilEsc} onChange={setUtilEsc} suffix="%/yr" step="0.5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label={`Lease total (${yrs} yrs)`} value={usd(r.leaseTot)} />
+          <Result label="Savings total" value={usd(r.saveTot)} />
+          <Result label="Buy — net benefit" value={usd(r.buyNet)} big />
+          <Result label="Lease — net benefit" value={usd(r.leaseNet)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Buying nets {usd(Math.round(r.buyNet))} vs leasing's {usd(Math.round(r.leaseNet))} — a {usd(Math.round(r.buyNet - r.leaseNet))} gap. The escalator ({esc}%/yr) doubles the payment by year {Math.round(70 / esc)} while savings only grow with utility rates. If you must lease: zero escalator, capped buyout, in writing.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: lease payments escalate at the contract rate; savings escalate with utility rates; the buy side is the after-credit cost against the same savings stream. The traps, in order of damage: the escalator — 2.9%/yr doubles payments by year 25, and in flat-rate years the lease margin inverts (your payment rises while the savings don't); home-sale friction — leases and PPAs must transfer to the buyer or be bought out, buyers' lenders balk, and a year-7 buyout can exceed remaining value, while OWNED systems add ~4% to sale price (Berkeley Lab's market studies); and the credit — on a lease, the LEASING COMPANY claims the 30% federal credit: you're financing their tax benefit. When leasing IS right: you can't use the credit (low tax liability, many retirees) or cash is genuinely constrained and rates are high — then negotiate zero escalator and a capped buyout, or walk. Roof reality: replace the roof BEFORE panels — remove/reinstall runs $1,500–3,000 and "we'll deal with it later" is the most expensive sentence in solar. Estimates — your quotes and utility tariff govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10994,6 +11042,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'variable-speed-pump-roi-calculator': VsPoolPumpCalc,
   'tou-rate-switch-calculator': TouSwitchCalc,
   'home-battery-roi-calculator': BatteryRoiCalc,
+  'solar-lease-vs-buy-calculator': SolarLeaseBuyCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

@@ -1134,6 +1134,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'solar-lease-vs-buy-calculator',
+    title: 'Solar Lease vs Buy Calculator 2026 — The 20-Year Ledger With the Escalator Trap Exposed',
+    shortTitle: 'Solar Lease vs Buy',
+    category: 'Home & Yard',
+    description:
+      'Run the full term: lease payments with the escalator versus buying after the 30% federal credit — total costs, net benefits, the home-sale friction, and when leasing is actually right.',
+    tagline: '$150/mo with a 2.9% escalator totals $47,878 over 20 years; buying nets +$31,454. The gap — $28,278 — is what the sales deck omits.',
+    intro:
+      'The solar lease pitch is "no money down, immediate savings"; the 20-year ledger tells the real story. A $150/mo lease with the standard 2.9% escalator totals $47,878 over the term. Buying the same system at $19,600 after the 30% federal credit, against $1,900/yr of savings growing with utility rates, nets +$31,454 — while the lease nets +$3,176. The $28,278 gap has three authors: the escalator (doubling your payment by year 25 whether or not rates cooperate), the credit (the leasing company claims the 30% — you\'re financing their tax benefit), and sale friction (leases must transfer or be bought out; owned systems add ~4% to sale price per Berkeley Lab). Leasing is right for exactly one profile — read the FAQ before signing either way.',
+    howItWorks: [
+      'Enter the lease payment and escalator from the contract — not the verbal pitch.',
+      'Enter the purchase price after the 30% federal credit.',
+      'Enter year-1 utility savings and your utility escalation assumption.',
+      'Set the term and read total lease cost, total savings, and both net positions.',
+    ],
+    faq: [
+      {
+        q: 'Why is the escalator so dangerous?',
+        a: 'Because it compounds against an assumption. A 2.9% annual escalator doubles the payment by year 25 — $150 becomes $300 — while your savings grow only if UTILITY RATES keep pace. The sales deck always assumes 3–5% utility escalation forever; in flat-rate years (which happen, sometimes for a decade), the lease margin inverts: the payment rises while savings stall, and by late term you can pay more than the grid power you\'re "saving." The escalator also poisons the exit: the buyout schedule prices remaining payments INCLUDING escalated amounts. The defenses: negotiate a zero-escalator lease (they exist — the escalator is margin, not necessity), cap the buyout in writing, and model utility escalation at 2%, not the deck\'s 4.9%. If the deal only works at aggressive utility-rate growth, it doesn\'t work.',
+      },
+      {
+        q: 'What happens when I sell the house?',
+        a: 'Owned systems sell FOR you; leased systems must be sold WITH you — and that asymmetry costs real money. Berkeley Lab\'s multi-state market studies found owned solar adds roughly 4% to sale price — buyers pay for the asset. Leases and PPAs must be transferred to the buyer (who must qualify with the leasing company, and whose lender may balk at the assumed liability) or bought out at a schedule that often exceeds remaining value in the early years. Real transactions die over this: the buyer\'s agent discovers the lease in disclosures, the buyer wants it gone, and the seller\'s options are a five-figure buyout or a price cut. If there\'s any chance you sell within the term, that risk belongs in the decision — and a transfer-fee-and-buyout schedule you read BEFORE signing, not during escrow.',
+      },
+      {
+        q: 'When IS a lease the right answer?',
+        a: 'One profile: you can\'t use the tax credit and cash is genuinely constrained. The 30% federal credit requires tax liability to absorb it (it\'s nonrefundable — though unused portions carry forward); retirees on small taxable incomes and some others can\'t capture it, which closes much of the buy-lease gap. In that case a ZERO-escalator lease or PPA with a capped buyout can still beat doing nothing — the savings are real, just smaller, and the maintenance is genuinely their problem. Everyone else should buy: cash if possible (best return), a solar loan if not (compare loan APR against the savings rate — under ~7% the loan typically still beats the lease by five figures over the term, and you keep the credit AND the resale premium). And regardless of structure: replace an aging roof BEFORE the panels go on — removal and reinstallation for a reroof runs $1,500–3,000, and "we\'ll deal with it later" is the most expensive sentence in solar.',
+      },
+    ],
+  },
+  {
     slug: 'home-battery-roi-calculator',
     title: 'Home Battery ROI Calculator 2026 — TOU Arbitrage, NEM 3.0 Export Math & Honest Outage Value',
     shortTitle: 'Home Battery ROI',
