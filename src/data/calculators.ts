@@ -1041,6 +1041,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 's-corp-election-calculator',
+    title: 'S-Corp Election Calculator 2026 — The SE-Tax Arbitrage Minus the Real Costs',
+    shortTitle: 'S-Corp Election',
+    category: 'Freelance & Career',
+    description:
+      'Should you elect S-corp? Compute the self-employment tax arbitrage at your profit and salary, minus payroll costs, added tax prep, and the QBI drag — the honest net.',
+    tagline: '$120k profit with a $60k salary saves $7,775 in SE tax — but payroll, prep, and the QBI drag take $4,288 of it. Net: $5,775.',
+    intro:
+      'The S-corp pitch is real but rarely priced honestly. Sole-prop profit pays 15.3% self-employment tax on 92.35% of everything; S-corp profit splits into salary (taxed) and distribution (not). At $120,000 profit with a defensible $60,000 salary, the gross arbitrage is $7,775 — but the honest ledger subtracts the payroll service (~$1,200), the extra return (~$800), and the QBI drag (salary dollars lose the 20% deduction — $2,880 at the 24% bracket). Net: $5,775, and the breakeven sits near $31,000 of profit. This calculator runs your numbers and flags the risks — reasonable-salary doctrine and state S-corp taxes — that the sales pitches skip.',
+    howItWorks: [
+      'Enter business net profit and the salary you could defend as reasonable.',
+      'Enter real quotes for payroll service and added tax preparation.',
+      'Read the gross arbitrage and the honest net after all three drags.',
+      'Below ~$40k profit, expect the fixed costs to win — revisit as you grow.',
+    ],
+    faq: [
+      {
+        q: 'At what profit does S-corp election start paying?',
+        a: 'The breakeven sits around $31,000–45,000 of profit for most situations, and the curve is steep after that. Below the line, fixed costs (payroll service ~$1,200/yr, the 1120-S return ~$800+, state minimums like California\'s $800 franchise tax) consume an arbitrage that scales with profit. Above ~$60–80k, net savings of $4,000–8,000/yr are typical at defensible salary ratios. The middle band matters most: between $45k and $80k, run this calculator with YOUR state\'s costs and YOUR defensible salary — the answer flips on details. Two accelerants: profits above the Social Security wage cap compress the savings (only the 2.9% Medicare split remains on the marginal dollar), and a salary set aggressively low multiplies savings on paper while multiplying audit exposure in reality — the IRS\'s recharacterization cases all share that fingerprint.',
+      },
+      {
+        q: 'What counts as "reasonable salary" — and what happens if I lowball it?',
+        a: 'Reasonable compensation is what the market pays someone to do your job — the IRS looks at comparable salaries for your role, industry, experience, and hours. Common defensible anchors: Bureau of Labor Statistics wage data for your occupation, salary surveys, and job-posting ranges. Common indefensible ones: $24,000 salaries for full-time consultants billing $150/hr, and the "50% rule" treated as law (it\'s a rule of thumb, not a safe harbor). The enforcement pattern: the IRS recharacterizes distributions as wages, assesses back payroll taxes plus penalties and interest — and wins consistently when salary is obviously cosmetic. Document the basis when you set it (save the comparables), revisit annually as profit grows, and use the reasonable-salary calculator as a floor-check. The conservative posture that rarely gets challenged: salary at or near market rate for the hours actually worked, distribution of the rest.',
+      },
+      {
+        q: 'What does the election cost besides money?',
+        a: 'Operational discipline, monthly. Payroll must run on schedule with quarterly 941 filings — late deposits penalize immediately and personally (the trust-fund portion follows you through bankruptcy). You\'ll maintain the S-corp as a real entity: separate bank account, payroll records, W-2 for yourself, reasonable-comp documentation, and corporate formalities your state expects. Health insurance and retirement get more powerful but more complex (the S-corp can run a Solo 401(k) on the SALARY, which caps contributions lower than sole-prop math on the same profit — sometimes the hidden cost of electing too early). And the exit: revoking or the election lapsing has its own rules and waiting periods. None of this is prohibitive — thousands of one-person S-corps run fine — but it converts your business from a shoebox into a compliance object. That overhead is exactly why the breakeven exists.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

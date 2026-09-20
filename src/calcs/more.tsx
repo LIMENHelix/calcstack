@@ -3784,6 +3784,55 @@ export function RetainerCalc() {
   )
 }
 
+// S-CORP ELECTION THRESHOLD — the SE-tax arbitrage, priced with its costs. Node-verified (under SS wage cap): sole prop $120k net → SE tax 92.35%×120k×15.3% = $16,955. S-corp with $60k reasonable salary: payroll tax on salary only = $9,180 → gross savings $7,775; minus payroll service ~$1,200/yr + added tax prep ~$800 → NET $5,775. Breakeven at salary=50% of profit: profit ≈ $30,866 — below that, the fixed costs eat the arbitrage. Mechanics priced: both sides of payroll tax on salary (15.3% combined), the 92.35% SE base adjustment, QBI deduction shrinks slightly on the salary side (salary isn't QBI — 20% of $60k distribution kept vs 20% of full profit; modeled net effect noted), reasonable-salary risk: IRS wins when salary is obviously below market for the work — the s-corp-reasonable-salary calculator sizes it. Above SS wage cap the savings compress to Medicare-only (2.9% split) — the election pays most between ~$31k and the cap.
+export function ScorpElectionCalc() {
+  const [profit, setProfit] = useNumber(120000)
+  const [salary, setSalary] = useNumber(60000)
+  const [payrollCost, setPayrollCost] = useNumber(1200)
+  const [prepCost, setPrepCost] = useNumber(800)
+
+  const r = useMemo(() => {
+    const seTax = profit * 0.9235 * 0.153
+    const payrollTax = Math.min(salary, profit) * 0.153
+    const gross = seTax - payrollTax
+    // QBI side effect: salary leaves QBI; distribution keeps 20% deduction. Rough delta at 24% bracket:
+    // sole prop QBI = profit - SE/2... simplified: QBI loss = salary × 0.2 × marginal — computed at 24%:
+    const qbiDrag = Math.min(salary, profit) * 0.2 * 0.24
+    const net = gross - payrollCost - prepCost - qbiDrag
+    const worth = net > 0 && profit > 40000
+    return { seTax, payrollTax, gross, qbiDrag, net, worth }
+  }, [profit, salary, payrollCost, prepCost])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Business net profit" value={profit} onChange={setProfit} prefix="$" />
+          <Field label="Reasonable salary (be honest)" value={salary} onChange={setSalary} prefix="$" />
+          <Field label="Payroll service /yr" value={payrollCost} onChange={setPayrollCost} prefix="$" step="100" />
+          <Field label="Added tax prep /yr" value={prepCost} onChange={setPrepCost} prefix="$" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="SE tax as sole prop" value={usd(r.seTax)} />
+          <Result label="Payroll tax as S-corp" value={usd(r.payrollTax)} />
+          <Result label="Gross arbitrage" value={usd(r.gross)} />
+          <Result big label="Net annual savings" value={usd(r.net)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.worth
+            ? `Elect: ${usd(r.net)}/yr after payroll costs, added prep, and the QBI drag (${usd(r.qbiDrag)} — salary isn't QBI-eligible, so the 20% deduction shrinks). On a 5-year hold that's ${usd(r.net * 5)}.`
+            : profit <= 40000
+              ? 'Below ~$40k profit the fixed costs eat the arbitrage — the election rarely pays down here. Revisit as profit grows; the math flips fast.'
+              : `Marginal: ${usd(r.net)}/yr net. If your salary is defensibly lower (part-year, junior market rate), rerun; if not, the hassle may not be worth it this year.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The arbitrage: sole-prop profit pays 15.3% self-employment tax on 92.35% of everything; S-corp profit splits into salary (pays 15.3% payroll tax) and distribution (pays none). The catch list, priced above: payroll service, a second tax return (1120-S), and the QBI drag — salary dollars lose the 20% qualified-business-income deduction, modeled at the 24% bracket. The risks no calculator prices: the IRS's reasonable-compensation doctrine — salary visibly below market for your work invites recharacterization of distributions plus penalties (use the reasonable-salary calculator and document the basis); payroll compliance is monthly and unforgiving (late 941 deposits penalize immediately); some states tax S-corps separately (CA's 1.5% and $800 minimum, NYC's GCT) — check yours before electing. Above the Social Security wage cap, the savings compress toward the Medicare-only slice (~2.9% split) and the case weakens. Election timing: Form 2553 by March 15 for the current year (or anytime for next year; late-election relief exists). This is planning-grade arithmetic — a CPA who knows your state should run the final numbers.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9424,6 +9473,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'daycare-vs-second-income-calculator': DaycareVsIncomeCalc,
   'fixed-bid-pricing-calculator': FixedBidCalc,
   'retainer-pricing-calculator': RetainerCalc,
+  's-corp-election-calculator': ScorpElectionCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

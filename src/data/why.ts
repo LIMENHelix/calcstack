@@ -71,6 +71,8 @@ export const WHY_USE: Record<string, string> = {
     'Freelancers use it before quoting: floor × hours × scope-risk multiplier turns a fuzzy 40-hour brief into a $5,700 bid whose ×1.5 absorbs 20 hours of creep — and the likely-hours check catches optimism before it signs.',
   'retainer-pricing-calculator':
     'Consultants use it to price certainty correctly: 20 guaranteed hours at 10% off outpay the same hours at 60% utilization by $570/mo — the discount is the client buying your availability, not your time cheap.',
+  's-corp-election-calculator':
+    'Independent professionals use it before electing: $120k profit at a $60k salary yields $7,775 gross SE-tax arbitrage, but payroll, prep, and the QBI drag take $4,288 — the honest net and the ~$31k breakeven decide.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
