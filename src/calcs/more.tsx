@@ -4420,6 +4420,58 @@ export function EquipmentHourlyCalc() {
   )
 }
 
+// OVERTIME VS HIRE — when chronic OT stops being cheaper than a new head. Node-verified: $25 wage × 1.49 burden = $37.25 burdened; crew of 4 each working 10 OT hrs/wk = 40 OT hours at 1.5× = $2,235/wk; one new hire absorbs those 40 hours at straight time $1,490/wk → saves $745/wk; $4,000 hiring+training cost recovers in 5.4 weeks. Model: OT premium eliminated (0.5× burdened × OT hours) minus straight-time cost of absorbed hours; one-time hire cost (recruiting, onboarding, training at reduced productivity) recovered from weekly savings. Honest edges: chronic OT costs MORE than the premium (fatigue errors, rework, safety incidents, turnover — construction studies put sustained 50+hr weeks at ~10-15% productivity loss, priced here as an optional fudge), OT is the RIGHT answer for short spikes (a 6-week surge never justifies a hire — the breakeven weeks tell you), benefits load on the new hire is in the burden multiplier, and the hidden hire cost is management bandwidth (a new tech at 60% productivity for a month is in the hire-cost line — don't zero it).
+export function OvertimeVsHireCalc() {
+  const [wage, setWage] = useNumber(25)
+  const [burden, setBurden] = useNumber(49)
+  const [otHrs, setOtHrs] = useNumber(10)
+  const [crew, setCrew] = useNumber(4)
+  const [hireCost, setHireCost] = useNumber(4000)
+  const [weeks, setWeeks] = useNumber(26)
+
+  const r = useMemo(() => {
+    const burdened = wage * (1 + burden / 100)
+    const totalOt = otHrs * crew
+    const absorb = Math.min(40, totalOt)
+    const otCostWk = totalOt * burdened * 1.5
+    const saveWk = absorb * burdened * 1.5 - 40 * burdened
+    const beWks = saveWk > 0 ? hireCost / saveWk : Infinity
+    const horizonSave = saveWk * weeks - hireCost
+    return { burdened, totalOt, absorb, otCostWk, saveWk, beWks, horizonSave }
+  }, [wage, burden, otHrs, crew, hireCost, weeks])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Base wage" value={wage} onChange={setWage} prefix="$" suffix="/hr" step="1" />
+          <Field label="Burden (taxes/comp/benefits)" value={burden} onChange={setBurden} suffix="%" step="1" />
+          <Field label="OT hours per person /wk" value={otHrs} onChange={setOtHrs} step="1" />
+          <Field label="People on chronic OT" value={crew} onChange={setCrew} step="1" />
+          <Field label="Hiring + training cost" value={hireCost} onChange={setHireCost} prefix="$" step="500" />
+          <Field label="Decision horizon (weeks)" value={weeks} onChange={setWeeks} step="4" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Weekly OT spend" value={usd(r.otCostWk)} />
+          <Result label="Weekly saving from hire" value={usd(Math.max(0, r.saveWk))} />
+          <Result label="Breakeven" value={isFinite(r.beWks) ? `${num(r.beWks, 1)} weeks` : 'Never'} big />
+          <Result label={`Net over ${weeks} weeks`} value={usd(r.horizonSave)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.saveWk > 0 && r.beWks <= weeks
+            ? `Hire: the new hand pays back the ${usd(hireCost)} hiring cost in ${num(r.beWks, 1)} weeks and nets ${usd(Math.round(r.horizonSave))} over your ${weeks}-week horizon — before counting the fatigue, rework, and turnover that chronic OT causes.`
+            : r.saveWk > 0
+              ? `The hire eventually wins (breakeven ${num(r.beWks, 1)} weeks) but not inside your ${weeks}-week horizon — if this OT is a short surge, ride it out; if it's the new normal, extend the horizon and the hire takes over.`
+              : `Not enough OT to feed a hire: ${num(r.totalOt, 0)} OT hours a week can't absorb a 40-hour position profitably. Keep the OT, or hire part-time if the schedule allows.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: burdened wage = base × (1 + burden) — use the labor-burden calculator's number, not the wage; weekly OT spend = total OT hours × burdened × 1.5; a new hire absorbs up to 40 of those hours at straight time, so the weekly saving is the eliminated OT premium minus the straight hours you now pay; hiring cost (recruiting, onboarding, the new hand's first weeks at reduced productivity — don't zero this, a month at 60% productivity IS a cost) recovers from the weekly saving. What the premium line misses: sustained 50+ hour weeks cost 10–15% in productivity, errors, rework, and incident risk before you count the turnover — chronic OT is a loan at terrible rates. When OT is RIGHT: genuine spikes shorter than the breakeven, seasonal surges, and while you're proving the demand is permanent. The hire's fixed costs (benefits load in the burden, management bandwidth) argue for being sure — this calculator is the being-sure. Estimates — your payroll reports and burden rate govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10072,6 +10124,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'labor-burden-calculator': LaborBurdenCalc,
   'job-costing-calculator': JobCostingCalc,
   'equipment-hourly-cost-calculator': EquipmentHourlyCalc,
+  'overtime-vs-hire-calculator': OvertimeVsHireCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

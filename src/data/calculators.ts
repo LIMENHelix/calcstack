@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'overtime-vs-hire-calculator',
+    title: 'Overtime vs Hiring Calculator 2026 — When Chronic OT Costs More Than a New Employee',
+    shortTitle: 'Overtime vs Hire',
+    category: 'Trades & Engineering',
+    description:
+      'The breakeven every shop owner faces: burdened overtime hours at 1.5× versus a new hire at straight time, with hiring and training costs recovered from the weekly savings. See breakeven weeks and net over your horizon.',
+    tagline: 'Four people on 10 hrs/wk of OT burn $2,235/wk at burdened rates — a $4,000 hire pays back in 5.4 weeks and saves $745/wk after that.',
+    intro:
+      'Overtime is a loan at terrible rates. Four people each working 10 overtime hours a week at a $25 wage with a 49% burden burn $2,235 weekly — the same 40 hours from a new hire cost $1,490 at straight time, a $745 weekly saving that recovers a $4,000 hiring-and-training cost in 5.4 weeks. But the premium line understates chronic OT: sustained 50+ hour weeks cost 10–15% in productivity, errors, rework, and incident risk before you count turnover. The calculator is honest in both directions — OT IS the right answer for genuine spikes shorter than the breakeven, seasonal surges, and unproven demand. Run your actual payroll numbers and let the breakeven weeks decide.',
+    howItWorks: [
+      'Enter base wage and your burden percentage (taxes, workers comp, benefits — from the labor-burden calculator).',
+      'Enter the chronic OT hours per person per week and how many people are on them.',
+      'Enter the one-time hiring cost: recruiting, onboarding, and the new hand\'s reduced-productivity weeks.',
+      'Set your decision horizon — how far out you\'re comparing.',
+      'Read the weekly OT spend, the hire\'s weekly saving, breakeven weeks, and net over the horizon.',
+    ],
+    faq: [
+      {
+        q: 'When is overtime the RIGHT choice?',
+        a: 'When the demand is short, seasonal, or unproven — the breakeven weeks tell you which. A six-week surge never justifies a hire: recruiting alone outlasts it. Seasonal work you can\'t staff year-round: OT or seasonal temps beat a permanent headcount you\'ll lay off in October. And while proving demand is permanent: two quarters of chronic OT is evidence; two weeks is weather. The honest frame: OT buys flexibility and certainty about the workload, and it costs the 50% premium plus fatigue — that trade is often correct. It becomes wrong when "temporary" OT is in its eighth month, because then you\'re paying surge prices for baseline demand while the fatigue costs compound silently.',
+      },
+      {
+        q: 'What should the hiring-cost input include?',
+        a: 'Everything between "we need someone" and "productive crew member." Recruiting: job posts, background checks, your interview hours at YOUR burdened rate. Onboarding: paperwork, safety training, PPE, uniforms, tools issued. The big one everyone zeros out: reduced productivity — a new tech at 60% effectiveness for the first month, PLUS the experienced hand whose productivity drops while supervising them. On a $37 burdened rate that month is easily $2,500–$4,000 in real cost. Skipping it makes hiring look free and OT look overpriced; including it makes the calculator honest — the hire still usually wins on chronic OT, but now you know the real payback period instead of a flattering fiction.',
+      },
+      {
+        q: 'What hidden costs of chronic OT does the premium miss?',
+        a: 'Three that never appear on a payroll report. Fatigue productivity loss: construction and manufacturing studies consistently find sustained 50+ hour weeks produce roughly 50 hours of output in 55–60 hours of presence — you\'re paying 1.5× for declining output per hour. Error and incident rates climb with hours worked: rework at burdened rates, plus the safety incidents that raise your workers-comp e-mod for THREE years — the premium you pay on every future hour of payroll. And turnover: chronic-OT crews quit, and replacing a trained hand costs multiples of the hiring line above. The honest chronic-OT price is the 1.5× premium plus a fatigue tax you\'ll never see itemized — which is why the breakeven on a real shop floor is usually shorter than the calculator shows.',
+      },
+    ],
+  },
+  {
     slug: 'equipment-hourly-cost-calculator',
     title: 'Equipment Hourly Cost Calculator 2026 — Own vs Rent per Operating Hour, Breakeven Utilization',
     shortTitle: 'Equipment Hourly Cost',
