@@ -169,6 +169,10 @@ export const WHY_USE: Record<string, string> = {
     'Landlords use it before writing the pet addendum: $40/mo pet rent nets $760 over a tenancy while a refundable deposit alone nets −$75 — and banning pets costs a week of vacancy since half of renters have them.',
   'property-manager-calculator':
     'Landlords use it before signing a management contract: the PM nets $2,419/yr after the vacancy edge — self-managing breaks even at $50/hr, so the question is what your 2 a.m. hours are worth.',
+  'price-reduction-calculator':
+    'Sellers use it before "testing the market": overpricing a $440k home and sitting 8 weeks costs $17,634 — the stale-listing penalty plus carrying burn — because the first two weeks are the listing\'s whole life.',
+  'staging-roi-calculator':
+    'Sellers use it before the staging quote: $2,500 of staging on a $440k home returns $11,015 at a 2% lift and 3 weeks saved — it breaks even at a 0.06% price bump, and the lift concentrates in vacant and dated homes.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

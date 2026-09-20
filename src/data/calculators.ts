@@ -2594,6 +2594,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'price-reduction-calculator',
+    title: 'Price Reduction Calculator — What Overpricing Costs: Staleness Penalty + Carrying Burn, Timed',
+    shortTitle: 'Price Reduction Timing',
+    category: 'Housing & Mortgage',
+    description:
+      'The true cost of overpricing your home — the stale-listing price penalty plus weekly carrying burn — and the timing and size rules for cutting before the listing dies.',
+    tagline: 'Overpricing and sitting 8 weeks costs $17,634 on a $440k home — $13,200 of final price plus $4,434 of carrying. The first two weeks are the listing\'s whole life.',
+    intro:
+      'Every seller wants to "test the market" high; the market charges for the test. A $440,000 home priced correctly sells near 100% of value in about two weeks. The same home overpriced sits eight weeks, then closes around 97% after a cut — the $13,200 price hit plus $4,434 of carrying cost is $17,634, and the seller who "tested" at $460k nets less than the one who listed at $440k on day one. The mechanism is the launch window: the first 7–14 days are when every buyer with a saved search sees the listing; after that it is furniture, and the eventual cut reads as desperation. This calculator prices the overpricing path against the correct-price path with your carrying costs — and the cut-size and cut-timing rules that actually work.',
+    howItWorks: [
+      'Enter true market value from your agent\'s comp analysis — not your hoped price.',
+      'Enter monthly carrying cost: mortgage, taxes, insurance, utilities, upkeep.',
+      'Enter expected weeks on the overpriced path versus the right-priced path.',
+      'Set the stale-sale and right-priced sale percentages (97% and 100% are fair defaults).',
+      'Read the price hit, the carrying burn, and the total cost of testing the market.',
+    ],
+    faq: [
+      {
+        q: 'Why do overpriced homes sell for LESS than correctly priced ones?',
+        a: 'Three mechanisms compound. The launch window: buyer interest on a new listing peaks in days 1–14 — every active buyer with a matching saved search gets the alert, showings cluster, and the offer environment is as competitive as it will ever be. Miss that window and you are marketing to the leftover buyers plus new ones trickling in. The staleness signal: days-on-market is printed on every listing, and buyers and their agents read high DOM as "something is wrong with it" — sometimes true, often just price — so they offer less and inspect harder. And the reduction psychology: a price cut after silence tells buyers the seller is negotiating against themselves; instead of resetting interest to launch levels, it invites offers BELOW the new price. The compounding result, visible in every MLS dataset: homes that sell in the first two weeks close at or above ask; homes that sit past 60 days close 3–7% under their final ask, below where a correct day-one price would have landed. The market does not punish optimism immediately — it punishes it at closing.',
+      },
+      {
+        q: 'If I overpriced, when and how much should I cut?',
+        a: 'Cut earlier and deeper than instinct says. Timing: read the first 10–14 days — showings per week against your agent\'s benchmark for the price band is the metric; quiet showings (0–2/week in a normal market) means the price has been voted down, and the right move is week 2–3, while the listing still has some freshness. Waiting until week 6–8 buys the same sale price minus six weeks of carrying — run the weekly number in this calculator to feel it. Size: 1–2% cuts are invisible — the listing stays in the same buyer search brackets ($450k and $445k reach the same buyers). The effective cut is 4–6%, specifically sized to cross a search band: buyers filter in $25k or $50k steps, so $460k → $449k lands in a whole new inbox. One deep cut also beats three shallow ones — serial reductions amplify the desperation signal. And the honest alternative your agent may not volunteer: if the market has clearly moved against the price, delisting for 30–90 days and relisting fresh resets days-on-market in most MLSs — a do-over that costs carry but erases staleness.',
+      },
+      {
+        q: 'Is underpricing to spark a bidding war ever right?',
+        a: 'It is a legitimate strategy with strict conditions — and it is the opposite of the trap this calculator prices. Underpricing 3–5% works in genuinely hot micro-markets: low inventory, high buyer count, recent comps with multiple offers and escalation clauses. The mechanism is the same launch window run in reverse — a visibly good price packs the first weekend, multiple offers create social proof, and escalation clauses push the close above ask, typically landing AT or above market value with near-zero days-on-market and often better terms (waived contingencies are where sellers really win). The conditions where it FAILS: balanced or cooling markets (you just sold 4% under), unique or luxury properties with thin buyer pools (no crowd to spark), and — critically — without a floor: the strategy requires willingness to reject everything and reprice if the bids do not come. The non-negotiable prerequisite either direction: a real comp analysis, not Zillow\'s zestimator and not the highest number three interviewing agents floated to win the listing. The agent quoting the highest price is buying your listing with your eventual price cut.',
+      },
+    ],
+  },
+  {
+    slug: 'staging-roi-calculator',
+    title: 'Home Staging ROI Calculator — Price Lift + Days-on-Market Savings vs the Staging Bill',
+    shortTitle: 'Staging ROI',
+    category: 'Housing & Mortgage',
+    description:
+      'Does staging pay? Price lift plus faster-sale carrying savings against the staging cost — with the honest bounds on when the lift is real (vacant, dated) and when it compresses (hot markets).',
+    tagline: 'Staging a $440k home for $2,500 returns $11,015 at a 2% lift and 3 weeks saved — a 341% ROI. It needs only a 0.06% price bump to break even.',
+    intro:
+      'Staging has the best claimed economics in home prep — and unusually, the honest version still clears the bar. At the defaults: $2,500 of staging on a $440,000 home, a conservative 2% price lift ($8,800) plus 3 weeks saved at $738/week of carrying ($2,215) — $11,015 of gain, $8,517 net, a 341% ROI. The breakeven is a 0.06% price bump, which is a rounding error. The honest bounds: agent surveys (NAR) report 1–5% lift and 30–50% shorter time on market, but the effect concentrates in vacant and dated homes and compresses toward zero in markets where everything sells anyway. This calculator runs your price, your market heat, and your staging quote.',
+    howItWorks: [
+      'Enter the expected sale price.',
+      'Enter the staging quote — $300–800 occupied consult, $2,000–4,000 vacant full-stage.',
+      'Set the expected price lift (1–2% conservative, up to 5% for vacant/dated in normal markets).',
+      'Enter expected weeks saved and your monthly carrying cost.',
+      'Read the gain, net, ROI, and the breakeven lift.',
+    ],
+    faq: [
+      {
+        q: 'Is the staged-home price lift actually proven?',
+        a: 'Directionally yes, precisely no — understand what the evidence is. The cited numbers come from NAR agent surveys: about a fifth of agents report 1–5% higher offers on staged homes, and most report reduced days-on-market. That is agent-reported perception, not a controlled experiment — homes that get staged differ from homes that do not (better agents, more motivated sellers, nicer properties), so some of the "lift" is selection. The mechanisms that make it real regardless: photography — 95%+ of buyers screen online first, and staging exists mostly to win the thumbnail scroll; emptiness mispricing — vacant rooms photograph small and cold and buyers mentally discount what they cannot imagine living in; and condition signaling — a styled home reads as maintained, which softens inspection aggression. The honest use of this calculator: run it at 0–1% lift for a hot market with an occupied, updated home (staging probably unnecessary), 1–2% for normal conditions, and 3–5% only for vacant or dated homes in markets with normal inventory. Even at 1% the ROI clears on any home where carrying costs are real.',
+      },
+      {
+        q: 'Occupied consult or full vacant staging — which one?',
+        a: 'Match the spend to the vacancy. Occupied staging ($300–800): a professional stager walks your home, writes the declutter-and-rearrange plan, and often rents accessories (art, lamps, bedding) for the photo window — you keep living there, your furniture stays, and the ROI is routinely the best in home prep because the spend is small and the photo improvement is large. Vacant staging ($2,000–4,000 for the main rooms, 2–3 months of furniture rental): the full furnish — living room, primary bedroom, kitchen, and dining are the rooms that move offers; staging secondary bedrooms is diminishing spend. The economics: vacant homes sell slower and lower than occupied ones, so the staging bill on a vacant home is fighting a real discount — this calculator\'s defaults assume exactly that case. The middle path growing fast: virtual staging ($50–100 per photo) for the online listing paired with an empty-but-immaculate house for showings — it wins the thumbnail cheaply, though buyers arriving at empty rooms feel the gap, and MLS rules require disclosure of virtually altered photos.',
+      },
+      {
+        q: 'What is the DIY staging that captures most of the value?',
+        a: 'The unglamorous four, in ROI order. Deep clean ($300–500 professional, or a brutal weekend): kitchens and bathrooms at hotel standard — the single highest-return prep spend, because buyers price grime as deferred maintenance everywhere. Declutter 30–50%: rent a storage unit ($100–200/mo) and remove half the furniture, all the personal photos, and everything on the counters — rooms photograph larger and buyers project their own lives in. Light: replace every bulb with matching bright daylight LEDs, open every blind, add lamps to dark corners — brightness is the cheapest square footage you will ever add. And neutralize: paint the accent wall beige, swap the bold bedding — $200 of paint that removes every "we would have to change..." objection. What to skip: pre-sale renovations — kitchens and baths remodeled to sell return 50–80% at best; the staging trick is making buyers not care. If the DIY four are done well, the professional consult ($300) becomes a polish layer rather than a rescue — and if the photos still read flat after all four, that is the signal the full stage is worth its quote.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

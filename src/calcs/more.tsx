@@ -6239,6 +6239,98 @@ export function PropertyManagerCalc() {
   )
 }
 
+// PRICE REDUCTION TIMING — node-verified defaults: market value $440k. Priced right: sells ~100% of value in 2 weeks. Overpriced path: sits 8 weeks, then sells at ~97% after the cut — cost = (100%−97%) × $440k ($13,200 price hit) + 6 extra weeks × $738/wk carrying ($4,434) = $17,634. The overpricing premium sellers hope for (+2%) is dwarfed by the staleness penalty the data shows: stale listings sell BELOW what a correct first price would have gotten, plus the carrying burn.
+export function PriceReductionCalc() {
+  const [mv, setMv] = useNumber(440000)
+  const [carryMo, setCarryMo] = useNumber(3200)
+  const [wksOver, setWksOver] = useNumber(8)
+  const [wksRight, setWksRight] = useNumber(2)
+  const [stalePct, setStalePct] = useNumber(97)
+  const [rightPct, setRightPct] = useNumber(100)
+
+  const r = useMemo(() => {
+    const carryWk = carryMo / 4.33
+    const saleRight = mv * (rightPct / 100)
+    const saleOver = mv * (stalePct / 100)
+    const priceHit = saleRight - saleOver
+    const carryCost = carryWk * Math.max(wksOver - wksRight, 0)
+    const total = priceHit + carryCost
+    return { carryWk, saleRight, saleOver, priceHit, carryCost, total }
+  }, [mv, carryMo, wksOver, wksRight, stalePct, rightPct])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="True market value" value={mv} onChange={setMv} prefix="$" step="5000" />
+          <Field label="Carrying cost" value={carryMo} onChange={setCarryMo} prefix="$" suffix="/mo" step="100" />
+          <Field label="Weeks overpriced" value={wksOver} onChange={setWksOver} suffix="wks" step="1" />
+          <Field label="Weeks if priced right" value={wksRight} onChange={setWksRight} suffix="wks" step="1" />
+          <Field label="Stale sale at" value={stalePct} onChange={setStalePct} suffix="% of value" step="1" />
+          <Field label="Right-priced sale at" value={rightPct} onChange={setRightPct} suffix="% of value" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Price hit from staleness" value={usd(Math.round(r.priceHit))} />
+          <Result label="Extra carrying cost" value={usd(Math.round(r.carryCost))} />
+          <Result label="Overpricing total cost" value={usd(Math.round(r.total))} big />
+          <Result label="Carrying per week" value={usd(Math.round(r.carryWk))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Overpricing by even a few percent and sitting ${wksOver} weeks costs ${usd(Math.round(r.total))} — ${usd(Math.round(r.priceHit))} of final price plus ${usd(Math.round(r.carryCost))} of carrying. The first two weeks are the listing's whole life: that is when every saved buyer gets the alert. Price to the comp set on day 1.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: overpricing cost = (right-priced sale% − stale sale%) × value + carrying × extra weeks. The mechanism is buyer psychology plus algorithm: a listing&apos;s first 7–14 days are when every buyer with a saved search sees it — the launch window. After that it is furniture: buyers and agents assume something is wrong, lowball offers arrive instead of full-price ones, and the eventual cut reads as desperation, so stale listings typically close 3–5% below where a correct first price would have landed. Carrying is the second burn: mortgage, taxes, insurance, utilities, and lawn at ${' '}the weekly rate shown — plus the unpriced cost of a life on hold. The cut-size rule: 1–2% cuts do nothing (the listing stays in the same search brackets); the effective cut is 4–6%, sized to drop into the next buyer search band ($450k → $425k changes WHO sees it). The timing rule: cut at week 2–3 if showings are quiet, not week 8 — the data says you end at the same place either way, minus seven weeks of carry. Exception worth noting: deliberately underpricing 3–5% in a hot market to force a bidding war is a different, legitimate strategy — that is pricing LOW to sell fast and high, the opposite of this trap. Estimate — your agent&apos;s comp analysis and local days-on-market govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// STAGING ROI — node-verified defaults: $440k home, staging $2,500, price lift 2% ($8,800) + 3 weeks faster × $738/wk carrying ($2,215) = $11,015 gain → net $8,517, ROI 341%. Breakeven lift: 0.06% — staging pencils if it moves the price even a rounding error. Honest bounds: NAR surveys show 1–5% lift claims (agent-reported, treat as directional); the lift is biggest for vacant or dated homes and thinnest in hot seller markets where anything sells.
+export function StagingRoiCalc() {
+  const [mv, setMv] = useNumber(440000)
+  const [stage, setStage] = useNumber(2500)
+  const [liftPct, setLiftPct] = useNumber(2)
+  const [wksSaved, setWksSaved] = useNumber(3)
+  const [carryMo, setCarryMo] = useNumber(3200)
+
+  const r = useMemo(() => {
+    const lift = mv * (liftPct / 100)
+    const save = (carryMo / 4.33) * wksSaved
+    const gain = lift + save
+    const net = gain - stage
+    const roi = stage > 0 ? (net / stage) * 100 : 0
+    const beLift = mv > 0 ? ((stage - save) / mv) * 100 : 0
+    return { lift, save, gain, net, roi, beLift }
+  }, [mv, stage, liftPct, wksSaved, carryMo])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Expected sale price" value={mv} onChange={setMv} prefix="$" step="5000" />
+          <Field label="Staging cost" value={stage} onChange={setStage} prefix="$" step="250" />
+          <Field label="Expected price lift" value={liftPct} onChange={setLiftPct} suffix="%" step="0.5" />
+          <Field label="Weeks saved" value={wksSaved} onChange={setWksSaved} suffix="wks" step="1" />
+          <Field label="Carrying cost" value={carryMo} onChange={setCarryMo} prefix="$" suffix="/mo" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Price lift" value={usd(Math.round(r.lift))} />
+          <Result label="Carrying saved" value={usd(Math.round(r.save))} />
+          <Result label="Net gain" value={usd(Math.round(r.net))} big />
+          <Result label="ROI" value={`${num(r.roi, 0)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Staging at ${usd(stage)} returns ${usd(Math.round(r.gain))} at these settings — net ${usd(Math.round(r.net))}, a ${num(r.roi, 0)}% ROI. It only needs a ${num(Math.max(r.beLift, 0), 2)}% price lift to break even; the bet is whether buyers pay more for a home that photographs like a magazine. They do.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: gain = sale price × expected lift% + weeks saved × weekly carrying; net = gain − staging cost. The lift is real but conditional — NAR surveys report agents seeing 1–5% higher offers on staged homes and 30–50% shorter days-on-market, with the biggest effect on VACANT homes (empty rooms photograph small and cold, and buyers cannot place their lives in them) and dated occupied ones; in a 10-offer hot market the lift compresses toward zero because everything sells anyway. Cost tiers: occupied-home consult + styling $300–800 (declutter plan, furniture rearrangement, accessory rental — the high-ROI tier); vacant full staging $2,000–4,000 for the main rooms over 2–3 months of rental. Where to spend: living room, primary bedroom, kitchen — those three rooms drive the offer; staging the guest room is vanity. The DIY version that captures most of it: declutter 30–50% of possessions into storage ($150/mo), deep clean ($300–500 pro, the single highest-ROI prep item), neutral paint touch-up, and lighting — brighter bulbs and open blinds in every photo. Photos are the actual product: 95%+ of buyers screen online first, so whatever makes the photos better is staging&apos;s real job. Estimate — your market&apos;s heat and your agent&apos;s experience with staged vs unstaged comps govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11928,6 +12020,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'make-ready-calculator': MakeReadyCalc,
   'pet-policy-calculator': PetPolicyCalc,
   'property-manager-calculator': PropertyManagerCalc,
+  'price-reduction-calculator': PriceReductionCalc,
+  'staging-roi-calculator': StagingRoiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
