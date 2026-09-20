@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'coast-fire-calculator',
+    title: 'Coast FIRE Calculator 2026 — The Portfolio Size Where Saving Becomes Optional',
+    shortTitle: 'Coast FIRE',
+    category: 'Retirement',
+    description:
+      'Coast FIRE is the invested amount where growth alone carries you to retirement: FIRE number ÷ (1 + real return)^years. Find your coast number, your progress, and the exact age you cross the line at your current savings rate.',
+    tagline: 'The day compounding takes over the job. After coast, your paycheck only has to cover this year.',
+    intro:
+      'Coast FIRE is the most liberating milestone on the financial-independence path: the portfolio size at which you can stop contributing entirely and still reach full retirement on growth alone. The math is one line — your FIRE number (annual spending ÷ safe withdrawal rate) discounted back by a real return for the years until retirement. A 35-year-old needing $60,000 a year at a 4% withdrawal rate has a $1.5M FIRE number, but a coast number of just $347,066 — cross that line and career risk, sabbaticals, and downshifts stop threatening retirement, because your paycheck only needs to cover the present. This calculator computes your coast number, your progress, and the exact age you\'ll cross at your current contribution rate — with honest real-return and withdrawal-rate assumptions.',
+    howItWorks: [
+      'Enter your current age and the age you want work fully optional.',
+      'Enter your retirement spending in TODAY\'s dollars — the real return handles inflation.',
+      'Enter your invested portfolio and current annual contributions.',
+      'Read the coast number, your progress, and the age you cross the line.',
+    ],
+    faq: [
+      {
+        q: 'What return should I assume?',
+        a: 'Use a REAL return — nominal minus inflation — because your spending target is in today\'s dollars. Long-run US equity real returns have averaged about 6.5–7%, but a blended portfolio and a dose of humility argue for 4–5%. The assumption matters enormously: at 7% real, a 30-year-old\'s coast number for a $1.5M FIRE target is $197,000; at 4% real it\'s $463,000. Pick the conservative end and be pleasantly surprised, not the reverse. And remember coast FIRE assumes average returns — sequence-of-returns risk means the path can wobble even when the destination math is right.',
+      },
+      {
+        q: 'How is coast FIRE different from barista FIRE?',
+        a: 'Coast FIRE: you stop SAVING but keep earning enough to cover current spending — the portfolio is untouched until full retirement. Barista FIRE: you semi-retire NOW on part-time income that covers part of spending, while the portfolio bridges the rest and keeps growing. Barista needs a bigger number (the portfolio is doing some work immediately) but buys freedom earlier. Regular FIRE is the finish line: the portfolio covers everything, work is fully optional. Coast is the milestone where the finish line becomes inevitable.',
+      },
+      {
+        q: 'Should Social Security reduce my coast number?',
+        a: 'Honestly, yes — but carefully. If you expect $24,000/year in benefits starting at 67, your portfolio only needs to fund the spending ABOVE that after 67, plus everything before it. The clean way to model it: subtract expected annual benefits from retirement spending if your FIRE age and benefit age match, or run the safe-withdrawal calculator with spending reduced by the benefit. A rough cut: $24k of expected benefits knocks roughly $600k off a 4%-rule FIRE number. The conservative crowd ignores Social Security entirely and treats it as margin — defensible, but it overstates what you actually need.',
+      },
+    ],
+  },
+  {
     slug: 'survivor-benefit-calculator',
     title: 'Social Security Survivor Benefit Calculator 2026 — Widow/Widower Rules, the 82.5% Floor, and the Last Legal Switch',
     shortTitle: 'Survivor Benefit',

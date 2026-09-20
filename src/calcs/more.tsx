@@ -2323,6 +2323,68 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Coast FIRE — the portfolio size at which you can stop saving and let compounding carry you to full retirement. FIRE number = annual spend ÷ safe withdrawal rate ($60k ÷ 4% = $1.5M). Coast number = FIRE ÷ (1+r)^years — what you need invested TODAY so growth alone gets there by your retirement age. Below it, the time-to-coast solves portfolio×(1+r)^t + contributions×((1+r)^t−1)/r = coast → (1+r)^t = (coast + c/r)/(P + c/r). The psychology is the point: once coasting, your paycheck only needs to cover THIS year's spending — career risk, sabbaticals, and downshifts stop threatening retirement. Honest wrinkles: use a REAL return (5% real ≈ 8% nominal − 3% inflation) so today's dollars stay today's dollars; the SWR assumption dominates the result (3.5% vs 4.5% moves the target ~28%); sequence risk still applies after full retirement — coast FIRE assumes average returns, which is fine for a target, not a guarantee. Node-verified: $60k/4%/35→65/5% → FIRE $1.5M, coast $347,066; P=$300k + $10k/yr → coast in 1.84 yrs (86.4% there); P=$400k → 2.9 yrs ahead; 25yo/60/$80k/4.5%/6% → FIRE $1,777,778, coast $231,298.
+export function CoastFireCalc() {
+  const [age, setAge] = useNumber(35)
+  const [retAge, setRetAge] = useNumber(65)
+  const [spend, setSpend] = useNumber(60000)
+  const [portfolio, setPortfolio] = useNumber(300000)
+  const [contrib, setContrib] = useNumber(10000)
+  const [r, setR] = useNumber(5)
+  const [swr, setSwr] = useNumber(4)
+
+  const res = useMemo(() => {
+    const yrs = Math.max(0, retAge - age)
+    const fire = spend / (swr / 100)
+    const rr = r / 100
+    const coast = fire / Math.pow(1 + rr, yrs)
+    const progress = coast > 0 ? (portfolio / coast) * 100 : 0
+    let yrsToCoast = 0
+    if (portfolio < coast && yrs > 0) {
+      if (contrib > 0) {
+        yrsToCoast = Math.log((coast + contrib / rr) / (portfolio + contrib / rr)) / Math.log(1 + rr)
+      } else {
+        yrsToCoast = Math.log(coast / portfolio) / Math.log(1 + rr)
+      }
+    }
+    const ahead = portfolio >= coast ? Math.log(portfolio / coast) / Math.log(1 + rr) : 0
+    const coastAge = age + yrsToCoast
+    return { fire, coast, progress, yrsToCoast, ahead, coastAge, yrs, isCoast: portfolio >= coast }
+  }, [age, retAge, spend, portfolio, contrib, r, swr])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <Field label="Current age" value={age} onChange={setAge} />
+          <Field label="Full retirement age" value={retAge} onChange={setRetAge} />
+          <Field label="Annual spend in retirement (today's $)" value={spend} onChange={setSpend} prefix="$" />
+          <Field label="Invested portfolio today" value={portfolio} onChange={setPortfolio} prefix="$" />
+          <Field label="Current annual contributions" value={contrib} onChange={setContrib} prefix="$" />
+          <Field label="Real return assumption" value={r} onChange={setR} suffix="%" />
+          <Field label="Safe withdrawal rate" value={swr} onChange={setSwr} suffix="%" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Coast number today" value={usd(res.coast, 0)} />
+          <Result label="Full FIRE number" value={usd(res.fire, 0)} />
+          <Result label="Your progress" value={`${num(res.progress, 1)}%`} />
+          <Result label={res.isCoast ? 'Status' : 'Coast at age'} value={res.isCoast ? 'Already coasting' : num(res.coastAge, 1)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {res.isCoast ? (
+            <>Your {usd(portfolio)} already beats the coast number of {usd(res.coast, 0)} — <span className="font-medium">you are Coast FIRE, {num(res.ahead, 1)} years of growth ahead of schedule</span>. From here your paycheck only needs to cover this year's life; every retirement dollar is compounding's job now. You could stop contributing entirely and still hit {usd(res.fire, 0)} by {retAge}.</>
+          ) : (
+            <>Coast needs {usd(res.coast, 0)} invested today — you have {usd(portfolio)} ({num(res.progress, 1)}%). {contrib > 0 ? <>At {usd(contrib)}/yr in contributions you cross the line in <span className="font-medium">{num(res.yrsToCoast, 1)} years, around age {num(res.coastAge, 1)}</span> — after that, saving becomes optional and compounding does the rest.</> : <>With no contributions you never catch it — the coast number requires growth alone to close a gap it's already behind on.</>}</>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Coast FIRE is the milestone where your portfolio, growing untouched, reaches your full FIRE number (annual spend ÷ safe withdrawal rate) by your retirement age — after which every dollar you earn only needs to fund the present. The math is one line: coast number = FIRE number ÷ (1 + real return)^years. The assumptions do the heavy lifting: use a REAL (after-inflation) return — 5% real is a reasonable long-run equity/bond blend, 8% nominal minus 3% inflation — and the withdrawal rate moves the target more than most people expect ($60k at 3.5% wants $1.71M; at 4.5%, $1.33M). Coast FIRE is a target, not a guarantee: sequence-of-returns risk still applies, the 4% rule is a historical-US result, and the number ignores taxes, Social Security (which lowers the required portfolio — run it here with your expected benefit as reduced spend), and pensions. Barista FIRE is the middle gear: part-time income covers part of spending so the portfolio only needs to bridge the rest. Estimates for planning, not a promise.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Social Security SURVIVOR benefits — a different, more generous rulebook than spousal. Widow(er)s can claim as early as 60 (50 if disabled) and at 60 always get exactly 71.5% of the base — the per-month reduction (28.5% spread over the months from 60 to survivor-FRA) flexes so the 60 number is constant. The base: worker's actual benefit, BUT if the worker claimed early the survivor is protected by the RIB LIM floor — the GREATER of the worker's reduced check or 82.5% of PIA; if the worker DELAYED, the DRCs carry over (delay to 70 → survivor gets 124%). The strategy superpower: NO deemed filing on survivor claims — a widow can take a reduced survivor benefit at 60 and switch to her own maxed benefit at 70 (or vice versa), the one remaining legal switch. Remarriage before 60 kills eligibility (unless it ends); after 60 it's fine. Survivor FRA runs on its own table, 2 years behind retirement FRA: 66 for born ≤1956, +2mo/yr, 67 for 1962+. Node-verified: base $2,600, FRA 67 → $1,859.00 at 60, $2,282.43 at 64 (36 mo early), $2,600 at FRA; worker claimed at 62 ($1,820) → floor kicks in, base $2,145 → $1,533.68 at 60; worker delayed to 70 → base $3,224; survivor FRA: 1957→794mo, 1960→800, 1962→804; own PIA $2,000 → $2,480 at 70, beat the $1,859 survivor-60 path for the switch.
 const SURV_FRA: [string, number][] = [
   ['1956 or earlier', 792], ['1957', 794], ['1958', 796], ['1959', 798], ['1960', 800], ['1961', 802], ['1962 or later', 804],
@@ -7148,6 +7210,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'coast-fire-calculator': CoastFireCalc,
   'survivor-benefit-calculator': SurvivorSSCalc,
   'spousal-social-security-calculator': SpousalSSCalc,
   'roth-5-year-rule-calculator': Roth5YearCalc,

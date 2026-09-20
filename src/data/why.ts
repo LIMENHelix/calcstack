@@ -21,6 +21,8 @@ export const WHY_USE: Record<string, string> = {
     'Car shoppers use it after the dealer quote, when the EV premium is a real number: with the federal credit gone since late 2025, the case rests on home-charging math and maintenance, and the breakeven year decides whether the premium is an investment or a donation.',
   'solar-payback-calculator':
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
+  'coast-fire-calculator':
+    'Savers in their 20s–40s use it to find the day saving becomes optional: coast number = FIRE number discounted by real return — $347k invested at 35 carries you to a $1.5M retirement at 65, and after that a paycheck only has to cover the present.',
   'survivor-benefit-calculator':
     'Widows and widowers use it in the first planning pass after a death: claiming at 60 locks in 71.5% of the base forever, the 82.5%-of-PIA floor repairs a spouse\'s early claiming, and the survivor switch — reduced survivor now, own maxed benefit at 70 — is the last legal double-dip.',
   'spousal-social-security-calculator':
