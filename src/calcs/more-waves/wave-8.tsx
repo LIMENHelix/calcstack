@@ -2312,3 +2312,71 @@ export function LocumRateCalc() {
     </CardContent></Card>
   )
 }
+// OPEN HOUSE ROI — node-verified defaults: 6 buyer leads × 8% lead→client × 50% client→close × $9,000 avg side = $2,160 expected value per open house. Against $150 of signs/ads/refreshments and 4 hours, that is $540/hr of EV — the open house is a lead harvest, not a house-selling event.
+export function OpenHouseRoiCalc() {
+  const [leads, setLeads] = useNumber(6)
+  const [leadToClient, setLeadToClient] = useNumber(8)
+  const [closeRate, setCloseRate] = useNumber(50)
+  const [commission, setCommission] = useNumber(9000)
+  const [cost, setCost] = useNumber(150)
+  const [hours, setHours] = useNumber(4)
+  const r = useMemo(() => {
+    const ev = leads * (leadToClient / 100) * (closeRate / 100) * commission
+    const net = ev - cost
+    return { ev, net, perHour: hours > 0 ? ev / hours : 0 }
+  }, [leads, leadToClient, closeRate, commission, cost, hours])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Buyer leads captured" value={leads} onChange={setLeads} />
+        <Field label="Lead → client rate" value={leadToClient} onChange={setLeadToClient} suffix="%" />
+        <Field label="Client → closing rate" value={closeRate} onChange={setCloseRate} suffix="%" />
+        <Field label="Avg commission per side" value={commission} onChange={setCommission} prefix="$" />
+        <Field label="Cost (signs, ads, refreshments)" value={cost} onChange={setCost} prefix="$" />
+        <Field label="Hours invested" value={hours} onChange={setHours} suffix="hrs" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Expected value per open house" value={usd(r.ev)} big />
+        <Result label="EV per hour" value={`${usd(r.perHour)}/hr`} big />
+        <Result label="Net after costs" value={usd(r.net)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Expected value is a long-run average across many open houses — any single one can produce zero. The sign-in sheet IS the product; no leads captured means zero EV no matter the traffic.</p>
+    </CardContent></Card>
+  )
+}
+
+// ONLINE COACHING PRICING — node-verified defaults: 1:1 training caps at 30 sessions/mo × $75 = $2,250 at $75/hr. 25 online clients at $200/mo with 10-min weekly check-ins = $5,000/mo on ~18 hours = $277/hr — same coaching skill, 3.7× the effective rate, and the roster is not capped by your calendar.
+export function OnlineCoachingCalc() {
+  const [rate, setRate] = useNumber(75)
+  const [sessions, setSessions] = useNumber(30)
+  const [clients, setClients] = useNumber(25)
+  const [price, setPrice] = useNumber(200)
+  const [mins, setMins] = useNumber(10)
+  const r = useMemo(() => {
+    const inPerson = rate * sessions
+    const inHourly = sessions > 0 ? inPerson / sessions : 0
+    const online = clients * price
+    const onHours = (clients * mins * 4.33) / 60
+    const onHourly = onHours > 0 ? online / onHours : 0
+    return { inPerson, inHourly, online, onHours, onHourly }
+  }, [rate, sessions, clients, price, mins])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="1:1 session rate" value={rate} onChange={setRate} prefix="$" />
+        <Field label="1:1 sessions per month" value={sessions} onChange={setSessions} />
+        <Field label="Online clients" value={clients} onChange={setClients} />
+        <Field label="Online price per month" value={price} onChange={setPrice} prefix="$" />
+        <Field label="Check-in minutes per client/week" value={mins} onChange={setMins} suffix="min" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="1:1 revenue ceiling" value={`${usd(r.inPerson)}/mo`} big />
+        <Result label="Online revenue" value={`${usd(r.online)}/mo`} big />
+        <Result label="1:1 effective hourly" value={`${usd(r.inHourly)}/hr`} />
+        <Result label="Online effective hourly" value={`${usd(r.onHourly)}/hr`} />
+        <Result label="Online hours per month" value={num(r.onHours, 1)} />
+      </div>
+      <p className="text-xs text-muted-foreground">Check-in time is the hidden cost — program writing, onboarding, and churn management add hours per client. Pad the minutes input honestly or the online hourly flatters itself.</p>
+    </CardContent></Card>
+  )
+}

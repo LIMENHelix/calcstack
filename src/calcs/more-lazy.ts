@@ -136,6 +136,8 @@ export const MORE_CALC_COMPONENTS: Record<string, LazyExoticComponent<ComponentT
   'mba-roi-calculator': lazy(() => import('./more-waves/wave-4').then((m) => ({ default: m.MbaRoiCalc }))),
   'bootcamp-roi-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.BootcampRoiCalc }))),
   'locum-tenens-rate-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.LocumRateCalc }))),
+  'open-house-roi-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.OpenHouseRoiCalc }))),
+  'online-coaching-pricing-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.OnlineCoachingCalc }))),
   'sabbatical-cost-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SabbaticalCostCalc }))),
   'self-storage-roi-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SelfStorageCalc }))),
   'car-wash-economics-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.CarWashCalc }))),

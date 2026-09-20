@@ -3790,6 +3790,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'open-house-roi-calculator',
+    title: 'Open House ROI Calculator — Expected Value per Hour of Your Sunday',
+    shortTitle: 'Open House ROI',
+    category: 'Careers & Salary',
+    description: 'Price an open house honestly: leads captured, lead-to-client rate, closing rate, and average commission turn Sunday afternoon into an expected-value number you can compare against prospecting.',
+    tagline: 'The open house rarely sells the house. It harvests the buyers.',
+    intro: 'Six sign-ins, an 8% lead-to-client rate, a 50% closing rate, and a $9,000 average side make one open house worth $2,160 in expected commission — $540 an hour against $150 of signs and refreshments. This calculator runs your own funnel numbers so you can decide which listings deserve your Sunday.',
+    howItWorks: [
+      'Enter the buyer leads you realistically capture — the sign-in sheet number, not foot traffic.',
+      'Set your lead-to-client conversion and your client-to-closing rate.',
+      'Add your average commission per side.',
+      'Include the hard costs and hours invested.',
+      'Read expected value per open house, per hour, and net after costs — then compare it to your other prospecting.',
+    ],
+    faq: [
+      {
+        q: 'Do open houses actually sell houses?',
+        a: 'Rarely — industry surveys consistently attribute only a low-single-digit share of sales directly to open houses, and serious buyers almost always arrive with an agent. The real product is the sign-in sheet: unrepresented buyers walking in are the highest-intent leads an agent can meet face-to-face, and the expected-value math is where the open house justifies itself. At 6 captured leads, 8% conversion, and a $9,000 average side, each open house carries about $2,160 of EV — roughly $540 per hour, which beats almost every other prospecting activity on a per-hour basis. Agents who skip the sign-in sheet or let visitors wander unregistered get the foot traffic without the asset.',
+      },
+      {
+        q: 'How do I capture more leads at an open house?',
+        a: 'The math is unforgiving: EV scales linearly with captured leads, so doubling capture doubles the value of the same afternoon. Digital sign-in on a tablet at the door (with a genuine reason — listing disclosures, the full photo set, or a neighborhood report sent by email) outperforms paper sheets, which invite fake names. The highest-converting move is requiring registration for the follow-up item: "I\'ll send you the comparable sales for this street" converts far better than "please sign in." Door-adjacent placement matters — greet, register, then release. Expect 60–80% capture with a system versus 20–30% with a clipboard by the snacks.',
+      },
+      {
+        q: 'When is an open house NOT worth it?',
+        a: 'When the EV/hour falls below your next-best prospecting alternative. Low-traffic neighborhoods, price ranges dominated by represented buyers (luxury), and listings with poor showing windows all crush the leads input. Run the break-even: at a $9,000 side and 8%/50% funnel, you need only 0.4 leads to cover the $150 cash cost — but the hours are the real expense. If your database prospecting returns $200/hour of EV and a weak-location open house returns $150/hour, skip it and work the phones. Also count the seller-relationship value: an open house that impresses the listing client generates referrals that never touch this calculator — some agents price that in by bumping the lead count by 1–2 "seller-pleasing" credits.',
+      },
+    ],
+  },
+  {
+    slug: 'online-coaching-pricing-calculator',
+    title: 'Online Coaching Pricing Calculator — Escape the 1:1 Revenue Ceiling',
+    shortTitle: 'Online Coaching Pricing',
+    category: 'Careers & Salary',
+    description: 'Compare in-person training revenue against online coaching: same coaching skill, priced per month instead of per hour. See revenue, hours, and effective hourly rate for both models.',
+    tagline: 'The calendar caps your 1:1 income. It does not cap your roster.',
+    intro: 'Thirty sessions a month at $75 is a $2,250 ceiling and a full calendar. Twenty-five online clients at $200 a month is $5,000 on roughly 18 hours of check-ins — $277 per effective hour from the same coaching skill. This calculator puts both models side by side with your real prices and real check-in time.',
+    howItWorks: [
+      'Enter your current 1:1 session rate and monthly session load — that is your ceiling.',
+      'Add your target online roster size and monthly price.',
+      'Set honest weekly check-in minutes per client — program review, messages, video feedback.',
+      'The tool computes revenue and effective hourly for both models.',
+      'Read the hours-per-month figure: that is what scaling actually costs you.',
+    ],
+    faq: [
+      {
+        q: 'How much should I charge for online fitness coaching?',
+        a: 'The market bands are well established: $99–$150/month buys template programming with light check-ins, $200–$300 buys custom programming with weekly video or message review, and $400+ buys high-touch coaching with nutrition, calls, and daily access. Price against your check-in time, not your ego: the effective-hourly output here is the honest test — if a $150 tier with 20-minute weekly check-ins drops you below your 1:1 rate, either the price rises or the touch shrinks. New coaches should start at $150–$200 and raise prices every 10 clients; churn data says clients who pay $200+ stay longer than discount clients anyway.',
+      },
+      {
+        q: 'How many online clients can one coach handle?',
+        a: 'The binding constraint is check-in minutes, and the math is on the screen: at 10 minutes per client per week, 25 clients costs about 18 hours a month — a part-time load. At a sloppier 20 minutes, 25 clients eats 36 hours, and the model starts looking like a job. Well-systemized coaches with templates, video libraries, and asynchronous Loom-style reviews hold 40–60 clients; beyond that, quality slips or you hire an assistant coach, at which point the calculator becomes a staffing decision. The number to watch is hours per month versus the revenue — when the effective hourly falls toward your 1:1 rate, the roster is full.',
+      },
+      {
+        q: 'Should I keep training 1:1 while building online?',
+        a: 'Yes — the hybrid is the standard transition, and the calculator shows why: 1:1 pays the bills at a known rate while the online roster compounds. The typical path is keeping 15–20 in-person sessions (the best clients, the ones who refer) while converting time-freed capacity into online check-ins. The mistake pattern is going all-online before the roster hits 15–20 clients, which trades a $75/hour certainty for a $2,000/month hope. Use the two revenue outputs as the trigger: when online revenue reliably covers your floor expenses for three straight months, the 1:1 schedule can shrink. Keep a few in-person slots permanently — they are your marketing, your testimonials, and your skill maintenance.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',
