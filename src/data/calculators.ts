@@ -700,6 +700,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'deductible-optimizer-calculator',
+    title: 'Insurance Deductible Optimizer 2026 — The Breakeven Claim Rate and the Emergency-Fund Gate',
+    shortTitle: 'Deductible Optimizer',
+    category: 'Health & Life',
+    description:
+      'Higher deductible or lower premium? Compute the breakeven claim frequency, the 10-year expected value at YOUR claim rate, and whether your emergency fund even allows the move.',
+    tagline: 'Raising a $500 deductible to $2,000 for $320/year saved breaks even at one claim per 4.7 years — most drivers claim once a decade.',
+    intro:
+      'Insurance pricing hides an asymmetry you can harvest: insurers charge the most for the first dollars of coverage, because that\'s where claim frequency lives. Raising a deductible from $500 to $2,000 often saves $300+ a year — and the breakeven is one claim every 4.7 years. If your real history is a claim a decade, the high deductible is a $1,700-per-decade expected win. But two gates come first: your emergency fund must cover the deductible comfortably, and the deductible belongs just under the smallest loss you\'d actually file — since small claims cost you 20–40% surcharges and CLUE-report history anyway. This calculator runs your breakeven and both gates.',
+    howItWorks: [
+      'Enter your current deductible and the higher option from a real quote.',
+      'Enter the annual premium saving the quote promises.',
+      'Add your honest claim history and your emergency fund.',
+      'Read the breakeven claim rate, the 10-year EV, and the verdict.',
+    ],
+    faq: [
+      {
+        q: 'How much does raising my deductible actually save?',
+        a: 'It varies by insurer and state, but the shape is consistent: the biggest savings live in the first jump. Auto insurance typically cuts premium 15–25% going from $500 to $1,000, and another 10–15% to $2,000; homeowners follows a similar curve. That\'s the pricing asymmetry — frequency concentrates in small losses, so insurers price the low deductible richly. Always get the real quote before deciding: plug both deductibles into your insurer\'s online quote tool or ask the agent directly, and put the ACTUAL annual saving into this calculator. One trap to avoid: don\'t raise the deductible on a policy where the dollar saving is small (some carriers price flat) — the breakeven math decides, not the principle.',
+      },
+      {
+        q: 'When should I NOT file a claim even though I\'m insured?',
+        a: 'When the payout barely exceeds the deductible. The hidden costs compound: auto claims typically surcharge your premium 20–40% for 3–5 years — a $1,800 payout on a $1,000 deductible can cost $2,000+ in surcharges. Home claims are harsher: they land on your CLUE report for 7 years, follow you to new insurers, and two claims in five years can make you unrenewable — forcing you into surplus-lines coverage at double the price. The practical rule many adjusters quietly endorse: don\'t file below roughly 2× your deductible unless liability is involved. This is why the deductible should sit just under your claim threshold — you\'re effectively self-insuring small losses anyway; you might as well collect the premium discount for it.',
+      },
+      {
+        q: 'Is the emergency-fund gate really a hard rule?',
+        a: 'Yes — the deductible is not a number, it\'s a promise to pay cash within days of a loss. A $2,000 deductible with $1,500 in liquid savings means financing your deductible on a credit card at 24% while the claim settles, which can erase years of premium savings in one event. The comfortable standard: the deductible should be a nuisance, not a crisis — most advisors say the e-fund should cover the deductible twice over (once for the loss, once for whatever else breaks that month, because losses cluster). If you\'re not there yet, keep the low deductible and redirect the "optimization" energy into building the fund; revisit the deductible the day the fund clears 2×. The insurance is doing its job either way — the question is only which layer you pay for.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

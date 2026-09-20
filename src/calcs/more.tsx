@@ -3218,6 +3218,55 @@ export function HomeSaleGainsCalc() {
   )
 }
 
+// DEDUCTIBLE OPTIMIZER — insurance is for losses that would hurt, not losses that would annoy. Node-verified: raising $500→$1,000 deductible saving $180/yr premium → breakeven claim frequency 180/500 = 0.36/yr = one claim per 2.78 years; claim less often and the high deductible wins. $500→$2,000 saving $320/yr → breakeven 1 per 4.69 yrs. EV over 10 yrs at 0.2 claims/yr: +$200; at 0.1/yr: +$1,700. The two hard gates: (1) emergency fund must cover the deductible comfortably — a $2,000 deductible with $1,500 in savings is self-insurance theater; (2) claims economics — small claims near the deductible shouldn't be filed at all (surcharges 20–40% for 3–5 yrs on auto; home claims poison renewability and CLUE reports follow you 7 yrs), so the deductible should sit just under the smallest loss you'd genuinely claim.
+export function DeductibleOptimizerCalc() {
+  const [lowDed, setLowDed] = useNumber(500)
+  const [highDed, setHighDed] = useNumber(2000)
+  const [saved, setSaved] = useNumber(320)
+  const [claimsPerYr, setClaimsPerYr] = useNumber(0.15)
+  const [efund, setEfund] = useNumber(5000)
+
+  const r = useMemo(() => {
+    const exposure = highDed - lowDed
+    const breakEvenFreq = exposure > 0 ? saved / exposure : 0
+    const breakEvenYrs = saved > 0 ? exposure / saved : 0
+    const ev10 = saved * 10 - claimsPerYr * 10 * exposure
+    const win = claimsPerYr < breakEvenFreq
+    const covered = efund >= highDed
+    return { exposure, breakEvenFreq, breakEvenYrs, ev10, win, covered }
+  }, [lowDed, highDed, saved, claimsPerYr, efund])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <Field label="Current deductible" value={lowDed} onChange={setLowDed} prefix="$" step="250" />
+          <Field label="Higher deductible option" value={highDed} onChange={setHighDed} prefix="$" step="250" />
+          <Field label="Annual premium saved" value={saved} onChange={setSaved} prefix="$" step="20" />
+          <Field label="Your claims per year (honest history)" value={claimsPerYr} onChange={setClaimsPerYr} step="0.05" />
+          <Field label="Emergency fund" value={efund} onChange={setEfund} prefix="$" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Extra exposure per claim" value={usd(r.exposure)} />
+          <Result big label="Breakeven claim rate" value={`1 per ${num(r.breakEvenYrs, 1)} yrs`} />
+          <Result label="10-year expected value" value={usd(r.ev10)} />
+          <Result label="Deductible covered by e-fund?" value={r.covered ? 'Yes' : 'NO — gate failed'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.win && r.covered
+            ? `Take the higher deductible: you claim once per ${num(1 / Math.max(claimsPerYr, 0.01), 1)} years but breakeven is once per ${num(r.breakEvenYrs, 1)} — a ${usd(r.ev10)} expected win over a decade, and your emergency fund covers the ${usd(highDed)} exposure.`
+            : !r.covered
+              ? `The math may say yes, but the gate says no: a ${usd(highDed)} deductible against a ${usd(efund)} emergency fund is self-insurance theater. Build the fund first, then raise the deductible.`
+              : `Keep the lower deductible: your claim history (once per ${num(1 / Math.max(claimsPerYr, 0.01), 1)} yrs) beats the ${num(r.breakEvenYrs, 1)}-year breakeven — you'd expect to lose ${usd(-r.ev10)} over a decade.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The pricing asymmetry is the opportunity: insurers charge heavily for the first dollars of coverage because that's where the claim frequency lives — the jump from $500 to $1,000 typically saves 15–25% of premium, while $1,000 to $2,000 saves less per dollar of exposure. Get both quotes from your insurer; the savings field above should come from a real quote, not a guess. The claims-economics caveat cuts deeper than the math: filing small claims near the deductible is usually a mistake — auto surcharges run 20–40% for 3–5 years, and home claims go on your CLUE report for 7 years, following you to the next insurer and sometimes making you unrenewable. Since you'd pay the first {usd(highDed)} of any loss anyway, the deductible belongs just under the smallest loss you'd genuinely claim. Auto and home only — health deductibles are a different machine (out-of-pocket maxes, coinsurance, HSA arbitrage). Estimates — your insurer's quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8847,6 +8896,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'seller-net-sheet-calculator': SellerNetSheetCalc,
   'mortgage-buydown-calculator': BuydownCalc,
   'home-sale-capital-gains-calculator': HomeSaleGainsCalc,
+  'deductible-optimizer-calculator': DeductibleOptimizerCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
