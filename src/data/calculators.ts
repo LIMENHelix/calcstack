@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'spousal-social-security-calculator',
+    title: 'Spousal Social Security Calculator 2026 — 50% of PIA, the Deemed-Filing Trap, and Why FRA Is the Ceiling',
+    shortTitle: 'Spousal Social Security',
+    category: 'Retirement',
+    description:
+      'A spouse can collect up to 50% of the worker\'s benefit — but claiming at 62 cuts it to 32.5%, deemed filing reduces BOTH pieces, and spousal benefits earn zero delayed credits past full retirement age. Compute the exact monthly amount.',
+    tagline: 'Half your spouse\'s check — but only at full retirement age. At 62 it\'s 32.5 cents on the dollar.',
+    intro:
+      'Spousal Social Security is the most misunderstood benefit in the system: the "50% rule" applies only at the spouse\'s full retirement age, and claiming early cuts it on a harsher schedule than the worker\'s own benefit — 35% gone at 62 against an FRA of 67, leaving 32.5% of the worker\'s PIA. Deemed filing makes it worse: one claim files for both your own benefit and the spousal top-up, and each reduces permanently on its own schedule. The top-up itself is 50% of the worker\'s PIA minus your own PIA — not your reduced check — so a spouse with a small work record still collects the difference. And unlike your own benefit, the spousal piece earns no delayed credits past FRA: once the worker has filed, waiting past FRA adds nothing. This calculator computes both pieces with the exact SSA reduction schedules, handles divorced-spouse claims, and shows the monthly and annual totals at any claiming age.',
+    howItWorks: [
+      'Enter the worker\'s PIA — their benefit at full retirement age (from their SSA statement).',
+      'Enter the spouse\'s own PIA — 0 if they never worked under Social Security.',
+      'Pick the spouse\'s birth year (sets FRA) and claiming age.',
+      'Read the own-benefit piece, the spousal top-up, and the combined monthly check.',
+    ],
+    faq: [
+      {
+        q: 'Why is my spousal benefit less than 50% of my spouse\'s check?',
+        a: 'Three possible reasons. You claimed before your full retirement age — spousal benefits cut 25/36 of 1% per month for the first 36 months early and 5/12 of 1% beyond, a 35% cut at 62 vs FRA 67. Your own PIA is deducted first: Social Security pays your own benefit, then tops up only the difference to the spousal maximum. Or your spouse claimed early — no wait, that one doesn\'t matter: spousal benefits are computed from the worker\'s PIA (their FRA amount), not their actual reduced check. The early-claiming penalty is entirely on the spouse\'s side.',
+      },
+      {
+        q: 'Can I claim spousal now and switch to my own bigger benefit at 70?',
+        a: 'Not if you were born after January 1, 1954 — that strategy is dead. Deemed filing means any claim is treated as a claim for BOTH benefits simultaneously, and you get the higher combination with both pieces reduced by your claiming age. The old "restricted application" (spousal now, own later) survives only for that pre-1954 cohort, all of whom are past 70 now. What still works: delaying your OWN benefit to 70 for the 24% boost while a spouse with no work record collects nothing until you file — the worker must file for any spousal benefit to start.',
+      },
+      {
+        q: 'How do divorced-spouse benefits work?',
+        a: 'If the marriage lasted at least 10 years, you\'re 62 or older, and you\'re currently unmarried, you can claim up to 50% of your ex\'s PIA — same reduction schedule as current spouses. Two genuine advantages over current spouses: once the divorce is two years final, your ex doesn\'t need to have filed (they just need to be 62+), and your claim is invisible to them — it doesn\'t reduce their benefit or their current spouse\'s. Remarry and you lose the divorced-spouse benefit (unless that marriage also ends). Survivor rules are even better: a divorced surviving spouse can collect up to 100%.',
+      },
+    ],
+  },
+  {
     slug: 'roth-5-year-rule-calculator',
     title: 'Roth 5-Year Rule Calculator 2026 — Conversions, Contributions, Earnings: Three Clocks',
     shortTitle: 'Roth 5-Year Rule',

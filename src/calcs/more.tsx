@@ -2323,6 +2323,90 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Spousal Social Security — up to 50% of the worker's PIA, but only at the spouse's FRA; earlier claiming cuts it 25/36%/mo (first 36 months) then 5/12%/mo — max 35% cut at 62 vs FRA 67, so the floor is 32.5% of PIA. NO delayed credits on the spousal piece past FRA — if the worker has filed, waiting past FRA adds nothing to it. Deemed filing: a claim files for BOTH own + spousal; the own benefit reduces on its own schedule (5/9%/mo first 36, 5/12% beyond; +8%/yr DRC to 70) and the spousal "excess" (50% worker PIA − own PIA) reduces on the spousal schedule. Worker must have FILED for a current spouse to collect (divorced spouses are independently entitled once divorced 2+ years; marriage must have lasted 10+ years, claimant 62+ and unmarried; the ex's check is untouched). FRA: 66 + 2mo/yr for 1955–1959 births, 67 for 1960+. Survivor benefits are a DIFFERENT rule (up to 100% of the worker's amount). Node-verified: worker $2,400 / own $800, FRA 67: claim 64 → own $640 + excess $300 = $940; 67 → $1,200; 62 → $560 + $260 = $820; never-worked spouse: $1,200 at FRA, $780 at 62; own PIA $1,500 → excess $0; own claim at 70 → $992 + $400 = $1,392.
+const SS_FRA_MONTHS: [string, number][] = [
+  ['1955 or earlier', 792], ['1956', 796], ['1957', 798], ['1958', 800], ['1959', 802], ['1960 or later', 804],
+]
+export function SpousalSSCalc() {
+  const [workerPIA, setWorkerPIA] = useNumber(2400)
+  const [ownPIA, setOwnPIA] = useNumber(800)
+  const [claimAge, setClaimAge] = useState('64')
+  const [birth, setBirth] = useState('804')
+  const [divorced, setDivorced] = useState(false)
+
+  const r = useMemo(() => {
+    const fra = Number(birth) // months
+    const m = Math.round(Number(claimAge) * 12)
+    // own benefit factor: early 5/9% x36 then 5/12%; DRC 2/3%/mo to age 70 (36 mo cap past FRA 67-ish — cap at 70)
+    let ownF = 1
+    if (m < fra) {
+      const early = fra - m
+      ownF = 1 - Math.min(early, 36) * (5 / 9) / 100 - Math.max(0, early - 36) * (5 / 12) / 100
+    } else {
+      ownF = 1 + Math.min(m - fra, 840 - fra) * (2 / 3) / 100 // DRC capped at age 70 (840 months)
+    }
+    // spousal excess factor: early 25/36% x36 then 5/12%; no DRC past FRA
+    let spF = 1
+    if (m < fra) {
+      const early = fra - m
+      spF = 1 - Math.min(early, 36) * (25 / 36) / 100 - Math.max(0, early - 36) * (5 / 12) / 100
+    }
+    const own = ownPIA * ownF
+    const excessFull = Math.max(0, 0.5 * workerPIA - ownPIA)
+    const excess = excessFull * spF
+    const tot = own + excess
+    const atFRA = ownPIA + excessFull
+    return { own, excess, excessFull, tot, atFRA, pctOfPIA: workerPIA > 0 ? (tot / workerPIA) * 100 : 0, underFRA: m < fra, fra }
+  }, [workerPIA, ownPIA, claimAge, birth])
+
+  const fraLabel = r.fra >= 804 ? '67' : `66y ${r.fra - 792}m`
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field label="Worker's PIA (benefit at their FRA)" value={workerPIA} onChange={setWorkerPIA} prefix="$" />
+          <Field label="Spouse's OWN PIA (0 if never worked)" value={ownPIA} onChange={setOwnPIA} prefix="$" />
+          <div>
+            <div className="mb-1 text-sm font-medium">Spouse's birth year</div>
+            <select value={birth} onChange={(e) => setBirth(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {SS_FRA_MONTHS.map(([y, mo]) => <option key={y} value={mo}>{y}</option>)}
+            </select>
+          </div>
+          <div>
+            <div className="mb-1 text-sm font-medium">Spouse claims at age</div>
+            <select value={claimAge} onChange={(e) => setClaimAge(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              {['62', '63', '64', '65', '66', '67', '68', '69', '70'].map((a) => <option key={a} value={a}>{a}</option>)}
+            </select>
+          </div>
+          <label className="flex items-center gap-2 text-sm pt-6">
+            <input type="checkbox" checked={divorced} onChange={(e) => setDivorced(e.target.checked)} className="h-4 w-4" />
+            Divorced-spouse claim (10+ yr marriage)
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Spouse's total monthly" value={usd(r.tot, 0)} />
+          <Result label="Own benefit piece" value={usd(r.own, 0)} />
+          <Result label="Spousal top-up" value={usd(r.excess, 0)} />
+          <Result label="= of worker's PIA" value={`${num(r.pctOfPIA, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.excessFull <= 0 ? (
+            <>The spouse's own PIA ({usd(ownPIA)}) already beats half the worker's — <span className="font-medium">no spousal top-up applies</span>; the total {usd(r.tot, 0)}/mo is just their own benefit{r.underFRA ? ', reduced for claiming before FRA' : ''}. Claiming on the worker's record would pay less, so Social Security pays the own benefit only.</>
+          ) : r.underFRA ? (
+            <>Claiming at {claimAge} (before FRA {fraLabel}) cuts BOTH pieces: the own benefit drops to {usd(r.own, 0)} and the spousal top-up to {usd(r.excess, 0)} — total <span className="font-medium">{usd(r.tot, 0)}/mo ({usd(r.tot * 12, 0)}/yr)</span>. Waiting to FRA pays {usd(r.atFRA, 0)}/mo — and since spousal benefits earn NO delayed credits past FRA, FRA is the ceiling for the top-up piece.</>
+          ) : (
+            <>At FRA-or-later the spousal math is capped: {usd(r.own, 0)} own + {usd(r.excess, 0)} top-up = <span className="font-medium">{usd(r.tot, 0)}/mo ({usd(r.tot * 12, 0)}/yr)</span>. Delaying the spousal piece past FRA adds nothing — only the OWN benefit earns 8%/yr delayed credits to 70.</>
+          )}
+          {divorced && <> Divorced-spouse claims don't touch the ex's check or their new spouse's — and if the divorce is 2+ years final, the ex doesn't even need to have filed yet.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The spousal maximum is 50% of the worker's primary insurance amount, paid only if claimed at the spouse's full retirement age; claiming at 62 against an FRA of 67 cuts it 35%, to 32.5% of PIA. Deemed filing means one claim covers both own and spousal benefits — each piece reduces on its own schedule, and the top-up is 50% of the worker's PIA minus the spouse's own PIA (not their reduced benefit), so early claiming permanently shrinks both. The worker must have filed for a current spouse to collect; divorced claimants (10-year marriage, 62+, currently unmarried) are independently entitled after two years of divorce and their claim doesn't reduce the ex's benefit or a new spouse's. Spousal benefits earn no delayed retirement credits past FRA — there is never a spousal reason to wait past FRA once the worker has filed. Working before FRA subjects benefits to the earnings test. Survivor benefits follow a different, more generous rule — up to 100% of what the deceased worker received; don't conflate the two. Post-Fairness Act, no GPO offset applies to public-pension spouses. Estimates only — the SSA computes exact amounts from the earnings record.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // Roth 5-year rules — three separate clocks people conflate: (1) CONTRIBUTIONS come out anytime, tax- and penalty-free, no clock. (2) CONVERSIONS each get their own 5-year clock (Jan 1 of conversion year counts as start) — but the 10% penalty on early-withdrawn converted principal only applies UNDER 59½; over 59½ conversions are accessible immediately, penalty-wise. (3) EARNINGS are qualified (tax-free) only after 59½ AND five tax years from your FIRST Roth ever — one clock, earliest dollar. Ordering rules: withdrawals come from contributions first, then conversions oldest-first, earnings last (§408A ordering) — most partial withdrawals never touch earnings at all. Node-verified: 2022 $50k conversion, age 50, withdraw $50k in 2026 → $5,000 penalty (clears Jan 1, 2027); same at age 60 → $0; 2024 $30k, age 55, withdraw $10k → $1,000; age 50 in 2027 → $0 penalty but earnings still not qualified until 59½.
 export function Roth5YearCalc() {
   const [convYear, setConvYear] = useNumber(2022)
@@ -6993,6 +7077,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'spousal-social-security-calculator': SpousalSSCalc,
   'roth-5-year-rule-calculator': Roth5YearCalc,
   '457b-calculator': Plan457Calc,
   'drop-retirement-calculator': DropCalc,
