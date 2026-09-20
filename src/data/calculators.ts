@@ -3351,6 +3351,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'salon-service-pricing-calculator',
+    title: 'Salon Service Pricing Calculator — The Hourly Floor Under Every Service on Your Menu',
+    shortTitle: 'Salon Service Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price a salon or barber menu from the ground up: overhead plus income target divided by bookable chair hours gives your hourly floor, and each service price is floor times minutes plus product cost. See the gap against your current price, annualized.',
+    tagline: '97 bookable hours a month carrying $5,913 of costs and income means every hour must earn $60.69 — a $95 color that costs $110 to deliver is a donation.',
+    intro:
+      'Most salon menus are priced by vibe: what the shop down the street charges, rounded to a five. This calculator prices from the floor up instead. Add your real monthly overhead — rent, color stock, insurance, software, card fees, marketing — to the income you need to take home, then divide by your bookable hours: chair hours times utilization. That is the hourly floor every service must clear. A 90-minute color with $18 of product at a $60.69 floor costs $109 to deliver; charging $95 for it donates $15 a ticket back to the chair. The tool rounds to client-friendly fives, compares against your current price, and annualizes the gap so the cost of underpricing is a number, not a feeling.',
+    howItWorks: [
+      'Enter total monthly overhead — everything the chair costs, including color stock and card fees.',
+      'Enter your monthly income target (pre-tax).',
+      'Enter chair hours per week and your booked share — your software’s utilization report has the real number.',
+      'Enter one service: minutes, product cost, and your current price.',
+      'Read the hourly floor, the cost-based price rounded to the next $5, and the annual gap versus what you charge now.',
+    ],
+    faq: [
+      {
+        q: 'Why does utilization matter more than my prices?',
+        a: 'Because the floor is overhead divided by PAID hours, and utilization sets the denominator. A 30-hour week at 75% booked gives 97.4 paid hours a month; slip to 60% and the same $5,913 of costs and income spreads over 78 hours — the floor jumps 25% with zero cost increase. This is why slow Tuesdays belong in your prices: the market does not owe you full books, and a menu priced assuming 100% utilization loses money every empty slot. It also cuts the other way — raising utilization from 75% to 85% drops the floor 12% and lets you hold prices while competitors raise theirs. Before touching the menu, run the no-show calculator’s policy stack: cutting no-shows from 8% to 3% is utilization recovery that costs nothing.',
+      },
+      {
+        q: 'What if my floor is higher than what the local market pays?',
+        a: 'Then eating the gap is the one move guaranteed to fail — you would be subsidizing clients out of your own paycheck indefinitely. The honest options, in order: raise utilization (fill gaps with waitlist offers and better rebooking), raise the average ticket with add-ons that cost minutes not hours (glosses, treatments, scalp services), cut overhead (renegotiate rent or color stock, drop unused software), or change the market you serve — a specialist colorist in a different neighborhood or a suite of your own can support a floor a walk-in shop cannot. What the floor gives you is the truth about WHICH services lose money: a $40 cut at a $61 floor is fine at 45 minutes and a loss at 60. Trim the losers, keep the winners, and let the menu reflect your actual cost structure instead of the shop down the street’s guess.',
+      },
+      {
+        q: 'Should I include taxes in the income target?',
+        a: 'Keep the target as pre-tax personal income, then handle tax separately — renters owe the extra self-employment FICA share (roughly 14% of net) plus income tax, and the quarterly-estimated-tax calculator converts the annual number into the four payments. If you want the menu to carry the tax load explicitly, inflate the income target by your effective rate: a $4,500 target at a 25% combined rate means the menu must produce $6,000. The mistake to avoid is mixing models — commission stylists are W-2 (tax withheld for them) while renters are 1099 (nobody withholds anything), so two stylists with identical menus and identical books can need very different floors. Re-run the calculator quarterly: color stock drifts, rent renews, and a menu frozen for two years is a slow-motion pay cut measured in percentages you never see.',
+      },
+    ],
+  },
+  {
+    slug: 'retail-vs-service-time-calculator',
+    title: 'Retail vs Service Time Calculator — What Selling Product Really Pays Per Hour Behind the Chair',
+    shortTitle: 'Retail vs Service Time',
+    category: 'Freelance & Career',
+    description:
+      'Convert retail commission into an honest hourly rate: weekly product sales times your commission, divided by the minutes you actually spend selling. Compare against your service rate and find the breakeven commission where retail time pays like chair time.',
+    tagline: '$220 a week of retail at 15% pays $33 an hour of selling time — half a $68 service rate, unless you sell in the gaps where the alternative is zero.',
+    intro:
+      'Every salon pushes retail, and every stylist wonders if the pitch is worth it. The honest answer is a number: your weekly product sales times the commission rate, divided by the minutes you actually spend selling. At $220 a week and 15%, that is $33 an hour of selling time — solidly below a $68 service rate, which says never trade a bookable hour for retail. But retail is rarely sold in hours; it is sold in the two minutes while color processes and the client is holding the bottle, where the alternative is zero. This calculator prices both sides — the effective hourly of your selling time, the annual commission, and the breakeven commission rate where retail matches your service rate — so you know when to pitch, when to book instead, and what to ask for at review time.',
+    howItWorks: [
+      'Enter weekly retail sales and your commission rate.',
+      'Enter the minutes per day you actually spend selling, and days per week.',
+      'Enter your service hourly rate — the salon-pricing calculator derives it from your costs.',
+      'Read the annual commission, the effective selling hourly, and what those hours pay as services.',
+      'Check the breakeven commission — the rate where retail time matches chair time.',
+    ],
+    faq: [
+      {
+        q: 'So should I push retail or not?',
+        a: 'Push it in the gaps, never instead of a booking. Measured as an hour, retail usually loses: at 15% commission you would need $453 of weekly retail per selling hour to match a $68 service rate. But retail sold while the color processes competes with zero, not with services — and retail always beats zero. Beyond the commission, retail earns its shelf three ways: it raises the total ticket without adding chair minutes, home care protects your color work between visits (fewer correction appointments you eat), and clients who buy product rebook at measurably higher rates — the industry rule of thumb is that home-care clients stay two to three times longer. The trap is asymmetric: a rushed service to push product loses a client worth far more than the bottle. Retail is a margin on loyalty, not a replacement for chair time.',
+      },
+      {
+        q: 'What commission rate should I ask for?',
+        a: 'The breakeven number this calculator shows is your negotiating floor — at $220 a week of sales against a $68 service rate, breakeven is about 31%, which tells you 15% is a gap-filler, not an income stream. Salons typically pay 10–20% on retail, so if your sales volume is strong, the realistic ask is the top of the band, not breakeven. Come to the review with your POS numbers: weekly retail dollars, attach rate (sales per client), and the effective hourly from this tool. A stylist moving $800 a month of product at 10% has a concrete case for 20% — that is a $960 a year raise that costs the salon nothing unless you perform. If the answer is no, the same numbers tell you exactly how much selling time is worth donating: at low commission, the two-minute pitch in the processing gap is the whole job.',
+      },
+      {
+        q: 'Does retail change what services I should offer?',
+        a: 'Indirectly, yes — product and services are one system. Services that create visible, maintainable results (color, texture treatments, extensions) generate retail naturally because home care protects the investment; clients who just watched you spend $18 of product and 90 minutes will pay $42 to keep it alive. Services with no home-care component generate no attach. If you are building a menu, pair every high-ticket service with its maintenance product and script the pitch into the processing gap — the attach rate, not the commission rate, is usually the real lever: moving from 1-in-10 clients buying to 1-in-4 triples retail income at the same commission. Track attach rate weekly in your POS; it responds to scripting faster than any other number in the shop.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

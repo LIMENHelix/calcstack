@@ -7345,6 +7345,106 @@ export function NoShowCostCalc() {
   )
 }
 
+// SALON SERVICE PRICING — node-verified defaults: overhead $1,083 rent + $150 supplies + $30 insurance + $50 software + $100 marketing = $1,413/mo, plus $4,500 income target = $5,913 to clear. Bookable chair time: 30 hrs/wk × 4.33 × 75% utilization = 97.4 hrs/mo → $60.69/hr floor. A 90-min color + $18 product = $109.04 → price at $110; a 45-min cut + $3 = $48.52 → $50. Below the floor every ticket is a quiet subsidy.
+export function SalonPricingCalc() {
+  const [overhead, setOverhead] = useNumber(1413)
+  const [income, setIncome] = useNumber(4500)
+  const [hrsWk, setHrsWk] = useNumber(30)
+  const [util, setUtil] = useNumber(75)
+  const [svcMin, setSvcMin] = useNumber(90)
+  const [prod, setProd] = useNumber(18)
+  const [current, setCurrent] = useNumber(95)
+
+  const r = useMemo(() => {
+    const hrsMo = hrsWk * 4.33 * (util / 100)
+    const perHr = hrsMo > 0 ? (overhead + income) / hrsMo : 0
+    const raw = perHr * (svcMin / 60) + prod
+    const rounded = Math.ceil(raw / 5) * 5
+    const gap = rounded - current
+    const annualGap = gap * hrsMo * (60 / svcMin) * 12
+    return { hrsMo, perHr, raw, rounded, gap, annualGap }
+  }, [overhead, income, hrsWk, util, svcMin, prod, current])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Monthly overhead" value={overhead} onChange={setOverhead} prefix="$" step="100" />
+          <Field label="Income target" value={income} onChange={setIncome} prefix="$" suffix="/mo" step="250" />
+          <Field label="Chair hours" value={hrsWk} onChange={setHrsWk} suffix="/wk" step="2" />
+          <Field label="Booked share" value={util} onChange={setUtil} suffix="%" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Service length" value={svcMin} onChange={setSvcMin} suffix="min" step="15" />
+          <Field label="Product cost" value={prod} onChange={setProd} prefix="$" step="2" />
+          <Field label="Current price" value={current} onChange={setCurrent} prefix="$" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Hourly floor" value={`${usd(Math.round(r.perHr * 100) / 100)}/hr`} />
+          <Result label="Cost-based price" value={usd(r.rounded)} big />
+          <Result label="Vs current" value={`${r.gap >= 0 ? '+' : '−'}${usd(Math.abs(Math.round(r.gap)))}`} />
+          <Result label="Annual gap" value={usd(Math.round(Math.abs(r.annualGap)))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.gap > 0
+            ? `Your floor is ${usd(Math.round(r.perHr * 100) / 100)}/hr — this ${svcMin}-minute service needs ${usd(r.rounded)}, and you charge ${usd(current)}. That ${usd(Math.round(r.gap))} gap per ticket is ${usd(Math.round(r.annualGap))}/yr you are donating back to the chair.`
+            : `At ${usd(current)} you are above the ${usd(r.rounded)} cost-based floor — the margin is real. Keep watching utilization: the floor rises fast when booked share slips below ${util}%.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: hourly floor = (monthly overhead + income target) ÷ bookable hours, where bookable hours = chair hours/week × 4.33 × booked share. Service price = floor × (minutes ÷ 60) + product cost, rounded UP to the next $5 — clients anchor on fives, and rounding down is a pay cut you gave yourself. Overhead means EVERYTHING the chair costs: rent or commission-share equivalent, backbar and color stock, liability insurance, booking software, card fees, marketing, laundry, and a continuing-education line. Utilization is the silent killer: a 30-hour week at 75% booked is 97.4 paid hours, but slip to 60% and the same overhead spreads over 78 hours — the floor jumps 25% with no cost increase at all. That is why slow Tuesdays belong in the price, not in your feelings. What this is NOT: market pricing. If the floor comes out above what your local market pays, the answer is not to eat the gap — it is to raise utilization (the no-show calculator&apos;s policy stack), raise the ticket with add-ons, or cut overhead. The income target is pre-tax personal income; renters should remember the extra self-employment FICA share (the chair-rental calculator prices it). Re-run quarterly — color stock and rent drift, and a menu frozen for two years is a slow-motion pay cut. Estimate — your booking software&apos;s utilization report and your actual cost receipts govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// RETAIL VS SERVICE TIME — node-verified defaults: $220/wk retail at 15% commission = $33/wk = $1,716/yr. Selling costs 12 min/day × 5 days = 1 hr/wk → effective $33/hr. The same hour booked at the $68/hr service rate = $3,536/yr. Retail pays off only at 30.9% commission — above that, or when the chair has idle gaps it fills.
+export function RetailVsServiceCalc() {
+  const [retailWk, setRetailWk] = useNumber(220)
+  const [comm, setComm] = useNumber(15)
+  const [minDay, setMinDay] = useNumber(12)
+  const [days, setDays] = useNumber(5)
+  const [svcRate, setSvcRate] = useNumber(68)
+
+  const r = useMemo(() => {
+    const commWk = retailWk * (comm / 100)
+    const commYr = commWk * 52
+    const hrsWk = (minDay * days) / 60
+    const effHr = hrsWk > 0 ? commWk / hrsWk : 0
+    const svcYr = hrsWk * svcRate * 52
+    const beComm = retailWk > 0 && hrsWk > 0 ? ((hrsWk * svcRate) / retailWk) * 100 : Infinity
+    return { commWk, commYr, hrsWk, effHr, svcYr, beComm }
+  }, [retailWk, comm, minDay, days, svcRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Retail sales" value={retailWk} onChange={setRetailWk} prefix="$" suffix="/wk" step="20" />
+          <Field label="Retail commission" value={comm} onChange={setComm} suffix="%" step="1" />
+          <Field label="Selling time" value={minDay} onChange={setMinDay} suffix="min/day" step="2" />
+          <Field label="Days per week" value={days} onChange={setDays} step="1" />
+          <Field label="Your service rate" value={svcRate} onChange={setSvcRate} prefix="$" suffix="/hr" step="4" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Retail commission /yr" value={usd(Math.round(r.commYr))} big />
+          <Result label="Effective rate" value={`${usd(Math.round(r.effHr))}/hr`} />
+          <Result label="Same hours as services" value={usd(Math.round(r.svcYr))} />
+          <Result label="Breakeven commission" value={isFinite(r.beComm) ? `${num(r.beComm, 1)}%` : '—'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.effHr >= svcRate
+            ? `Retail pays ${usd(Math.round(r.effHr))}/hr of selling time — at or above your ${usd(svcRate)}/hr service rate. Push it: every bottle sold in a gap is found money.`
+            : `Retail pays ${usd(Math.round(r.effHr))}/hr against your ${usd(svcRate)}/hr service rate — below breakeven (${isFinite(r.beComm) ? num(r.beComm, 1) : '—'}% commission). Sell in the gaps between clients, never instead of a bookable hour.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: commission = weekly retail sales × rate, annualized ×52; effective rate = commission ÷ selling hours; breakeven commission = the rate where retail time pays your service hourly. The verdict is nuanced, so hold both truths: measured as an HOUR, retail usually loses to services — at 15% commission you would need $453 of weekly retail per selling hour just to match a $68 service rate. But retail is not sold in hours — it is sold in the two minutes while the color processes and the client is already holding the bottle. In that gap the comparison is not retail versus services, it is retail versus zero, and retail always beats zero. Where retail earns its shelf: it raises the total ticket without adding chair minutes, it builds the home-care habit that protects your color work between visits, and clients who buy product rebook at higher rates (industry rule of thumb: clients using home care stay 2–3× longer). Where it is a trap: when the salon prices commission so low that the effective rate drops under minimum wage, and when selling time eats consultation quality — a rushed service to push product loses the client, which is worth more than any bottle. Negotiation lever: if your retail numbers are strong, the breakeven rate here is your ask — many salons pay 10–20%, and a stylist moving real volume has earned the top of the band. Estimate — your POS retail report and actual minutes spent selling govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -13058,6 +13158,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'estimate-contingency-calculator': EstimateContingencyCalc,
   'chair-rental-vs-commission-calculator': ChairRentalCalc,
   'no-show-cost-calculator': NoShowCostCalc,
+  'salon-service-pricing-calculator': SalonPricingCalc,
+  'retail-vs-service-time-calculator': RetailVsServiceCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

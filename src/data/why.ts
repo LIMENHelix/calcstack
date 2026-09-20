@@ -217,6 +217,10 @@ export const WHY_USE: Record<string, string> = {
     'Stylists use it before signing: at $4,800/mo of services, booth rental nets $1,135 more than a 45% commission — but only past the $2,404 breakeven, and only if the clientele is yours.',
   'no-show-cost-calculator':
     'Salons and trainers use it to price prevention: eight appointments a day at 8% no-show burns $10,816/yr of perishable chair time — a deposits-and-confirmations policy cutting it to 3% recovers $6,760.',
+  'salon-service-pricing-calculator':
+    'Stylists use it before printing the menu: $5,913 of overhead and income spread over 97 bookable hours sets a $60.69/hr floor — a 90-minute color priced under $110 is a donation.',
+  'retail-vs-service-time-calculator':
+    'Stylists use it to time the pitch: $220/wk of retail at 15% pays $33/hr of selling time — half the $68 service rate, so sell in the processing gaps, never instead of a booking.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
