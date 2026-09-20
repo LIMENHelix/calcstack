@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'teacher-lane-change-roi-calculator',
+    title: 'Teacher Master\'s Degree ROI Calculator — Lane Change Payback and the Pension Dividend',
+    shortTitle: 'Lane Change ROI',
+    category: 'Careers & Salary',
+    description:
+      'Compute whether a master\'s degree pays for a teacher: lane bump payback, career net, and the hidden pension dividend — defined-benefit formulas pay on final salary, so the bump compounds twice.',
+    tagline: 'A $14,000 MAT returning $2,400/yr pays back in 5.8 years — then the pension formula adds $28,800 more in retirement.',
+    intro:
+      'Teachers don\'t negotiate salaries — they change lanes. A $14,000 online master\'s returning a $2,400/yr lane bump pays back in 5.8 years and nets $46,000 over a 25-year remainder. Then the sleeper: defined-benefit pensions pay on FINAL salary, so the same bump adds $1,440/yr of pension across a 20-year retirement — $28,800 that never shows in the salary-schedule brochure. Grand total: $74,800 on a $14,000 degree. This calculator runs your district\'s schedule, your years left, and your pension formula.',
+    howItWorks: [
+      'Enter the degree\'s total cost and your district\'s annual lane bump.',
+      'Enter years remaining — read the payback and career net.',
+      'Enter your pension multiplier, service years, and expected retirement length.',
+      'Read the pension dividend — the bump paid again, for life.',
+      'Compare against NBCT (National Boards) as the cheaper alternative lane.',
+    ],
+    faq: [
+      {
+        q: 'Is a master\'s degree worth it for teachers financially?',
+        a: 'Usually yes — but the answer lives in YOUR district\'s salary schedule, not national averages. Lane bumps range from $1,200 to $6,000+/yr; some districts cap advancement at MA+30; some require credits in your subject area. The example math — $14k degree, $2,400 bump, 25 years left — nets $46,000 in salary plus a $28,800 pension dividend because defined-benefit formulas (multiplier × service × final salary) pay the bump again every retirement year. Where it fails: late-career starts (payback exceeds years left), districts without real lane schedules, and $40k private programs bought for a $2k bump. Do it cheap: online MAT/MEd programs run $9k–20k total, and §127 tuition reimbursement ($1,500–5,250/yr tax-free) is use-it-or-lose-it money most teachers never file for.',
+      },
+      {
+        q: 'When should I time the degree and credits?',
+        a: 'Lanes move at contract anniversaries — finishing in May versus August can cost a full year of the bump, so sequence completion to land just before your district\'s lane-change deadline (usually September 1 or the contract ratification date). Two more timing rules: graduate credits earned BEFORE the master\'s often count toward MA+15 or MA+30 lanes afterward — take the cheap district-approved PD credits first and let them double-count; and confirm the lane rules in writing with HR before enrolling, because "master\'s in anything" districts and "subject-area only" districts price the same degree very differently. National Board Certification (NBCT) is the parallel lane worth pricing: ~$1,900 total cost, stipends of $2,000–10,000/yr in many states, portable across districts — in stipend states it beats the MA on pure ROI, and nothing stops you from stacking both.',
+      },
+      {
+        q: 'How does the lane bump affect my pension?',
+        a: 'Directly, and it is the most under-priced part of the degree. Defined-benefit teacher pensions pay multiplier × service years × final average salary (usually the average of your highest 3–5 years). A $2,400 lane bump raises that final average by the full bump, so a 2% × 30-year formula adds $1,440/yr of pension — $28,800 across a 20-year retirement, index-linked where COLAs exist. The caveat that matters: if you are mid-career and might leave before the pension vests or before the final-average window captures the bump, the pension dividend shrinks or vanishes — the dividend is largest for teachers who stay in the system. That is also why the lane decision interacts with the pension-vs-leaving math: every year of service at the higher lane raises the annuity you are vesting into. Run both calculators together if a career change is on the table.',
+      },
+    ],
+  },
+  {
+    slug: 'teacher-summer-gap-calculator',
+    title: 'Teacher Summer Gap Calculator — 10-Month Paychecks, Summer Income, and the Exact Save-per-Check',
+    shortTitle: 'Teacher Summer Gap',
+    category: 'Careers & Salary',
+    description:
+      'Solve the 10-month paycheck problem: your true monthly budget, the summer gap in dollars, summer gig income (ESY, tutoring), and the exact amount to save from every check.',
+    tagline: '$62,000 over 10 months feels like $6,200/mo — your life costs $5,167/mo. Save $1,033 a check and June stops being a crisis.',
+    intro:
+      'The 10-month paycheck is an optical illusion: a $62,000 salary arrives as $6,200 checks, but your mortgage, groceries, and car payment run 12 months at $5,167. The two-month gap is $10,333 — or $6,133 after a five-week ESY gig at $42/hr. Either way, the fix is an exact number, not a vibe: bank $1,033 (or $613) from every check and summer stops being an emergency. This calculator sizes your gap, credits your summer plans, and names the monthly number.',
+    howItWorks: [
+      'Enter your annual salary and how many months your district pays over (10, 11, or 12).',
+      'Read the monthly check versus your true 12-month budget.',
+      'Enter a summer gig — ESY rate, hours, weeks — or choose full break.',
+      'Read the summer income and the remaining gap.',
+      'Read the exact save-per-check that closes it.',
+    ],
+    faq: [
+      {
+        q: 'Should I take 12-month pay spreading if my district offers it?',
+        a: 'It depends on which of you has more discipline — you or your future self. 12-month spreading is the same salary in smaller checks with no gap: opt in if summer savings have failed before; opt out and bank the difference yourself if your discipline is strong, because YOUR high-yield savings account pays 4–5% interest and the district pays you none for holding your money. The automated version of opting out: split direct deposit so the save-per-check amount lands in a separate account (ideally at a different bank — friction is the budget) before you ever see it. Either way, decide in September, not June: the teachers in August trouble are the ones who treated June\'s full check as found money and put July on a 24% APR credit card — the interest silently eats next year\'s raise.',
+      },
+      {
+        q: 'What summer work pays teachers the most?',
+        a: 'The hierarchy runs on credential leverage: extended school year (ESY) and summer school pay your contracted hourly rate ($35–55/hr) in your own classroom with zero commute friction — the highest-value summer dollar, and it often comes with pensionable service in some states. Next: tutoring at $50–90/hr with your built-in reputation and referral network, curriculum writing and PD facilitation stipends, then camp roles that trade pay for schedule and sanity. The tax trap on the 1099 side: tutoring and curriculum contracting arrive with no withholding — set aside 25–30% for taxes or April ambushes the school year. And the pension note: summer work does not add service credit — the pension counts contracted days only, so the summer-gig question is pure cash flow, never retirement math.',
+      },
+      {
+        q: 'How big an emergency fund do teachers need for summer?',
+        a: 'The summer gap IS the first emergency fund: budget × unpaid months, minus reliable summer income — $10,333 in the example with no gig, $6,133 with ESY. That reserve is not optional savings; it is deferred salary you are holding for yourself, so it belongs in a separate high-yield account labeled by month ("July," "August") to stop raids. On top of the gap, the standard 3–6 month emergency fund still applies — teaching has strong job security but cars, roofs, and deductibles do not care. The stacking order that works on a teacher salary: first the summer gap fully funded by May, then one month of true expenses, then Roth IRA contributions while the 403(b) match is captured, then months 2–6. The calculator\'s save-per-check number is the first line of that stack — it is not saving for a goal, it is paying August-you\'s salary.',
+      },
+    ],
+  },
+  {
     slug: 'nurse-agency-vs-staff-calculator',
     title: 'Nurse Agency vs Staff Calculator — Per-Diem Premium vs Total Compensation',
     shortTitle: 'Agency vs Staff Nurse Pay',

@@ -7875,6 +7875,109 @@ export function MobileMechanicCalc() {
   )
 }
 
+// TEACHER LANE-CHANGE ROI — node-verified defaults: MA costs $14,000; lane bump $2,400/yr → payback 5.8 yrs, 25-yr career net $46,000. The hidden dividend: pension = 2% × 30 yrs × final salary — the bump raises final salary, adding $1,440/yr of pension for a 20-yr retirement = $28,800. Grand total $74,800 on a $14k degree. The lane change is the only raise teachers control.
+export function TeacherLaneCalc() {
+  const [cost, setCost] = useNumber(14000)
+  const [bump, setBump] = useNumber(2400)
+  const [yrsLeft, setYrsLeft] = useNumber(25)
+  const [penMult, setPenMult] = useNumber(2)
+  const [svc, setSvc] = useNumber(30)
+  const [retYrs, setRetYrs] = useNumber(20)
+
+  const r = useMemo(() => {
+    const payback = bump > 0 ? cost / bump : 0
+    const careerNet = bump * yrsLeft - cost
+    const penGain = (penMult / 100) * svc * bump
+    const penTotal = penGain * retYrs
+    const grand = careerNet + penTotal
+    return { payback, careerNet, penGain, penTotal, grand }
+  }, [cost, bump, yrsLeft, penMult, svc, retYrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Degree cost" value={cost} onChange={setCost} prefix="$" step="1000" />
+          <Field label="Lane bump" value={bump} onChange={setBump} prefix="$" suffix="/yr" step="200" />
+          <Field label="Years left" value={yrsLeft} onChange={setYrsLeft} step="1" />
+          <Field label="Pension multiplier" value={penMult} onChange={setPenMult} suffix="%" step="0.1" />
+          <Field label="Service years" value={svc} onChange={setSvc} step="1" />
+          <Field label="Retirement years" value={retYrs} onChange={setRetYrs} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Payback" value={`${num(r.payback, 1)} years`} />
+          <Result label="Career net (salary)" value={usd(Math.round(r.careerNet))} />
+          <Result label="Pension dividend" value={usd(Math.round(r.penTotal))} />
+          <Result label="Grand total" value={usd(Math.round(r.grand))} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.grand > 0
+            ? `The ${usd(cost)} degree pays ${usd(bump)}/yr for ${yrsLeft} years (${usd(Math.round(r.careerNet))} net) — then the pension formula turns the bump into ${usd(Math.round(r.penGain))}/yr for ${retYrs} retirement years. Total: ${usd(Math.round(r.grand))}. The salary schedule is the fine print that makes it work.`
+            : `At ${usd(bump)}/yr over ${yrsLeft} years, this degree never recovers its ${usd(cost)} cost — negotiate the lane bump first, or find a cheaper program.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: career net = annual lane bump × years remaining − degree cost; pension dividend = multiplier × service years × bump × retirement years (defined-benefit pensions pay on FINAL salary, so every raise compounds twice — once in the paycheck, once in the annuity). The rules that decide whether the MA pays: read YOUR district's salary schedule first — lane bumps range from $1,200 to $6,000+, some districts cap lane advancement at MA+30, and some require the credits be in your subject area; the bump on paper beats the national average every time. Timing: lanes move at contract anniversaries — finishing in May vs August can cost a full year of bump; and credits earned BEFORE the master's often count toward MA+30, so sequence the degree and the extra credits together. Cost discipline: online MAT/MEd programs run $9k–20k total; district tuition reimbursement ($1,500–5,250/yr tax-free under §127) can halve the effective cost — file for it every year, it is use-it-or-lose-it. The pension dividend is the sleeper: a 2% × 30-year formula converts a $2,400 lane bump into $1,440/yr for life — over a 20-year retirement that alone doubles the degree's salary payoff. Where it fails: late-career teachers (payback exceeds years left), districts without real lane schedules, and degrees bought at $40k private prices for a $2k bump. National boards (NBCT) are the alternative lane: $1,900 total cost, $2k–10k/yr stipends in many states, and portable across districts. Estimate — your district's negotiated agreement is the source of truth.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// TEACHER SUMMER GAP — node-verified defaults: $62,000 salary paid over 10 months = $6,200/mo checks; spread over 12 = $5,167/mo. Two-month gap needs $10,333 reserved → save $1,033/mo across the 10 working months. ESY summer gig ($42/hr × 20h × 5wk = $4,200) cuts the need to $6,133 → $613/mo. The 10-month paycheck is a budgeting problem with an exact answer.
+export function TeacherSummerCalc() {
+  const [salary, setSalary] = useNumber(62000)
+  const [paidMonths, setPaidMonths] = useNumber(10)
+  const [summerRate, setSummerRate] = useNumber(42)
+  const [summerHrs, setSummerHrs] = useNumber(20)
+  const [summerWks, setSummerWks] = useState('5')
+
+  const wks = parseFloat(summerWks) || 0
+  const r = useMemo(() => {
+    const gapMonths = 12 - paidMonths
+    const moPay = paidMonths > 0 ? salary / paidMonths : 0
+    const mo12 = salary / 12
+    const gapNeed = mo12 * gapMonths
+    const summerEarn = summerRate * summerHrs * wks
+    const netNeed = Math.max(0, gapNeed - summerEarn)
+    const saveMo = paidMonths > 0 ? netNeed / paidMonths : 0
+    return { gapMonths, moPay, mo12, gapNeed, summerEarn, netNeed, saveMo }
+  }, [salary, paidMonths, summerRate, summerHrs, wks])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Annual salary" value={salary} onChange={setSalary} prefix="$" step="1000" />
+          <Field label="Paycheck months" value={paidMonths} onChange={setPaidMonths} step="1" />
+          <Field label="Summer gig rate" value={summerRate} onChange={setSummerRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Summer hrs/wk" value={summerHrs} onChange={setSummerHrs} step="1" />
+          <label className="space-y-1">
+            <span className="text-sm text-muted-foreground">Summer weeks</span>
+            <select value={summerWks} onChange={(e) => setSummerWks(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="0">0 — full break</option>
+              <option value="3">3 weeks</option>
+              <option value="5">5 weeks (ESY)</option>
+              <option value="8">8 weeks</option>
+            </select>
+          </label>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Monthly check (10-mo)" value={usd(Math.round(r.moPay))} />
+          <Result label="True monthly budget" value={usd(Math.round(r.mo12))} />
+          <Result label="Summer income" value={usd(Math.round(r.summerEarn))} />
+          <Result label="Save per check" value={`${usd(Math.round(r.saveMo))}/mo`} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Your ${usd(salary)} arrives as ${usd(Math.round(r.moPay))}/mo for ${paidMonths} months — but your life costs ${usd(Math.round(r.mo12))}/mo for 12. Bank ${usd(Math.round(r.saveMo))} from every check${r.summerEarn > 0 ? ` (after ${usd(Math.round(r.summerEarn))} of summer income)` : ''} and June stops being a crisis.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: true monthly budget = salary ÷ 12; gap = budget × unpaid months; save-per-check = (gap − summer earnings) ÷ paid months. The structural fixes before the savings discipline: many districts offer 12-month pay spreading (same salary, smaller checks, no gap) — opt in if your discipline is weak, opt out and bank the difference yourself if it is strong, because YOUR savings account pays interest and the district's does not pay you any. The summer-income hierarchy for teachers: extended school year (ESY) and summer school pay your contracted hourly rate ($35–55/hr) in your own classroom with zero commute friction — the highest-value summer dollar; curriculum writing and PD facilitation pay stipends; tutoring runs $50–90/hr with your built-in reputation; and camp roles trade pay for schedule. The trap to avoid: treating the summer as found money — teachers who spend June's full check face August on credit cards at 24% APR, and the interest silently eats next year's raise. Automate it: split direct deposit so the save-per-check amount never touches checking, or open a summer account at a different bank — friction is the budget. Tax note: summer gig W-2 income stacks on your salary withholding — if the gig is 1099 (tutoring, curriculum contracting), set aside 25–30% for taxes or April ambushes the school year. Pension angle: summer work does NOT add service credit — the pension only sees contracted days, which is why the 12-month-spread question is budgeting, not retirement math. Estimate — your district's pay calendar and your actual summer plans govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // NURSE AGENCY VS STAFF — node-verified defaults: staff $42/hr × 36h × 52wk = $78,624 base + $6,500 health + 4% match $3,145 = $88,269 total comp ($47.15/hr on paid hours). Agency $62/hr × 36h × 46wk (4wk unpaid + 2wk booking gaps) = $102,672 gross − $5,400 ACA premium = $97,272. Agency wins $9,003 — but ONLY if the calendar stays booked and you fund your own retirement. The $20/hr premium is real; the benefits gap eats a third of it.
 export function NurseAgencyCalc() {
   const [staffRate, setStaffRate] = useNumber(42)
@@ -14001,6 +14104,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'teacher-lane-change-roi-calculator': TeacherLaneCalc,
+  'teacher-summer-gap-calculator': TeacherSummerCalc,
   'nurse-agency-vs-staff-calculator': NurseAgencyCalc,
   'nurse-certification-roi-calculator': NurseCertCalc,
   'bookkeeping-pricing-calculator': BookkeepingPricingCalc,
