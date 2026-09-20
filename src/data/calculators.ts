@@ -1072,6 +1072,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'rsu-vest-tax-calculator',
+    title: 'RSU Vest Tax Calculator 2026 — The Under-Withholding Trap and the Honest Sell-at-Vest Answer',
+    shortTitle: 'RSU Vest Tax',
+    category: 'Careers & Salary',
+    description:
+      'RSUs vest as ordinary income at the vest-day price. Compute the tax owed vs the 22% default withholding, the April surprise gap, and whether holding past vest beats selling.',
+    tagline: '400 shares vesting at $150 means $60,000 of income — and the default 22% withholding leaves a $6,000 April bill at the 32% bracket.',
+    intro:
+      'An RSU vest is a cash bonus paid in stock: ordinary income at the vest-day price, full stop. Two things surprise people every April. First, the withholding trap — plans default to the flat 22% supplemental rate, but anyone in the 32%+ bracket owes more: on a $60,000 vest, that\'s a $6,000 under-payment the IRS remembers. Second, the hold fallacy — keeping vested shares "for the long-term gains treatment" applies only to growth AFTER vest; the vest itself is always ordinary income, and holding is economically identical to taking a cash bonus and buying the stock. This calculator computes the real tax, the withholding gap, and frames the sell-or-hold decision honestly.',
+    howItWorks: [
+      'Enter vesting shares and the vest-day price.',
+      'Enter your marginal bracket and your plan\'s withholding rate (default 22%).',
+      'Set an expected post-vest gain and holding period for the hold scenario.',
+      'Read the tax owed, the April gap, and the sell-at-vest framing.',
+    ],
+    faq: [
+      {
+        q: 'Why do I owe more tax than my plan withheld?',
+        a: 'Because the default is a floor, not a match. RSU income is supplemental wages, and the IRS default flat withholding is 22% — regardless of your actual bracket (it jumps to a mandatory 37% only above $1M of supplemental wages). If your total income puts you at 32% or 35%, every vest under-withholds by 10–13 cents per dollar. The fixes, in order of ease: elect a higher withholding rate if your plan allows (many do, buried in plan settings), increase W-4 withholding or make an estimated payment in the vest quarter, or simply sweep the gap into savings at vest and pay it in April (under-withholding penalties apply if you blow through safe-harbor thresholds — 100%/110% of last year\'s tax or 90% of this year\'s). The worst outcome is the common one: the shares drop after vest AND the April bill arrives — you paid 32% tax on a $150 price while holding $120 stock. That\'s the sell-at-vest argument in one sentence.',
+      },
+      {
+        q: 'Should I hold after vest for long-term capital gains?',
+        a: 'The tax tail wagging the risk dog. Long-term treatment applies ONLY to gains after the vest date — the vest itself was ordinary income no matter how long you hold. So the real question: holding converts after-tax cash into a single-stock position in the company that already provides your paycheck. Framed as a purchase: if your employer handed you $40,800 in cash, would you buy the stock? If yes — genuinely, today — hold with a cap (many planners suggest keeping employer stock under 10% of investable assets). If hesitating, sell at vest, diversify, and sleep. The tax cost of selling immediately is zero (no gain yet), and the "I\'ll hold one year for LTCG" plan risks a year of single-stock volatility to save 15–20% tax on a gain that might not exist. Concentration is the error that ends retirements; taxes on gains are the price of having won.',
+      },
+      {
+        q: 'What should I check in my plan before the next vest?',
+        a: 'Five settings, ten minutes. One: withholding rate election — many plans allow choosing a higher rate; set it to your bracket. Two: sell-to-cover vs same-day sale defaults — sell-to-cover sells shares to pay withholding automatically; know what yours does so the April number matches your expectation. Three: vest timing vs blackout windows — if vests land in trading blackouts, your shares arrive during a window you can\'t sell; plan liquidity accordingly. Four: dividend equivalents — some plans accrue them on unvested shares, taxed as ordinary income when paid. Five: state tax — moving states between grant and vest allocates income between them, and California in particular follows the work-days formula. Big-grant years (IPO lockups expiring, refreshers stacking) deserve a CPA session before the vest, not after — bunching into one year can push you through IRMAA tiers and the NIIT threshold on top of the bracket math.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

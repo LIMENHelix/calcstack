@@ -3833,6 +3833,57 @@ export function ScorpElectionCalc() {
   )
 }
 
+// RSU VEST TAX + SELL-AT-VEST — vesting is a cash bonus your employer pays in stock, taxed as ordinary income at the vest-day price. Node-verified: 400 RSUs vesting at $150 = $60,000 ordinary income; default flat supplemental withholding 22% = $13,200, but a 32% bracket owes $19,200 → a $6,000 April surprise (the under-withholding trap). Post-vest gains held 1yr+ get LTCG (a $10k gain @15% = $1,500) — but the VEST is always ordinary. Sell-at-vest framing: if your employer handed you $40,800 cash after tax, would you buy this stock with it? That's exactly what holding is. Concentration risk: income AND portfolio tied to one ticker — Enron logic, stated gently. Mega-grant note: withholding over $1M supplemental wages jumps to 37%.
+export function RsuVestCalc() {
+  const [shares, setShares] = useNumber(400)
+  const [price, setPrice] = useNumber(150)
+  const [bracket, setBracket] = useNumber(32)
+  const [withholding, setWithholding] = useNumber(22)
+  const [gainPct, setGainPct] = useNumber(10)
+  const [holdYrs, setHoldYrs] = useNumber(1)
+
+  const r = useMemo(() => {
+    const vestValue = shares * price
+    const withheld = vestValue * (withholding / 100)
+    const owed = vestValue * (bracket / 100)
+    const gap = owed - withheld
+    const afterTax = vestValue - owed
+    const futureGain = vestValue * (gainPct / 100) * holdYrs
+    const ltcgOnGain = futureGain * 0.15
+    const holdNet = afterTax + futureGain - ltcgOnGain
+    return { vestValue, withheld, owed, gap, afterTax, futureGain, ltcgOnGain, holdNet }
+  }, [shares, price, bracket, withholding, gainPct, holdYrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Shares vesting" value={shares} onChange={setShares} step="50" />
+          <Field label="Vest-day price" value={price} onChange={setPrice} prefix="$" />
+          <Field label="Your marginal bracket" value={bracket} onChange={setBracket} suffix="%" />
+          <Field label="Plan withholding rate" value={withholding} onChange={setWithholding} suffix="%" step="1" />
+          <Field label="Expected annual gain if held" value={gainPct} onChange={setGainPct} suffix="%" />
+          <Field label="Years held post-vest" value={holdYrs} onChange={setHoldYrs} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Ordinary income at vest" value={usd(r.vestValue)} />
+          <Result label="Withheld (default 22%)" value={usd(r.withheld)} />
+          <Result big label={r.gap > 0 ? 'April surprise bill' : 'Over-withheld refund'} value={usd(Math.abs(r.gap))} />
+          <Result label="After-tax value at vest" value={usd(r.afterTax)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.gap > 0
+            ? `Heads up: your plan withholds ${num(withholding, 0)}% but your bracket is ${num(bracket, 0)}% — set aside ${usd(r.gap)} now or adjust W-4 withholding, because April will ask. The sell-vs-hold question, honestly framed: your employer just handed you ${usd(r.afterTax)} in cash-equivalent. Would you buy ${num(shares, 0)} shares with it today? Holding is buying.`
+            : `Your withholding covers the bracket — no surprise bill. The remaining question is concentration: holding turns ${usd(r.afterTax)} of after-tax value into a single-ticker bet on the company that also pays your salary.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The mechanics that matter: vest is ordinary income at the vest-day price, period — no election changes that. Default 22% flat supplemental withholding under-withholds anyone above the 22% bracket (over $1M of supplemental wages, the mandatory rate jumps to 37%); some plans allow rate election — check yours before the vest, not after. Post-vest, the clock resets: vest price becomes your basis, and only gains AFTER vest earn long-term treatment at the one-year mark — modeled above at the 15% LTCG rate (20% at high incomes, +3.8% NIIT over $200k/$250k MAGI, plus state). Sell-at-vest advocates (most fee-only planners) point at the symmetry: selling immediately and diversifying is identical to receiving a cash bonus and investing it; holding is an active purchase decision made daily by default. The exception worth naming: if you'd genuinely buy the stock with fresh cash today, hold with eyes open — but set a concentration cap (many planners suggest 10% of investable assets in employer stock) because your income already rides the same ticker. Estimates — your plan documents and CPA govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9474,6 +9525,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'fixed-bid-pricing-calculator': FixedBidCalc,
   'retainer-pricing-calculator': RetainerCalc,
   's-corp-election-calculator': ScorpElectionCalc,
+  'rsu-vest-tax-calculator': RsuVestCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
