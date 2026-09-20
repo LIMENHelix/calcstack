@@ -36,7 +36,7 @@ const HOUSE_ADS = [
     cta: 'Get a site that works',
   },
   {
-    name: 'Realty Supply',
+    name: 'Relay Supply',
     blurb: 'Everything the modern agent needs — signs, lockboxes, marketing, and more.',
     cta: 'Shop agent supplies',
   },
