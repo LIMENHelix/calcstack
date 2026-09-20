@@ -6610,6 +6610,102 @@ export function CareerBreakCalc() {
   )
 }
 
+// SIGNING BONUS VS SALARY — node-verified defaults: $15,000 one-time bonus vs $5,000/yr raise with 3% growth and 4% 401(k) match on the base. 5-year cumulative raise value = $27,608 → the raise wins by $12,608; breakeven at year 3. Raises compound (future raises, bonuses, and match percentages all ride the base); bonuses evaporate. The only question is how long you stay.
+export function SigningBonusVsSalaryCalc() {
+  const [bonus, setBonus] = useNumber(15000)
+  const [raise, setRaise] = useNumber(5000)
+  const [growth, setGrowth] = useNumber(3)
+  const [match, setMatch] = useNumber(4)
+  const [yrs, setYrs] = useNumber(5)
+
+  const r = useMemo(() => {
+    let cum = 0
+    let beYr = 0
+    for (let t = 0; t < yrs; t++) {
+      cum += raise * Math.pow(1 + growth / 100, t) * (1 + match / 100)
+      if (cum < bonus) beYr = t + 1
+    }
+    const diff = cum - bonus
+    const winner = cum >= bonus ? 'The raise' : 'The bonus'
+    return { cum, diff: Math.abs(diff), winner, beYr: cum >= bonus ? beYr + 1 : null }
+  }, [bonus, raise, growth, match, yrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Signing bonus offered" value={bonus} onChange={setBonus} prefix="$" step="1000" />
+          <Field label="Annual raise alternative" value={raise} onChange={setRaise} prefix="$" suffix="/yr" step="500" />
+          <Field label="Raise growth" value={growth} onChange={setGrowth} suffix="%/yr" step="0.5" />
+          <Field label="401(k) match on base" value={match} onChange={setMatch} suffix="%" step="1" />
+          <Field label="Years you will stay" value={yrs} onChange={setYrs} suffix="yrs" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label={`Raise value over ${yrs} yrs`} value={usd(Math.round(r.cum))} />
+          <Result label="Bonus value" value={usd(bonus)} />
+          <Result label="Winner" value={`${r.winner} by ${usd(Math.round(r.diff))}`} big />
+          <Result label="Raise breaks even" value={r.beYr ? `Year ${r.beYr}` : `After ${yrs} yrs`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The ${usd(raise)}/yr raise compounds with growth and match to ${usd(Math.round(r.cum))} over ${yrs} years versus the bonus's ${usd(bonus)} once. ${r.beYr && r.beYr <= 2 ? 'Stay even ' + r.beYr + ' years and the raise wins' : 'The raise wins from year ' + (r.beYr ?? yrs + 1) + ' — take the bonus only if you are leaving before that'}.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: raise value = Σ raise × (1+growth)^t × (1+match) over your stay — the match term matters because percentage matches ride the base. Why the base is king: future raises, annual bonuses (percent-of-base), 401(k) matches, life insurance multiples, and even severance formulas all scale off salary — a dollar of base is a dollar across five lines, forever. Why employers push the bonus: one-time cash closes candidates without raising the comp band, and clawback terms (repay if you leave within 12–24 months) handcuff you — read the proration before signing. When the bonus genuinely wins: you are leaving inside the breakeven window, you have a specific high-ROI use (debt at 20% APR beats compounding), or the raise is capped by a band and the bonus is extra on top — always ask &quot;both?&quot; first. The hybrid to propose: a smaller bonus plus a scheduled 6-month review with a defined raise path — it splits the employer&apos;s cash-flow concern while preserving your base trajectory. Tax note: both are wages; the bonus hits supplemental withholding (22%) but lands in the same brackets at filing. Estimate — your actual tenure and the employer&apos;s raise history govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// TUITION REIMBURSEMENT ROI — node-verified defaults: employer pays $5,250/yr tax-free (IRC §127 cap) × 4 yrs = $21,000 of a $30,000 degree → you pay $9,000; degree uplift 8% on $70k = $5,600/yr → payback 1.6 yrs. The stay-clause ledger: 2-year retention requirement vs a forgone $10k/yr external raise = $20,000 handcuff cost vs $21,000 benefit → net +$1,000, which is why the clause terms decide everything.
+export function TuitionReimbursementCalc() {
+  const [perYr, setPerYr] = useNumber(5250)
+  const [progYrs, setProgYrs] = useNumber(4)
+  const [cost, setCost] = useNumber(30000)
+  const [salary, setSalary] = useNumber(70000)
+  const [upliftPct, setUpliftPct] = useNumber(8)
+  const [stayYrs, setStayYrs] = useNumber(2)
+  const [forgone, setForgone] = useNumber(10000)
+
+  const r = useMemo(() => {
+    const empPays = Math.min(perYr * progYrs, cost)
+    const mine = Math.max(cost - empPays, 0)
+    const uplift = salary * (upliftPct / 100)
+    const payback = uplift > 0 ? mine / uplift : Infinity
+    const handcuff = stayYrs * forgone
+    const net = empPays + uplift * stayYrs - handcuff - mine
+    return { empPays, mine, uplift, payback, handcuff, net }
+  }, [perYr, progYrs, cost, salary, upliftPct, stayYrs, forgone])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Employer pays per year" value={perYr} onChange={setPerYr} prefix="$" step="250" />
+          <Field label="Program length" value={progYrs} onChange={setProgYrs} suffix="yrs" step="1" />
+          <Field label="Total program cost" value={cost} onChange={setCost} prefix="$" step="1000" />
+          <Field label="Current salary" value={salary} onChange={setSalary} prefix="$" step="2500" />
+          <Field label="Expected uplift" value={upliftPct} onChange={setUpliftPct} suffix="%" step="1" />
+          <Field label="Stay clause" value={stayYrs} onChange={setStayYrs} suffix="yrs" step="1" />
+          <Field label="External raise forgone" value={forgone} onChange={setForgone} prefix="$" suffix="/yr" step="1000" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Employer pays" value={usd(Math.round(r.empPays))} />
+          <Result label="You pay" value={usd(Math.round(r.mine))} />
+          <Result label="Payback on your share" value={isFinite(r.payback) ? `${num(r.payback, 1)} yrs` : 'Never'} big />
+          <Result label="Stay-clause cost" value={usd(Math.round(r.handcuff))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Employer covers ${usd(Math.round(r.empPays))} — your ${usd(Math.round(r.mine))} share pays back in ${num(r.payback, 1)} years at an ${upliftPct}% uplift. The stay clause is the real price: ${usd(Math.round(r.handcuff))} of forgone market raises if it handcuffs you — negotiate prorated repayment, not all-or-nothing.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: employer share = min(annual benefit × years, program cost); your payback = your share ÷ annual uplift; handcuff = stay years × external raise forgone. The tax gift to use fully: IRC §127 makes the first $5,250/yr of employer education assistance TAX-FREE — amounts above it are taxable wages unless the coursework qualifies as a working-condition benefit (job-related education often does — ask payroll how they treat it). The stay-clause terms that decide the deal: repayment on departure should be PRORATED monthly (leave halfway, repay half) and die if THEY lay you off — all-or-nothing clawbacks convert a benefit into golden handcuffs priced above. Also negotiate: pre-approval requirements (many plans require the degree relate to your current role — a career-changer degree may not qualify), grade minimums (B-or-better reimbursement is standard), and whether books and fees count. The uplift input is where honesty lives: degrees pay when they gate a promotion (MBA into management, RN to BSN, PE license) and pay nothing when they are decorative — price the specific role change, not the brochure&apos;s average. Stack it: community college prerequisites at $150/credit inside the same benefit stretch the $5,250 twice as far. Estimate — your HR policy document and the actual post-degree market rate govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12307,6 +12403,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'non-compete-cost-calculator': NonCompeteCostCalc,
   'relocation-package-calculator': RelocationPackageCalc,
   'career-break-calculator': CareerBreakCalc,
+  'signing-bonus-vs-salary-calculator': SigningBonusVsSalaryCalc,
+  'tuition-reimbursement-calculator': TuitionReimbursementCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

@@ -185,6 +185,10 @@ export const WHY_USE: Record<string, string> = {
     'Job movers use it before signing the offer: a $10k relocation lump is $7,600 after tax against $10,500 of real costs — the counter is $13,816 grossed up, and the clawback terms matter more than the amount.',
   'career-break-calculator':
     'Anyone planning a sabbatical uses it before resigning: six months off costs $37,200 in cash but $105,710 with retirement compounding — and ACA subsidies plus IRA continuity shrink it dramatically.',
+  'signing-bonus-vs-salary-calculator':
+    'Candidates use it before accepting the "generous" bonus: a $5,000 raise compounds to $27,608 over 5 years — beating a $15,000 bonus by $12,608 — because raises are seeds and bonuses are flowers.',
+  'tuition-reimbursement-calculator':
+    'Employees use it before enrolling: the $5,250 tax-free benefit covers $21,000 of a $30,000 degree with a 1.6-yr payback — but the 2-year stay clause can cost $20,000 in forgone raises.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

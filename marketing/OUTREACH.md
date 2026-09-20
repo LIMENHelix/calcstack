@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 370 calculators live (596 indexed pages). See LAUNCH.md for the domain-day
+**Status: 380 calculators live (606 indexed pages). See LAUNCH.md for the domain-day
 sequence.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -584,3 +584,37 @@ blogs, home-inspector content sites, radon/waterproofing contractor blogs
 - **Backlist ride-alongs** — rental cash flow, cap rate, BRRRR, depreciation,
   cost segregation, STR loophole. The landlord cluster now runs acquisition →
   operations → tax in one interlinked set.
+
+## Wave 63 — Seller-side real estate & career negotiation (#371–#380, milestone wave)
+
+Milestone wave: 380 calculators live. Seller-side RE suite (pricing, staging,
+FSBO, escalation) plus the career negotiation suite (countering, non-competes,
+relocation, sabbaticals, bonus-vs-base, tuition benefits). Audiences: real-estate
+consumer blogs and agent-content sites, r/RealEstate and r/FirstTimeHomeBuyer
+wikis, career subreddits (r/cscareerquestions, r/personalfinance job threads),
+HR and people-ops newsletters, negotiation-content creators.
+
+- **Price reduction timing (#371)** — the staleness penalty quantified
+  ($17,634 at defaults); "your first two weeks are the listing's whole life"
+  hooks agent blogs and FSBO-skeptic content.
+- **Staging ROI (#372)** — honest bounds (vacant/dated lift vs hot-market
+  compression) make it citable by both stagers and skeptics.
+- **FSBO vs agent (#373)** — the 97.7% breakeven price framing; both sides of
+  the commission debate will argue over it (engagement bait, honestly framed).
+- **Escalation clause (#374)** — appraisal-gap cash math; buyer-agent content
+  and first-time-buyer communities in competitive metros.
+- **Counteroffer EV (#375)** — "one email, six figures" compounding line;
+  the strongest share hook in the career set. Salary-negotiation creators.
+- **Non-compete cost (#376)** — clause-to-signing-premium conversion plus the
+  post-FTC-ban state map; employment-law blogs and tech career communities.
+- **Relocation package (#377)** — the TCJA tax trap ("$10k is $7,600") is the
+  correction headline; HR-benefits content and military-adjacent audiences.
+- **Career break cost (#378)** — retirement-compounding framing ($37k → $106k)
+  with the shrink-it playbook; sabbatical/FIRE-adjacent newsletters.
+- **Signing bonus vs salary (#379)** — "raises are seeds, bonuses are flowers";
+  new-grad and offer-evaluation communities.
+- **Tuition reimbursement (#380)** — §127 tax-free benefit + stay-clause
+  handcuff pricing; working-adult education audiences and HR newsletters.
+- **Backlist ride-alongs** — salary-offer comparison, raise-worth, 1099-vs-W2,
+  startup offer, job-hop. Career cluster now covers the full arc: offer →
+  negotiate → stay/go → exit → break.

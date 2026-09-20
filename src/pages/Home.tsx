@@ -54,14 +54,15 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          370 calculators and counting. Newest: the landlord operations suite —
-          tenant turnover priced honestly, rent-vs-vacancy effective pricing,
-          itemized CapEx reserves, make-ready scopes with the vacancy meter,
-          pet policy math, and the property-manager breakeven hourly.
+          380 calculators and counting. Newest: the career negotiation suite —
+          counteroffer expected value with rescind risk priced, non-compete
+          clauses converted to a signing premium, relocation packages after tax,
+          the true cost of a career break, bonus-vs-base compounding, and the
+          tuition-benefit stay clause.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['tenant-turnover-cost-calculator', 'rent-vacancy-pricing-calculator', 'maintenance-reserve-calculator', 'make-ready-calculator', 'pet-policy-calculator', 'property-manager-calculator'].includes(c.slug),
+            ['counteroffer-ev-calculator', 'non-compete-cost-calculator', 'relocation-package-calculator', 'career-break-calculator', 'signing-bonus-vs-salary-calculator', 'tuition-reimbursement-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

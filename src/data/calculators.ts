@@ -2848,6 +2848,69 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'signing-bonus-vs-salary-calculator',
+    title: 'Signing Bonus vs Salary Calculator — Why $5k of Base Beats $15k of Bonus, Compounding Priced',
+    shortTitle: 'Bonus vs Base',
+    category: 'Freelance & Career',
+    description:
+      'A one-time signing bonus or a higher base? The compounding math that makes raises win by year 3 — match effects, raise growth, clawback terms, and when the bonus is genuinely the right take.',
+    tagline: 'A $5,000 raise compounds to $27,608 over 5 years — beating a $15,000 bonus by $12,608. The raise wins from year 3; take the bonus only if you are leaving early.',
+    intro:
+      'Employers offer signing bonuses because one-time cash closes candidates without raising the comp band — and candidates accept because $15,000 today feels bigger than $5,000 a year. It is not. The raise compounds: at 3% growth plus a 4% 401(k) match riding the base, $5,000/year is $27,608 over five years — beating the bonus by $12,608, with breakeven in year 3. And base propagates: future raises, annual bonus percentages, match, life insurance multiples, and severance formulas all scale off salary. The bonus wins in exactly two cases: you are leaving before breakeven, or you have 20% APR debt to kill. This calculator prices the trade with your tenure horizon.',
+    howItWorks: [
+      'Enter the signing bonus offered and the annual raise alternative.',
+      'Enter expected raise growth and your 401(k) match percentage.',
+      'Enter how many years you realistically expect to stay.',
+      'Read cumulative raise value versus the bonus, the winner, and the breakeven year.',
+    ],
+    faq: [
+      {
+        q: 'Why do employers push the bonus instead of the raise?',
+        a: 'Because the bonus is cheap for them in every way that matters and expensive for you in the same ways. One-time cash does not raise the salary band — next year\'s raise percentage applies to the un-bonused base, the comp ratio stays clean for HR, and internal equity is undisturbed. The bonus also terminates: the raise pays forever, the bonus pays once. And the clawback turns it into a retention tool: repay-if-you-leave-in-12-to-24-months terms handcuff you through the exact window when a raise would have been recruiting-proof. Read clawback terms before signing anything: you want monthly proration (leave at month 18 of 24, repay 25%), death of the clawback if THEY terminate or lay you off, and clarity on whether repayment is gross or net of the taxes you already paid on it (gross repayment after paying 30% tax is a real and nasty surprise). The tell that the bonus is substituting for a band problem: "we can\'t move base but we can do a signing bonus" — translate it as "the band exists and next year\'s raise will be 3% of the lower number."',
+      },
+      {
+        q: 'When should I actually take the bonus?',
+        a: 'Three clean cases. Short tenure by design: you know this is a 12–18 month stop (relocation coming, industry bridge role, startup with an expiration date) — before breakeven the bonus is genuinely more money, so take the cash and mind the clawback window. Debt arbitrage: $15,000 against 20%+ APR credit card debt returns more than any compounding base — the math of killing toxic debt beats the math of salary growth, and the stress reduction is free. And when the base is capped: if the role sits at the top of its band and the raise literally cannot happen, the bonus is not a trade — it is extra; negotiate the SIZE. The move that beats both: ask for both. "I understand the band constraint — can we do $8,000 signing and a written 6-month review with a path to $X?" splits the employer\'s cash-flow objection while preserving your base trajectory. Whatever you take, one tax note: bonuses hit 22% supplemental withholding, which is NOT your tax rate — you settle to your actual bracket at filing, so a refund difference is normal.',
+      },
+      {
+        q: 'Does base salary really propagate into everything?',
+        a: 'Yes — and the propagation is the reason this calculator weights the raise so heavily. The base multiplies through: percentage raises (3% of $100k is $3,000; of $105k, $3,150 — the gap grows every year), annual bonus targets (a 10% bonus target pays 10% of BASE — the bonus-on-bonus effect), 401(k) match (a 4% match on the higher base is $200/yr of free money compounding at market rates), group life insurance (typically 1–2× salary), long-term disability (60–70% of base), severance formulas (weeks per year of service, of base), and — the quiet one — your NEXT job\'s offer, which anchors on current base wherever salary history is legal to ask or volunteered. Ten years of 3% raises on a $5,000 base gap is $114,639 of cumulative difference — the number this calculator shows. The only propagation the bonus touches: nothing. It is a flower, not a seed. When evaluating ANY compensation trade — bonus vs base, equity vs base, title vs base — ask which side compounds and which side evaporates. Take the seed every time you plan to stay.',
+      },
+    ],
+  },
+  {
+    slug: 'tuition-reimbursement-calculator',
+    title: 'Tuition Reimbursement Calculator — Employer Education Benefit ROI and the Stay-Clause Price',
+    shortTitle: 'Tuition Reimbursement ROI',
+    category: 'Freelance & Career',
+    description:
+      'What employer tuition assistance is really worth — the $5,250 tax-free §127 benefit against your share, the degree uplift payback, and the stay-clause handcuff priced in forgone raises.',
+    tagline: 'The employer pays $21,000 of a $30,000 degree — your $9,000 share pays back in 1.6 years at an 8% uplift. But a 2-year stay clause can cost $20,000 in forgone raises.',
+    intro:
+      'Employer tuition assistance is the most underused benefit in American comp packages — and the most quietly handcuffed. The good math: $5,250/year tax-free under IRC §127 over a 4-year program covers $21,000 of a $30,000 degree; your $9,000 share pays back in 1.6 years at an 8% salary uplift. The hidden price: the stay clause. Two years of required retention after the last payment, while the market would have paid you $10,000 more, is a $20,000 handcuff — nearly the entire benefit. The terms decide the deal: prorated repayment and layoff carve-outs are the negotiation. This calculator runs the benefit, the uplift, and the handcuff on one ledger.',
+    howItWorks: [
+      'Enter the annual employer benefit ($5,250 is the tax-free cap; some employers exceed it) and program length.',
+      'Enter total program cost and your current salary.',
+      'Enter the expected salary uplift from the degree — price the specific role change, not the brochure average.',
+      'Enter the stay-clause years and the external raise you would forgo.',
+      'Read employer share, your payback, and the stay-clause cost.',
+    ],
+    faq: [
+      {
+        q: 'How does the $5,250 tax-free rule work?',
+        a: 'IRC Section 127 lets employers pay up to $5,250 per year of education assistance completely tax-free — it does not appear in your W-2 wages at all, which at a 24% bracket makes it worth $6,900 of equivalent salary. Amounts above $5,250 are taxable wages UNLESS the education qualifies as a working-condition benefit — coursework that maintains or improves skills in your CURRENT job can be excluded above the cap under a different section (§132), which is why job-related MBAs at generous employers sometimes pass through entirely tax-free; ask payroll how your plan treats the excess. The catch that matters: the benefit is per calendar year, not per program — a $30,000 degree timed across four Januarys uses $21,000 of tax-free room, while cramming it into two years burns half the benefit to tax. The fine print to verify in YOUR plan document: accredited programs only (usually), grade minimums (B-or-better reimbursement is standard), pre-approval requirements (enroll first, get denied later is a real pattern), and whether books, fees, and supplies count toward the cap. Some employers pay the school directly; most reimburse after grades — plan the cash flow.',
+      },
+      {
+        q: 'How bad is the stay clause, really?',
+        a: 'As bad as the market alternative — which is exactly what this calculator prices. The clause: remain employed N years (1–2 typical) after the last reimbursement or repay some or all of it. The cost is not the repayment risk — it is the optionality you sell: if the external market would pay you $10,000 more during those two years, the handcuff costs $20,000 against a $21,000 benefit, and the degree was close to free-but-not-quite. The negotiation that fixes it: prorated repayment (leave at the midpoint, owe half — never accept all-or-nothing), a carve-out if THEY terminate you (repayment on layoff is unconscionable and often negotiable), and a clause that starts from EACH payment rather than the last (so early semesters vest while you are still enrolled). When the clause is fine: you planned to stay anyway, the employer IS the market-rate payer, or the degree directly unlocks an internal promotion ladder — the handcuff binds nobody who was not leaving. When to walk from the benefit: a hot external market for your post-degree role, an all-or-nothing clause, and a program you could self-fund — paying $9,000 of your own money to keep a $20,000 raise available is often the right trade.',
+      },
+      {
+        q: 'Which degrees actually produce the uplift?',
+        a: 'Gate degrees pay; decorative degrees do not — the uplift input in this calculator should be priced from the specific door the credential opens. The gates: RN to BSN (hospital systems require it for advancement, magnet hospitals for hire at all), PE licensure in engineering (the stamp changes the salary band overnight), MBA into management tracks at companies that formally require it, CPA for accounting advancement, teaching credentials and the salary-lane jumps they trigger in public districts, and PMP in project-management shops where it gates the senior title. The decoratives: general masters degrees with no licensure or formal requirement behind them — the "average masters holder earns X more" statistics confound selection with causation; people who get promoted get degrees. Price the uplift honestly: find five people WITH the credential at your company or target employers and compare their bands to yours — that is the number for this calculator, not the program brochure. And consider the cheaper gate-crashers first: certifications (PMP, SHRM, AWS) at $300–3,000 often unlock the same bands as a $30,000 degree — the certification ROI calculator prices that comparison directly.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
