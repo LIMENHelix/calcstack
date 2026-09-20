@@ -2981,6 +2981,53 @@ export function PropertyTaxAppealCalc() {
   )
 }
 
+// HOA TRUE COST — the fee is a second, junior mortgage that never amortizes and never ends. Node-verified: $400/mo at 6.5%/30yr money = mortgage-equivalent of $63,284 of home price (a $350k HOA home costs like a $413k non-HOA home monthly). Growth compounding: $400/mo at 5%/yr escalation → $60,374 paid over 10 yrs, $318,906 over 30, and the year-30 fee is $19,757/yr ($1,646/mo). Offsets priced honestly: HOA often replaces lawn/snow/exterior maintenance and bundles amenities + some insurance — subtract what you'd pay anyway. Special assessments: underfunded reserve funds are the standard trigger; the reserve study and % funded are in the resale docs — read them before closing, not after.
+export function HoaTrueCostCalc() {
+  const [fee, setFee] = useNumber(400)
+  const [growth, setGrowth] = useNumber(5)
+  const [replaces, setReplaces] = useNumber(75)
+  const [rate, setRate] = useNumber(6.5)
+  const [yrs, setYrs] = useNumber(10)
+
+  const r = useMemo(() => {
+    const net = Math.max(0, fee - replaces)
+    const i = rate / 1200
+    const loanEq = i > 0 ? (net * (1 - Math.pow(1 + i, -360))) / i : net * 360
+    let total = 0
+    for (let y = 0; y < yrs; y++) total += fee * 12 * Math.pow(1 + growth / 100, y)
+    const feeYrN = fee * 12 * Math.pow(1 + growth / 100, Math.max(0, yrs - 1))
+    let total30 = 0
+    for (let y = 0; y < 30; y++) total30 += fee * 12 * Math.pow(1 + growth / 100, y)
+    return { net, loanEq, total, feeYrN, total30 }
+  }, [fee, growth, replaces, rate, yrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <Field label="Monthly HOA fee" value={fee} onChange={setFee} prefix="$" />
+          <Field label="Annual fee growth" value={growth} onChange={setGrowth} suffix="%" step="0.5" />
+          <Field label="Costs it replaces (lawn, snow, gym)" value={replaces} onChange={setReplaces} prefix="$" suffix="/mo" />
+          <Field label="Mortgage rate context" value={rate} onChange={setRate} suffix="%" step="0.125" />
+          <Field label="Ownership horizon" value={yrs} onChange={setYrs} suffix="yrs" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Net fee (after what it replaces)" value={`${usd(r.net, 0)}/mo`} />
+          <Result big label="Mortgage-equivalent of the net fee" value={usd(r.loanEq)} />
+          <Result label={`Total fees paid over ${yrs} yrs`} value={usd(r.total)} />
+          <Result label={`Annual fee in year ${yrs}`} value={usd(r.feeYrN)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          The net {usd(r.net, 0)}/month fee carries the same monthly weight as {usd(r.loanEq)} of additional mortgage at {num(rate, 2)}% — so a $350,000 HOA home costs like a {usd(350000 + r.loanEq)} non-HOA home before amenities. Over 30 years at {num(growth, 1)}% growth the fee stream totals {usd(r.total30)}.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The fee never amortizes, never ends, and compounds: boards raise it with costs, and the growth field is the honest number — look at the HOA's last 5 years of increases, not the current fee. Two hidden line items decide whether an HOA is safe: the reserve fund (the resale docs include a reserve study and % funded — chronically underfunded reserves are how $20,000 special assessments happen; ask directly) and the delinquency rate (above ~10% of owners behind, the paying owners cover the gap). What the fee buys has real value — exterior maintenance, roof/siding reserves in condo and townhome structures, amenities you'd otherwise pay for — which is why the "costs it replaces" field matters: a $400 fee replacing $150 of lawn/snow/gym is really $250. Also check: rental caps and pet rules (they bind you at resale), pending litigation (kills conventional financing), and insurance gaps between the master policy and your HO-6. Lenders count the full fee in DTI. Estimates — the HOA's documents govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -8606,6 +8653,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'house-flip-calculator': HouseFlipCalc,
   'rental-cash-flow-calculator': RentalCashFlowCalc,
   'property-tax-appeal-calculator': PropertyTaxAppealCalc,
+  'hoa-true-cost-calculator': HoaTrueCostCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

@@ -576,6 +576,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'hoa-true-cost-calculator',
+    title: 'HOA True Cost Calculator 2026 — The Fee Is a Second Mortgage That Never Amortizes',
+    shortTitle: 'HOA True Cost',
+    category: 'Housing & Mortgage',
+    description:
+      'Convert the monthly HOA fee into its mortgage-equivalent home price, project the fee growth over your ownership, and see what the fee stream really costs after what it replaces.',
+    tagline: 'A $400/month HOA at 6.5% money weighs like $63,284 of extra house — and at 5% growth you\'ll pay $318,906 of fees over 30 years.',
+    intro:
+      'The HOA fee is the only housing cost that never amortizes and never ends. Priced honestly, a $400 monthly fee at 6.5% mortgage money carries the same weight as $63,284 of additional home price — the $350,000 condo costs like a $413,000 house before you count a single amenity. And unlike the mortgage, the fee compounds: at 5% annual growth, year 30\'s fee is $1,646 a month and the 30-year stream totals $318,906. The offsets are real — lawn, snow, exterior maintenance, the gym — so this calculator nets out what the fee replaces, then shows you the mortgage-equivalent, the horizon total, and the questions that matter more than the fee itself: reserve funding and special-assessment risk.',
+    howItWorks: [
+      'Enter the monthly fee and its real growth rate (check the HOA\'s last 5 years of increases).',
+      'Enter what the fee genuinely replaces — lawn, snow, gym membership, exterior insurance.',
+      'Set the mortgage rate for the equivalence conversion.',
+      'Read the net fee, the mortgage-equivalent price tag, and the horizon totals.',
+    ],
+    faq: [
+      {
+        q: 'How do I spot a special assessment before I buy?',
+        a: 'The reserve study is the document that predicts it. Every well-run HOA commissions one: an engineering inventory of every common component (roof, pavement, elevators, pool) with remaining useful life and replacement cost, against actual reserves. The output is a percent-funded figure — above 70% is healthy, 30–50% is a warning, below 30% means the assessment is scheduled, just not yet announced. Ask for it during your contingency period along with: two years of meeting minutes (deferred maintenance debates appear there first), the delinquency rate (above ~10% of owners behind, the paying owners absorb the gap), any pending litigation (which can kill conventional financing entirely), and the master insurance policy versus what your HO-6 must cover. The fee size itself tells you less than the reserves behind it — a $600 fee with 80% funding beats a $300 fee with 15%.',
+      },
+      {
+        q: 'Is an HOA ever worth it financially?',
+        a: 'Sometimes, and the math here is how you tell. The honest ledger: subtract what the fee genuinely replaces (lawn and snow service ~$150–300/mo in many metros, exterior maintenance and roof reserves in condo structures, gym/pool memberships, sometimes water/trash/insurance). A $400 fee replacing $250 of real costs is a $250 net fee — mortgage-equivalent $39,553, not $63,284. Beyond the ledger: HOAs protect property values through enforced maintenance standards (studies consistently find HOA homes sell for a premium, though causation is murky), and condo/townhome ownership is often only available with an HOA. The genuine financial risks are asymmetric: unlimited assessment liability, fee growth you don\'t control, and resale constraints from rental caps or litigation. Price the fee, verify the reserves, then decide.',
+      },
+      {
+        q: 'Can the fee really grow 5% a year forever?',
+        a: 'The direction is structural, the rate varies. HOA costs are dominated by labor, insurance, and construction — all of which have outpaced CPI for years, and insurance on coastal/condo properties has spiked far beyond 5% in some markets since 2022. Boards that keep fees flat by underfunding reserves aren\'t saving money; they\'re converting it into future special assessments with interest. Older buildings face the cliff directly: post-Surfside, many states now mandate structural reserve studies and fully-funded reserves, which is raising fees sharply on aging condos — painful for current owners but protective for buyers. When evaluating: model the fee at its documented 5-year growth rate, check insurance renewal trends in the minutes, and treat any fee that hasn\'t moved in years as deferred cost, not discipline.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

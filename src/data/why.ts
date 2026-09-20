@@ -41,6 +41,8 @@ export const WHY_USE: Record<string, string> = {
     'Investors use it before offering: the lender-grade model prices vacancy, management, and CapEx honestly, so a $300k/$2,400-rent deal at 7% shows its real face — −$152/mo, 0.90 DSCR — instead of the seller\'s proforma fiction.',
   'property-tax-appeal-calculator':
     'Owners holding an assessment notice use it before the deadline: implied market value vs comp-supported value × the tax rate shows a $35k over-assessment is $630/yr — $6,898 over a decade — for a filing most counties charge nothing for.',
+  'hoa-true-cost-calculator':
+    'Buyers comparing HOA vs non-HOA homes use it to convert the fee into house-price terms: $400/mo at 6.5% weighs like $63,284 of mortgage, and 5% growth turns the stream into $318,906 over 30 years — before the reserve-study questions that predict special assessments.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':
