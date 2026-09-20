@@ -55,15 +55,16 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          400 calculators and counting. Newest: the service-business pricing suite —
-          salon chair rental vs commission, the no-show cost of empty chairs,
-          menu pricing from the hourly floor, retail vs chair time, cleaning
-          quotes with drive time priced in, photographer session CODB, tattoo
-          splits vs booth rent, and DJ gigs quoted with the rig amortized.
+          410 calculators and counting. Newest: the route-and-rate suite for service
+          businesses — handyman hourly built backward from the year, window cleaning
+          per-pane vs storefront routes, junk removal priced off the scale ticket,
+          pool route density math, bookkeeping retainers with cleanup fees, tutoring
+          platform vs independent take-home, mobile mechanic vs the shop, and
+          detailing packages with true hourly after the van.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CALCULATORS.filter((c) =>
-            ['chair-rental-vs-commission-calculator', 'no-show-cost-calculator', 'salon-service-pricing-calculator', 'cleaning-business-pricing-calculator', 'photographer-session-pricing-calculator', 'event-dj-pricing-calculator'].includes(c.slug),
+            ['handyman-hourly-rate-calculator', 'pool-service-route-calculator', 'junk-removal-pricing-calculator', 'tutoring-rate-calculator', 'auto-detailing-pricing-calculator', 'bookkeeping-pricing-calculator'].includes(c.slug),
           ).map((c) => (
             <Link key={c.slug} to={`/calculators/${c.slug}`}>
               <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

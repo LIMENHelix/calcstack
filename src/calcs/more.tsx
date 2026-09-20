@@ -7875,6 +7875,107 @@ export function MobileMechanicCalc() {
   )
 }
 
+// BOOKKEEPING SERVICE PRICING — node-verified defaults: 150-txn client at $325/mo taking 3h = $108.33/hr effective ($2.17/txn). Practice of 25 clients × $350 avg = $8,750/mo ($105k/yr) over 80h/mo work = $109.38/hr. Cleanup: 6-month backlog × 2h/mo × $75 = $900 project. Retainers beat hourly when you get faster — hourly pays you less for being good.
+export function BookkeepingPricingCalc() {
+  const [retainer, setRetainer] = useNumber(325)
+  const [txns, setTxns] = useNumber(150)
+  const [hrs, setHrs] = useNumber(3)
+  const [clients, setClients] = useNumber(25)
+  const [avg, setAvg] = useNumber(350)
+  const [workHrs, setWorkHrs] = useNumber(80)
+  const [backlog, setBacklog] = useNumber(6)
+  const [cleanupRate, setCleanupRate] = useNumber(75)
+
+  const r = useMemo(() => {
+    const effHr = hrs > 0 ? retainer / hrs : 0
+    const perTxn = txns > 0 ? retainer / txns : 0
+    const moRev = clients * avg
+    const pracHr = workHrs > 0 ? moRev / workHrs : 0
+    const yrRev = moRev * 12
+    const cleanup = backlog * 2 * cleanupRate
+    return { effHr, perTxn, moRev, pracHr, yrRev, cleanup }
+  }, [retainer, txns, hrs, clients, avg, workHrs, backlog, cleanupRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Client retainer" value={retainer} onChange={setRetainer} prefix="$" suffix="/mo" step="25" />
+          <Field label="Transactions/mo" value={txns} onChange={setTxns} step="25" />
+          <Field label="Hours per month" value={hrs} onChange={setHrs} step="0.5" />
+          <Field label="Clients" value={clients} onChange={setClients} step="1" />
+          <Field label="Avg fee" value={avg} onChange={setAvg} prefix="$" suffix="/mo" step="25" />
+          <Field label="Practice hrs/mo" value={workHrs} onChange={setWorkHrs} step="5" />
+          <Field label="Cleanup backlog" value={backlog} onChange={setBacklog} suffix="mo" step="1" />
+          <Field label="Cleanup rate" value={cleanupRate} onChange={setCleanupRate} prefix="$" suffix="/hr" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Effective hourly (client)" value={`${usd(Math.round(r.effHr))}/hr`} big />
+          <Result label="Practice revenue" value={`${usd(Math.round(r.moRev))}/mo`} />
+          <Result label="Practice hourly" value={`${usd(Math.round(r.pracHr))}/hr`} />
+          <Result label="Cleanup project fee" value={usd(Math.round(r.cleanup))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`The ${usd(retainer)} client runs ${num(hrs, 1)} hours — ${usd(Math.round(r.effHr))}/hr effective, ${num(r.perTxn, 2)} a transaction. ${clients} of those is ${usd(Math.round(r.moRev))}/mo at ${usd(Math.round(r.pracHr))}/hr. Retainers convert your speed into margin; hourly billing converts it into a pay cut.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: effective hourly = retainer ÷ actual hours; practice hourly = clients × average fee ÷ total monthly hours (including admin); cleanup fee = backlog months × ~2h/mo × cleanup rate. The pricing architecture that works: monthly retainer by transaction volume tier — under 100 txns ($250–350), 100–300 ($350–600), 300+ ($600+) — because volume predicts effort better than revenue does, and the tier boundary is where you re-quote at renewal. Cleanup is a separate project, always: a new client with a 6-month backlog is a $900 fixed-fee engagement (backlog months × hours × cleanup rate) billed BEFORE the retainer starts — bookkeepers who fold cleanup into month one work free for weeks. Add-on lines with real margin: payroll ($50–150/mo per client), bill pay, sales tax filing, 1099 season, and catch-up reports for the client's CPA at year-end — each prices standalone. The effective-hourly discipline: track minutes per client monthly; when a client's effective rate drops below your floor (scope creep is silent — new bank accounts, new entities, more questions), re-quote at anniversary with the data in hand. Software is COGS, not overhead: QBO/Xero per-client subscriptions ($70/mo stack across clients) either get billed through wholesale billing or priced into the retainer. The ceiling math: one bookkeeper tops out around 25–35 clients depending on complexity; past that you are hiring at $20–30/hr and the practice becomes margin × books, which is exactly when fixed-fee pricing pays double. Credential note: CB/CPB certification and QuickBooks ProAdvisor status justify the top of every range — and the niche premium is real (construction, medical, e-commerce each pay more for a bookkeeper who speaks the chart of accounts). Estimate — your time log per client governs every number here.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// TUTORING RATE — node-verified defaults: $60/hr × 20 sessions/wk = $1,200 gross. Platform at 20% fee: $960/wk. Independent at 8% no-show/cancel: $1,104/wk — $144/wk difference, $52,992/yr independent. Group of 4 × $35 = $140/hr vs $60 solo. Test-prep premium $90/hr → $1,656/wk. The platform buys you students; independence pays you $7k/yr more on the same calendar.
+export function TutoringRateCalc() {
+  const [rate, setRate] = useNumber(60)
+  const [sessions, setSessions] = useNumber(20)
+  const [platFee, setPlatFee] = useNumber(20)
+  const [cancel, setCancel] = useNumber(8)
+  const [groupSize, setGroupSize] = useNumber(4)
+  const [groupRate, setGroupRate] = useNumber(35)
+  const [prepRate, setPrepRate] = useNumber(90)
+
+  const r = useMemo(() => {
+    const gross = rate * sessions
+    const platNet = gross * (1 - platFee / 100)
+    const indep = gross * (1 - cancel / 100)
+    const diff = indep - platNet
+    const yrIndep = indep * 48
+    const groupHr = groupSize * groupRate
+    const prepWk = prepRate * sessions * (1 - cancel / 100)
+    return { gross, platNet, indep, diff, yrIndep, groupHr, prepWk }
+  }, [rate, sessions, platFee, cancel, groupSize, groupRate, prepRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Your hourly rate" value={rate} onChange={setRate} prefix="$" step="5" />
+          <Field label="Sessions per week" value={sessions} onChange={setSessions} step="1" />
+          <Field label="Platform fee" value={platFee} onChange={setPlatFee} suffix="%" step="1" />
+          <Field label="No-show/cancel" value={cancel} onChange={setCancel} suffix="%" step="1" />
+          <Field label="Group size" value={groupSize} onChange={setGroupSize} step="1" />
+          <Field label="Group rate each" value={groupRate} onChange={setGroupRate} prefix="$" step="5" />
+          <Field label="Test-prep rate" value={prepRate} onChange={setPrepRate} prefix="$" step="5" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Platform take-home/wk" value={usd(Math.round(r.platNet))} />
+          <Result label="Independent take-home/wk" value={`${usd(Math.round(r.indep))} (+${usd(Math.round(r.diff))})`} big />
+          <Result label="Group session rate" value={`${usd(Math.round(r.groupHr))}/hr`} />
+          <Result label="Independent year" value={usd(Math.round(r.yrIndep))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`${sessions} sessions at ${usd(rate)} is ${usd(Math.round(r.gross))}/wk gross. The platform's ${platFee}% leaves ${usd(Math.round(r.platNet))}; independent with an ${cancel}% cancel rate keeps ${usd(Math.round(r.indep))} — ${usd(Math.round(r.diff))}/wk for running your own calendar. And ${groupSize} students at ${usd(groupRate)} each is ${usd(Math.round(r.groupHr))}/hr: the group math nobody's platform shows them.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: platform week = rate × sessions × (1 − fee); independent week = rate × sessions × (1 − cancel/no-show rate); group hourly = students × per-student rate; year = independent week × 48 teaching weeks. The business rules that make tutoring a living: platforms (Wyzant, Preply, Superprof) take 15–25% but solve the empty-calendar problem — the standard arc is platform-first to build reviews and a student base, then independent for renewals and referrals where the same hours pay 15–25% more. Cancellation policy is revenue: 24-hour notice, charged in full inside it, prepaid packages of 10 — an 8% no-show rate on a $60/hr calendar is $4,600/yr, and prepaid packages cut no-shows roughly in half while fixing your cash flow. Group sessions are the leverage nobody prices: 4 students at $35 each is $140/hr — students pay 42% less than solo, you earn 133% more, and SAT/ACT or algebra-cohort groups sell precisely because parents compare the per-student price. Rate ladders: general homework help $40–60, subject expertise (calculus, chemistry, physics) $60–85, test prep with score results $90–150 — the premium follows demonstrated outcomes, so track score gains and grade lifts as your marketing. The calendar reality: 20 sessions/wk is a full independent practice (lesson prep, parent updates, and travel eat the rest), school-year seasonality peaks September–May with summer bridge programs as the gap-filler, and online delivery removes the drive-time tax that caps in-person routes at 4–5 sessions/day. Subjects with structural demand: math (always), reading intervention, SAT/ACT, AP sciences, and increasingly statistics — price to the demand curve, not the median. Estimate — your booking calendar and cancel log govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // HANDYMAN HOURLY RATE — node-verified defaults: $65k take-home goal + $850/mo overhead ($10,200/yr) + SE tax $9,184 (92.35% × 15.3%) → $84,384 gross needed over 1,200 billable hrs (25/wk × 48wk) = $70.32/hr. Half-day minimum: 4h × $70.32 + $45 trip = $326. Charge-by-the-hour only works when the rate was built backward from the year.
 export function HandymanRateCalc() {
   const [goal, setGoal] = useNumber(65000)
@@ -13801,6 +13902,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'bookkeeping-pricing-calculator': BookkeepingPricingCalc,
+  'tutoring-rate-calculator': TutoringRateCalc,
   'handyman-hourly-rate-calculator': HandymanRateCalc,
   'window-cleaning-pricing-calculator': WindowCleaningCalc,
   'junk-removal-pricing-calculator': JunkRemovalCalc,

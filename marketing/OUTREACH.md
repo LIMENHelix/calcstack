@@ -1,6 +1,6 @@
 # CalcStack Embed Outreach Kit
 
-**Status: 400 calculators live (626 indexed pages). Domain live at calcstack.app;
+**Status: 410 calculators live (636 indexed pages). Domain live at calcstack.app;
 sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded calculators on other people's sites. Every embed carries a
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
@@ -684,3 +684,43 @@ wedding-photographer forums), tattoo artist forums and r/tattoo, DJ communities
 - **Backlist ride-alongs** — fixed-bid pricing, retainer pricing, commission
   draw, bid sheet, markup-vs-margin. The freelance cluster now runs
   price → book → keep → grow for chair, camera, needle, and booth.
+
+## Wave 66 — Route & rate suite (#401–#410, milestone wave)
+
+Milestone wave: 410 calculators live (636 indexed pages). This wave prices the
+driveway-and-route economy: the businesses where the wage is set by minutes
+between stops and the ticket at the scale house, not the menu price. Audiences:
+pressure-washing and exterior-cleaning communities (r/pressurewashing, Pressure
+Wash Resource forums), caterers and food-business groups (r/Catering,
+chef/catering Facebook groups), detailers (r/AutoDetailing, Detailing World),
+mobile mechanics and flat-rate techs (r/MechanicAdvice, Just Rolled In
+community), junk removal and hauling operators (r/sweatystartup, hauling
+Facebook groups), pool-service pros (r/pools, Pool & Spa News, route-buy/sell
+groups), handyman communities (r/handyman, Handyman Journey), window cleaners
+(r/WindowCleaning, WCR forums), bookkeepers (r/bookkeeping, Bookkeeper Launch
+community), tutors (r/tutor, Wyzant tutor forums), and the broader sweat-equity
+startup press that loves a pricing tool.
+
+- **Pressure washing pricing (#401)** — per-sq-ft vs flat-rate with drive time;
+  exterior-cleaning YouTube and Facebook groups share pricing tools hardest.
+- **Catering pricing (#402)** — food-cost multiplier vs per-person floor, the
+  drop-off vs staffed spread; catering-business coaches and culinary forums.
+- **Auto detailing pricing (#403)** — "$50/hr billed, $14.71 kept" headline;
+  detailer communities live on package-pricing debates.
+- **Mobile mechanic rate (#404)** — the $465 shop brake job at $365 in the
+  driveway; pitch-writes-itself angle for techs going independent.
+- **Junk removal pricing (#405)** — the scale ticket vs the fraction price book;
+  r/sweatystartup's favorite business model gets its math checked.
+- **Pool route density (#406)** — "same $150 pool: $58/hr nearby, $35/hr across
+  town"; route-buy/sell marketplaces and pool-trade press.
+- **Handyman hourly rate (#407)** — the backward-built $70.32/hr and the minimum
+  ticket; handyman communities and trades-business coaches.
+- **Window cleaning pricing (#408)** — per-pane residential vs the $70/hr
+  storefront route; WCR forums and window-cleaning YouTube.
+- **Bookkeeping pricing (#409)** — retainer effective hourly + "cleanup bills
+  first"; bookkeeping course communities run on pricing content.
+- **Tutoring rate (#410)** — platform vs independent take-home and the $140/hr
+  group session; tutor forums and teacher-side-hustle newsletters.
+- **Backlist ride-alongs** — cleaning-business pricing, photographer CODB,
+  salon suite, lawn-care pricing. The service-business cluster now runs 30+
+  deep across beauty, events, cleaning, auto, routes, and knowledge work.

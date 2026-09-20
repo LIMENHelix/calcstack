@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'bookkeeping-pricing-calculator',
+    title: 'Bookkeeping Pricing Calculator — Retainers, Effective Hourly, and Cleanup Fees',
+    shortTitle: 'Bookkeeping Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price bookkeeping clients by transaction tier, see the effective hourly on every retainer, the practice total across your book, and the cleanup fee for backlog work.',
+    tagline: 'A $325/mo client running 3 hours pays $108/hr — but only if the cleanup backlog billed separately, first.',
+    intro:
+      'Bookkeeping fails as hourly billing and works as retainers: the client who took 5 hours in month one takes 2.5 by month six, and hourly billing pays you less for getting good. A $325/month retainer on a 150-transaction client is $108/hr effective — and a 25-client practice at a $350 average is $105,000 a year. This calculator shows the effective hourly on each client, the practice-level wage, and the cleanup fee that backlog work must bill separately.',
+    howItWorks: [
+      'Enter a client retainer, their monthly transaction count, and your actual hours.',
+      'Read the effective hourly and per-transaction price for that client.',
+      'Enter your client count, average fee, and total monthly hours — read the practice wage.',
+      'Enter a backlog size and cleanup rate — read the fixed cleanup project fee.',
+      'Re-quote any client whose effective hourly has slid below your floor.',
+    ],
+    faq: [
+      {
+        q: 'How should I price bookkeeping services?',
+        a: 'Monthly retainers tiered by transaction volume: under 100 transactions ($250–350/mo), 100–300 ($350–600/mo), 300+ ($600+/mo). Volume predicts effort far better than the client\'s revenue does — a $2M services business with 80 transactions is less work than a $400k restaurant with 900. The tier boundary is the re-quote point at renewal. Why not hourly: your efficiency is your margin — month six of a client takes half the hours of month one, and hourly billing cuts your pay in half for mastering the account. Track minutes per client monthly anyway, because scope creep (new bank accounts, a second entity, more questions) silently drops effective hourly, and the time log is the evidence for the anniversary re-quote. Software is COGS: QBO/Xero subscriptions either flow through wholesale billing or are priced into the retainer.',
+      },
+      {
+        q: 'Should cleanup work be billed separately?',
+        a: 'Always — and before the retainer starts. A new client with a six-month backlog is not a $325/mo account; it is a $900 fixed-fee cleanup engagement (backlog months × roughly 2 hours per month × a cleanup rate of $75–100/hr) plus the ongoing retainer once the books are current. Bookkeepers who fold cleanup into "month one" work free for weeks and train the client that arrears are cheap. Quote cleanup fixed-fee from a diagnostic review (one paid hour to scope the mess — unreconciled accounts, uncategorized transactions, missing payroll entries), never hourly-estimated from the client\'s guess. The cleanup is also your best marketing: delivering reconciled, CPA-ready books from chaos is the reference story that wins the next three clients.',
+      },
+      {
+        q: 'What add-on services carry the best margin for bookkeepers?',
+        a: 'Payroll ($50–150/mo per client, mostly automated once configured), bill pay and invoicing, sales tax filing, 1099 season, and the year-end CPA package — each prices standalone on top of the retainer, and each deepens retention because switching costs compound. The niche premium is real: construction (job costing, WIP schedules), medical practices, and e-commerce (multi-channel payouts, inventory COGS) each pay 20–40% above general rates for a bookkeeper who already speaks that chart of accounts. Credentials justify the top of every range — CB or CPB certification and QuickBooks ProAdvisor status move you from price-shopped to referred. The growth ceiling: one bookkeeper tops out around 25–35 clients depending on complexity; past that you hire at $20–30/hr and the practice becomes margin × books — which is exactly when fixed-fee pricing pays double, because your hires\' efficiency gains accrue to the firm, not to an hourly meter.',
+      },
+    ],
+  },
+  {
+    slug: 'tutoring-rate-calculator',
+    title: 'Tutoring Rate Calculator — Platform vs Independent, Group Math, and the Real Weekly Take',
+    shortTitle: 'Tutoring Rate Calculator',
+    category: 'Freelance & Career',
+    description:
+      'Compare tutoring platform take-home against independent rates after no-shows, see what group sessions pay per hour, and price test-prep premiums — the full weekly math.',
+    tagline: 'Same 20 sessions: platform pays $960/wk, independent pays $1,104 — and a 4-student group pays $140/hr.',
+    intro:
+      'Tutoring platforms solve the empty-calendar problem and charge 15–25% for it — on 20 sessions at $60/hr, that is $240 a week, every week. Independent tutors with a cancellation policy keep $1,104 of the same $1,200 gross, and a single 4-student group at $35 each pays $140/hr — students save 42%, you earn 133% more. This calculator runs the full comparison: platform vs independent take-home, group-session leverage, and the test-prep premium, so your rate card is math, not guessing.',
+    howItWorks: [
+      'Enter your hourly rate and sessions per week — read the gross.',
+      'Enter the platform fee — read what the platform week actually pays.',
+      'Enter your no-show/cancel rate — read the independent week and the difference.',
+      'Enter group size and per-student rate — read the group hourly.',
+      'Read the independent year total at 48 teaching weeks.',
+    ],
+    faq: [
+      {
+        q: 'Should I tutor through a platform or independently?',
+        a: 'Platform first, independent for keeps. Platforms (Wyzant, Preply, Superprof) take 15–25% but solve the cold-start problem — reviews, search placement, and a steady lead flow when your calendar is empty. The standard arc: build 10–20 reviews on the platform, then move renewals and referrals independent, where the same hours pay 15–25% more — the example week shows $144/wk, roughly $7,000/yr on an identical calendar. Note the platform terms: most prohibit moving active platform students off-platform, so the transition runs through NEW students from referrals, school lists, and local groups, not poaching. Independence costs something too — you become the scheduler, the payment collector, and the marketer — which is what the cancellation policy and prepaid packages are for.',
+      },
+      {
+      q: 'How do I handle cancellations and no-shows?',
+        a: 'With a written policy and prepaid packages — the two together cut no-shows roughly in half. The standard: 24-hour notice required, sessions cancelled inside it charged in full, packages of 10 sessions prepaid with a 3–4 month expiry. The math justifies the firmness: an 8% no-show rate on a $60/hr, 20-session calendar is $4,600 a year of empty hours you held for someone. Prepaid packages also fix cash flow (paid this month for sessions spread over six weeks) and increase completion — families who prepaid finish the package. Makeups: offer one reschedule slot per package as the humane valve, and waive the fee for genuine emergencies once — the policy\'s job is to make cancelling a decision, not to punish illness.',
+      },
+      {
+        q: 'What subjects and formats pay the most?',
+        a: 'The rate ladder follows demonstrated outcomes: general homework help $40–60/hr, subject expertise (calculus, chemistry, physics, statistics) $60–85/hr, and test prep with documented score gains $90–150/hr — parents pay the premium for the result, so track score lifts and grade improvements as your rate justification. Group formats change the math entirely: 4 students at $35/hr each is $140/hr — SAT cohorts, algebra bootcamps, and AP review groups sell because parents compare the per-student price while you earn the group total. The calendar realities: 20 sessions/wk is a full independent practice once prep and parent communication are counted; demand runs September–May with finals-week spikes and a summer trough that bridge programs and test-prep intensives fill; and online delivery removes the drive-time tax that caps in-person tutors at 4–5 sessions a day. Structural demand lives in math at every level, reading intervention, SAT/ACT, and AP sciences.',
+      },
+    ],
+  },
+  {
     slug: 'handyman-hourly-rate-calculator',
     title: 'Handyman Hourly Rate Calculator — Build Your Rate Backward From the Year You Want',
     shortTitle: 'Handyman Hourly Rate',

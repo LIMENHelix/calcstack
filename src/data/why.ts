@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'bookkeeping-pricing-calculator':
+    'Bookkeepers use it before the proposal: the $325/mo client pays $108/hr effective at 3 hours — and the 6-month backlog is a $900 cleanup project, not a free month one.',
+  'tutoring-rate-calculator':
+    'Tutors use it before setting rates: 20 sessions at $60 pays $960/wk on a platform but $1,104 independent — and one 4-student group out-earns two solo hours.',
   'handyman-hourly-rate-calculator':
     'Handymen use it before quoting anything: $65k take-home on 25 billable hrs/wk needs $70.32/hr — and a 4-hour minimum with a trip fee is what makes the faucet swap pay.',
   'window-cleaning-pricing-calculator':
