@@ -1134,6 +1134,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'service-call-fee-calculator',
+    title: 'Service Call Fee Calculator 2026 — Price the Trip Charge From Drive Time, Diagnostic & Vehicle Cost',
+    shortTitle: 'Service Call Fee',
+    category: 'Trades & Engineering',
+    description:
+      'What a dispatch really costs — drive time and diagnostic at the burdened rate plus true vehicle cost per mile — and the trip charge that prices it at margin. Free service calls are a subsidy for shoppers.',
+    tagline: '35 minutes of driving + 30 minutes diagnosing at burdened rates costs $61 before a wrench turns — publish $89, credited to the repair.',
+    intro:
+      'A "$0 service call" isn\'t free — it\'s a subsidy you pay shoppers with your technician\'s hours. A typical dispatch (35 minutes round-trip drive, 30 minutes of diagnosis) at a burdened $37.25/hr costs $40.35 of labor plus $21 of vehicle cost: $61.35 before a wrench turns. Priced at a 25% margin the fee is $81.81 — publish $89, credit it to approved work, and the calls you lose were the ones losing you money. The fee is more than cost recovery: it filters. Free-estimate shoppers convert worst and cost the full $61 each; a published trip charge raises close rate while cutting junk volume. This calculator prices the dispatch from your real numbers, per zone if drive times vary.',
+    howItWorks: [
+      'Enter average round-trip drive minutes and diagnostic minutes per call.',
+      'Enter your burdened labor rate (from the labor-burden calculator).',
+      'Enter round-trip miles and true vehicle cost per mile (fuel + wear + depreciation — ~70¢ default).',
+      'Set the target margin and read the true cost per call and the fee to publish.',
+    ],
+    faq: [
+      {
+        q: 'Won\'t a trip charge scare customers away?',
+        a: 'It scares the right ones away — that\'s the mechanism, not the side effect. Free-estimate shoppers are collecting three bids on price alone; they convert worst, negotiate hardest, and cost the full $61 dispatch whether or not they buy. A published fee credited to the repair ("$89, applied to your work") keeps serious callers — they were paying it anyway inside the job price — and filters the ones who were never customers. Shops that introduce fees consistently report: call volume drops, close rate rises, revenue holds or grows, and the schedule stops bleeding drive time. The fee isn\'t a barrier to customers; it\'s a barrier to non-customers, and your techs\' hours are too expensive to spend proving the difference one driveway at a time.',
+      },
+      {
+        q: 'Should the fee be waived or credited when they approve the work?',
+        a: 'Credited, always — the difference sounds semantic and behaves economic. "$89, credited to your repair" frames the fee as already-spent money working toward the fix; approval feels like claiming value. "Free if you approve" frames the fee as negotiable — and trains customers to negotiate everything else, including the repair price and next year\'s maintenance agreement. The credit also protects the diagnostic\'s dignity: the customer paid for an answer, and the answer ("here\'s what\'s wrong, here\'s the fix") has standalone value whether or not they buy the repair. Waiving teaches the market that your diagnosis is worth nothing until a wrench turns; crediting prices it as the professional service it is.',
+      },
+      {
+        q: 'How do I handle long-distance calls?',
+        a: 'Zone pricing, computed — not absorbed. Run this calculator per ring: your core 15-minute zone gets the standard fee; the 45-minute zone gets its own number ($61 of cost becomes $100+); the 90-minute call gets a frank conversation about whether you\'re the right shop. Absorbing long drives "for goodwill" converts your densest, most profitable schedule into a subsidized taxi — and the far customer often price-shops you anyway. The polite decline is a real option: referring a distant caller to a closer shop costs nothing, builds referral goodwill, and keeps the truck in the zone where route density makes you money. Density beats reach: four calls in one neighborhood out-earn four calls across the county at identical prices, because the minutes between calls are where the margin lives.',
+      },
+    ],
+  },
+  {
     slug: 'seasonal-cash-reserve-calculator',
     title: 'Seasonal Cash Reserve Calculator 2026 — Size the Slow-Season Deficit, Fund It From Peak Months',
     shortTitle: 'Seasonal Cash Reserve',

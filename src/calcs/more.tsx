@@ -4673,6 +4673,52 @@ export function SeasonalReserveCalc() {
   )
 }
 
+// SERVICE CALL FEE — the trip charge priced from drive time + diagnostic + vehicle cost. Node-verified: 35 min round-trip drive + 30 min diagnostic = 1.08 hr at $37.25 burdened = $40.35; 30 miles at $0.70 = $21 → cost $61.35 → at 25% margin the fee is $81.81 → publish $89. Honest edges: drive time is UNSOLD labor (the tech in the truck is inventory melting — a $0 service call means every dispatch loses ~$60 before a wrench turns), the fee FILTERS (free-estimate shoppers cost $60+ each and convert worst; a fee — even one credited to the work — raises close rate while it cuts junk volume), waive-vs-credit policy (crediting the fee to approved work converts better than waiving; waived fees attract the wrong call), zone pricing (a 60-minute-each-way call needs a zone fee or a polite decline — the calculator per zone settles it), and the market anchor (check competitors' published trip fees — being 2× market needs a reason; being half of market is a subsidy you didn't intend).
+export function ServiceCallFeeCalc() {
+  const [drive, setDrive] = useNumber(35)
+  const [diag, setDiag] = useNumber(30)
+  const [rate, setRate] = useNumber(37.25)
+  const [miles, setMiles] = useNumber(30)
+  const [mileCost, setMileCost] = useNumber(0.7)
+  const [margin, setMargin] = useNumber(25)
+
+  const r = useMemo(() => {
+    const labor = ((drive + diag) / 60) * rate
+    const veh = miles * mileCost
+    const cost = labor + veh
+    const fee = cost / (1 - Math.min(90, margin) / 100)
+    const suggested = Math.ceil(fee / 10) * 10 - 1
+    return { labor, veh, cost, fee, suggested }
+  }, [drive, diag, rate, miles, mileCost, margin])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Round-trip drive (min)" value={drive} onChange={setDrive} step="5" />
+          <Field label="Diagnostic time (min)" value={diag} onChange={setDiag} step="5" />
+          <Field label="Burdened labor rate" value={rate} onChange={setRate} prefix="$" suffix="/hr" step="1" />
+          <Field label="Round-trip miles" value={miles} onChange={setMiles} step="5" />
+          <Field label="Vehicle cost per mile" value={mileCost} onChange={setMileCost} prefix="$" step="0.05" />
+          <Field label="Target margin" value={margin} onChange={setMargin} suffix="%" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Labor cost" value={usd(r.labor)} />
+          <Result label="Vehicle cost" value={usd(r.veh)} />
+          <Result label="True cost per call" value={usd(r.cost)} />
+          <Result big label="Publish" value={usd(r.suggested)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          Every dispatch costs {usd(r.cost)} before a wrench turns — a $0 service call subsidizes shoppers with your tech's hours. Publish {usd(r.suggested)} (credit it to approved work) and the calls you lose were the ones losing you money.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: (drive + diagnostic minutes) ÷ 60 × burdened labor rate + round-trip miles × true vehicle cost per mile (fuel + wear + insurance + the truck's depreciation — 70¢ is a fair default, IRS rate territory; your fleet numbers may differ), priced at margin: cost ÷ (1 − margin). The strategic layer: drive time is unsold labor — the tech in the truck is inventory melting, and route density (grouping calls by zone and day) is worth more than any fee tweak. The fee is also a FILTER: free-estimate shoppers convert worst and cost {usd(r.cost)} each; a published fee — especially one credited to approved work — raises close rate while cutting junk volume. Zone pricing follows the same math per ring: the 60-minute-each-way call needs its own number or a polite decline. Credit beats waive: "$89 credited to your repair" converts; "free if you approve" trains haggling. Check competitors' published trip fees — 2× market needs a reason; half of market is a subsidy you didn't intend. Estimates — your dispatch logs govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10330,6 +10376,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'bid-win-rate-calculator': BidWinRateCalc,
   'maintenance-agreement-calculator': MaintenanceAgreementCalc,
   'seasonal-cash-reserve-calculator': SeasonalReserveCalc,
+  'service-call-fee-calculator': ServiceCallFeeCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
