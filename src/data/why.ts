@@ -273,6 +273,10 @@ export const WHY_USE: Record<string, string> = {
     'Borrowers use it before signing: $320k at 6.5% is $2,022.62/mo and $408,142 of interest — 79% of year one is the bank\'s money, not yours.',
   'square-footage-calculator':
     'DIYers use it before the cart: 12×14 is 168 sq ft, but flooring wants 184.8 with waste — $792.79 at $4.29/ft, measured twice, ordered once.',
+  'debt-to-income-calculator':
+    'Homebuyers use it before pre-approval: $2,950 of debts on $7,800 income is 37.8% — the 43% cap says max housing $2,504, and lenders read it before your score.',
+  'down-payment-calculator':
+    'First-time buyers use it to size the real check: 5% on $400k is $20,000 plus $12,000 closing plus $158/mo PMI — $32,000 cash to close, not $20,000.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

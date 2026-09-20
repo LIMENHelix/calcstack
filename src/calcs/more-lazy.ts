@@ -150,6 +150,8 @@ export const MORE_CALC_COMPONENTS: Record<string, LazyExoticComponent<ComponentT
   'shopify-vs-etsy-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.ShopifyVsEtsyCalc }))),
   'amortization-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.AmortizationCalc }))),
   'square-footage-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.SquareFootageCalc }))),
+  'debt-to-income-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.DtiCalc }))),
+  'down-payment-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.DownPaymentCalc }))),
   'sabbatical-cost-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SabbaticalCostCalc }))),
   'self-storage-roi-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SelfStorageCalc }))),
   'car-wash-economics-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.CarWashCalc }))),

@@ -4210,6 +4210,66 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'debt-to-income-calculator',
+    title: 'Debt-to-Income Ratio Calculator — The Number Lenders Read First',
+    shortTitle: 'Debt-to-Income',
+    category: 'Loans & Debt',
+    description: 'Calculate your DTI the way underwriters do: minimum monthly debt payments divided by gross income. See front-end and back-end ratios, your verdict, and the max housing payment at the 43% cap.',
+    tagline: 'Before a lender reads your credit score, they read this ratio.',
+    intro: '$7,800 a month gross against $2,950 of debt payments is a 37.8% DTI — workable, but the 43% qualified-mortgage cap says your housing payment can\'t exceed $2,504. This calculator runs both ratios the way an underwriter does and tells you where you stand.',
+    howItWorks: [
+      'Enter gross monthly income — before taxes, the way lenders count it.',
+      'Add your housing payment (or the one you are applying for).',
+      'Add car payments, credit card minimums, and other loan payments.',
+      'The tool divides total debt by gross income for the back-end DTI.',
+      'Read the verdict and the maximum housing payment under the 43% cap.',
+    ],
+    faq: [
+      {
+        q: 'What is a good debt-to-income ratio for a mortgage?',
+        a: 'The guideposts: 36% or below is the traditional comfort line — conventional underwriting smiles at it. Up to 43% qualifies for a Qualified Mortgage, the legal safe-harbor standard most lenders follow. FHA stretches to 50% with compensating factors (strong credit, cash reserves), and VA loans technically have no cap but use 41% as the guideline with residual-income tests. Front-end ratio (housing only) targets 28%. The practical answer: under 36% you shop lenders; 36–43% you shop programs; above 43% you are paying down debt before you are buying a house. One leverage point: paying off a car or card kills the whole monthly payment from the ratio — $400/month of retired debt buys about $80,000 of mortgage capacity.',
+      },
+      {
+        q: 'What counts in DTI — and what doesn\'t?',
+        a: 'Counts: every minimum payment on installment and revolving debt (car, student, personal, cards), your housing payment including taxes/insurance/HOA, alimony and child support you PAY, and co-signed loans (yes, even if your kid makes the payments). Does not count: utilities, phone, insurance premiums, groceries, subscriptions, or anything that can be cancelled without a creditor. Income side: gross (pre-tax) income that is documented and likely to continue — salary, documented overtime with 2-year history, bonuses, RSUs with vesting history, and rental income at 75% of gross rent. Deferred student loans no longer get a free pass — most programs count 0.5–1% of the balance monthly even in deferment.',
+      },
+      {
+        q: 'How do I lower my DTI fast?',
+        a: 'Five levers, ranked by speed. One: pay off the smallest monthly payment entirely — a $180 card minimum disappears from the ratio the month the balance dies (a loan with 10 months left can often be excluded once paid down to 10 remaining payments). Two: ask the lender to exclude debts others pay from their own account for 12 months with proof. Three: raise the income denominator — a documented second job with 2 years of history counts, a new one doesn\'t yet. Four: buy down the housing payment with points or a cheaper home — DTI is a ratio, the numerator works too. Five: do NOT open new credit or finance furniture before closing — underwriters re-pull credit days before funding and new debt can kill the file at the finish line.',
+      },
+    ],
+  },
+  {
+    slug: 'down-payment-calculator',
+    title: 'Down Payment Calculator — 3% to 20%, PMI, and Real Cash to Close',
+    shortTitle: 'Down Payment',
+    category: 'Housing & Mortgage',
+    description: 'Compare down payment percentages side by side: the cash, the loan, and the PMI each level triggers — plus closing costs so the check you bring is the check you planned.',
+    tagline: 'The 5% buyer on a $400k home needs $32,000, not $20,000. Here is the full check.',
+    intro: 'On a $400,000 home, 5% down is $20,000 — plus about $12,000 in closing costs and $158 a month of PMI until you reach 20% equity. This calculator prices every level from 3% to 20% side by side so you can pick the down payment that fits the savings you actually have.',
+    howItWorks: [
+      'Enter the home price.',
+      'Set the down payment percentage you are considering.',
+      'Add the closing-cost estimate (2–5% is normal; 3% default).',
+      'Read down payment, loan amount, and monthly PMI.',
+      'Scan the comparison table — every level from 3% to 20% priced side by side.',
+    ],
+    faq: [
+      {
+        q: 'How much do I really need for a down payment?',
+        a: 'The minimums by loan type: conventional loans start at 3% (first-time buyers) or 5%, FHA at 3.5% with 580+ credit, VA and USDA at 0% for eligible buyers. But the down payment is not the check — closing costs add 2–5% of the price (lender fees, title, appraisal, prepaid taxes and insurance), and smart buyers hold 2–3 months of payments in reserve afterward because some loan programs require it and life does anyway. On a $400,000 home: 3% down = $12,000, plus ~$12,000 closing, plus reserves — call it $30,000 of real savings for the minimum path. The 20% number ($80,000) exists because it kills PMI, not because it is required.',
+      },
+      {
+        q: 'Is it better to put 20% down or keep the cash?',
+        a: 'Run the PMI math: on $400,000, the gap from 10% to 20% down is $40,000 of cash to save about $150/month of PMI and roughly $260/month of payment — that is a 5.3% annual "return" on the $40,000, guaranteed and tax-free-ish. But the counterargument is liquidity: money in home equity requires a refinance or sale to access, and buyers who empty savings for 20% down are one furnace from credit-card debt. The honest framework: if 20% down leaves 3+ months of reserves, take the PMI savings; if it leaves you empty, put 10% down, keep the cushion, and request PMI removal at 78–80% LTV — appreciation and payments often get there in 4–6 years. FHA buyers should note MIP is for the life of the loan under 10% down — refinance is the only exit.',
+      },
+      {
+        q: 'Where can down payment money come from?',
+        a: 'Lenders care about sourcing because undisclosed loans inflate your real DTI. Clean sources: savings and checking with 60 days of statements, gift funds from family with a signed gift letter (allowed on nearly all programs — the donor\'s paper trail gets checked too), down-payment assistance programs (most states run DPA grants or forgivable second loans worth 3–5% of price for moderate-income buyers), 401(k) loans (allowed, but the repayment counts in DTI), and IRA withdrawals up to $10,000 penalty-free for first-time buyers (taxes still due). What kills applications: undocumented cash deposits ("mattress money"), loans from friends disguised as gifts, and crypto sold without a paper trail. Deposit anything unusual 3+ months before applying — seasoned money asks no questions.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

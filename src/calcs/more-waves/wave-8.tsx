@@ -2806,3 +2806,81 @@ export function SquareFootageCalc() {
     </CardContent></Card>
   )
 }
+// DEBT-TO-INCOME — node-verified defaults: $7,800/mo gross income; debts $2,100 housing + $450 car + $180 cards + $220 student = $2,950 → 37.8% back-end DTI, 26.9% front-end. At the 43% qualified-mortgage cap, max total debt is $3,354 → max housing $2,504. Lenders read DTI before they read anything else.
+export function DtiCalc() {
+  const [income, setIncome] = useNumber(7800)
+  const [housing, setHousing] = useNumber(2100)
+  const [car, setCar] = useNumber(450)
+  const [cards, setCards] = useNumber(180)
+  const [other, setOther] = useNumber(220)
+  const r = useMemo(() => {
+    const debts = housing + car + cards + other
+    const dti = income > 0 ? (debts / income) * 100 : 0
+    const front = income > 0 ? (housing / income) * 100 : 0
+    const maxHousing = income > 0 ? Math.max(0, 0.43 * income - (car + cards + other)) : 0
+    const verdict = dti <= 36 ? 'Strong — under the 36% comfort line' : dti <= 43 ? 'Workable — under the 43% QM cap' : dti <= 50 ? 'Tight — FHA may stretch to 50% with compensating factors' : 'Over — most lenders decline above 50%'
+    return { debts, dti, front, maxHousing, verdict }
+  }, [income, housing, car, cards, other])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Gross monthly income" value={income} onChange={setIncome} prefix="$" />
+        <Field label="Housing payment (PITI or rent)" value={housing} onChange={setHousing} prefix="$" />
+        <Field label="Car payments" value={car} onChange={setCar} prefix="$" />
+        <Field label="Credit card minimums" value={cards} onChange={setCards} prefix="$" />
+        <Field label="Other debts (student, personal)" value={other} onChange={setOther} prefix="$" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Back-end DTI" value={`${num(r.dti, 1)}%`} big />
+        <Result label="Max housing at the 43% cap" value={usd(r.maxHousing)} big />
+        <Result label="Front-end (housing) ratio" value={`${num(r.front, 1)}%`} />
+        <Result label="Total monthly debt" value={usd(r.debts)} />
+      </div>
+      <p className="rounded-md border bg-muted/40 px-4 py-2 text-sm">{r.verdict}</p>
+      <p className="text-xs text-muted-foreground">Lenders use gross income and minimum payments, not balances. Utilities, insurance, and groceries do not count; deferred student loans usually count at 0.5–1% of balance.</p>
+    </CardContent></Card>
+  )
+}
+
+// DOWN PAYMENT — node-verified defaults: $400,000 home → 3% = $12,000 (PMI $162/mo), 5% = $20,000 (PMI $158/mo), 10% = $40,000 (PMI $150/mo), 20% = $80,000 (no PMI). Add ~3% closing costs ($12,000): the 5% buyer really needs $32,000 cash to close, not $20,000.
+export function DownPaymentCalc() {
+  const [price, setPrice] = useNumber(400000)
+  const [pct, setPct] = useNumber(5)
+  const [closing, setClosing] = useNumber(3)
+  const r = useMemo(() => {
+    const dp = price * (pct / 100)
+    const loan = price - dp
+    const pmi = pct < 20 ? (loan * 0.005) / 12 : 0
+    const closingCost = price * (closing / 100)
+    const cashToClose = dp + closingCost
+    const rows = [3, 5, 10, 20].map((p) => {
+      const d = price * (p / 100)
+      return { p, d, pmi: p < 20 ? ((price - d) * 0.005) / 12 : 0 }
+    })
+    return { dp, loan, pmi, closingCost, cashToClose, rows }
+  }, [price, pct, closing])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Home price" value={price} onChange={setPrice} prefix="$" />
+        <Field label="Your down payment" value={pct} onChange={setPct} suffix="%" step="0.5" />
+        <Field label="Closing costs" value={closing} onChange={setClosing} suffix="%" step="0.5" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Result label="Down payment" value={usd(r.dp)} big />
+        <Result label="Cash to close (with closing costs)" value={usd(r.cashToClose)} big />
+        <Result label="Loan amount" value={usd(r.loan)} />
+        <Result label="PMI per month (under 20%)" value={r.pmi > 0 ? usd(r.pmi) : 'None'} />
+      </div>
+      <div className="space-y-1">
+        {r.rows.map((row) => (
+          <div key={row.p} className="flex items-center justify-between rounded-md border px-4 py-1.5 text-sm">
+            <span>{row.p}% down</span>
+            <span className="font-semibold">{usd(row.d)}{row.pmi > 0 ? ` · PMI ${usd(row.pmi)}/mo` : ' · no PMI'}</span>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-muted-foreground">PMI modeled at 0.5%/yr of the loan — real quotes run 0.2–1.5% by credit score. PMI drops at 78–80% LTV on conventional loans; FHA MIP can be permanent under 10% down.</p>
+    </CardContent></Card>
+  )
+}
