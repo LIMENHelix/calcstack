@@ -2323,6 +2323,61 @@ const DOTS_COEFF = {
   f: [-0.0000010706, 0.0005158568, -0.1126655495, 13.6175032, -57.96288],
 } as const
 
+// Social Security earnings test, 2026 (SSA 2026 COLA fact sheet): under FRA all year → exempt $24,480 ($2,040/mo), withhold $1 per $2 over; year you REACH FRA → exempt $65,160 ($5,430/mo) counting only pre-FRA-month earnings, withhold $1 per $3; from the FRA month on, no test at all. Countable = wages + net self-employment only — pensions, 401(k)/IRA withdrawals, investment income, annuities don't count. SSA withholds whole checks (ceil of withheld ÷ monthly benefit), reconciles to actual earnings later. The part nobody believes: withheld benefits are NOT lost — at FRA, SSA recalculates your benefit, crediting the withheld months, permanently raising the check (actuarially it roughly returns the money over life expectancy; you lose only the time value). First-year grace rule: in the year you retire mid-year, any month under $2,040 (or $5,430, FRA year) pays a full check regardless of annual earnings. Node-verified: $1,800/mo, $40k wages, under FRA → excess $15,520, withheld $7,760 ≈ 5 checks, keep $13,840; FRA-year $80k pre-FRA wages, $2,000/mo, 8 benefit months → withheld $4,946.67 ≈ 3 checks; $24,480 exactly → $0; $150k wages, $2,000/mo → all 12 checks withheld ($24,000 cap).
+export function SSEarningsTestCalc() {
+  const [year, setYear] = useState<'under' | 'fra'>('under')
+  const [earn, setEarn] = useNumber(40000)
+  const [ben, setBen] = useNumber(1800)
+  const [months, setMonths] = useNumber(12)
+
+  const r = useMemo(() => {
+    const lim = year === 'fra' ? 65160 : 24480
+    const rate = year === 'fra' ? 3 : 2
+    const excess = Math.max(0, earn - lim)
+    const annualBen = ben * Math.max(1, months)
+    const withheld = Math.min(excess / rate, annualBen)
+    const checks = ben > 0 ? Math.ceil(withheld / ben) : 0
+    return { lim, rate, excess, withheld, checks, keep: annualBen - withheld, monthlyLim: year === 'fra' ? 5430 : 2040 }
+  }, [year, earn, ben, months])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 p-5">
+        <div className="grid gap-4 sm:grid-cols-4">
+          <div>
+            <div className="mb-1 text-sm font-medium">Your 2026 situation</div>
+            <select value={year} onChange={(e) => setYear(e.target.value as 'under' | 'fra')} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+              <option value="under">Under FRA all year</option>
+              <option value="fra">Reach FRA this year</option>
+            </select>
+          </div>
+          <Field label={year === 'fra' ? 'Wages BEFORE your FRA month' : 'Wages / self-employment this year'} value={earn} onChange={setEarn} prefix="$" />
+          <Field label="Monthly SS benefit" value={ben} onChange={setBen} prefix="$" />
+          {year === 'fra' ? <Field label="Benefit months before FRA" value={months} onChange={setMonths} /> : <div />}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-4">
+          <Result big label="Benefits withheld" value={usd(r.withheld, 0)} />
+          <Result label="Checks withheld (SSA takes whole months)" value={`≈ ${r.checks}`} />
+          <Result label="You keep this year" value={usd(r.keep, 0)} />
+          <Result label="2026 exempt amount" value={usd(r.lim, 0)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.withheld <= 0 ? (
+            <>{usd(earn, 0)} is under the 2026 exempt amount of {usd(r.lim, 0)}{year === 'fra' ? ' (counting only months before your FRA month)' : ''} — <span className="font-medium">no withholding, full checks all year</span>. Remember only wages and net self-employment count: pensions, IRA/401(k) withdrawals, and investment income are invisible to this test.</>
+          ) : r.withheld >= ben * Math.max(1, months) * 0.999 ? (
+            <>At {usd(earn, 0)} of earnings, the withholding formula exceeds your entire benefit — <span className="font-medium">expect every check withheld this year ({usd(r.withheld, 0)})</span>. Honest read: if work pays this much, claiming before FRA mostly converts your benefit into a forced savings account — you'll get it back via the recalculation, but delayed.</>
+          ) : (
+            <>You're {usd(r.excess, 0)} over the {usd(r.lim, 0)} exempt amount, so SSA withholds $1 per ${r.rate}: <span className="font-medium">{usd(r.withheld, 0)} — about {r.checks} full check{r.checks === 1 ? '' : 's'}</span> (SSA withholds whole months, then reconciles to your actual reported earnings). You keep {usd(r.keep, 0)} this year.</>
+          )} {r.withheld > 0 && <>The money isn't gone: at FRA, SSA recalculates your benefit upward for every withheld month — over a normal life expectancy you recover it; what you actually lose is the time value.</>}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          2026 exempt amounts (SSA): $24,480 if you're under full retirement age all year — $1 of benefits withheld per $2 over; $65,160 in the year you reach FRA, counting only earnings before your FRA month — $1 per $3; from your FRA month onward, no test at all, earn anything. Countable earnings are wages and net self-employment income only — pensions, annuities, IRA/401(k) withdrawals, interest, dividends, and capital gains don't count (they matter for the separate tax-on-benefits question instead). Two softeners: the first-year grace rule pays a full check for any month you're under $2,040 ($5,430 in the FRA year), no matter what you earned earlier — built for mid-year retirees; and the FRA recalculation restores withheld months as a permanently higher benefit. This test also applies to spousal and survivor benefits taken before FRA, and it's different from SSDI work rules and SSI — separate systems. SSA withholds whole monthly checks based on your estimated earnings, then settles against what you actually report — overestimates get refunded. Estimates only; report earnings changes to SSA to avoid overpayment surprises.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // HSA + Medicare retroactive trap — the quiet excess-contribution bomb for everyone working past 65 on an HDHP. The rule: enrolling in ANY Medicare part ends HSA contribution eligibility, and when you claim Social Security after 65, Part A enrollment is RETROACTIVE up to 6 months (never before your 65th-birthday month) — contributions for those backdated months were never eligible. Eligible months = enrollment month − 7 (Part A effective = enrollment − 6; eligibility ends the month BEFORE that... precisely: eligible = max(0, enrollMo − retro − 1) with retro=6). Excess contributions get a 6% excise tax EVERY YEAR until withdrawn with earnings. The defense: stop HSA contributions 6+ months before you plan to claim SS/Medicare — or don't claim (but you can't refuse Part A once you take Social Security). 2026 limits: self $4,400, family $8,750, +$1,000 catch-up at 55+ (per person — a spouse's catch-up must go in their OWN HSA). Node-verified: family+catch-up $9,750, enroll December → Part A effective June → 5 eligible months → limit $4,062.50; contributed the full $9,750 → excess $5,687.50, excise $341.25/yr; enroll October → 3 eligible months → $2,437.50; enroll July → 0 eligible months, everything is excess; last safe contribution month for a December claim = May.
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 export function HsaMedicareTrapCalc() {
@@ -7400,6 +7455,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'trump-account-calculator': TrumpAccountCalc,
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
+  'social-security-earnings-test-calculator': SSEarningsTestCalc,
   'hsa-medicare-trap-calculator': HsaMedicareTrapCalc,
   '72t-sepp-calculator': Sepp72tCalc,
   'roth-conversion-bracket-filler-calculator': RothBracketFillCalc,

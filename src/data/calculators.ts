@@ -266,6 +266,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'social-security-earnings-test-calculator',
+    title: 'Social Security Earnings Test Calculator 2026 — Working While Claiming: What\'s Withheld, What\'s Returned',
+    shortTitle: 'SS Earnings Test',
+    category: 'Retirement',
+    description:
+      'Claiming before full retirement age while working? 2026 rules: $1 withheld per $2 earned over $24,480 (under FRA) or $1 per $3 over $65,160 (FRA year, pre-FRA months only). Withheld benefits come back at FRA as a higher check — compute your real numbers.',
+    tagline: 'The "penalty" for working while claiming is mostly a delay, not a loss — but it can zero your checks this year.',
+    intro:
+      'The Social Security earnings test is the most misread rule in retirement: claim benefits before full retirement age while earning wages, and SSA withholds $1 of benefits for every $2 over $24,480 (2026, under FRA all year) — or $1 per $3 over $65,160 in the year you reach FRA, counting only the months before your FRA birthday. The headlines stop there. The rest of the story: only wages and self-employment count — pensions, IRA withdrawals, and investment income are invisible to the test — and withheld benefits aren\'t lost, they\'re credited back at FRA as a permanently recalculated higher check. What you actually lose is timing. This calculator computes your excess earnings, the dollars withheld, how many whole monthly checks SSA will skip, and what you keep.',
+    howItWorks: [
+      'Pick your situation: under FRA all year, or reaching FRA during 2026.',
+      'Enter wages/self-employment income (pre-FRA months only, if FRA year).',
+      'Enter your monthly benefit — withholding is taken in whole checks.',
+      'Read the withheld amount, checks skipped, and what you keep this year.',
+    ],
+    faq: [
+      {
+        q: 'Are benefits withheld by the earnings test gone forever?',
+        a: 'No — this is the rule\'s best-kept secret. At full retirement age, SSA recalculates your benefit, crediting every month that was withheld as if you\'d claimed later. The recalculated check is permanently higher, and over a normal life expectancy you recover the withheld amount. What you genuinely lose is the time value of money and, if you die early, some of the total. The real cost of working while claiming is usually not the test itself but claiming early at all: the permanent reduction for claiming at 62 vs FRA applies regardless of earnings.',
+      },
+      {
+        q: 'What income counts toward the $24,480 limit?',
+        a: 'Only earned income: gross wages, bonuses, commissions, vacation pay, and net self-employment income. Explicitly NOT counted: pensions and annuities, 401(k)/IRA withdrawals, interest, dividends, capital gains, rental income in most cases, and veterans benefits. This creates the classic planning asymmetry — a retiree living on $40,000 of IRA withdrawals keeps every SS dollar, while one earning $40,000 at a part-time job loses $7,760 of benefits to withholding (at $1,800/month, about five full checks). Note IRA withdrawals DO count for the separate income-tax-on-benefits calculation — different test, different list.',
+      },
+      {
+        q: 'I retired mid-year after earning a lot. Am I wiped out?',
+        a: 'No — the first-year grace rule exists exactly for you. In the year you retire, SSA applies a monthly test: any month your earnings are under $2,040 (2026, under FRA) pays a full benefit check regardless of what you earned earlier in the year. Earn $150,000 January through June, retire July 1, and July through December pay full checks. Self-employment uses a substantial-services test instead (roughly: under 45 hours a month). The rule applies once — the first year you\'re entitled and have a non-work month — then the annual test takes over.',
+      },
+    ],
+  },
+  {
     slug: 'hsa-medicare-trap-calculator',
     title: 'HSA Medicare Trap Calculator 2026 — The Retroactive Part A Rule That Creates Excess Contributions',
     shortTitle: 'HSA Medicare Trap',
