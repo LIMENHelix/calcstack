@@ -3674,6 +3674,64 @@ export function DaycareVsIncomeCalc() {
   )
 }
 
+// FIXED-BID PROJECT PRICING — price = hours × floor × uncertainty multiplier, with rush premium on top. Node-verified: $95/hr floor, 40 est hrs, "new client, fuzzy scope" (×1.5) → $5,700; rush +25% → $7,125. Breakeven hours at that price: 75 — the risk multiplier buys you 35 hrs of overrun before dipping under the floor. If it actually takes 55 hrs, implied $129.55/hr. The multipliers (labeled heuristics, not statistics): repeat client, tight scope ×1.15; new client, clear scope ×1.3; new + fuzzy ×1.5; "we'll know it when we see it" ×1.8 or REFUSE fixed-bid. Fixed-bid transfers scope risk to YOU — the multiplier is the insurance premium; skip it and you're underwriting for free. Never bid below floor×hours×1.15 regardless of how much you want the logo.
+export function FixedBidCalc() {
+  const [floor, setFloor] = useNumber(95)
+  const [hours, setHours] = useNumber(40)
+  const [scope, setScope] = useState('1.5')
+  const [rush, setRush] = useState(false)
+  const [actualHrs, setActualHrs] = useNumber(55)
+
+  const r = useMemo(() => {
+    const mult = parseFloat(scope) || 1.3
+    const base = floor * hours * mult
+    const price = rush ? base * 1.25 : base
+    const breakevenHrs = floor > 0 ? price / floor : 0
+    const implied = actualHrs > 0 ? price / actualHrs : 0
+    const overrunCover = breakevenHrs - hours
+    return { mult, price, breakevenHrs, implied, overrunCover }
+  }, [floor, hours, scope, rush, actualHrs])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Your hourly floor (from the rate calculator)" value={floor} onChange={setFloor} prefix="$" />
+          <Field label="Estimated hours" value={hours} onChange={setHours} suffix="hrs" step="4" />
+          <Field label="Likely actual hours (honest)" value={actualHrs} onChange={setActualHrs} suffix="hrs" step="4" />
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium">Scope risk (the multiplier IS your insurance)</label>
+          <select value={scope} onChange={(e) => setScope(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="1.15">Repeat client, tight written scope (×1.15)</option>
+            <option value="1.3">New client, clear scope (×1.3)</option>
+            <option value="1.5">New client, fuzzy scope (×1.5)</option>
+            <option value="1.8">"We'll know it when we see it" (×1.8 — or refuse fixed-bid)</option>
+          </select>
+        </div>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} className="h-4 w-4" />
+          Rush timeline (+25% — tight deadlines cost you evenings, price them)
+        </label>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result big label="Fixed bid price" value={usd(r.price)} />
+          <Result label="Breakeven hours" value={`${num(r.breakevenHrs, 0)} hrs`} />
+          <Result label="Overrun the multiplier covers" value={`+${num(r.overrunCover, 0)} hrs`} />
+          <Result label="Implied hourly at likely hours" value={`${usd(r.implied, 2)}/hr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.implied >= floor
+            ? `Bid ${usd(r.price)}: even at your honest ${actualHrs}-hour estimate you clear ${usd(r.implied, 2)}/hr — above the ${usd(floor)} floor. The multiplier absorbs ${num(r.overrunCover, 0)} hours of scope creep before you work for under-floor rates.`
+            : `At ${actualHrs} likely hours this bid pays ${usd(r.implied, 2)}/hr — UNDER your ${usd(floor)} floor. Raise the price to ${usd(floor * actualHrs * 1.15)} (floor × likely hours × 1.15) or narrow the scope.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Fixed bids transfer scope risk from client to you — the multiplier is how you get paid for carrying it. The tiers are heuristics from common freelance practice, not statistics; calibrate with your own overrun history (track estimated vs actual per project; your personal multiplier reveals itself in five projects). The mechanics that protect the price: a written scope with an explicit exclusion list and a change-order rate (your hourly floor × 1.25 — creep should pay BETTER than scope), 30–50% upfront, and a kill fee. Rush premiums aren't greed: compressed timelines crowd out other billable work and guarantee weekend hours. When a client balks at the multiplied price, the honest move is shrinking scope, not shrinking the multiplier — the risk didn't balk. And the floor is the floor: below it, employment beats self-employment — that's what the freelance rate calculator computes. Estimates — your contract governs.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9312,6 +9370,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'lifestyle-creep-calculator': LifestyleCreepCalc,
   'commute-cost-calculator': CommuteCostCalc,
   'daycare-vs-second-income-calculator': DaycareVsIncomeCalc,
+  'fixed-bid-pricing-calculator': FixedBidCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

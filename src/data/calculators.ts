@@ -979,6 +979,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'fixed-bid-pricing-calculator',
+    title: 'Fixed-Bid Project Pricing Calculator 2026 — Hours × Floor × the Uncertainty Multiplier That Saves You',
+    shortTitle: 'Fixed-Bid Pricing',
+    category: 'Freelance & Career',
+    description:
+      'Price fixed-bid freelance projects correctly: hourly floor times estimated hours times a scope-risk multiplier, plus rush premium. See breakeven hours and implied rate at honest estimates.',
+    tagline: 'A 40-hour estimate with a fuzzy scope is a $5,700 bid at a $95 floor — and the ×1.5 multiplier absorbs 20 hours of creep before you lose money.',
+    intro:
+      'Fixed bids transfer scope risk from the client to you — the multiplier is how you get paid for carrying it. The formula is discipline, not guesswork: hourly floor × estimated hours × uncertainty multiplier (×1.15 repeat client with tight scope, up to ×1.8 for "we\'ll know it when we see it"), plus 25% for rush timelines. A 40-hour estimate at a $95 floor with a fuzzy scope prices at $5,700 — and that multiplier absorbs 20 hours of overrun before you dip below floor. This calculator also checks the honest case: your LIKELY hours, not your optimistic estimate, against the bid.',
+    howItWorks: [
+      'Enter your hourly floor (run the freelance rate calculator first if you haven\'t).',
+      'Enter estimated hours — then the honest "likely actual" hours.',
+      'Pick the scope-risk tier and rush status.',
+      'Read the bid, the breakeven hours, and the implied rate at likely hours.',
+    ],
+    faq: [
+      {
+        q: 'Why multiply instead of just adding a buffer of hours?',
+        a: 'Because risk scales with project size, not linearly with time. A 10-hour project with fuzzy scope might overrun by 5 hours; a 100-hour project with the same client overruns by 50. The multiplier prices risk proportionally, which matches how overruns actually behave. It also encodes the client relationship honestly: a repeat client with a written scope and a history of paying is a ×1.15 risk; a new client with a fuzzy brief and "quick questions" habits is ×1.5 minimum. Calibrate with your own data — track estimated vs actual hours per project for five projects and your personal multiplier reveals itself. Most freelancers discover their optimistic estimates run 30–40% light; that IS the multiplier showing up.',
+      },
+      {
+        q: 'When should I refuse fixed-bid entirely?',
+        a: 'When the scope can\'t be written down. Discovery-phase work, research, "help us figure out our strategy," legacy codebases nobody has mapped, any client who answers scope questions with "we\'ll figure it out as we go" — these are hourly or weekly-retainer engagements, because the risk can\'t be priced, only borne. The tell: if you can\'t write a one-page scope with explicit exclusions, you can\'t fixed-bid it. The professional structure for fuzzy work: a small fixed-bid DISCOVERY project (paid, bounded, producing the written scope) followed by the real bid — clients who refuse to pay for discovery are telling you how they\'ll behave later. And one hard rule from the calculator: below floor × hours × 1.15, no logo is worth it — employment beats self-employment under the floor, which is what the rate calculator proves.',
+      },
+      {
+        q: 'How do change orders and payment terms protect the bid?',
+        a: 'The bid is only as good as the contract mechanics around it. Change orders: scope changes bill at your floor × 1.25 — creep should pay BETTER than scope, or the contract invites it. Deposits: 30–50% upfront, non-refundable, before the calendar is booked — it filters unserious clients and funds your early hours. Milestones: for anything over ~3 weeks, tie payments to deliverables, not dates. Kill fee: if the client cancels mid-project, work-to-date plus a percentage of the remainder (15–25% is common) compensates the calendar you blocked. And the scope document itself: one page, deliverables listed, EXCLUSIONS listed (the exclusions prevent more disputes than the inclusions), revision rounds capped at two. Boring paperwork, but the multiplier prices risk — the contract is what keeps the priced risk from becoming unpriced.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',
