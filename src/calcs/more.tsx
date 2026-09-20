@@ -7875,6 +7875,104 @@ export function MobileMechanicCalc() {
   )
 }
 
+// VENDING MACHINE ROUTE — node-verified defaults: $3,500 machine, location does 45 vends/wk × $1.75 = $78.75/wk; COGS 45% + location commission 20% → net $27.56/wk → payback 127 weeks (2.4 yrs), $1,433/yr per machine. An 8-machine route nets $11,466/yr. Vending is a location business: the machine is inventory, the spot is the asset.
+export function VendingRouteCalc() {
+  const [mach, setMach] = useNumber(3500)
+  const [vends, setVends] = useNumber(45)
+  const [price, setPrice] = useNumber(1.75)
+  const [cogs, setCogs] = useNumber(45)
+  const [comm, setComm] = useNumber(20)
+  const [machines, setMachines] = useNumber(8)
+
+  const r = useMemo(() => {
+    const wkRev = vends * price
+    const wkNet = wkRev * (1 - cogs / 100 - comm / 100)
+    const paybackWk = wkNet > 0 ? mach / wkNet : 0
+    const yrNet = wkNet * 52
+    const routeYr = yrNet * machines
+    const routeVal = routeYr * 2.5 // routes sell ~2.5x annual net
+    return { wkRev, wkNet, paybackWk, yrNet, routeYr, routeVal }
+  }, [mach, vends, price, cogs, comm, machines])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Machine cost" value={mach} onChange={setMach} prefix="$" step="250" />
+          <Field label="Vends per week" value={vends} onChange={setVends} step="5" />
+          <Field label="Avg vend price" value={price} onChange={setPrice} prefix="$" step="0.25" />
+          <Field label="COGS" value={cogs} onChange={setCogs} suffix="%" step="1" />
+          <Field label="Location cut" value={comm} onChange={setComm} suffix="%" step="1" />
+          <Field label="Machines on route" value={machines} onChange={setMachines} step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Net per machine/wk" value={usd(Math.round(r.wkNet))} />
+          <Result label="Payback" value={`${num(r.paybackWk / 4.33, 1)} months`} big />
+          <Result label={`Route net (${machines} machines)`} value={`${usd(Math.round(r.routeYr))}/yr`} />
+          <Result label="Route sale value" value={usd(Math.round(r.routeVal))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Each ${usd(mach)} machine nets ${usd(Math.round(r.wkNet))}/wk after product and the location's cut — payback in ${num(r.paybackWk / 4.33, 1)} months, then ${usd(Math.round(r.yrNet))}/yr. ${machines} of them is ${usd(Math.round(r.routeYr))}/yr of semi-passive income — "semi" because machines jam, products expire, and locations churn.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: weekly net = vends × price × (1 − COGS − location commission); payback = machine cost ÷ weekly net; route value ≈ 2.5× annual net (typical broker multiple for documented routes). The vending truths the YouTube ads skip: location quality IS the business — a blue-collar breakroom with 50 employees and no nearby food does 60–100 vends/wk, a sleepy office lobby does 12; the machine is inventory, the LOCATION is the asset, so never buy machines before you have signed locations, and get location agreements in writing with a term (verbal handshake spots evaporate when the manager changes). Commission negotiations: 10–25% of gross to the location is standard; offer it proactively — it is what keeps the spot and beats the next operator's pitch. Machine buying: refurbished snack+drink combos run $2,500–4,500 (avoid the $8k "biz-op" machines sold at seminars — same hardware, double the price); card readers add 15–30% to vend volume and are non-negotiable in 2026; telemetry (Nayax/Cantaloupe) tells you what sold without driving there. Product economics: drinks beat snacks on margin and shelf life; price to the round quarter or card-tap psychology ($1.75–2.50 range); expired product and jam refunds are line items, not surprises. The route discipline: service loop efficiency (12+ machines on a tight loop = one route day/week), date-check discipline (one expired lawsuit risk), and machine appearance — clean machines in good light out-vend dusty ones materially. Scaling path: reinvest each machine's cash flow into the next machine — 8 machines at the example numbers buy a new machine every ~5 months with zero new capital. Red flags in "routes for sale": undocumented income claims, locations with month-to-month handshake deals, and machines near end-of-life. Estimate — your actual vend counts by location govern everything.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// LAUNDROMAT ROI — node-verified defaults: $425k purchase, 22 machines × 3.5 turns/day × $5.25 avg vend = $404/day = $147,551/yr gross. Utilities 25% of gross, rent $3,500/mo, attendant $1,800/mo, misc $600/mo → NOI $39,863 → 9.4% cap rate. Laundromats sell at 3.5–5× NOI; below 8% cap you're buying a job, above 12% there's usually a catch (old machines, lease expiry).
+export function LaundromatCalc() {
+  const [price, setPrice] = useNumber(425000)
+  const [machines, setMachines] = useNumber(22)
+  const [turns, setTurns] = useNumber(3.5)
+  const [vend, setVend] = useNumber(5.25)
+  const [utilPct, setUtilPct] = useNumber(25)
+  const [rent, setRent] = useNumber(3500)
+  const [labor, setLabor] = useNumber(1800)
+
+  const r = useMemo(() => {
+    const dayGross = machines * turns * vend
+    const yrGross = dayGross * 365
+    const noi = yrGross * (1 - utilPct / 100) - rent * 12 - labor * 12 - 600 * 12
+    const cap = price > 0 ? (noi / price) * 100 : 0
+    const valuation = noi * 4
+    const moCash = noi / 12
+    return { dayGross, yrGross, noi, cap, valuation, moCash }
+  }, [price, machines, turns, vend, utilPct, rent, labor])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Purchase price" value={price} onChange={setPrice} prefix="$" step="5000" />
+          <Field label="Machines" value={machines} onChange={setMachines} step="1" />
+          <Field label="Turns per day" value={turns} onChange={setTurns} step="0.25" />
+          <Field label="Avg vend" value={vend} onChange={setVend} prefix="$" step="0.25" />
+          <Field label="Utilities" value={utilPct} onChange={setUtilPct} suffix="% of gross" step="1" />
+          <Field label="Rent" value={rent} onChange={setRent} prefix="$" suffix="/mo" step="100" />
+          <Field label="Attendant" value={labor} onChange={setLabor} prefix="$" suffix="/mo" step="100" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Annual gross" value={usd(Math.round(r.yrGross))} />
+          <Result label="NOI" value={usd(Math.round(r.noi))} big />
+          <Result label="Cap rate" value={`${num(r.cap, 1)}%`} />
+          <Result label="Value at 4× NOI" value={usd(Math.round(r.valuation))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.cap >= 8
+            ? `${machines} machines at ${num(turns, 1)} turns gross ${usd(Math.round(r.dayGross))}/day — NOI ${usd(Math.round(r.noi))}/yr is a ${num(r.cap, 1)}% cap on ${usd(price)}. At 4× NOI the store appraises at ${usd(Math.round(r.valuation))} — ${r.valuation > price ? 'buying below value if the turns are real' : 'priced at or above value; verify every turn'}.`
+            : `A ${num(r.cap, 1)}% cap rate at this price is buying yourself a job — laundromats trade at 3.5–5× NOI, so either the price drops to ${usd(Math.round(r.valuation))} or the turns need to be higher than claimed. Verify with water bills, not the seller's spreadsheet.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: gross = machines × turns/day × avg vend × 365; NOI = gross − utilities (22–28% of gross) − rent − attendant − misc; cap rate = NOI ÷ price; valuation at the 4× NOI industry multiple. The due-diligence rules that separate buyers from suckers: verify revenue with WATER BILLS and utility records — gallons consumed back into turns/day honestly, while seller spreadsheets lie fluently; 12 months of card-system reports if the machines have readers; and the lease is the whole asset — a laundromat without 10+ years of lease (with options) is a machine collection, not a business, since moving costs kill the equity. Machine age is the hidden liability: commercial washers last 10–15 years under route use; a store full of 12-year-old machines needs $80–120k of retooling priced OFF the purchase price, and retooling is also the value-add play (new machines + card readers + a paint job reliably lift revenue 15–30% in tired stores). Attendance models: unattended stores net more but suffer vandalism and cleanliness decline; attended stores enable wash-and-fold ($1.50–2.50/lb — the highest-margin line in the building, often 20–30% of revenue) and pickup/delivery, which is where the growth is. The demographic truth: laundromats serve renters within a 1-mile radius — count units, income mix, and competing stores' condition; a new competitor opening nearby is the existential risk, and the lease's exclusivity clause is your only armor. Financing: SBA 7(a) is the standard vehicle (10% down-ish with the right file) because banks understand the cash flow; seller financing at 6–8% is common and signals the seller believes their own numbers. Utilities are the margin thief: water/sewer rates rose 30%+ in many cities — model the trend, not the last bill. Estimate — water bills, card reports, and the lease document govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // NOTARY SIGNING AGENT — node-verified defaults: $110 avg fee × 4 signings/day × 21 days = $9,240/mo gross. Costs: 84 signings × ($8 print + $6 fuel) + $60/mo E&O/supplies = $1,236 → net $8,004/mo over 168 all-in hours (2h per signing incl. drive/print) = $47.64/hr. Direct title work at $150 vs signing services at $80 is a $5,880/mo gap on the same calendar.
 export function NotarySigningCalc() {
   const [fee, setFee] = useNumber(110)
@@ -14810,6 +14908,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'catering-price-per-person-calculator': CateringCalc,
   'auto-detailing-pricing-calculator': DetailingCalc,
   'mobile-mechanic-rate-calculator': MobileMechanicCalc,
+  'vending-machine-route-calculator': VendingRouteCalc,
+  'laundromat-roi-calculator': LaundromatCalc,
   'notary-signing-agent-calculator': NotarySigningCalc,
   'massage-therapist-pricing-calculator': MassagePricingCalc,
   'pest-control-route-calculator': PestRouteCalc,

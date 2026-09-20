@@ -237,6 +237,10 @@ export const WHY_USE: Record<string, string> = {
     'Detailers use it before printing the menu: a $175 detail bills $50/hr but keeps $14.71/hr after the van, gear, and labor — the gap is the whole business.',
   'mobile-mechanic-rate-calculator':
     'Mobile mechanics use it to write the pitch: the $465 shop brake job is $365 in the driveway — customer saves $100, you still clear $86/hr on a full route.',
+  'vending-machine-route-calculator':
+    'Route builders use it before buying machines: a $3,500 machine nets $27.56/wk after product and the location cut — 29-month payback — and the location, not the machine, is the asset.',
+  'laundromat-roi-calculator':
+    'Buyers use it in due diligence: 22 machines at 3.5 turns is a 9.4% cap rate at $425k — verified by water bills, not the seller\'s spreadsheet, and valued at 4× NOI.',
   'notary-signing-agent-calculator':
     'Signing agents use it before believing the course ads: 84 signings at $110 nets $8,004/mo at $47.64 true hourly — and direct title work pays $5,880/mo more than the services on the same calendar.',
   'massage-therapist-pricing-calculator':

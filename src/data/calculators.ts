@@ -3670,6 +3670,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'vending-machine-route-calculator',
+    title: 'Vending Machine Route Calculator — Payback per Machine, Route Income, and Sale Value',
+    shortTitle: 'Vending Route ROI',
+    category: 'Freelance & Career',
+    description:
+      'Model vending machines honestly: vends per week, COGS, location commission, payback per machine, route-level income, and what a documented route sells for.',
+    tagline: 'A $3,500 machine at 45 vends/wk nets $27.56/wk — 29-month payback, then $1,433/yr. The machine is inventory; the location is the asset.',
+    intro:
+      'Vending is sold as passive income and runs as a location business. A $3,500 refurbished combo machine in a decent breakroom does 45 vends a week at $1.75 — $27.56 weekly net after product cost and the location\'s 20% cut, paying itself back in 29 months and returning $1,433 a year thereafter. Eight of them on a tight loop is $11,466 a year of semi-passive income — semi, because machines jam and locations churn. This calculator prices a machine, a location, and the whole route.',
+    howItWorks: [
+      'Enter machine cost, weekly vends, and average vend price.',
+      'Enter COGS percentage and the location\'s commission.',
+      'Read weekly net and the payback period per machine.',
+      'Enter machines on route — read the annual route income.',
+      'Read the route\'s sale value at the broker multiple (~2.5× net).',
+    ],
+    faq: [
+      {
+        q: 'Are vending machines actually profitable?',
+        a: 'Yes, slowly, and only with good locations — the honest numbers are $25–40/wk net per machine in a solid spot, meaning 2–3 year paybacks and $1,300–1,900/yr thereafter. The YouTube version skips three things: location quality dominates everything (a 50-employee blue-collar breakroom vends 60–100/wk; a sleepy office lobby vends 12), machines break and products expire (jam refunds and stale chips are line items, not surprises), and the work is real — a route day of restocking is a physical logistics job. The profitable pattern: buy refurbished combo machines ($2,500–4,500 — never the $8k seminar "biz-op" machines), add card readers (15–30% more volume; non-negotiable now), negotiate locations with a written agreement and a fair commission (10–25%), and reinvest each machine\'s cash flow into the next — 8 machines at the example numbers buy a new machine every 5 months with zero new capital. The compounding is real; the "passive" is a lie by adjective.',
+      },
+      {
+        q: 'How do I find vending machine locations?',
+        a: 'By knowing what a good location looks like: 40+ employees or heavy daily foot traffic, limited food options nearby, blue-collar or shift-work populations (warehouses, factories, hospitals, call centers, car dealerships) out-vend white-collar offices — office workers DoorDash; warehouse workers buy from the machine. The pitch: walk in, ask for the manager or HR, offer a commission (10–25% of gross) and free service — you are offering them an amenity plus money, so the conversation is easy; the hard part is volume of asks. Get it in writing: a simple location agreement with a 1–2 year term, the commission, and a 30-day out either way — verbal handshake spots evaporate when the manager changes. Buying existing routes: legitimate and faster, but diligence ruthlessly — verify vend counts with telemetry data or collection receipts (not the seller\'s spreadsheet), confirm every location agreement survives the sale, and price at ~2.5× documented annual net. Locator services that sell "guaranteed locations" for $50–500 per spot are mostly selling you cold calls you could make — and the guaranteed spot is usually the lobby that vends 12 a week.',
+      },
+      {
+        q: 'What should I stock and how should I price it?',
+        a: 'Drinks beat snacks on margin and shelf life, and the mix should follow the telemetry, not your taste: top sellers nationally are the same dozen items everywhere (name-brand chips, candy bars, energy drinks, water, Coke/Pepsi staples), and regional quirks reveal themselves in the data within a month. Pricing psychology: round quarters and card-tap thresholds — $1.75–2.50 for drinks, $1.50–2.25 for snacks is the 2026 range; customers tap cards without flinching at prices that would feel steep in quarters. Card readers are mandatory: cash-only machines lose 15–30% of volume, and telemetry (Nayax, Cantaloupe) converts the route from drive-and-check to restock-what-sold — the software cost pays for itself in route hours. The margin math: buy at club-store prices (Sam\'s/Costco) or a vending distributor for volume, target 45–50% COGS on snacks and 35–45% on drinks, and date-check every visit — expired product is a lawsuit risk, not just a loss. Healthy options: stock a couple of better-for-you slots (protein bars, nuts) because some locations REQUIRE them, but watch the telemetry — healthy slots in most blue-collar spots vend a third of the top sellers.',
+      },
+    ],
+  },
+  {
+    slug: 'laundromat-roi-calculator',
+    title: 'Laundromat ROI Calculator — Turns per Day, NOI, Cap Rate, and the Water-Bill Test',
+    shortTitle: 'Laundromat ROI',
+    category: 'Savings & Investing',
+    description:
+      'Evaluate a laundromat purchase honestly: machines × turns × vend price into NOI and cap rate, the 4× NOI valuation multiple, and the due-diligence rules that catch lying sellers.',
+    tagline: '22 machines at 3.5 turns gross $404/day — a 9.4% cap rate at $425k. Verify the turns with water bills, never the seller\'s spreadsheet.',
+    intro:
+      'Laundromats are the original passive-ish business — and the original seller-exaggeration machine. The math is simple: 22 machines × 3.5 turns a day × $5.25 a vend is $404 a day, $147,551 a year gross; after utilities (25% of gross), rent, and an attendant, NOI is $39,863 — a 9.4% cap rate on a $425,000 price. What makes or breaks the deal is verification: turns claimed versus water bills measured. This calculator runs the operating math, the cap rate, and the 4× NOI valuation, so the seller\'s brochure has to survive arithmetic.',
+    howItWorks: [
+      'Enter purchase price, machine count, turns per day, and average vend.',
+      'Enter utilities %, rent, and attendant cost.',
+      'Read annual gross and net operating income (NOI).',
+      'Read the cap rate — 8%+ is real cash flow, below that is a job.',
+      'Read the 4× NOI valuation — what the store is worth by industry multiple.',
+    ],
+    faq: [
+      {
+        q: 'Are laundromats a good investment?',
+        a: 'At the right price with a long lease, they are one of the durable small-business asset classes: 20–35% cash-on-cash returns are achievable, failure rates are far below restaurants, and demand is recession-resistant — people wash clothes in every economy. The honest requirements: buy NOI, not a story — at 3.5–5× NOI, the example store at $39,863 NOI supports roughly $140–200k... at $425k it only works if turns are higher than modeled, which is exactly why verification matters. The asset is really the lease plus the demographics: 10+ years of lease with options (moving a laundromat kills the equity), renters within a 1-mile radius, and no exclusivity-threatening competitor next door. Machine age is the hidden liability: commercial washers last 10–15 years, and a store of 12-year-old machines needs $80–120k of retooling — price it off the purchase. The upside play: tired stores with old machines and no card readers are the value-add opportunity — retool, repaint, add card payment and wash-and-fold, and revenue lifts 15–30% reliably.',
+      },
+      {
+        q: 'How do I verify a laundromat\'s income before buying?',
+        a: 'Never from the seller\'s spreadsheet — laundromats are the most exaggerated small business sold, historically because revenue was untraceable quarters. The verification stack: WATER BILLS first — gallons consumed per month back into turns/day (a top-loader uses ~25–30 gallons per cycle; big front-loaders ~15–18), and the math catches inflated claims cold; utility records for the dryers; 12 months of card-system reports if readers are installed (increasingly common and nearly tamper-proof); tax returns or Schedule C — sellers who inflate income to you usually deflated it to the IRS, and the return is the floor; and a month of observation — sit in the parking lot on two Saturdays and count turns yourself. Watch the timing tricks: a seller who raised vend prices 6 weeks ago is showing you revenue that hasn\'t proven it will stick; one who just deferred all maintenance is showing you margins that are about to be spent on machines. Due diligence period: 30–45 days minimum with an equipment inspection (every machine opened and run), lease review by an attorney, and utility account histories pulled directly from the providers with the seller\'s authorization.',
+      },
+      {
+        q: 'How do laundromats make money beyond the machines?',
+        a: 'Wash-and-fold is the highest-margin line in the building — $1.50–2.50/lb at 50%+ margins, and it needs attendance, which is the trade: attended stores pay labor but capture WDF revenue (often 20–30% of total in mature stores), stay cleaner, and suffer less vandalism; unattended stores net more on paper and decline faster in practice. Pickup and delivery is the growth channel: a $25–40 route stop aggregates WDF volume without walk-in traffic, and app-based demand (or your own simple booking) feeds it. Vending and arcade machines, soap sales (50%+ margin), and ATM/Lottery where legal add small streams. Card readers do double duty: they lift vend revenue 10–20% (customers spend more on cards than quarters) AND produce the clean revenue data that raises your exit multiple — a store with 3 years of card-system reports sells at the top of the 3.5–5× range because the buyer\'s diligence is easy. The demographic defense: your real asset is a dense renter population with in-unit laundry scarce — know your one-mile radius cold, count the apartment units, and watch for new construction with in-unit hookups, which is the slow erosion nobody sells you on.',
+      },
+    ],
+  },
+  {
     slug: 'notary-signing-agent-calculator',
     title: 'Notary Signing Agent Calculator — True Hourly After Print, Drive, and the Channel Gap',
     shortTitle: 'Notary Signing Agent',
