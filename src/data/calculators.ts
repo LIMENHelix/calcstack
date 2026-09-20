@@ -2116,6 +2116,102 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'solar-degradation-calculator',
+    title: 'Solar Panel Degradation Calculator — 25-Year Production Loss & What Premium Panels Are Actually Worth',
+    shortTitle: 'Solar Degradation',
+    category: 'Home & Yard',
+    description:
+      'How much production your panels lose over 25 years — year-by-year degradation compounding, total lifetime kWh, and the dollar value of the loss so you can price premium low-degradation panels honestly.',
+    tagline: 'An 8 kW array loses 19,982 kWh to degradation over 25 years — $3,397 at $0.17/kWh. That is the exact budget for paying extra for 0.25%/yr panels.',
+    intro:
+      'Every solar quote shows year-one production; almost none show year twenty-five. Panels degrade: a 1–3% hit in year one (light-induced degradation), then 0.25–0.7% every year after, compounding. An 8 kW system producing 11,200 kWh in year one still produces 9,781 kWh in year 25 — but the cumulative loss is 19,982 kWh, worth $3,397 at $0.17/kWh. That number converts a vague warranty spec into a price: if a premium panel line degrades at 0.25%/yr instead of 0.55%/yr, it recovers roughly half that loss — so a $1,400 premium pays for itself while a $4,000 premium does not. Run your quoted production and the warranty degradation rate here before choosing between panel tiers.',
+    howItWorks: [
+      'Enter system size in kW and year-1 yield per kW (1,300–1,600 kWh/kW for most US zips — PVWatts has yours).',
+      'Enter the first-year degradation (1–3%; check the warranty sheet).',
+      'Enter the annual degradation rate from the panel warranty (0.25% premium, 0.55% standard, 0.7% budget).',
+      'Set the horizon and your electricity rate.',
+      'Read year-25 production, lifetime kWh, and the dollar cost of degradation.',
+    ],
+    faq: [
+      {
+        q: 'What degradation rate should I actually use?',
+        a: 'The one printed in the warranty — that is the manufacturer putting money behind a number. Premium lines (Maxeon/SunPower, some Panasonic and REC models) warrant 0.25–0.4% per year with an 88–92% year-25 floor. Standard tier warrants ~0.55% with an 84–85% floor. Budget panels warrant 0.7% and an 80% floor. First-year degradation (light-induced degradation, or LID) is separate: 1–3% in year one before the annual rate starts. NREL field studies of real arrays cluster around 0.5–0.8%/yr median for older fleets, but modern mono PERC panels test better. Use the warranty number for the decision, not the lab number — the warranty is the part you can collect on.',
+      },
+      {
+        q: 'Is paying more for a low-degradation panel worth it?',
+        a: 'Do the arithmetic this calculator sets up: total degradation loss at your rate, then compare tiers. At the defaults, going from 0.55%/yr to 0.25%/yr recovers about 8,000 kWh over 25 years — roughly $1,400 at $0.17/kWh, more in high-rate states like California or the Northeast where the same kWh are worth $0.25–0.35. So the premium is worth it up to about that recovered value, minus a discount for the fact that year-20 dollars are worth less than year-one dollars. Where the premium math breaks: if you will sell the house before year 12, you capture little of the tail production — degrade the premium by your expected ownership years. Where it clearly wins: high electricity rates, long ownership, and net-billing regimes where exported kWh still pay retail.',
+      },
+      {
+        q: 'What else degrades that this does not count?',
+        a: 'Two big line items. First, the inverter: string inverters typically last 12–15 years, so budget one replacement ($1,500–3,000 installed) inside any 25-year horizon; microinverters often carry 25-year warranties but failure rates are not zero. Second, real-world shading change — trees grow, neighbors build second stories — which can cost more than panel degradation and is never in the quote. Also separate: soiling (dust, pollen) is recoverable with cleaning and is usually already inside the production derate, and catastrophic events (hail, fire) are insurance questions, not degradation. The honest way to use this tool: it prices the panel-line decision cleanly; then carry a one-time inverter replacement as a separate lump in your payback math.',
+      },
+    ],
+  },
+  {
+    slug: 'solar-removal-reinstall-calculator',
+    title: 'Solar Panel Removal & Reinstall Cost Calculator — The Roof-Age Trap, Priced',
+    shortTitle: 'Solar Removal & Reinstall',
+    category: 'Home & Yard',
+    description:
+      'What it costs to remove and reinstall solar panels when the roof needs replacing — per-panel labor, permits, inflation to the year it happens, and the verdict on whether to re-roof before going solar.',
+    tagline: 'Removing and reinstalling 20 panels runs $5,500 today — $6,959 by the time a 6-year-old roof dies. If the roof has under 10 years left, re-roof before the panels go on.',
+    intro:
+      'The line item missing from almost every solar quote: roofs and panels have different lifespans. Panels warrant 25 years; an asphalt roof installed a decade ago has 10–15 left. When the roof dies first, the panels come off and go back on — $200–300 per panel in labor plus permit and inspection, typically $1,500–6,000+ total, and more by the time it happens because labor inflates. For 20 panels that is $5,500 today, $6,959 in six years at 4% labor inflation — 22% of the original system price, and neither the panel warranty nor the power-production guarantee covers it. The decision rule is simple: under ~10 years of roof life remaining, re-roof before the solar install and this cost never exists. This calculator prices the event and gives the verdict.',
+    howItWorks: [
+      'Enter the panel count and the per-panel R&R labor quote ($200–300 typical; steep or tile roofs higher).',
+      'Enter the permit and inspection fee your jurisdiction charges.',
+      'Enter how many years of life the roof has left.',
+      'Set labor inflation (3–5% recent reality) and the original system price.',
+      'Read today cost, the inflated cost at the year the roof dies, and the re-roof-first verdict.',
+    ],
+    faq: [
+      {
+        q: 'Who pays for removal and reinstall — me, the installer, or the warranty?',
+        a: 'Default answer: you. Panel warranties cover the panels; workmanship warranties cover the installation; neither covers a roof replacement, which is a different trade entirely. The exceptions worth hunting: some premium installers bundle one R&R event into a long workmanship warranty (get it in writing, with the company\'s survival risk in mind — solar installers have a high failure rate), and leased or PPA systems often put R&R responsibility on the provider since they own the hardware — read that clause specifically before signing. Insurance is the other path: if the roof replacement follows a covered event like hail, the R&R is often part of the claim — document the system and keep your install records. Absent those, this is a homeowner cost, which is exactly why the roof-age check belongs before the install.',
+      },
+      {
+        q: 'My roof has some life left but not 25 years — where is the line?',
+        a: 'The practical cutoff is around 10 years, but make it about payback, not round numbers: if the roof dies before the system pays back, you are stacking an R&R bill on top of an investment that has not returned yet — clearly bad. If the roof dies a few years after payback, the R&R is an annoying maintenance event, not a deal-killer. The variables that push the line earlier: tile roofs (removal is slower and breakage adds panel-adjacent costs), steep pitches, and multi-story access. The variable that pushes it later: a roofing quote bundled with the solar mobilization, where one crew visit for both trades costs less than two separate ones — some paired roofing-solar companies price exactly this. If you are near the line, get the roof inspected; a $200 inspection beats a $6,000 surprise.',
+      },
+      {
+        q: 'Does the R&R cost change the lease-vs-buy decision?',
+        a: 'Yes, and it cuts in favor of leases and PPAs for older roofs. When you own the system, R&R is your bill, full stop. Under a lease or PPA, the provider owns the hardware and most contracts assign removal-and-reinstall to them for roof work — though the details matter: some contracts cover it fully, some cap it, some charge a fee, and the remedy if the provider has gone bankrupt is nothing. So for a roof with 8–12 years left, the lease-vs-buy comparison should add this calculator\'s inflated cost to the ownership side before comparing. Ownership still usually wins on a sound roof — the lease discount rate is expensive — but on an aging roof with a strong R&R clause, the lease can pencil. Run both; the answer is roof-age-dependent in a way almost no comparison accounts for.',
+      },
+    ],
+  },
+  {
+    slug: 'heat-pump-water-heater-calculator',
+    title: 'Heat Pump Water Heater Calculator 2026 — Savings vs Standard Electric, Rebates & Real Payback',
+    shortTitle: 'Heat Pump Water Heater ROI',
+    category: 'Home & Yard',
+    description:
+      'What a heat pump water heater saves versus a standard electric tank — hot-water energy from your actual usage, 3× efficiency physics, net cost after credits and rebates, and payback that is often under a year against a like-for-like replacement.',
+    tagline: 'Water heating is the #2 electric load in most homes. A heat pump unit cuts it two-thirds — $386/yr back at 50 gal/day, with the incremental cost often paying back inside a year.',
+    intro:
+      'The cheapest big efficiency upgrade in an electric home is not solar — it is the water heater. A standard resistance tank converts electricity to heat at 1:1; a heat pump water heater moves heat from the surrounding air at roughly 3.3:1. A household using 50 gallons of hot water a day burns 3,152 kWh/yr in a resistance tank versus 879 kWh in a heat pump unit — 2,273 kWh saved, $386 a year at $0.17/kWh. Against a standard $1,200 replacement, the incremental cost after rebates is often under $500, paying back in about a year; even the full $2,500 installed cost pays back in roughly 3 years. The catch is siting: the unit needs ~700–1,000 cubic feet of surrounding air and cools the room it sits in. This calculator prices your actual usage and rebate stack.',
+    howItWorks: [
+      'Enter daily hot-water gallons (40–60 typical for a family of four), setpoint, and inlet temperature.',
+      'Enter your electricity rate.',
+      'Enter the installed HPWH quote and what a standard replacement tank would cost.',
+      'Enter the tax-credit percentage and utility rebate that actually apply to your purchase year.',
+      'Read annual savings, net cost, payback versus a standard replacement, and the 10-year net.',
+    ],
+    faq: [
+      {
+        q: 'Where can a heat pump water heater actually go?',
+        a: 'The physics decides: the unit harvests heat from room air, so it needs volume to harvest from — roughly 700–1,000 cubic feet minimum (a 10×10 room with 8-ft ceilings is 800), and more is better. Garages, basements, and utility rooms work; small closets do not without louvered doors or ducting kits. Ambient temperature matters: efficiency falls below ~40°F, so an unheated northern garage in January runs its backup resistance elements more — still efficient annually, less so seasonally. The side effects cut both ways: the unit cools and dehumidifies its space, free air conditioning for a hot garage but a comfort penalty in a conditioned room you occupy. Noise runs refrigerator-plus — fine next to the laundry, annoying beside a bedroom. Measure the space and check the manufacturer\'s minimum-volume spec before committing.',
+      },
+      {
+        q: 'What rebates and credits can I stack?',
+        a: 'Three layers historically, and you must verify which are live for your purchase year. Federal: the 25C energy-efficiency credit covered 30% of cost (equipment plus install) up to $2,000 for heat pump water heaters, but legislation ended it for purchases after 2025 — set the credit input to 0 unless your tax year qualifies. Utilities: the steadiest source — $300–750 rebates are common, some run to $1,000+, usually requiring an ENERGY STAR or qualified-products-list unit and sometimes a licensed installer. State and IRA-funded programs: HOMES/HEEHRA rebates phase in state by state and can be large for qualifying incomes. The stacking rules matter: utility rebates generally reduce the cost basis for any federal credit. One phone call to your utility before purchase is worth more than any estimate here — then put the real numbers in this calculator.',
+      },
+      {
+        q: 'Does it beat gas too, or just standard electric?',
+        a: 'Usually yes on operating cost, with caveats. A gas tank at 60% efficiency burning $1.30/therm spends roughly $0.0217 per thousand BTU; the heat pump at COP 3.3 on $0.17/kWh spends about $0.0151 — around 30% cheaper per unit of hot water, and the gap widens as gas rates rise. The caveats: if your gas rate is unusually cheap or your electric rate exceeds ~$0.30/kWh (parts of California, New England), the operating advantage shrinks or inverts at the margin; and if the home has no 240V circuit at the water heater, add $300–800 for an electrician. Where heat pumps win outright regardless of rates: replacing PROPANE or oil water heating, where fuel costs are brutal. Run your actual rates — this calculator handles the electric comparison directly; for the gas case, convert your therm rate to an equivalent and compare annual figures.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

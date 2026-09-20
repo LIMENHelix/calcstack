@@ -139,6 +139,12 @@ export const WHY_USE: Record<string, string> = {
     'Professionals use it before applying: a $60k master\'s plus two years out of a $70k job really costs $192k in present value — a $25k/yr premium wins by $193k (breakeven year 13), a $10k premium never pays back.',
   'startup-offer-calculator':
     'Candidates use it before signing: 0.1% with a $20k strike at startup-typical odds is $68k of expected value over four years — against a $120k salary cut the trade is −$52k, and dilution makes it worse.',
+  'solar-degradation-calculator':
+    'Solar shoppers use it before picking a panel tier: an 8 kW array loses 19,982 kWh ($3,397) to degradation over 25 years — so a $1,400 premium for 0.25%/yr panels pays for itself, a $4,000 one does not.',
+  'solar-removal-reinstall-calculator':
+    'Homeowners with aging roofs use it before signing a solar contract: removing and reinstalling 20 panels costs $5,500 today ($6,959 by year 6) — with under 10 years of roof left, re-roof first and the bill never exists.',
+  'heat-pump-water-heater-calculator':
+    'Homeowners replacing an electric tank use it before the plumber visit: a heat pump unit cuts water heating by two-thirds — $386/yr back — and the incremental cost after rebates often pays back inside a year.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

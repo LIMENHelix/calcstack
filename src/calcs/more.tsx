@@ -5519,6 +5519,163 @@ export function EvHomeChargingCalc() {
   )
 }
 
+// SOLAR DEGRADATION — node-verified defaults: 8 kW × 1,400 kWh/kW = 11,200 kWh yr-1. Year 1 ships at nameplate (no degradation applied to yr-1 here; degradation starts yr 2); yr-2 = yr1 × (1 − 2% first-year/LID); yr-n = yr1 × 0.98 × 0.995^(n−2). Verified: yr-25 = 9,781 kWh; 25-yr total = 260,018 kWh vs 280,000 no-degradation → 19,982 kWh lost = $3,397 at $0.17. Typical warranties: 0.4–0.55%/yr premium panels, 0.7%/yr budget; first-year 1–3% (LID). Use: compare the degradation-lost value against the premium for a lower-degradation panel line — that is the whole decision.
+export function SolarDegradationCalc() {
+  const [kw, setKw] = useNumber(8)
+  const [ypk, setYpk] = useNumber(1400)
+  const [fy, setFy] = useNumber(2)
+  const [deg, setDeg] = useNumber(0.5)
+  const [yrs, setYrs] = useNumber(25)
+  const [rate, setRate] = useNumber(0.17)
+
+  const r = useMemo(() => {
+    const yr1 = kw * ypk
+    let total = 0
+    let last = yr1
+    for (let y = 1; y <= yrs; y++) {
+      const f = y === 1 ? 1 : (1 - fy / 100) * Math.pow(1 - deg / 100, y - 2)
+      const prod = yr1 * f
+      total += prod
+      last = prod
+    }
+    const noDeg = yr1 * yrs
+    const lost = noDeg - total
+    const lostVal = lost * rate
+    return { yr1, total, last, lost, lostVal }
+  }, [kw, ypk, fy, deg, yrs, rate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="System size" value={kw} onChange={setKw} suffix="kW" step="0.5" />
+          <Field label="Year-1 production per kW" value={ypk} onChange={setYpk} suffix="kWh/kW" step="50" />
+          <Field label="First-year degradation" value={fy} onChange={setFy} suffix="%" step="0.5" />
+          <Field label="Annual degradation after" value={deg} onChange={setDeg} suffix="%/yr" step="0.1" />
+          <Field label="Horizon" value={yrs} onChange={setYrs} suffix="yrs" step="5" />
+          <Field label="Electricity rate" value={rate} onChange={setRate} prefix="$" suffix="/kWh" step="0.01" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Year-1 production" value={`${num(r.yr1, 0)} kWh`} />
+          <Result label={`Year-${yrs} production`} value={`${num(r.last, 0)} kWh`} />
+          <Result label={`${yrs}-yr total`} value={`${num(r.total, 0)} kWh`} big />
+          <Result label="Degradation costs you" value={usd(Math.round(r.lostVal))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`An ${num(kw, 1)} kW array making ${num(r.yr1, 0)} kWh in year 1 still makes ${num(r.last, 0)} in year ${yrs} — degradation quietly eats ${num(r.lost, 0)} kWh (${usd(Math.round(r.lostVal))}) across the horizon. That number is the budget for premium panels: if a 0.25%/yr line costs ${usd(Math.round(r.lostVal * 0.4))} more than the 0.55%/yr line, the upgrade pays for itself.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: year-1 production = system kW × yield per kW (1,300–1,600 kWh/kW in most of the US — PVWatts has your zip); year 2 applies the first-year loss (light-induced degradation, 1–3%); each later year compounds the annual rate. Degradation is a compounding drag, not a cliff — modern panels warrant 85–92% of nameplate at year 25, which is exactly what this models. Why it matters: two quotes with the same price and wattage are NOT the same system — a 0.25%/yr panel versus a 0.7%/yr panel differs by roughly 8% of lifetime production, worth several thousand dollars. Check the warranty fine print for the stated annual rate and the year-25 floor, and run both here before paying a premium. Also note: this isolates panel degradation only — inverter replacement (year 12–15, $1,500–3,000) and shade changes are separate line items. Estimate — your production guarantee and local yield govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// SOLAR REMOVAL & REINSTALL — node-verified defaults: 20 panels × $250 R&R labor + $500 permit/inspection = $5,500 today; at 4%/yr labor inflation due in year 6 = $6,959; = 22% of a $25,000 system. Industry range: $1,500–6,000+ per R&R event ($200–300/panel plus permit, new flashing/mounts often extra). Use: if the roof has under ~10 years left, re-roof BEFORE the solar install — bundling avoids the entire R&R.
+export function SolarRemovalReinstallCalc() {
+  const [panels, setPanels] = useNumber(20)
+  const [perPanel, setPerPanel] = useNumber(250)
+  const [permit, setPermit] = useNumber(500)
+  const [roofLeft, setRoofLeft] = useNumber(6)
+  const [infl, setInfl] = useNumber(4)
+  const [sysPrice, setSysPrice] = useNumber(25000)
+
+  const r = useMemo(() => {
+    const today = panels * perPanel + permit
+    const future = today * Math.pow(1 + infl / 100, roofLeft)
+    const pct = sysPrice > 0 ? (today / sysPrice) * 100 : 0
+    const reRoofFirst = roofLeft < 10
+    return { today, future, pct, reRoofFirst }
+  }, [panels, perPanel, permit, roofLeft, infl, sysPrice])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Panels on roof" value={panels} onChange={setPanels} step="2" />
+          <Field label="R&R labor per panel" value={perPanel} onChange={setPerPanel} prefix="$" step="25" />
+          <Field label="Permit & inspection" value={permit} onChange={setPermit} prefix="$" step="100" />
+          <Field label="Roof life remaining" value={roofLeft} onChange={setRoofLeft} suffix="yrs" step="1" />
+          <Field label="Labor inflation" value={infl} onChange={setInfl} suffix="%/yr" step="0.5" />
+          <Field label="Solar system price" value={sysPrice} onChange={setSysPrice} prefix="$" step="1000" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="R&R cost today" value={usd(Math.round(r.today))} />
+          <Result label={`Cost in ${roofLeft} yrs`} value={usd(Math.round(r.future))} big />
+          <Result label="% of system price" value={`${num(r.pct, 1)}%`} />
+          <Result label="Verdict" value={r.reRoofFirst ? 'Re-roof first' : 'Roof outlasts'} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.reRoofFirst
+            ? `With ${roofLeft} years of roof left, the panels come off once more: ${usd(Math.round(r.future))} at year ${roofLeft} — ${num(r.pct, 1)}% of the system price, gone. Re-roof BEFORE the solar install and this entire line item never exists.`
+            : `With ${roofLeft} years of roof left, the roof likely outlasts the payback window — but if a storm or warranty issue forces a re-roof anyway, budget ${usd(Math.round(r.today))} for removal and reinstall (and confirm who pays: some installers bundle one R&R into the workmanship warranty).`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: R&R = panels × per-panel labor ($200–300 typical, more for steep or tile roofs) + permit and inspection; inflated at the labor rate to the year the roof dies. The rule installers rarely volunteer: a roof with under ~10 years of life should be replaced BEFORE solar goes on — re-roofing with panels up costs this entire amount, and the solar warranty does not cover it. Asphalt architectural shingles run 25–30 years, tile and metal 40+, so match roof life to the 25-year panel warranty. If you are mid-ownership: some roofing and solar companies coordinate the job in one mobilization (cheaper than two), and one R&R is sometimes negotiable into a new solar contract — ask before signing anything. This is also the hidden cost that changes lease vs buy math — leased systems often shift R&R terms to the provider, read that clause. Estimate — actual roofer and installer quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// HEAT PUMP WATER HEATER — node-verified defaults: 50 gal/day × 8.34 lb/gal × (120−55)°F × 365 = 9.89M BTU/yr = 2,900 kWh thermal. Resistance at UEF 0.92 → 3,152 kWh/yr; HPWH at COP 3.3 → 879 kWh/yr; saves 2,273 kWh = $386/yr at $0.17. Costs: HPWH installed $2,500 − 30% federal 25C credit ($750, under the $2,000 cap) − $500 utility rebate = $1,250 net; standard electric replacement $1,200 → incremental $50, incremental payback 0.13 yr; full-cost payback 3.2 yrs; 10-yr net $3,814. Note: 25C credit for HPWH ended after 2025 (OBBBA) — the 30% input is user-adjustable; default kept as legacy 2025 example. HPWHs need ~700–1,000 cu ft of surrounding air and cool/dehumidify the room they sit in (a feature in a garage, a bug in a small closet).
+export function HeatPumpWaterHeaterCalc() {
+  const [gal, setGal] = useNumber(50)
+  const [setpt, setSetpt] = useNumber(120)
+  const [inlet, setInlet] = useNumber(55)
+  const [rate, setRate] = useNumber(0.17)
+  const [hpwhCost, setHpwhCost] = useNumber(2500)
+  const [stdCost, setStdCost] = useNumber(1200)
+  const [creditPct, setCreditPct] = useNumber(30)
+  const [rebate, setRebate] = useNumber(500)
+
+  const r = useMemo(() => {
+    const btuYr = gal * 8.34 * Math.max(setpt - inlet, 0) * 365
+    const kwhThermal = btuYr / 3412
+    const res = kwhThermal / 0.92
+    const hp = kwhThermal / 3.3
+    const savedKwh = res - hp
+    const savedUsd = savedKwh * rate
+    const credit = Math.min(hpwhCost * (creditPct / 100), 2000)
+    const net = hpwhCost - credit - rebate
+    const incr = net - stdCost
+    const paybackFull = savedUsd > 0 ? net / savedUsd : Infinity
+    const paybackIncr = savedUsd > 0 ? incr / savedUsd : Infinity
+    const tenYr = savedUsd * 10 - incr
+    return { res, hp, savedKwh, savedUsd, net, incr, paybackFull, paybackIncr, tenYr }
+  }, [gal, setpt, inlet, rate, hpwhCost, stdCost, creditPct, rebate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Hot water use" value={gal} onChange={setGal} suffix="gal/day" step="5" />
+          <Field label="Setpoint" value={setpt} onChange={setSetpt} suffix="°F" step="5" />
+          <Field label="Inlet water temp" value={inlet} onChange={setInlet} suffix="°F" step="5" />
+          <Field label="Electricity rate" value={rate} onChange={setRate} prefix="$" suffix="/kWh" step="0.01" />
+          <Field label="HPWH installed cost" value={hpwhCost} onChange={setHpwhCost} prefix="$" step="100" />
+          <Field label="Standard tank cost" value={stdCost} onChange={setStdCost} prefix="$" step="100" />
+          <Field label="Tax credit" value={creditPct} onChange={setCreditPct} suffix="%" step="5" />
+          <Field label="Utility rebate" value={rebate} onChange={setRebate} prefix="$" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Savings per year" value={usd(Math.round(r.savedUsd))} big />
+          <Result label="Net HPWH cost" value={usd(Math.round(r.net))} />
+          <Result label="Payback vs standard" value={isFinite(r.paybackIncr) ? `${num(r.paybackIncr, 1)} yrs` : 'Never'} />
+          <Result label="10-yr net gain" value={usd(Math.round(r.tenYr))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`A heat pump water heater moves heat instead of making it: ${num(r.res, 0)} kWh/yr of resistance heating drops to ${num(r.hp, 0)} — ${usd(Math.round(r.savedUsd))}/yr back. Net of credits and rebates the unit costs ${usd(Math.round(r.net))} installed; against a standard replacement the incremental ${usd(Math.round(Math.max(r.incr, 0)))} pays back in ${num(Math.max(r.paybackIncr, 0), 1)} years.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: hot-water energy = gal/day × 8.34 lb × (setpoint − inlet) × 365 ÷ 3,412 BTU/kWh; resistance tank at UEF 0.92, heat pump unit at COP ~3.3 (it steals heat from the room air — 2–3× more efficient than making heat). The physics is why this is the single cheapest big efficiency win in most electric homes — water heating is typically the #2 electric load after HVAC, and this cuts it by two-thirds. Siting rules that decide success: the unit needs roughly 700–1,000 cubic feet of surrounding air (a garage or basement, not a closet), works best above ~40°F ambient, and cools plus dehumidifies the space it sits in — free bonus in a warm garage, a comfort cost in a conditioned utility room. Noise is refrigerator-plus; place accordingly. Check your utility rebate before buying ($300–750 common) and confirm the current federal credit rules — the 30% energy-efficiency credit applied through 2025 purchases; set the credit input to what actually applies to your tax year. Estimate — your plumber&apos;s quote and actual hot-water use govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -11193,6 +11350,9 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'solar-quote-checker-calculator': SolarQuoteCalc,
   'solar-sizing-calculator': SolarSizingCalc,
   'ev-home-charging-calculator': EvHomeChargingCalc,
+  'solar-degradation-calculator': SolarDegradationCalc,
+  'solar-removal-reinstall-calculator': SolarRemovalReinstallCalc,
+  'heat-pump-water-heater-calculator': HeatPumpWaterHeaterCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
