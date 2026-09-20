@@ -23,6 +23,8 @@ export const WHY_USE: Record<string, string> = {
     'Homeowners holding an installer quote use it to check the pitch: with the federal credit gone since January 2026, the honest drivers are the electric rate, net-metering terms, and state rebates — and the gap between a 9-year and a 21-year payback is exactly those three inputs.',
   'heloc-calculator':
     'Homeowners quoted a $354 interest-only payment use it before signing: the same $50,000 draw jumps to $434 when repayment starts and costs $96,639 in interest over the life — and the interest is deductible only if the money improves the house.',
+  'heloc-vs-cash-out-refi-calculator':
+    'Homeowners choosing between equity products use it to expose the number lenders never print: pulling $50k from a 3.5% mortgage via a 6.5% cash-out refi is an effective 10.9% loan on the cash — while a 6.8% holder refinancing down gets it nearly free.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

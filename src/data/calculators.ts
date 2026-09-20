@@ -297,6 +297,37 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'heloc-vs-cash-out-refi-calculator',
+    title: 'HELOC vs Cash-Out Refinance Calculator 2026 — The Effective Rate on the Cash Decides',
+    shortTitle: 'HELOC vs Cash-Out Refi',
+    category: 'Housing & Mortgage',
+    description:
+      'A cash-out refi reprices your entire mortgage, not just the cash. Solve the payment delta back into an effective rate on the cash alone, price 10 years of added interest both ways, and get the verdict.',
+    tagline: 'Pulling $50,000 from a 3.5% mortgage via a 6.5% cash-out refi means paying an effective 10.9% on that cash.',
+    intro:
+      'Every lender quote shows the note rate; none show the rate you actually pay on the cash. A cash-out refinance replaces your whole first mortgage at the new rate, so pulling $50,000 out of a $300,000 loan at 3.5% means repricing the entire $350,000 at 6.5% — the payment jumps $472 and the effective rate on that $50,000 works out to 10.90%, worse than the 8.5% HELOC the same bank offered. Flip the scenario — a 6.8% loan refinancing down to 6.5% — and the cash comes out at an effective 0.12%, essentially free. The crossover sits around a 4.2% existing rate: below it, keep the mortgage and take the line; above it, the refi wins. This calculator does the solve for your exact numbers and prices ten years of interest both ways, closing costs included.',
+    howItWorks: [
+      'Enter your current balance, rate, and years remaining.',
+      'Enter the cash you want and the quoted refi rate, term, and closing costs.',
+      'Enter the HELOC rate you\'ve been quoted for comparison.',
+      'Read the effective rate on the cash — the number lenders never print — and the 10-year cost verdict.',
+    ],
+    faq: [
+      {
+        q: 'What is the "effective rate on the cash" and why does it matter?',
+        a: 'It\'s the payment increase from the refinance solved backward as if it were a standalone loan for just the cash amount. Pull $50,000 from a $300,000 mortgage at 3.5% (20 years left) by refinancing to $350,000 at 6.5% for 30 years, and the payment rises $472.36/month. A $50,000 loan costing $472.36/month over 30 years is a 10.90% loan — even though the paperwork says 6.5%. The rest of the cost is the invisible part: your old $300,000 was repriced upward too. This number is the only honest way to compare a cash-out refi against a HELOC or home equity loan, because those leave the first mortgage untouched.',
+      },
+      {
+        q: 'When does the cash-out refi actually win?',
+        a: 'When your existing rate is at or above the new rate. At a 6.8% existing rate refinancing to 6.5%, the effective rate on the same $50,000 collapses to about 0.12% — the interest you save on the old balance pays for the cash. Over ten years that path adds $27,752 of interest plus $3,000 closing, against $42,500 of interest-only HELOC cost. The rough crossover: if your current rate is more than about 2 points below the new rate, the refi is charging you double digits on the cash and the second-lien products win. Below a 2-point gap, run the numbers — term resets and closing costs decide it.',
+      },
+      {
+        q: 'What does this calculator not capture?',
+        a: 'Three real-world wrinkles. First, cash-out pricing premiums: lenders typically add 0.25–0.75% to the rate (or charge points) for cash-out versus rate-and-term refis, and conforming cash-out is capped at 80% loan-to-value. Second, the term reset flatters the refi — stretching 20 remaining years back to 30 lowers the payment while adding a decade of debt; that\'s why the 10-year interest comparison is the cleaner cost measure. Third, deductibility: refi interest on the cash portion is deductible only if the cash improves the home, same rule as HELOCs. And the behavioral one nobody models: a HELOC can be drawn and repaid repeatedly; a cash-out refi spends your low rate permanently.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

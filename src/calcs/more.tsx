@@ -2376,6 +2376,78 @@ export function HelocCalc() {
   )
 }
 
+// HELOC vs CASH-OUT REFI — the effective rate on the cash is the only number that matters. A cash-out refi replaces the ENTIRE first mortgage at the new rate, so the true cost of the $50k isn't the 6.5% note rate — it's the payment delta solved back as a rate on the cash alone. Node-verified ($300k balance, $50k cash, new loan 30yr @6.5%, $3,000 closing): existing 3.5% w/ 20 yrs left → $1,739.88 → $2,212.24, Δ$472.36 → effective rate 10.90% (vs HELOC 8.5% — HELOC wins; 10-yr incremental interest $127,451 vs HELOC's $42,500). Existing 6.8% w/ 25 yrs left → Δ$130.02 → effective 0.12% (refi wins; 10-yr incremental $27,752 + $3,000 closing = $30,752 < HELOC $42,500). Rate sweep (20 yrs left, refi 6.5%): existing 3% → 12.88%, 4% → 8.78%, 5% → 3.78%, 5.5% → 0.45%. The crossover sits near 4.2–4.5% — below that the refi charges double-digit rates on the cash even though the brochure says 6.5%. Caveat priced honestly: the effective rate blends the term reset (25→30 yrs lowers payments and stretches debt); the 10-yr interest comparison isolates cost.
+export function CashOutRefiCalc() {
+  const [bal, setBal] = useNumber(300000)
+  const [oldRate, setOldRate] = useNumber(3.5)
+  const [yrsLeft, setYrsLeft] = useNumber(20)
+  const [cash, setCash] = useNumber(50000)
+  const [newRate, setNewRate] = useNumber(6.5)
+  const [newTerm, setNewTerm] = useNumber(30)
+  const [closing, setClosing] = useNumber(3000)
+  const [helocRate, setHelocRate] = useNumber(8.5)
+
+  const r = useMemo(() => {
+    const pmt = (P: number, i: number, n: number) => (i > 0 ? (P * i) / (1 - Math.pow(1 + i, -n)) : P / n)
+    const interestPaid = (P: number, i: number, n: number, months: number) => {
+      let b = P, t = 0
+      const p = pmt(P, i, n)
+      for (let m = 0; m < months; m++) { const ix = b * i; t += ix; b = b - p + ix }
+      return t
+    }
+    const nOld = Math.max(1, yrsLeft * 12)
+    const nNew = Math.max(1, newTerm * 12)
+    const oldP = pmt(bal, oldRate / 1200, nOld)
+    const newP = pmt(bal + cash, newRate / 1200, nNew)
+    const delta = newP - oldP
+    // solve effective monthly rate on the cash: pmt(cash, i, nNew) = delta
+    let lo = 0.00001, hi = 0.05
+    if (delta > 0) for (let k = 0; k < 200; k++) { const mid = (lo + hi) / 2; if (pmt(cash, mid, nNew) < delta) lo = mid; else hi = mid }
+    const eff = delta > 0 ? ((lo + hi) / 2) * 1200 : 0
+    const horizon = Math.min(120, nNew)
+    const incRefi = interestPaid(bal + cash, newRate / 1200, nNew, horizon) - interestPaid(bal, oldRate / 1200, nOld, Math.min(horizon, nOld))
+    const incRefiTotal = incRefi + closing
+    const incHeloc = cash * (helocRate / 100) * 10 // interest-only draw decade, balance flat
+    const refiWins = incRefiTotal < incHeloc
+    return { oldP, newP, delta, eff, incRefiTotal, incHeloc, refiWins }
+  }, [bal, oldRate, yrsLeft, cash, newRate, newTerm, closing, helocRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Current mortgage balance" value={bal} onChange={setBal} prefix="$" />
+          <Field label="Current rate" value={oldRate} onChange={setOldRate} suffix="%" step="0.125" />
+          <Field label="Years left on it" value={yrsLeft} onChange={setYrsLeft} step="1" />
+          <Field label="Cash you want out" value={cash} onChange={setCash} prefix="$" />
+          <Field label="Cash-out refi rate" value={newRate} onChange={setNewRate} suffix="%" step="0.125" />
+          <Field label="New term (years)" value={newTerm} onChange={setNewTerm} step="5" />
+          <Field label="Refi closing costs" value={closing} onChange={setClosing} prefix="$" step="500" />
+          <Field label="HELOC rate (comparison)" value={helocRate} onChange={setHelocRate} suffix="%" step="0.25" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Payment today" value={usd(r.oldP)} />
+          <Result label="Payment after refi" value={usd(r.newP)} />
+          <Result label="Monthly increase" value={usd(r.delta)} />
+          <Result big label="Effective rate on the cash" value={`${num(r.eff, 2)}%`} />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Result label="Refi: added 10-yr interest + closing" value={usd(r.incRefiTotal)} />
+          <Result label="HELOC: 10-yr interest (draw decade)" value={usd(r.incHeloc)} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.refiWins
+            ? `The cash-out refi wins: your existing ${num(oldRate, 2)}% rate is close to (or above) the ${num(newRate, 2)}% refi rate, so the cash comes out at an effective ${num(r.eff, 2)}% — far under the HELOC's ${num(helocRate, 2)}%. Over 10 years the refi costs ${usd(r.incRefiTotal)} against the HELOC's ${usd(r.incHeloc)}.`
+            : `Keep the first mortgage, take the HELOC: refinancing your ${num(oldRate, 2)}% loan at ${num(newRate, 2)}% makes the ${usd(cash)} of cash cost an effective ${num(r.eff, 2)}% — above the HELOC's ${num(helocRate, 2)}%. Over 10 years the refi burns ${usd(r.incRefiTotal)} in added interest and closing versus ${usd(r.incHeloc)} on the line.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          A cash-out refinance reprices your ENTIRE mortgage, not just the cash — that is why the effective rate on the cash can be double the note rate (a 3.5% holder pulling $50,000 at 6.5% is really paying ~10.9% on that $50,000) or nearly zero (a 6.8% holder refinancing DOWN to 6.5% gets the cash almost free). The HELOC comparison uses a 10-year interest-only draw with a flat balance; in repayment the HELOC amortizes and its total interest roughly doubles — run the HELOC calculator for the two-phase picture. Effective rate here blends the term reset: stretching 25 remaining years back to 30 lowers the payment while lengthening the debt, which flatters the refi — the 10-year interest comparison is the cleaner cost measure. Cash-out pricing usually adds a rate premium (~0.25–0.75%) over a plain refi, and conforming cash-out is capped at 80% LTV. Estimates — lender quotes govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -7992,6 +8064,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'custodial-roth-ira-calculator': CustodialRothCalc,
   '529-vs-trump-vs-roth-calculator': KidSavingsCompareCalc,
   'heloc-calculator': HelocCalc,
+  'heloc-vs-cash-out-refi-calculator': CashOutRefiCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
