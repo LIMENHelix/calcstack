@@ -4261,6 +4261,60 @@ export function UnpaidInternshipCalc() {
   )
 }
 
+// LABOR BURDEN — the true hourly cost of an employee vs what you must bill. Node-verified: $25/hr wage, 2,080 paid hrs but 1,800 billable (PTO/holidays/training), FICA+FUTA/SUTA 9.65%, workers comp 8%, health $6,000/yr → total $67,178 → $32.30 per PAID hour but $37.32 per BILLABLE hour; at a 20% MARGIN the breakeven bill rate is $46.65 (a 20% MARKUP gives $44.79 — margin ≠ markup is where contractors go broke). Honest edges: workers comp is the wild card (roofing ~25-40% of payroll, clerical ~0.5% — get YOUR class code rate, NCCI/state fund publishes it), billable-hour reality (between-jobs time, callbacks, warranty work — honest shops bill 70-85% of paid hours, not 100%), missing burdens to add in "other" (small tools, uniforms, truck time, training, safety programs, payroll-service fees), and the gut-check: if your bill rate is under 1.5× the wage, at least one cost is unpriced.
+export function LaborBurdenCalc() {
+  const [wage, setWage] = useNumber(25)
+  const [paid, setPaid] = useNumber(2080)
+  const [billable, setBillable] = useNumber(1800)
+  const [taxRate, setTaxRate] = useNumber(9.65)
+  const [wc, setWc] = useNumber(8)
+  const [health, setHealth] = useNumber(6000)
+  const [other, setOther] = useNumber(1500)
+  const [margin, setMargin] = useNumber(20)
+
+  const r = useMemo(() => {
+    const base = wage * paid
+    const taxes = (base * taxRate) / 100
+    const comp = (base * wc) / 100
+    const total = base + taxes + comp + health + other
+    const perBillable = billable > 0 ? total / billable : 0
+    const perPaid = paid > 0 ? total / paid : 0
+    const m = Math.min(90, margin) / 100
+    const price = perBillable / (1 - m)
+    const markupEquiv = (price / perBillable - 1) * 100
+    return { base, taxes, comp, total, perBillable, perPaid, price, markupEquiv }
+  }, [wage, paid, billable, taxRate, wc, health, other, margin])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Field label="Base wage" value={wage} onChange={setWage} prefix="$" suffix="/hr" step="1" />
+          <Field label="Paid hours /yr" value={paid} onChange={setPaid} step="40" />
+          <Field label="Billable hours /yr" value={billable} onChange={setBillable} step="40" />
+          <Field label="Payroll taxes (FICA+SUTA/FUTA)" value={taxRate} onChange={setTaxRate} suffix="%" step="0.5" />
+          <Field label="Workers comp rate" value={wc} onChange={setWc} suffix="%" step="1" />
+          <Field label="Health/benefits /yr" value={health} onChange={setHealth} prefix="$" step="500" />
+          <Field label="Other burden /yr" value={other} onChange={setOther} prefix="$" step="250" />
+          <Field label="Target net margin" value={margin} onChange={setMargin} suffix="%" step="1" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Annual burdened cost" value={usd(r.total)} />
+          <Result label="Cost per billable hour" value={usd(r.perBillable)} />
+          <Result label="Breakeven bill rate" value={`${usd(r.price)}/hr`} big />
+          <Result label="= markup on cost" value={`${num(r.markupEquiv, 1)}%`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          A {usd(wage)}/hr employee costs {usd(r.perBillable)} per billable hour — to net {margin}% you must bill {usd(Math.round(r.price * 100) / 100)}/hr. That's a {num(r.markupEquiv, 1)}% markup on burdened cost, not {margin}%: margin divides by the PRICE, markup by the COST, and confusing them is the classic way contractors work all year for nothing.
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: annual cost = wage × paid hours + employer payroll taxes (7.65% FICA + SUTA/FUTA, typically 1–4% on early wages) + workers comp (get YOUR class-code rate — roofing runs 25–40% of payroll, clerical ~0.5%, NCCI or your state fund publishes the schedules) + benefits + other burden (small tools, uniforms, truck time, training, payroll-service fees). Divided by BILLABLE hours, not paid hours — PTO, holidays, drive time between jobs, callbacks, and warranty work are real costs that never invoice; honest shops bill 70–85% of paid hours. The margin/markup trap: a 20% net margin requires cost ÷ 0.80 = a 25% markup on cost; quoting "cost plus 20%" nets only 16.7%. Gut-check: a bill rate under 1.5× the wage almost always means a cost is unpriced. Estimates — your comp mod sheet and payroll reports govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -9910,6 +9964,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'job-hop-calculator': JobHopCalc,
   'walk-away-number-calculator': WalkAwayCalc,
   'unpaid-internship-calculator': UnpaidInternshipCalc,
+  'labor-burden-calculator': LaborBurdenCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,

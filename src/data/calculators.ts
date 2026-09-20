@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'labor-burden-calculator',
+    title: 'Labor Burden Calculator 2026 — True Employee Cost per Billable Hour & the Breakeven Bill Rate',
+    shortTitle: 'Labor Burden Calculator',
+    category: 'Trades & Engineering',
+    description:
+      'What a $25/hr employee really costs: payroll taxes, workers comp by class code, benefits, and non-billable hours — then the bill rate that actually hits your target margin (margin, not markup).',
+    tagline: 'A $25/hr tech costs $37.32 per billable hour — and a 20% margin needs a $46.65 bill rate, not the $44.79 that "cost plus 20%" produces.',
+    intro:
+      'The wage is the start of labor cost, not the end. A $25/hr employee paid for 2,080 hours but billable for 1,800 carries $5,018 of employer payroll taxes, $4,160 of workers comp at an 8% trade rate, and $6,000 of benefits — $67,178 a year, or $37.32 per billable hour. To net a 20% margin you must bill $46.65/hr — because margin divides by the PRICE while markup divides by the COST, and "cost plus 20%" ($44.79) quietly nets only 16.7%. That confusion is the classic way contractors work all year for nothing. This calculator builds the burdened cost line by line and solves the breakeven bill rate, so bids start from arithmetic instead of the going rate down the street.',
+    howItWorks: [
+      'Enter the base wage and paid hours per year (2,080 is full-time).',
+      'Enter BILLABLE hours honestly — PTO, holidays, drive time, and callbacks never invoice.',
+      'Add payroll taxes (7.65% FICA + SUTA/FUTA), your workers-comp class-code rate, and benefits.',
+      'Add other burden: small tools, uniforms, truck time, training.',
+      'Read the burdened cost per billable hour and the bill rate that hits your target margin.',
+    ],
+    faq: [
+      {
+        q: 'Why divide by billable hours instead of paid hours?',
+        a: 'Because only billable hours produce revenue, but all paid hours produce cost. A tech paid 2,080 hours who bills 1,800 loses 280 hours to PTO, holidays, training, drive time between jobs, and warranty callbacks — that time is real cost that never invoices, so the hours that DO invoice must carry it. At $25/hr the gap moves the cost from $32.30 to $37.32 per hour — bid off the paid-hour number and every job leaks $5/hr. Honest shops track the real ratio for a year; most land at 70–85% of paid hours. New shops should model 75% and be pleasantly surprised, not model 100% and be broke.',
+      },
+      {
+        q: 'What workers comp rate should I use?',
+        a: 'YOUR class code\'s rate, from your policy\'s declaration page or the NCCI/state-fund schedule — the spread across trades is enormous and generic averages are dangerous. Clerical work runs ~0.5% of payroll, carpentry 8–12%, roofing 25–40%. Also check your experience modifier (e-mod): a 1.25 mod inflates the published rate 25%, and it follows your claims history for three years. If you\'ve never looked at the mod worksheet, that alone is worth the exercise — safety programs that improve the mod are one of the highest-ROI investments a trade business can make. Never bid a labor-heavy job off last year\'s comp invoice without adjusting for payroll growth.',
+      },
+      {
+        q: 'Margin vs markup — why does everyone get this wrong?',
+        a: 'Because they divide by different things, and the difference compounds invisibly. Markup multiplies COST: $37.32 × 1.20 = $44.79. Margin divides by PRICE: to keep 20% of every dollar billed, cost must be 80% of price, so $37.32 ÷ 0.80 = $46.65. Quote "cost plus 20%" all year and your P&L shows 16.7% — the missing 3.3 points on $500k of labor revenue is $16,500 that vanished while the books looked busy. The fix is mechanical: decide your target NET margin, divide burdened cost by (1 − margin), and never quote a markup number again. The gut-check that catches unpriced costs: a bill rate below 1.5× the wage almost always means something — comp, non-billable time, benefits — isn\'t in the number.',
+      },
+    ],
+  },
+  {
     slug: 'unpaid-internship-calculator',
     title: 'Unpaid Internship Calculator 2026 — The True Cost of "Great Experience" vs the Career Premium It Buys',
     shortTitle: 'Unpaid Internship Cost',

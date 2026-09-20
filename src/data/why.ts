@@ -77,6 +77,8 @@ export const WHY_USE: Record<string, string> = {
     'Tech employees use it before vest day: 400 shares at $150 is $60,000 of ordinary income, the default 22% withholding leaves a $6,000 gap at the 32% bracket — and the sell-vs-hold frame ("would you buy it with cash?") settles the rest.',
   'iso-vs-nso-calculator':
     'Employees with options use it before exercising: NSO spreads tax at 35% immediately ($172.5k out on a $350k spread) while ISOs defer regular tax but cast a ~$91k AMT shadow — and the December exercise keeps the escape hatch open.',
+  'labor-burden-calculator':
+    'Owners use it before bidding: a $25/hr tech costs $37.32 per billable hour after taxes, comp, benefits, and non-billable time — and a 20% margin needs a $46.65 bill rate, not the $44.79 that "cost plus 20%" produces.',
   'unpaid-internship-calculator':
     'Students use it before accepting: a 12-week unpaid internship costs $12,000 against a $20/hr summer job — it must lift starting salary $1,782/yr to break even, and NACE data says paid interns get both more offers and higher starts.',
   'walk-away-number-calculator':
