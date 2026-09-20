@@ -201,6 +201,10 @@ export const WHY_USE: Record<string, string> = {
     'Trade contractors use it before renewal: $500k payroll at $5.50/$100 with a 1.25 mod is $34,375/yr — the class code drives more than the payroll, and a sub without a COI lands on your payroll at audit.',
   'emr-impact-calculator':
     'Trade contractors use it after a claim: a $30k claim that moves the mod to 1.22 costs $48,150 all-in — three years of surcharge on top — and the formula punishes frequency harder than severity.',
+  'crew-downtime-calculator':
+    'Contractors use it before blaming the bid: 45 idle minutes a day across a 5-person crew burns $71,562/yr — a full salary spent standing around, fixable with a 15-minute huddle and next-day staging.',
+  'change-order-calculator':
+    'Contractors use it before the scope creeps: $8,500 of direct work prices at $11,550 with OH&P and 3 days of general conditions — signed before the work, or it becomes an invoice argument.',
   'qlac-calculator':
     'Retirees with surplus IRA money use it before the first RMD: $210,000 moved to a QLAC cuts the forced withdrawal $7,924/yr at 73 and the tax $1,743 — but the annuity breakeven is ~90.8, so it\'s longevity insurance with a tax delay, not an investment.',
   'q4-equipment-timing-calculator':

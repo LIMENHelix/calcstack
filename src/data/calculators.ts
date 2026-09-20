@@ -3098,6 +3098,68 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'crew-downtime-calculator',
+    title: 'Crew Downtime Cost Calculator — What 45 Idle Minutes a Day Costs a Year',
+    shortTitle: 'Crew Downtime Cost',
+    category: 'Trades & Engineering',
+    description:
+      'Annualize crew idle time — loaded labor and idle equipment per lost hour per day — and see why a 15-minute huddle and next-day staging are the cheapest fixes in construction management.',
+    tagline: '45 lost minutes a day across a 5-person crew burns $71,562/yr — a full salary spent standing around. Downtime is invisible daily and enormous annually.',
+    intro:
+      'Downtime never looks expensive at 9 a.m. — it is 45 minutes of waiting on materials, an unclear drawing, a missing inspection. Annualized, it is a salary: five crew at $55/hr loaded losing 45 minutes a day burns $51,562 of labor plus $20,000 of idle equipment across 250 workdays — $71,562, or $1,376 every single week. The fixes are logistics, not speed: a 15-minute morning huddle, materials staged the night before, a two-week lookahead, and one decision channel. This calculator converts your idle minutes into the annual number that justifies them — and the number that belongs inside your labor rate.',
+    howItWorks: [
+      'Enter crew size and loaded labor rate (wage + burden — use the labor-burden calculator).',
+      'Enter honestly lost hours per day (field studies put unmanaged crews at 0.75–1.5).',
+      'Enter workdays per year and idle equipment cost per day.',
+      'Read annual labor loss, equipment loss, and the weekly bleed.',
+    ],
+    faq: [
+      {
+        q: 'Where does crew downtime actually come from?',
+        a: 'Jobsite studies keep finding the same five leaks, and none of them are laziness. Materials logistics: the delivery that arrives at 11, the order that is short two items, the part nobody staged — crews stand while the supply chain improvises; next-day staging (tonight, before anyone leaves) is the fix. Information gaps: the task starts without complete scope, drawings, or a decision — the crew waits while the answer drives to the site; the morning huddle names these before they cost hours. Trade stacking and inspections: waiting on the previous trade or the inspector — a two-week lookahead schedule shared with subs and the inspector booked days ahead collapses this. Tool and equipment trips: the run back to the shop for the thing that should be on the truck — truck stock lists are a one-time project that pays forever. And rework: miscommunication redone is downtime twice — the work AND the undo. The pattern: every leak is management, not labor — which is why the fix budget is tiny against the loss. Track it with a simple daily field log (hours paid vs hours productive, by cause) for two weeks; the crew that logs it usually finds the number is worse than this calculator\'s default.',
+      },
+      {
+        q: 'What is a loaded labor rate and why does it matter here?',
+        a: 'Wages lie about cost; the loaded rate tells the truth. The $38/hr carpenter costs you $50–60/hr once payroll taxes (7.65% FICA plus unemployment), workers comp (class rates of $5–15 per $100 in the trades — see the workers comp calculator), benefits, PTO, and non-billable time stack on — the labor-burden calculator builds yours line by line. Using the loaded rate for downtime matters because idle time burns the FULL stack: the comp premium and payroll taxes run whether the crew is framing or waiting. The second-order effect most shops miss: downtime belongs inside your billing rate. If bids assume 100% productive hours but field logs show 87%, every estimate is under-priced by 13 points — you are bidding the crew you wish you had. Two ways to fix it: raise the productive-hours assumption by actually managing downtime (the huddle, the staging), or price the real number into the labor rate — either way this calculator is the measurement. The shops that outbid you profitably are not paying less for labor; they are wasting less of it.',
+      },
+      {
+        q: 'What is the realistic fix budget against this loss?',
+        a: 'Embarrassingly small — which is the point. The 15-minute morning huddle costs about $69/day on a five-person crew at $55 loaded (15 minutes × 5 × $55) — call it $17,000/yr against a $71,000 loss; if it reclaims even a third of the idle time it returns 2:1, and well-run huddles reclaim more. Next-day staging is supervisor time, not crew time: 30 minutes of a lead&apos;s evening against tomorrow morning\'s first hour of five. The two-week lookahead is a whiteboard and a Friday habit; the superintendent software versions (Buildertrend, Fieldwire, even a shared spreadsheet) cost $100–400/mo. Decision-channel discipline — one person empowered to answer crew questions in minutes — costs a phone call culture, not money. The equipment side: idle iron is priced at rental-equivalent rates ($80–300/day for the machines that matter), so moving the excavator to the next task or off-renting it between phases is pure capture. Total realistic program: under $25,000/yr of management time and software against a $71,562 leak, before counting the schedule compression that gets crews to the next job sooner. The barrier is never cost — it is that downtime is invisible until someone annualizes it. This calculator is the someone.',
+      },
+    ],
+  },
+  {
+    slug: 'change-order-calculator',
+    title: 'Change Order Pricing Calculator — Direct Cost, OH&P, and the Time Extension Nobody Prices',
+    shortTitle: 'Change Order Pricing',
+    category: 'Trades & Engineering',
+    description:
+      'Price change orders properly — direct cost plus overhead and profit markups plus general conditions for schedule extension — with the documentation discipline that keeps them from becoming disputes.',
+    tagline: '$8,500 of direct work prices at $11,550: 10% overhead + 10% profit + 3 days of general conditions at $450/day. Signed before the work, or it is an invoice argument.',
+    intro:
+      'Change orders are where construction profit is made or litigated. The honest structure: $8,500 of direct labor and materials, plus 10% overhead (office time, resequencing, coordination is real cost), plus 10% profit, plus the part owners never expect — schedule extension priced as general conditions, $450/day for supervision, trailer, fence, and insurance. Total: $11,550, and the signature lands BEFORE the work starts, because a change order written after the work is an invoice argument, not a contract. This calculator prices the change, and the FAQ carries the documentation discipline that keeps it collected.',
+    howItWorks: [
+      'Enter the direct cost of the changed work (labor + materials + subs).',
+      'Enter overhead and profit markups (10%/10% is the commercial standard; small disruptive changes justify more).',
+      'Enter the schedule extension in days and your general-conditions daily rate.',
+      'Read markup, time cost, and the total price — then get it signed.',
+    ],
+    faq: [
+      {
+        q: 'Why do change orders include markup on top of cost?',
+        a: 'Because the change costs more than the work. Direct cost — labor and materials — is only the visible layer. Overhead is real: the estimator re-pricing, the PM resequencing the schedule, the coordinator re-booking the sub, the office processing the paperwork — 10% is the industry-standard allowance baked into most contract forms (AIA and ConsensusDocs both assume it), and small, disruptive changes justify 15–20% because a $2,000 change consumes nearly the same office hours as a $20,000 one. Profit belongs on changed work for the same reason it belongs on base work — the contractor is not a cost-recovery service; the markup structure was the deal. The components owners resist most are the ones they cannot see: general conditions for time extensions (every added day is supervision, temporary facilities, insurance, and equipment on site — $300–600/day on commercial jobs, real money that owners instinctively treat as free) and remobilization when the change pulls a crew back. Owners reading this from the other side: the legitimate check is itemization — direct cost breakdown, labor hours and rates, material quotes, and the GCs rate — a contractor who itemizes earns the markup; one who waves at a lump sum invites the negotiation.',
+      },
+      {
+        q: 'Lump-sum or cost-plus for a change order?',
+        a: 'Match the pricing mode to the uncertainty, per change — not per project. Lump-sum (the contractor estimates, the owner accepts or negotiates) is right for defined scope: the owner wants a new door moved, a finish upgraded — known work, known productivity; it favors the contractor on price risk and the owner on certainty, and it forces the estimate discipline that keeps changes from metastasizing. Cost-plus with a guaranteed maximum fee is right for genuinely unknown conditions: rock in the trench, rot behind the wall, utilities that are not where the drawings swore they were — the owner pays actual cost plus a fixed or capped fee, saving the risk premium a lump sum would carry, but buying the obligation to audit tickets and receipts. The hybrid most contracts actually use: lump-sum when scope is definable, cost-plus with a not-to-exceed cap when it is not, with unit prices (per yard of rock, per square foot of unforeseen repair) pre-agreed in the base contract for the predictable unknowns — unit prices are the cheapest dispute insurance in construction. Whichever mode: the fee percentage, the GCs daily rate, and the documentation standard belong in the base contract, negotiated when everyone is friendly — change-order terms written mid-dispute are written in blood.',
+      },
+      {
+        q: 'How do I keep change orders from becoming disputes?',
+        a: 'Process, signed paper, and photos — the unglamorous trinity. The written-before-work rule is the whole game: scope, price, and time impact signed by both parties before mobilization; the contract should require written change orders and state that work performed without one is at the contractor\'s risk (contractors) or that directives must come from one authorized person (owners) — verbal directives on site are how both parties end up testifying. Scope discipline: the change order lists inclusions AND exclusions — "includes relocating the panel; excludes patching, painting, and ceiling repair" — because the argument later is always about the edges. Time impact in writing: every change states its schedule effect, even zero, so the cumulative float erosion cannot be relitigated at the end; owners should track cumulative change volume too — changes past 10% of contract value signal a scope failure at bid time and justify a frank conversation about the drawings. Documentation that wins: daily field reports (who, what, where, weather), dated photos before/during/after the changed work, delivery tickets, and the owner\'s initials on field directives — in a dispute, the side with contemporaneous records beats the side with memories. And the deductive mirror: changes that REMOVE work run the same math in reverse — credit equals direct cost saved plus markup, not the full retail line item; owners who know that clause and contractors who honor it keep the relationship through the project.',
+      },
+    ],
+  },
+  {
     slug: 'qlac-calculator',
     title: 'QLAC Calculator 2026 — Move $210,000 Out of Your RMDs, Income at 85, the Real Breakeven',
     shortTitle: 'QLAC Calculator',

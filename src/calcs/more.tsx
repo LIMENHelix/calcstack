@@ -6971,6 +6971,93 @@ export function EmrImpactCalc() {
   )
 }
 
+// CREW DOWNTIME COST — node-verified defaults: 5-person crew × $55/hr loaded × 0.75 hr/day lost × 250 workdays = $51,562/yr of idle labor + $80/day idle equipment ($20,000/yr) = $71,562/yr — $1,376/week leaking through material waits, missing plans, and permit delays. The 15-minute morning huddle and next-day material staging are the cheapest fixes in construction management.
+export function CrewDowntimeCalc() {
+  const [crew, setCrew] = useNumber(5)
+  const [rate, setRate] = useNumber(55)
+  const [lost, setLost] = useNumber(0.75)
+  const [days, setDays] = useNumber(250)
+  const [equip, setEquip] = useNumber(80)
+
+  const r = useMemo(() => {
+    const laborLoss = crew * rate * lost * days
+    const equipLoss = equip * days
+    const total = laborLoss + equipLoss
+    const perWk = total / 52
+    const perMinDay = (crew * rate * (1 / 60) + equip / 8) // value of one minute across crew per day
+    return { laborLoss, equipLoss, total, perWk, perMinDay }
+  }, [crew, rate, lost, days, equip])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Crew size" value={crew} onChange={setCrew} step="1" />
+          <Field label="Loaded labor rate" value={rate} onChange={setRate} prefix="$" suffix="/hr" step="5" />
+          <Field label="Lost hours per day" value={lost} onChange={setLost} suffix="hrs" step="0.25" />
+          <Field label="Workdays per year" value={days} onChange={setDays} step="10" />
+          <Field label="Idle equipment per day" value={equip} onChange={setEquip} prefix="$" step="20" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Idle labor /yr" value={usd(Math.round(r.laborLoss))} />
+          <Result label="Idle equipment /yr" value={usd(Math.round(r.equipLoss))} />
+          <Result label="Total downtime cost /yr" value={usd(Math.round(r.total))} big />
+          <Result label="Per week" value={usd(Math.round(r.perWk))} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Losing ${lost} hr/day across a ${crew}-person crew burns ${usd(Math.round(r.total))}/yr — ${usd(Math.round(r.perWk))} every week. That is a full additional hire's salary spent on standing around. The fix is logistics, not speed: materials staged tonight, plan reviewed this morning, decisions made before the crew arrives.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: labor loss = crew × loaded rate × lost hours × workdays; loaded rate means wage + burden (taxes, comp, benefits — the labor-burden calculator builds it; $55 is a fair $38-wage equivalent). Where the 45 minutes goes, ranked by jobsite studies: waiting on materials or the delivery window, unclear scope or missing drawings at task start, waiting on another trade or an inspection, tool/equipment trips, and rework from miscommunication. The fixes are famously cheap against this number: the 15-minute morning huddle (today&apos;s tasks, materials confirmed, blockers named — costs $69/day on this crew, returns multiples), next-day staging (materials on site and located before the shift, not during it), the two-week lookahead schedule (so the plumber knows the inspector comes Tuesday), and a single decision channel (crew questions get answered in minutes, not after lunch). The compounding insight: downtime is invisible in any single day — 45 minutes feels like nothing — but annualized it is a full salary, which is why the shops that track it (simple daily field logs: hours worked vs hours paid) outbid the ones that feel it. Estimating tie-in: if your bids assume 100% productive hours and the field delivers 87%, every bid is under-priced by the difference — this number belongs in your labor rate, not your surprises. Estimate — your field logs and payroll burden govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
+// CHANGE ORDER PRICING — node-verified defaults: direct cost $8,500 + 10% overhead + 10% profit = $10,200 + 3 days of general conditions at $450/day ($1,350) = $11,550 contract price. The discipline: OH&P markup on direct costs, time extension priced as GENERAL CONDITIONS per day (not free), and everything signed BEFORE the work starts — the change order written after the work is an invoice argument, not a contract.
+export function ChangeOrderCalc() {
+  const [direct, setDirect] = useNumber(8500)
+  const [oh, setOh] = useNumber(10)
+  const [profit, setProfit] = useNumber(10)
+  const [gcDays, setGcDays] = useNumber(3)
+  const [gcRate, setGcRate] = useNumber(450)
+
+  const r = useMemo(() => {
+    const markup = direct * ((oh + profit) / 100)
+    const gcs = gcDays * gcRate
+    const price = direct + markup + gcs
+    const margin = price > 0 ? ((price - direct - gcs) / price) * 100 : 0
+    return { markup, gcs, price, margin }
+  }, [direct, oh, profit, gcDays, gcRate])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Field label="Direct cost (labor+materials)" value={direct} onChange={setDirect} prefix="$" step="500" />
+          <Field label="Overhead markup" value={oh} onChange={setOh} suffix="%" step="1" />
+          <Field label="Profit markup" value={profit} onChange={setProfit} suffix="%" step="1" />
+          <Field label="Schedule extension" value={gcDays} onChange={setGcDays} suffix="days" step="1" />
+          <Field label="General conditions" value={gcRate} onChange={setGcRate} prefix="$" suffix="/day" step="50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Result label="Direct cost" value={usd(Math.round(direct))} />
+          <Result label="OH&P markup" value={usd(Math.round(r.markup))} />
+          <Result label="Time extension (GCs)" value={usd(Math.round(r.gcs))} />
+          <Result label="Change order price" value={usd(Math.round(r.price))} big />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {`Price the change at ${usd(Math.round(r.price))}: ${usd(Math.round(direct))} direct + ${usd(Math.round(r.markup))} OH&P + ${usd(Math.round(r.gcs))} for ${gcDays} days of schedule. Get it signed before the work starts — a change order written after the work is an invoice argument, not a contract.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: price = direct cost × (1 + OH% + profit%) + extension days × general-conditions rate. The components owners miss: overhead markup is real (office time, resequencing, sub coordination — 10% is the industry-standard allowance, 15–20% on small disruptive changes), and time extensions carry GENERAL CONDITIONS — supervision, trailer, fence, insurance at $300–600/day on commercial work — which owners treat as free and contractors must not. Pricing mode discipline: lump-sum changes (you estimate, they accept) favor the contractor on scope-creep-prone work; cost-plus with a capped fee favors the owner on genuinely unknown conditions (rock, rot, hidden utilities) — pick per change, not per project. The process that prevents disputes: written scope with inclusions AND exclusions, priced time impact, signature before mobilization, and a contract clause requiring written change orders — the handshake change is the lawsuit&apos;s first exhibit. Documentation that wins: daily field reports, photos before/during/after, and the owner&apos;s initials on the directive. Deductive changes run the same math in reverse (credit = direct saved × markup — never credit the full retail). Track cumulative change volume: changes past 10% of contract value signal a scope failure at bid time — worth its own post-mortem. Estimate — your estimate and the contract&apos;s change clause govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -12676,6 +12763,8 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'saas-creep-calculator': SaasCreepCalc,
   'workers-comp-calculator': WorkersCompCalc,
   'emr-impact-calculator': EmrImpactCalc,
+  'crew-downtime-calculator': CrewDowntimeCalc,
+  'change-order-calculator': ChangeOrderCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
