@@ -4301,3 +4301,107 @@ export function GasTripCalc() {
     </CardContent></Card>
   )
 }
+
+
+// IDEAL WEIGHT — node-verified: 5'10" (70 in) male → Devine 73 kg, Robinson 71, Miller 70.3; BMI healthy band at 1.778 m = 58.5–79.0 kg (129–174 lb). Female 5'5" → Devine 57 kg. Four formulas because they span a band — the band IS the answer.
+export function IdealWeightCalc() {
+  const [sex, setSex] = useState('m')
+  const [inches, setInches] = useNumber(70)
+  const r = useMemo(() => {
+    if (inches < 48 || inches > 84) return null
+    const over = inches - 60
+    const m = sex === 'm'
+    const devine = (m ? 50 : 45.5) + 2.3 * over
+    const robinson = (m ? 52 : 49) + (m ? 1.9 : 1.7) * over
+    const miller = (m ? 56.2 : 53.1) + (m ? 1.41 : 1.36) * over
+    const hamwi = (m ? 48 : 45.5) + (m ? 2.7 : 2.2) * over
+    const hM = inches * 0.0254
+    const bmiLo = 18.5 * hM * hM
+    const bmiHi = 24.9 * hM * hM
+    return { devine, robinson, miller, hamwi, bmiLo, bmiHi, avg: (devine + robinson + miller + hamwi) / 4 }
+  }, [sex, inches])
+  const lb = (kg: number) => kg * 2.20462
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium">Sex</label>
+          <select value={sex} onChange={(e) => setSex(e.target.value)} className="flex h-9 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="m">Male</option>
+            <option value="f">Female</option>
+          </select>
+        </div>
+        <Field label="Height (total inches — 5 ft 10 = 70)" value={inches} onChange={setInches} suffix="in" step="1" />
+      </div>
+      {r && (
+        <>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <Result label="Devine" value={`${num(lb(r.devine), 0)} lb`} big />
+            <Result label="Robinson" value={`${num(lb(r.robinson), 0)} lb`} />
+            <Result label="Miller" value={`${num(lb(r.miller), 0)} lb`} />
+            <Result label="Hamwi" value={`${num(lb(r.hamwi), 0)} lb`} />
+            <Result label="Formula average" value={`${num(lb(r.avg), 0)} lb (${num(r.avg, 1)} kg)`} big />
+            <Result label="BMI healthy band" value={`${num(lb(r.bmiLo), 0)}–${num(lb(r.bmiHi), 0)} lb`} />
+          </div>
+          <p className="text-sm text-muted-foreground">The four formulas span {num(lb(r.bmiLo), 0)}–{num(lb(r.hamwi), 0)} lb — treat it as a zone, not a target. Frame size, muscle mass, and age move your personal number within it.</p>
+        </>
+      )}
+      <p className="text-xs text-muted-foreground">Devine (1974, drug-dosing origin), Robinson, Miller, and Hamwi all use height-past-5-feet slopes. None account for muscle: a lean 200-lb athlete reads "overweight" on every one. Pair with body-fat % for the honest picture.</p>
+    </CardContent></Card>
+  )
+}
+
+// TIRE SIZE DECODER — node-verified: 225/45R17 → sidewall 101.25 mm, diameter 634.3 mm = 24.97 in, 808 revs/mile; upsize 235/40R18 → 25.40 in, speedometer error 1.7% (reads 59.0 at a true 60). Parse the sidewall code, price the speedometer error before the plus-size.
+export function TireSizeCalc() {
+  const [width, setWidth] = useNumber(225)
+  const [aspect, setAspect] = useNumber(45)
+  const [rim, setRim] = useNumber(17)
+  const [width2, setWidth2] = useNumber(235)
+  const [aspect2, setAspect2] = useNumber(40)
+  const [rim2, setRim2] = useNumber(18)
+  const calc = (w: number, a: number, rimIn: number) => {
+    const side = w * (a / 100)
+    const diaMm = rimIn * 25.4 + 2 * side
+    const diaIn = diaMm / 25.4
+    const circ = Math.PI * diaMm
+    return { side, diaMm, diaIn, circMm: circ, revsPerMile: 1609344 / circ }
+  }
+  const r = useMemo(() => {
+    if (width <= 0 || aspect <= 0 || rim <= 0) return null
+    const t1 = calc(width, aspect, rim)
+    const t2 = width2 > 0 && aspect2 > 0 && rim2 > 0 ? calc(width2, aspect2, rim2) : null
+    const err = t2 ? ((t2.diaMm / t1.diaMm) - 1) * 100 : null
+    return { t1, t2, err }
+  }, [width, aspect, rim, width2, aspect2, rim2])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <p className="text-sm font-medium">Current: {width}/{aspect}R{rim}</p>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="Width" value={width} onChange={setWidth} suffix="mm" step="5" />
+        <Field label="Aspect ratio" value={aspect} onChange={setAspect} suffix="%" step="5" />
+        <Field label="Rim" value={rim} onChange={setRim} suffix="in" step="1" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label="Sidewall height" value={`${num(r.t1.side, 1)} mm`} />
+          <Result label="Overall diameter" value={`${num(r.t1.diaIn, 2)} in`} big />
+          <Result label="Revolutions per mile" value={num(r.t1.revsPerMile, 0)} />
+        </div>
+      )}
+      <p className="text-sm font-medium pt-2">Compare size: {width2}/{aspect2}R{rim2}</p>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="Width" value={width2} onChange={setWidth2} suffix="mm" step="5" />
+        <Field label="Aspect ratio" value={aspect2} onChange={setAspect2} suffix="%" step="5" />
+        <Field label="Rim" value={rim2} onChange={setRim2} suffix="in" step="1" />
+      </div>
+      {r?.t2 && r.err !== null && (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Result label="New diameter" value={`${num(r.t2.diaIn, 2)} in`} />
+          <Result label="Diameter change" value={`${r.err >= 0 ? '+' : ''}${num(r.err, 1)}%`} big />
+          <Result label="Speedo reads 60, true speed" value={`${num(60 * (1 + r.err / 100), 1)} mph`} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">225/45R17 = 225 mm wide, sidewall 45% of width, 17-in rim. Plus-sizing rule: keep total diameter within ±3% — beyond that the speedometer, ABS, and gearing all drift. Lower profile sharpens steering and roughens the ride, same trade every time.</p>
+    </CardContent></Card>
+  )
+}

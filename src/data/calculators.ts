@@ -5286,6 +5286,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'ideal-weight-calculator',
+    title: 'Ideal Weight Calculator — Devine, Robinson, Miller, Hamwi & BMI Band',
+    shortTitle: 'Ideal Weight',
+    category: 'Health & Life',
+    description:
+      'Ideal body weight by the four classic medical formulas plus the BMI healthy band — see the zone they agree on instead of one rigid number.',
+    tagline: 'At 5 ft 10: Devine says 161 lb, Robinson 157, Miller 155, Hamwi 165 — the formulas span a zone, and the zone is the honest answer.',
+    intro:
+      '"Ideal weight" has no single answer — medicine uses four different formulas (Devine, Robinson, Miller, Hamwi), all built from height and sex, all disagreeing by a few pounds. This calculator runs all four plus the BMI healthy band, because the truthful output is a range, not a verdict — and the FAQ explains what none of them can see: muscle, frame, and age.',
+    howItWorks: [
+      'Enter sex and height in total inches (5 ft 10 = 70).',
+      'Read all four medical formulas side by side.',
+      'The formula average is the consensus estimate.',
+      'The BMI band (18.5–24.9) gives the widest healthy zone.',
+      'Adjust for frame and muscle — formulas can\'t see either.',
+    ],
+    faq: [
+      {
+        q: 'Which ideal weight formula is most accurate?',
+        a: 'None — they were built for drug dosing (Devine, 1974) and clinical convenience, not body composition, and studies show they span a 5–10% band that all sits within healthy variation. Devine: 50 kg + 2.3 kg per inch over 5 ft (45.5 for women). Robinson nudges lower, Miller lower still, Hamwi higher. The right use: treat the four outputs as a zone — at 5 ft 10 that zone runs roughly 155–165 lb for men. All of them share the fatal blind spot: they see height only, so a muscular 200-lb athlete and a sedentary 200 lb read identically "overweight." That is why clinicians pair these with waist circumference and body-fat percentage before calling anything ideal.',
+      },
+      {
+      q: 'How does frame size change ideal weight?',
+        a: 'Meaningfully — the classic adjustment is ±10%: small frame subtracts 10% from the formula result, large frame adds it. The wrist test estimates frame: wrap thumb and middle finger around the opposite wrist — overlap means small frame, just touching is medium, a gap is large. At 5 ft 10 male with a 160 lb formula average: small frame ~145 lb, large frame ~175 lb — and both can be perfectly healthy, which is a 30-pound spread the raw formulas never mention. Muscle density compounds it: muscle is ~18% denser than fat, so two people at identical weight and height can wear different sizes. The most honest "ideal weight" combines the formula zone with performance markers — resting heart rate, blood pressure, waist-to-height ratio under 0.5 — rather than the scale alone.',
+      },
+      {
+        q: 'Is BMI or ideal weight better?',
+        a: 'They are the same blindness with different packaging — both reduce you to height and weight. BMI\'s healthy band (18.5–24.9) at least frames the answer as a range: at 5 ft 10, 129–174 lb. The Devine-class formulas produce a point estimate inside it. Where both fail identically: athletes (BMI called prime Michael Jordan "overweight"), the elderly (muscle loss drops weight while fat rises — "normal weight obesity"), and tall/short extremes where the height-squared scaling distorts. The metrics that add real information: waist-to-height ratio (under 0.5 — the strongest simple predictor of cardiometabolic risk), body-fat percentage (healthy roughly 10–20% men, 18–28% women), and resting blood markers. Use this calculator\'s zone as the starting hypothesis, then let the waistband and the annual physical arbitrate.',
+      },
+    ],
+  },
+  {
+    slug: 'tire-size-calculator',
+    title: 'Tire Size Calculator — Decode 225/45R17, Compare Sizes, Speedo Error',
+    shortTitle: 'Tire Size Calculator',
+    category: 'Auto & Transport',
+    description:
+      'Decode any tire size — sidewall height, overall diameter, revolutions per mile — and compare a new size for speedometer error before you plus-size.',
+    tagline: '225/45R17 is 24.97 inches tall and turns 808 times per mile. Jump to 235/40R18 and your speedometer reads 59 at a true 60 — inside the 3% rule.',
+    intro:
+      'The code on your sidewall — 225/45R17 — is three numbers: width in millimeters, sidewall as a percentage of width, rim diameter in inches. This calculator decodes any size into overall diameter and revs per mile, then compares a second size so you can price the speedometer error before buying wheels — because diameter is what the speedo, ABS, and gearing all assume.',
+    howItWorks: [
+      'Enter current size: width / aspect ratio / rim.',
+      'Read sidewall height, overall diameter, revs per mile.',
+      'Enter the size you\'re considering.',
+      'Check the diameter change — stay within ±3%.',
+      'See true speed when the speedometer reads 60.',
+    ],
+    faq: [
+      {
+        q: 'How do I read a tire size like 225/45R17?',
+        a: 'Three numbers in two unit systems, because tires are globally weird: 225 is the section width in millimeters; 45 is the aspect ratio — sidewall height as 45% of width (225 × 0.45 = 101.25 mm); R means radial construction (nearly everything now); 17 is the rim diameter in inches. Overall diameter = rim + two sidewalls: 17 × 25.4 + 2 × 101.25 = 634.3 mm = 24.97 inches. Variations you\'ll meet: LT sizes (LT265/75R16, load-rated for trucks), flotation sizes (35×12.50R17 = diameter×width, off-road style), and the trailing load/speed index (94V: 1,477 lb per tire, 149 mph rated). The aspect ratio history lesson: 70-series was standard in the 1970s; today\'s 35–45 series exist because bigger brakes and looks demanded shorter sidewalls.',
+      },
+      {
+        q: 'What is the 3% rule for changing tire size?',
+        a: 'Keep the new overall diameter within ±3% of stock — because your speedometer, odometer, ABS, stability control, and transmission shift points are all calibrated to stock diameter. Bigger tires make you go faster than indicated (reads 60, actually 61+); smaller make you slower. Beyond 3%: speedometer tickets you didn\'t earn, ABS faults, incorrect shift timing, and potential rubbing on full lock or full suspension compression. The plus-sizing recipe that stays safe: +1 inch of rim needs −5 points of aspect ratio at similar width (225/45R17 → 225/40R18 keeps diameter within 1%). Check clearance too — wider isn\'t just taller math: 10 mm of extra width can rub the strut or fender liner even when diameter matches.',
+      },
+      {
+        q: 'Does bigger wheels and lower profile actually help?',
+        a: 'Steering sharpens, everything else pays. Shorter sidewalls flex less, so turn-in response and cornering stability genuinely improve — that is why sports cars ship on 40-series and lower. The costs: ride harshness rises (the sidewall is the first suspension), pothole damage risk jumps (less air cushion between rim and road — bent 19-inch rims are a pothole-season ritual), tire prices climb steeply with rim diameter, and winter performance usually suffers. Range matters on EVs: the same car on 21-inch wheels can lose 5–10% of rated range versus 18s — Tesla and Rivian owners learn this at delivery. The sweet spot most engineers privately recommend: the middle trim\'s wheel size — the one the suspension was actually tuned around.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

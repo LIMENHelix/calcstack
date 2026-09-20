@@ -341,6 +341,10 @@ export const WHY_USE: Record<string, string> = {
     'Anyone staring at a power bill uses it: 100 W × 8 h at $0.17/kWh is $49.64 a year — price every appliance, find the vampires.',
   'gas-trip-cost-calculator':
     'Road trippers use it before booking: 300 miles at 28 mpg and $3.40 gas is $36.43 — split 4 ways, $9.11 each, round-trip toggle built in.',
+  'ideal-weight-calculator':
+    'Anyone setting a goal weight uses it: at 5 ft 10, Devine says 161 lb, Robinson 157, Miller 155 — the four formulas define a zone, not a verdict.',
+  'tire-size-calculator':
+    'Drivers plus-sizing wheels use it: 225/45R17 is 24.97 in tall; jump to 235/40R18 and the speedo reads 59 at a true 60 — within the 3% rule.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':
