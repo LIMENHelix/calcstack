@@ -5222,6 +5222,70 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'electricity-cost-calculator',
+    title: 'Electricity Cost Calculator — What Any Appliance Costs to Run',
+    shortTitle: 'Electricity Cost',
+    category: 'Home & Yard',
+    description:
+      'Cost per day, month, and year for any device from its wattage and hours of use — find the energy vampires on your power bill.',
+    tagline: 'A 100 W device running 8 hours a day at $0.17/kWh costs $49.64 a year. The dryer: $0.38 a load. The math your utility hopes you never do.',
+    intro:
+      'Electric bills arrive as one opaque number — this calculator decomposes it. Every device is watts × hours ÷ 1000 = kWh, times your rate. Price the dryer load ($0.38), the always-on server, the second fridge in the garage, and the space heater that quietly out-earns your raise in the wrong direction.',
+    howItWorks: [
+      'Enter the device wattage (on the label or brick).',
+      'Enter hours per day it actually runs.',
+      'Enter your rate — check the bill; US average ≈ $0.17/kWh.',
+      'Read daily, monthly, and yearly cost.',
+      'Repeat per device to reconstruct your whole bill.',
+    ],
+    faq: [
+      {
+        q: 'What uses the most electricity in a house?',
+        a: 'The hierarchy is consistent: HVAC dominates at 40–50% of a typical bill (a 3.5 kW central AC running 6 hours daily is $107/month at average rates), water heating second at ~14–18% (4.5 kW element, ~2 hours of run time), then the dryer ($0.38/load adds up to $46/year at 3 loads weekly), refrigeration ~8%, and lighting now under 5% thanks to LEDs. The vampire tier deserves its audit: cable boxes and game consoles idle at 10–30 W continuously — $15–45/year each for doing nothing. The audit method that works: run this calculator on the top five suspects, and you will find 80% of the bill. A $20 plug-in kill-a-watt meter catches the liars whose labels don\'t match real draw.',
+      },
+      {
+        q: 'How do I find my electricity rate?',
+        a: 'It is on the bill but disguised: divide the total dollar amount by total kWh used — that blended number (usually $0.12–0.25 nationally, ~$0.17 average) is the honest rate because it includes delivery charges and fees that the advertised "generation rate" hides. Watch the traps: tiered pricing (rate jumps after a baseline), time-of-use plans (peak afternoon power can cost 2–3× off-peak — huge for EV charging timing), and fixed monthly charges that make your marginal kWh cheaper than your average. Hawaii (~$0.40+), California (~$0.30), and the Northeast run high; Louisiana, Washington, and Idaho (~$0.10) are the cheap seats — which is why EV economics and heat-pump math flip completely by state.',
+      },
+      {
+        q: 'Do devices use power when they are off?',
+        a: 'Yes — standby ("vampire") draw typically runs 1–10 W per device, and a house full of them burns 50–100 W continuously: $75–150/year. The offenders: cable/DVR boxes (20–45 W even "off" — among the worst), game consoles on instant-on (10–15 W), smart speakers (2–4 W), chargers left plugged in (~0.3 W, negligible despite the reputation), and anything with a clock display. The math decides which battles matter: a 25 W DVR costs $37/year — smart-strip territory; a 0.3 W phone charger costs 45 cents — ignore it. Rule of thumb for the audit: every watt of 24/7 draw costs about $1.50/year at average rates, so round up the usual 10 W+ suspects and unplug with confidence.',
+      },
+    ],
+  },
+  {
+    slug: 'gas-trip-cost-calculator',
+    title: 'Gas Trip Cost Calculator — Fuel for Any Drive, Split Per Person',
+    shortTitle: 'Gas Trip Cost',
+    category: 'Auto & Transport',
+    description:
+      'Fuel cost for any trip from distance, MPG, and gas price — round-trip option, per-person split, and the fuel-only cost per mile.',
+    tagline: '300 miles at 28 mpg and $3.40 gas: $36.43 — $9.11 each split four ways. And the EV version of the same trip: $14.57.',
+    intro:
+      'The road-trip budget question, answered honestly: distance ÷ MPG × price per gallon. This calculator adds the round-trip toggle, the per-person split that settles group-trip math, and the fuel-only cost per mile — the number that looks cheap until you learn the IRS prices the full cost of driving at roughly 70 cents a mile.',
+    howItWorks: [
+      'Enter the one-way distance in miles.',
+      'Enter your vehicle\'s real MPG (not the sticker — the trip computer).',
+      'Enter the gas price along your route.',
+      'Toggle round trip; add passengers for the per-person split.',
+      'Compare the fuel-per-mile to the ~70¢ full-cost mile.',
+    ],
+    faq: [
+      {
+        q: 'How do I calculate gas cost for a road trip?',
+        a: 'Miles ÷ MPG × price — 300 miles at 28 mpg burns 10.7 gallons, and at $3.40 that is $36.43. The accuracy upgrades: use your car\'s actual highway MPG (the trip computer\'s lifetime average, typically 10–20% below the EPA sticker), price gas along the route not at home (remote tourist corridors run 30–50¢ high), and add 10% for detours, traffic, and the wrong exit that cost 12 miles. Round-trip toggle doubles correctly. For groups, the per-person split settles the eternal debate — $9.11 each on a 4-person 300-mile trip is the number that ends arguments. EV alternative for the same trip at 3.5 mi/kWh on home electricity: about $14.57.',
+      },
+      {
+        q: 'Is it cheaper to drive or fly?',
+        a: 'Drive usually wins on cash for groups under ~600 miles; fly wins on time and often on TRUE cost for solo travelers. The honest driving number is not the $36 in gas — the IRS mileage rate (70¢/mile in 2025) prices depreciation, tires, maintenance, and insurance: a 300-mile round trip really costs ~$210 in vehicle wear plus fuel. A $150 flight beats that solo, loses to it for a family of four ($840 of driving vs $600 of fares). Time prices honestly too: 5 hours of driving vs 1 hour of flying plus 3 hours of airport. The crossover rule of thumb: solo beyond ~500 miles, fly; family of 3+ under 500 miles, drive. The sleeper variable: a rental car at destination can flip the math back.',
+      },
+      {
+        q: 'How can I improve my MPG on a road trip?',
+        a: 'Speed is the biggest lever: aerodynamic drag scales with velocity squared, so most cars peak near 50–60 mph and lose roughly 10–15% of MPG going 65 → 75 mph — on a 600-mile day, that is $8–12 for arriving 45 minutes sooner. Next: tires at door-sticker PSI (under-inflation by 10 PSI costs ~1–2%), roof boxes off when empty (a cargo carrier at highway speed costs 10–25%), smooth throttle (aggressive driving burns 15–30% more), and windows up above 45 mph (AC below that, aerodynamics above). Idling burns 0.2–0.5 gal/hour — drive-through lines are fuel bonfires. Realistic combined gain: 15–25% over a lead-foot baseline, which on a 1,200-mile vacation is a free tank of gas.',
+      },
+    ],
+  },
+  {
     slug: 'self-storage-roi-calculator',
     title: 'Self-Storage ROI Calculator — NOI, Cap Rate, and the Rate-Bump Engine',
     shortTitle: 'Self-Storage ROI',

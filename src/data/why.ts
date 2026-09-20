@@ -337,6 +337,10 @@ export const WHY_USE: Record<string, string> = {
     'Drivers and physics students learn the same law: ½mv² — a car at 100 km/h carries 463 kJ, at 50 km/h a quarter of that. Speed kills by squaring.',
   'velocity-calculator':
     'Bolt averaged 10.44 m/s over 9.58 s; a 4.5-second 0–100 launch is 0.63 g; 3 seconds of free fall is 105.9 km/h — v=d/t, a=Δv/t, and gravity.',
+  'electricity-cost-calculator':
+    'Anyone staring at a power bill uses it: 100 W × 8 h at $0.17/kWh is $49.64 a year — price every appliance, find the vampires.',
+  'gas-trip-cost-calculator':
+    'Road trippers use it before booking: 300 miles at 28 mpg and $3.40 gas is $36.43 — split 4 ways, $9.11 each, round-trip toggle built in.',
   'self-storage-roi-calculator':
     'Storage investors use it in underwriting: 120 units at 82% throw $80,590 NOI at 35% OpEx — and the 8% annual tenant bump is the yield engine apartments can only envy.',
   'car-wash-economics-calculator':

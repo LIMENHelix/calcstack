@@ -4232,3 +4232,72 @@ export function VelocityCalc() {
     </CardContent></Card>
   )
 }
+
+
+// ELECTRICITY COST — node-verified: 100 W × 8 h/day at $0.17/kWh → $0.136/day, $4.08/mo, $49.64/yr; dryer 3 kW × 45 min → $0.38/load; AC 3.5 kW × 6 h → $3.57/day. Watts × hours ÷ 1000 × rate — the bill, decomposed appliance by appliance.
+export function ElectricityCostCalc() {
+  const [watts, setWatts] = useNumber(100)
+  const [hours, setHours] = useNumber(8)
+  const [rate, setRate] = useNumber(0.17)
+  const r = useMemo(() => {
+    if (watts < 0 || hours < 0 || rate < 0) return null
+    const kwhDay = (watts * hours) / 1000
+    return { kwhDay, day: kwhDay * rate, month: kwhDay * rate * 30.4, year: kwhDay * rate * 365 }
+  }, [watts, hours, rate])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="Device power" value={watts} onChange={setWatts} suffix="W" step="10" />
+        <Field label="Hours per day" value={hours} onChange={setHours} suffix="h" step="0.5" />
+        <Field label="Electricity rate" value={rate} onChange={setRate} prefix="$" step="0.01" />
+      </div>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label={`${num(r.kwhDay, 2)} kWh/day`} value={`${usd(r.day, 3)}/day`} big />
+          <Result label="Per month" value={usd(r.month)} big />
+          <Result label="Per year" value={usd(r.year)} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">kWh = watts × hours ÷ 1000. References: LED bulb 10 W, fridge ~150 W cycling, dryer 3,000 W ($0.38/load), window AC 1,200 W, EV charging 7,200 W. US average rate ≈ $0.17/kWh — check your bill, Hawaii pays double and Louisiana half.</p>
+    </CardContent></Card>
+  )
+}
+
+// GAS TRIP COST — node-verified: 300 mi at 28 mpg with $3.40 gas → 10.71 gal = $36.43, $9.11/person split 4 ways; EV comparison at 3.5 mi/kWh × $0.17 = $14.57. Round-trip toggle and per-person split built in.
+export function GasTripCalc() {
+  const [miles, setMiles] = useNumber(300)
+  const [mpg, setMpg] = useNumber(28)
+  const [price, setPrice] = useNumber(3.4)
+  const [round, setRound] = useState(false)
+  const [people, setPeople] = useNumber(1)
+  const r = useMemo(() => {
+    if (miles <= 0 || mpg <= 0 || price < 0 || people < 1) return null
+    const total = miles * (round ? 2 : 1)
+    const gal = total / mpg
+    const cost = gal * price
+    return { total, gal, cost, per: cost / people, perMile: cost / total }
+  }, [miles, mpg, price, round, people])
+  return (
+    <Card><CardContent className="space-y-4 pt-6">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="Distance" value={miles} onChange={setMiles} suffix="mi" step="10" />
+        <Field label="Vehicle MPG" value={mpg} onChange={setMpg} suffix="mpg" step="1" />
+        <Field label="Gas price" value={price} onChange={setPrice} prefix="$" step="0.10" />
+        <Field label="People splitting" value={people} onChange={setPeople} step="1" />
+      </div>
+      <label className="flex items-center gap-2 text-sm">
+        <input type="checkbox" checked={round} onChange={(e) => setRound(e.target.checked)} className="h-4 w-4" />
+        Round trip
+      </label>
+      {r && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Result label={`Fuel for ${num(r.total, 0)} mi`} value={`${num(r.gal, 1)} gal`} />
+          <Result label="Trip cost" value={usd(r.cost)} big />
+          {people > 1 && <Result label="Per person" value={usd(r.per)} big />}
+          <Result label="Cost per mile (fuel only)" value={`${usd(r.perMile, 3)}/mi`} />
+        </div>
+      )}
+      <p className="text-xs text-muted-foreground">Fuel is only part of it — the IRS rate (70¢/mi in 2025) prices depreciation, tires, and maintenance in. A 300-mile round trip in a 28-mpg car: $21.86 in gas at $3.40, but ~$210 in true driving cost. EVs run ~$0.05/mi at home rates.</p>
+    </CardContent></Card>
+  )
+}

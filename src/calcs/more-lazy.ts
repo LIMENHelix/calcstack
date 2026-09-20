@@ -182,6 +182,8 @@ export const MORE_CALC_COMPONENTS: Record<string, LazyExoticComponent<ComponentT
   'force-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.ForceCalc }))),
   'kinetic-energy-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.KineticEnergyCalc }))),
   'velocity-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.VelocityCalc }))),
+  'electricity-cost-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.ElectricityCostCalc }))),
+  'gas-trip-cost-calculator': lazy(() => import('./more-waves/wave-8').then((m) => ({ default: m.GasTripCalc }))),
   'sabbatical-cost-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SabbaticalCostCalc }))),
   'self-storage-roi-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.SelfStorageCalc }))),
   'car-wash-economics-calculator': lazy(() => import('./more-waves/wave-5').then((m) => ({ default: m.CarWashCalc }))),
