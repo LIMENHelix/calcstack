@@ -1134,6 +1134,38 @@ export const CALCULATORS: CalculatorMeta[] = [
     ],
   },
   {
+    slug: 'generator-cost-calculator',
+    title: 'Generator Cost vs Outage Loss Calculator 2026 — Standby, Portable, or Nothing: the Expected-Loss Math',
+    shortTitle: 'Generator vs Outage Cost',
+    category: 'Home & Yard',
+    description:
+      'Is a whole-house generator worth it? Annualized installed cost and maintenance versus expected annual outage losses — food, hotels, lost income, and the sump-pump flood risk that dominates the math.',
+    tagline: 'Two outages a year plus a 4% sump-flood risk is $1,750/yr of expected loss — a $10k standby costs $1,149/yr annualized, and the math says yes.',
+    intro:
+      'Generators are bought emotionally and justified loosely — this calculator does it properly. A $10,000 standby unit over 15 years plus $250/yr maintenance annualizes to $1,149. Against it: two outages a year costing $575 each (food, a hotel night share, lost WFH income) plus the line that dominates — a 4% annual chance that a stopped sump pump turns a storm into a $15,000 basement, worth $600/yr by itself. Total expected loss: $1,750/yr, and the generator wins in outage-prone areas. The honest middle option matters too: a $1,100 portable with a transfer switch covers fridge, sump, and furnace blower for ~$186/yr annualized. Match the machine to the risk profile, not to the fear after the last storm.',
+    howItWorks: [
+      'Enter the standby installed cost, lifespan, and annual maintenance.',
+      'Enter outages per year from YOUR history — not the memorable ones, the actual count.',
+      'Price each outage: food loss, hotel share, lost work income.',
+      'Enter sump-flood risk and damage if you have a basement — this line dominates.',
+      'Read annualized generator cost vs expected annual loss and the verdict.',
+    ],
+    faq: [
+      {
+        q: 'Standby or portable — how do I actually choose?',
+        a: 'By outage frequency and what must never stop. A portable ($1,100 + $50/yr ≈ $186/yr annualized) with a transfer switch keeps the fridge, sump pump, and furnace blower alive — manual start, gasoline logistics, partial circuits, and you must be home and awake. The standby ($1,149/yr annualized) is automatic within seconds, runs the whole house on natural gas, and protects the home when you\'re away — the difference that matters for freeze-risk climates (pipes burst on day two, not hour two), medical devices, and anyone whose basement floods without the sump. The crossover is roughly: 2+ meaningful outages a year, a sump pump, or work-from-home income → standby wins; one blip a year and no basement → portable; rare outages and no critical loads → neither, and a $15 water alarm is your generator.',
+      },
+      {
+        q: 'What maintenance does a standby generator need?',
+        a: 'The $250/yr service isn\'t optional — it\'s what makes the unit worth buying. Annual maintenance covers oil and filter, battery check (the #1 failure point — a dead start battery means the auto-transfer clicks and nothing happens), spark plugs on schedule, and a full-load test. Skip it and two things die: the warranty (manufacturers require documented service) and the reliability you bought the thing for — a generator that fails during the outage it was bought for is worse than none, because it suppressed the portable backup plan. Self-exercise cycles (weekly automatic runs) keep seals healthy but don\'t replace the annual service. Budget the maintenance into the decision from day one; it\'s in this calculator\'s default for exactly that reason.',
+      },
+      {
+        q: 'Does a generator add resale value?',
+        a: 'In outage-prone markets, meaningfully — 50–75% of installed cost returns at sale by most appraiser estimates, and in storm corridors (Gulf Coast, ice-storm belts, fire-country PSPS areas) a standby is increasingly an expected feature that speeds the sale itself. In reliable-grid markets it returns less — buyers price it as a curiosity. This calculator deliberately EXCLUDES resale from the verdict, so a "generator wins" result is conservative; a close call in a storm-prone market tips further once resale is counted. Relatedly: insurance. Some carriers discount for standby generators (freeze and sump claims prevented); a few require disclosure of fuel storage for portables. Ask your agent — a 5% homeowner\'s discount is another $60–100/yr toward the machine.',
+      },
+    ],
+  },
+  {
     slug: 'tank-vs-tankless-calculator',
     title: 'Tank vs Tankless Water Heater Calculator 2026 — Annualized Cost, the Descaling Bill Nobody Quotes',
     shortTitle: 'Tank vs Tankless',

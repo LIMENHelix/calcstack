@@ -4871,6 +4871,60 @@ export function TankVsTanklessCalc() {
   )
 }
 
+// GENERATOR VS OUTAGE COST — expected annual outage loss vs annualized generator cost. Node-verified: standby unit $10k installed, 15-yr life, $250/yr maintenance → $1,149/yr annualized @4%; outage profile 2/yr × $575 each (food $300, hotel half-night avg $75, WFH income loss $200) + sump-failure flood risk 4%/yr × $15k = $600 → expected loss $1,750/yr → GENERATOR WINS in outage-prone areas. Portable alternative: $1,100/10yr + $50 maint = $186/yr (manual, partial circuits, gasoline logistics — a different product, priced here for contrast). Honest edges: the flood-risk line dominates (a sump pump that stops in a storm is the $15k basement — if you have a sump and storms, that line alone justifies backup), WFH income loss is real for remote workers (a deadline day lost is a day's billing), the standby's convenience premium vs portable is ~$960/yr (auto-transfer, whole house, natural gas — worth it for medical devices, freeze risk, or frequent outages; overkill for the once-a-year blip), standby maintenance is mandatory ($250/yr service or the warranty and the reliability both die), and resale (standby units return ~50-75% at sale in outage-prone markets — not counted here, so the win threshold is conservative).
+export function GeneratorCostCalc() {
+  const [genCost, setGenCost] = useNumber(10000)
+  const [life, setLife] = useNumber(15)
+  const [maint, setMaint] = useNumber(250)
+  const [outages, setOutages] = useNumber(2)
+  const [food, setFood] = useNumber(300)
+  const [hotel, setHotel] = useNumber(75)
+  const [income, setIncome] = useNumber(200)
+  const [floodRisk, setFloodRisk] = useNumber(4)
+  const [floodCost, setFloodCost] = useNumber(15000)
+
+  const r = useMemo(() => {
+    const r0 = 0.04
+    const ann = (n: number) => (1 - Math.pow(1 + r0, -n)) / r0
+    const genAnn = genCost / ann(Math.max(1, life)) + maint
+    const perOutage = food + hotel + income
+    const expLoss = outages * perOutage + (floodRisk / 100) * floodCost
+    const diff = expLoss - genAnn
+    return { genAnn, perOutage, expLoss, diff }
+  }, [genCost, life, maint, outages, food, hotel, income, floodRisk, floodCost])
+
+  return (
+    <Card>
+      <CardContent className="space-y-4 pt-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <Field label="Standby installed cost" value={genCost} onChange={setGenCost} prefix="$" step="500" />
+          <Field label="Lifespan" value={life} onChange={setLife} step="1" />
+          <Field label="Maintenance /yr" value={maint} onChange={setMaint} prefix="$" step="50" />
+          <Field label="Outages per year" value={outages} onChange={setOutages} step="0.5" />
+          <Field label="Food loss /outage" value={food} onChange={setFood} prefix="$" step="50" />
+          <Field label="Hotel /outage (avg)" value={hotel} onChange={setHotel} prefix="$" step="25" />
+          <Field label="Income loss /outage" value={income} onChange={setIncome} prefix="$" step="50" />
+          <Field label="Flood risk /yr (sump)" value={floodRisk} onChange={setFloodRisk} suffix="%" step="1" />
+          <Field label="Flood damage if it hits" value={floodCost} onChange={setFloodCost} prefix="$" step="1000" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <Result label="Generator annualized" value={`${usd(r.genAnn)}/yr`} />
+          <Result label="Expected outage loss" value={`${usd(r.expLoss)}/yr`} />
+          <Result big label={r.diff >= 0 ? 'Generator wins by' : 'Math favors no generator'} value={`${usd(Math.abs(r.diff))}/yr`} />
+        </div>
+        <div className="rounded-md border bg-muted/40 p-3 text-sm">
+          {r.diff >= 0
+            ? `Expected losses (${usd(Math.round(r.expLoss))}/yr) exceed the generator's annualized cost (${usd(Math.round(r.genAnn))}/yr) — the math backs the install, and it doesn't count the resale value or the first storm you sleep through.`
+            : `Pure math says skip it: ${usd(Math.round(r.expLoss))}/yr of expected loss vs ${usd(Math.round(r.genAnn))}/yr annualized. But a $1,100 portable (~$186/yr annualized) covers food and the sump at a fraction of the cost — match the machine to the risk.`}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Method: generator = installed cost ÷ PV annuity over lifespan + annual maintenance; losses = outages/yr × (food + hotel + income loss) + flood-risk% × flood damage. The flood line dominates where it applies: a sump pump that stops in a storm is a $15k basement, and at 4%/yr that risk alone is $600/yr — half the standby's cost before food is counted. WFH income loss is real for remote workers (a deadline day lost is a day's billing). The portable contrast matters: $1,100 + $50/yr maint ≈ $186/yr annualized covers fridge + sump + furnace blower via a transfer switch — manual and partial, but the right size for a once-a-year outage profile. Standby's premium (~$960/yr more) buys auto-transfer, whole-house coverage, and natural-gas fueling — worth it for medical devices, freeze-risk climates, or frequent outages; and standby units return 50–75% at resale in outage-prone markets (not counted — the win threshold is conservative). Maintenance is mandatory: skip the $250/yr service and the warranty dies with the reliability. Estimates — installer quotes and your outage history govern.
+        </p>
+      </CardContent>
+    </Card>
+  )
+}
+
 // QLAC — Qualified Longevity Annuity Contract, 2026 (SECURE 2.0 §202; IRS Notice 2025-67): move up to $210,000 per person (lifetime, indexed; old 25%-of-balance cap gone) out of a traditional IRA/401(k) into a fixed deferred income annuity. The premium EXITS the RMD base until payments begin (by the month after 85) — at 73 on the Uniform Lifetime Table (26.5), $210k cuts the RMD $7,924.53/yr, saving $1,743/yr at 22%. RMD ages: 73 (born ≤1959), 75 (1960+). Roth IRAs can't fund QLACs; fixed contracts only (no variable/indexed). The honest ledger: tax DEFERRAL not avoidance (payments are ordinary income at 85, likely at a lower bracket), total illiquidity until payout, insurer credit risk (state guaranty $250k–$500k typical), and mortality risk — die before breakeven (premium ÷ annual income from start age) and the insurer keeps the spread unless you pay for a return-of-premium rider (which cuts the payout). Node-verified: $1.5M IRA at 73 → RMD $56,603.77 → with $210k QLAC $48,679.25 (saves $7,924.53/yr, $1,743 tax at 22% — matches published examples); $210k premium paying $3,000/mo at 85 → payback 5.8 years, breakeven age 90.8.
 const ULTABLE: [number, number][] = [[72, 27.4], [73, 26.5], [74, 25.5], [75, 24.6], [76, 23.7], [77, 22.9], [78, 22.0], [79, 21.1], [80, 20.2], [81, 19.4], [82, 18.5], [83, 17.7], [84, 16.8], [85, 16.0]]
 export function QlacCalc() {
@@ -10532,6 +10586,7 @@ export const MORE_CALC_COMPONENTS: Record<string, (props: import('./index').Calc
   'customer-ltv-cac-calculator': LtvCacCalc,
   'repair-vs-replace-calculator': RepairReplaceCalc,
   'tank-vs-tankless-calculator': TankVsTanklessCalc,
+  'generator-cost-calculator': GeneratorCostCalc,
   'qlac-calculator': QlacCalc,
   'q4-equipment-timing-calculator': Q4TimingCalc,
   'equipment-lease-vs-buy-calculator': EquipLeaseVsBuyCalc,
