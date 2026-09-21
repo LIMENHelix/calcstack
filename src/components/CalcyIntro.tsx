@@ -1,17 +1,31 @@
 /* Calcy's animated introduction — homepage hero.
-   Entrance pop + squash, waving loop, typewriter speech bubble,
-   and a real voice on tap (browser speech synthesis — user-gesture only). */
+   Autonomous mascot behaviors: mouse-tracking pupils, random idle actions
+   (wave / bounce / spin), celebration when the visitor uses the search,
+   entrance pop + squash, typewriter speech bubble, tap-to-talk voice. */
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const LINE = "Hi! I'm Calcy — your calculator buddy. 500 calculators, zero sign-ups, and every answer runs right here in your browser. What are we figuring out today?"
+// Spoken variant: TTS reads "Calcy" as "Cal-see" — spell it phonetically.
+const SPEAK_LINE = LINE.replace("I'm Calcy", "I'm Cal-Key")
+
+type Action = 'float' | 'wave' | 'bounce' | 'spin'
+
+// Eye centers as fractions of the image (measured from calcy.png)
+const EYES = [
+  { x: 42.5, y: 24 },
+  { x: 62, y: 24 },
+]
 
 export function CalcyIntro() {
   const [typed, setTyped] = useState(0)
   const [speaking, setSpeaking] = useState(false)
-  const [waving, setWaving] = useState(false)
+  const [action, setAction] = useState<Action>('float')
+  const [look, setLook] = useState({ x: 0, y: 0 })
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const actionTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Typewriter: starts after the entrance pop lands
+  /* --- typewriter --- */
   useEffect(() => {
     const start = setTimeout(() => {
       timer.current = setInterval(() => {
@@ -30,20 +44,75 @@ export function CalcyIntro() {
     }
   }, [])
 
-  // Idle wave every 9s so he feels alive without being noisy
+  /* --- pupils follow the mouse --- */
   useEffect(() => {
-    const wave = setInterval(() => {
-      setWaving(true)
-      setTimeout(() => setWaving(false), 1600)
-    }, 9000)
-    return () => clearInterval(wave)
+    const onMove = (e: MouseEvent) => {
+      const rect = wrapRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const cx = rect.left + rect.width / 2
+      const cy = rect.top + rect.height * 0.24
+      const dx = (e.clientX - cx) / rect.width
+      const dy = (e.clientY - cy) / rect.height
+      setLook({
+        x: Math.max(-1, Math.min(1, dx * 2.2)),
+        y: Math.max(-1, Math.min(1, dy * 2.2)),
+      })
+    }
+    window.addEventListener('mousemove', onMove)
+    return () => window.removeEventListener('mousemove', onMove)
   }, [])
 
+  /* --- autonomous idle behaviors: he does things on his own --- */
+  const act = useCallback((a: Action, ms: number) => {
+    if (actionTimer.current) clearTimeout(actionTimer.current)
+    setAction(a)
+    actionTimer.current = setTimeout(() => setAction('float'), ms)
+  }, [])
+
+  useEffect(() => {
+    let alive = true
+    const loop = () => {
+      if (!alive) return
+      const wait = 6000 + Math.random() * 7000 // every 6–13s he does something
+      setTimeout(() => {
+        if (!alive) return
+        const pick = Math.random()
+        if (pick < 0.45) act('wave', 1700)
+        else if (pick < 0.8) act('bounce', 1200)
+        else act('spin', 1100)
+        loop()
+      }, wait)
+    }
+    const first = setTimeout(loop, 5000)
+    return () => {
+      alive = false
+      clearTimeout(first)
+    }
+  }, [act])
+
+  /* --- celebrate when the visitor starts searching --- */
+  useEffect(() => {
+    const onInput = (e: Event) => {
+      if ((e.target as HTMLElement)?.closest?.('input')) act('bounce', 1200)
+    }
+    const onClick = (e: Event) => {
+      const a = (e.target as HTMLElement)?.closest?.('a')
+      if (a?.getAttribute('href')?.includes('/calculators/')) act('spin', 1100)
+    }
+    document.addEventListener('input', onInput)
+    document.addEventListener('click', onClick)
+    return () => {
+      document.removeEventListener('input', onInput)
+      document.removeEventListener('click', onClick)
+    }
+  }, [act])
+
+  /* --- voice --- */
   const speak = useCallback(() => {
     if (!('speechSynthesis' in window)) return
     window.speechSynthesis.cancel()
-    const u = new SpeechSynthesisUtterance(LINE)
-    u.pitch = 1.35 // friendly, a little cartoonish
+    const u = new SpeechSynthesisUtterance(SPEAK_LINE)
+    u.pitch = 1.35
     u.rate = 1.05
     const voices = window.speechSynthesis.getVoices()
     u.voice =
@@ -51,15 +120,12 @@ export function CalcyIntro() {
       voices.find((v) => v.lang === 'en-US' && /female|zira|samantha/i.test(v.name)) ??
       voices.find((v) => v.lang.startsWith('en')) ??
       null
-    setWaving(true)
     setSpeaking(true)
-    u.onend = () => {
-      setSpeaking(false)
-      setWaving(false)
-    }
+    act('wave', 1700)
+    u.onend = () => setSpeaking(false)
     u.onerror = u.onend
     window.speechSynthesis.speak(u)
-  }, [])
+  }, [act])
 
   return (
     <div className="mx-auto mb-2 flex max-w-md flex-col items-center gap-1">
@@ -70,13 +136,33 @@ export function CalcyIntro() {
         className="group relative cursor-pointer transition-transform hover:scale-105 focus:outline-none"
         aria-label="Hear Calcy introduce himself"
       >
-        <img
-          src={`${import.meta.env.BASE_URL}calcy.png`}
-          alt="Calcy, the CalcStack mascot — a friendly calculator waving hello"
-          className={`calcy-pop w-28 drop-shadow-lg sm:w-36 ${waving ? 'calcy-wave' : 'calcy-float'}`}
-          width="144"
-          height="144"
-        />
+        <div ref={wrapRef} className="relative inline-block">
+          <img
+            src={`${import.meta.env.BASE_URL}calcy.png`}
+            alt="Calcy, the CalcStack mascot — a friendly calculator waving hello"
+            className={`calcy-pop w-28 drop-shadow-lg sm:w-36 calcy-${action}`}
+            width="144"
+            height="144"
+            draggable={false}
+          />
+          {/* live pupils — they watch your cursor */}
+          {EYES.map((eye, i) => (
+            <span
+              key={i}
+              aria-hidden
+              className="pointer-events-none absolute rounded-full"
+              style={{
+                left: `${eye.x}%`,
+                top: `${eye.y}%`,
+                width: '5.5%',
+                aspectRatio: '1',
+                background: 'radial-gradient(circle at 35% 35%, #0f766e, #022c22)',
+                transform: `translate(calc(-50% + ${(look.x * 5).toFixed(1)}px), calc(-50% + ${(look.y * 4).toFixed(1)}px))`,
+                transition: 'transform 0.12s ease-out',
+              }}
+            />
+          ))}
+        </div>
         <span className="absolute -right-2 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-sm text-primary-foreground shadow-md transition-transform group-hover:scale-110">
           {speaking ? '🔊' : '🔈'}
         </span>

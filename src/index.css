@@ -104,6 +104,28 @@
   animation: calcy-wave-kf 0.8s ease-in-out 2;
 }
 
+/* Happy bounce: two quick hops with squash on landing */
+@keyframes calcy-bounce-kf {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  25% { transform: translateY(-18px) scaleY(1.05); }
+  50% { transform: translateY(0) scaleY(0.9); }
+  75% { transform: translateY(-10px) scaleY(1.03); }
+}
+.calcy-bounce {
+  animation: calcy-bounce-kf 0.6s ease-in-out 2;
+}
+
+/* Celebratory spin: full 360 with a little lift */
+@keyframes calcy-spin-kf {
+  0% { transform: rotate(0deg) translateY(0); }
+  30% { transform: rotate(140deg) translateY(-12px); }
+  60% { transform: rotate(280deg) translateY(0); }
+  100% { transform: rotate(360deg) translateY(0); }
+}
+.calcy-spin {
+  animation: calcy-spin-kf 1.1s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
 @keyframes calcy-blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
