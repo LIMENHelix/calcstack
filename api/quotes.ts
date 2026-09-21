@@ -14,7 +14,11 @@ interface Res {
 const SYMBOL_RE = /^[A-Za-z][A-Za-z0-9.\-]{0,9}$/
 
 export default async function handler(req: Req, res: Res) {
-  const token = process.env.TRADIER_TOKEN
+  // Accept the owner's var names: TRADIER_API_KEY (production) or TRADIER_API_SANDBOX (sandbox),
+  // plus the conventional TRADIER_TOKEN. Production key wins when both exist.
+  const prodToken = process.env.TRADIER_TOKEN ?? process.env.TRADIER_API_KEY
+  const sandboxToken = process.env.TRADIER_API_SANDBOX
+  const token = prodToken ?? sandboxToken
   if (!token) {
     res.status(503).json({ error: 'quotes_not_configured' })
     return
@@ -29,7 +33,8 @@ export default async function handler(req: Req, res: Res) {
     res.status(400).json({ error: 'no_valid_symbols' })
     return
   }
-  const base = process.env.TRADIER_BASE ?? 'https://sandbox.tradier.com/v1'
+  // Base follows the token: production key → live API, sandbox key → sandbox.
+  const base = process.env.TRADIER_BASE ?? (prodToken ? 'https://api.tradier.com/v1' : 'https://sandbox.tradier.com/v1')
   try {
     const up = await fetch(`${base}/markets/quotes?symbols=${symbols.join(',')}&greeks=false`, {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
