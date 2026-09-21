@@ -2,6 +2,7 @@ import { Suspense, lazy, useMemo, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
+import { CalcyReaction } from '@/components/CalcyReaction'
 import { usd, num, monthlyPayment } from '@/lib/calc'
 
 const GrowthChart = lazy(() => import('@/components/CalcCharts').then((m) => ({ default: m.GrowthChart })))
@@ -393,6 +394,10 @@ export function CompoundInterestCalc() {
             <Result label="Total growth" value={usd(r.growth)} />
           </div>
         </div>
+        <CalcyReaction
+          fire={r.growth > r.contributed && r.contributed > 0}
+          message="Crossover! Your money now earns more than you put in — the growth is doing the heavy lifting. 🎉"
+        />
         <div className="mt-6">
           <p className="mb-2 text-sm font-medium">Balance vs. what you put in</p>
           <Suspense fallback={<div className="h-64 w-full animate-pulse rounded-lg bg-muted" />}>
@@ -463,6 +468,10 @@ export function SavingsGoalCalc() {
             keep beats a plan you abandon.
           </p>
         </div>
+        <CalcyReaction
+          fire={goal > 0 && saved >= goal}
+          message="Wait — you already have it. Goal fully funded. 🎉 Now let's find the next one."
+        />
       </CardContent>
     </Card>
   )
@@ -526,6 +535,10 @@ export function LoanPayoffCalc() {
           <Result label="New payoff time" value={`${num(r.newMonths, 0)} months (${num(r.newMonths / 12, 1)} yrs)`} />
           <Result label="Baseline interest (no extra)" value={usd(r.baseInterest)} />
         </div>
+        <CalcyReaction
+          fire={extra > 0 && r.monthsSaved >= 12}
+          message={`That extra payment just moved your debt-free date up ${num(r.monthsSaved, 0)} months — over a year of freedom, bought early. 🎉`}
+        />
       </CardContent>
     </Card>
   )
