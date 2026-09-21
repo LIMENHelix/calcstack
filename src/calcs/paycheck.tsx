@@ -1,9 +1,11 @@
-import { useMemo, useState } from 'react'
+import { Suspense, lazy, useMemo, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Field, Result, useNumber } from './index'
 import type { CalcProps } from './index'
 import { PAYCHECK_STATES, computePaycheck, computeCheck, computeYtd } from '@/data/paycheck'
 import { usd, num } from '@/lib/calc'
+
+const MoneyPie = lazy(() => import('@/components/CalcCharts').then((m) => ({ default: m.MoneyPie })))
 
 type Mode = 'annual' | 'check' | 'ytd'
 
@@ -144,15 +146,28 @@ export function PaycheckCalc({ stateSlug }: CalcProps) {
           </div>
           <div>
             <p className="mb-2 text-sm font-medium">Where the money goes (annual)</p>
-            <Breakdown
-              gross={annual.gross}
-              rows={[
-                ['Federal income tax', annual.federal],
-                ['Social Security (6.2%)', annual.ss],
-                ['Medicare (1.45%)', annual.medicare],
-                [`${rule.name} state tax`, annual.state],
-              ]}
-            />
+            <div className="grid items-center gap-6 sm:grid-cols-2">
+              <Breakdown
+                gross={annual.gross}
+                rows={[
+                  ['Federal income tax', annual.federal],
+                  ['Social Security (6.2%)', annual.ss],
+                  ['Medicare (1.45%)', annual.medicare],
+                  [`${rule.name} state tax`, annual.state],
+                ]}
+              />
+              <Suspense fallback={<div className="h-64 w-full animate-pulse rounded-lg bg-muted" />}>
+                <MoneyPie
+                  rows={[
+                    ['Take-home', annual.net],
+                    ['Federal tax', annual.federal],
+                    ['Social Security', annual.ss],
+                    ['Medicare', annual.medicare],
+                    [`${rule.name} tax`, annual.state],
+                  ]}
+                />
+              </Suspense>
+            </div>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <Result label="Total taxes & payroll" value={usd(annual.gross - annual.net)} />

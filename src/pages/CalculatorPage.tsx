@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { useParams, Link } from 'react-router'
+import { CalcyTip } from '@/components/CalcyTip'
 import { CALCULATORS } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
@@ -146,6 +147,10 @@ export default function CalculatorPage() {
       <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading calculator…</div>}>
         <Calc presets={variant?.presets} stateSlug={variant?.stateSlug} />
       </Suspense>
+
+      {(WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)) && (
+        <CalcyTip>{WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)}</CalcyTip>
+      )}
 
       <AdSlot />
 

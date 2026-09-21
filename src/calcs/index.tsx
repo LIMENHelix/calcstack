@@ -1,8 +1,11 @@
-import { useMemo, useState } from 'react'
+import { Suspense, lazy, useMemo, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
 import { usd, num, monthlyPayment } from '@/lib/calc'
+
+const GrowthChart = lazy(() => import('@/components/CalcCharts').then((m) => ({ default: m.GrowthChart })))
+const AmortChart = lazy(() => import('@/components/CalcCharts').then((m) => ({ default: m.AmortChart })))
 
 export interface CalcProps {
   presets?: Record<string, number>
@@ -312,6 +315,13 @@ export function MortgageCalc({ presets }: { presets?: Record<string, number> }) 
         </div>
 
         <div>
+          <p className="mb-2 text-sm font-medium">Principal vs. interest each year — and the balance falling</p>
+          <Suspense fallback={<div className="h-64 w-full animate-pulse rounded-lg bg-muted" />}>
+            <AmortChart data={r.yearly} />
+          </Suspense>
+        </div>
+
+        <div>
           <p className="mb-2 text-sm font-medium">Amortization schedule (yearly)</p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -382,6 +392,12 @@ export function CompoundInterestCalc() {
             <Result label="Total contributed" value={usd(r.contributed)} />
             <Result label="Total growth" value={usd(r.growth)} />
           </div>
+        </div>
+        <div className="mt-6">
+          <p className="mb-2 text-sm font-medium">Balance vs. what you put in</p>
+          <Suspense fallback={<div className="h-64 w-full animate-pulse rounded-lg bg-muted" />}>
+            <GrowthChart data={r.schedule} />
+          </Suspense>
         </div>
         <div className="mt-6 max-h-64 overflow-auto rounded-lg border">
           <table className="w-full text-sm">
