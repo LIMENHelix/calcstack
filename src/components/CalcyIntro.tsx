@@ -138,7 +138,7 @@ export function CalcyIntro() {
       >
         <div ref={wrapRef} className="relative inline-block">
           <img
-            src={`${import.meta.env.BASE_URL}calcy.png`}
+            src={`${import.meta.env.BASE_URL}${action === 'bounce' || action === 'spin' ? 'calcy-celebrate.png' : 'calcy.png'}`}
             alt="Calcy, the CalcStack mascot — a friendly calculator waving hello"
             className={`calcy-pop w-28 drop-shadow-lg sm:w-36 calcy-${action}`}
             width="144"

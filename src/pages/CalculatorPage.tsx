@@ -39,6 +39,16 @@ import { Seo } from '@/components/Seo'
 import { AdSlot, AffiliateCard, affiliatesFor } from '@/components/Monetization'
 import { EmbedSnippet } from '@/components/EmbedSnippet'
 import { WHY_USE } from '@/data/why'
+import type { CalcyMood } from '@/components/CalcyTip'
+
+/* Calcy's mood follows the calculator's stakes: warnings for cliff/risk tools,
+   celebration for payoff/savings wins, thinking for planning tools. */
+function calcyMood(slug: string): CalcyMood {
+  if (/cliff|irmaa|penalty|amt-|estate-tax|gift-tax|underwithhold|late|fine|overpay|audit|depreciat|recapture/i.test(slug)) return 'warning'
+  if (/payoff|debt-free|avalanche|snowball|savings-goal|compound-interest|fire|retire|millionaire|net-worth|windfall|bonus/i.test(slug)) return 'celebrate'
+  if (/vs-|compare|or-|should-i|rent-vs|lease-vs|buy-vs|breakeven|break-even|roi|decision/i.test(slug)) return 'thinking'
+  return 'default'
+}
 
 export const ALL_COMPONENTS: Record<string, (props: CalcProps) => React.ReactElement> = {
   ...CALC_COMPONENTS,
@@ -149,7 +159,9 @@ export default function CalculatorPage() {
       </Suspense>
 
       {(WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)) && (
-        <CalcyTip>{WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)}</CalcyTip>
+        <CalcyTip mood={calcyMood(meta.slug)}>
+          {WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)}
+        </CalcyTip>
       )}
 
       <AdSlot />

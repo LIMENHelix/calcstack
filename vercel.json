@@ -19,6 +19,9 @@
     { "source": "/calcstack/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/calcstack/robots.txt", "destination": "/robots.txt" },
     { "source": "/calcstack/calcy.png", "destination": "/calcy.png" },
+    { "source": "/calcstack/calcy-celebrate.png", "destination": "/calcy-celebrate.png" },
+    { "source": "/calcstack/calcy-thinking.png", "destination": "/calcy-thinking.png" },
+    { "source": "/calcstack/calcy-warning.png", "destination": "/calcy-warning.png" },
     { "source": "/calcstack/:path*", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
