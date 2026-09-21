@@ -18,6 +18,7 @@
     { "source": "/calcstack/ads/:path*", "destination": "/ads/:path*" },
     { "source": "/calcstack/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/calcstack/robots.txt", "destination": "/robots.txt" },
+    { "source": "/calcstack/calcy.png", "destination": "/calcy.png" },
     { "source": "/calcstack/:path*", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
