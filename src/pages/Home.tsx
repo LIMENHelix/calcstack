@@ -3,9 +3,9 @@ import { CALCULATORS, CATEGORIES } from '@/data/calculators'
 import { PERSONAS } from '@/data/personas'
 import { Seo } from '@/components/Seo'
 import { CalcyIntro } from '@/components/CalcyIntro'
+import { RelayFeature } from '@/components/RelayFeature'
 import { SearchBar } from '@/components/SearchBar'
 import { Card, CardContent } from '@/components/ui/card'
-import { AdSlot } from '@/components/Monetization'
 
 export default function Home() {
   return (
@@ -120,7 +120,7 @@ export default function Home() {
         </div>
       </section>
 
-      <AdSlot />
+      <RelayFeature />
 
       {CATEGORIES.map((cat, i) => {
         const catCalcs = CALCULATORS.filter((c) => c.category === cat)
