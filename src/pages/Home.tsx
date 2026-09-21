@@ -200,6 +200,14 @@ export default function Home() {
               </CardContent>
             </Card>
           </Link>
+          <Link to="/invest">
+            <Card className="h-full transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
+              <CardContent className="p-5">
+                <p className="font-semibold">Investing — Live Quotes + Real Math 📈</p>
+                <p className="mt-1 text-sm text-muted-foreground">Live market prices next to compound growth, capital gains, and FIRE calculators.</p>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </section>
 

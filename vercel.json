@@ -9,6 +9,7 @@
     { "source": "/embeds", "destination": "/calcstack/embeds", "permanent": true },
     { "source": "/embed/:path*", "destination": "/calcstack/embed/:path*", "permanent": true },
     { "source": "/directory", "destination": "/calcstack/directory", "permanent": true },
+    { "source": "/invest", "destination": "/calcstack/invest", "permanent": true },
     { "source": "/tax-season", "destination": "/calcstack/tax-season", "permanent": true },
     { "source": "/open-enrollment", "destination": "/calcstack/open-enrollment", "permanent": true },
     { "source": "/home-buying", "destination": "/calcstack/home-buying", "permanent": true }
