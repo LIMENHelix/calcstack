@@ -16,13 +16,22 @@ const calcsDir = join(root, 'src/calcs')
 
 // --- collect registered component slugs from all registry exports ---
 const componentSlugs = new Set()
-for (const f of readdirSync(calcsDir).filter((f) => f.endsWith('.tsx'))) {
-  const src = readFileSync(join(calcsDir, f), 'utf8')
+const tsxFiles = [
+  ...readdirSync(calcsDir).filter((f) => f.endsWith('.tsx')).map((f) => join(calcsDir, f)),
+  ...readdirSync(join(calcsDir, 'more-waves'))
+    .filter((f) => f.endsWith('.tsx'))
+    .map((f) => join(calcsDir, 'more-waves', f)),
+]
+for (const f of tsxFiles) {
+  const src = readFileSync(f, 'utf8')
   for (const m of src.matchAll(/^ {2}'([a-z0-9-]+)':\s*\w+,?\s*$/gm)) componentSlugs.add(m[1])
 }
 // paycheck-calculator registers inline in CalculatorPage.tsx
 const pageSrc = readFileSync(join(root, 'src/pages/CalculatorPage.tsx'), 'utf8')
 for (const m of pageSrc.matchAll(/^ {2}'([a-z0-9-]+)':\s*\w+,?\s*$/gm)) componentSlugs.add(m[1])
+// lazy registry (more-lazy.ts)
+const lazySrc = readFileSync(join(calcsDir, 'more-lazy.ts'), 'utf8')
+for (const m of lazySrc.matchAll(/^ {2}'([a-z0-9-]+)':\s*lazy\(/gm)) componentSlugs.add(m[1])
 
 // --- metadata slugs + field completeness ---
 const calcSrc = readFileSync(join(root, 'src/data/calculators.ts'), 'utf8')
