@@ -1,7 +1,7 @@
 /* Lazy-loaded chart components (recharts lives in its own chunk).
    Import via React.lazy so calculators that don't chart never pay the cost. */
 import {
-  Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart,
+  Area, AreaChart, Bar, CartesianGrid, Cell, ComposedChart, Legend, Line, LineChart,
   Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts'
 
@@ -49,7 +49,7 @@ export function AmortChart({ data }: { data: { year: number; principal: number; 
   return (
     <div className="h-64 w-full">
       <ResponsiveContainer>
-        <BarChart data={rows} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
+        <ComposedChart data={rows} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="year" tick={{ fontSize: 11 }} interval="preserveStartEnd" stroke="hsl(var(--muted-foreground))" />
           <YAxis yAxisId="left" tickFormatter={fmt} tick={{ fontSize: 11 }} width={58} stroke="hsl(var(--muted-foreground))" />
@@ -59,7 +59,7 @@ export function AmortChart({ data }: { data: { year: number; principal: number; 
           <Bar yAxisId="left" dataKey="Principal" stackId="p" fill="#0d9488" />
           <Bar yAxisId="left" dataKey="Interest" stackId="p" fill="#f97316" />
           <Line yAxisId="right" type="monotone" dataKey="Balance" stroke="#6366f1" strokeWidth={2} dot={false} />
-        </BarChart>
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   )
