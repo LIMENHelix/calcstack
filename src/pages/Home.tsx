@@ -3,7 +3,7 @@ import { CALCULATORS, CATEGORIES } from '@/data/calculators'
 import { PERSONAS } from '@/data/personas'
 import { Seo } from '@/components/Seo'
 import { CalcyIntro } from '@/components/CalcyIntro'
-import { RelayFeature } from '@/components/RelayFeature'
+import { RelayFeature, KillswitchFeature } from '@/components/RelayFeature'
 import { SearchBar } from '@/components/SearchBar'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -202,6 +202,8 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      <KillswitchFeature />
 
       <section className="mt-14 max-w-3xl">
         <h2 className="mb-3 text-xl font-semibold">Why CalcStack?</h2>
