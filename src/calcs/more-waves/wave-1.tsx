@@ -579,6 +579,7 @@ export function CreditCardMinimumCalc() {
           <CalcyReaction
             fire={extra > 0 && r.savedMonths >= 12}
             message={`Fixing the payment above the minimum kills this debt ${r.savedMonths} months sooner and keeps ${usd(r.savedInterest, 0)} of interest in YOUR pocket. 🎉`}
+            shareText={`Fixing my credit card payment saves me ${usd(r.savedInterest, 0)} in interest and ${r.savedMonths} months of payments.`}
           />
         </>
       )}

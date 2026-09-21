@@ -1034,6 +1034,7 @@ export function CoastFireCalc() {
         <CalcyReaction
           fire={res.isCoast}
           message="You're already Coast FIRE — compounding finishes the job from here. Working becomes optional-ish. 🎉"
+          shareText={`I just found out I'm already Coast FIRE — my $${portfolio.toLocaleString()} portfolio compounds to ${usd(res.fire, 0)} without another dollar saved.`}
         />
       </CardContent>
     </Card>

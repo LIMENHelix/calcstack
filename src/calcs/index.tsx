@@ -285,6 +285,7 @@ export function MortgageCalc({ presets }: { presets?: Record<string, number> }) 
             <CalcyReaction
               fire={r.needsPmi && r.pmiEndMonth !== null}
               message={`Good news hiding in here: your PMI disappears in month ${r.pmiEndMonth} — that's ${usd(r.pmiMo, 2)}/month back in your pocket, automatically. 🎉`}
+              shareText={`My PMI disappears in month ${r.pmiEndMonth} — ${usd(r.pmiMo, 2)}/month back in my pocket.`}
             />
               </>
             )}
@@ -403,6 +404,7 @@ export function CompoundInterestCalc() {
         <CalcyReaction
           fire={r.growth > r.contributed && r.contributed > 0}
           message="Crossover! Your money now earns more than you put in — the growth is doing the heavy lifting. 🎉"
+          shareText={`My investments now earn more than I contribute — the compound interest crossover. Projected balance: ${usd(r.final)}.`}
         />
         <div className="mt-6">
           <p className="mb-2 text-sm font-medium">Balance vs. what you put in</p>
@@ -477,6 +479,7 @@ export function SavingsGoalCalc() {
         <CalcyReaction
           fire={goal > 0 && saved >= goal}
           message="Wait — you already have it. Goal fully funded. 🎉 Now let's find the next one."
+          shareText={`I just ran my numbers and my $${goal.toLocaleString()} savings goal is already fully funded.`}
         />
       </CardContent>
     </Card>
@@ -544,6 +547,7 @@ export function LoanPayoffCalc() {
         <CalcyReaction
           fire={extra > 0 && r.monthsSaved >= 12}
           message={`That extra payment just moved your debt-free date up ${num(r.monthsSaved, 0)} months — over a year of freedom, bought early. 🎉`}
+          shareText={`I just found out I can be debt-free ${num(r.monthsSaved, 0)} months sooner with extra payments.`}
         />
       </CardContent>
     </Card>
