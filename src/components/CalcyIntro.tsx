@@ -4,7 +4,7 @@
    entrance pop + squash, typewriter speech bubble, tap-to-talk voice. */
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-const LINE = "Hi! I'm Calcy — your calculator buddy. 500 calculators, zero sign-ups, and every answer runs right here in your browser. What are we figuring out today?"
+const LINE = "Hi! I'm Calcy — your calculator buddy. 500+ calculators, zero sign-ups, and every answer runs right here in your browser. What are we figuring out today?"
 // Spoken variant: TTS reads "Calcy" as "Cal-see" — spell it phonetically.
 const SPEAK_LINE = LINE.replace("I'm Calcy", "I'm Cal-Key")
 

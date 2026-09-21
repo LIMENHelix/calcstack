@@ -25,11 +25,13 @@ globalThis.__calcstackCount = CALCULATORS.length
 eval(result.outputFiles[0].text)
 const count = Number(globalThis.__calcstackCount)
 if (!Number.isFinite(count) || count < 1) throw new Error(`bad count: ${count}`)
+// Display as a rounded "N+" (e.g. 501 → "500+") so copy never drifts as we add calculators.
+const display = `${Math.floor(count / 100) * 100}+`
 
 let html = readFileSync('index.html', 'utf8')
 html = html
-  .replace(/— \d+ Free Calculators for Work, Money & Life/g, `— ${count} Free Calculators for Work, Money & Life`)
-  .replace(/\d+ free calculators for every job/, `${count} free calculators for every job`)
+  .replace(/— \d+\+? Free Calculators for Work, Money & Life/g, `— ${display} Free Calculators for Work, Money & Life`)
+  .replace(/\d+\+? free calculators for every job/, `${display} free calculators for every job`)
 
 writeFileSync('index.html', html)
 console.log(`index.html meta synced: ${count} calculators`)

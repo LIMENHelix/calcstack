@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Seo
-        title={`CalcStack — ${CALCULATORS.length} Free Calculators for Work, Money & Life`}
+        title="CalcStack — 500+ Free Calculators for Work, Money & Life"
         description="Free, instant calculators for every job and every money question: contractor bids, salon and studio pricing, paychecks by state, mortgages, training and nutrition math, retirement, and everyday life. No signup — runs in your browser."
       />
       <section className="mb-10 mt-4 text-center">
@@ -20,7 +20,7 @@ export default function Home() {
           The math behind your work, <span className="text-primary">answered in seconds.</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-          {CALCULATORS.length} free calculators — by profession, by state, by goal. Bid sheets and
+          500+ free calculators — by profession, by state, by goal. Bid sheets and
           salon pricing, paychecks and mortgages, training cycles and retirement math. Results update as you type,
           and every calculation runs in your browser — no accounts, no uploads, no email gates.
         </p>
@@ -56,7 +56,7 @@ export default function Home() {
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          {CALCULATORS.length} calculators and counting. Newest: the search-classics suite —
+          500+ calculators and counting. Newest: the search-classics suite —
           fraction arithmetic with mixed numbers, simple vs compound interest, mean / median /
           mode with weighted averages, 15-vs-30-year mortgage trade-offs, ovulation and fertile
           windows, and a six-category unit converter with exact factors.
