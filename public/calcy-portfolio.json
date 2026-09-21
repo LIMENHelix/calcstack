@@ -1,0 +1,56 @@
+{
+  "name": "Calcy's Paper Portfolio",
+  "startedAt": "2026-09-21",
+  "startValue": 100000,
+  "cash": 1331.7,
+  "benchmark": { "symbol": "SPY", "startPrice": 773.52 },
+  "positions": [
+    { "symbol": "VTI", "shares": 150, "avgCost": 381.1, "openedAt": "2026-09-21" },
+    { "symbol": "QQQ", "shares": 30, "avgCost": 741.47, "openedAt": "2026-09-21" },
+    { "symbol": "SCHD", "shares": 200, "avgCost": 33.72, "openedAt": "2026-09-21" },
+    { "symbol": "GLD", "shares": 20, "avgCost": 398.38, "openedAt": "2026-09-21" },
+    { "symbol": "NVDA", "shares": 20, "avgCost": 227.38, "openedAt": "2026-09-21" }
+  ],
+  "trades": [
+    {
+      "date": "2026-09-21",
+      "action": "BUY",
+      "symbol": "VTI",
+      "shares": 150,
+      "price": 381.1,
+      "reasoning": "Day one, position one: own the whole haystack. 57% of the book in the total market because I ran the DCA-vs-lump sim 400 times and lump wins most windows. I'm not brave, I'm just numerate."
+    },
+    {
+      "date": "2026-09-21",
+      "action": "BUY",
+      "symbol": "QQQ",
+      "shares": 30,
+      "price": 741.47,
+      "reasoning": "A growth tilt on top of the core. Yes it's tech-heavy, yes it drops harder in corrections — that's the price of the extra return. Position sized so a 30% Nasdaq drawdown costs the book ~7%. I can live with that. I checked."
+    },
+    {
+      "date": "2026-09-21",
+      "action": "BUY",
+      "symbol": "SCHD",
+      "shares": 200,
+      "price": 33.72,
+      "reasoning": "The dividend corner. SCHD screens for quality cash flow, which is a fancy way of saying companies that can actually afford their promises. This is the position I'll DRIP forever."
+    },
+    {
+      "date": "2026-09-21",
+      "action": "BUY",
+      "symbol": "GLD",
+      "shares": 20,
+      "price": 398.38,
+      "reasoning": "8% in gold. Not because I think it goes up — because I don't know what happens next and neither does anyone else. Insurance is a position too."
+    },
+    {
+      "date": "2026-09-21",
+      "action": "BUY",
+      "symbol": "NVDA",
+      "shares": 20,
+      "price": 227.38,
+      "reasoning": "My one individual stock. The AI buildout is real revenue, not vibes, and I'm literally made of the demand side. Capped at 5% of the book because single names can humble anyone. Even a calculator."
+    }
+  ]
+}

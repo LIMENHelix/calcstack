@@ -10,6 +10,7 @@
     { "source": "/embed/:path*", "destination": "/calcstack/embed/:path*", "permanent": true },
     { "source": "/directory", "destination": "/calcstack/directory", "permanent": true },
     { "source": "/invest", "destination": "/calcstack/invest", "permanent": true },
+    { "source": "/calcy", "destination": "/calcstack/calcy", "permanent": true },
     { "source": "/tax-season", "destination": "/calcstack/tax-season", "permanent": true },
     { "source": "/open-enrollment", "destination": "/calcstack/open-enrollment", "permanent": true },
     { "source": "/home-buying", "destination": "/calcstack/home-buying", "permanent": true }
@@ -23,6 +24,7 @@
     { "source": "/calcstack/calcy-celebrate.png", "destination": "/calcy-celebrate.png" },
     { "source": "/calcstack/calcy-thinking.png", "destination": "/calcy-thinking.png" },
     { "source": "/calcstack/calcy-warning.png", "destination": "/calcy-warning.png" },
+    { "source": "/calcstack/calcy-portfolio.json", "destination": "/calcy-portfolio.json" },
     { "source": "/calcstack/:path*", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]

@@ -38,6 +38,7 @@ const HomeBuying = lazy(() => import('./pages/HomeBuying'))
 const AuditAll = lazy(() => import('./pages/AuditAll'))
 const Advertise = lazy(() => import('./pages/Advertise'))
 const Invest = lazy(() => import('./pages/Invest'))
+const CalcyPortfolio = lazy(() => import('./pages/CalcyPortfolio'))
 
 const PageFallback = (
   <div className="py-20 text-center text-sm text-muted-foreground">Loading…</div>
@@ -67,6 +68,7 @@ export default function App() {
               <Route path="/data/average-salary-by-job" element={<DataSalaries />} />
               <Route path="/directory" element={<Directory />} />
               <Route path="/invest" element={<Invest />} />
+              <Route path="/calcy" element={<CalcyPortfolio />} />
               <Route path="/embeds" element={<EmbedGallery />} />
               <Route path="/tax-season" element={<TaxSeason />} />
               <Route path="/open-enrollment" element={<OpenEnrollment />} />

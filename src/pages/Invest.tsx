@@ -149,6 +149,25 @@ export default function Invest() {
           <DcaSimulator />
         </div>
 
+        {/* Calcy's paper portfolio teaser */}
+        <Link to="/calcy" className="mt-4 block">
+          <Card className="transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
+            <CardContent className="flex items-center gap-4 p-4">
+              <img
+                src={`${import.meta.env.BASE_URL}calcy.png`}
+                alt="Calcy"
+                className="h-12 w-12 shrink-0"
+              />
+              <div>
+                <p className="text-sm font-semibold">Calcy's paper portfolio — $100k, live scoreboard</p>
+                <p className="text-xs text-muted-foreground">
+                  The mascot puts his math where his mouth is: real prices, public reasoning, tracked vs the S&amp;P 500.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+
         {/* Calculator grid */}
         <h2 className="mb-4 mt-10 text-xl font-semibold">The investor's toolkit</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
