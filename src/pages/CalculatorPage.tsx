@@ -84,6 +84,13 @@ export default function CalculatorPage() {
   if (!meta || !Calc) {
     return (
       <div className="py-20 text-center">
+        <img
+          src={`${import.meta.env.BASE_URL}calcy.png`}
+          alt="Calcy, the CalcStack mascot, looking for your calculator"
+          className="mx-auto mb-4 w-32 opacity-90"
+          width="128"
+          height="128"
+        />
         <h1 className="text-2xl font-bold">Calculator not found</h1>
         <p className="mt-2 text-muted-foreground">
           <Link to="/" className="text-primary underline">Back to all calculators</Link>

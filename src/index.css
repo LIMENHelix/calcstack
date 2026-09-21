@@ -73,3 +73,10 @@
     @apply bg-background text-foreground;
   }
 }
+@keyframes calcy-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+.calcy-float {
+  animation: calcy-float 4s ease-in-out infinite;
+}

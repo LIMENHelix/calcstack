@@ -14,6 +14,13 @@ export default function Home() {
         description="Free, instant calculators for every job and every money question: contractor bids, salon and studio pricing, paychecks by state, mortgages, training and nutrition math, retirement, and everyday life. No signup — runs in your browser."
       />
       <section className="mb-10 mt-4 text-center">
+        <img
+          src={`${import.meta.env.BASE_URL}calcy.png`}
+          alt="Calcy, the CalcStack mascot — a friendly calculator waving hello"
+          className="calcy-float mx-auto mb-2 w-28 drop-shadow-lg sm:w-36"
+          width="144"
+          height="144"
+        />
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
           The math behind your work, <span className="text-primary">answered in seconds.</span>
         </h1>
