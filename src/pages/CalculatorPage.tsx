@@ -44,7 +44,7 @@ import type { CalcyMood } from '@/components/CalcyTip'
 /* Calcy's mood follows the calculator's stakes: warnings for cliff/risk tools,
    celebration for payoff/savings wins, thinking for planning tools. */
 function calcyMood(slug: string): CalcyMood {
-  if (/cliff|irmaa|penalty|amt-|estate-tax|gift-tax|underwithhold|late|fine|overpay|audit|depreciat|recapture/i.test(slug)) return 'warning'
+  if (/cliff|irmaa|penalty|amt-|estate-tax|gift-tax|underwithhold|late|fine|overpay|audit|depreciat|recapture|savers-credit/i.test(slug)) return 'warning'
   if (/payoff|debt-free|avalanche|snowball|savings-goal|compound-interest|fire|retire|millionaire|net-worth|windfall|bonus/i.test(slug)) return 'celebrate'
   if (/vs-|compare|or-|should-i|rent-vs|lease-vs|buy-vs|breakeven|break-even|roi|decision/i.test(slug)) return 'thinking'
   return 'default'
