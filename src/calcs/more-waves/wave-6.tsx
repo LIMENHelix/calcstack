@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { useNumber, Field, Result } from '../index'
 import { usd, num } from '@/lib/calc'
+import { CalcyReaction } from '@/components/CalcyReaction'
 import { FEDERAL, bracketTax, SS_WAGE_CAP } from '@/data/paycheck'
 import { ULTABLE, AUTO_CAPS, MACRS_TABLES, MONTHS, SLE_TABLE, SURV_FRA, SS_FRA_MONTHS } from '../more-shared'
 export function TutoringRateCalc() {
@@ -1030,6 +1031,10 @@ export function CoastFireCalc() {
         <p className="text-xs text-muted-foreground">
           Coast FIRE is the milestone where your portfolio, growing untouched, reaches your full FIRE number (annual spend ÷ safe withdrawal rate) by your retirement age — after which every dollar you earn only needs to fund the present. The math is one line: coast number = FIRE number ÷ (1 + real return)^years. The assumptions do the heavy lifting: use a REAL (after-inflation) return — 5% real is a reasonable long-run equity/bond blend, 8% nominal minus 3% inflation — and the withdrawal rate moves the target more than most people expect ($60k at 3.5% wants $1.71M; at 4.5%, $1.33M). Coast FIRE is a target, not a guarantee: sequence-of-returns risk still applies, the 4% rule is a historical-US result, and the number ignores taxes, Social Security (which lowers the required portfolio — run it here with your expected benefit as reduced spend), and pensions. Barista FIRE is the middle gear: part-time income covers part of spending so the portfolio only needs to bridge the rest. Estimates for planning, not a promise.
         </p>
+        <CalcyReaction
+          fire={res.isCoast}
+          message="You're already Coast FIRE — compounding finishes the job from here. Working becomes optional-ish. 🎉"
+        />
       </CardContent>
     </Card>
   )

@@ -1,6 +1,7 @@
 import { CALCULATORS, CATEGORIES } from '@/data/calculators'
 import { Seo } from '@/components/Seo'
 import { Card, CardContent } from '@/components/ui/card'
+import { RelayFeature } from '@/components/RelayFeature'
 
 const MAILTO =
   'mailto:chrishubbel72@gmail.com?subject=Advertise%20on%20CalcStack&body=Business%20name%3A%0AWebsite%3A%0AWhich%20pages%20or%20professions%20fit%20your%20customers%3F%0A'
@@ -38,8 +39,29 @@ export default function Advertise() {
           </CardContent></Card>
         </div>
 
+        <h2 className="mt-10 text-xl font-semibold">The flagship: homepage banner, endorsed by Calcy</h2>
+        <p className="mt-3 text-muted-foreground">
+          This is a live example running on our front page right now — full-width banner, your photos,
+          your pitch, and our mascot Calcy personally vouching for you in a speech bubble visitors
+          actually read. Nobody skips the mascot.
+        </p>
+        <div className="pointer-events-none mt-4" aria-hidden>
+          <RelayFeature />
+        </div>
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          ↑ Live example (preview disabled here — the real one links straight to you)
+        </p>
+
         <h2 className="mt-10 text-xl font-semibold">What you can book</h2>
         <div className="mt-4 space-y-4">
+          <Card className="border-primary/40"><CardContent className="p-5">
+            <p className="font-semibold">Homepage takeover ★ flagship</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              The banner above, with your business: your headline, your photos, and a custom
+              &quot;Calcy says&quot; endorsement written for your customers. The most visible square
+              footage we have.
+            </p>
+          </CardContent></Card>
           <Card><CardContent className="p-5">
             <p className="font-semibold">Category sponsorship</p>
             <p className="mt-1 text-sm text-muted-foreground">

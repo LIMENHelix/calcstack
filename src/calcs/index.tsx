@@ -277,10 +277,16 @@ export function MortgageCalc({ presets }: { presets?: Record<string, number> }) 
               <Result label="Payoff date" value={r.payoff.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} />
             </div>
             {r.pmiEndMonth !== null && (
+              <>
               <p className="text-sm text-muted-foreground">
                 PMI ends in month {r.pmiEndMonth} when the balance drops below 78% of the home price —
                 saving {usd(r.pmiMo, 2)}/mo afterward. Total PMI paid: {usd(r.totalPmi)}.
               </p>
+            <CalcyReaction
+              fire={r.needsPmi && r.pmiEndMonth !== null}
+              message={`Good news hiding in here: your PMI disappears in month ${r.pmiEndMonth} — that's ${usd(r.pmiMo, 2)}/month back in your pocket, automatically. 🎉`}
+            />
+              </>
             )}
             <p className="text-xs text-muted-foreground">
               Comparing against a lender quote? Quotes often differ because they include an escrow cushion,

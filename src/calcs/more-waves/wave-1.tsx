@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { useNumber, Field, Result } from '../index'
 import { usd, num } from '@/lib/calc'
+import { CalcyReaction } from '@/components/CalcyReaction'
 import { simulatePayoff, minPaymentSim, fixedPaymentSim, BUDGET_PRESETS, WH_2026, PERIODS, bracketTax2026, annuityPmt, impliedApr, TSP_LIMITS, SSA_B1, SSA_B2, SS_ADJ, pia2026, RENO_PROJECTS } from '../more-shared'
 import type { DebtSim } from '../more-shared'
 
@@ -575,6 +576,10 @@ export function CreditCardMinimumCalc() {
             The CARD Act requires your statement to show this minimum-payment timeline — check it
             against this number.
           </p>
+          <CalcyReaction
+            fire={extra > 0 && r.savedMonths >= 12}
+            message={`Fixing the payment above the minimum kills this debt ${r.savedMonths} months sooner and keeps ${usd(r.savedInterest, 0)} of interest in YOUR pocket. 🎉`}
+          />
         </>
       )}
     </CardContent></Card>
