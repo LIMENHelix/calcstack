@@ -7,6 +7,8 @@ import { CALCULATORS } from '@/data/calculators'
 import { Seo } from '@/components/Seo'
 import { Card, CardContent } from '@/components/ui/card'
 import { CalcyTip } from '@/components/CalcyTip'
+import { PortfolioTracker } from '@/components/PortfolioTracker'
+import { DcaSimulator } from '@/components/DcaSimulator'
 
 interface Quote {
   symbol: string
@@ -140,6 +142,12 @@ export default function Invest() {
           Price is what you see; math is what you keep. Run any number on this page through the
           calculators below before you act on it.
         </CalcyTip>
+
+        {/* Portfolio tracker + DCA simulator on live data */}
+        <div className="mt-8 grid gap-4 lg:grid-cols-2">
+          <PortfolioTracker />
+          <DcaSimulator />
+        </div>
 
         {/* Calculator grid */}
         <h2 className="mb-4 mt-10 text-xl font-semibold">The investor's toolkit</h2>
