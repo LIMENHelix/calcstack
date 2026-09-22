@@ -153,16 +153,17 @@ export default function CalculatorPage() {
       <h1 className="mb-2 text-3xl font-extrabold tracking-tight">{meta.shortTitle}</h1>
       <p className="mb-6 text-lg text-muted-foreground">{meta.tagline}</p>
 
-      {/* Tool first — the calculator is the hero of the page */}
-      <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading calculator…</div>}>
-        <Calc presets={variant?.presets} stateSlug={variant?.stateSlug} />
-      </Suspense>
-
+      {/* Calcy frames the tool before the visitor touches it */}
       {(WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)) && (
         <CalcyTip mood={calcyMood(meta.slug)}>
           {WHY_USE[meta.slug] ?? (variant ? WHY_USE[variant.baseSlug] : undefined)}
         </CalcyTip>
       )}
+
+      {/* Tool first — the calculator is the hero of the page */}
+      <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading calculator…</div>}>
+        <Calc presets={variant?.presets} stateSlug={variant?.stateSlug} />
+      </Suspense>
 
       <AdSlot />
 

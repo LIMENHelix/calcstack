@@ -38,6 +38,7 @@ const HOUSE_ADS = [
     href: 'https://www.killswitchwebsites.com',
     img: `${BASE}ads/killswitch-og.svg`,
     tone: 'from-sky-500/10',
+    calcyLine: "Free website, live the same day — I checked their math. It adds up."
   },
   {
     name: 'Relay — The Everyday Edit',
@@ -46,6 +47,7 @@ const HOUSE_ADS = [
     href: 'https://limenhelix.com/relay',
     img: `${BASE}ads/relay-coffee.jpg`,
     tone: 'from-amber-500/10',
+    calcyLine: "The coffee gear is legit. I ran the cost-per-cup numbers myself."
   },
   {
     name: 'Relay — Coffee & Custard',
@@ -54,6 +56,7 @@ const HOUSE_ADS = [
     href: 'https://limenhelix.com/relay',
     img: `${BASE}ads/relay-mug.jpg`,
     tone: 'from-orange-500/10',
+    calcyLine: "Their espresso makers pass my cost-per-shot test. I respect that."
   },
   {
     name: 'Relay — Everyday Style',
@@ -62,6 +65,7 @@ const HOUSE_ADS = [
     href: 'https://limenhelix.com/relay',
     img: `${BASE}ads/relay-crewneck.jpg`,
     tone: 'from-rose-500/10',
+    calcyLine: "Cost-per-wear math loves good basics. So do I."
   },
   {
     name: 'Tradier Brokerage',
@@ -69,6 +73,7 @@ const HOUSE_ADS = [
     cta: 'Open an account',
     href: 'https://trade.tradier.com/raf-open/?mwr=christopher-793b',
     tone: 'from-emerald-500/10',
+    calcyLine: "Their live quotes power my portfolio. I vouch for the data personally."
   },
   {
     name: 'Your business here',
@@ -76,6 +81,7 @@ const HOUSE_ADS = [
     cta: 'Message us to advertise',
     href: '/advertise',
     tone: 'from-violet-500/10',
+    calcyLine: "This spot gets seen by people mid-decision. Prime real estate — trust me, I am a calculator."
   },
 ]
 let houseAdCounter = 0
@@ -130,6 +136,10 @@ export function AdSlot({ label = 'Advertisement' }: { label?: string }) {
         <div className="min-w-0 flex-1">
           <p className="text-base font-bold tracking-tight">{ad.name}</p>
           <p className="mt-1 text-sm text-muted-foreground">{ad.blurb}</p>
+          <p className="mt-2 flex items-center gap-1.5 text-xs italic text-muted-foreground/80">
+            <img src={`${BASE}calcy.png`} alt="" className="h-5 w-5" loading="lazy" />
+            <span><span className="font-semibold not-italic text-primary">Calcy:</span> {ad.calcyLine}</span>
+          </p>
         </div>
         <span className="shrink-0 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm">
           {ad.cta} →
