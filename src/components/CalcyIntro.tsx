@@ -1,7 +1,7 @@
 /* Calcy's animated introduction — homepage hero.
    Autonomous mascot behaviors: mouse-tracking pupils, random idle actions
    (wave / bounce / spin), celebration when the visitor uses the search,
-   entrance pop + squash, typewriter speech bubble, tap-to-greet. */
+   entrance pop + squash, typewriter speech bubble, tap-to-hear recorded voice. */
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const LINE = "Hi! I'm Calcy — your calculator buddy. 500+ calculators, zero sign-ups, and every answer runs right here in your browser. What are we figuring out today?"
@@ -16,12 +16,13 @@ const EYES = [
 
 export function CalcyIntro() {
   const [typed, setTyped] = useState(0)
-  const [greeted, setGreeted] = useState(false)
+  const [playing, setPlaying] = useState(false)
   const [action, setAction] = useState<Action>('float')
   const [look, setLook] = useState({ x: 0, y: 0 })
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const actionTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   /* --- typewriter --- */
   useEffect(() => {
@@ -105,10 +106,9 @@ export function CalcyIntro() {
     }
   }, [act])
 
-  /* --- tap-to-greet: wave + retype his line (no robot voice) --- */
+  /* --- tap-to-greet: wave, retype his line, and play his recorded voice --- */
   const greet = useCallback(() => {
     act('wave', 1700)
-    setGreeted(true)
     if (timer.current) clearInterval(timer.current)
     setTyped(0)
     timer.current = setInterval(() => {
@@ -120,6 +120,19 @@ export function CalcyIntro() {
         return t + 1
       })
     }, 22)
+    try {
+      if (!audioRef.current) {
+        audioRef.current = new Audio(`${import.meta.env.BASE_URL}calcy-voice.mp3`)
+      }
+      const a = audioRef.current
+      a.currentTime = 0
+      a.onended = () => setPlaying(false)
+      a.onerror = () => setPlaying(false)
+      setPlaying(true)
+      a.play().catch(() => setPlaying(false))
+    } catch {
+      setPlaying(false)
+    }
   }, [act])
 
   return (
@@ -127,9 +140,9 @@ export function CalcyIntro() {
       <button
         type="button"
         onClick={greet}
-        title="Say hi to Calcy"
+        title={playing ? 'Calcy is talking…' : 'Hear Calcy say hi'}
         className="group relative cursor-pointer transition-transform hover:scale-105 focus:outline-none"
-        aria-label="Say hi to Calcy"
+        aria-label="Hear Calcy introduce himself"
       >
         <div ref={wrapRef} className="relative inline-block">
           <img
@@ -159,7 +172,7 @@ export function CalcyIntro() {
           ))}
         </div>
         <span className="absolute -right-2 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-sm text-primary-foreground shadow-md transition-transform group-hover:scale-110">
-          {greeted ? '👋' : '✦'}
+          {playing ? '🔊' : '🔈'}
         </span>
       </button>
       <div className="relative min-h-[3.5rem] max-w-sm rounded-2xl rounded-tl-sm border border-primary/30 bg-primary/5 px-4 py-2.5 text-left text-sm text-foreground/90 shadow-sm">

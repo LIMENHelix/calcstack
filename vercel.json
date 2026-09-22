@@ -25,6 +25,7 @@
     { "source": "/calcstack/calcy-thinking.png", "destination": "/calcy-thinking.png" },
     { "source": "/calcstack/calcy-warning.png", "destination": "/calcy-warning.png" },
     { "source": "/calcstack/calcy-portfolio.json", "destination": "/calcy-portfolio.json" },
+    { "source": "/calcstack/calcy-voice.mp3", "destination": "/calcy-voice.mp3" },
     { "source": "/calcstack/:path*", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
