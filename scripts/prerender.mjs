@@ -46,19 +46,19 @@ function renderPage({ path, title, description, stub, jsonLd }) {
   let html = template
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`)
     .replace(
-      /<meta name="description" content="[^"]*"/,
-      `<meta name="description" content="${esc(description)}"`,
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/>/s,
+      `<meta name="description" content="${esc(description)}" />`,
     )
-    .replace(/<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${esc(title)}"`)
+    .replace(/<meta\s+property="og:title"\s+content="[^"]*"\s*\/>/s, `<meta property="og:title" content="${esc(title)}" />`)
     .replace(
-      /<meta property="og:description" content="[^"]*"/,
-      `<meta property="og:description" content="${esc(description)}"`,
+      /<meta\s+property="og:description"\s+content="[^"]*"\s*\/>/s,
+      `<meta property="og:description" content="${esc(description)}" />`,
     )
-    .replace(/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${url}"`)
-    .replace(/<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${esc(title)}"`)
+    .replace(/<meta\s+property="og:url"\s+content="[^"]*"\s*\/>/s, `<meta property="og:url" content="${url}" />`)
+    .replace(/<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/>/s, `<meta name="twitter:title" content="${esc(title)}" />`)
     .replace(
-      /<meta name="twitter:description" content="[^"]*"/,
-      `<meta name="twitter:description" content="${esc(description)}"`,
+      /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/>/s,
+      `<meta name="twitter:description" content="${esc(description)}" />`,
     )
   const headExtras = [
     `<link rel="canonical" href="${url}" />`,
