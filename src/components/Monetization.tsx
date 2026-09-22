@@ -41,31 +41,13 @@ const HOUSE_ADS = [
     calcyLine: "Free website, live the same day — I checked their math. It adds up."
   },
   {
-    name: 'Relay — The Everyday Edit',
+    name: 'Relay Supply',
     blurb: 'Coffee ritual gear, everyday clothing, comfort finds, and home goods — thoughtfully selected.',
     cta: 'Shop the edit',
     href: 'https://limenhelix.com/relay',
     img: `${BASE}ads/relay-coffee.jpg`,
     tone: 'from-amber-500/10',
     calcyLine: "The coffee gear is legit. I ran the cost-per-cup numbers myself."
-  },
-  {
-    name: 'Relay — Coffee & Custard',
-    blurb: 'International roasters, espresso makers, and the details that make your morning ritual yours.',
-    cta: 'Start your morning',
-    href: 'https://limenhelix.com/relay',
-    img: `${BASE}ads/relay-mug.jpg`,
-    tone: 'from-orange-500/10',
-    calcyLine: "Their espresso makers pass my cost-per-shot test. I respect that."
-  },
-  {
-    name: 'Relay — Everyday Style',
-    blurb: 'Basics and easy layers that earn their place — wear it your way.',
-    cta: 'Find your layer',
-    href: 'https://limenhelix.com/relay',
-    img: `${BASE}ads/relay-crewneck.jpg`,
-    tone: 'from-rose-500/10',
-    calcyLine: "Cost-per-wear math loves good basics. So do I."
   },
   {
     name: 'Tradier Brokerage',
