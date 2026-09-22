@@ -113,23 +113,25 @@ export function AdSlot({ label = 'Advertisement' }: { label?: string }) {
 
   const ad = HOUSE_ADS[houseIdx.current]
   const inner = (
-    <div className="flex flex-col items-center gap-4 p-5 text-center sm:flex-row sm:text-left">
+    <div>
       {'img' in ad && ad.img ? (
         <img
           src={ad.img}
           alt={ad.name}
           loading="lazy"
-          className="h-24 w-24 shrink-0 rounded-xl border bg-white object-cover shadow-sm sm:h-28 sm:w-28"
+          className="h-32 w-full object-cover sm:h-40"
         />
       ) : (
-        <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border bg-primary/10 text-3xl font-extrabold text-primary shadow-sm sm:h-28 sm:w-28">
+        <div className="flex h-32 w-full items-center justify-center bg-primary/10 text-5xl font-extrabold text-primary sm:h-40">
           {ad.name.charAt(0)}
         </div>
       )}
-      <div className="min-w-0 flex-1">
-        <p className="text-base font-bold tracking-tight">{ad.name}</p>
-        <p className="mt-1 text-sm text-muted-foreground">{ad.blurb}</p>
-        <span className="mt-3 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm">
+      <div className="flex items-center gap-4 p-4 text-left sm:p-5">
+        <div className="min-w-0 flex-1">
+          <p className="text-base font-bold tracking-tight">{ad.name}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{ad.blurb}</p>
+        </div>
+        <span className="shrink-0 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm">
           {ad.cta} →
         </span>
       </div>
