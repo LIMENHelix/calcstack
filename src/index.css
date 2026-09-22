@@ -134,3 +134,16 @@
   animation: calcy-blink 1s step-end infinite;
   color: hsl(var(--primary));
 }
+
+/* Walking hop: two quick hops scooting sideways and back, like he walked over */
+@keyframes calcy-hop-kf {
+  0% { transform: translateX(0) translateY(0) scaleY(1); }
+  18% { transform: translateX(14px) translateY(-16px) scaleY(1.06); }
+  36% { transform: translateX(26px) translateY(0) scaleY(0.9); }
+  54% { transform: translateX(14px) translateY(-12px) scaleY(1.04); }
+  72% { transform: translateX(0) translateY(0) scaleY(0.94); }
+  100% { transform: translateX(0) translateY(0) scaleY(1); }
+}
+.calcy-hop {
+  animation: calcy-hop-kf 1.2s ease-in-out;
+}

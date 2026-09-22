@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 const LINE = "Hi! I'm Calcy — your calculator buddy. 500+ calculators, zero sign-ups, and every answer runs right here in your browser. What are we figuring out today?"
 
-type Action = 'float' | 'wave' | 'bounce' | 'spin'
+type Action = 'float' | 'wave' | 'bounce' | 'spin' | 'hop'
 
 // Eye centers as fractions of the image (measured from calcy.png)
 const EYES = [
@@ -19,6 +19,7 @@ export function CalcyIntro() {
   const [playing, setPlaying] = useState(false)
   const [action, setAction] = useState<Action>('float')
   const [look, setLook] = useState({ x: 0, y: 0 })
+  const [blink, setBlink] = useState(false)
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const actionTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -61,6 +62,24 @@ export function CalcyIntro() {
     return () => window.removeEventListener('mousemove', onMove)
   }, [])
 
+  /* --- blinking: he has working eyelids now --- */
+  useEffect(() => {
+    let alive = true
+    const loop = () => {
+      if (!alive) return
+      setTimeout(() => {
+        if (!alive) return
+        setBlink(true)
+        setTimeout(() => alive && setBlink(false), 140)
+        loop()
+      }, 2500 + Math.random() * 3000)
+    }
+    loop()
+    return () => {
+      alive = false
+    }
+  }, [])
+
   /* --- autonomous idle behaviors: he does things on his own --- */
   const act = useCallback((a: Action, ms: number) => {
     if (actionTimer.current) clearTimeout(actionTimer.current)
@@ -76,8 +95,9 @@ export function CalcyIntro() {
       setTimeout(() => {
         if (!alive) return
         const pick = Math.random()
-        if (pick < 0.45) act('wave', 1700)
-        else if (pick < 0.8) act('bounce', 1200)
+        if (pick < 0.35) act('wave', 1700)
+        else if (pick < 0.65) act('bounce', 1200)
+        else if (pick < 0.85) act('hop', 1250)
         else act('spin', 1100)
         loop()
       }, wait)
@@ -144,7 +164,14 @@ export function CalcyIntro() {
         className="group relative cursor-pointer transition-transform hover:scale-105 focus:outline-none"
         aria-label="Hear Calcy introduce himself"
       >
-        <div ref={wrapRef} className="relative inline-block">
+        <div
+          ref={wrapRef}
+          className="relative inline-block"
+          style={{
+            transform: `rotate(${(look.x * 4).toFixed(1)}deg)`,
+            transition: 'transform 0.25s ease-out',
+          }}
+        >
           <img
             src={`${import.meta.env.BASE_URL}${action === 'bounce' || action === 'spin' ? 'calcy-celebrate.png' : 'calcy.png'}`}
             alt="Calcy, the CalcStack mascot — a friendly calculator waving hello"
@@ -165,7 +192,7 @@ export function CalcyIntro() {
                 width: '5.5%',
                 aspectRatio: '1',
                 background: 'radial-gradient(circle at 35% 35%, #0f766e, #022c22)',
-                transform: `translate(calc(-50% + ${(look.x * 5).toFixed(1)}px), calc(-50% + ${(look.y * 4).toFixed(1)}px))`,
+                transform: `translate(calc(-50% + ${(look.x * 5).toFixed(1)}px), calc(-50% + ${(look.y * 4).toFixed(1)}px)) scaleY(${blink ? 0.12 : 1})`,
                 transition: 'transform 0.12s ease-out',
               }}
             />
