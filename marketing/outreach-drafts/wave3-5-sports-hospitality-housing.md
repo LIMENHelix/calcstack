@@ -1,7 +1,7 @@
 # Wave 3–5 outreach drafts — sports science, hospitality, housing
 
 Ready-to-send after Waves 1–2. Personalize every [bracket]. One send per day.
-Embed gallery to reference: https://calcstack.app/embeds
+Embed gallery to reference: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -22,7 +22,7 @@ Subject: DOTS calculator with verified 2019 coefficients — embeddable
 > lbs, instant result as you type, no page reload. It's clean enough to embed next
 > to your program spreadsheets:
 >
-> Live demo: https://calcstack.app/embed/dots-score-calculator
+> Live demo: https://calcstack.app/calcstack/embed/dots-score-calculator
 > Full page: https://calcstack.app/calculators/dots-score-calculator
 >
 > One iframe, free forever, no signup, all math in the reader's browser. If you
@@ -65,8 +65,8 @@ Subject: Race-week tools your readers can run inline: carb loading + sweat rate
 > problems: how many grams of carbs per kg for the taper, and how much fluid and
 > sodium per hour based on their sweat rate. I built free calculators for both:
 >
-> - Carb Loading: https://calcstack.app/embed/carb-loading-calculator
-> - Sweat Rate: https://calcstack.app/embed/sweat-rate-calculator
+> - Carb Loading: https://calcstack.app/calcstack/embed/carb-loading-calculator
+> - Sweat Rate: https://calcstack.app/calcstack/embed/sweat-rate-calculator
 >
 > Both embed with one iframe and work fully inside the frame — your readers get
 > their numbers without leaving your race-week guide. Free forever, no signup,
@@ -89,11 +89,11 @@ Subject: CKD carb-up calculator based on Lyle McDonald's protocol — embeddable
 > following Lyle McDonald's protocol math (glycogen depletion, bodyweight-based
 > carb targets, refeed duration):
 >
-> Live demo: https://calcstack.app/embed/ckd-carb-up-calculator
+> Live demo: https://calcstack.app/calcstack/embed/ckd-carb-up-calculator
 > Full page: https://calcstack.app/calculators/ckd-carb-up-calculator
 >
 > There's also a glycogen estimator for the depletion side:
-> https://calcstack.app/embed/glycogen-calculator
+> https://calcstack.app/calcstack/embed/glycogen-calculator
 >
 > One iframe, free forever, no signup, nothing tracked. Glad to adjust the
 > protocol assumptions if your coverage differs.
@@ -124,13 +124,13 @@ Subject: Free tip-pool calculator your restaurant readers can embed
 > split right?" I built a free calculator that does hours-weighted tip-pool splits
 > with tip-outs, so a manager or server can check the math in seconds:
 >
-> Live demo: https://calcstack.app/embed/tip-pool-calculator
+> Live demo: https://calcstack.app/calcstack/embed/tip-pool-calculator
 > Full page: https://calcstack.app/calculators/tip-pool-calculator
 >
 > There's also a Tip Credit Checker — it computes the employer top-up owed when
 > tips don't bring a worker to full minimum wage. A worker-protection angle almost
 > no tool covers:
-> https://calcstack.app/embed/tip-credit-calculator
+> https://calcstack.app/calcstack/embed/tip-credit-calculator
 >
 > Both embed with one iframe, free forever, no signup, all math client-side.
 > Happy to customize for a specific post or state rule.
@@ -154,13 +154,13 @@ Subject: Free affordability calculator for your video descriptions
 > calculator that solves for the home price with taxes, insurance, and PMI inside
 > (bankrate's makes you iterate by hand):
 >
-> Live demo: https://calcstack.app/embed/home-affordability-calculator
+> Live demo: https://calcstack.app/calcstack/embed/home-affordability-calculator
 > Full page: https://calcstack.app/calculators/home-affordability-calculator
 >
 > Link it in the description, or embed it if you have a site — one iframe, free
 > forever, no signup, nothing tracked. The Closing Cost calculator pairs well for
 > "cash to close" videos:
-> https://calcstack.app/embed/closing-cost-calculator
+> https://calcstack.app/calcstack/embed/closing-cost-calculator
 >
 > [Name], CalcStack
 
@@ -204,7 +204,7 @@ Subject: VA vs FHA vs conventional on the same house — free embeddable tool
 > on THIS house?" I built a free calculator that runs all three side by side —
 > funding fee vs UFMIP vs PMI, monthly and lifetime:
 >
-> Live demo: https://calcstack.app/embed/va-loan-calculator
+> Live demo: https://calcstack.app/calcstack/embed/va-loan-calculator
 > Full page: https://calcstack.app/calculators/va-loan-calculator
 >
 > One iframe, free forever, no signup, nothing tracked. Happy to build a variant
@@ -225,7 +225,7 @@ Subject: Refi break-even with the clock-reset warning — embeddable
 > savings AND remaining-debt comparison at the horizon, plus the clock-reset
 > warning when a new 30-year term quietly erases the savings:
 >
-> Live demo: https://calcstack.app/embed/refinance-break-even-calculator
+> Live demo: https://calcstack.app/calcstack/embed/refinance-break-even-calculator
 > Full page: https://calcstack.app/calculators/refinance-break-even-calculator
 >
 > For a loan officer, a tool that makes YOUR pitch honest is a trust asset. One
@@ -245,7 +245,7 @@ Subject: The only free FHA calculator showing what UFMIP + lifetime MIP really c
 > calculator shows it honestly: financed upfront MIP, monthly MIP, and the
 > lifetime MIP total when putting under 10% down. Ours does:
 >
-> Live demo: https://calcstack.app/embed/fha-loan-calculator
+> Live demo: https://calcstack.app/calcstack/embed/fha-loan-calculator
 > Full page: https://calcstack.app/calculators/fha-loan-calculator
 >
 > One iframe, free forever, no signup, all client-side math. Happy to adjust for

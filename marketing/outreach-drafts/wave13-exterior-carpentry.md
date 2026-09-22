@@ -6,7 +6,7 @@ kill-you angles, and retaining walls fall over because the drainage column got s
 calculator below is verified against the governing document — IRC R507.3.1, ADA §405, ANSI A14.2,
 and course-count takeoff math. Send after Wave 12. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -23,7 +23,7 @@ Subject: IRC R507.3.1 footing sizes as an embeddable calculator
 > interpolation is the code-permitted kind, and it stops at 160 sq ft tributary area instead
 > of extrapolating — same limit the code book draws:
 >
-> Live demo: https://calcstack.app/embed/deck-footing-calculator
+> Live demo: https://calcstack.app/calcstack/embed/deck-footing-calculator
 > Full page: https://calcstack.app/calculators/deck-footing-calculator
 >
 > One iframe embeds it alongside your footing articles — readers get the table answer without
@@ -44,7 +44,7 @@ Subject: A wheelchair ramp calculator that shows the real length — landings in
 > 1:10 and 1:8 exceptions for existing buildings and the IRC 1:8 residential allowance, with
 > the "not ADA-compliant" flag plain to see:
 >
-> Live demo: https://calcstack.app/embed/ramp-slope-calculator
+> Live demo: https://calcstack.app/calcstack/embed/ramp-slope-calculator
 >
 > Families planning for a parent coming home from rehab use it to learn whether the yard has
 > room for 1:12 at all — before the first board is cut. Embeds with one iframe, free forever.
@@ -63,7 +63,7 @@ Subject: The ladder math behind the 4:1 rule, as an embeddable calculator
 > lengths — a "24-foot" ladder works to 21), the exact base distance for 75.5°, the OSHA
 > overlap for extension ladders, and the rail-above-landing check:
 >
-> Live demo: https://calcstack.app/embed/ladder-angle-calculator
+> Live demo: https://calcstack.app/calcstack/embed/ladder-angle-calculator
 >
 > It sits naturally next to any ladder-safety or fall-protection article — readers check their
 > own setup while the rules are fresh. One iframe, free forever, no signup.
@@ -83,7 +83,7 @@ Subject: Retaining wall takeoffs by the course — embeddable calculator
 > DIY counts always skip. Verified against published worked examples (20-ft × 3-ft wall,
 > 12×6 block: 154 blocks at 10% waste):
 >
-> Live demo: https://calcstack.app/embed/retaining-wall-calculator
+> Live demo: https://calcstack.app/calcstack/embed/retaining-wall-calculator
 >
 > It also flags the 3-ft geogrid threshold and the 4-ft permit/engineering line. One iframe
 > embeds it on any estimating or how-to article. Free forever, no signup.

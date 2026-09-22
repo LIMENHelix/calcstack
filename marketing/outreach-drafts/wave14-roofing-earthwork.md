@@ -7,7 +7,7 @@ ordered for the in-ground volume instead of the loose volume. Our roofing cluste
 calculator quotes the same FM 5-434 table earthwork estimators use. Send after Wave 13.
 Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -22,10 +22,10 @@ Subject: The full roof-measure chain as embeddable calculators
 > bundle of free calculators:
 >
 > Pitch → degrees, slope %, and the area multiplier (6/12 = 26.57°, factor 1.118 — the same
-> numbers on a framing square): https://calcstack.app/embed/roof-pitch-calculator
-> Footprint × pitch → squares with waste: https://calcstack.app/embed/roofing-calculator
-> Rafter lengths with ridge deduction: https://calcstack.app/embed/rafter-length-calculator
-> Gutter sizing from drainage area: https://calcstack.app/embed/gutter-size-calculator
+> numbers on a framing square): https://calcstack.app/calcstack/embed/roof-pitch-calculator
+> Footprint × pitch → squares with waste: https://calcstack.app/calcstack/embed/roofing-calculator
+> Rafter lengths with ridge deduction: https://calcstack.app/calcstack/embed/rafter-length-calculator
+> Gutter sizing from drainage area: https://calcstack.app/calcstack/embed/gutter-size-calculator
 >
 > Any of them embeds with one iframe next to your estimating content — readers run the
 > numbers while they read. Free forever, no signup, all math in the browser.
@@ -45,7 +45,7 @@ Subject: Haul truck counts with the FM 5-434 swell table built in
 > clay 40%, blasted rock 65%), loose yards to truckloads by bed size, and loads to
 > haul-away cost:
 >
-> Live demo: https://calcstack.app/embed/excavation-calculator
+> Live demo: https://calcstack.app/calcstack/embed/excavation-calculator
 > Full page: https://calcstack.app/calculators/excavation-calculator
 >
 > It's the five-second sanity check before the iron shows up — and it embeds on any
@@ -63,12 +63,12 @@ Subject: Three calculators for the projects your readers underestimate
 >
 > Retaining walls — counted by the course like suppliers sell them, with the buried base
 > course and the 12-inch drainage column that DIY counts always skip:
-> https://calcstack.app/embed/retaining-wall-calculator
+> https://calcstack.app/calcstack/embed/retaining-wall-calculator
 > Excavation — why the hauled dirt is 25–40% bigger than the hole (FM 5-434 swell table):
-> https://calcstack.app/embed/excavation-calculator
+> https://calcstack.app/calcstack/embed/excavation-calculator
 > Roof pitch — degrees, slope %, and the multiplier that explains why the roof needs more
 > shingles than the floor plan suggests:
-> https://calcstack.app/embed/roof-pitch-calculator
+> https://calcstack.app/calcstack/embed/roof-pitch-calculator
 >
 > Each embeds with one iframe and carries a plain-language explainer your editors would
 > write anyway. Free forever, no signup.
@@ -86,7 +86,7 @@ Subject: Pool dig math — bank yards, swell, and truck counts
 > dimensions → bank yards → loose yards (FM 5-434 factors) → truckloads → haul cost, with
 > the average-depth note for tapered digs built right into the page:
 >
-> Live demo: https://calcstack.app/embed/excavation-calculator
+> Live demo: https://calcstack.app/calcstack/embed/excavation-calculator
 >
 > One iframe embeds it on any pool-planning or cost article. Free forever, no signup.
 >

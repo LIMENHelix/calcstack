@@ -9,7 +9,7 @@ policy. Pet sites get this question on every breed profile and adoption guide; e
 the tool and let readers price their own situation. Send after Wave 29. Personalize
 every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -26,7 +26,7 @@ Subject: The first-year dog cost answer, as a calculator instead of a guess
 > because that's the number the household budget actually has to absorb. Default
 > example: $3,289 first year, $274/month, $2,134/year after that:
 >
-> Live demo: https://calcstack.app/embed/pet-first-year-cost-calculator
+> Live demo: https://calcstack.app/calcstack/embed/pet-first-year-cost-calculator
 >
 > One iframe, free forever, no signup, all math client-side — nothing a reader enters
 > leaves their browser.
@@ -45,7 +45,7 @@ Subject: Help adopters budget past the adoption fee
 > and lands on the monthly number they should test against their budget BEFORE the
 > adoption day. It's the honest version of "can I afford this dog":
 >
-> https://calcstack.app/embed/pet-first-year-cost-calculator
+> https://calcstack.app/calcstack/embed/pet-first-year-cost-calculator
 >
 > One iframe on your adoption-process or prepare-your-home page. Free forever, no
 > signup, nothing collected.
@@ -65,7 +65,7 @@ Subject: An insurance-vs-vet-fund calculator that respects your readers' intelli
 > dedicated vet fund is the math-fair alternative. That framing sends readers to your
 > reviews for the right reason — informed, not scared:
 >
-> https://calcstack.app/embed/pet-first-year-cost-calculator
+> https://calcstack.app/calcstack/embed/pet-first-year-cost-calculator
 >
 > One iframe, free forever, runs entirely in the browser.
 >
@@ -82,7 +82,7 @@ Subject: The cat version of the first-year budget — no training, no grooming, 
 > routine vet, insurance, toys — and shows the real split: about $1,870 for year one,
 > $156/month, with litter added on top. Kitten-adoption guides are the natural home:
 >
-> https://calcstack.app/embed/pet-first-year-cost-calculator
+> https://calcstack.app/calcstack/embed/pet-first-year-cost-calculator
 >
 > One iframe, free forever, no signup.
 >

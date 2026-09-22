@@ -7,7 +7,7 @@ check, and it completes a water-management chain no competitor has: gutters → 
 French drain → dry well → sump pump → the excavation to dig it all. Send after Wave 14.
 Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -23,7 +23,7 @@ Subject: A French drain calculator with the slope check built in
 > true gravel tons, perforated pipe footage with fitting allowance, fabric square footage for
 > the wrap, and a live slope check against the fall available to the outlet:
 >
-> Live demo: https://calcstack.app/embed/french-drain-calculator
+> Live demo: https://calcstack.app/calcstack/embed/french-drain-calculator
 > Full page: https://calcstack.app/calculators/french-drain-calculator
 >
 > The 50-ft worked example on the page reconciles to 2.6 yards / 3.7 tons — the same number
@@ -32,8 +32,8 @@ Subject: A French drain calculator with the slope check built in
 > tonnage, the NJ DEP sizing method) and a sump pump sizer (the 60-second pit rise test →
 > GPH at your total dynamic head → the right horsepower, not the box number):
 >
-> https://calcstack.app/embed/dry-well-calculator
-> https://calcstack.app/embed/sump-pump-calculator
+> https://calcstack.app/calcstack/embed/dry-well-calculator
+> https://calcstack.app/calcstack/embed/sump-pump-calculator
 >
 > One iframe embeds any of them on a drainage article. Free forever, no signup, all math
 > in the browser.
@@ -50,12 +50,12 @@ Subject: Send your customers a calculator that orders your stone correctly
 > drain?" Our free calculator answers it with your exact product — washed #57 by the ton —
 > including the pipe displacement most DIYers forget, so they order once and order right:
 >
-> https://calcstack.app/embed/french-drain-calculator
+> https://calcstack.app/calcstack/embed/french-drain-calculator
 >
 > Yards that embed a calculator like this see fewer under-orders (the second delivery fee is
 > where customer goodwill dies) and fewer returns. It also computes gravel for driveways and
 > road base with the compaction factor built in:
-> https://calcstack.app/embed/road-base-calculator
+> https://calcstack.app/calcstack/embed/road-base-calculator
 >
 > One iframe on your stone product pages. Free forever, no signup.
 >
@@ -71,12 +71,12 @@ Subject: The water chain after the downspout — embeddable drainage calculators
 > the wet-basement problem. The fix is a drain line — and we built the calculator for it:
 > trench size to gravel tons, pipe footage, fabric, and the 1% slope check:
 >
-> https://calcstack.app/embed/french-drain-calculator
+> https://calcstack.app/calcstack/embed/french-drain-calculator
 >
 > It pairs naturally with our gutter sizing calculator (drainage area × rainfall intensity →
 > gutter and downspout sizes), so your readers can go from "is my gutter big enough" to
 > "where does the water go" on one page:
-> https://calcstack.app/embed/gutter-size-calculator
+> https://calcstack.app/calcstack/embed/gutter-size-calculator
 >
 > Both embed with one iframe, free forever, no signup.
 >

@@ -8,7 +8,7 @@ math (RMD, Uniform Lifetime Table III). Retirement blogs and advisor sites usual
 one of these from a paid vendor; we offer all five free. Send after Wave 20. Personalize
 every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -23,11 +23,11 @@ Subject: Five retirement calculators, all free, all embeddable
 > out at 73. We built a calculator for each step, and every one embeds with a single
 > iframe:
 >
-> https://calcstack.app/embed/401k-contribution-calculator
-> https://calcstack.app/embed/roth-vs-traditional-calculator
-> https://calcstack.app/embed/social-security-breakeven-calculator
-> https://calcstack.app/embed/safe-withdrawal-calculator
-> https://calcstack.app/embed/rmd-calculator
+> https://calcstack.app/calcstack/embed/401k-contribution-calculator
+> https://calcstack.app/calcstack/embed/roth-vs-traditional-calculator
+> https://calcstack.app/calcstack/embed/social-security-breakeven-calculator
+> https://calcstack.app/calcstack/embed/safe-withdrawal-calculator
+> https://calcstack.app/calcstack/embed/rmd-calculator
 >
 > All five are free forever, no signup, and run entirely in the reader's browser — no
 > data leaves their machine.
@@ -46,7 +46,7 @@ Subject: Client-education calculators without the vendor subscription
 > using the official SSA month-by-month reduction rules, safe withdrawal with
 > sequence-of-returns guardrails, and RMDs from the current Uniform Lifetime Table:
 >
-> https://calcstack.app/embeds
+> https://calcstack.app/calcstack/embeds
 >
 > One iframe per tool, free forever, no signup, no lead capture — your clients' numbers
 > never leave their browsers.
@@ -64,7 +64,7 @@ Subject: The claiming-age math, computed the SSA's own way
 > early, 5/12% beyond, plus delayed credits to 70 — and finds the exact crossover age
 > for any two claiming ages:
 >
-> https://calcstack.app/embed/social-security-breakeven-calculator
+> https://calcstack.app/calcstack/embed/social-security-breakeven-calculator
 >
 > One iframe inside any claiming guide. Free forever, no signup.
 >
@@ -81,7 +81,7 @@ Subject: The 4% rule with the 1966 scenario built in
 > and the guardrail that separates surviving the 1966 window from not (cut spending 10%
 > after an early 20% drawdown):
 >
-> https://calcstack.app/embed/safe-withdrawal-calculator
+> https://calcstack.app/calcstack/embed/safe-withdrawal-calculator
 >
 > One iframe in any SWR post. Free forever, runs entirely in the browser.
 >

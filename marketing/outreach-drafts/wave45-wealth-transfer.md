@@ -13,7 +13,7 @@ superfund caps enforced ($95k/$190k). Child tax credit rounds out the family
 set ($2,200 permanent, ACTC $1,700, Schedule 8812 order). Send after Wave 44.
 Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -34,7 +34,7 @@ Subject: Your "2026 sunset" article needs an update — $15M exclusion is now pe
 > exclusion after lifetime gifts, the exact 40% marginal math, effective rate
 > on the gross estate:
 >
-> Live demo: https://calcstack.app/embed/estate-tax-calculator
+> Live demo: https://calcstack.app/calcstack/embed/estate-tax-calculator
 >
 > One iframe, free forever, no signup, all math client-side — your readers can
 > run their own numbers inside your article.
@@ -57,7 +57,7 @@ Subject: A 529 superfunding calculator with the $95,000 cap actually enforced
 > 10-year annual-exclusion habit moves ~$1.05M at 7% — no Form 709, no
 > lifetime-exclusion cost:
 >
-> https://calcstack.app/embed/gift-tax-calculator
+> https://calcstack.app/calcstack/embed/gift-tax-calculator
 >
 > One iframe, free forever, no signup.
 >
@@ -78,7 +78,7 @@ Subject: Two client-facing wealth-transfer tools with 2026-verified numbers
 > tuition/medical in the fine print, and the carryover-vs-stepped-up basis
 > caution most tools omit:
 >
-> https://calcstack.app/embeds
+> https://calcstack.app/calcstack/embeds
 >
 > Free forever, no signup, client-side (nothing your clients type leaves their
 > browser) — safe to hand to clients directly.
@@ -99,7 +99,7 @@ Subject: The child tax credit is permanent now — a calculator with the Schedul
 > The 15% formula, not the $1,700 cap, is what limits lower-income refunds.
 > This calculator runs all three stages and shows headroom to the phase-out:
 >
-> https://calcstack.app/embed/child-tax-credit-calculator
+> https://calcstack.app/calcstack/embed/child-tax-credit-calculator
 >
 > One iframe, free forever, no signup.
 >

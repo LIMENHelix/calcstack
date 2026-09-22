@@ -11,7 +11,7 @@ pro-rata tool because SEP/SIMPLE balances count: rolling a SEP into a solo 401(k
 before December 31 is what keeps the backdoor Roth clean. Send after Wave 38.
 Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -29,7 +29,7 @@ Subject: The solo 401(k) number every freelancer article gets wrong
 > catch-ups stacked for 50+. S-corp owners get the flat 25%-of-W-2 view too, so
 > readers can see why their salary decision sets their retirement ceiling:
 >
-> Live demo: https://calcstack.app/embed/solo-401k-calculator
+> Live demo: https://calcstack.app/calcstack/embed/solo-401k-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -50,7 +50,7 @@ Subject: SEP vs solo 401(k) — the deadline calculator your clients ask about e
 > every eligible employee gets the same percentage. It turns a phone call into a
 > two-minute screen share:
 >
-> https://calcstack.app/embed/sep-ira-calculator
+> https://calcstack.app/calcstack/embed/sep-ira-calculator
 >
 > One iframe on any entity-choice or retirement-deadline page. Free forever.
 >
@@ -70,8 +70,8 @@ Subject: Your side-hustle readers can shelter more than their salary does
 > once assets pass $250,000. It's the "your 9-to-5 isn't the ceiling" post,
 > already calculated:
 >
-> https://calcstack.app/embed/solo-401k-calculator
-> https://calcstack.app/embed/sep-ira-calculator
+> https://calcstack.app/calcstack/embed/solo-401k-calculator
+> https://calcstack.app/calcstack/embed/sep-ira-calculator
 >
 > One iframe each, free forever, runs entirely in the browser.
 >
@@ -92,8 +92,8 @@ Subject: The SEP balance that breaks your readers' backdoor Roth
 > conversion goes clean. Worth a sidebar in any backdoor guide aimed at
 > freelancers:
 >
-> https://calcstack.app/embed/backdoor-roth-pro-rata-calculator
-> https://calcstack.app/embed/solo-401k-calculator
+> https://calcstack.app/calcstack/embed/backdoor-roth-pro-rata-calculator
+> https://calcstack.app/calcstack/embed/solo-401k-calculator
 >
 > One iframe each, free forever, no signup.
 >

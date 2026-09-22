@@ -9,7 +9,7 @@ needs: reinvested dividends are still taxed annually, and high yields with 100%+
 payout ratios are cuts waiting to happen. Send after Wave 33. Personalize every
 [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -26,7 +26,7 @@ Subject: Your yield-on-cost posts, as an interactive calculator
 > growth → year-20 income $3,050 (30.5% on cost), portfolio $63,077 vs $42,130 without
 > reinvestment — the DRIP checkbox worth $21k:
 >
-> Live demo: https://calcstack.app/embed/dividend-drip-calculator
+> Live demo: https://calcstack.app/calcstack/embed/dividend-drip-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -45,7 +45,7 @@ Subject: The income-crossover calculator for your retirement-income series
 > what the switch costs in portfolio value. It pairs naturally with your
 > 4%-rule-vs-dividends comparisons:
 >
-> https://calcstack.app/embed/dividend-drip-calculator
+> https://calcstack.app/calcstack/embed/dividend-drip-calculator
 >
 > One iframe, free forever, runs entirely in the browser.
 >
@@ -64,7 +64,7 @@ Subject: A DRIP calculator with the payout-ratio warning built in
 > and its built-in notes flag the payout-ratio rule and the tax-on-reinvested-dividends
 > issue most tools skip:
 >
-> https://calcstack.app/embed/dividend-drip-calculator
+> https://calcstack.app/calcstack/embed/dividend-drip-calculator
 >
 > One iframe inside any dividend-safety analysis. Free forever.
 >
@@ -82,7 +82,7 @@ Subject: The compounding story, told in dividend income instead of line-go-up
 > and the year-by-year income number. The yield-on-cost line ("30% on your original
 > stake") lands the patience lesson better than any chart:
 >
-> https://calcstack.app/embed/dividend-drip-calculator
+> https://calcstack.app/calcstack/embed/dividend-drip-calculator
 >
 > One iframe on any getting-started or compounding explainer. Free forever.
 >

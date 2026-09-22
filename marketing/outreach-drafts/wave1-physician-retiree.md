@@ -4,7 +4,7 @@ Ready-to-send. Personalize the [bracketed] parts before each send — one specif
 reference per email is the difference between a reply and a delete. Send one per day,
 not all at once. Track sends in TARGETS.md's sheet.
 
-Embed gallery to reference: https://calcstack.app/embeds
+Embed gallery to reference: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -25,13 +25,13 @@ Subject: Free wRVU compensation calculator your readers can run inline
 > lands against a base-plus-incentive structure.
 >
 > It's embeddable — one iframe and your readers run it without leaving the page:
-> Live demo: https://calcstack.app/embed/wrvu-compensation-calculator
+> Live demo: https://calcstack.app/calcstack/embed/wrvu-compensation-calculator
 > Full page: https://calcstack.app/calculators/wrvu-compensation-calculator
 >
 > Also possibly useful for your rent-vs-buy content: ours shows an honest breakeven
 > year with the invested difference included — it's not a lender tool that always
 > says "buy."
-> https://calcstack.app/embed/rent-vs-buy-calculator
+> https://calcstack.app/calcstack/embed/rent-vs-buy-calculator
 >
 > Both are free forever, no signup, and everything computes in the reader's browser —
 > nothing is uploaded or tracked. Happy to build a custom variant (e.g., MGMA
@@ -55,12 +55,12 @@ Subject: Embeddable safe-withdrawal calculator for your drawdown posts
 > plug in portfolio, horizon, and spending and see success rates and year-by-year
 > depletion risk inline. One iframe and it runs on your page:
 >
-> Live demo: https://calcstack.app/embed/safe-withdrawal-calculator
+> Live demo: https://calcstack.app/calcstack/embed/safe-withdrawal-calculator
 > Full page: https://calcstack.app/calculators/safe-withdrawal-calculator
 >
 > Also relevant to your physician audience: a wRVU compensation calculator — one of
 > the only free ones that exists:
-> https://calcstack.app/embed/wrvu-compensation-calculator
+> https://calcstack.app/calcstack/embed/wrvu-compensation-calculator
 >
 > Free forever, no signup, all math client-side (nothing tracked). If a different
 > input set would serve your readers better (e.g., Roth conversion scenarios),
@@ -84,11 +84,11 @@ Subject: Free embeddable tools for your physician-finance readers
 > 1. wRVU Compensation — readers evaluating contracts can check whether a conversion
 >    factor or base-plus-incentive offer is actually competitive. Almost no free
 >    wRVU tools exist; physicians usually have to do this in a spreadsheet.
->    https://calcstack.app/embed/wrvu-compensation-calculator
+>    https://calcstack.app/calcstack/embed/wrvu-compensation-calculator
 >
 > 2. Rent vs Buy — honest breakeven math with the invested difference included,
 >    for the "should I buy the doctor house" question.
->    https://calcstack.app/embed/rent-vs-buy-calculator
+>    https://calcstack.app/calcstack/embed/rent-vs-buy-calculator
 >
 > Both embed with one iframe (snippet is on each page), free forever, no signup,
 > no tracking — everything runs in the reader's browser. Happy to customize inputs
@@ -128,12 +128,12 @@ Subject: RMD calculator with the 25% excise penalty math — embeddable
 > the distribution AND the 25% excise penalty exposure — most ranking RMD tools
 > never mention the penalty. It embeds with one iframe:
 >
-> Live demo: https://calcstack.app/embed/rmd-calculator
+> Live demo: https://calcstack.app/calcstack/embed/rmd-calculator
 > Full page: https://calcstack.app/calculators/rmd-calculator
 >
 > There's also a Social Security breakeven calculator (claim at 62 vs 67 vs 70,
 > with the crossover age) if that fits your claiming-strategy content:
-> https://calcstack.app/embed/social-security-breakeven-calculator
+> https://calcstack.app/calcstack/embed/social-security-breakeven-calculator
 >
 > Free forever, no signup, all computation in the reader's browser. Glad to adjust
 > defaults or add an input if your readers need it.

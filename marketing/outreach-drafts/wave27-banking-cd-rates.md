@@ -6,7 +6,7 @@ it. Our calculator prices the exit: maturity value, then the break-early scenari
 the penalty against simply staying in a HYSA. It is the natural companion to every rate
 table on the internet. Send after Wave 26. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -23,7 +23,7 @@ Subject: The second half of every rate table: what breaking the CD costs
 > live: $10,000 at 4.5%, 12-month term, 6-month penalty, broken at month 6 → nets
 > $9,995.05, behind the $10,198.04 a 4% HYSA would have paid:
 >
-> Live demo: https://calcstack.app/embed/cd-interest-calculator
+> Live demo: https://calcstack.app/calcstack/embed/cd-interest-calculator
 >
 > One iframe beside any rate table. Free forever, no signup, all math client-side.
 >
@@ -40,7 +40,7 @@ Subject: Early-withdrawal penalties, computed instead of footnoted
 > conversion and shows the case where breaking costs more than you earned (net below
 > principal), plus the CD ladder as the standard liquidity fix:
 >
-> https://calcstack.app/embed/cd-interest-calculator
+> https://calcstack.app/calcstack/embed/cd-interest-calculator
 >
 > One iframe inside any CD review or banking guide. Free forever, no signup.
 >
@@ -57,7 +57,7 @@ Subject: The ladder logic, shown with the penalty math that justifies it
 > unplanned break costs at any month, which is the reason the ladder exists. Readers
 > can price their own "what if I need it at month 8" before committing:
 >
-> https://calcstack.app/embed/cd-interest-calculator
+> https://calcstack.app/calcstack/embed/cd-interest-calculator
 >
 > One iframe next to any ladder explainer. Free forever, runs entirely in the browser.
 >
@@ -74,7 +74,7 @@ Subject: A CD calculator your conservative readers will actually use
 > chunk for a roof." This calculator prices both exits honestly, with the HYSA
 > comparison built in, so the lockup decision is made with numbers instead of nerves:
 >
-> https://calcstack.app/embed/cd-interest-calculator
+> https://calcstack.app/calcstack/embed/cd-interest-calculator
 >
 > One iframe, free forever, no signup, nothing entered leaves the reader's browser.
 >

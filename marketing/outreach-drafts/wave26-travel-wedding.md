@@ -7,7 +7,7 @@ calculator shows the all-in per-guest number and why the guest list IS the budge
 answer the question readers actually ask: "what will this really cost?" Send after
 Wave 25. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -24,7 +24,7 @@ Subject: A trip-cost calculator that ends at a monthly savings number
 > 5 nights at $180, $700 flights, $60/day food → $3,080 all-in, $616/day, $770/month
 > over 4 months:
 >
-> Live demo: https://calcstack.app/embed/vacation-budget-calculator
+> Live demo: https://calcstack.app/calcstack/embed/vacation-budget-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -41,7 +41,7 @@ Subject: The per-guest math that reframes the guest list argument
 > and a surprise buffer, landing at the all-in per-guest cost (example: 100 guests at
 > $120 → $24,750 total, $247.50/guest) and the monthly savings target to pay cash:
 >
-> Live demo: https://calcstack.app/embed/wedding-budget-calculator
+> Live demo: https://calcstack.app/calcstack/embed/wedding-budget-calculator
 >
 > One iframe inside any budget or guest-list guide. Free forever, no signup.
 >
@@ -58,7 +58,7 @@ Subject: A free budget tool for your client onboarding page
 > cost, see the all-in total with the buffer for service charges and gratuities, and
 > learn the per-guest framing before the venue tour:
 >
-> https://calcstack.app/embed/wedding-budget-calculator
+> https://calcstack.app/calcstack/embed/wedding-budget-calculator
 >
 > One iframe, free forever, no signup, nothing the client enters leaves their browser.
 >
@@ -75,7 +75,7 @@ Subject: The cash-side number for your points-and-miles readers
 > don't: food per person per day, activities, local transport, and the buffer, with the
 > per-day cost for comparing destinations:
 >
-> https://calcstack.app/embed/vacation-budget-calculator
+> https://calcstack.app/calcstack/embed/vacation-budget-calculator
 >
 > One iframe next to any itinerary or destination-cost post. Free forever, no signup.
 >

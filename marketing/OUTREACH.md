@@ -5,7 +5,7 @@ sitemap submitted-ready — see LAUNCH.md Phase 0.** Goal: backlinks + embedded 
 "Powered by CalcStack" link — that is the SEO engine. This kit is for manual, honest outreach:
 personalized, one at a time, no blasts.
 
-The outreach destination is the embed gallery: https://calcstack.app/embeds —
+The outreach destination is the embed gallery: https://calcstack.app/calcstack/embeds —
 live working preview on-page, size presets, one-click copy for all 400 tools.
 
 ## Rules of engagement
@@ -22,7 +22,7 @@ Every calculator page has an "Embed this calculator" section with a copy-paste i
 size presets (Compact / Standard / Tall). Example:
 
 ```html
-<iframe src="https://calcstack.app/embed/mileage-deduction-calculator"
+<iframe src="https://calcstack.app/calcstack/embed/mileage-deduction-calculator"
         width="100%" height="680" style="border:0;border-radius:12px" loading="lazy"
         title="Mileage Deduction Calculator — CalcStack"></iframe>
 ```

@@ -6,7 +6,7 @@ disability coverage do I actually need," and "how much life insurance." Physicia
 on these three posts; our tools let their readers run the numbers on-page. Send after Wave 16.
 Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -21,14 +21,14 @@ Subject: wRVU compensation math as an embeddable calculator
 > offered conversion factor to clear the base, the incentive tier math past threshold, and
 > the effective rate per wRVU at any production level:
 >
-> Live demo: https://calcstack.app/embed/wrvu-compensation-calculator
+> Live demo: https://calcstack.app/calcstack/embed/wrvu-compensation-calculator
 >
 > The natural companions for your audience are already live too — a disability insurance
 > gap calculator (the after-tax group LTD surprise, sized for own-occupation individual
 > policies) and a DIME life insurance needs calculator:
 >
-> https://calcstack.app/embed/disability-insurance-calculator
-> https://calcstack.app/embed/life-insurance-calculator
+> https://calcstack.app/calcstack/embed/disability-insurance-calculator
+> https://calcstack.app/calcstack/embed/life-insurance-calculator
 >
 > One iframe each, free forever, no signup, all math client-side — nothing a reader enters
 > leaves their browser.
@@ -47,7 +47,7 @@ Subject: The disability insurance math residents should run before fellowship en
 > the individual policy needs to fill, plus what comprehensive coverage typically costs
 > (1–3% of income):
 >
-> Live demo: https://calcstack.app/embed/disability-insurance-calculator
+> Live demo: https://calcstack.app/calcstack/embed/disability-insurance-calculator
 >
 > It embeds with one iframe on any resident finance guide. Free forever, no signup.
 >
@@ -64,7 +64,7 @@ Subject: A free wRVU calculator for your contract-checklist page
 > floor, incentive tiers past threshold, and effective $/wRVU at any production level —
 > the same math a contract attorney runs, free and instant:
 >
-> https://calcstack.app/embed/wrvu-compensation-calculator
+> https://calcstack.app/calcstack/embed/wrvu-compensation-calculator
 >
 > One iframe embeds it next to your checklist. Free forever, no signup, runs entirely in
 > the browser.
@@ -82,7 +82,7 @@ Subject: Life insurance math for households where both incomes are big
 > mortgage and daycare say otherwise. The DIME method settles it per-person: debts, years
 > of income, mortgage, education, minus existing coverage:
 >
-> https://calcstack.app/embed/life-insurance-calculator
+> https://calcstack.app/calcstack/embed/life-insurance-calculator
 >
 > The 10×-rule comparison on the page is the part that changes minds — it lands hundreds
 > of thousands off in both directions depending on the family. One iframe, free forever.

@@ -10,7 +10,7 @@ the missing middle layer between their articles and a lender's quote. Send after
 Wave 28. Personalize every [bracket]. One per day. Pitch the CLUSTER, then name the
 one tool that fits their best-performing post.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 Cluster: mortgage-payment-calculator · home-affordability-calculator ·
 closing-cost-calculator · fha-loan-calculator · va-loan-calculator ·
 mortgage-points-calculator · 15-year-mortgage-calculator ·
@@ -28,13 +28,13 @@ Subject: An eight-calculator buyer journey, free and unbranded
 > "what's the payment," "what are closing costs," "FHA or conventional." CalcStack has
 > a calculator for each step, all free, none of them collecting leads:
 >
-> Affordability: https://calcstack.app/embed/home-affordability-calculator
-> Payment: https://calcstack.app/embed/mortgage-payment-calculator
-> Closing costs: https://calcstack.app/embed/closing-cost-calculator
-> FHA (with MIP math): https://calcstack.app/embed/fha-loan-calculator
+> Affordability: https://calcstack.app/calcstack/embed/home-affordability-calculator
+> Payment: https://calcstack.app/calcstack/embed/mortgage-payment-calculator
+> Closing costs: https://calcstack.app/calcstack/embed/closing-cost-calculator
+> FHA (with MIP math): https://calcstack.app/calcstack/embed/fha-loan-calculator
 >
 > Each embeds in one iframe, math runs entirely in the reader's browser — nothing they
-> enter is sent anywhere. Full gallery: https://calcstack.app/embeds
+> enter is sent anywhere. Full gallery: https://calcstack.app/calcstack/embeds
 >
 > [Name], CalcStack
 
@@ -50,10 +50,10 @@ Subject: A points and refinance calculator that shows YOUR math, not a rate tabl
 >
 > Points (cost vs monthly savings vs breakeven — $300k/30yr example: 1 point saves
 > $50.11/mo, breaks even at 60 months, +$3,014 over 10 years):
-> https://calcstack.app/embed/mortgage-points-calculator
+> https://calcstack.app/calcstack/embed/mortgage-points-calculator
 >
 > Refinance break-even (new payment vs closing costs, months to recover):
-> https://calcstack.app/embed/refinance-break-even-calculator
+> https://calcstack.app/calcstack/embed/refinance-break-even-calculator
 >
 > No rate sales, no lead capture — readers bring the numbers you quoted them. One
 > iframe each, free forever.
@@ -70,8 +70,8 @@ Subject: VA loan math with the funding fee built in
 > starts with it — first-use vs subsequent-use, down-payment tier, exempt cases — and
 > rolls it into the financed amount the way the loan actually closes:
 >
-> VA loan: https://calcstack.app/embed/va-loan-calculator
-> Funding fee standalone: https://calcstack.app/embed/va-funding-fee-calculator
+> VA loan: https://calcstack.app/calcstack/embed/va-loan-calculator
+> Funding fee standalone: https://calcstack.app/calcstack/embed/va-funding-fee-calculator
 >
 > One iframe on any VA-benefit explainer. Free forever, no signup, all math client-side.
 >
@@ -88,7 +88,7 @@ Subject: The 15-year question, answered with the reader's actual rate quotes
 > quotes — the honest version of the argument, since it shows what the 15 saves AND
 > what the higher required payment costs in flexibility:
 >
-> https://calcstack.app/embed/15-year-mortgage-calculator
+> https://calcstack.app/calcstack/embed/15-year-mortgage-calculator
 >
 > One iframe, free forever, runs entirely in the browser.
 >

@@ -11,7 +11,7 @@ health premiums + PTO ÷ REAL hours — a $70k job beats an $80k one by $6.27/hr
 in the verified example). The draw tool shows recoverable draws as the loans
 they are. Send after Wave 41. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -29,7 +29,7 @@ Subject: Your overtime-threshold page is probably stale (and here's the fix)
 > (salary basis, level, duties — with the Helix day-rate case), state floors for
 > CA/WA, and prices the weekly OT premium a misclassified role accrues:
 >
-> Live demo: https://calcstack.app/embed/overtime-exempt-threshold-calculator
+> Live demo: https://calcstack.app/calcstack/embed/overtime-exempt-threshold-calculator
 >
 > One iframe, free forever, no signup, all math client-side.
 >
@@ -49,7 +49,7 @@ Subject: The offer-comparison calculator that divides by actual hours
 > $34.18 per hour actually worked. Readers get the number to quote back to the
 > recruiter:
 >
-> https://calcstack.app/embed/benefits-value-calculator
+> https://calcstack.app/calcstack/embed/benefits-value-calculator
 >
 > One iframe on any offer-negotiation article. Free forever.
 >
@@ -67,7 +67,7 @@ Subject: Recoverable draw = loan. This calculator shows the repayment schedule
 > excess-commission repayment, and the balance owed if the rep quits — the
 > termination-clause conversation, quantified before signature:
 >
-> https://calcstack.app/embed/commission-draw-calculator
+> https://calcstack.app/calcstack/embed/commission-draw-calculator
 >
 > One iframe, free forever, runs entirely in the browser.
 >
@@ -86,7 +86,7 @@ Subject: Two calculators for the two most common pay disputes
 > all three tests, and prices the annualized premium plus the liquidated-damages
 > doubling:
 >
-> https://calcstack.app/embed/overtime-exempt-threshold-calculator
+> https://calcstack.app/calcstack/embed/overtime-exempt-threshold-calculator
 >
 > One iframe, free forever, no signup.
 >

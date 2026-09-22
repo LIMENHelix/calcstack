@@ -10,7 +10,7 @@ computed WITHOUT the expired credits and explicit about what still drives the ma
 content sites, this is the "our calculators are now wrong" fix in one bundle. Send
 after Wave 32. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 Trilogy: solar-payback-calculator · ev-vs-gas-cost-calculator ·
 heat-pump-vs-furnace-calculator
 
@@ -29,7 +29,7 @@ Subject: Your payback calculator still has the 30% credit. Ours doesn't.
 > terms, payback with escalation and degradation. Default example: $24k system, $2k
 > state rebate, 9,000 kWh at the 18.8¢ national average → year 13, +$30k over 25 years:
 >
-> Live demo: https://calcstack.app/embed/solar-payback-calculator
+> Live demo: https://calcstack.app/calcstack/embed/solar-payback-calculator
 >
 > It also flags the quote trap: a "30% credit" line in 2026 is the lease/PPA company's
 > §48E, not the homeowner's. One iframe, free forever, all math client-side.
@@ -49,7 +49,7 @@ Subject: EV vs gas math for 2026 — no $7,500 credit, home charging is the subs
 > ahead at year 10. It also tells readers the truth about public fast-charging (gas-car
 > money per mile — home charging is the whole case):
 >
-> https://calcstack.app/embed/ev-vs-gas-cost-calculator
+> https://calcstack.app/calcstack/embed/ev-vs-gas-cost-calculator
 >
 > One iframe inside any EV-buying guide. Free forever, no signup.
 >
@@ -68,7 +68,7 @@ Subject: The heat pump calculator that admits when the heat pump loses
 > face — when it also replaces a dying AC, which the tool models as a direct offset to
 > the premium. The §25C credit is gone (ended 12/31/25) and the tool says so:
 >
-> https://calcstack.app/embed/heat-pump-vs-furnace-calculator
+> https://calcstack.app/calcstack/embed/heat-pump-vs-furnace-calculator
 >
 > One iframe, free forever. Your audience will trust it because it can say no.
 >
@@ -86,9 +86,9 @@ Subject: The post-OBBBA electrification calculator trilogy
 > (breakeven 5.2 years on home charging), heat pump vs furnace (rate-dependent, with
 > the AC-replacement offset that usually decides it). All three are embeddable:
 >
-> Solar: https://calcstack.app/embed/solar-payback-calculator
-> EV: https://calcstack.app/embed/ev-vs-gas-cost-calculator
-> Heat pump: https://calcstack.app/embed/heat-pump-vs-furnace-calculator
+> Solar: https://calcstack.app/calcstack/embed/solar-payback-calculator
+> EV: https://calcstack.app/calcstack/embed/ev-vs-gas-cost-calculator
+> Heat pump: https://calcstack.app/calcstack/embed/heat-pump-vs-furnace-calculator
 >
 > Free forever, no signup, nothing a reader enters leaves their browser.
 >

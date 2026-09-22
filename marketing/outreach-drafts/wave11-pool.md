@@ -4,7 +4,7 @@ The hook: every pool chemical label says "per 10,000 gallons" and no pool is 10,
 our dosing calculator is the missing step. Pool content sites live on chemistry questions.
 Send after Wave 10. Personalize every [bracket]. One per day.
 
-Embed gallery: https://calcstack.app/embeds
+Embed gallery: https://calcstack.app/calcstack/embeds
 
 ---
 
@@ -26,7 +26,7 @@ Subject: Free dosing calculator for your chemical product pages
 > a different size. We built a free calculator that scales the standard dosing rates (12.5%
 > liquid, dichlor, baking soda, calcium chloride, stabilizer, muriatic acid) to any pool volume:
 >
-> Live demo: https://calcstack.app/embed/pool-chemical-calculator
+> Live demo: https://calcstack.app/calcstack/embed/pool-chemical-calculator
 > Full page: https://calcstack.app/calculators/pool-chemical-calculator
 >
 > It embeds with one iframe on product or guide pages — customers dose right the first time,
@@ -44,11 +44,11 @@ Subject: Embeddable tools your route-tech readers will use at the truck
 > Your readers run routes, not desks. Three free calculators built for the truck:
 >
 > - Pool Volume — new-account math in 20 seconds:
->   https://calcstack.app/embed/pool-volume-calculator
+>   https://calcstack.app/calcstack/embed/pool-volume-calculator
 > - Chemical Dosing — label rates scaled to the actual pool:
->   https://calcstack.app/embed/pool-chemical-calculator
+>   https://calcstack.app/calcstack/embed/pool-chemical-calculator
 > - Pump Turnover — settles "your pump only runs 4 hours" arguments with arithmetic:
->   https://calcstack.app/embed/pool-pump-calculator
+>   https://calcstack.app/calcstack/embed/pool-pump-calculator
 >
 > All embed with one iframe, free forever, no signup, work fully offline-fast in the browser.
 > There's also a full pool-tech toolkit page your blog could link as a reader resource:
@@ -66,8 +66,8 @@ Subject: The heater-sizing math your "heat pump vs gas" videos skip — free emb
 > ask about in comments. Our heater calculator runs the surface-area × temperature-rise rule
 > with wind adjustment, and the pump calculator shows real turnover from actual GPM:
 >
-> https://calcstack.app/embed/pool-heater-calculator
-> https://calcstack.app/embed/pool-pump-calculator
+> https://calcstack.app/calcstack/embed/pool-heater-calculator
+> https://calcstack.app/calcstack/embed/pool-pump-calculator
 >
 > One iframe each, free forever, no signup. Description links work great too — the pages load
 > fast on phones by the pool.
