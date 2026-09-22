@@ -26,6 +26,9 @@
     { "source": "/calcstack/calcy-warning.png", "destination": "/calcy-warning.png" },
     { "source": "/calcstack/calcy-portfolio.json", "destination": "/calcy-portfolio.json" },
     { "source": "/calcstack/calcy-voice.mp3", "destination": "/calcy-voice.mp3" },
+    { "source": "/calcstack/calcy-walk1.png", "destination": "/calcy-walk1.png" },
+    { "source": "/calcstack/calcy-walk2.png", "destination": "/calcy-walk2.png" },
+    { "source": "/calcstack/calcy-talk.png", "destination": "/calcy-talk.png" },
     { "source": "/calcstack/:path*", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
