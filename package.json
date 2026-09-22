@@ -7,6 +7,7 @@
     "dev": "vite",
     "prebuild": "node scripts/gen-sitemap.mjs && node scripts/sync-meta.mjs",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
