@@ -77,9 +77,9 @@ const HOUSE_ADS = [
     calcyLine: "Evidence graded honestly, zero miracle cures, autistic voices first. This is what the internet should be."
   },
   {
-    name: 'Your business here',
-    blurb: 'Put your business in front of people actively doing money math. Drive real traffic.',
-    cta: 'Message us to advertise',
+    name: 'You can advertise here',
+    blurb: 'Put your business in front of people actively doing money math. Drive real traffic — email chris@limenhelix.com.',
+    cta: 'Advertise with us',
     href: '/advertise',
     tone: 'from-violet-500/10',
     calcyLine: "This spot gets seen by people mid-decision. Prime real estate — trust me, I am a calculator."
