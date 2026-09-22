@@ -3,6 +3,7 @@ import { CALCULATORS, CATEGORIES } from '@/data/calculators'
 import { PERSONAS } from '@/data/personas'
 import { Seo } from '@/components/Seo'
 import { CalcyIntro } from '@/components/CalcyIntro'
+import { CalcyScoreboard } from '@/components/CalcyScoreboard'
 import { RelayFeature, KillswitchFeature } from '@/components/RelayFeature'
 import { SearchBar } from '@/components/SearchBar'
 import { Card, CardContent } from '@/components/ui/card'
@@ -52,6 +53,8 @@ export default function Home() {
           </span>
         </div>
       </Link>
+
+      <CalcyScoreboard />
 
       <section className="mb-12">
         <h2 className="mb-1 text-xl font-semibold">Just shipped</h2>
