@@ -60,6 +60,12 @@ const HOUSE_ADS = [
     img: `${BASE}ads/relay-crewneck.jpg`,
   },
   {
+    name: 'Tradier Brokerage',
+    blurb: 'The brokerage powering Calcy\u2019s live quotes — open an account and trade the math yourself.',
+    cta: 'Open an account',
+    href: 'https://trade.tradier.com/raf-open/?mwr=christopher-793b',
+  },
+  {
     name: 'Your business here',
     blurb: 'Put your business in front of people actively doing money math. Drive real traffic.',
     cta: 'Message us to advertise',
@@ -207,13 +213,13 @@ export const CATEGORY_AFFILIATES: Record<string, AffiliateItem[]> = {
   ],
   'Savings & Investing': [
     { name: 'High-yield savings comparison', blurb: 'The growth you just projected deserves a real rate.', href: '#affiliate-high-yield-savings' },
-    { name: 'Commission-free brokerage', blurb: 'Where compound interest stops being hypothetical.', href: '#affiliate-brokerage' },
+    { name: 'Commission-free brokerage', blurb: 'Where compound interest stops being hypothetical.', href: 'https://trade.tradier.com/raf-open/?mwr=christopher-793b' },
     { name: 'CD rate comparison', blurb: 'Lock the rate when the goal has a date.', href: '#affiliate-cd-rates' },
   ],
   'Investing & Crypto': [
     { name: 'Regulated crypto exchange', blurb: 'If you are going to trade, fees are the first loss to control.', href: '#affiliate-crypto-exchange' },
     { name: 'Portfolio tracking app', blurb: 'See the ROI you calculated across everything you own.', href: '#affiliate-portfolio-tracker' },
-    { name: 'Commission-free brokerage', blurb: 'The boring index fund usually wins the comparison.', href: '#affiliate-brokerage' },
+    { name: 'Commission-free brokerage', blurb: 'The boring index fund usually wins the comparison.', href: 'https://trade.tradier.com/raf-open/?mwr=christopher-793b' },
   ],
   'Freelance & Career': [
     { name: 'Business banking for freelancers', blurb: 'Separate the rate income from the spending.', href: '#affiliate-business-banking' },
