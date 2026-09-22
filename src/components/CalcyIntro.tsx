@@ -1,25 +1,18 @@
 /* Calcy's animated introduction — homepage hero.
-   Autonomous mascot behaviors: mouse-tracking pupils, random idle actions
-   (wave / bounce / spin), celebration when the visitor uses the search,
-   entrance pop + squash, typewriter speech bubble, tap-to-hear recorded voice. */
+   Autonomous mascot behaviors: leans toward the visitor's cursor, random idle
+   actions (wave / bounce / spin / hop), celebration when the visitor uses the
+   search, entrance pop + squash, typewriter speech bubble, tap-to-hear voice. */
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const LINE = "Hi! I'm Calcy — your calculator buddy. 500+ calculators, zero sign-ups, and every answer runs right here in your browser. What are we figuring out today?"
 
 type Action = 'float' | 'wave' | 'bounce' | 'spin' | 'hop'
 
-// Eye centers as fractions of the image (measured from calcy.png)
-const EYES = [
-  { x: 42.5, y: 24 },
-  { x: 62, y: 24 },
-]
-
 export function CalcyIntro() {
   const [typed, setTyped] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [action, setAction] = useState<Action>('float')
   const [look, setLook] = useState({ x: 0, y: 0 })
-  const [blink, setBlink] = useState(false)
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const actionTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -60,24 +53,6 @@ export function CalcyIntro() {
     }
     window.addEventListener('mousemove', onMove)
     return () => window.removeEventListener('mousemove', onMove)
-  }, [])
-
-  /* --- blinking: he has working eyelids now --- */
-  useEffect(() => {
-    let alive = true
-    const loop = () => {
-      if (!alive) return
-      setTimeout(() => {
-        if (!alive) return
-        setBlink(true)
-        setTimeout(() => alive && setBlink(false), 140)
-        loop()
-      }, 2500 + Math.random() * 3000)
-    }
-    loop()
-    return () => {
-      alive = false
-    }
   }, [])
 
   /* --- autonomous idle behaviors: he does things on his own --- */
@@ -180,23 +155,6 @@ export function CalcyIntro() {
             height="144"
             draggable={false}
           />
-          {/* live pupils — they watch your cursor */}
-          {EYES.map((eye, i) => (
-            <span
-              key={i}
-              aria-hidden
-              className="pointer-events-none absolute rounded-full"
-              style={{
-                left: `${eye.x}%`,
-                top: `${eye.y}%`,
-                width: '5.5%',
-                aspectRatio: '1',
-                background: 'radial-gradient(circle at 35% 35%, #0f766e, #022c22)',
-                transform: `translate(calc(-50% + ${(look.x * 5).toFixed(1)}px), calc(-50% + ${(look.y * 4).toFixed(1)}px)) scaleY(${blink ? 0.12 : 1})`,
-                transition: 'transform 0.12s ease-out',
-              }}
-            />
-          ))}
         </div>
         <span className="absolute -right-2 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-sm text-primary-foreground shadow-md transition-transform group-hover:scale-110">
           {playing ? '🔊' : '🔈'}
