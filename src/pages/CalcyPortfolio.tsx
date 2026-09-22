@@ -213,10 +213,18 @@ export default function CalcyPortfolio() {
                 <Card key={`${t.date}-${t.symbol}-${i}`}>
                   <CardContent className="p-4">
                     <p className="text-sm font-semibold">
-                      <span className={t.action === 'BUY' ? 'text-emerald-600' : 'text-red-500'}>
+                      <span
+                        className={
+                          t.action === 'BUY'
+                            ? 'text-emerald-600'
+                            : t.action === 'SELL'
+                              ? 'text-red-500'
+                              : 'text-amber-600'
+                        }
+                      >
                         {t.action}
                       </span>{' '}
-                      {t.shares} {t.symbol} @ {money(t.price)}{' '}
+                      {t.shares > 0 ? `${t.shares} ${t.symbol} @ ${money(t.price)} ` : ''}
                       <span className="font-normal text-muted-foreground">· {t.date}</span>
                     </p>
                     <p className="mt-1 text-sm italic text-muted-foreground">“{t.reasoning}”</p>
