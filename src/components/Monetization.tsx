@@ -58,6 +58,22 @@ const HOUSE_ADS = [
     calcyLine: "Their live quotes power my portfolio. I vouch for the data personally."
   },
   {
+    name: 'All Access KC',
+    blurb: 'The free local’s guide to Kansas City — real day-plans, parking tricks, and $370+ in mapped food rewards, updated weekly.',
+    cta: 'Open the free guide',
+    href: 'https://allaccesskc.com/',
+    tone: 'from-red-500/10',
+    calcyLine: "A free guide carrying $1,000+ in real value — the ROI on free is my favorite number."
+  },
+  {
+    name: 'Recursive Love',
+    blurb: 'A calm, judgment-free community for parents of autistic children and autistic adults — evidence graded honestly, no fear-selling.',
+    cta: 'Start here',
+    href: 'https://www.recursivelove.com',
+    tone: 'from-teal-500/10',
+    calcyLine: "Evidence graded honestly, zero miracle cures, autistic voices first. This is what the internet should be."
+  },
+  {
     name: 'Your business here',
     blurb: 'Put your business in front of people actively doing money math. Drive real traffic.',
     cta: 'Message us to advertise',
