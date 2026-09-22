@@ -37,6 +37,7 @@ const HOUSE_ADS = [
     cta: 'Get your free site',
     href: 'https://www.killswitchwebsites.com',
     img: `${BASE}ads/killswitch-og.svg`,
+    tone: 'from-sky-500/10',
   },
   {
     name: 'Relay — The Everyday Edit',
@@ -44,6 +45,7 @@ const HOUSE_ADS = [
     cta: 'Shop the edit',
     href: 'https://limenhelix.com/relay',
     img: `${BASE}ads/relay-coffee.jpg`,
+    tone: 'from-amber-500/10',
   },
   {
     name: 'Relay — Coffee & Custard',
@@ -51,6 +53,7 @@ const HOUSE_ADS = [
     cta: 'Start your morning',
     href: 'https://limenhelix.com/relay',
     img: `${BASE}ads/relay-mug.jpg`,
+    tone: 'from-orange-500/10',
   },
   {
     name: 'Relay — Everyday Style',
@@ -58,18 +61,21 @@ const HOUSE_ADS = [
     cta: 'Find your layer',
     href: 'https://limenhelix.com/relay',
     img: `${BASE}ads/relay-crewneck.jpg`,
+    tone: 'from-rose-500/10',
   },
   {
     name: 'Tradier Brokerage',
     blurb: 'The brokerage powering Calcy\u2019s live quotes — open an account and trade the math yourself.',
     cta: 'Open an account',
     href: 'https://trade.tradier.com/raf-open/?mwr=christopher-793b',
+    tone: 'from-emerald-500/10',
   },
   {
     name: 'Your business here',
     blurb: 'Put your business in front of people actively doing money math. Drive real traffic.',
     cta: 'Message us to advertise',
     href: '/advertise',
+    tone: 'from-violet-500/10',
   },
 ]
 let houseAdCounter = 0
@@ -107,30 +113,36 @@ export function AdSlot({ label = 'Advertisement' }: { label?: string }) {
 
   const ad = HOUSE_ADS[houseIdx.current]
   const inner = (
-    <>
-      {'img' in ad && ad.img && (
+    <div className="flex flex-col items-center gap-4 p-5 text-center sm:flex-row sm:text-left">
+      {'img' in ad && ad.img ? (
         <img
           src={ad.img}
           alt={ad.name}
           loading="lazy"
-          className="mx-auto mb-3 h-28 w-full max-w-xs rounded-md border bg-white object-contain p-1"
+          className="h-24 w-24 shrink-0 rounded-xl border bg-white object-cover shadow-sm sm:h-28 sm:w-28"
         />
+      ) : (
+        <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border bg-primary/10 text-3xl font-extrabold text-primary shadow-sm sm:h-28 sm:w-28">
+          {ad.name.charAt(0)}
+        </div>
       )}
-      <p className="text-sm font-semibold">{ad.name}</p>
-      <p className="mt-1 text-xs text-muted-foreground">{ad.blurb}</p>
-      <span className="mt-2 inline-block rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground">
-        {ad.cta} →
-      </span>
-    </>
+      <div className="min-w-0 flex-1">
+        <p className="text-base font-bold tracking-tight">{ad.name}</p>
+        <p className="mt-1 text-sm text-muted-foreground">{ad.blurb}</p>
+        <span className="mt-3 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm">
+          {ad.cta} →
+        </span>
+      </div>
+    </div>
   )
   return (
-    <div className="my-8 rounded-lg border bg-muted/40 p-4 text-center">
-      <p className="mb-2 text-[10px] uppercase tracking-widest text-muted-foreground/60">{label}</p>
+    <div className={`my-8 overflow-hidden rounded-xl border bg-gradient-to-br ${ad.tone} via-background to-background shadow-sm`}>
+      <p className="pt-2 text-center text-[10px] uppercase tracking-widest text-muted-foreground/60">{label}</p>
       {ad.href ? (
         <a
           href={ad.href}
           {...(ad.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          className="block transition-opacity hover:opacity-80"
+          className="block transition-all hover:brightness-95"
         >
           {inner}
         </a>
