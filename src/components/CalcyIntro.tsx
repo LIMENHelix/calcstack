@@ -4,7 +4,7 @@
    search, entrance pop + squash, typewriter speech bubble, tap-to-hear voice. */
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-const LINE = "Hi! I'm Calcy — your calculator buddy. 500+ calculators, zero sign-ups, and every answer runs right here in your browser. What are we figuring out today?"
+const LINE = "Oh, hi! I'm Calcy, your calculator buddy! I've got, like, 500+ calculators in here — zero sign-ups, and everything runs right in your browser. It's kind of my whole thing. So... what are we figuring out today?"
 
 type Action = 'float' | 'wave' | 'bounce' | 'spin' | 'hop'
 
