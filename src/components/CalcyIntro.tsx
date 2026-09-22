@@ -1,12 +1,10 @@
 /* Calcy's animated introduction — homepage hero.
    Autonomous mascot behaviors: mouse-tracking pupils, random idle actions
    (wave / bounce / spin), celebration when the visitor uses the search,
-   entrance pop + squash, typewriter speech bubble, tap-to-talk voice. */
+   entrance pop + squash, typewriter speech bubble, tap-to-greet. */
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const LINE = "Hi! I'm Calcy — your calculator buddy. 500+ calculators, zero sign-ups, and every answer runs right here in your browser. What are we figuring out today?"
-// Spoken variant: TTS reads "Calcy" as "Cal-see" — spell it phonetically.
-const SPEAK_LINE = LINE.replace("I'm Calcy", "I'm Cal-Key")
 
 type Action = 'float' | 'wave' | 'bounce' | 'spin'
 
@@ -18,7 +16,7 @@ const EYES = [
 
 export function CalcyIntro() {
   const [typed, setTyped] = useState(0)
-  const [speaking, setSpeaking] = useState(false)
+  const [greeted, setGreeted] = useState(false)
   const [action, setAction] = useState<Action>('float')
   const [look, setLook] = useState({ x: 0, y: 0 })
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -107,34 +105,31 @@ export function CalcyIntro() {
     }
   }, [act])
 
-  /* --- voice --- */
-  const speak = useCallback(() => {
-    if (!('speechSynthesis' in window)) return
-    window.speechSynthesis.cancel()
-    const u = new SpeechSynthesisUtterance(SPEAK_LINE)
-    u.pitch = 1.35
-    u.rate = 1.05
-    const voices = window.speechSynthesis.getVoices()
-    u.voice =
-      voices.find((v) => /Google US English/i.test(v.name)) ??
-      voices.find((v) => v.lang === 'en-US' && /female|zira|samantha/i.test(v.name)) ??
-      voices.find((v) => v.lang.startsWith('en')) ??
-      null
-    setSpeaking(true)
+  /* --- tap-to-greet: wave + retype his line (no robot voice) --- */
+  const greet = useCallback(() => {
     act('wave', 1700)
-    u.onend = () => setSpeaking(false)
-    u.onerror = u.onend
-    window.speechSynthesis.speak(u)
+    setGreeted(true)
+    if (timer.current) clearInterval(timer.current)
+    setTyped(0)
+    timer.current = setInterval(() => {
+      setTyped((t) => {
+        if (t >= LINE.length) {
+          if (timer.current) clearInterval(timer.current)
+          return t
+        }
+        return t + 1
+      })
+    }, 22)
   }, [act])
 
   return (
     <div className="mx-auto mb-2 flex max-w-md flex-col items-center gap-1">
       <button
         type="button"
-        onClick={speak}
-        title={speaking ? 'Calcy is talking…' : 'Hear Calcy say hi'}
+        onClick={greet}
+        title="Say hi to Calcy"
         className="group relative cursor-pointer transition-transform hover:scale-105 focus:outline-none"
-        aria-label="Hear Calcy introduce himself"
+        aria-label="Say hi to Calcy"
       >
         <div ref={wrapRef} className="relative inline-block">
           <img
@@ -164,7 +159,7 @@ export function CalcyIntro() {
           ))}
         </div>
         <span className="absolute -right-2 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-sm text-primary-foreground shadow-md transition-transform group-hover:scale-110">
-          {speaking ? '🔊' : '🔈'}
+          {greeted ? '👋' : '✦'}
         </span>
       </button>
       <div className="relative min-h-[3.5rem] max-w-sm rounded-2xl rounded-tl-sm border border-primary/30 bg-primary/5 px-4 py-2.5 text-left text-sm text-foreground/90 shadow-sm">
