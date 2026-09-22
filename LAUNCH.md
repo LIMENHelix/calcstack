@@ -19,9 +19,13 @@ Product Hunt once we have some social proof.
 >
 > So I built the opposite:
 >
-> - 127 free calculators and data tools (mortgage, paycheck math for all 50 states
+> - 500+ free calculators and data tools (mortgage, paycheck math for all 50 states
 >   verified against official DOR schedules, freelance rates, sales tax, sports science,
 >   construction bid sheets, physician wRVU comp…)
+> - Live market quotes (Tradier) plus a portfolio tracker and a DCA-vs-lump-sum
+>   simulator that runs on real historical closes
+> - A mascot, Calcy, who runs a public $100k paper portfolio with his reasoning
+>   on the record — and talks
 > - Everything computes instantly as you type, entirely in your browser
 > - Bill Analyzer: paste your bills as plain text, get totals, categories, and
 >   flags on where you're overpaying — parsed locally, never uploaded
@@ -64,13 +68,13 @@ rough US averages), link.
 
 **r/SideProject — post:**
 Title: "I built a calculator site with zero tracking — everything computes in
-your browser. 100+ tools."
+your browser. 500+ tools."
 Body: build story, architecture honesty (static site, client-side JS), what's
 next. This sub rewards transparency about revenue model: state it plainly.
 
 ## Hacker News (Show HN)
 
-Title: "Show HN: CalcStack – 100+ calculators that run entirely in your browser"
+Title: "Show HN: CalcStack – 500+ calculators that run entirely in your browser"
 
 Best window: weekday 8–10am ET. HN rewards technical honesty — lead with the
 architecture (static site, zero backend, client-side parsing), not the money.
