@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { CalcyTip } from '@/components/CalcyTip'
 import { PortfolioTracker } from '@/components/PortfolioTracker'
 import { DcaSimulator } from '@/components/DcaSimulator'
+import { StarterDeploy } from '@/components/StarterDeploy'
 
 interface Quote {
   symbol: string
@@ -143,8 +144,11 @@ export default function Invest() {
           calculators below before you act on it.
         </CalcyTip>
 
-        {/* Portfolio tracker + DCA simulator on live data */}
-        <div className="mt-8 grid gap-4 lg:grid-cols-2">
+        {/* Starter deployment + Portfolio tracker + DCA simulator on live data */}
+        <div className="mt-8">
+          <StarterDeploy />
+        </div>
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <PortfolioTracker />
           <DcaSimulator />
         </div>
