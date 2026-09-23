@@ -61,45 +61,53 @@ export function CalcyScoreboard() {
   const beating = state.totalReturn >= state.benchReturn
 
   return (
-    <Link to="/calcy" className="mb-12 block">
-      <div className="rounded-xl border p-5 transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md sm:flex sm:items-center sm:gap-6">
-        <div className="flex items-center gap-3">
-          <img
-            src={`${import.meta.env.BASE_URL}${beating ? 'calcy-celebrate.png' : 'calcy-thinking.png'}`}
-            alt="Calcy"
-            className="h-12 w-12 shrink-0"
-          />
-          <div>
-            <p className="text-sm font-bold">Calcy vs the S&amp;P 500</p>
-            <p className="text-xs text-muted-foreground">
-              The mascot's $100k paper portfolio · last move: {state.lastAction}
-            </p>
+    <div className="mb-12">
+      <Link to="/calcy" className="block">
+        <div className="rounded-xl border p-5 transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md sm:flex sm:items-center sm:gap-6">
+          <div className="flex items-center gap-3">
+            <img
+              src={`${import.meta.env.BASE_URL}${beating ? 'calcy-celebrate.png' : 'calcy-thinking.png'}`}
+              alt="Calcy"
+              className="h-12 w-12 shrink-0"
+            />
+            <div>
+              <p className="text-sm font-bold">Calcy vs the S&amp;P 500</p>
+              <p className="text-xs text-muted-foreground">
+                The mascot's $100k paper portfolio · last move: {state.lastAction}
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 flex gap-6 sm:ml-auto sm:mt-0">
+            <div className="text-right">
+              <p className="text-lg font-extrabold tabular-nums">{money(state.equity)}</p>
+              <p
+                className={`text-xs font-semibold tabular-nums ${
+                  state.totalReturn >= 0 ? 'text-emerald-600' : 'text-red-500'
+                }`}
+              >
+                Calcy {pct(state.totalReturn)}
+              </p>
+            </div>
+            <div className="text-right">
+              <p
+                className={`text-lg font-extrabold tabular-nums ${
+                  state.benchReturn >= 0 ? 'text-emerald-600' : 'text-red-500'
+                }`}
+              >
+                {pct(state.benchReturn)}
+              </p>
+              <p className="text-xs text-muted-foreground">S&amp;P 500</p>
+            </div>
+            <div className="self-center text-xl">{beating ? '🏆' : '😤'}</div>
           </div>
         </div>
-        <div className="mt-4 flex gap-6 sm:ml-auto sm:mt-0">
-          <div className="text-right">
-            <p className="text-lg font-extrabold tabular-nums">{money(state.equity)}</p>
-            <p
-              className={`text-xs font-semibold tabular-nums ${
-                state.totalReturn >= 0 ? 'text-emerald-600' : 'text-red-500'
-              }`}
-            >
-              Calcy {pct(state.totalReturn)}
-            </p>
-          </div>
-          <div className="text-right">
-            <p
-              className={`text-lg font-extrabold tabular-nums ${
-                state.benchReturn >= 0 ? 'text-emerald-600' : 'text-red-500'
-              }`}
-            >
-              {pct(state.benchReturn)}
-            </p>
-            <p className="text-xs text-muted-foreground">S&amp;P 500</p>
-          </div>
-          <div className="self-center text-xl">{beating ? '🏆' : '😤'}</div>
-        </div>
-      </div>
-    </Link>
+      </Link>
+      <p className="mt-2 text-center text-xs text-muted-foreground">
+        He trades by a published formula —{' '}
+        <Link to="/calcy/policy" className="font-medium text-primary underline">
+          read it, or rewrite it and see what yours would trade
+        </Link>
+      </p>
+    </div>
   )
 }

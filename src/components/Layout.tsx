@@ -95,6 +95,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
               </li>
               <li>
+                <Link to="/calcy" className="hover:text-foreground">
+                  Calcy's portfolio
+                </Link>
+              </li>
+              <li>
+                <Link to="/calcy/policy" className="hover:text-foreground">
+                  Rewrite Calcy's formula
+                </Link>
+              </li>
+              <li>
                 <Link to="/embeds" className="hover:text-foreground">
                   Embed these calculators
                 </Link>
