@@ -1,21 +1,14 @@
 /* Calcy — animated mascot with real movement.
-   Flipbook walk cycle (walk1/walk2 frames) with autonomous wandering: he picks
-   a spot, turns, and WALKS there. Lip-syncs his recorded voice by flipping to
-   the talk frame while audio plays. Plus cursor lean, idle tricks (wave /
-   bounce / spin), entrance pop, and the typewriter bubble. */
+   Articulated SVG character (CalcySvg): jointed arms and legs with a true
+   walk cycle, waving, blinking, lip-synced talking mouth, bounce and spin.
+   Autonomous wandering: he picks a spot, turns, and WALKS there. Plus cursor
+   lean, entrance pop, and the typewriter bubble. */
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { CalcySvg, type CalcyAction } from './CalcySvg'
 
 const LINE = "Oh, hi! I'm Calcy, your calculator buddy! I've got, like, 500+ calculators in here — zero sign-ups, and everything runs right in your browser. It's kind of my whole thing. So... what are we figuring out today?"
 
-const FRAMES = {
-  idle: 'calcy.png',
-  celebrate: 'calcy-celebrate.png',
-  walk1: 'calcy-walk1.png',
-  walk2: 'calcy-walk2.png',
-  talk: 'calcy-talk.png',
-} as const
-
-type Action = 'float' | 'wave' | 'bounce' | 'spin'
+type Action = CalcyAction
 
 const WANDER_RANGE = 64 // px either side of center
 
@@ -27,8 +20,6 @@ export function CalcyIntro() {
   const [pos, setPos] = useState(0) // px offset from center
   const [facing, setFacing] = useState(1) // 1 = right, -1 = left
   const [walking, setWalking] = useState(false)
-  const [walkFrame, setWalkFrame] = useState(0)
-  const [talkFrame, setTalkFrame] = useState(false)
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const actionTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -81,20 +72,6 @@ export function CalcyIntro() {
     setAction(a)
     actionTimer.current = setTimeout(() => setAction('float'), ms)
   }, [])
-
-  /* --- walk-cycle flipbook while walking --- */
-  useEffect(() => {
-    if (!walking) return
-    const t = setInterval(() => setWalkFrame((f) => (f === 0 ? 1 : 0)), 210)
-    return () => clearInterval(t)
-  }, [walking])
-
-  /* --- lip-sync flipbook while his voice plays --- */
-  useEffect(() => {
-    if (!playing) return
-    const t = setInterval(() => setTalkFrame((f) => !f), 190)
-    return () => clearInterval(t)
-  }, [playing])
 
   /* --- autonomous wandering: pick a spot, turn, WALK there --- */
   useEffect(() => {
@@ -182,18 +159,6 @@ export function CalcyIntro() {
     }
   }, [act])
 
-  const frame = walking
-    ? walkFrame === 0
-      ? FRAMES.walk1
-      : FRAMES.walk2
-    : playing
-      ? talkFrame
-        ? FRAMES.talk
-        : FRAMES.idle
-      : action === 'bounce' || action === 'spin'
-        ? FRAMES.celebrate
-        : FRAMES.idle
-
   return (
     <div className="mx-auto mb-2 flex max-w-md flex-col items-center gap-1">
       <button
@@ -216,14 +181,9 @@ export function CalcyIntro() {
         >
           {/* face the direction he's walking */}
           <div style={{ transform: `scaleX(${facing})` }}>
-            <img
-              src={`${import.meta.env.BASE_URL}${frame}`}
-              alt="Calcy, the CalcStack mascot — a friendly calculator who walks around and talks"
-              className={`calcy-pop w-28 drop-shadow-lg sm:w-36 ${walking ? '' : `calcy-${action}`}`}
-              width="144"
-              height="144"
-              draggable={false}
-            />
+            <div className="calcy-pop w-28 drop-shadow-lg sm:w-36">
+              <CalcySvg walking={walking} talking={playing} action={action} />
+            </div>
           </div>
         </div>
         <span className="absolute -right-2 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-sm text-primary-foreground shadow-md transition-transform group-hover:scale-110">
