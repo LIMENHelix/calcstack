@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 import { Seo } from '@/components/Seo'
 import { Card, CardContent } from '@/components/ui/card'
 import { CalcyTip } from '@/components/CalcyTip'
+import { RealBook } from '@/components/RealBook'
 
 interface Position {
   symbol: string
@@ -167,6 +168,9 @@ export default function CalcyPortfolio() {
               {live ? `Live prices · SPY ${money(calc.spyLast)}` : 'Prices offline — showing cost basis'} ·
               started {book.startedAt} · cash {money(book.cash)}
             </p>
+
+            {/* The real-money book, live from the brokerage */}
+            <RealBook />
 
             {/* Positions */}
             <h2 className="mb-3 mt-8 text-xl font-semibold">Positions</h2>
