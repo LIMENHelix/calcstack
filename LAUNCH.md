@@ -24,8 +24,9 @@ Product Hunt once we have some social proof.
 >   construction bid sheets, physician wRVU comp…)
 > - Live market quotes (Tradier) plus a portfolio tracker and a DCA-vs-lump-sum
 >   simulator that runs on real historical closes
-> - A mascot, Calcy, who runs a public $100k paper portfolio with his reasoning
->   on the record — and talks
+> - A mascot, Calcy, who trades by a published formula you can rewrite — he runs
+>   a $100k paper portfolio AND a real brokerage account, every fill public on
+>   the site within 5 minutes — and talks
 > - Everything computes instantly as you type, entirely in your browser
 > - Bill Analyzer: paste your bills as plain text, get totals, categories, and
 >   flags on where you're overpaying — parsed locally, never uploaded
@@ -67,10 +68,12 @@ browser), a worked example with sample output, honest limits (benchmarks are
 rough US averages), link.
 
 **r/SideProject — post:**
-Title: "I built a calculator site with zero tracking — everything computes in
-your browser. 500+ tools."
-Body: build story, architecture honesty (static site, client-side JS), what's
-next. This sub rewards transparency about revenue model: state it plainly.
+Title: "My calculator site's mascot trades real money in public — and you can rewrite the formula he trades by"
+Body: build story, the transparency stack (published policy → $100k paper book →
+real brokerage account live on the site → visitor-editable formula), architecture
+honesty (static site, client-side JS, key-gated serverless trade pipe with
+preview-before-execute). This sub rewards transparency about revenue model: state
+it plainly (labeled affiliate links + one clearly-labeled ad slot).
 
 ## Hacker News (Show HN)
 

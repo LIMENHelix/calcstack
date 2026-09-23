@@ -12,11 +12,19 @@ embed/coverage live?
 
 **Canonical links to use (copy exactly):**
 - Embed gallery: https://calcstack.app/calcstack/embeds
+- Calcy's page (paper book + REAL brokerage book, live): https://calcstack.app/calcstack/calcy
+- The published formula / rewrite-the-brain lab: https://calcstack.app/calcstack/calcy/policy
 - Mortgage-by-state data: https://calcstack.app/calcstack/data/mortgage-payment-by-state
 - DCA simulator: https://calcstack.app/calcstack/invest
-- Calcy's public portfolio: https://calcstack.app/calcstack/calcy
 - Bill Analyzer: https://calcstack.app/calcstack/tools/bill-analyzer
 - wRVU calculator: https://calcstack.app/calcstack/calculators/wrvu-compensation-calculator
+
+**The lead hook (as of 2026-09-23):** Calcy doesn't just run a paper portfolio —
+he trades REAL money in a real brokerage account, live on the site
+(funded 2026-09-23 with $100, every fill public within 5 minutes), and the
+exact formula he trades by is published and visitor-editable. "A calculator
+site's mascot trades real money in public, and you can rewrite his brain" is
+the story. Lead with it where it fits.
 
 ---
 
@@ -120,20 +128,21 @@ runs a public $100k paper portfolio with every decision and its reasoning on
 the record, benchmarked against SPY.
 **Contact:** via the contact/email listed on awealthofcommonsense.com.
 
-Subject: A cartoon mascot with a public $100k paper portfolio (and receipts)
+Subject: A cartoon mascot trades real money in public (and shows the formula)
 
 > Hi Ben —
 >
-> Different pitch: our site's mascot, Calcy, runs a public $100k paper
-> portfolio — every position sized with the reasoning published, live P&L
-> benchmarked against SPY, updated weekly:
-> https://calcstack.app/calcstack/calcy
+> Different pitch: our calculator site's mascot, Calcy, trades actual money in
+> a real brokerage account — live on the site, every fill public within five
+> minutes: https://calcstack.app/calcstack/calcy
 >
-> It's a transparency experiment: most finance sites tell you what to do; ours
-> shows its work and its scoreboard. Free tools, no accounts, everything runs
-> client-side.
+> The part I think you'd appreciate: he trades by a published formula (target
+> weights, rebalance bands, cash floor), and visitors can rewrite the formula
+> and see what their version would trade on his live book:
+> https://calcstack.app/calcstack/calcy/policy
 >
-> Thought it might amuse you — happy to answer anything.
+> It's a transparency experiment with skin in the game — started with a $100k
+> paper book, now running real dollars too. Happy to answer anything.
 >
 > Chris
 

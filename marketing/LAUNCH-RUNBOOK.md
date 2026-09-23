@@ -31,11 +31,7 @@ history get posts removed.
 ## Step 3 — r/SideProject post (10 min)
 
 Open `LAUNCH.md` → section **"r/SideProject — post"**. Paste title and body.
-Add this line at the end (social proof that exists now):
-
-> The site mascot runs a public $100k paper portfolio with every trade's
-> reasoning on the record — he's currently beating the S&P 500:
-> https://calcstack.app/calcstack/calcy
+The hook is the real-money transparency stack — lead with it.
 
 Reply to every comment within an hour.
 
