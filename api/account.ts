@@ -12,8 +12,7 @@ interface Res {
   setHeader(name: string, value: string): void
 }
 
-const PROD_BASE = 'https://api.tradier.com/v1'
-const SANDBOX_BASE = 'https://sandbox.tradier.com/v1'
+const BASE = 'https://api.tradier.com/v1'
 
 export default async function handler(req: Req, res: Res) {
   const key = req.headers['x-api-key']
@@ -22,15 +21,8 @@ export default async function handler(req: Req, res: Res) {
     res.status(401).json({ error: 'unauthorized' })
     return
   }
-  // ?sandbox=1 → virtual $100k paper account (sandbox key + VA… number).
-  const sandbox = String(req.query.sandbox ?? '') === '1'
-  const token = sandbox
-    ? process.env.TRADIER_API_SANDBOX
-    : (process.env.TRADIER_TOKEN ?? process.env.TRADIER_API_KEY)
-  const acct = sandbox
-    ? (process.env.TRADIER_SANDBOX_ACCT ?? 'VA60523798')
-    : (process.env.TRADIER_ACCT_NUMBER ?? process.env.TRADIER_ACCOUNT_NUMBER)
-  const BASE = sandbox ? SANDBOX_BASE : PROD_BASE
+  const token = process.env.TRADIER_TOKEN ?? process.env.TRADIER_API_KEY
+  const acct = process.env.TRADIER_ACCT_NUMBER ?? process.env.TRADIER_ACCOUNT_NUMBER
   if (!token || !acct) {
     res.status(503).json({ error: 'tradier_not_configured' })
     return
@@ -61,7 +53,6 @@ export default async function handler(req: Req, res: Res) {
     }
     res.setHeader('Cache-Control', 'no-store')
     res.status(200).json({
-      mode: sandbox ? 'SANDBOX' : 'LIVE',
       balances: balances
         ? {
             totalEquity: balances.total_equity,
