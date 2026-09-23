@@ -42,7 +42,7 @@ export default async function handler(req: Req, res: Res) {
     return
   }
   const token = process.env.TRADIER_TOKEN ?? process.env.TRADIER_API_KEY
-  const acct = process.env.TRADIER_ACCT_NUMBER
+  const acct = process.env.TRADIER_ACCT_NUMBER ?? process.env.TRADIER_ACCOUNT_NUMBER
   if (!token || !acct) {
     res.status(503).json({ error: 'tradier_not_configured' })
     return
