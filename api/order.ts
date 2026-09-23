@@ -25,7 +25,8 @@ interface Res {
   setHeader(name: string, value: string): void
 }
 
-const BASE = 'https://api.tradier.com/v1'
+const PROD_BASE = 'https://api.tradier.com/v1'
+const SANDBOX_BASE = 'https://sandbox.tradier.com/v1'
 const SYMBOL_RE = /^[A-Za-z][A-Za-z0-9.\-]{0,9}$/
 const MAX_QTY = 500
 const MAX_NOTIONAL = 25_000
@@ -41,19 +42,27 @@ export default async function handler(req: Req, res: Res) {
     res.status(401).json({ error: 'unauthorized' })
     return
   }
-  const token = process.env.TRADIER_TOKEN ?? process.env.TRADIER_API_KEY
-  const acct = process.env.TRADIER_ACCT_NUMBER ?? process.env.TRADIER_ACCOUNT_NUMBER
-  if (!token || !acct) {
-    res.status(503).json({ error: 'tradier_not_configured' })
-    return
-  }
-
   const body = (typeof req.body === 'string' ? JSON.parse(req.body) : req.body) as {
     symbol?: string
     side?: string
     quantity?: number
     limitPrice?: number
     execute?: boolean
+    sandbox?: boolean
+  }
+  // sandbox: true → virtual $100k paper account; key + account number that
+  // actually match each other. Production stays the default for real trades.
+  const sandbox = body?.sandbox === true
+  const token = sandbox
+    ? process.env.TRADIER_API_SANDBOX
+    : (process.env.TRADIER_TOKEN ?? process.env.TRADIER_API_KEY)
+  const acct = sandbox
+    ? (process.env.TRADIER_SANDBOX_ACCT ?? 'VA60523798')
+    : (process.env.TRADIER_ACCT_NUMBER ?? process.env.TRADIER_ACCOUNT_NUMBER)
+  const BASE = sandbox ? SANDBOX_BASE : PROD_BASE
+  if (!token || !acct) {
+    res.status(503).json({ error: 'tradier_not_configured' })
+    return
   }
   const symbol = String(body?.symbol ?? '').toUpperCase()
   const side = String(body?.side ?? '').toLowerCase()
@@ -125,7 +134,7 @@ export default async function handler(req: Req, res: Res) {
       return
     }
     res.status(200).json({
-      mode: execute ? 'LIVE' : 'PREVIEW',
+      mode: `${sandbox ? 'SANDBOX' : 'LIVE'}-${execute ? 'EXECUTE' : 'PREVIEW'}`,
       request: { symbol, side, quantity, type, limitPrice, duration: 'day' },
       tradier: data,
       asOf: new Date().toISOString(),
