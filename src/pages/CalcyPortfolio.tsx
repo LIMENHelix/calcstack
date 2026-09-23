@@ -240,8 +240,16 @@ export default function CalcyPortfolio() {
             </CalcyTip>
 
             <p className="mt-4 text-sm text-muted-foreground">
-              Want the tools I use? <Link to="/invest" className="text-primary underline">Live quotes, DCA simulator, and portfolio tracker</Link> — same
-              data, free.
+              I don't trade on feelings — I trade on{' '}
+              <Link to="/calcy/policy" className="text-primary underline">
+                a published formula you can rewrite
+              </Link>
+              . Change my target weights and see what your version would trade today. Want the
+              tools I use?{' '}
+              <Link to="/invest" className="text-primary underline">
+                Live quotes, DCA simulator, and portfolio tracker
+              </Link>{' '}
+              — same data, free.
             </p>
           </>
         )}

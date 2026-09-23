@@ -157,6 +157,7 @@ const STATIC = [
   ['/directory', 'Directory — All 500+ Free Calculators', 'Every CalcStack calculator organized by profession, state, and goal.'],
   ['/invest', 'Investing — Live Quotes + the Math That Turns Prices into Decisions', 'Live market quotes next to compound growth, DCA, capital gains, Coast FIRE, and retirement calculators.'],
   ['/calcy', "Calcy's Paper Portfolio — $100k, Real Prices, Public Reasoning", "CalcStack's mascot runs a virtual $100,000 portfolio marked to real market prices, with every trade's reasoning on the record."],
+  ['/calcy/policy', "Calcy's Investment Policy — The Formula That Runs the Book", 'Target weights, rebalance bands, and a cash floor — the exact formula the mascot trades by, plus an interactive lab to rewrite it and see what your version would trade today.'],
   ['/tools/bill-analyzer', 'Bill Analyzer — Paste Your Bills, See Where the Money Goes', 'Paste bills as plain text: monthly and yearly totals, spending by category, and overpayment flags. 100% private, runs in your browser.'],
   ['/data/mortgage-payment-by-state', `Average Mortgage Payment by State (${DATA_YEAR})`, 'Median home prices and implied monthly payments for all 50 states, ranked and compared.'],
   ['/data/average-salary-by-job', 'Average Salary by Job', 'Typical pay for dozens of jobs — compare your offer, your raise, or your career change.'],

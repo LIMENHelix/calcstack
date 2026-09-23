@@ -4,6 +4,14 @@
   "startValue": 100000,
   "cash": 1331.7,
   "benchmark": { "symbol": "SPY", "startPrice": 773.52 },
+  "policy": {
+    "targets": { "VTI": 56, "QQQ": 22, "SCHD": 7, "GLD": 8, "NVDA": 5 },
+    "bandPct": 20,
+    "cashFloorPct": 2,
+    "maxTradesPerWeek": 3,
+    "updatedAt": "2026-09-22",
+    "note": "Targets are % of total book value. A position trades only when its live weight closes outside target × (1 ± bandPct/100). Buys never push cash below cashFloorPct. Whole shares only."
+  },
   "positions": [
     { "symbol": "VTI", "shares": 150, "avgCost": 381.1, "openedAt": "2026-09-21" },
     { "symbol": "QQQ", "shares": 30, "avgCost": 741.47, "openedAt": "2026-09-21" },
