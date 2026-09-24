@@ -1,8 +1,8 @@
-/* Calcy as an articulated SVG character — real skeletal cartoon movement.
-   Separate groups for arms, legs, eyes, and mouth, each pivoting at its joint,
-   driven by CSS keyframes: a true walk cycle (legs swing opposite, arms
-   counter-swing, body bobs), a waving arm, blinking eyes, a talking mouth,
-   bounce and spin tricks. No flipbook frames, no image assets. */
+/* Calcy as an articulated SVG character — v2 with two-segment limbs.
+   Thighs + shins with bending knees, upper arms + forearms with bending
+   elbows, squash-and-stretch on jumps, anticipation on spins, heel-lift
+   walk cycle with knee lift. The principles that make motion read as
+   "character" instead of "jiggle": joints, anticipation, follow-through. */
 
 export type CalcyAction = 'float' | 'wave' | 'bounce' | 'spin'
 
@@ -35,114 +35,184 @@ export function CalcySvg({ walking = false, talking = false, action = 'float', c
         .calsvg { width: 100%; height: auto; overflow: visible; }
         .calsvg * { transform-box: fill-box; }
 
-        /* ---------- IDLE: gentle bob + breathing ---------- */
-        .calsvg-float .calsvg-body  { animation: calsvg-bob 4s ease-in-out infinite; }
-        .calsvg-float .calsvg-armL  { animation: calsvg-armSway 4s ease-in-out infinite; }
-        .calsvg-float .calsvg-armR  { animation: calsvg-armSway 4s ease-in-out infinite reverse; }
+        /* ---------- IDLE: breathing bob, slight arm sway ---------- */
+        .calsvg-float .calsvg-body   { animation: cs-bob 4s ease-in-out infinite; }
+        .calsvg-float .calsvg-armL   { animation: cs-armSway 4s ease-in-out infinite; }
+        .calsvg-float .calsvg-armR   { animation: cs-armSway 4s ease-in-out infinite reverse; }
+        .calsvg-float .calsvg-foreL  { animation: cs-foreSway 4s ease-in-out infinite; }
+        .calsvg-float .calsvg-foreR  { animation: cs-foreSway 4s ease-in-out infinite reverse; }
 
-        /* ---------- WALK CYCLE: legs alternate, arms counter-swing, body bobs ---------- */
-        .calsvg-walk .calsvg-legL  { animation: calsvg-legSwing 0.42s ease-in-out infinite; }
-        .calsvg-walk .calsvg-legR  { animation: calsvg-legSwing 0.42s ease-in-out infinite reverse; }
-        .calsvg-walk .calsvg-armL  { animation: calsvg-armSwing 0.42s ease-in-out infinite reverse; }
-        .calsvg-walk .calsvg-armR  { animation: calsvg-armSwing 0.42s ease-in-out infinite; }
-        .calsvg-walk .calsvg-body  { animation: calsvg-walkBob 0.42s ease-in-out infinite; }
+        /* ---------- WALK: thigh swings, knee lifts on the swing-through,
+           shin folds behind, arms counter-swing with elbow bend, body bobs
+           twice per stride ---------- */
+        .calsvg-walk .calsvg-legL    { animation: cs-thigh 0.48s ease-in-out infinite; }
+        .calsvg-walk .calsvg-legR    { animation: cs-thigh 0.48s ease-in-out infinite reverse; }
+        .calsvg-walk .calsvg-shinL   { animation: cs-knee 0.48s ease-in-out infinite; }
+        .calsvg-walk .calsvg-shinR   { animation: cs-knee 0.48s ease-in-out infinite reverse; }
+        .calsvg-walk .calsvg-armL    { animation: cs-armSwing 0.48s ease-in-out infinite reverse; }
+        .calsvg-walk .calsvg-armR    { animation: cs-armSwing 0.48s ease-in-out infinite; }
+        .calsvg-walk .calsvg-foreL   { animation: cs-elbow 0.48s ease-in-out infinite reverse; }
+        .calsvg-walk .calsvg-foreR   { animation: cs-elbow 0.48s ease-in-out infinite; }
+        .calsvg-walk .calsvg-body    { animation: cs-walkBob 0.24s ease-in-out infinite; }
 
-        /* ---------- WAVE: right arm up, wagging ---------- */
-        .calsvg-wave .calsvg-armR  { animation: calsvg-wave 0.55s ease-in-out 3; }
-        .calsvg-wave .calsvg-body  { animation: calsvg-bob 1.65s ease-in-out; }
+        /* ---------- WAVE: arm snaps up (anticipation dip first), elbow
+           wags the forearm, body leans in ---------- */
+        .calsvg-wave .calsvg-armR    { animation: cs-waveUp 1.65s ease-in-out; }
+        .calsvg-wave .calsvg-foreR   { animation: cs-waveWag 1.65s ease-in-out; }
+        .calsvg-wave .calsvg-body    { animation: cs-waveLean 1.65s ease-in-out; }
 
-        /* ---------- BOUNCE: happy jump, legs tuck ---------- */
-        .calsvg-bounce .calsvg-all   { animation: calsvg-jump 0.6s cubic-bezier(.34,1.56,.64,1) 2; }
-        .calsvg-bounce .calsvg-legL  { animation: calsvg-tuck 0.6s ease-in-out 2; }
-        .calsvg-bounce .calsvg-legR  { animation: calsvg-tuck 0.6s ease-in-out 2 reverse; }
-        .calsvg-bounce .calsvg-armL  { animation: calsvg-cheer 0.6s ease-in-out 2; }
-        .calsvg-bounce .calsvg-armR  { animation: calsvg-cheer 0.6s ease-in-out 2 reverse; }
+        /* ---------- BOUNCE: crouch (anticipation) → spring up with squash
+           and stretch → soft landing ---------- */
+        .calsvg-bounce .calsvg-all   { animation: cs-jump 0.62s cubic-bezier(.3,1.4,.5,1) 2; }
+        .calsvg-bounce .calsvg-body  { animation: cs-squash 0.62s ease-in-out 2; }
+        .calsvg-bounce .calsvg-legL  { animation: cs-tuck 0.62s ease-in-out 2; }
+        .calsvg-bounce .calsvg-legR  { animation: cs-tuck 0.62s ease-in-out 2 reverse; }
+        .calsvg-bounce .calsvg-armL  { animation: cs-cheer 0.62s ease-in-out 2; }
+        .calsvg-bounce .calsvg-armR  { animation: cs-cheer 0.62s ease-in-out 2 reverse; }
 
-        /* ---------- SPIN ---------- */
-        .calsvg-spin .calsvg-all   { animation: calsvg-spin 1.1s cubic-bezier(.34,1.3,.64,1); }
+        /* ---------- SPIN: wind up backward, then whip around ---------- */
+        .calsvg-spin .calsvg-all     { animation: cs-spin 1.15s cubic-bezier(.5,-0.2,.3,1.2); }
+        .calsvg-spin .calsvg-armL    { animation: cs-spinArms 1.15s ease-in-out; }
+        .calsvg-spin .calsvg-armR    { animation: cs-spinArms 1.15s ease-in-out reverse; }
 
-        /* ---------- BLINK (always on) ---------- */
-        .calsvg-eye { animation: calsvg-blink 4.2s ease-in-out infinite; }
+        /* ---------- ALWAYS ON: blink; talk adds mouth flaps ---------- */
+        .calsvg-eye { animation: cs-blink 4.2s ease-in-out infinite; }
+        .calsvg-talk .calsvg-mouth { animation: cs-talk 0.19s ease-in-out infinite; }
 
-        /* ---------- TALK: mouth opens and closes ---------- */
-        .calsvg-talk .calsvg-mouth { animation: calsvg-talk 0.19s ease-in-out infinite; }
-
-        @keyframes calsvg-bob {
+        @keyframes cs-bob {
+          0%, 100% { transform: translateY(0) scale(1, 1); }
+          50%      { transform: translateY(-3px) scale(1.01, 0.99); }
+        }
+        @keyframes cs-armSway {
+          0%, 100% { transform: rotate(5deg); }
+          50%      { transform: rotate(-5deg); }
+        }
+        @keyframes cs-foreSway {
+          0%, 100% { transform: rotate(-6deg); }
+          50%      { transform: rotate(4deg); }
+        }
+        @keyframes cs-thigh {
+          0%, 100% { transform: rotate(28deg); }
+          50%      { transform: rotate(-28deg); }
+        }
+        @keyframes cs-knee {
+          /* knee folds most as the leg swings forward through the middle */
+          0%   { transform: rotate(-8deg); }
+          25%  { transform: rotate(-38deg); }
+          50%  { transform: rotate(-10deg); }
+          75%  { transform: rotate(-4deg); }
+          100% { transform: rotate(-8deg); }
+        }
+        @keyframes cs-armSwing {
+          0%, 100% { transform: rotate(24deg); }
+          50%      { transform: rotate(-24deg); }
+        }
+        @keyframes cs-elbow {
+          0%, 100% { transform: rotate(-14deg); }
+          50%      { transform: rotate(-34deg); }
+        }
+        @keyframes cs-walkBob {
           0%, 100% { transform: translateY(0); }
           50%      { transform: translateY(-3px); }
         }
-        @keyframes calsvg-armSway {
-          0%, 100% { transform: rotate(4deg); }
-          50%      { transform: rotate(-4deg); }
-        }
-        @keyframes calsvg-legSwing {
-          0%, 100% { transform: rotate(26deg); }
-          50%      { transform: rotate(-26deg); }
-        }
-        @keyframes calsvg-armSwing {
-          0%, 100% { transform: rotate(22deg); }
-          50%      { transform: rotate(-22deg); }
-        }
-        @keyframes calsvg-walkBob {
-          0%, 100% { transform: translateY(0); }
-          50%      { transform: translateY(-2.5px); }
-        }
-        @keyframes calsvg-wave {
+        @keyframes cs-waveUp {
           0%   { transform: rotate(0deg); }
-          20%  { transform: rotate(-150deg); }
-          40%  { transform: rotate(-120deg); }
-          60%  { transform: rotate(-150deg); }
-          80%  { transform: rotate(-120deg); }
+          10%  { transform: rotate(18deg); }   /* anticipation dip */
+          28%  { transform: rotate(-158deg); }
+          86%  { transform: rotate(-152deg); }
           100% { transform: rotate(0deg); }
         }
-        @keyframes calsvg-jump {
-          0%, 100% { transform: translateY(0) scale(1); }
-          40%      { transform: translateY(-14px) scale(1.03); }
+        @keyframes cs-waveWag {
+          0%, 24%  { transform: rotate(0deg); }
+          36%      { transform: rotate(-38deg); }
+          48%      { transform: rotate(10deg); }
+          60%      { transform: rotate(-38deg); }
+          72%      { transform: rotate(10deg); }
+          84%      { transform: rotate(-24deg); }
+          100%     { transform: rotate(0deg); }
         }
-        @keyframes calsvg-tuck {
+        @keyframes cs-waveLean {
           0%, 100% { transform: rotate(0deg); }
-          40%      { transform: rotate(30deg); }
+          30%, 80% { transform: rotate(-4deg); }
         }
-        @keyframes calsvg-cheer {
+        @keyframes cs-jump {
+          0%   { transform: translateY(0); }
+          15%  { transform: translateY(4px); }    /* crouch */
+          45%  { transform: translateY(-16px); }  /* spring */
+          70%  { transform: translateY(-16px); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes cs-squash {
+          0%   { transform: scale(1, 1); }
+          15%  { transform: scale(1.08, 0.88); }  /* squash on crouch */
+          45%  { transform: scale(0.94, 1.1); }   /* stretch mid-air */
+          85%  { transform: scale(1.06, 0.92); }  /* squash on landing */
+          100% { transform: scale(1, 1); }
+        }
+        @keyframes cs-tuck {
           0%, 100% { transform: rotate(0deg); }
-          40%      { transform: rotate(-70deg); }
+          45%, 70% { transform: rotate(34deg); }
         }
-        @keyframes calsvg-spin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
+        @keyframes cs-cheer {
+          0%, 100% { transform: rotate(0deg); }
+          45%, 70% { transform: rotate(-78deg); }
         }
-        @keyframes calsvg-blink {
+        @keyframes cs-spin {
+          0%   { transform: rotate(0deg); }
+          18%  { transform: rotate(-28deg); }     /* wind up */
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes cs-spinArms {
+          0%, 100% { transform: rotate(0deg); }
+          18%      { transform: rotate(30deg); }
+          55%      { transform: rotate(-55deg); } /* arms fly out mid-spin */
+        }
+        @keyframes cs-blink {
           0%, 92%, 100% { transform: scaleY(1); }
           95%           { transform: scaleY(0.08); }
         }
-        @keyframes calsvg-talk {
+        @keyframes cs-talk {
           0%, 100% { transform: scaleY(1); }
           50%      { transform: scaleY(0.25); }
         }
       `}</style>
 
       <g className="calsvg-all" style={{ transformOrigin: '50% 60%' }}>
-        {/* shadow */}
+        {/* shadow — squashes with him */}
         <ellipse cx="60" cy="134" rx="26" ry="5" fill="#0c4a36" opacity="0.18" />
 
-        {/* legs — pivot at hip */}
-        <g className="calsvg-legL" style={{ transformOrigin: '46px 108px' }}>
-          <rect x="42" y="106" width="9" height="22" rx="4.5" fill="#0b7a54" />
-          <ellipse cx="46.5" cy="129" rx="7.5" ry="4.5" fill="#f8fafc" stroke="#d6d3d1" strokeWidth="1" />
+        {/* LEFT LEG: thigh pivots at hip, shin pivots at knee */}
+        <g className="calsvg-legL" style={{ transformOrigin: '46px 106px' }}>
+          <rect x="41.5" y="104" width="9" height="14" rx="4.5" fill="#0b7a54" />
+          <g className="calsvg-shinL" style={{ transformOrigin: '46px 116px' }}>
+            <rect x="42.5" y="114" width="7.5" height="12" rx="3.75" fill="#0d8a5f" />
+            <ellipse cx="46.5" cy="129" rx="7.5" ry="4.5" fill="#f8fafc" stroke="#d6d3d1" strokeWidth="1" />
+          </g>
         </g>
-        <g className="calsvg-legR" style={{ transformOrigin: '74px 108px' }}>
-          <rect x="69" y="106" width="9" height="22" rx="4.5" fill="#0b7a54" />
-          <ellipse cx="73.5" cy="129" rx="7.5" ry="4.5" fill="#f8fafc" stroke="#d6d3d1" strokeWidth="1" />
+        {/* RIGHT LEG */}
+        <g className="calsvg-legR" style={{ transformOrigin: '74px 106px' }}>
+          <rect x="69.5" y="104" width="9" height="14" rx="4.5" fill="#0b7a54" />
+          <g className="calsvg-shinR" style={{ transformOrigin: '74px 116px' }}>
+            <rect x="70.5" y="114" width="7.5" height="12" rx="3.75" fill="#0d8a5f" />
+            <ellipse cx="73.5" cy="129" rx="7.5" ry="4.5" fill="#f8fafc" stroke="#d6d3d1" strokeWidth="1" />
+          </g>
         </g>
 
-        {/* arms — pivot at shoulder */}
-        <g className="calsvg-armL" style={{ transformOrigin: '22px 62px' }}>
-          <rect x="16" y="58" width="9" height="26" rx="4.5" fill="#0d8a5f" transform="rotate(14 20 60)" />
-          <circle cx="15" cy="85" r="5.5" fill="#f8fafc" stroke="#d6d3d1" strokeWidth="1" />
+        {/* LEFT ARM: upper arm at shoulder, forearm at elbow */}
+        <g className="calsvg-armL" style={{ transformOrigin: '24px 60px' }}>
+          <rect x="19.5" y="58" width="9" height="15" rx="4.5" fill="#0d8a5f" />
+          <g className="calsvg-foreL" style={{ transformOrigin: '24px 71px' }}>
+            <rect x="20.5" y="69" width="7.5" height="13" rx="3.75" fill="#10b981" />
+            <circle cx="24" cy="85" r="5.5" fill="#f8fafc" stroke="#d6d3d1" strokeWidth="1" />
+          </g>
         </g>
-        <g className="calsvg-armR" style={{ transformOrigin: '98px 62px' }}>
-          <rect x="95" y="58" width="9" height="26" rx="4.5" fill="#0d8a5f" transform="rotate(-14 100 60)" />
-          <circle cx="105" cy="85" r="5.5" fill="#f8fafc" stroke="#d6d3d1" strokeWidth="1" />
+        {/* RIGHT ARM */}
+        <g className="calsvg-armR" style={{ transformOrigin: '96px 60px' }}>
+          <rect x="91.5" y="58" width="9" height="15" rx="4.5" fill="#0d8a5f" />
+          <g className="calsvg-foreR" style={{ transformOrigin: '96px 71px' }}>
+            <rect x="92.5" y="69" width="7.5" height="13" rx="3.75" fill="#10b981" />
+            <circle cx="96" cy="85" r="5.5" fill="#f8fafc" stroke="#d6d3d1" strokeWidth="1" />
+          </g>
         </g>
 
         {/* body */}
