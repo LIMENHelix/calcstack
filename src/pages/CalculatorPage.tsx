@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { useParams, Link } from 'react-router'
 import { CalcyTip } from '@/components/CalcyTip'
+import { LimenContext } from '@/components/LimenContext'
 import { CALCULATORS } from '@/data/calculators'
 import { VARIANTS } from '@/data/variants'
 import { CALC_COMPONENTS } from '@/calcs'
@@ -201,6 +202,8 @@ export default function CalculatorPage() {
           </div>
         </section>
       </article>
+
+      <LimenContext category={meta.category} slug={meta.slug} />
 
       <AffiliateCard items={affiliatesFor(meta.category)} />
 
