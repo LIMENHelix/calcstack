@@ -73,6 +73,31 @@ Then by existing CalcStack strength:
       pages gain "Calculators by CalcStack" credit. Cross-domain authority
       flows both ways — this is the SEO alliance.
 
+## The fractal funding ladder
+
+Each band's surplus funds the next band's build. Capital intensity and revenue
+scale together; the shape repeats at every level — free signal → monitored
+signal → owned infrastructure.
+
+| Band | Capital | Revenue profile | What lives here | Who pays |
+|---|---|---|---|---|
+| **P0–P1** | none | ad/affiliate/embed trickle | CalcStack free tools, Limen live reads | nobody — attention is the product |
+| **P2–P3** | near-zero | $4–$8/mo subscriptions | /finance bank monitor + capital alert (LIVE); per-domain watches: utility filings, tax changes, tariff changes, tuition tracker | individuals, depositors, freelancers |
+| **P4–P5** | low-mid | $50–$500/mo B2B | White-label CalcStack embeds for agents/lenders (branded net sheets, payment desks on THEIR sites); domain dashboards for small institutions (credit unions, school districts, HOAs); premium data API (our programmatic state datasets, licensed) | agents, brokers, small institutions |
+| **P6–P7** | mid | $1k–$10k/mo contracts | Institutional monitoring: bank-capital surveillance for depositors-at-scale (corporate treasurers — the exact buyer of the /finance P3 alert, upgraded to portfolios of banks); municipal/utility stress dashboards; compliance-adjacent reporting (informational, not regulated advice) | treasurers, municipalities, mid-size firms |
+| **P8–P10** | high | enterprise / platform | The full system: cross-domain early-warning subscriptions (the 20-domain read as an institutional product), data licensing at scale, and eventually the autonomous-systems tier — the machine that runs the reading, monitoring, and tooling itself | enterprises, funds, governments |
+
+Fractal rule: no band starts until the band below throws surplus. P0–P1 is
+live and self-funding (ads + affiliates + Calcy sponsor slots). P2–P3 has its
+first products live on /finance. Everything from P4 up is a projection until
+the revenue below it exists — the ladder finances its own climb.
+
+Why CalcStack matters at every band: it's not just the P0/P1 engine — the
+same tool infrastructure becomes the white-label product at P4–P5, the same
+programmatic datasets become the licensed API at P6–P7, and the same
+monitoring plumbing (crons, feed reads, alert chains) becomes the enterprise
+platform at P8–P10. Build once at the bottom, sell it again at every rung.
+
 ## What this is NOT
 
 - Not merging the brands. CalcStack stays the friendly free tool site; LIMEN
